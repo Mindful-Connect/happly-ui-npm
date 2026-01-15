@@ -1,0 +1,47 @@
+{
+  "$schema": "https://happly.cloud/schema/registry.json",
+  "name": "happlyui",
+  "homepage": "https://happly.cloud/ui",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "A button component with multiple variants and sizes.",
+      "dependencies": ["@radix-ui/react-slot"],
+      "registryDependencies": []
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "A text input component.",
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "A label component for form inputs.",
+      "dependencies": ["@radix-ui/react-label"],
+      "registryDependencies": []
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "A card container component.",
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "A badge component for status indicators.",
+      "dependencies": [],
+      "registryDependencies": []
+    }
+  ]
+}
