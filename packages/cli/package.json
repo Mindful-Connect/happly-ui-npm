@@ -1,0 +1,37 @@
+{
+  "name": "happlyui",
+  "version": "0.0.1",
+  "description": "Add HapplyUI components to your project",
+  "type": "module",
+  "bin": {
+    "happlyui": "./dist/index.js"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "bun build ./src/index.ts --outdir ./dist --target node --format esm",
+    "dev": "bun run ./src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "prompts": "^2.4.2",
+    "picocolors": "^1.1.1",
+    "ora": "^8.1.1",
+    "fs-extra": "^11.2.0",
+    "cosmiconfig": "^9.0.0",
+    "fast-glob": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/prompts": "^2.4.9",
+    "@types/fs-extra": "^11.0.4",
+    "typescript": "^5.7.0"
+  },
+  "keywords": ["happly", "ui", "components", "react", "tailwindcss", "design-system"],
+  "author": "Happly",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/happly-ai/happly-ui"
+  }
+}
