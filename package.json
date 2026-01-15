@@ -1,0 +1,13 @@
+{
+  "name": "happly-ui",
+  "private": true,
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "build": "bun run --filter './packages/*' build",
+    "dev": "bun run --filter './packages/*' dev",
+    "clean": "rm -rf packages/*/dist packages/*/.turbo"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}
