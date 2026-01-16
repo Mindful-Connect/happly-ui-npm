@@ -79,27 +79,28 @@ export function getComponentPath(
   config: HapplyConfig
 ): string {
   const ext = config.tsx ? ".tsx" : ".jsx";
+  const srcPrefix = config.srcDir ? "src/" : "";
 
   switch (componentType) {
     case "registry:ui":
     case "registry:component":
       return path.join(
-        config.aliases.ui.replace("@/", ""),
+        srcPrefix + config.aliases.ui.replace("@/", ""),
         `${componentName}${ext}`
       );
     case "registry:hook":
       return path.join(
-        (config.aliases.hooks || "@/hooks").replace("@/", ""),
+        srcPrefix + (config.aliases.hooks || "@/hooks").replace("@/", ""),
         `${componentName}${ext}`
       );
     case "registry:lib":
       return path.join(
-        (config.aliases.lib || "@/lib").replace("@/", ""),
+        srcPrefix + (config.aliases.lib || "@/lib").replace("@/", ""),
         `${componentName}${ext}`
       );
     default:
       return path.join(
-        config.aliases.ui.replace("@/", ""),
+        srcPrefix + config.aliases.ui.replace("@/", ""),
         `${componentName}${ext}`
       );
   }

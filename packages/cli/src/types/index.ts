@@ -5,6 +5,7 @@
 // Config file schema (components.json)
 export interface HapplyConfig {
   $schema: string;
+  srcDir: boolean;
   tailwind: {
     config: string;
     css: string;
@@ -113,6 +114,7 @@ export const CONFIG_FILE = "components.json";
 
 export const DEFAULT_CONFIG: Partial<HapplyConfig> = {
   $schema: "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/components.json",
+  srcDir: true,
   tailwind: {
     config: "tailwind.config.ts",
     css: "src/index.css",

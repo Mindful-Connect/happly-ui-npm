@@ -180,7 +180,8 @@ export async function init(options: InitOptions): Promise<void> {
     writeSpinner.text = "Created components.json";
 
     // Write utils file
-    const utilsPath = config.aliases.utils.replace("@/", "");
+    const srcPrefix = config.srcDir ? "src/" : "";
+    const utilsPath = srcPrefix + config.aliases.utils.replace("@/", "");
     const utilsContent = config.tsx ? UTILS_TEMPLATE : UTILS_JS_TEMPLATE;
     const utilsExt = config.tsx ? ".ts" : ".js";
     await writeComponentFile(cwd, `${utilsPath}${utilsExt}`, utilsContent);
@@ -241,6 +242,7 @@ function createDefaultConfig(projectInfo: ReturnType<typeof detectProject> exten
 
   return {
     $schema: "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/components.json",
+    srcDir: isSrcDir,
     tailwind: {
       config: projectInfo.tailwindConfig || "tailwind.config.ts",
       css: projectInfo.tailwindCss || (isSrcDir ? "src/index.css" : "index.css"),
@@ -269,6 +271,7 @@ function createConfig(
 ): HapplyConfig {
   return {
     $schema: "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/components.json",
+    srcDir: projectInfo.isSrcDir,
     tailwind: {
       config: projectInfo.tailwindConfig || "tailwind.config.ts",
       css: projectInfo.tailwindCss || (projectInfo.isSrcDir ? "src/index.css" : "index.css"),
