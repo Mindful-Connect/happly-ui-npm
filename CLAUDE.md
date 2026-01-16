@@ -96,6 +96,20 @@ The `registry.json` index lists all available components with their npm and regi
 - Always use `@/lib/utils` import path (transformed at install time)
 - Export both component and variants config
 
+## Release Workflow
+
+**IMPORTANT: Never create GitHub tags/releases or bump npm versions without explicit user permission.**
+
+- Make code changes and commit them normally
+- Continue working on features/fixes across multiple commits
+- Only when the user explicitly asks, then:
+  1. Bump version in packages/cli/package.json
+  2. Rebuild CLI
+  3. Create GitHub tag/release
+  4. Publish to npm
+
+Do NOT auto-release after every commit.
+
 ## Publishing
 
 ```bash
