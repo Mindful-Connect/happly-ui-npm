@@ -2,7 +2,7 @@ import { existsSync } from "fs";
 import { readFile } from "fs/promises";
 import path from "path";
 import fg from "fast-glob";
-import type { ProjectInfo } from "../types/index.js";
+import type { ProjectInfo, TailwindVersion } from "../types/index.js";
 
 /**
  * Detect project configuration
@@ -13,6 +13,7 @@ export async function detectProject(cwd: string): Promise<ProjectInfo> {
     isSrcDir: false,
     tailwindConfig: null,
     tailwindCss: null,
+    tailwindVersion: 3,
     packageManager: "bun",
     aliases: {},
     framework: "unknown",
@@ -32,6 +33,9 @@ export async function detectProject(cwd: string): Promise<ProjectInfo> {
 
   // Detect Tailwind CSS file
   info.tailwindCss = await detectTailwindCss(cwd);
+
+  // Detect Tailwind version (must come after CSS detection)
+  info.tailwindVersion = await detectTailwindVersion(cwd, info.tailwindCss);
 
   // Detect framework
   info.framework = await detectFramework(cwd);
@@ -119,6 +123,59 @@ async function detectTailwindCss(cwd: string): Promise<string | null> {
   }
 
   return null;
+}
+
+/**
+ * Detect Tailwind CSS version (v3 or v4)
+ */
+async function detectTailwindVersion(
+  cwd: string,
+  cssFile: string | null
+): Promise<TailwindVersion> {
+  // Check package.json for Tailwind v4 indicators
+  try {
+    const pkgPath = path.join(cwd, "package.json");
+    if (existsSync(pkgPath)) {
+      const pkg = JSON.parse(await readFile(pkgPath, "utf-8"));
+      const deps = { ...pkg.dependencies, ...pkg.devDependencies };
+
+      // Check for v4-specific packages
+      if (deps["@tailwindcss/vite"] || deps["@tailwindcss/postcss"] || deps["@tailwindcss/cli"]) {
+        return 4;
+      }
+
+      // Check tailwindcss version
+      const twVersion = deps["tailwindcss"];
+      if (twVersion) {
+        // Parse version - handle ^4.0.0, ~4.0.0, 4.0.0, etc.
+        const versionMatch = twVersion.match(/(\d+)\./);
+        if (versionMatch && parseInt(versionMatch[1], 10) >= 4) {
+          return 4;
+        }
+      }
+    }
+  } catch {
+    // Ignore errors
+  }
+
+  // Check CSS file for v4 syntax (@import "tailwindcss")
+  if (cssFile) {
+    try {
+      const cssPath = path.join(cwd, cssFile);
+      if (existsSync(cssPath)) {
+        const content = await readFile(cssPath, "utf-8");
+        // v4 uses @import "tailwindcss" instead of @tailwind directives
+        if (content.includes('@import "tailwindcss"') || content.includes("@import 'tailwindcss'")) {
+          return 4;
+        }
+      }
+    } catch {
+      // Ignore errors
+    }
+  }
+
+  // Default to v3
+  return 3;
 }
 
 /**

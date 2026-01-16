@@ -80,12 +80,16 @@ export interface RegistryIndexItem {
   registryDependencies?: string[];
 }
 
+// Tailwind version
+export type TailwindVersion = 3 | 4;
+
 // Project detection result
 export interface ProjectInfo {
   isTypeScript: boolean;
   isSrcDir: boolean;
   tailwindConfig: string | null;
   tailwindCss: string | null;
+  tailwindVersion: TailwindVersion;
   packageManager: "bun" | "npm" | "pnpm" | "yarn";
   aliases: Record<string, string>;
   framework: "next" | "vite" | "remix" | "astro" | "unknown";

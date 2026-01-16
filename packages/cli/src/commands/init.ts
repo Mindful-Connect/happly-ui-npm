@@ -31,7 +31,8 @@ export function cn(...inputs) {
 }
 `;
 
-const CSS_TEMPLATE = `@tailwind base;
+// Tailwind v3 CSS template
+const CSS_TEMPLATE_V3 = `@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -92,6 +93,66 @@ const CSS_TEMPLATE = `@tailwind base;
 }
 `;
 
+// Tailwind v4 CSS template
+const CSS_TEMPLATE_V4 = `@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}
+`;
+
 export async function init(options: InitOptions): Promise<void> {
   const cwd = options.cwd || process.cwd();
 
@@ -132,6 +193,7 @@ export async function init(options: InitOptions): Promise<void> {
   logger.info(`Framework: ${logger.highlight(projectInfo.framework)}`);
   logger.info(`TypeScript: ${logger.highlight(String(projectInfo.isTypeScript))}`);
   logger.info(`Package Manager: ${logger.highlight(projectInfo.packageManager)}`);
+  logger.info(`Tailwind CSS: ${logger.highlight(`v${projectInfo.tailwindVersion}`)}`);
   if (projectInfo.tailwindConfig) {
     logger.info(`Tailwind Config: ${logger.highlight(projectInfo.tailwindConfig)}`);
   }
@@ -208,15 +270,27 @@ export async function init(options: InitOptions): Promise<void> {
     // Write/update CSS file if it doesn't exist or is empty
     const cssPath = config.tailwind.css;
     const fullCssPath = path.join(cwd, cssPath);
+    const cssTemplate = projectInfo.tailwindVersion === 4 ? CSS_TEMPLATE_V4 : CSS_TEMPLATE_V3;
+
     if (!existsSync(fullCssPath)) {
-      await writeComponentFile(cwd, cssPath, CSS_TEMPLATE);
+      await writeComponentFile(cwd, cssPath, cssTemplate);
       writeSpinner.text = `Created ${cssPath}`;
     } else {
       // Check if CSS already has our variables
       const existingCss = await readFile(fullCssPath, "utf-8");
       if (!existingCss.includes("--background:")) {
-        // Prepend our CSS variables
-        await writeFile(fullCssPath, CSS_TEMPLATE + "\n" + existingCss, "utf-8");
+        // For v4, we need to handle @import "tailwindcss" differently
+        if (projectInfo.tailwindVersion === 4 && existingCss.includes('@import "tailwindcss"')) {
+          // Insert our variables after the import
+          const updatedCss = existingCss.replace(
+            '@import "tailwindcss";',
+            cssTemplate
+          );
+          await writeFile(fullCssPath, updatedCss, "utf-8");
+        } else {
+          // Prepend our CSS variables
+          await writeFile(fullCssPath, cssTemplate + "\n" + existingCss, "utf-8");
+        }
         writeSpinner.text = `Updated ${cssPath}`;
       }
     }
