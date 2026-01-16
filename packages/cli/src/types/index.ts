@@ -107,7 +107,7 @@ export interface AddOptions {
 
 // Constants
 export const REGISTRY_URL =
-  "https://raw.githubusercontent.com/happly-ai/happly-ui/main/packages/registry";
+  "https://raw.githubusercontent.com/Mindful-Connect/happly-ui-npm/production/packages/registry";
 
 export const CONFIG_FILE = "components.json";
 

@@ -1,6 +1,6 @@
 {
   "name": "happlyui",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Add HapplyUI components to your project",
   "type": "module",
   "bin": {
@@ -32,6 +32,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/happly-ai/happly-ui"
+    "url": "https://github.com/Mindful-Connect/happly-ui-npm"
   }
 }
