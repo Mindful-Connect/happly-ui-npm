@@ -1,6 +1,6 @@
 {
-  "name": "happlyui",
-  "version": "0.0.2",
+  "name": "@happlyui/cli",
+  "version": "0.1.0",
   "description": "Add HapplyUI components to your project",
   "type": "module",
   "bin": {
