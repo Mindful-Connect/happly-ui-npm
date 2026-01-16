@@ -11,6 +11,7 @@ import {
   writeComponentFile,
 } from "../utils/config.js";
 import { installDependencies } from "../utils/install.js";
+import { isNonInteractive, getAgentName } from "../utils/env.js";
 import type { HapplyConfig, InitOptions, BaseColor } from "../types/index.js";
 import { BASE_COLORS, DEFAULT_CONFIG } from "../types/index.js";
 
@@ -94,12 +95,22 @@ const CSS_TEMPLATE = `@tailwind base;
 export async function init(options: InitOptions): Promise<void> {
   const cwd = options.cwd || process.cwd();
 
+  // Auto-detect non-interactive environments (AI agents, CI, etc.)
+  const nonInteractive = isNonInteractive();
+  const agentName = getAgentName();
+  const useDefaults = options.defaults || options.yes || nonInteractive;
+
   logger.break();
   logger.log(logger.bold("HapplyUI") + " - Initialize your project");
+  if (agentName) {
+    logger.info(`Detected: ${logger.highlight(agentName)} (using defaults)`);
+  } else if (nonInteractive && !options.yes) {
+    logger.info("Non-interactive mode detected (using defaults)");
+  }
   logger.break();
 
   // Check if already initialized
-  if (isInitialized(cwd) && !options.yes) {
+  if (isInitialized(cwd) && !useDefaults) {
     const { overwrite } = await prompts({
       type: "confirm",
       name: "overwrite",
@@ -129,8 +140,15 @@ export async function init(options: InitOptions): Promise<void> {
   // Interactive prompts
   let config: HapplyConfig;
 
-  if (options.defaults || options.yes) {
+  if (useDefaults) {
     config = createDefaultConfig(projectInfo);
+    // Apply CLI overrides if provided
+    if (options.baseColor && BASE_COLORS.includes(options.baseColor)) {
+      config.tailwind.baseColor = options.baseColor;
+    }
+    if (options.cssVariables === false) {
+      config.tailwind.cssVariables = false;
+    }
   } else {
     const responses = await prompts([
       {

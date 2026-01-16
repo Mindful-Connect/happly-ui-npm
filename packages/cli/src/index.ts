@@ -17,6 +17,8 @@ program
   .option("-c, --cwd <path>", "Working directory", process.cwd())
   .option("-y, --yes", "Skip prompts and use defaults")
   .option("--defaults", "Use default configuration")
+  .option("--base-color <color>", "Base color theme (slate, gray, zinc, neutral, stone)")
+  .option("--no-css-variables", "Disable CSS variables for colors")
   .action(init);
 
 program

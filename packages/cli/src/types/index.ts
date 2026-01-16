@@ -96,6 +96,8 @@ export interface InitOptions {
   cwd?: string;
   yes?: boolean;
   defaults?: boolean;
+  baseColor?: BaseColor;
+  cssVariables?: boolean;
 }
 
 export interface AddOptions {
