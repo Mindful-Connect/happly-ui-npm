@@ -4,9 +4,9 @@
   <p>Built with Radix UI and Tailwind CSS.</p>
 
   <p>
-    <a href="https://www.npmjs.com/package/happlyui"><img src="https://img.shields.io/npm/v/happlyui.svg?style=flat-square" alt="npm version" /></a>
-    <a href="https://www.npmjs.com/package/happlyui"><img src="https://img.shields.io/npm/dm/happlyui.svg?style=flat-square" alt="npm downloads" /></a>
-    <a href="https://github.com/happly-ai/happly-ui/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="license" /></a>
+    <a href="https://www.npmjs.com/package/@happlyui/cli"><img src="https://img.shields.io/npm/v/@happlyui/cli.svg?style=flat-square" alt="npm version" /></a>
+    <a href="https://www.npmjs.com/package/@happlyui/cli"><img src="https://img.shields.io/npm/dm/@happlyui/cli.svg?style=flat-square" alt="npm downloads" /></a>
+    <a href="https://github.com/Mindful-Connect/happly-ui-npm/blob/production/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="license" /></a>
   </p>
 </div>
 
@@ -33,7 +33,7 @@ This is **NOT** a component library. It's a collection of components that you ca
 The easiest way to get started is using the CLI:
 
 ```bash
-bunx --bun happlyui@latest init
+bunx @happlyui/cli@latest init
 ```
 
 This will:
@@ -48,13 +48,13 @@ Once initialized, add components to your project:
 
 ```bash
 # Add a single component
-bunx --bun happlyui@latest add button
+bunx @happlyui/cli@latest add button
 
 # Add multiple components
-bunx --bun happlyui@latest add button input card
+bunx @happlyui/cli@latest add button input card
 
 # Add all components
-bunx --bun happlyui@latest add --all
+bunx @happlyui/cli@latest add --all
 ```
 
 ### Manual Installation
@@ -118,20 +118,20 @@ The `components.json` file configures how components are installed:
 
 ```bash
 # Initialize project
-happlyui init [options]
+@happlyui/cli init [options]
   -c, --cwd <path>    Working directory (default: current directory)
   -y, --yes           Skip prompts and use defaults
   --defaults          Use default configuration
 
 # Add components
-happlyui add [components...] [options]
+@happlyui/cli add [components...] [options]
   -c, --cwd <path>    Working directory
   -y, --yes           Skip confirmation prompts
   -o, --overwrite     Overwrite existing files
   -a, --all           Add all available components
 
 # List components
-happlyui list [options]
+@happlyui/cli list [options]
   -c, --cwd <path>    Working directory
 ```
 
@@ -139,8 +139,8 @@ happlyui list [options]
 
 ```bash
 # Clone the repository
-git clone https://github.com/happly-ai/happly-ui.git
-cd happly-ui
+git clone https://github.com/Mindful-Connect/happly-ui-npm.git
+cd happly-ui-npm
 
 # Install dependencies
 bun install
