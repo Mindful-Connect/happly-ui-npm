@@ -169,5 +169,5 @@ MIT License - see the [LICENSE](LICENSE) file for details.
 ---
 
 <div align="center">
-  <p>Built with ❤️ by <a href="https://happly.cloud">Happly</a></p>
+  <p>Built with ❤️ by <a href="https://happly.ai">Happly</a></p>
 </div>

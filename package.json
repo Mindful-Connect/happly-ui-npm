@@ -8,6 +8,9 @@
     "clean": "rm -rf packages/*/dist packages/*/.turbo"
   },
   "devDependencies": {
-    "typescript": "^5.7.0"
-  }
+    "typescript": "^5.7.0",
+    "@types/bun": "latest"
+  },
+  "module": "index.ts",
+  "type": "module"
 }
