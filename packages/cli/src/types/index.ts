@@ -112,7 +112,7 @@ export const REGISTRY_URL =
 export const CONFIG_FILE = "components.json";
 
 export const DEFAULT_CONFIG: Partial<HapplyConfig> = {
-  $schema: "https://happly.cloud/schema.json",
+  $schema: "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/components.json",
   tailwind: {
     config: "tailwind.config.ts",
     css: "src/index.css",

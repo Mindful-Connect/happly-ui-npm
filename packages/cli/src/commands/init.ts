@@ -240,7 +240,7 @@ function createDefaultConfig(projectInfo: ReturnType<typeof detectProject> exten
   const isSrcDir = projectInfo.isSrcDir;
 
   return {
-    $schema: "https://happly.cloud/schema.json",
+    $schema: "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/components.json",
     tailwind: {
       config: projectInfo.tailwindConfig || "tailwind.config.ts",
       css: projectInfo.tailwindCss || (isSrcDir ? "src/index.css" : "index.css"),
@@ -268,7 +268,7 @@ function createConfig(
   }
 ): HapplyConfig {
   return {
-    $schema: "https://happly.cloud/schema.json",
+    $schema: "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/components.json",
     tailwind: {
       config: projectInfo.tailwindConfig || "tailwind.config.ts",
       css: projectInfo.tailwindCss || (projectInfo.isSrcDir ? "src/index.css" : "index.css"),

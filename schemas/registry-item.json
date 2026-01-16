@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "title": "HapplyUI Registry Item",
+  "description": "Definition file for a single component in a HapplyUI registry",
+  "type": "object",
+  "required": ["name", "type", "files"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "JSON Schema reference for validation and IDE support"
+    },
+    "name": {
+      "type": "string",
+      "description": "Component name (must match filename without extension)",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "examples": ["button", "input", "data-table"]
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of registry item",
+      "enum": ["registry:ui", "registry:hook", "registry:lib", "registry:component", "registry:block"]
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable title for the component",
+      "examples": ["Button", "Data Table"]
+    },
+    "description": {
+      "type": "string",
+      "description": "Brief description of what the component does"
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "npm packages required by this component",
+      "items": {
+        "type": "string"
+      },
+      "examples": [["@radix-ui/react-slot"], ["@radix-ui/react-dialog", "cmdk"]]
+    },
+    "devDependencies": {
+      "type": "array",
+      "description": "npm dev dependencies required by this component",
+      "items": {
+        "type": "string"
+      }
+    },
+    "registryDependencies": {
+      "type": "array",
+      "description": "Other registry components required by this component",
+      "items": {
+        "type": "string"
+      },
+      "examples": [["button"], ["button", "input"]]
+    },
+    "files": {
+      "type": "array",
+      "description": "Files that make up this component",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["path", "type"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Relative path to the file in the registry",
+            "examples": ["ui/button.tsx", "hooks/use-toast.ts"]
+          },
+          "content": {
+            "type": "string",
+            "description": "Inline file content (optional, fetched from path if not provided)"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of file, determines installation location",
+            "enum": ["registry:ui", "registry:hook", "registry:lib", "registry:component", "registry:block"]
+          },
+          "target": {
+            "type": "string",
+            "description": "Override target path for installation"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "cssVars": {
+      "type": "object",
+      "description": "CSS variables to add to the project",
+      "properties": {
+        "light": {
+          "type": "object",
+          "description": "CSS variables for light mode",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "dark": {
+          "type": "object",
+          "description": "CSS variables for dark mode",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "tailwind": {
+      "type": "object",
+      "description": "Tailwind configuration to merge",
+      "properties": {
+        "config": {
+          "type": "object",
+          "description": "Tailwind config object to merge with existing config",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

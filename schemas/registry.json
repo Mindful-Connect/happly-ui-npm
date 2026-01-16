@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry.json",
+  "title": "HapplyUI Registry Index",
+  "description": "Index file listing all available components in a HapplyUI registry",
+  "type": "object",
+  "required": ["name", "items"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "JSON Schema reference for validation and IDE support"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the registry",
+      "examples": ["happlyui", "my-custom-registry"]
+    },
+    "homepage": {
+      "type": "string",
+      "description": "Homepage URL for the registry",
+      "format": "uri",
+      "examples": ["https://happly.cloud"]
+    },
+    "items": {
+      "type": "array",
+      "description": "List of available components in the registry",
+      "items": {
+        "type": "object",
+        "required": ["name", "type"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Component name (used in CLI commands)",
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "examples": ["button", "input", "data-table"]
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of registry item",
+            "enum": ["registry:ui", "registry:hook", "registry:lib", "registry:component", "registry:block"]
+          },
+          "title": {
+            "type": "string",
+            "description": "Human-readable title for the component",
+            "examples": ["Button", "Data Table"]
+          },
+          "description": {
+            "type": "string",
+            "description": "Brief description of the component"
+          },
+          "dependencies": {
+            "type": "array",
+            "description": "npm packages required by this component",
+            "items": {
+              "type": "string"
+            },
+            "examples": [["@radix-ui/react-slot"], ["@radix-ui/react-dialog", "cmdk"]]
+          },
+          "registryDependencies": {
+            "type": "array",
+            "description": "Other registry components required by this component",
+            "items": {
+              "type": "string"
+            },
+            "examples": [["button"], ["button", "input"]]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

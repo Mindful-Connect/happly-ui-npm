@@ -108,7 +108,7 @@ export { MyComponent };
 
 ```json
 {
-  "$schema": "https://happly.cloud/schema/registry-item.json",
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
   "name": "my-component",
   "type": "registry:ui",
   "title": "My Component",
