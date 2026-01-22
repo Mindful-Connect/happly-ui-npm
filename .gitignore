@@ -62,3 +62,6 @@ coverage/
 *.pem
 .vercel
 .netlify
+
+# Playground
+apps/playground/

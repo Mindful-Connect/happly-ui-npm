@@ -1,56 +1,359 @@
-import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
-import { cva, type VariantProps } from "class-variance-authority";
+import * as React from 'react';
+import { Slot } from '@radix-ui/react-slot';
 
-import { cn } from "@/lib/utils";
+import type { PolymorphicComponentProps } from '@/utils/polymorphic';
+import { recursiveCloneChildren } from '@/utils/recursive-clone-children';
+import { tv, type VariantProps } from '@/utils/tv';
 
-const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
-  {
-    variants: {
-      variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+const BUTTON_ROOT_NAME = 'ButtonRoot';
+const BUTTON_ICON_NAME = 'ButtonIcon';
+
+export const buttonVariants = tv({
+  slots: {
+    root: [
+      // base
+      'group relative inline-flex items-center justify-center whitespace-nowrap outline-none',
+      'transition duration-200 ease-out',
+      // typography
+      'font-medium text-sm leading-none tracking-[-0.006em]',
+      // focus
+      'focus:outline-none focus:ring-0',
+      // disabled
+      'disabled:pointer-events-none disabled:bg-bg-weak-50 disabled:text-text-disabled-300 disabled:ring-transparent',
+    ],
+    icon: [
+      // base
+      'flex shrink-0 items-center justify-center',
+    ],
+  },
+  variants: {
+    variant: {
+      primary: {},
+      neutral: {},
+      error: {},
+    },
+    mode: {
+      filled: {},
+      stroke: {
+        root: 'ring-1 ring-inset',
       },
-      size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10",
+      lighter: {
+        root: 'ring-1 ring-inset',
+      },
+      ghost: {
+        root: 'ring-1 ring-inset',
       },
     },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
+    size: {
+      medium: {
+        root: 'h-10 gap-3 rounded-10 px-3.5',
+        icon: 'size-5 -mx-1',
+      },
+      small: {
+        root: 'h-9 gap-3 rounded-lg px-3',
+        icon: 'size-5 -mx-1',
+      },
+      xsmall: {
+        root: 'h-8 gap-2.5 rounded-lg px-2.5',
+        icon: 'size-4 -mx-0.5',
+      },
+      xxsmall: {
+        root: 'h-7 gap-2.5 rounded-lg px-2',
+        icon: 'size-4 -mx-0.5',
+      },
     },
-  }
-);
+    iconOnly: {
+      true: {
+        root: 'px-0',
+        icon: 'm-0',
+      },
+    },
+  },
+  compoundVariants: [
+    //#region iconOnly=true
+    {
+      iconOnly: true,
+      size: 'medium',
+      class: {
+        root: 'w-10',
+      },
+    },
+    {
+      iconOnly: true,
+      size: 'small',
+      class: {
+        root: 'w-9',
+      },
+    },
+    {
+      iconOnly: true,
+      size: 'xsmall',
+      class: {
+        root: 'w-8',
+      },
+    },
+    {
+      iconOnly: true,
+      size: 'xxsmall',
+      class: {
+        root: 'w-7',
+      },
+    },
+    //#endregion
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
-}
+    //#region variant=primary
+    {
+      variant: 'primary',
+      mode: 'filled',
+      class: {
+        root: [
+          // base
+          'bg-primary-base text-static-white',
+          // hover
+          'hover:bg-primary-darker',
+          // focus
+          'focus-visible:shadow-button-primary-focus',
+        ],
+      },
+    },
+    {
+      variant: 'primary',
+      mode: 'stroke',
+      class: {
+        root: [
+          // base
+          'bg-bg-white-0 text-primary-base ring-primary-base',
+          // hover
+          'hover:bg-primary-alpha-10 hover:ring-transparent',
+          // focus
+          'focus-visible:shadow-button-primary-focus',
+        ],
+      },
+    },
+    {
+      variant: 'primary',
+      mode: 'lighter',
+      class: {
+        root: [
+          // base
+          'bg-primary-alpha-10 text-primary-base ring-transparent',
+          // hover
+          'hover:bg-bg-white-0 hover:ring-primary-base',
+          // focus
+          'focus-visible:bg-bg-white-0 focus-visible:shadow-button-primary-focus focus-visible:ring-primary-base',
+        ],
+      },
+    },
+    {
+      variant: 'primary',
+      mode: 'ghost',
+      class: {
+        root: [
+          // base
+          'bg-transparent text-primary-base ring-transparent',
+          // hover
+          'hover:bg-primary-alpha-10',
+          // focus
+          'focus-visible:bg-bg-white-0 focus-visible:shadow-button-primary-focus focus-visible:ring-primary-base',
+        ],
+      },
+    },
+    //#endregion
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button";
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
+    //#region variant=neutral
+    {
+      variant: 'neutral',
+      mode: 'filled',
+      class: {
+        root: [
+          // base
+          'bg-bg-strong-950 text-text-white-0',
+          // hover
+          'hover:bg-bg-surface-800',
+          // focus
+          'focus-visible:shadow-button-important-focus',
+        ],
+      },
+    },
+    {
+      variant: 'neutral',
+      mode: 'stroke',
+      class: {
+        root: [
+          // base
+          'bg-bg-white-0 text-text-sub-600 shadow-regular-xs ring-stroke-soft-200',
+          // hover
+          'hover:bg-bg-weak-50 hover:text-text-strong-950 hover:shadow-none hover:ring-transparent',
+          // focus
+          'focus-visible:text-text-strong-950 focus-visible:shadow-button-important-focus focus-visible:ring-stroke-strong-950',
+        ],
+      },
+    },
+    {
+      variant: 'neutral',
+      mode: 'lighter',
+      class: {
+        root: [
+          // base
+          'bg-bg-weak-50 text-text-sub-600 ring-transparent',
+          // hover
+          'hover:bg-bg-white-0 hover:text-text-strong-950 hover:shadow-regular-xs hover:ring-stroke-soft-200',
+          // focus
+          'focus-visible:bg-bg-white-0 focus-visible:text-text-strong-950 focus-visible:shadow-button-important-focus focus-visible:ring-stroke-strong-950',
+        ],
+      },
+    },
+    {
+      variant: 'neutral',
+      mode: 'ghost',
+      class: {
+        root: [
+          // base
+          'bg-transparent text-text-sub-600 ring-transparent',
+          // hover
+          'hover:bg-bg-weak-50 hover:text-text-strong-950',
+          // focus
+          'focus-visible:bg-bg-white-0 focus-visible:text-text-strong-950 focus-visible:shadow-button-important-focus focus-visible:ring-stroke-strong-950',
+        ],
+      },
+    },
+    //#endregion
+
+    //#region variant=error
+    {
+      variant: 'error',
+      mode: 'filled',
+      class: {
+        root: [
+          // base
+          'bg-error-base text-static-white',
+          // hover
+          'hover:bg-red-700',
+          // focus
+          'focus-visible:shadow-button-error-focus',
+        ],
+      },
+    },
+    {
+      variant: 'error',
+      mode: 'stroke',
+      class: {
+        root: [
+          // base
+          'bg-bg-white-0 text-error-base ring-error-base',
+          // hover
+          'hover:bg-red-alpha-10 hover:ring-transparent',
+          // focus
+          'focus-visible:shadow-button-error-focus',
+        ],
+      },
+    },
+    {
+      variant: 'error',
+      mode: 'lighter',
+      class: {
+        root: [
+          // base
+          'bg-red-alpha-10 text-error-base ring-transparent',
+          // hover
+          'hover:bg-bg-white-0 hover:ring-error-base',
+          // focus
+          'focus-visible:bg-bg-white-0 focus-visible:shadow-button-error-focus focus-visible:ring-error-base',
+        ],
+      },
+    },
+    {
+      variant: 'error',
+      mode: 'ghost',
+      class: {
+        root: [
+          // base
+          'bg-transparent text-error-base ring-transparent',
+          // hover
+          'hover:bg-red-alpha-10',
+          // focus
+          'focus-visible:bg-bg-white-0 focus-visible:shadow-button-error-focus focus-visible:ring-error-base',
+        ],
+      },
+    },
+    //#endregion
+  ],
+  defaultVariants: {
+    variant: 'primary',
+    mode: 'filled',
+    size: 'medium',
+  },
+});
+
+type ButtonSharedProps = VariantProps<typeof buttonVariants> & {
+  iconOnly?: boolean;
+};
+
+type ButtonRootProps = ButtonSharedProps &
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    asChild?: boolean;
+  };
+
+const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
+  (
+    {
+      children,
+      variant,
+      mode,
+      size,
+      iconOnly,
+      asChild,
+      className,
+      ...rest
+    }: ButtonRootProps,
+    forwardedRef,
+  ) => {
+    const uniqueId = React.useId();
+    const Component = asChild ? Slot : 'button';
+    const { root } = buttonVariants({ variant, mode, size, iconOnly });
+
+    const sharedProps: ButtonSharedProps = {
+      variant,
+      mode,
+      size,
+      iconOnly,
+    };
+
+    const extendedChildren = recursiveCloneChildren(
+      children as React.ReactElement[],
+      sharedProps,
+      [BUTTON_ICON_NAME],
+      uniqueId,
+      asChild,
     );
-  }
-);
-Button.displayName = "Button";
 
-export { Button, buttonVariants };
+    return (
+      <Component
+        ref={forwardedRef}
+        className={root({ class: className })}
+        {...rest}
+      >
+        {extendedChildren}
+      </Component>
+    );
+  },
+);
+ButtonRoot.displayName = BUTTON_ROOT_NAME;
+
+function ButtonIcon<T extends React.ElementType>({
+  variant,
+  mode,
+  size,
+  iconOnly,
+  as,
+  className,
+  ...rest
+}: PolymorphicComponentProps<T, ButtonSharedProps>) {
+  const Component = as || 'div';
+  const { icon } = buttonVariants({ mode, variant, size, iconOnly });
+
+  return <Component className={icon({ class: className })} {...rest} />;
+}
+ButtonIcon.displayName = BUTTON_ICON_NAME;
+
+export { ButtonRoot as Root, ButtonIcon as Icon };
