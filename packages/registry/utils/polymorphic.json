@@ -1,0 +1,16 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "polymorphic",
+  "type": "registry:lib",
+  "title": "Polymorphic",
+  "description": "Polymorphic component type helper for the 'as' prop pattern.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "utils/polymorphic.ts",
+      "type": "registry:lib",
+      "content": "import type * as React from \"react\";\n\n/**\n * Polymorphic component type helper\n * Allows components to change their rendered element via an `as` prop\n */\ntype AsProp<T extends React.ElementType> = {\n  as?: T;\n};\n\ntype PropsToOmit<T extends React.ElementType, P> = keyof (AsProp<T> & P);\n\n/**\n * PolymorphicComponentProps type\n * Combines the component's own props with the props of the element it renders as\n *\n * @example\n * function Button<T extends React.ElementType = \"button\">({\n *   as,\n *   children,\n *   ...props\n * }: PolymorphicComponentProps<T, { children: React.ReactNode }>) {\n *   const Component = as || \"button\";\n *   return <Component {...props}>{children}</Component>;\n * }\n */\nexport type PolymorphicComponentProps<\n  T extends React.ElementType,\n  Props = object,\n> = AsProp<T> &\n  Props &\n  Omit<React.ComponentPropsWithoutRef<T>, PropsToOmit<T, Props>>;\n\n/**\n * PolymorphicComponentPropsWithRef type\n * Same as PolymorphicComponentProps but includes ref forwarding support\n */\nexport type PolymorphicComponentPropsWithRef<\n  T extends React.ElementType,\n  Props = object,\n> = PolymorphicComponentProps<T, Props> & {\n  ref?: PolymorphicRef<T>;\n};\n\n/**\n * PolymorphicRef type\n * Gets the ref type for a polymorphic component\n */\nexport type PolymorphicRef<T extends React.ElementType> =\n  React.ComponentPropsWithRef<T>[\"ref\"];\n"
+    }
+  ]
+}
