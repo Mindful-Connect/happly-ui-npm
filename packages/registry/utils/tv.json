@@ -1,0 +1,16 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "tv",
+  "type": "registry:lib",
+  "title": "Tailwind Variants",
+  "description": "Tailwind Variants wrapper with cn() for class merging.",
+  "dependencies": ["tailwind-variants"],
+  "registryDependencies": ["utils"],
+  "files": [
+    {
+      "path": "utils/tv.ts",
+      "type": "registry:lib",
+      "content": "import { tv as tvBase, type VariantProps } from \"tailwind-variants\";\n\nimport { cn } from \"@/lib/utils\";\n\n/**\n * Tailwind Variants wrapper with cn() for class merging\n * Re-exports tv and VariantProps from tailwind-variants\n */\nconst tv: typeof tvBase = (options, config) =>\n  tvBase(options, {\n    ...config,\n    twMerge: true,\n    twMergeConfig: {\n      classGroups: {\n        \"font-size\": [{ text: [\"xs\", \"sm\", \"base\", \"lg\", \"xl\", \"2xl\"] }],\n      },\n    },\n  });\n\nexport { tv, type VariantProps };\n"
+    }
+  ]
+}

@@ -4,12 +4,36 @@
   "homepage": "https://happly.cloud/ui",
   "items": [
     {
+      "name": "tv",
+      "type": "registry:lib",
+      "title": "Tailwind Variants",
+      "description": "Tailwind Variants wrapper with cn() for class merging.",
+      "dependencies": ["tailwind-variants"],
+      "registryDependencies": ["utils"]
+    },
+    {
+      "name": "polymorphic",
+      "type": "registry:lib",
+      "title": "Polymorphic",
+      "description": "Polymorphic component type helper for the 'as' prop pattern.",
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
+      "name": "recursive-clone-children",
+      "type": "registry:lib",
+      "title": "Recursive Clone Children",
+      "description": "Utility to recursively clone React children and inject shared props.",
+      "dependencies": [],
+      "registryDependencies": []
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
       "description": "A button component with multiple variants and sizes.",
-      "dependencies": ["@radix-ui/react-slot"],
-      "registryDependencies": []
+      "dependencies": ["@radix-ui/react-slot", "tailwind-variants"],
+      "registryDependencies": ["tv", "polymorphic", "recursive-clone-children"]
     },
     {
       "name": "input",

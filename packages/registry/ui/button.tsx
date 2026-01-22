@@ -46,7 +46,7 @@ export const buttonVariants = tv({
     },
     size: {
       medium: {
-        root: 'h-10 gap-3 rounded-10 px-3.5',
+        root: 'h-10 gap-3 rounded-xl px-3.5',
         icon: 'size-5 -mx-1',
       },
       small: {
@@ -330,6 +330,7 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
     return (
       <Component
         ref={forwardedRef}
+        type={asChild ? undefined : rest.type || 'button'}
         className={root({ class: className })}
         {...rest}
       >
@@ -356,4 +357,112 @@ function ButtonIcon<T extends React.ElementType>({
 }
 ButtonIcon.displayName = BUTTON_ICON_NAME;
 
+// =============================================================================
+// LEGACY API (Backward Compatibility)
+// =============================================================================
+
+/**
+ * Legacy variant mapping for backward compatibility with shadcn/ui API
+ */
+type LegacyVariant =
+  | 'default'
+  | 'destructive'
+  | 'outline'
+  | 'secondary'
+  | 'ghost'
+  | 'link';
+
+type LegacySize = 'default' | 'sm' | 'lg' | 'icon';
+
+interface LegacyButtonProps
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'children'> {
+  variant?: LegacyVariant;
+  size?: LegacySize;
+  asChild?: boolean;
+  children?: React.ReactNode;
+}
+
+/**
+ * Maps legacy variants to new variant/mode system
+ */
+function mapLegacyVariant(variant?: LegacyVariant): {
+  variant: 'primary' | 'neutral' | 'error';
+  mode: 'filled' | 'stroke' | 'lighter' | 'ghost';
+} {
+  switch (variant) {
+    case 'destructive':
+      return { variant: 'error', mode: 'filled' };
+    case 'outline':
+      return { variant: 'neutral', mode: 'stroke' };
+    case 'secondary':
+      return { variant: 'neutral', mode: 'lighter' };
+    case 'ghost':
+      return { variant: 'neutral', mode: 'ghost' };
+    case 'link':
+      return { variant: 'primary', mode: 'ghost' };
+    case 'default':
+    default:
+      return { variant: 'primary', mode: 'filled' };
+  }
+}
+
+/**
+ * Maps legacy sizes to new size system
+ */
+function mapLegacySize(
+  size?: LegacySize
+): 'medium' | 'small' | 'xsmall' | 'xxsmall' {
+  switch (size) {
+    case 'sm':
+      return 'small';
+    case 'lg':
+      return 'medium';
+    case 'icon':
+      return 'medium';
+    case 'default':
+    default:
+      return 'medium';
+  }
+}
+
+/**
+ * Legacy Button component for backward compatibility
+ * Supports the original shadcn/ui Button API
+ *
+ * @example
+ * <Button variant="default" size="lg">Click me</Button>
+ * <Button variant="destructive">Delete</Button>
+ */
+const Button = React.forwardRef<HTMLButtonElement, LegacyButtonProps>(
+  ({ variant, size, asChild, className, children, ...props }, ref) => {
+    const { variant: mappedVariant, mode } = mapLegacyVariant(variant);
+    const mappedSize = mapLegacySize(size);
+    const iconOnly = size === 'icon';
+
+    return (
+      <ButtonRoot
+        ref={ref}
+        variant={mappedVariant}
+        mode={mode}
+        size={mappedSize}
+        iconOnly={iconOnly}
+        asChild={asChild}
+        className={className}
+        {...props}
+      >
+        {children}
+      </ButtonRoot>
+    );
+  }
+);
+Button.displayName = 'Button';
+
+// =============================================================================
+// EXPORTS
+// =============================================================================
+
+// New compound component API
 export { ButtonRoot as Root, ButtonIcon as Icon };
+
+// Legacy API for backward compatibility
+export { Button, buttonVariants };
