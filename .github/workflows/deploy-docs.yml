@@ -35,14 +35,14 @@ jobs:
         run: bun install
         working-directory: ./docs
 
-      - name: Build Astro site
+      - name: Build Next.js site
         run: bun run build
         working-directory: ./docs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './docs/dist'
+          path: './docs/out'
 
   deploy:
     environment:
