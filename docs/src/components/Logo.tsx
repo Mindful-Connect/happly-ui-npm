@@ -1,10 +1,9 @@
-import Image from 'next/image'
 import logoImg from '@/images/logo.png'
 
 export function Logomark(props: React.ComponentPropsWithoutRef<'img'>) {
   return (
-    <Image
-      src={logoImg}
+    <img
+      src={logoImg.src}
       alt="HapplyUI"
       width={36}
       height={36}
@@ -15,8 +14,8 @@ export function Logomark(props: React.ComponentPropsWithoutRef<'img'>) {
 
 export function Logo(props: React.ComponentPropsWithoutRef<'img'>) {
   return (
-    <Image
-      src={logoImg}
+    <img
+      src={logoImg.src}
       alt="HapplyUI"
       width={32}
       height={32}
