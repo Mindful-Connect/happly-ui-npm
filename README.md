@@ -4,6 +4,7 @@
   <p>Built with Radix UI and Tailwind CSS. Powered by the Happly Design System.</p>
 
   <p>
+    <a href="https://ui.happly.cloud"><img src="https://img.shields.io/badge/docs-ui.happly.cloud-blue.svg?style=flat-square" alt="documentation" /></a>
     <a href="https://www.npmjs.com/package/@happlyui/cli"><img src="https://img.shields.io/npm/v/@happlyui/cli.svg?style=flat-square" alt="npm version" /></a>
     <a href="https://www.npmjs.com/package/@happlyui/cli"><img src="https://img.shields.io/npm/dm/@happlyui/cli.svg?style=flat-square" alt="npm downloads" /></a>
     <a href="https://github.com/Mindful-Connect/happly-ui-npm/blob/production/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="license" /></a>
@@ -161,10 +162,13 @@ export default function Home() {
 | Component | Description |
 |-----------|-------------|
 | `button` | Compound button with variants (primary, neutral, error), modes (filled, stroke, lighter, ghost), and sizes |
+| `divider` | Versatile divider with variants (line, line-spacing, line-text, text, solid-text, content) |
 | `input` | A text input component |
 | `label` | A label for form inputs |
 | `card` | A card container with header, content, and footer |
 | `badge` | A badge for status indicators |
+
+View all components with live examples at [ui.happly.cloud](https://ui.happly.cloud).
 
 ## Configuration
 
@@ -229,6 +233,66 @@ bun packages/cli/dist/index.js init
 ## Contributing
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+### Adding a New Component
+
+1. Create `packages/registry/ui/my-component.tsx` with your component code
+2. Create `packages/registry/ui/my-component.json` with metadata and docs
+3. Add entry to `packages/registry/registry.json`
+4. Open a PR to `production` - docs auto-update on merge
+
+### Component JSON with Docs
+
+Include a `docs` field for automatic documentation generation:
+
+```json
+{
+  "name": "my-component",
+  "docs": {
+    "lead": "Component description",
+    "usage": "import * as MyComponent from '@/components/ui/my-component'",
+    "examples": [
+      {
+        "title": "Default",
+        "code": "<MyComponent.Root />",
+        "preview": [{ "component": "my-component", "props": {} }]
+      }
+    ],
+    "api": [
+      {
+        "name": "MyComponent.Root",
+        "props": [
+          { "name": "variant", "type": "string", "default": "'default'", "description": "The variant" }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### Adding Preview Components
+
+To add live preview support for a new component:
+
+1. Add the component type to `docs/src/lib/registry.ts`:
+   ```ts
+   export interface ComponentPreviewConfig {
+     component: 'button' | 'badge' | ... | 'my-component'
+   }
+   ```
+
+2. Create a Demo component in `docs/src/components/ComponentPreview.tsx`:
+   ```tsx
+   export function DemoMyComponent({ variant, children }: DemoMyComponentProps) {
+     // Render preview with inline styles (no Tailwind)
+   }
+   ```
+
+3. Add the case in `docs/src/app/docs/components/[component]/component-docs.tsx`:
+   ```tsx
+   case 'my-component':
+     return <DemoMyComponent {...props}>{children}</DemoMyComponent>
+   ```
 
 ## License
 
