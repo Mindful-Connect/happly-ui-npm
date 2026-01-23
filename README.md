@@ -1,7 +1,7 @@
 <div align="center">
   <h1>HapplyUI</h1>
   <p><strong>Beautiful, accessible React components you can copy and paste into your apps.</strong></p>
-  <p>Built with Radix UI and Tailwind CSS.</p>
+  <p>Built with Radix UI and Tailwind CSS. Powered by the Happly Design System.</p>
 
   <p>
     <a href="https://www.npmjs.com/package/@happlyui/cli"><img src="https://img.shields.io/npm/v/@happlyui/cli.svg?style=flat-square" alt="npm version" /></a>
@@ -25,6 +25,7 @@ This is **NOT** a component library. It's a collection of components that you ca
 - **Dark Mode** - CSS variables make theming and dark mode simple
 - **TypeScript** - Written in TypeScript with full type safety
 - **Tailwind CSS** - Styled with Tailwind for easy customization
+- **Design System** - Consistent variant/mode system across components
 
 ## Installation
 
@@ -63,7 +64,70 @@ If you prefer manual setup, you can copy components directly from the `packages/
 
 ## Usage
 
-Import and use components in your React application:
+### Namespace Import (Recommended)
+
+Import components using the namespace pattern for compound components:
+
+```tsx
+import * as Button from "@/components/ui/button"
+
+export default function Home() {
+  return (
+    <div className="flex gap-4">
+      {/* Primary variants */}
+      <Button.Root variant="primary" mode="filled">
+        Primary
+      </Button.Root>
+      <Button.Root variant="primary" mode="stroke">
+        Stroke
+      </Button.Root>
+      <Button.Root variant="primary" mode="lighter">
+        Lighter
+      </Button.Root>
+      <Button.Root variant="primary" mode="ghost">
+        Ghost
+      </Button.Root>
+
+      {/* With icons */}
+      <Button.Root variant="primary" mode="filled">
+        <Button.Icon as={PlusIcon} />
+        Add Item
+      </Button.Root>
+
+      {/* Icon only */}
+      <Button.Root variant="neutral" mode="stroke" size="medium" iconOnly>
+        <Button.Icon as={SettingsIcon} />
+      </Button.Root>
+    </div>
+  )
+}
+```
+
+### Button Variants & Modes
+
+| Variant | Description |
+|---------|-------------|
+| `primary` | Brand color, main call-to-action |
+| `neutral` | Grayscale, secondary actions |
+| `error` | Destructive/danger actions |
+
+| Mode | Description |
+|------|-------------|
+| `filled` | Solid background color |
+| `stroke` | Outlined with border |
+| `lighter` | Light background tint |
+| `ghost` | Transparent background |
+
+| Size | Height |
+|------|--------|
+| `medium` | 40px (default) |
+| `small` | 36px |
+| `xsmall` | 32px |
+| `xxsmall` | 28px |
+
+### Legacy API (Backward Compatible)
+
+For compatibility with shadcn/ui patterns:
 
 ```tsx
 import { Button } from "@/components/ui/button"
@@ -82,11 +146,21 @@ export default function Home() {
 }
 ```
 
+**Legacy to New Mapping:**
+| Legacy Variant | New Variant + Mode |
+|----------------|-------------------|
+| `default` | `primary` + `filled` |
+| `destructive` | `error` + `filled` |
+| `outline` | `neutral` + `stroke` |
+| `secondary` | `neutral` + `lighter` |
+| `ghost` | `neutral` + `ghost` |
+| `link` | `primary` + `ghost` |
+
 ## Components
 
 | Component | Description |
 |-----------|-------------|
-| `button` | A button with multiple variants and sizes |
+| `button` | Compound button with variants (primary, neutral, error), modes (filled, stroke, lighter, ghost), and sizes |
 | `input` | A text input component |
 | `label` | A label for form inputs |
 | `card` | A card container with header, content, and footer |
@@ -169,5 +243,5 @@ MIT License - see the [LICENSE](LICENSE) file for details.
 ---
 
 <div align="center">
-  <p>Built with ❤️ by <a href="https://happly.ai">Happly</a></p>
+  <p>Built with care by <a href="https://happly.ai">Happly</a></p>
 </div>
