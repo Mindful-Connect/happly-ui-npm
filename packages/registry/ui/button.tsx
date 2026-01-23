@@ -461,8 +461,23 @@ Button.displayName = 'Button';
 // EXPORTS
 // =============================================================================
 
-// New compound component API
+/**
+ * Primary API - Namespace import pattern (recommended)
+ * @example
+ * import * as Button from "@/components/ui/button"
+ *
+ * <Button.Root variant="primary" mode="filled">
+ *   <Button.Icon as={PlusIcon} />
+ *   Click me
+ * </Button.Root>
+ */
 export { ButtonRoot as Root, ButtonIcon as Icon };
 
-// Legacy API for backward compatibility
+/**
+ * Legacy API - For backward compatibility with shadcn/ui
+ * @example
+ * import { Button } from "@/components/ui/button"
+ *
+ * <Button variant="default" size="lg">Click me</Button>
+ */
 export { Button, buttonVariants };
