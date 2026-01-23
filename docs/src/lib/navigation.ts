@@ -1,19 +1,5 @@
-export const navigation = [
-  {
-    title: 'Introduction',
-    links: [
-      { title: 'Getting started', href: '/' },
-      { title: 'Installation', href: '/docs/installation' },
-    ],
-  },
-  {
-    title: 'Components',
-    links: [
-      { title: 'Badge', href: '/docs/components/badge' },
-      { title: 'Button', href: '/docs/components/button' },
-      { title: 'Card', href: '/docs/components/card' },
-      { title: 'Input', href: '/docs/components/input' },
-      { title: 'Label', href: '/docs/components/label' },
-    ],
-  },
-]
+// Navigation data is generated from registry at build time
+// Run `bun run prebuild` to regenerate
+import navigationData from './navigation-data.json'
+
+export const navigation = navigationData

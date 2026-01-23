@@ -1,0 +1,50 @@
+// Types for registry items - can be used anywhere
+export interface RegistryItem {
+  name: string
+  type: 'registry:ui' | 'registry:lib' | 'registry:hook'
+  title: string
+  description: string
+  dependencies: string[]
+  registryDependencies: string[]
+}
+
+export interface RegistryItemWithDocs extends RegistryItem {
+  docs?: {
+    lead?: string
+    usage?: string
+    examples?: Array<{
+      title: string
+      description?: string
+      code: string
+      preview?: ComponentPreviewConfig[]
+    }>
+    api?: Array<{
+      name: string
+      description?: string
+      props: Array<{
+        name: string
+        type: string
+        default?: string
+        description: string
+      }>
+    }>
+  }
+  files?: Array<{
+    path: string
+    type: string
+    content: string
+  }>
+}
+
+// Preview configuration for rendering demo components
+export interface ComponentPreviewConfig {
+  component: 'button' | 'badge' | 'input' | 'label' | 'card'
+  props?: Record<string, unknown>
+  children?: string
+}
+
+export interface Registry {
+  name: string
+  homepage: string
+  items: RegistryItem[]
+}
