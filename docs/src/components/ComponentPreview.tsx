@@ -488,3 +488,106 @@ export function FormGroup({ children }: FormGroupProps) {
     </div>
   )
 }
+
+// =============================================================================
+// DEMO DIVIDER COMPONENT
+// =============================================================================
+
+type DividerVariant = 'line' | 'line-spacing' | 'line-text' | 'text' | 'solid-text' | 'content'
+
+interface DemoDividerProps {
+  variant?: DividerVariant
+  children?: ReactNode
+}
+
+const dividerLineColor = '#e5e7eb'
+const dividerTextColor = '#9ca3af'
+const dividerBgWeak = '#f9fafb'
+
+export function DemoDivider({ variant = 'line', children }: DemoDividerProps) {
+  const baseStyles: CSSProperties = {
+    position: 'relative',
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center',
+  }
+
+  const lineBeforeAfter: CSSProperties = {
+    content: '""',
+    flex: 1,
+    height: '1px',
+    backgroundColor: dividerLineColor,
+  }
+
+  switch (variant) {
+    case 'line':
+      return (
+        <div style={{ ...baseStyles, height: 0 }}>
+          <div style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', width: '100%', height: '1px', backgroundColor: dividerLineColor }} />
+        </div>
+      )
+
+    case 'line-spacing':
+      return (
+        <div style={{ ...baseStyles, height: '4px' }}>
+          <div style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', width: '100%', height: '1px', backgroundColor: dividerLineColor }} />
+        </div>
+      )
+
+    case 'line-text':
+      return (
+        <div style={{ ...baseStyles, gap: '10px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: dividerTextColor }}>
+          <div style={lineBeforeAfter} />
+          {children || 'OR'}
+          <div style={lineBeforeAfter} />
+        </div>
+      )
+
+    case 'text':
+      return (
+        <div style={{ ...baseStyles, justifyContent: 'center', padding: '4px 8px', fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: dividerTextColor }}>
+          {children || 'Section'}
+        </div>
+      )
+
+    case 'solid-text':
+      return (
+        <div style={{ ...baseStyles, justifyContent: 'center', backgroundColor: dividerBgWeak, padding: '6px 20px', fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: dividerTextColor }}>
+          {children || 'OR'}
+        </div>
+      )
+
+    case 'content':
+      const contentChild = children === 'icon-button' ? (
+        <button style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '32px',
+          height: '32px',
+          padding: 0,
+          color: colors.neutral[600],
+          background: 'white',
+          border: `1px solid ${colors.neutral[200]}`,
+          borderRadius: '8px',
+          cursor: 'pointer',
+          boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+        }}>
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
+        </button>
+      ) : children || <span style={{ color: dividerTextColor }}>•</span>
+
+      return (
+        <div style={{ ...baseStyles, gap: '10px' }}>
+          <div style={lineBeforeAfter} />
+          {contentChild}
+          <div style={lineBeforeAfter} />
+        </div>
+      )
+
+    default:
+      return null
+  }
+}

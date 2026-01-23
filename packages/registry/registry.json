@@ -66,6 +66,14 @@
       "description": "A badge component for status indicators.",
       "dependencies": [],
       "registryDependencies": []
+    },
+    {
+      "name": "divider",
+      "type": "registry:ui",
+      "title": "Divider",
+      "description": "A versatile divider component for creating visual separation between content elements.",
+      "dependencies": ["tailwind-variants"],
+      "registryDependencies": ["tv"]
     }
   ]
 }

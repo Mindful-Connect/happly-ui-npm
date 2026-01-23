@@ -14,6 +14,7 @@ import {
   DemoCardTitle,
   DemoCardDescription,
   DemoCardContent,
+  DemoDivider,
   ButtonGroup,
 } from '@/components/ComponentPreview'
 import type { RegistryItemWithDocs, ComponentPreviewConfig } from '@/lib/registry'
@@ -47,6 +48,8 @@ function PreviewItem({ config }: { config: ComponentPreviewConfig }) {
           {children && <DemoCardContent>{children}</DemoCardContent>}
         </DemoCard>
       )
+    case 'divider':
+      return <DemoDivider {...(props as any)}>{children}</DemoDivider>
     default:
       return null
   }
@@ -205,20 +208,6 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
           </>
         )}
 
-        {/* Source Code Preview */}
-        <h2 id="source-code">Source Code</h2>
-        <p>
-          This is the full source code that gets installed in your project. You own this code and
-          can customize it freely.
-        </p>
-        <details className="mt-4">
-          <summary className="cursor-pointer font-medium text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-100">
-            View source ({files?.[0]?.path || `ui/${name}.tsx`})
-          </summary>
-          <div className="mt-4 max-h-[500px] overflow-auto">
-            <Fence language="tsx">{sourceCode}</Fence>
-          </div>
-        </details>
       </Prose>
     </article>
   )
