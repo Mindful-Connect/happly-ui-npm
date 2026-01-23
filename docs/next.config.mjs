@@ -6,7 +6,6 @@ import withSearch from './src/markdoc/search.mjs'
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'md', 'ts', 'tsx'],
   output: 'export',
-  basePath: '/happly-ui-npm',
   images: {
     unoptimized: true,
   },
