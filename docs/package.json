@@ -5,7 +5,7 @@
   "scripts": {
     "prebuild": "bun run scripts/generate-navigation.ts",
     "dev": "bun run prebuild && next dev --port 3005 --webpack",
-    "build": "bun run prebuild && next build",
+    "build": "bun run prebuild && next build --webpack",
     "start": "next start",
     "lint": "next lint"
   },
