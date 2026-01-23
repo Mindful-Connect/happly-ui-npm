@@ -1,6 +1,6 @@
 'use client'
 
-import { type ReactNode, type CSSProperties } from 'react'
+import { type ReactNode, type CSSProperties, useState } from 'react'
 
 // =============================================================================
 // COMPONENT PREVIEW WRAPPER
@@ -91,70 +91,142 @@ const iconOnlySizeStyles: Record<Size, CSSProperties> = {
   xxsmall: { height: '28px', width: '28px', borderRadius: '8px', padding: 0 },
 }
 
-const getVariantStyles = (variant: Variant, mode: Mode): CSSProperties => {
-  const styles: Record<Variant, Record<Mode, CSSProperties>> = {
+const getVariantStyles = (variant: Variant, mode: Mode, isHovered: boolean): CSSProperties => {
+  const styles: Record<Variant, Record<Mode, { base: CSSProperties; hover: CSSProperties }>> = {
     primary: {
       filled: {
-        background: `linear-gradient(135deg, ${colors.primary.base}, ${colors.primary.darker})`,
-        color: 'white',
-        boxShadow: `0 1px 2px rgba(0,0,0,0.1), 0 2px 8px ${colors.primary.alpha30}`,
+        base: {
+          background: `linear-gradient(135deg, ${colors.primary.base}, ${colors.primary.darker})`,
+          color: 'white',
+          boxShadow: `0 1px 2px rgba(0,0,0,0.1), 0 2px 8px ${colors.primary.alpha30}`,
+        },
+        hover: {
+          background: colors.primary.darker,
+          boxShadow: `0 1px 2px rgba(0,0,0,0.1), 0 4px 12px ${colors.primary.alpha30}`,
+        },
       },
       stroke: {
-        background: 'white',
-        color: colors.primary.base,
-        boxShadow: `inset 0 0 0 1.5px ${colors.primary.base}`,
+        base: {
+          background: 'white',
+          color: colors.primary.base,
+          boxShadow: `inset 0 0 0 1.5px ${colors.primary.base}`,
+        },
+        hover: {
+          background: colors.primary.alpha10,
+          boxShadow: 'none',
+        },
       },
       lighter: {
-        background: colors.primary.alpha10,
-        color: colors.primary.base,
+        base: {
+          background: colors.primary.alpha10,
+          color: colors.primary.base,
+        },
+        hover: {
+          background: 'white',
+          boxShadow: `inset 0 0 0 1.5px ${colors.primary.base}`,
+        },
       },
       ghost: {
-        background: 'transparent',
-        color: colors.primary.base,
+        base: {
+          background: 'transparent',
+          color: colors.primary.base,
+        },
+        hover: {
+          background: colors.primary.alpha10,
+        },
       },
     },
     neutral: {
       filled: {
-        background: colors.neutral[900],
-        color: 'white',
-        boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
+        base: {
+          background: colors.neutral[900],
+          color: 'white',
+          boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
+        },
+        hover: {
+          background: '#374151',
+        },
       },
       stroke: {
-        background: 'white',
-        color: colors.neutral[600],
-        boxShadow: `inset 0 0 0 1px ${colors.neutral[200]}, 0 1px 2px rgba(0,0,0,0.05)`,
+        base: {
+          background: 'white',
+          color: colors.neutral[600],
+          boxShadow: `inset 0 0 0 1px ${colors.neutral[200]}, 0 1px 2px rgba(0,0,0,0.05)`,
+        },
+        hover: {
+          background: colors.neutral[100],
+          color: colors.neutral[900],
+          boxShadow: 'none',
+        },
       },
       lighter: {
-        background: colors.neutral[100],
-        color: colors.neutral[600],
+        base: {
+          background: colors.neutral[100],
+          color: colors.neutral[600],
+        },
+        hover: {
+          background: 'white',
+          color: colors.neutral[900],
+          boxShadow: `inset 0 0 0 1px ${colors.neutral[200]}, 0 1px 2px rgba(0,0,0,0.05)`,
+        },
       },
       ghost: {
-        background: 'transparent',
-        color: colors.neutral[600],
+        base: {
+          background: 'transparent',
+          color: colors.neutral[600],
+        },
+        hover: {
+          background: colors.neutral[100],
+          color: colors.neutral[900],
+        },
       },
     },
     error: {
       filled: {
-        background: `linear-gradient(135deg, ${colors.error.base}, ${colors.error.darker})`,
-        color: 'white',
-        boxShadow: '0 1px 2px rgba(0,0,0,0.1), 0 2px 8px rgba(239, 68, 68, 0.3)',
+        base: {
+          background: `linear-gradient(135deg, ${colors.error.base}, ${colors.error.darker})`,
+          color: 'white',
+          boxShadow: '0 1px 2px rgba(0,0,0,0.1), 0 2px 8px rgba(239, 68, 68, 0.3)',
+        },
+        hover: {
+          background: colors.error.darker,
+          boxShadow: '0 1px 2px rgba(0,0,0,0.1), 0 4px 12px rgba(239, 68, 68, 0.4)',
+        },
       },
       stroke: {
-        background: 'white',
-        color: colors.error.base,
-        boxShadow: `inset 0 0 0 1.5px ${colors.error.base}`,
+        base: {
+          background: 'white',
+          color: colors.error.base,
+          boxShadow: `inset 0 0 0 1.5px ${colors.error.base}`,
+        },
+        hover: {
+          background: colors.error.alpha10,
+          boxShadow: 'none',
+        },
       },
       lighter: {
-        background: colors.error.alpha10,
-        color: colors.error.base,
+        base: {
+          background: colors.error.alpha10,
+          color: colors.error.base,
+        },
+        hover: {
+          background: 'white',
+          boxShadow: `inset 0 0 0 1.5px ${colors.error.base}`,
+        },
       },
       ghost: {
-        background: 'transparent',
-        color: colors.error.base,
+        base: {
+          background: 'transparent',
+          color: colors.error.base,
+        },
+        hover: {
+          background: colors.error.alpha10,
+        },
       },
     },
   }
-  return styles[variant][mode]
+  const variantStyles = styles[variant][mode]
+  return isHovered ? { ...variantStyles.base, ...variantStyles.hover } : variantStyles.base
 }
 
 const getDisabledStyles = (): CSSProperties => ({
@@ -231,16 +303,23 @@ export function DemoButton({
   icon,
   iconPosition = 'left',
 }: DemoButtonProps) {
+  const [isHovered, setIsHovered] = useState(false)
+
   const combinedStyles: CSSProperties = {
     ...baseStyles,
     ...(iconOnly ? iconOnlySizeStyles[size] : sizeStyles[size]),
-    ...(disabled ? getDisabledStyles() : getVariantStyles(variant, mode)),
+    ...(disabled ? getDisabledStyles() : getVariantStyles(variant, mode, isHovered)),
   }
 
   const IconComponent = icon ? iconComponents[icon] : null
 
   return (
-    <button style={combinedStyles} disabled={disabled}>
+    <button
+      style={combinedStyles}
+      disabled={disabled}
+      onMouseEnter={() => !disabled && setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       {IconComponent && iconPosition === 'left' && <IconComponent />}
       {children}
       {IconComponent && iconPosition === 'right' && <IconComponent />}
