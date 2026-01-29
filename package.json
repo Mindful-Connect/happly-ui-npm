@@ -9,7 +9,8 @@
   },
   "devDependencies": {
     "typescript": "^5.7.0",
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "prettier": "^3.0.3"
   },
   "module": "index.ts",
   "type": "module"
