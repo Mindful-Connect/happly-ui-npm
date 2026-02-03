@@ -865,3 +865,88 @@ export function DemoDivider({ variant = 'line', children }: DemoDividerProps) {
       return null
   }
 }
+
+// =============================================================================
+// DEMO TEXTAREA COMPONENT
+// =============================================================================
+
+interface DemoTextareaProps {
+  placeholder?: string
+  disabled?: boolean
+  value?: string
+  id?: string
+  maxLength?: number
+}
+
+export function DemoTextarea({
+  placeholder,
+  disabled = false,
+  value: initialValue = '',
+  id,
+  maxLength,
+}: DemoTextareaProps) {
+  const [value, setValue] = useState(initialValue)
+
+  const textareaStyles: CSSProperties = {
+    display: 'flex',
+    minHeight: '80px',
+    width: '100%',
+    maxWidth: '300px',
+    borderRadius: '12px',
+    border: '1px solid #E1E4EA', // ds-stroke-soft-200
+    background: 'white',
+    padding: '10px 12px',
+    fontSize: '14px',
+    outline: 'none',
+    transition: 'all 0.2s ease-out', // match component transition
+    opacity: disabled ? 0.5 : 1,
+    cursor: disabled ? 'not-allowed' : 'text',
+    fontFamily: 'inherit',
+    resize: 'none',
+    boxShadow: '0px 1px 2px 0px rgba(10, 13, 20, 0.03)', // shadow-regular-xs approx
+    color: '#0E121B', // ds-strong-950
+  }
+
+  const wrapperStyles: CSSProperties = {
+    position: 'relative',
+    width: '100%',
+    maxWidth: '300px',
+  }
+
+  const counterStyles: CSSProperties = {
+    position: 'absolute',
+    bottom: '8px',
+    right: '12px',
+    fontSize: '11px',
+    pointerEvents: 'none',
+    color: disabled ? '#CACFD8' : '#99A0AE', // ds-disabled-300 : ds-soft-400
+  }
+
+  return (
+    <div style={wrapperStyles}>
+      <textarea
+        id={id}
+        placeholder={placeholder}
+        disabled={disabled}
+        maxLength={maxLength}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        style={textareaStyles}
+        onFocus={(e) => {
+          e.target.style.borderColor = '#0E121B' // ds-stroke-strong-950
+          e.target.style.boxShadow =
+            '0 0 0 2px #FFFFFF, 0 0 0 4px rgba(153, 160, 174, 0.16)' // shadow-button-important-focus
+        }}
+        onBlur={(e) => {
+          e.target.style.borderColor = '#E1E4EA'
+          e.target.style.boxShadow = '0px 1px 2px 0px rgba(10, 13, 20, 0.03)'
+        }}
+      />
+      {typeof maxLength === 'number' && (
+        <span style={counterStyles}>
+          {value.length} / {maxLength}
+        </span>
+      )}
+    </div>
+  )
+}

@@ -88,6 +88,14 @@
         "@headlessui/react"
       ],
       "registryDependencies": ["utils"]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "A textarea component.",
+      "dependencies": [],
+      "registryDependencies": []
     }
   ]
 }

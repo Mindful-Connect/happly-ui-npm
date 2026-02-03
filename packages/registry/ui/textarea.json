@@ -1,0 +1,103 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "textarea",
+  "type": "registry:ui",
+  "title": "Textarea",
+  "description": "A textarea component.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "docs": {
+    "lead": "A textarea component.",
+    "usage": "import { Textarea } from \"@/components/ui/textarea\"\n\n<Textarea placeholder=\"Type your message here.\" />",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "A default textarea component.",
+        "code": "<Textarea placeholder=\"Type your message here.\" />",
+        "preview": [
+          {
+            "component": "textarea",
+            "props": {
+              "placeholder": "Type your message here."
+            }
+          }
+        ]
+      },
+      {
+        "title": "Disabled",
+        "description": "A disabled textarea component.",
+        "code": "<Textarea disabled placeholder=\"Type your message here.\" />",
+        "preview": [
+          {
+            "component": "textarea",
+            "props": {
+              "disabled": true,
+              "placeholder": "Type your message here."
+            }
+          }
+        ]
+      },
+      {
+        "title": "With Label",
+        "description": "A textarea with a label.",
+        "code": "<div className=\"grid w-full gap-1.5\">\n  <Label htmlFor=\"message\">Your message</Label>\n  <Textarea placeholder=\"Type your message here.\" id=\"message\" />\n</div>",
+        "preview": [
+          {
+            "component": "form-group",
+            "children": [
+              {
+                "component": "label",
+                "children": "Your message",
+                "props": {
+                  "htmlFor": "message"
+                }
+              },
+              {
+                "component": "textarea",
+                "props": {
+                  "id": "message",
+                  "placeholder": "Type your message here."
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "With Maximum Length",
+        "description": "A textarea with a maximum length.",
+        "code": "<Textarea placeholder=\"Type your message here.\" maxLength={250} />",
+        "preview": [
+          {
+            "component": "textarea",
+            "props": {
+              "placeholder": "Type your message here.",
+              "maxLength": 250
+            }
+          }
+        ]
+      }
+    ],
+    "api": [
+      {
+        "name": "Textarea",
+        "description": "The textarea component.",
+        "props": [
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Indicates whether the textarea is in an error state."
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/textarea.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from 'react';\nimport { cn } from '@/lib/utils';\n\ntype TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {\n  hasError?: boolean;\n};\n\nconst Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(\n  (\n    {\n      className,\n      hasError = false,\n      disabled,\n      maxLength,\n      defaultValue,\n      value: externalValue,\n      onChange,\n      ...props\n    },\n    ref\n  ) => {\n    // Internal state for uncontrolled usage\n    const [value, setValue] = React.useState<string>(() =>\n      typeof defaultValue === 'string' ? defaultValue : ''\n    );\n\n    // Keep in sync if it's a controlled component\n    React.useEffect(() => {\n      if (externalValue !== undefined) {\n        setValue(String(externalValue));\n      }\n    }, [externalValue]);\n\n    // Combined change handler\n    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {\n      setValue(e.target.value);\n      onChange?.(e);\n    };\n\n    return (\n      <div className='group relative'>\n        <textarea\n          ref={ref}\n          disabled={disabled}\n          maxLength={maxLength}\n          value={externalValue !== undefined ? externalValue : value}\n          onChange={handleChange}\n          className={cn(\n            // base reset\n            'block w-full resize-none border-none !text-paragraph-sm text-ds-strong-950 outline-none',\n\n            // box + padding\n            'min-h-[160px] rounded-12 bg-ds-white-0 px-3 py-2.5 shadow-regular-xs',\n\n            // base inset ring\n            'ring-1 ring-inset ring-ds-stroke-soft-200',\n\n            // smooth transitions\n            'transition duration-200 ease-out',\n\n            // hover BG & hide stroke when unfocused\n            'hover:[&:not(:focus)]:bg-ds-weak-50',\n            !hasError && 'hover:[&:not(:focus)]:ring-transparent',\n\n            // error at rest & on hover\n            hasError && 'ring-ds-error-base hover:ring-ds-error-base',\n\n            // focus: recolor the same inset stroke + shadow\n            'focus-visible:shadow-button-important-focus focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-ds-stroke-strong-950',\n\n            // error on focus\n            hasError &&\n              'focus-visible:shadow-button-error-focus focus-visible:ring-ds-error-base',\n\n            // disabled\n            disabled && 'bg-ds-weak-50 ring-transparent',\n\n            // placeholder styling\n            !disabled &&\n              'placeholder:select-none placeholder:text-ds-soft-400 placeholder:transition placeholder:duration-200 placeholder:ease-out hover:placeholder:text-ds-sub-600 focus-visible:placeholder:text-ds-sub-600',\n\n            // disabled placeholder/text\n            disabled && 'text-ds-disabled-300 placeholder:text-ds-disabled-300',\n\n            className\n          )}\n          {...props}\n        />\n\n        {typeof maxLength === 'number' && (\n          <span\n            className={cn(\n              'pointer-events-none absolute bottom-2 right-3 !text-paragraph-xxs',\n              disabled ? 'text-ds-disabled-300' : 'text-ds-soft-400'\n            )}\n          >\n            {value.length} / {maxLength}\n          </span>\n        )}\n      </div>\n    );\n  }\n);\n\nTextarea.displayName = 'Textarea';\nexport { Textarea };\n"
+    }
+  ]
+}

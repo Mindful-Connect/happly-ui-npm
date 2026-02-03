@@ -46,8 +46,10 @@ export interface ComponentPreviewConfig {
     | 'card'
     | 'divider'
     | 'phone-input'
+    | 'textarea'
+    | 'form-group'
   props?: Record<string, unknown>
-  children?: string
+  children?: string | ComponentPreviewConfig[]
 }
 
 export interface Registry {

@@ -15,6 +15,8 @@ import {
   DemoCardDescription,
   DemoCardContent,
   DemoDivider,
+  DemoTextarea,
+  FormGroup,
   ButtonGroup,
 } from '@/components/ComponentPreview'
 import type {
@@ -33,6 +35,15 @@ interface ComponentDocsProps {
 
 import { DemoPhoneInput } from '@/components/demos/demo-phone-input'
 
+// Helper to render children safely
+function renderPreviewChildren(children?: string | ComponentPreviewConfig[]) {
+  if (!children) return null
+  if (typeof children === 'string') return children
+  return children.map((config, index) => (
+    <PreviewItem key={index} config={config} />
+  ))
+}
+
 // Render a single preview item
 function PreviewItem({ config }: { config: ComponentPreviewConfig }) {
   const { component, props = {}, children } = config
@@ -41,13 +52,25 @@ function PreviewItem({ config }: { config: ComponentPreviewConfig }) {
     case 'phone-input':
       return <DemoPhoneInput {...(props as any)} />
     case 'button':
-      return <DemoButton {...(props as any)}>{children}</DemoButton>
+      return (
+        <DemoButton {...(props as any)}>
+          {renderPreviewChildren(children)}
+        </DemoButton>
+      )
     case 'badge':
-      return <DemoBadge {...(props as any)}>{children}</DemoBadge>
+      return (
+        <DemoBadge {...(props as any)}>
+          {renderPreviewChildren(children)}
+        </DemoBadge>
+      )
     case 'input':
       return <DemoInput {...(props as any)} />
     case 'label':
-      return <DemoLabel {...(props as any)}>{children}</DemoLabel>
+      return (
+        <DemoLabel {...(props as any)}>
+          {renderPreviewChildren(children)}
+        </DemoLabel>
+      )
     case 'card':
       return (
         <DemoCard>
@@ -61,11 +84,25 @@ function PreviewItem({ config }: { config: ComponentPreviewConfig }) {
               </DemoCardDescription>
             )}
           </DemoCardHeader>
-          {children && <DemoCardContent>{children}</DemoCardContent>}
+          {children && (
+            <DemoCardContent>{renderPreviewChildren(children)}</DemoCardContent>
+          )}
         </DemoCard>
       )
     case 'divider':
-      return <DemoDivider {...(props as any)}>{children}</DemoDivider>
+      return (
+        <DemoDivider {...(props as any)}>
+          {renderPreviewChildren(children)}
+        </DemoDivider>
+      )
+    case 'textarea':
+      return <DemoTextarea {...(props as any)} />
+    case 'form-group':
+      return (
+        <FormGroup {...(props as any)}>
+          {renderPreviewChildren(children)}
+        </FormGroup>
+      )
     default:
       return null
   }
