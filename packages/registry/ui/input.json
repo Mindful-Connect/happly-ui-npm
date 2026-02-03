@@ -6,6 +6,147 @@
   "description": "A text input component.",
   "dependencies": [],
   "registryDependencies": [],
+  "docs": {
+    "lead": "A text input component.",
+    "usage": "import { Input } from \"@/components/ui/input\"\n\n<Input type=\"email\" placeholder=\"Email\" />",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "A default input component.",
+        "code": "<Input type=\"email\" placeholder=\"Email\" />",
+        "preview": [
+          {
+            "component": "input",
+            "props": {
+              "type": "email",
+              "placeholder": "Email"
+            }
+          }
+        ]
+      },
+      {
+        "title": "File",
+        "description": "A file input component.",
+        "code": "<div className=\"grid w-full max-w-sm items-center gap-1.5\">\n  <Label htmlFor=\"picture\">Picture</Label>\n  <Input id=\"picture\" type=\"file\" />\n</div>",
+        "preview": [
+          {
+            "component": "label",
+            "children": "Picture",
+            "props": {
+              "htmlFor": "picture"
+            }
+          },
+          {
+            "component": "input",
+            "props": {
+              "id": "picture",
+              "type": "file"
+            }
+          }
+        ]
+      },
+      {
+        "title": "With Label",
+        "description": "Input with a label.",
+        "code": "<div className=\"grid w-full max-w-sm items-center gap-1.5\">\n  <Label htmlFor=\"email\">Email</Label>\n  <Input type=\"email\" id=\"email\" placeholder=\"Email\" />\n</div>",
+        "preview": [
+          {
+            "component": "label",
+            "children": "Email",
+            "props": {
+              "htmlFor": "email-2"
+            }
+          },
+          {
+            "component": "input",
+            "props": {
+              "type": "email",
+              "id": "email-2",
+              "placeholder": "Email"
+            }
+          }
+        ]
+      },
+      {
+        "title": "With Button",
+        "description": "Input with a button.",
+        "code": "<div className=\"flex w-full max-w-sm items-center space-x-2\">\n  <Input type=\"email\" placeholder=\"Email\" />\n  <Button type=\"submit\">Subscribe</Button>\n</div>",
+        "preview": [
+          {
+            "component": "input",
+            "props": {
+              "type": "email",
+              "placeholder": "Email"
+            }
+          },
+          {
+            "component": "button",
+            "children": "Subscribe",
+            "props": {
+              "type": "submit"
+            }
+          }
+        ]
+      }
+    ],
+    "phoneInput": {
+      "title": "Phone Input",
+      "lead": "A phone input component with country selection and automatic formatting.",
+      "usage": "import * as PhoneInput from \"@/components/ui/phone-input\"\n\n<PhoneInput.Root\n  inputValue={value}\n  onChange={(val) => setValue(val)}\n  defaultCountryIso2=\"ca\"\n/>",
+      "examples": [
+        {
+          "title": "Default",
+          "description": "Default phone input with Canada selected.",
+          "code": "<PhoneInput.Root\n  inputValue={value}\n  onChange={setValue}\n  defaultCountryIso2=\"ca\"\n/>",
+          "preview": [
+            {
+              "component": "phone-input",
+              "props": {
+                "defaultCountryIso2": "ca"
+              }
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "name": "PhoneInput.Root",
+          "description": "The main component.",
+          "props": [
+            {
+              "name": "inputValue",
+              "type": "string",
+              "default": "''",
+              "description": "The current value in E.164 format."
+            },
+            {
+              "name": "onChange",
+              "type": "(value: string) => void",
+              "description": "Callback when value changes."
+            },
+            {
+              "name": "defaultCountryIso2",
+              "type": "CountryIso2",
+              "default": "'ca'",
+              "description": "Default country to select."
+            },
+            {
+              "name": "readOnly",
+              "type": "boolean",
+              "description": "Whether the input is read-only."
+            }
+          ]
+        }
+      ],
+      "dependencies": [
+        "react-international-phone",
+        "libphonenumber-js",
+        "flag-icons",
+        "lucide-react",
+        "@headlessui/react"
+      ]
+    }
+  },
   "files": [
     {
       "path": "ui/input.tsx",

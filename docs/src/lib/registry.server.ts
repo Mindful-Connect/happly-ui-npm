@@ -20,7 +20,9 @@ export function getRegistry(): Registry {
  */
 export function getUIComponents(): RegistryItem[] {
   const registry = getRegistry()
-  return registry.items.filter((item) => item.type === 'registry:ui')
+  return registry.items.filter(
+    (item) => item.type === 'registry:ui' && item.name !== 'phone-input',
+  )
 }
 
 /**
@@ -56,7 +58,10 @@ export function getAllComponentNames(): string[] {
 /**
  * Generate navigation links for components
  */
-export function getComponentNavigation(): Array<{ title: string; href: string }> {
+export function getComponentNavigation(): Array<{
+  title: string
+  href: string
+}> {
   const components = getUIComponents()
   return components
     .map((c) => ({

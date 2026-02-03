@@ -74,6 +74,20 @@
       "description": "A versatile divider component for creating visual separation between content elements.",
       "dependencies": ["tailwind-variants"],
       "registryDependencies": ["tv"]
+    },
+    {
+      "name": "phone-input",
+      "type": "registry:ui",
+      "title": "Phone Input",
+      "description": "A phone input component with country selection and formatting.",
+      "dependencies": [
+        "react-international-phone",
+        "libphonenumber-js",
+        "flag-icons",
+        "lucide-react",
+        "@headlessui/react"
+      ],
+      "registryDependencies": ["utils"]
     }
   ]
 }

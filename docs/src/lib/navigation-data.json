@@ -38,6 +38,10 @@
       {
         "title": "Label",
         "href": "/docs/components/label"
+      },
+      {
+        "title": "Phone Input",
+        "href": "/docs/components/phone-input"
       }
     ]
   }

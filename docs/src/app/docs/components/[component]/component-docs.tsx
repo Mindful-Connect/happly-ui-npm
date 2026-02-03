@@ -17,17 +17,29 @@ import {
   DemoDivider,
   ButtonGroup,
 } from '@/components/ComponentPreview'
-import type { RegistryItemWithDocs, ComponentPreviewConfig } from '@/lib/registry'
+import type {
+  RegistryItemWithDocs,
+  ComponentPreviewConfig,
+} from '@/lib/registry'
+
+import { TableOfContents } from '@/components/TableOfContents'
+import { PrevNextLinks } from '@/components/PrevNextLinks'
+import { type Section } from '@/lib/sections'
+import { cn } from '@/lib/utils'
 
 interface ComponentDocsProps {
   component: RegistryItemWithDocs
 }
+
+import { DemoPhoneInput } from '@/components/demos/demo-phone-input'
 
 // Render a single preview item
 function PreviewItem({ config }: { config: ComponentPreviewConfig }) {
   const { component, props = {}, children } = config
 
   switch (component) {
+    case 'phone-input':
+      return <DemoPhoneInput {...(props as any)} />
     case 'button':
       return <DemoButton {...(props as any)}>{children}</DemoButton>
     case 'badge':
@@ -40,9 +52,13 @@ function PreviewItem({ config }: { config: ComponentPreviewConfig }) {
       return (
         <DemoCard>
           <DemoCardHeader>
-            <DemoCardTitle>{(props as any).title || 'Card Title'}</DemoCardTitle>
+            <DemoCardTitle>
+              {(props as any).title || 'Card Title'}
+            </DemoCardTitle>
             {(props as any).description && (
-              <DemoCardDescription>{(props as any).description}</DemoCardDescription>
+              <DemoCardDescription>
+                {(props as any).description}
+              </DemoCardDescription>
             )}
           </DemoCardHeader>
           {children && <DemoCardContent>{children}</DemoCardContent>}
@@ -82,7 +98,15 @@ function PreviewGroup({ previews }: { previews: ComponentPreviewConfig[] }) {
 }
 
 export function ComponentDocs({ component }: ComponentDocsProps) {
-  const { name, title, description, dependencies, registryDependencies, docs, files } = component
+  const {
+    name,
+    title,
+    description,
+    dependencies,
+    registryDependencies,
+    docs,
+    files,
+  } = component
 
   // Extract source code from the first file
   const sourceCode = files?.[0]?.content || ''
@@ -90,126 +114,324 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
   // Get export info from source code
   const exports = extractExports(sourceCode)
 
+  const phoneInput = (docs as any)?.phoneInput
+
+  // Construct Table of Contents
+  const inputChildren: import('@/lib/sections').Subsection[] = [
+    { id: 'installation', title: 'Installation', level: 3 },
+  ]
+
+  if (dependencies.length > 0 || registryDependencies.length > 0) {
+    inputChildren.push({ id: 'dependencies', title: 'Dependencies', level: 3 })
+  }
+
+  inputChildren.push({ id: 'usage', title: 'Usage', level: 3 })
+
+  if (docs?.examples && docs.examples.length > 0) {
+    inputChildren.push({ id: 'examples', title: 'Examples', level: 3 })
+  }
+
+  if (docs?.api && docs.api.length > 0) {
+    inputChildren.push({
+      id: 'api-reference',
+      title: 'API Reference',
+      level: 3,
+    })
+  }
+
+  const tableOfContents: Section[] = [
+    {
+      id: 'input',
+      title: 'Input',
+      level: 2,
+      children: inputChildren,
+    },
+  ]
+
+  if (phoneInput) {
+    const phoneChildren: import('@/lib/sections').Subsection[] = []
+    phoneChildren.push({
+      id: 'phone-input-installation',
+      title: 'Installation',
+      level: 3,
+    })
+    if (phoneInput.dependencies && phoneInput.dependencies.length > 0) {
+      phoneChildren.push({
+        id: 'phone-input-dependencies',
+        title: 'Dependencies',
+        level: 3,
+      })
+    }
+    phoneChildren.push({ id: 'phone-input-usage', title: 'Usage', level: 3 })
+    if (phoneInput.examples && phoneInput.examples.length > 0) {
+      phoneChildren.push({
+        id: 'phone-input-examples',
+        title: 'Examples',
+        level: 3,
+      })
+    }
+    if (phoneInput.api && phoneInput.api.length > 0) {
+      phoneChildren.push({
+        id: 'phone-input-api',
+        title: 'API Reference',
+        level: 3,
+      })
+    }
+    tableOfContents.push({
+      id: 'phone-input',
+      title: 'Phone Input',
+      level: 2,
+      children: phoneChildren,
+    })
+  }
+
   return (
-    <article>
-      <DocsHeader title={title} />
-      <Prose>
-        {/* Lead paragraph */}
-        <p className="lead">{docs?.lead || description}</p>
+    <>
+      <div className="max-w-2xl min-w-0 flex-auto px-4 py-16 lg:max-w-none lg:pr-0 lg:pl-8 xl:px-16">
+        <article>
+          <DocsHeader title={title} />
+          <Prose>
+            {/* Lead paragraph */}
+            <p className="lead">{docs?.lead || description}</p>
 
-        <hr />
-
-        {/* Installation */}
-        <h2 id="installation">Installation</h2>
-        <Fence language="bash">{`bunx @happlyui/cli@latest add ${name}`}</Fence>
-
-        <hr />
-
-        {/* Dependencies */}
-        {(dependencies.length > 0 || registryDependencies.length > 0) && (
-          <>
-            <h2 id="dependencies">Dependencies</h2>
-            {dependencies.length > 0 && (
-              <>
-                <h3>npm packages</h3>
-                <ul>
-                  {dependencies.map((dep) => (
-                    <li key={dep}>
-                      <code>{dep}</code>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
-            {registryDependencies.length > 0 && (
-              <>
-                <h3>Registry dependencies</h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400">
-                  These are automatically installed when you add this component.
-                </p>
-                <ul>
-                  {registryDependencies.map((dep) => (
-                    <li key={dep}>
-                      <code>{dep}</code>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
+            <div id="input" className="scroll-mt-24" />
             <hr />
-          </>
-        )}
 
-        {/* Usage */}
-        <h2 id="usage">Usage</h2>
-        {docs?.usage ? (
-          <Fence language="tsx">{docs.usage}</Fence>
-        ) : (
-          <BasicUsageExample name={name} exports={exports} />
-        )}
+            {/* Installation */}
+            <h2 id="installation">Installation</h2>
+            <Fence language="bash">{`bunx @happlyui/cli@latest add ${name}`}</Fence>
 
-        <hr />
-
-        {/* Examples from docs field */}
-        {docs?.examples && docs.examples.length > 0 && (
-          <>
-            <h2 id="examples">Examples</h2>
-            {docs.examples.map((example, index) => (
-              <div key={index} className="mb-8">
-                <h3>{example.title}</h3>
-                {example.description && <p>{example.description}</p>}
-                {example.preview && example.preview.length > 0 && (
-                  <PreviewGroup previews={example.preview} />
-                )}
-                <Fence language="tsx">{example.code}</Fence>
-              </div>
-            ))}
             <hr />
-          </>
-        )}
 
-        {/* API Reference from docs field */}
-        {docs?.api && docs.api.length > 0 && (
-          <>
-            <h2 id="api-reference">API Reference</h2>
-            {docs.api.map((apiItem, index) => (
-              <div key={index} className="mb-8">
-                <h3>{apiItem.name}</h3>
-                {apiItem.description && <p>{apiItem.description}</p>}
-                <div className="overflow-x-auto">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Prop</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {apiItem.props.map((prop, propIndex) => (
-                        <tr key={propIndex}>
-                          <td>
-                            <code>{prop.name}</code>
-                          </td>
-                          <td>
-                            <code className="text-xs">{prop.type}</code>
-                          </td>
-                          <td>{prop.default ? <code>{prop.default}</code> : '-'}</td>
-                          <td>{prop.description}</td>
-                        </tr>
+            {/* Dependencies */}
+            {(dependencies.length > 0 || registryDependencies.length > 0) && (
+              <>
+                <h2 id="dependencies">Dependencies</h2>
+                {dependencies.length > 0 && (
+                  <>
+                    <h3>npm packages</h3>
+                    <ul>
+                      {dependencies.map((dep) => (
+                        <li key={dep}>
+                          <code>{dep}</code>
+                        </li>
                       ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            ))}
-            <hr />
-          </>
-        )}
+                    </ul>
+                  </>
+                )}
+                {registryDependencies.length > 0 && (
+                  <>
+                    <h3>Registry dependencies</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
+                      These are automatically installed when you add this
+                      component.
+                    </p>
+                    <ul>
+                      {registryDependencies.map((dep) => (
+                        <li key={dep}>
+                          <code>{dep}</code>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+                <hr />
+              </>
+            )}
 
-      </Prose>
-    </article>
+            {/* Usage */}
+            <h2 id="usage">Usage</h2>
+            {docs?.usage ? (
+              <Fence language="tsx">{docs.usage}</Fence>
+            ) : (
+              <BasicUsageExample name={name} exports={exports} />
+            )}
+
+            <hr />
+
+            {/* Examples from docs field */}
+            {docs?.examples && docs.examples.length > 0 && (
+              <>
+                <h2 id="examples">Examples</h2>
+                {docs.examples.map((example, index) => (
+                  <div key={index} className="mb-8">
+                    <h3>{example.title}</h3>
+                    {example.description && <p>{example.description}</p>}
+                    {example.preview && example.preview.length > 0 && (
+                      <PreviewGroup previews={example.preview} />
+                    )}
+                    <Fence language="tsx">{example.code}</Fence>
+                  </div>
+                ))}
+                <hr />
+              </>
+            )}
+
+            {/* API Reference from docs field */}
+            {docs?.api && docs.api.length > 0 && (
+              <>
+                <h2 id="api-reference">API Reference</h2>
+                {docs.api.map((apiItem, index) => (
+                  <div key={index} className="mb-8">
+                    <h3>{apiItem.name}</h3>
+                    {apiItem.description && <p>{apiItem.description}</p>}
+                    <div className="overflow-x-auto">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Prop</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {apiItem.props.map((prop, propIndex) => (
+                            <tr key={propIndex}>
+                              <td>
+                                <code>{prop.name}</code>
+                              </td>
+                              <td>
+                                <code className="text-xs">{prop.type}</code>
+                              </td>
+                              <td>
+                                {prop.default ? (
+                                  <code>{prop.default}</code>
+                                ) : (
+                                  '-'
+                                )}
+                              </td>
+                              <td>{prop.description}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                ))}
+                <hr />
+              </>
+            )}
+
+            {/* Phone Input Section */}
+            {phoneInput && (
+              <>
+                <div className="mt-16">
+                  <h2
+                    id="phone-input"
+                    className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white"
+                  >
+                    {phoneInput.title || 'Phone Input'}
+                  </h2>
+                  {phoneInput.lead && (
+                    <p className="lead mt-4">{phoneInput.lead}</p>
+                  )}
+
+                  <hr />
+
+                  {/* Phone Input Installation */}
+                  <h3 id="phone-input-installation">Installation</h3>
+                  <Fence language="bash">{`bunx @happlyui/cli@latest add phone-input`}</Fence>
+
+                  <hr />
+
+                  {/* Phone Input Dependencies */}
+                  {phoneInput.dependencies &&
+                    phoneInput.dependencies.length > 0 && (
+                      <>
+                        <h3 id="phone-input-dependencies">Dependencies</h3>
+                        <ul>
+                          {phoneInput.dependencies.map((dep: string) => (
+                            <li key={dep}>
+                              <code>{dep}</code>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+
+                  {/* Phone Input Usage */}
+                  <h3 id="phone-input-usage">Usage</h3>
+                  <Fence language="tsx">{phoneInput.usage}</Fence>
+
+                  {/* Phone Input Examples */}
+                  {phoneInput.examples && phoneInput.examples.length > 0 && (
+                    <>
+                      <h3 id="phone-input-examples">Examples</h3>
+                      {phoneInput.examples.map(
+                        (example: any, index: number) => (
+                          <div key={index} className="mb-8">
+                            <h4>{example.title}</h4>
+                            {example.description && (
+                              <p>{example.description}</p>
+                            )}
+                            {example.preview && example.preview.length > 0 && (
+                              <PreviewGroup previews={example.preview} />
+                            )}
+                            <Fence language="tsx">{example.code}</Fence>
+                          </div>
+                        ),
+                      )}
+                    </>
+                  )}
+
+                  {/* Phone Input API */}
+                  {phoneInput.api && phoneInput.api.length > 0 && (
+                    <>
+                      <h3 id="phone-input-api">API Reference</h3>
+                      {phoneInput.api.map((apiItem: any, index: number) => (
+                        <div key={index} className="mb-8">
+                          <h4>{apiItem.name}</h4>
+                          {apiItem.description && <p>{apiItem.description}</p>}
+                          <div className="overflow-x-auto">
+                            <table>
+                              <thead>
+                                <tr>
+                                  <th>Prop</th>
+                                  <th>Type</th>
+                                  <th>Default</th>
+                                  <th>Description</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {apiItem.props.map(
+                                  (prop: any, propIndex: number) => (
+                                    <tr key={propIndex}>
+                                      <td>
+                                        <code>{prop.name}</code>
+                                      </td>
+                                      <td>
+                                        <code className="text-xs">
+                                          {prop.type}
+                                        </code>
+                                      </td>
+                                      <td>
+                                        {prop.default ? (
+                                          <code>{prop.default}</code>
+                                        ) : (
+                                          '-'
+                                        )}
+                                      </td>
+                                      <td>{prop.description}</td>
+                                    </tr>
+                                  ),
+                                )}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      ))}
+                    </>
+                  )}
+                </div>
+              </>
+            )}
+          </Prose>
+        </article>
+        <PrevNextLinks />
+      </div>
+      <TableOfContents tableOfContents={tableOfContents} />
+    </>
   )
 }
 
@@ -234,7 +456,9 @@ function extractExports(sourceCode: string): string[] {
   }
 
   // Match export const/function: export const Foo = / export function Foo
-  const directExportMatch = sourceCode.match(/export\s+(const|function|class)\s+(\w+)/g)
+  const directExportMatch = sourceCode.match(
+    /export\s+(const|function|class)\s+(\w+)/g,
+  )
   if (directExportMatch) {
     directExportMatch.forEach((match) => {
       const nameMatch = match.match(/export\s+(?:const|function|class)\s+(\w+)/)
@@ -248,7 +472,13 @@ function extractExports(sourceCode: string): string[] {
 }
 
 // Generate a basic usage example
-function BasicUsageExample({ name, exports }: { name: string; exports: string[] }) {
+function BasicUsageExample({
+  name,
+  exports,
+}: {
+  name: string
+  exports: string[]
+}) {
   // Check if this is a compound component (has Root export)
   const hasRoot = exports.some((e) => e === 'Root' || e.includes('Root'))
   const componentName = name.charAt(0).toUpperCase() + name.slice(1)
