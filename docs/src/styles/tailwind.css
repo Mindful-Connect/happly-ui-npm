@@ -1,10 +1,10 @@
 @import 'tailwindcss';
 @import './prism.css';
 
-@plugin "tailwindcss-animate";
-@plugin "tailwind-scrollbar";
-@plugin "@tailwindcss/forms";
-@plugin "@tailwindcss/typography";
+@plugin 'tailwindcss-animate';
+@plugin 'tailwind-scrollbar';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -49,8 +49,8 @@
   --color-happly-200: #ddd6fe;
   --color-happly-300: #c4b5fd;
   --color-happly-400: #a78bfa;
-  --color-happly-500: #7D52F4;
-  --color-happly-600: #6B45D9;
+  --color-happly-500: #7d52f4;
+  --color-happly-600: #6b45d9;
   --color-happly-700: #5b3cc4;
   --color-happly-800: #4c1d95;
   --color-happly-900: #3b1876;
@@ -103,71 +103,76 @@
   --color-ds-primary-900: var(--color-primary-900);
   --color-ds-primary-950: var(--color-primary-950);
 
-  --color-ds-neutral-0: #FFFFFF;
-  --color-ds-neutral-50: #F5F7FA;
-  --color-ds-neutral-100: #F2F5F8;
-  --color-ds-neutral-200: #E1E4EA;
-  --color-ds-neutral-300: #CACFD8;
-  --color-ds-neutral-400: #99A0AE;
+  --color-ds-neutral-0: #ffffff;
+  --color-ds-neutral-50: #f5f7fa;
+  --color-ds-neutral-100: #f2f5f8;
+  --color-ds-neutral-200: #e1e4ea;
+  --color-ds-neutral-300: #cacfd8;
+  --color-ds-neutral-400: #99a0ae;
   --color-ds-neutral-500: #717784;
   --color-ds-neutral-600: #525866;
-  --color-ds-neutral-700: #2B303B;
+  --color-ds-neutral-700: #2b303b;
   --color-ds-neutral-800: #222530;
-  --color-ds-neutral-900: #181B25;
-  --color-ds-neutral-950: #0E121B;
-  
+  --color-ds-neutral-900: #181b25;
+  --color-ds-neutral-950: #0e121b;
+
   --color-ds-alpha-neutral-16: rgba(153, 160, 174, 0.16);
 
   /* Shadows */
-  --shadow-button-important-focus: 0 0 0 2px var(--color-ds-white-0), 0 0 0 4px var(--color-ds-alpha-neutral-16);
+  --shadow-button-important-focus:
+    0 0 0 2px var(--color-ds-white-0),
+    0 0 0 4px var(--color-ds-alpha-neutral-16);
+
+  /* Border Radius */
+  --radius-10: 0.625rem;
 }
 
 /* Base Variable Definitions (Simulated from sibling repo themes) */
 :root {
   --color-static-black: #000000;
   --color-static-white: #ffffff;
-  --color-text-strong-950: #0E121B;
+  --color-text-strong-950: #0e121b;
   --color-text-sub-600: #525866;
-  --color-text-soft-400: #99A0AE;
-  --color-text-disabled-300: #CACFD8;
+  --color-text-soft-400: #99a0ae;
+  --color-text-disabled-300: #cacfd8;
   --color-bg-surface-800: #222530;
-  --color-bg-sub-300: #CACFD8;
-  --color-bg-soft-200: #E1E4EA;
-  --color-bg-weak-50: #F5F7FA;
-  --color-bg-white-0: #FFFFFF;
-  --color-stroke-strong-950: #0E121B;
-  --color-stroke-sub-300: #CACFD8;
-  --color-stroke-soft-200: #E1E4EA;
-  --color-stroke-white-0: #FFFFFF;
-  
-  --color-primary-dark: #2547D0; 
-  --color-primary-darker: #1F3BAD;
-  --color-primary-base: #335CFF;
-  --color-primary-light: #6895FF;
-  --color-primary-lighter: #97BAFF;
+  --color-bg-sub-300: #cacfd8;
+  --color-bg-soft-200: #e1e4ea;
+  --color-bg-weak-50: #f5f7fa;
+  --color-bg-white-0: #ffffff;
+  --color-stroke-strong-950: #0e121b;
+  --color-stroke-sub-300: #cacfd8;
+  --color-stroke-soft-200: #e1e4ea;
+  --color-stroke-white-0: #ffffff;
+
+  --color-primary-dark: #2547d0;
+  --color-primary-darker: #1f3bad;
+  --color-primary-base: #335cff;
+  --color-primary-light: #6895ff;
+  --color-primary-lighter: #97baff;
   --color-primary-alpha-24: rgba(51, 92, 255, 0.24);
-  --color-primary-alpha-20: rgba(51, 92, 255, 0.20);
+  --color-primary-alpha-20: rgba(51, 92, 255, 0.2);
   --color-primary-alpha-16: rgba(51, 92, 255, 0.16);
-  --color-primary-alpha-10: rgba(51, 92, 255, 0.10);
+  --color-primary-alpha-10: rgba(51, 92, 255, 0.1);
 
-  --color-error-darker: #AD1F2B;
-  --color-error-dark: #D02533;
-  --color-error-base: #FB3748;
-  --color-error-light: #FF6875;
-  --color-error-lighter: #FF97A0;
-  --color-error-alpha-10: rgba(251, 55, 72, 0.10);
+  --color-error-darker: #ad1f2b;
+  --color-error-dark: #d02533;
+  --color-error-base: #fb3748;
+  --color-error-light: #ff6875;
+  --color-error-lighter: #ff97a0;
+  --color-error-alpha-10: rgba(251, 55, 72, 0.1);
 
-  --color-primary-50: #EBF1FF;
-  --color-primary-100: #D5E2FF;
-  --color-primary-200: #C0EAFF;
-  --color-primary-300: #97DCFF;
-  --color-primary-400: #68CDFF;
-  --color-primary-500: #47C2FF;
-  --color-primary-600: #35ADE9;
-  --color-primary-700: #2597D0;
-  --color-primary-800: #1F7EAD;
-  --color-primary-900: #18658B;
-  --color-primary-950: #124B68;
+  --color-primary-50: #ebf1ff;
+  --color-primary-100: #d5e2ff;
+  --color-primary-200: #c0eaff;
+  --color-primary-300: #97dcff;
+  --color-primary-400: #68cdff;
+  --color-primary-500: #47c2ff;
+  --color-primary-600: #35ade9;
+  --color-primary-700: #2597d0;
+  --color-primary-800: #1f7ead;
+  --color-primary-900: #18658b;
+  --color-primary-950: #124b68;
 }
 
 @layer base {

@@ -7,7 +7,6 @@ import {
   ComponentPreview,
   DemoButton,
   DemoBadge,
-  DemoInput,
   DemoLabel,
   DemoCard,
   DemoCardHeader,
@@ -36,6 +35,8 @@ interface ComponentDocsProps {
 import { DemoPhoneInput } from '@/components/demos/demo-phone-input'
 import DemoRadioCardGroup from '@/components/demos/demo-radio-card-group'
 import { DemoCalendarInput } from '@/components/demos/demo-calendar-input'
+import { DemoSocialsInput } from '@/components/demos/demo-socials-input'
+import { DemoInput } from '@/components/demos/demo-input'
 
 // Helper to render children safely
 function renderPreviewChildren(children?: string | ComponentPreviewConfig[]) {
@@ -57,6 +58,8 @@ function PreviewItem({ config }: { config: ComponentPreviewConfig }) {
       return <DemoRadioCardGroup />
     case 'calendar-input':
       return <DemoCalendarInput />
+    case 'socials-input':
+      return <DemoSocialsInput />
     case 'button':
       return (
         <DemoButton {...(props as any)}>

@@ -11,80 +11,13 @@
     "usage": "import { Input } from \"@/components/ui/input\"\n\n<Input type=\"email\" placeholder=\"Email\" />",
     "examples": [
       {
-        "title": "Default",
-        "description": "A default input component.",
-        "code": "<Input type=\"email\" placeholder=\"Email\" />",
+        "title": "Showcase",
+        "description": "Input component with various sizes, icons, and affixes.",
+        "code": "import { Input } from \"@/components/ui/input\"\nimport { RiUser3Line } from \"react-icons/ri\"\n\n<Input placeholder=\"Username\" leftIcon={<RiUser3Line />} />",
         "preview": [
           {
             "component": "input",
-            "props": {
-              "type": "email",
-              "placeholder": "Email"
-            }
-          }
-        ]
-      },
-      {
-        "title": "File",
-        "description": "A file input component.",
-        "code": "<div className=\"grid w-full max-w-sm items-center gap-1.5\">\n  <Label htmlFor=\"picture\">Picture</Label>\n  <Input id=\"picture\" type=\"file\" />\n</div>",
-        "preview": [
-          {
-            "component": "label",
-            "children": "Picture",
-            "props": {
-              "htmlFor": "picture"
-            }
-          },
-          {
-            "component": "input",
-            "props": {
-              "id": "picture",
-              "type": "file"
-            }
-          }
-        ]
-      },
-      {
-        "title": "With Label",
-        "description": "Input with a label.",
-        "code": "<div className=\"grid w-full max-w-sm items-center gap-1.5\">\n  <Label htmlFor=\"email\">Email</Label>\n  <Input type=\"email\" id=\"email\" placeholder=\"Email\" />\n</div>",
-        "preview": [
-          {
-            "component": "label",
-            "children": "Email",
-            "props": {
-              "htmlFor": "email-2"
-            }
-          },
-          {
-            "component": "input",
-            "props": {
-              "type": "email",
-              "id": "email-2",
-              "placeholder": "Email"
-            }
-          }
-        ]
-      },
-      {
-        "title": "With Button",
-        "description": "Input with a button.",
-        "code": "<div className=\"flex w-full max-w-sm items-center space-x-2\">\n  <Input type=\"email\" placeholder=\"Email\" />\n  <Button type=\"submit\">Subscribe</Button>\n</div>",
-        "preview": [
-          {
-            "component": "input",
-            "props": {
-              "type": "email",
-              "placeholder": "Email"
-            }
-          },
-          {
-            "component": "button",
-            "children": "Subscribe",
-            "props": {
-              "type": "submit"
-            }
+            "props": {}
           }
         ]
       }

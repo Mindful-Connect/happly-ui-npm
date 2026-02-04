@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { type ClassValue } from 'clsx';
-import { cn } from '@/lib/utils';
-import { ReactElement, SVGProps } from 'react';
+import * as React from 'react'
+import { type ClassValue } from 'clsx'
+import { cn } from '@/lib/utils'
+import { ReactElement, SVGProps } from 'react'
 
 const inputClassConfig = {
   slots: {
@@ -9,7 +9,6 @@ const inputClassConfig = {
       // base
       'group relative flex w-full overflow-hidden bg-ds-white-0 text-ds-strong-950 shadow-regular-xs',
       'transition duration-200 ease-out',
-      'divide-x divide-ds-stroke-soft-200',
       // before pseudo-element for border/ring
       'before:absolute before:inset-0 before:ring-1 before:ring-inset before:ring-ds-stroke-soft-200',
       'before:pointer-events-none before:rounded-[inherit]',
@@ -37,7 +36,7 @@ const inputClassConfig = {
       '[&:has(input:disabled)]:!bg-ds-weak-50',
     ],
     input: [
-      'w-full bg-transparent !text-paragraph-sm text-ds-strong-950 outline-none',
+      'w-full bg-transparent !text-sm text-ds-strong-950 outline-none',
       'transition duration-200 ease-out',
       'placeholder:select-none placeholder:text-ds-soft-400 placeholder:transition placeholder:duration-200 placeholder:ease-out',
       'group-hover/input-wrapper:[&:not(:focus-within)]:placeholder:text-ds-sub-600',
@@ -53,7 +52,7 @@ const inputClassConfig = {
       'group-focus-within:text-ds-sub-600',
     ],
     affix: [
-      'shrink-0 bg-ds-white-0 !text-paragraph-sm text-ds-soft-400',
+      'shrink-0 bg-ds-white-0 !text-sm text-ds-soft-400',
       'flex items-center justify-center truncate',
       'transition duration-200 ease-out',
 
@@ -61,7 +60,7 @@ const inputClassConfig = {
       'group-focus-within:text-ds-sub-600',
     ],
     inlineAffix: [
-      '!text-paragraph-sm text-ds-soft-400',
+      '!text-sm text-ds-soft-400',
       'transition duration-200 ease-out',
       'group-hover/input-wrapper:text-ds-sub-600',
       'group-focus-within:text-ds-sub-600',
@@ -118,96 +117,98 @@ const inputClassConfig = {
   defaultVariants: {
     size: 'medium',
   },
-};
+}
 
 // Type definition for the slots in inputClassConfig
-type InputSlotName = keyof (typeof inputClassConfig)['slots'];
+type InputSlotName = keyof (typeof inputClassConfig)['slots']
 
 // Props for the Input component
-export interface InputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
-  size?: 'medium' | 'small' | 'xsmall';
-  hasError?: boolean;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
-  leftAffix?: React.ReactNode;
-  rightAffix?: React.ReactNode;
-  inlineAffix?: React.ReactNode;
-  wrapperClassName?: string;
-  inputClassName?: string;
-  leftIconClassName?: string;
-  rightIconClassName?: string;
-  leftAffixClassName?: string;
-  rightAffixClassName?: string;
-  inlineAffixClassName?: string;
+export interface InputProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'size'
+> {
+  size?: 'medium' | 'small' | 'xsmall'
+  hasError?: boolean
+  leftIcon?: React.ReactNode
+  rightIcon?: React.ReactNode
+  leftAffix?: React.ReactNode
+  rightAffix?: React.ReactNode
+  inlineAffix?: React.ReactNode
+  wrapperClassName?: string
+  inputClassName?: string
+  leftIconClassName?: string
+  rightIconClassName?: string
+  leftAffixClassName?: string
+  rightAffixClassName?: string
+  inlineAffixClassName?: string
 }
 
 // Helper function to generate class strings for a specific slot
 function generateSlotClasses(
   slotName: InputSlotName,
   props: { size?: 'medium' | 'small' | 'xsmall'; hasError?: boolean },
-  additionalClasses?: ClassValue
+  additionalClasses?: ClassValue,
 ): string {
   const { size = inputClassConfig.defaultVariants.size, hasError = false } =
-    props;
-  const classes: ClassValue[] = [];
+    props
+  const classes: ClassValue[] = []
 
   if (inputClassConfig.slots[slotName]) {
-    classes.push(inputClassConfig.slots[slotName]);
+    classes.push(inputClassConfig.slots[slotName])
   }
 
   const sizeVariant =
     inputClassConfig.variants.size[
       size as keyof typeof inputClassConfig.variants.size
-    ];
+    ]
   if (sizeVariant && sizeVariant[slotName as keyof typeof sizeVariant]) {
-    classes.push(sizeVariant[slotName as keyof typeof sizeVariant]);
+    classes.push(sizeVariant[slotName as keyof typeof sizeVariant])
   }
 
-  const errorVariantKey = hasError ? 'true' : 'false';
+  const errorVariantKey = hasError ? 'true' : 'false'
   const errorVariant =
     inputClassConfig.variants.hasError[
       errorVariantKey as keyof typeof inputClassConfig.variants.hasError
-    ];
+    ]
   if (errorVariant && errorVariant[slotName as keyof typeof errorVariant]) {
-    classes.push(errorVariant[slotName as keyof typeof errorVariant]);
+    classes.push(errorVariant[slotName as keyof typeof errorVariant])
   }
 
   // 4. Compound variants
   inputClassConfig.compoundVariants.forEach((cv) => {
-    let match = true;
+    let match = true
     if (cv.size) {
       if (Array.isArray(cv.size)) {
-        match = match && cv.size.includes(size);
+        match = match && cv.size.includes(size)
       } else {
-        match = match && cv.size === size;
+        match = match && cv.size === size
       }
     }
 
     if (match && cv.class && cv.class[slotName as keyof typeof cv.class]) {
-      classes.push(cv.class[slotName as keyof typeof cv.class]);
+      classes.push(cv.class[slotName as keyof typeof cv.class])
     }
-  });
+  })
 
   if (additionalClasses) {
-    classes.push(additionalClasses);
+    classes.push(additionalClasses)
   }
 
-  return cn(classes);
+  return cn(classes)
 }
 
 function renderSlotContent(
   node: React.ReactNode,
   slot: InputSlotName,
   variantProps: Parameters<typeof generateSlotClasses>[1],
-  extraClass?: string
+  extraClass?: string,
 ): React.ReactNode {
-  if (!React.isValidElement(node)) return null;
+  if (!React.isValidElement(node)) return null
 
-  const el = node as ReactElement<SVGProps<SVGSVGElement>>;
+  const el = node as ReactElement<SVGProps<SVGSVGElement>>
   return React.cloneElement(el, {
     className: generateSlotClasses(slot, variantProps, extraClass),
-  });
+  })
 }
 
 // The main Input component, styled like shadcn/ui components.
@@ -233,31 +234,31 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       id,
       ...props
     },
-    ref
+    ref,
   ) => {
-    type InputSize = keyof typeof inputClassConfig.variants.size; // "medium" | "small" | "xsmall"
+    type InputSize = keyof typeof inputClassConfig.variants.size // "medium" | "small" | "xsmall"
     const currentSize: InputSize = (propSize ??
-      inputClassConfig.defaultVariants.size) as InputSize;
-    const currentHasError = propHasError || false;
+      inputClassConfig.defaultVariants.size) as InputSize
+    const currentHasError = propHasError || false
     const variantProps: Parameters<typeof generateSlotClasses>[1] = {
       size: currentSize,
       hasError: currentHasError,
-    };
+    }
 
-    const inputId = id || React.useId();
+    const inputId = id || React.useId()
 
     const renderedLeftIcon = renderSlotContent(
       leftIcon,
       'icon',
       variantProps,
-      leftIconClassName
-    );
+      leftIconClassName,
+    )
     const renderedRightIcon = renderSlotContent(
       rightIcon,
       'icon',
       variantProps,
-      rightIconClassName
-    );
+      rightIconClassName,
+    )
 
     return (
       <div
@@ -270,7 +271,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className={generateSlotClasses(
               'affix',
               variantProps,
-              leftAffixClassName
+              leftAffixClassName,
             )}
           >
             {leftAffix}
@@ -282,7 +283,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           className={generateSlotClasses(
             'wrapper',
             variantProps,
-            wrapperClassName
+            cn(
+              wrapperClassName,
+              leftAffix && 'border-l border-ds-stroke-soft-200',
+            ),
           )}
         >
           {renderedLeftIcon}
@@ -293,7 +297,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             className={cn(
               generateSlotClasses('input', variantProps, inputClassName),
-              'border-none bg-transparent p-0 outline-none focus:border-none focus:outline-none focus:ring-0'
+              'border-none bg-transparent p-0 outline-none focus:border-none focus:ring-0 focus:outline-none',
             )}
           />
           {inlineAffix && (
@@ -301,7 +305,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               className={generateSlotClasses(
                 'inlineAffix',
                 variantProps,
-                inlineAffixClassName
+                inlineAffixClassName,
               )}
             >
               {inlineAffix}
@@ -316,16 +320,16 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className={generateSlotClasses(
               'affix',
               variantProps,
-              rightAffixClassName
+              cn('border-l border-ds-stroke-soft-200', rightAffixClassName),
             )}
           >
             {rightAffix}
           </div>
         )}
       </div>
-    );
-  }
-);
-Input.displayName = 'Input';
+    )
+  },
+)
+Input.displayName = 'Input'
 
-export { Input };
+export { Input }

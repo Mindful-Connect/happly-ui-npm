@@ -12,7 +12,7 @@ interface ComponentPreviewProps {
 
 export function ComponentPreview({ children }: ComponentPreviewProps) {
   return (
-    <div className="not-prose my-6 rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900/50">
+    <div className="not-prose my-6 rounded-xl border border-slate-200 bg-white text-sm dark:border-slate-800 dark:bg-slate-900/50">
       <div className="flex min-h-[140px] flex-wrap items-center justify-center gap-4 p-8">
         {children}
       </div>

@@ -36,6 +36,7 @@
     "react-day-picker": "^9.13.0",
     "react-dom": "^19.2.3",
     "react-highlight-words": "^0.21.0",
+    "react-icons": "^5.5.0",
     "react-international-phone": "^4.7.0",
     "simple-functional-loader": "^1.2.1",
     "tailwind-merge": "^3.4.0",

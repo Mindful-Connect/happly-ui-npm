@@ -134,6 +134,21 @@
       "description": "An icon container with various styles and colors.",
       "dependencies": ["class-variance-authority"],
       "registryDependencies": ["utils"]
+    },
+    {
+      "name": "socials-input",
+      "type": "registry:ui",
+      "title": "Socials Input",
+      "description": "A dynamic input list for social media URLs with validation and icons.",
+      "dependencies": [
+        "zod",
+        "@headlessui/react",
+        "react-icons",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": ["utils", "input"],
+      "files": [{ "path": "ui/socials-input.tsx", "type": "registry:ui" }]
     }
   ]
 }
