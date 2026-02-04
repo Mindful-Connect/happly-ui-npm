@@ -45,6 +45,10 @@ export const buttonVariants = tv({
       },
     },
     size: {
+      large: {
+        root: 'h-11 gap-4 rounded-xl px-4', // Estimated values based on other sizes
+        icon: 'size-6 -mx-1',
+      },
       medium: {
         root: 'h-10 gap-3 rounded-xl px-3.5',
         icon: 'size-5 -mx-1',
@@ -481,3 +485,53 @@ export { ButtonRoot as Root, ButtonIcon as Icon };
  * <Button variant="default" size="lg">Click me</Button>
  */
 export { Button, buttonVariants };
+
+// =============================================================================
+// COMPACT BUTTON API (Ported)
+// =============================================================================
+
+const modeBase: Record<string, string> = {
+  filled: '',
+  stroke: 'ring-1 ring-inset',
+  lighter: 'ring-1 ring-inset',
+  ghost: 'ring-1 ring-inset',
+};
+
+// ICON-ONLY <ButtonCompact>
+const compactRoot = tv({
+  base: [
+    'relative flex shrink-0 items-center justify-center outline-none',
+    'transition duration-200 ease-out [&>svg]:transition-all [&>svg]:duration-200 [&>svg]:ease-out',
+    'disabled:pointer-events-none disabled:border-transparent disabled:bg-transparent disabled:text-ds-disabled-300 [&>svg]:disabled:text-ds-disabled-300 disabled:shadow-none',
+  ],
+  variants: {
+    variant: {
+      stroke:
+        'border border-ds-stroke-soft-200 bg-ds-white-0 text-ds-sub-600 shadow-regular-xs ' +
+        'hover:border-transparent hover:bg-ds-weak-50 hover:text-ds-strong-950 hover:shadow-none ' +
+        'focus-visible:border-transparent focus-visible:bg-ds-strong-950 focus-visible:text-ds-white-0',
+      ghost:
+        'bg-transparent text-ds-sub-600 ' +
+        'hover:bg-ds-weak-50 hover:text-ds-strong-950 ' +
+        'focus-visible:bg-ds-strong-950 focus-visible:text-ds-white-0',
+      white:
+        'bg-ds-white-0 text-ds-sub-600 shadow-regular-xs ' +
+        'hover:bg-ds-weak-50 hover:text-ds-strong-950 ' +
+        'focus-visible:bg-ds-strong-950 focus-visible:text-ds-white-0',
+      modifiable: '',
+    },
+    size: {
+      large: 'h-6 w-6',
+      medium: 'h-5 w-5',
+    },
+    fullRadius: {
+      true: 'rounded-full',
+      false: 'rounded-md',
+    },
+  },
+  defaultVariants: { variant: 'stroke', size: 'large', fullRadius: false },
+});
+
+export const compactButtonVariants = compactRoot;
+
+export default Button;

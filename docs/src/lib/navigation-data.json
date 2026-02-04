@@ -24,6 +24,10 @@
         "href": "/docs/components/button"
       },
       {
+        "title": "Calendar Input",
+        "href": "/docs/components/calendar-input"
+      },
+      {
         "title": "Card",
         "href": "/docs/components/card"
       },

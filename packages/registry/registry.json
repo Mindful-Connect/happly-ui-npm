@@ -28,6 +28,20 @@
       "registryDependencies": []
     },
     {
+      "name": "calendar-input",
+      "type": "registry:ui",
+      "title": "Calendar Input",
+      "description": "A date input component with calendar popover.",
+      "dependencies": [
+        "react-day-picker",
+        "date-fns",
+        "@headlessui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": ["button", "utils"],
+      "files": [{ "path": "ui/calendar-input.tsx", "type": "registry:ui" }]
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
