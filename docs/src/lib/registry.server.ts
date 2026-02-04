@@ -21,7 +21,9 @@ export function getRegistry(): Registry {
 export function getUIComponents(): RegistryItem[] {
   const registry = getRegistry()
   return registry.items.filter(
-    (item) => item.type === 'registry:ui' && item.name !== 'phone-input',
+    (item) =>
+      item.type === 'registry:ui' &&
+      !['phone-input', 'radio-group', 'key-icon'].includes(item.name),
   )
 }
 

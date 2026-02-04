@@ -96,6 +96,30 @@
       "description": "A textarea component.",
       "dependencies": [],
       "registryDependencies": []
+    },
+    {
+      "name": "radio-card-group",
+      "type": "registry:ui",
+      "title": "Radio Card Group",
+      "description": "A radio group component with card styling, supporting icons, badges, and descriptions.",
+      "dependencies": [],
+      "registryDependencies": ["radio-group", "key-icon", "badge", "label", "utils"]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio Group",
+      "description": "A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time.",
+      "dependencies": ["@radix-ui/react-radio-group"],
+      "registryDependencies": ["utils"]
+    },
+    {
+      "name": "key-icon",
+      "type": "registry:ui",
+      "title": "Key Icon",
+      "description": "An icon container with various styles and colors.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["utils"]
     }
   ]
 }

@@ -36,8 +36,20 @@
         "href": "/docs/components/input"
       },
       {
+        "title": "Key Icon",
+        "href": "/docs/components/key-icon"
+      },
+      {
         "title": "Label",
         "href": "/docs/components/label"
+      },
+      {
+        "title": "Radio Card Group",
+        "href": "/docs/components/radio-card-group"
+      },
+      {
+        "title": "Radio Group",
+        "href": "/docs/components/radio-group"
       },
       {
         "title": "Textarea",

@@ -48,6 +48,7 @@ export interface ComponentPreviewConfig {
     | 'phone-input'
     | 'textarea'
     | 'form-group'
+    | 'radio-card-group'
   props?: Record<string, unknown>
   children?: string | ComponentPreviewConfig[]
 }

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "radio-card-group",
+  "type": "registry:ui",
+  "title": "Radio Card Group",
+  "description": "A radio group component with card styling, supporting icons, badges, and descriptions.",
+  "dependencies": [],
+  "registryDependencies": ["radio-group", "key-icon", "badge", "label", "utils"],
+  "docs": {
+    "lead": "A radio group component with card styling, supporting icons, badges, and descriptions.",
+    "usage": "import RadioCardGroup, { RadioCardItem } from '@/components/ui/radio-card-group'\n\nconst items: RadioCardItem[] = [\n  { title: 'Option 1', value: 'opt1' },\n  { title: 'Option 2', value: 'opt2' }\n]\n\n<RadioCardGroup items={items} value={value} onValueChange={setValue} />",
+    "examples": [
+      {
+        "title": "Basic Usage",
+        "description": "Radio Card Group with different configurations.",
+        "code": "import RadioCardGroup, { RadioCardItem } from '@/components/ui/radio-card-group'\n\n// See demo for full usage example",
+        "preview": [
+          {
+            "component": "radio-card-group"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/radio-card-group.tsx",
+      "type": "registry:ui",
+      "content": "'use client';\n\nimport { Badge, BadgeProps } from '@/components/ui/badge';\nimport { Label } from '@/components/ui/label';\nimport { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';\nimport { cn } from '@/lib/utils';\nimport KeyIcon from '@/components/ui/key-icon';\n\nexport type RadioCardItem = {\n  badge?: {\n    colorVar: BadgeProps['colorVar'];\n    size: 'sm' | 'default';\n    text: string;\n  };\n  description?: string;\n  icon?: React.ReactNode;\n  readOnly?: boolean;\n  title: string;\n  value: string;\n};\n\n// USING THIS INSIDE FORMIK <Form> COMPONENT CAUSES A BUG. JUST REMOVE THE <FORM> TAG FROM INSIDE THE <Formik> COMPONENT\n\nexport default function RadioCardGroup({\n  allowDeselect,\n  className,\n  descriptionInTitle,\n  disabled,\n  itemClassName,\n  items,\n  noBorderHighlightWhenSeected,\n  simpleIcons,\n  value,\n  variant = 'default',\n  onValueChange,\n}: {\n  allowDeselect?: boolean; // this component sets an empty string when deselecting. please handle in the parent\n  className?: string;\n  descriptionInTitle?: boolean;\n  disabled?: boolean;\n  itemClassName?: string;\n  items: RadioCardItem[];\n  noBorderHighlightWhenSeected?: boolean;\n  simpleIcons?: boolean;\n  value: string | undefined;\n  variant?: 'default' | 'primary';\n  onValueChange: (value: string) => void;\n}) {\n  return (\n    <RadioGroup\n      className={cn('', className)}\n      value={value}\n      onValueChange={() => {}}\n      onClick={(e) => {\n        e.preventDefault();\n      }}\n    >\n      {items.map((item, index) => (\n        <div\n          key={`${index}-${item.value}`}\n          className={cn(\n            'flex w-full justify-between gap-x-3.5 rounded-xl border p-4 transition-colors duration-75',\n            disabled || item.readOnly\n              ? 'cursor-default border-neutral-200'\n              : [\n                  'cursor-pointer',\n                  value === item.value && !noBorderHighlightWhenSeected\n                    ? variant === 'primary'\n                      ? 'border-primaryColor'\n                      : 'border-neutral-950'\n                    : 'border-ds-neutral-200 hover:border-ds-neutral-200 hover:bg-ds-neutral-50',\n                ],\n            itemClassName\n          )}\n          onClick={(e) => {\n            if (disabled || item.readOnly) return;\n            if (allowDeselect && value === item.value) {\n              onValueChange('');\n              return;\n            }\n            onValueChange(item.value);\n          }}\n        >\n          <div className={cn('flex', simpleIcons ? 'gap-2' : 'gap-[14px]')}>\n            {!!item.icon &&\n              (simpleIcons ? item.icon : <KeyIcon icon={item.icon} />)}\n\n            <div className='flex flex-col gap-1'>\n              <div className='flex gap-x-2'>\n                <div className='flex flex-wrap items-center gap-x-1.5'>\n                  <Label\n                    htmlFor={item.value}\n                    className={cn(\n                      'line-clamp-1 font-medium transition-colors duration-75',\n                      disabled || item.readOnly\n                        ? 'text-ds-neutral-600'\n                        : 'cursor-pointer text-ds-neutral-950'\n                    )}\n                  >\n                    {item.title}\n                  </Label>\n                  {descriptionInTitle && item.description && (\n                    <span\n                      className={cn(\n                        'transition-colors duration-75',\n                        disabled || item.readOnly\n                          ? 'text-ds-neutral-400'\n                          : 'text-ds-neutral-600'\n                      )}\n                    >\n                      {item.description}\n                    </span>\n                  )}\n                </div>\n                {item.badge && (\n                  <Badge\n                    size={item.badge.size}\n                    colorVar={item.badge.colorVar}\n                    className={disabled || item.readOnly ? 'opacity-50' : ''}\n                  >\n                    {item.badge.text}\n                  </Badge>\n                )}\n              </div>\n\n              {!descriptionInTitle && item.description && (\n                <p\n                  className={cn(\n                    'transition-colors duration-75',\n                    disabled || item.readOnly\n                      ? 'text-ds-neutral-400'\n                      : 'text-ds-neutral-600'\n                  )}\n                >\n                  {item.description}\n                </p>\n              )}\n            </div>\n          </div>\n\n          <RadioGroupItem\n            variant={variant}\n            disabled={disabled || item.readOnly}\n            id={item.value}\n            value={item.value}\n            className='peer'\n            onClick={() => {\n              if (disabled || item.readOnly) return;\n              onValueChange(item.value);\n            }}\n          />\n        </div>\n      ))}\n    </RadioGroup>\n  );\n}\n"
+    }
+  ]
+}

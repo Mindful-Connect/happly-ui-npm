@@ -34,6 +34,7 @@ interface ComponentDocsProps {
 }
 
 import { DemoPhoneInput } from '@/components/demos/demo-phone-input'
+import DemoRadioCardGroup from '@/components/demos/demo-radio-card-group'
 
 // Helper to render children safely
 function renderPreviewChildren(children?: string | ComponentPreviewConfig[]) {
@@ -51,6 +52,8 @@ function PreviewItem({ config }: { config: ComponentPreviewConfig }) {
   switch (component) {
     case 'phone-input':
       return <DemoPhoneInput {...(props as any)} />
+    case 'radio-card-group':
+      return <DemoRadioCardGroup />
     case 'button':
       return (
         <DemoButton {...(props as any)}>
