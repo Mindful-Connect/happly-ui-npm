@@ -15,65 +15,45 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Tag as TagPill, TagClose } from '@/components/ui/tag';
+import { Tag, TagCategory } from '@/lib/tag-utils';
 import { cn } from '@/lib/utils';
-import { useI18n } from '@/locales/client';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import * as React from 'react';
 import { ReactElement, SVGProps } from 'react';
+import {
+  LanguageType,
+  Translatable,
+} from '@/lib/searchable-combo-box-utils';
 
-type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
-  U[keyof U];
-
-  export const LANGUAGE_TYPE = {
-  English: 'en',
-  French: 'fr',
-  Spanish: 'es',
-  Portuguese: 'pt',
-  German: 'de',
-  Italian: 'it',
-  Japanese: 'ja',
-  Korean: 'ko',
-  ChineseSimplified: 'zh-CN',
-  ChineseTraditional: 'zh-TW',
-  Arabic: 'ar',
-  Hindi: 'hi',
-  Russian: 'ru',
-  Turkish: 'tr',
-  Vietnamese: 'vi',
-  Polish: 'pl',
-  Dutch: 'nl',
-  Romanian: 'ro',
-  Hungarian: 'hu',
-} as const;
-export type LanguageType = ObjectValues<typeof LANGUAGE_TYPE>;
-
-export type Translatable = AtLeastOne<{
-  [K in LanguageType]?: string;
-}>;
-
-export type ObjectValues<T> = T[keyof T];
-
-export interface Tag {
-  id: number;
-  slug: string;
-  label: string;
-  category: TagCategory;
-}''
-
-export const TAG_CATEGORY = {
-  Sector: 'sector',
-  Skill: 'skill',
-  OpportunityType: 'opportunity_type',
-  Perk: 'perk',
-  Demographic: 'demographic',
-  IncorporationType: 'incorporation_type',
-  General: 'general',
-  SpaceAccommodation: 'space_accommodation',
-  LiveStreamTopic: 'live_stream_topic',
-  EventTopic: 'event_topic',
-  Group: 'group',
-} as const;
-export type TagCategory = ObjectValues<typeof TAG_CATEGORY>;
+// translation strings you'll need:
+/* 
+  // en:
+  {
+    _domain: {
+      search: 'Search',
+    },
+    inputs: {
+      tag_combobox: {
+        noMatchesFound: 'No matches found',
+        orAdd: ' or add yours',
+        pressEnterToAdd: 'Press Enter to add what you typed',
+      },
+    }
+  }
+  // fr:
+  {
+    _domain: {
+      search: 'Rechercher',
+    },
+    inputs: {
+      tag_combobox: {
+        noMatchesFound: 'Aucun résultat trouvé',
+        orAdd: ' ou ajoutez-le',
+        pressEnterToAdd: 'Appuyez sur Entrée pour ajouter ce que vous avez tapé',
+      },
+    },
+  }
+ */
 
 interface SearchableMultiComboboxProps {
   allowAdding?: boolean;
@@ -91,6 +71,7 @@ interface SearchableMultiComboboxProps {
   setSelected: (tags: Tag[]) => void;
   tag: TagCategory;
   customTagOptions?: Tag[]; // to convert FormOption to Tag, use value as id
+  t: any; // pass t from useI18n for stranslations
   useTags: ({ tagCategory, enabled, excludeTagSlugs, prioritySlugs, translatable, customTagOptions, }: {
     tagCategory?: TagCategory | "payment-features" | undefined;
     enabled?: boolean;
@@ -98,15 +79,15 @@ interface SearchableMultiComboboxProps {
     prioritySlugs?: string[];
     translatable?: boolean;
     customTagOptions?: Tag[];
-}) => {
-    tags: {
-        id: number;
-        slug: string;
-        label: string;
-        category: any;
-    }[] | undefined;
-    status: "loading" | "error" | "success";
-};
+  }) => {
+      tags: {
+          id: number;
+          slug: string;
+          label: string;
+          category: any;
+      }[] | undefined;
+      status: "loading" | "error" | "success";
+  };
 }
 
 const noMatchesFoundTranslatable: Translatable = {
@@ -135,10 +116,10 @@ export function SearchableMultiCombobox({
   setSelected,
   tag,
   customTagOptions, // if tagOptions are passed, we're not fetching tags
+  t,
   useTags,
   ...props
 }: SearchableMultiComboboxProps & React.InputHTMLAttributes<HTMLInputElement>) {
-  const t = useI18n();
   let prioritySlugs;
 
   // Here we can force an order for the tags of different taggable categories
