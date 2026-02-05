@@ -1,0 +1,79 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "searchable-combo-box",
+  "type": "registry:ui",
+  "title": "Searchable Combo Box",
+  "description": "A searchable multi-select combobox component with tag selection.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "command",
+    "custom-input-wrapper",
+    "popover",
+    "tag",
+    "utils"
+  ],
+  "docs": {
+    "lead": "A powerful searchable multi-select combobox component for selecting and managing multiple tags or options.",
+    "usage": "import { SearchableMultiCombobox } from \"@/components/ui/searchable-combo-box\"\nimport { useTags } from \"@/hooks/use-tags\"\n\n<SearchableMultiCombobox\n  selected={selectedTags}\n  setSelected={setSelectedTags}\n  tag=\"sector\"\n  useTags={useTags}\n  t={t}\n/>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Basic searchable multi-combobox.",
+        "code": "<SearchableMultiCombobox\n  selected={selected}\n  setSelected={setSelected}\n  tag=\"sector\"\n  useTags={useTags}\n  t={t}\n/>"
+      }
+    ],
+    "api": [
+      {
+        "name": "SearchableMultiCombobox",
+        "description": "The main searchable multi-combobox component.",
+        "props": [
+          {
+            "name": "selected",
+            "type": "Tag[]",
+            "description": "Array of selected tags."
+          },
+          {
+            "name": "setSelected",
+            "type": "(tags: Tag[]) => void",
+            "description": "Callback to update selected tags."
+          },
+          {
+            "name": "tag",
+            "type": "TagCategory",
+            "description": "The category of tags to search."
+          },
+          {
+            "name": "useTags",
+            "type": "Function",
+            "description": "Hook to fetch tags."
+          },
+          {
+            "name": "t",
+            "type": "any",
+            "description": "Translation function."
+          },
+          {
+            "name": "allowAdding",
+            "type": "boolean",
+            "default": "false",
+            "description": "Allow adding custom options."
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/searchable-combo-box.tsx",
+      "type": "registry:ui",
+      "content": "'use client';\n\nimport {\n  Command,\n  CommandEmpty,\n  CommandGroup,\n  CommandInput,\n  CommandItem,\n  CommandList,\n} from '@/components/ui/command';\nimport { CustomInputWrapper } from '@/components/ui/custom-input-wrapper';\nimport {\n  Popover,\n  PopoverContent,\n  PopoverTrigger,\n} from '@/components/ui/popover';\nimport { Tag as TagPill, TagClose } from '@/components/ui/tag';\nimport { Tag, TagCategory } from '@/lib/tag-utils';\nimport { cn } from '@/lib/utils';\nimport { Check, ChevronsUpDown } from 'lucide-react';\nimport * as React from 'react';\nimport { ReactElement, SVGProps } from 'react';\nimport {\n  LanguageType,\n  Translatable,\n} from '@/lib/searchable-combo-box-utils';\n\n// translation strings you'll need:\n/* \n  // en:\n  {\n    _domain: {\n      search: 'Search',\n    },\n    inputs: {\n      tag_combobox: {\n        noMatchesFound: 'No matches found',\n        orAdd: ' or add yours',\n        pressEnterToAdd: 'Press Enter to add what you typed',\n      },\n    }\n  }\n  // fr:\n  {\n    _domain: {\n      search: 'Rechercher',\n    },\n    inputs: {\n      tag_combobox: {\n        noMatchesFound: 'Aucun r\u00e9sultat trouv\u00e9',\n        orAdd: ' ou ajoutez-le',\n        pressEnterToAdd: 'Appuyez sur Entr\u00e9e pour ajouter ce que vous avez tap\u00e9',\n      },\n    },\n  }\n */\n\ninterface SearchableMultiComboboxProps {\n  allowAdding?: boolean;\n  className?: string;\n  disabled?: boolean;\n  excludeTagSlugs?: string[];\n  hasError?: boolean;\n  icon?: React.ReactNode;\n  isPreview?: boolean;\n  max?: number;\n  min?: number;\n  placeholder?: string;\n  selected: Tag[];\n  selectedLang?: LanguageType;\n  setSelected: (tags: Tag[]) => void;\n  tag: TagCategory;\n  customTagOptions?: Tag[]; // to convert FormOption to Tag, use value as id\n  t: any; // pass t from useI18n for stranslations\n  useTags: ({ tagCategory, enabled, excludeTagSlugs, prioritySlugs, translatable, customTagOptions, }: {\n    tagCategory?: TagCategory | \"payment-features\" | undefined;\n    enabled?: boolean;\n    excludeTagSlugs?: string[];\n    prioritySlugs?: string[];\n    translatable?: boolean;\n    customTagOptions?: Tag[];\n  }) => {\n      tags: {\n          id: number;\n          slug: string;\n          label: string;\n          category: any;\n      }[] | undefined;\n      status: \"loading\" | \"error\" | \"success\";\n  };\n}\n\nconst noMatchesFoundTranslatable: Translatable = {\n  en: 'No matches found',\n  fr: 'Aucun r\u00e9sultat trouv\u00e9',\n};\n\nconst pressEnterToAddTranslatable: Translatable = {\n  en: 'Press Enter to add what you typed',\n  fr: 'Appuyez sur Entr\u00e9e pour ajouter ce que vous avez tap\u00e9',\n};\n\nexport function SearchableMultiCombobox({\n  allowAdding,\n  className = 'w-full',\n  disabled,\n  excludeTagSlugs,\n  hasError = false,\n  icon,\n  isPreview,\n  max = Infinity,\n  min = 0,\n  placeholder = '',\n  selected,\n  selectedLang = 'en',\n  setSelected,\n  tag,\n  customTagOptions, // if tagOptions are passed, we're not fetching tags\n  t,\n  useTags,\n  ...props\n}: SearchableMultiComboboxProps & React.InputHTMLAttributes<HTMLInputElement>) {\n  let prioritySlugs;\n\n  // Here we can force an order for the tags of different taggable categories\n  if (tag === 'demographic' && !isPreview) {\n    prioritySlugs = ['not-applied-to-me'];\n  }\n\n  const [open, setOpen] = React.useState(false);\n  const { tags = [] } = useTags({\n    tagCategory: tag,\n    excludeTagSlugs,\n    prioritySlugs,\n    translatable: isPreview,\n    customTagOptions: customTagOptions,\n  });\n\n  const isTagSelected = (tag: Tag) => selected.some((t: Tag) => t.slug === tag.slug);\n\n  const handleToggle = (tag: Tag) => {\n    if (isPreview) return;\n\n    const isSelected = isTagSelected(tag);\n\n    if (isSelected) {\n      if (selected.length > min) {\n        setSelected(selected.filter((t: Tag) => t.slug !== tag.slug));\n      }\n    } else {\n      if (selected.length < max) {\n        setSelected([...selected, tag]);\n      }\n    }\n  };\n\n  let sizedIcon: React.ReactNode = null;\n  if (React.isValidElement(icon)) {\n    const svgIcon = icon as ReactElement<SVGProps<SVGSVGElement>>;\n    sizedIcon = React.cloneElement(svgIcon, {\n      className: cn(\n        'h-5 w-5 flex-shrink-0',\n        svgIcon.props.className,\n        'text-ds-soft-400'\n      ),\n    });\n  }\n\n  const recognizableTag =\n    tag === 'demographic' ||\n    tag === 'incorporation_type' ||\n    tag === 'opportunity_type' ||\n    tag === 'perk' ||\n    tag === 'sector' ||\n    tag === 'skill';\n\n  // #region CommandInput placeholder\n  const substringSearchForPreview = {\n    en: 'Search ',\n    fr: 'Rechercher ',\n  }[selectedLang as 'en' | 'fr'];\n  const substringTagCategory = customTagOptions\n    ? ''\n    : recognizableTag\n      ? isPreview\n        ? {\n            en: {\n              demographic: 'demographic',\n              incorporation_type: 'incorporation type',\n              opportunity_type: 'opportunity type',\n              perk: 'perk',\n              sector: 'sector',\n              skill: 'skill',\n            },\n            fr: {\n              demographic: 'd\u00e9mographique',\n              incorporation_type: 'type d\u2019incorporation',\n              opportunity_type: 'type d\u2019opportunit\u00e9',\n              perk: 'avantage',\n              sector: 'secteur',\n              skill: 'comp\u00e9tence',\n            },\n          }[selectedLang as 'en' | 'fr'][tag]\n        : t(`_domain.tagCategory.${tag}`)\n      : tag;\n  const substringForAllowAdding = allowAdding\n    ? isPreview\n      ? {\n          en: 'or add yours',\n          fr: 'ou ajoutez-le',\n        }[selectedLang as 'en' | 'fr']\n      : t('inputs.tag_combobox.orAdd')\n    : '';\n\n  // 'Search <tagCategory>...' or 'Search <tagCategory> or add yours...'\n  const commandInputPlaceholder: string = isPreview\n    ? `${substringSearchForPreview}${substringTagCategory}${substringForAllowAdding}`\n    : `${t('_domain.search')} ${substringTagCategory}${substringForAllowAdding}...`;\n  // #endregion\n\n  return (\n    <div className={cn('flex flex-col gap-2', className)}>\n      <ConditionalPopover\n        isPreview={isPreview}\n        open={open}\n        onOpenChange={setOpen}\n      >\n        <ConditionalPopoverTrigger isPreview={isPreview}>\n          <CustomInputWrapper\n            className={cn(\n              'flex h-9 flex-row items-center gap-2 p-2',\n              isPreview ? 'ps-4' : 'ps-2.5'\n            )}\n            hasError={hasError}\n          >\n            {sizedIcon}\n            <span\n              className={cn(\n                'flex-1',\n                isPreview ? 'inline capitalize text-ds-soft-400' : 'flex-1'\n              )}\n            >\n              {placeholder ? placeholder : `${t('_domain.select')} ${tag}`}\n            </span>\n            <ChevronsUpDown className='h-4 w-4 flex-shrink-0' />\n          </CustomInputWrapper>\n        </ConditionalPopoverTrigger>\n\n        <ConditionalPopoverContent isPreview={isPreview}>\n          <Command>\n            <CommandInput placeholder={commandInputPlaceholder} />\n\n            <CommandList>\n              <CommandEmpty>\n                <span className='text-ds-sub-600'>\n                  {isPreview\n                    ? `${noMatchesFoundTranslatable[selectedLang!]}${allowAdding ? `. ${pressEnterToAddTranslatable[selectedLang!]}` : ''}`\n                    : `${t('inputs.tag_combobox.noMatchesFound')}${allowAdding ? `. ${t('inputs.tag_combobox.pressEnterToAdd')}` : ''}`}\n                </span>\n              </CommandEmpty>\n\n              {tags.length > 0 && (\n                <CommandGroup>\n                  {tags.map((option) => {\n                    const isSelected = isTagSelected(option);\n                    const atMax = !isSelected && selected.length >= max;\n\n                    return (\n                      <CommandItem\n                        key={option.slug}\n                        onSelect={() => !atMax && handleToggle(option)}\n                        disabled={disabled || (atMax && !isSelected)}\n                      >\n                        <Check\n                          className={cn(\n                            'mr-2 h-4 w-4',\n                            isSelected ? 'opacity-100' : 'opacity-0'\n                          )}\n                        />\n                        {isPreview\n                          ? (option.label as Translatable)[selectedLang!]\n                          : option.label}\n                      </CommandItem>\n                    );\n                  })}\n                </CommandGroup>\n              )}\n            </CommandList>\n          </Command>\n        </ConditionalPopoverContent>\n      </ConditionalPopover>\n\n      {!isPreview && selected.length > 0 && (\n        <div className='flex flex-wrap gap-2'>\n          {selected.map((tag) => (\n            <TagPill key={tag.id} variant='stroke'>\n              <span className='ms-1'>{tag.label}</span>\n              <TagClose\n                onClick={() => handleToggle(tag)}\n                disabled={disabled || selected.length <= min}\n              />\n            </TagPill>\n          ))}\n        </div>\n      )}\n    </div>\n  );\n}\n\nfunction ConditionalPopover({\n  isPreview,\n  children,\n  open,\n  onOpenChange,\n}: {\n  isPreview: boolean | undefined;\n  children: React.ReactNode;\n  open: boolean;\n  onOpenChange: (open: boolean) => void;\n}) {\n  if (isPreview) {\n    return <>{children}</>;\n  }\n\n  return (\n    <Popover open={open} onOpenChange={onOpenChange}>\n      {children}\n    </Popover>\n  );\n}\n\nfunction ConditionalPopoverTrigger({\n  isPreview,\n  children,\n}: {\n  isPreview: boolean | undefined;\n  children: React.ReactNode;\n}) {\n  if (isPreview) {\n    return <>{children}</>;\n  }\n\n  return <PopoverTrigger asChild>{children}</PopoverTrigger>;\n}\n\nfunction ConditionalPopoverContent({\n  isPreview,\n  children,\n}: {\n  isPreview: boolean | undefined;\n  children: React.ReactNode;\n}) {\n  if (isPreview) {\n    return (\n      <div className='w-full rounded-12 border border-ds-soft-200 bg-popover p-0.5 text-popover-foreground shadow-regular-md outline-none'>\n        {children}\n      </div>\n    );\n  }\n\n  return (\n    <PopoverContent\n      align='start'\n      sideOffset={4}\n      className='mt-2 w-[--radix-popover-trigger-width] p-0'\n    >\n      {children}\n    </PopoverContent>\n  );\n}\n"
+    },
+    {
+      "path": "lib/searchable-combo-box-utils.ts",
+      "type": "registry:lib",
+      "content": "import { ObjectValues } from './tag-utils';\n\nexport type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &\n  U[keyof U];\n\nexport const LANGUAGE_TYPE = {\n  English: 'en',\n  French: 'fr',\n  Spanish: 'es',\n  Portuguese: 'pt',\n  German: 'de',\n  Italian: 'it',\n  Japanese: 'ja',\n  Korean: 'ko',\n  ChineseSimplified: 'zh-CN',\n  ChineseTraditional: 'zh-TW',\n  Arabic: 'ar',\n  Hindi: 'hi',\n  Russian: 'ru',\n  Turkish: 'tr',\n  Vietnamese: 'vi',\n  Polish: 'pl',\n  Dutch: 'nl',\n  Romanian: 'ro',\n  Hungarian: 'hu',\n} as const;\nexport type LanguageType = ObjectValues<typeof LANGUAGE_TYPE>;\n\nexport type Translatable = AtLeastOne<{\n  [K in LanguageType]?: string;\n}>;\n"
+    }
+  ]
+}

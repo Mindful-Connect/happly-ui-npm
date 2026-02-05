@@ -286,6 +286,18 @@
       "dependencies": ["@radix-ui/react-popover"],
       "registryDependencies": ["utils"],
       "files": [{ "path": "ui/popover.tsx", "type": "registry:ui" }]
+    },
+    {
+      "name": "searchable-combo-box",
+      "type": "registry:ui",
+      "title": "Searchable Combo Box",
+      "description": "A searchable multi-select combobox component with tag selection.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["command", "custom-input-wrapper", "popover", "tag", "utils"],
+      "files": [
+        { "path": "ui/searchable-combo-box.tsx", "type": "registry:ui" },
+        { "path": "lib/searchable-combo-box-utils.ts", "type": "registry:lib" }
+      ]
     }
   ]
 }

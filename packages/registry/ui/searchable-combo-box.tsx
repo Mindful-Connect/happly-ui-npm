@@ -8,7 +8,7 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import { CustomInputWrapper } from '@/components/ui/customInputWrapper';
+import { CustomInputWrapper } from '@/components/ui/custom-input-wrapper';
 import {
   Popover,
   PopoverContent,
