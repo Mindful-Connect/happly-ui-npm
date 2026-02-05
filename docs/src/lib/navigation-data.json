@@ -32,18 +32,6 @@
         "href": "/docs/components/card"
       },
       {
-        "title": "Command",
-        "href": "/docs/components/command"
-      },
-      {
-        "title": "Custom Input Wrapper",
-        "href": "/docs/components/custom-input-wrapper"
-      },
-      {
-        "title": "Dialog",
-        "href": "/docs/components/dialog"
-      },
-      {
         "title": "Divider",
         "href": "/docs/components/divider"
       },
@@ -52,20 +40,12 @@
         "href": "/docs/components/input"
       },
       {
-        "title": "Key Icon",
-        "href": "/docs/components/key-icon"
-      },
-      {
         "title": "Label",
         "href": "/docs/components/label"
       },
       {
         "title": "Location Input",
         "href": "/docs/components/location-input"
-      },
-      {
-        "title": "Popover",
-        "href": "/docs/components/popover"
       },
       {
         "title": "Radio Card Group",
@@ -90,6 +70,32 @@
       {
         "title": "Textarea",
         "href": "/docs/components/textarea"
+      },
+      {
+        "title": "Support components",
+        "links": [
+          {
+            "title": "Command",
+            "href": "/docs/components/command"
+          },
+          {
+            "title": "Custom Input Wrapper",
+            "href": "/docs/components/custom-input-wrapper"
+          },
+          {
+            "title": "Dialog",
+            "href": "/docs/components/dialog"
+          },
+          {
+            "title": "Key Icon",
+            "href": "/docs/components/key-icon"
+          },
+          {
+            "title": "Popover",
+            "href": "/docs/components/popover"
+          }
+        ],
+        "collapsed": true
       }
     ]
   }
