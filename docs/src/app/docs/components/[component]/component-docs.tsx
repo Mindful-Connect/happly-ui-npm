@@ -40,6 +40,7 @@ import { DemoSocialsInput } from '@/components/demos/demo-socials-input'
 import { DemoInput } from '@/components/demos/demo-input'
 import { DemoSelect } from '@/components/demos/demo-select'
 import { DemoTag } from '@/components/demos/demo-tag'
+import { DemoSearchableComboBox } from '@/components/demos/demo-searchable-combo-box'
 
 // Helper to render children safely
 function renderPreviewChildren(children?: string | ComponentPreviewConfig[]) {
@@ -123,6 +124,8 @@ function PreviewItem({ config }: { config: ComponentPreviewConfig }) {
       return (
         <DemoTag {...(props as any)}>{renderPreviewChildren(children)}</DemoTag>
       )
+    case 'searchable-combo-box':
+      return <DemoSearchableComboBox />
     default:
       return null
   }

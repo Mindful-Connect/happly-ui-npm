@@ -21,7 +21,14 @@
       {
         "title": "Default",
         "description": "Basic searchable multi-combobox.",
-        "code": "<SearchableMultiCombobox\n  selected={selected}\n  setSelected={setSelected}\n  tag=\"sector\"\n  useTags={useTags}\n  t={t}\n/>"
+        "code": "<SearchableMultiCombobox\n  selected={selected}\n  setSelected={setSelected}\n  tag=\"sector\"\n  useTags={useTags}\n  t={t}\n/>",
+        "preview": [
+          {
+            "component": "searchable-combo-box",
+            "props": {},
+            "children": ""
+          }
+        ]
       }
     ],
     "api": [

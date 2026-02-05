@@ -124,7 +124,11 @@
     0 0 0 4px var(--color-ds-alpha-neutral-16);
 
   /* Border Radius */
+  --radius-8: 0.5rem;
   --radius-10: 0.625rem;
+  --radius-12: 0.75rem;
+  --radius-16: 1rem;
+  --radius-20: 1.25rem;
 }
 
 /* Base Variable Definitions (Simulated from sibling repo themes) */

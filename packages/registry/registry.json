@@ -297,7 +297,25 @@
       "files": [
         { "path": "ui/searchable-combo-box.tsx", "type": "registry:ui" },
         { "path": "lib/searchable-combo-box-utils.ts", "type": "registry:lib" }
-      ]
+      ],
+      "docs": {
+        "lead": "A searchable multi-select combobox component with tag selection.",
+        "usage": "import { SearchableMultiCombobox } from \"@/components/ui/searchable-combo-box\"\n\n// See demo for complete usage example",
+        "examples": [
+          {
+            "title": "Default",
+            "description": "Default usage with mock data.",
+            "code": "<SearchableMultiCombobox\n  selected={selected}\n  setSelected={setSelected}\n  tag=\"skill\"\n  t={t}\n  useTags={useTags}\n  placeholder=\"Select skills...\"\n  allowAdding\n/>",
+            "preview": [
+              {
+                "component": "searchable-combo-box",
+                "props": {},
+                "children": ""
+              }
+            ]
+          }
+        ]
+      }
     }
   ]
 }

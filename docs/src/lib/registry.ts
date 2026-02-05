@@ -54,6 +54,7 @@ export interface ComponentPreviewConfig {
     | 'select'
     | 'location-input'
     | 'tag'
+    | 'searchable-combo-box'
   props?: Record<string, unknown>
   children?: string | ComponentPreviewConfig[]
 }
