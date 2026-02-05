@@ -223,7 +223,60 @@
         "react-icons"
       ],
       "registryDependencies": ["utils"],
-      "files": [{ "path": "ui/tag.tsx", "type": "registry:ui" }]
+      "files": [
+        { "path": "ui/tag.tsx", "type": "registry:ui" },
+        { "path": "lib/tag-utils.ts", "type": "registry:lib" }
+      ],
+      "docs": {
+        "lead": "A tag component for labeling and categorization.",
+        "usage": "import { Tag, TagIcon, TagClose } from \"@/components/ui/tag\"\n\n<Tag variant=\"stroke\">\n  <TagIcon><Icon /></TagIcon>\n  Label\n  <TagClose />\n</Tag>",
+        "examples": [
+          {
+            "title": "Default",
+            "description": "Default tag variant.",
+            "code": "<Tag variant=\"stroke\">Tag Label</Tag>",
+            "preview": [
+              {
+                "component": "tag",
+                "props": { "variant": "stroke" },
+                "children": "Tag Label"
+              }
+            ]
+          },
+          {
+            "title": "Gray Variant",
+            "description": "Gray background variant.",
+            "code": "<Tag variant=\"gray\">Gray Tag</Tag>",
+            "preview": [
+              {
+                "component": "tag",
+                "props": { "variant": "gray" },
+                "children": "Gray Tag"
+              }
+            ]
+          }
+        ],
+        "api": [
+          {
+            "name": "Tag",
+            "description": "The main Tag component.",
+            "props": [
+              {
+                "name": "variant",
+                "type": "'stroke' | 'gray'",
+                "default": "'stroke'",
+                "description": "The visual style of the tag."
+              },
+              {
+                "name": "disabled",
+                "type": "boolean",
+                "default": "false",
+                "description": "Whether the tag is disabled."
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "name": "popover",

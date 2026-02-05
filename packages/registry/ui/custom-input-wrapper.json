@@ -1,0 +1,18 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "custom-input-wrapper",
+  "type": "registry:ui",
+  "title": "Custom Input Wrapper",
+  "description": "A wrapper for custom inputs with consistent styling.",
+  "dependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "ui/custom-input-wrapper.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from 'react';\nimport { cn } from '@/lib/utils';\n\ntype CustomInputWrapperProps = React.HTMLAttributes<HTMLDivElement> & {\n  hasError?: boolean;\n  disabled?: boolean;\n};\n\nexport const CustomInputWrapper = React.forwardRef<\n  HTMLDivElement,\n  CustomInputWrapperProps\n>(\n  (\n    { className, hasError = false, disabled = false, children, ...props },\n    ref\n  ) => {\n    return (\n      <div\n        ref={ref}\n        className={cn(\n          // ─── container reset & layout ─────────────────────────────────────────\n          'group relative block w-full rounded-12 bg-ds-white-0 shadow-regular-xs',\n          disabled\n            ? 'bg-ds-weak-50'\n            : 'hover:[&:not(:focus-within)]:bg-ds-weak-50',\n          // ─── ring (inset) ────────────────────────────────────────────────────\n          hasError\n            ? 'ring-1 ring-inset ring-ds-error-base hover:ring-ds-error-base'\n            : 'ring-1 ring-inset ring-ds-stroke-soft-200 hover:[&:not(:focus-within)]:ring-transparent',\n          // ─── focus ring & shadow ─────────────────────────────────────────────\n          'focus-within:ring-1 focus-within:ring-inset',\n          hasError\n            ? 'focus-within:shadow-button-error-focus focus-within:ring-ds-error-base'\n            : 'focus-within:shadow-button-important-focus focus-within:ring-ds-stroke-strong-950',\n          // ─── transitions & state resets ──────────────────────────────────────\n          'transition duration-200 ease-out',\n          disabled && 'ring-transparent',\n          className\n        )}\n        {...props}\n      >\n        {children}\n      </div>\n    );\n  }\n);\nCustomInputWrapper.displayName = 'CustomInputWrapper';\n"
+    }
+  ]
+}

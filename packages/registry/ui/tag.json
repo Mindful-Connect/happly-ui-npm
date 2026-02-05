@@ -1,0 +1,75 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "tag",
+  "type": "registry:ui",
+  "title": "Tag",
+  "description": "A tag component for labeling and categorization.",
+  "dependencies": [
+    "@radix-ui/react-slot",
+    "class-variance-authority",
+    "react-icons"
+  ],
+  "registryDependencies": ["utils"],
+  "docs": {
+    "lead": "A tag component for labeling and categorization.",
+    "usage": "import { Tag, TagIcon, TagClose } from \"@/components/ui/tag\"\n\n<Tag variant=\"stroke\">\n  <TagIcon><Icon /></TagIcon>\n  Label\n  <TagClose />\n</Tag>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Default tag variant.",
+        "code": "<Tag variant=\"stroke\">Tag Label</Tag>",
+        "preview": [
+          {
+            "component": "tag",
+            "props": { "variant": "stroke" },
+            "children": "Tag Label"
+          }
+        ]
+      },
+      {
+        "title": "Gray Variant",
+        "description": "Gray background variant.",
+        "code": "<Tag variant=\"gray\">Gray Tag</Tag>",
+        "preview": [
+          {
+            "component": "tag",
+            "props": { "variant": "gray" },
+            "children": "Gray Tag"
+          }
+        ]
+      }
+    ],
+    "api": [
+      {
+        "name": "Tag",
+        "description": "The main Tag component.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'stroke' | 'gray'",
+            "default": "'stroke'",
+            "description": "The visual style of the tag."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Whether the tag is disabled."
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/tag.tsx",
+      "type": "registry:ui",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport { Slot } from '@radix-ui/react-slot';\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport { cn } from '@/lib/utils';\nimport { RiCloseFill } from 'react-icons/ri';\n\nimport {\n  // type ObjectValues,\n  // TAG_CATEGORY,\n  // type TagCategory,\n  // type Tag as TagInterface,\n} from '@/lib/tag-utils';\n\n// export type { ObjectValues, TagCategory };\n// export type Tag = TagInterface;\n// export { TAG_CATEGORY };\n\n/**\n * shadcn/ui Tag component\n *\n * Usage:\n * <Tag variant=\"stroke\">Label</Tag>\n * <Tag variant=\"stroke\">\n *   <Tag.Icon><Icon /></Tag.Icon>\n *   Text\n *   <Tag.Close />\n * </Tag>\n */\n\nexport const tagRoot = cva(\n  [\n    'group inline-flex items-center min-h-[36px] gap-2 rounded-lg px-2 !text-label-sm text-ds-sub-600',\n    'transition duration-200 ease-out ring-1 ring-inset',\n  ].join(' '),\n  {\n    variants: {\n      variant: {\n        stroke: [\n          'bg-ds-white-0 ring-ds-stroke-soft-200',\n          'hover:bg-ds-weak-50 hover:ring-transparent',\n          'focus-within:bg-ds-weak-50 focus-within:ring-transparent',\n        ].join(' '),\n        gray: [\n          'bg-ds-weak-50 ring-transparent',\n          'hover:bg-ds-white-0 hover:ring-ds-stroke-soft-200',\n        ].join(' '),\n      },\n      disabled: {\n        true: [\n          'pointer-events-none bg-ds-weak-50 text-ds-disabled-300 ring-transparent',\n        ].join(' '),\n      },\n    },\n    defaultVariants: {\n      variant: 'stroke',\n      disabled: false,\n    },\n  }\n);\n\nexport interface TagProps\n  extends React.HTMLAttributes<HTMLDivElement>,\n    VariantProps<typeof tagRoot> {\n  asChild?: boolean;\n}\n\nexport const Tag = React.forwardRef<HTMLDivElement, TagProps>(\n  ({ asChild, variant, disabled, className, children, ...props }, ref) => {\n    const Comp = asChild ? Slot : 'div';\n    return (\n      <Comp\n        ref={ref}\n        className={cn(tagRoot({ variant, disabled, class: className }))}\n        aria-disabled={disabled ?? undefined}\n        {...props}\n      >\n        {children}\n      </Comp>\n    );\n  }\n);\nTag.displayName = 'Tag';\n\n// Slot for an icon inside the Tag\ntype TagIconProps = {\n  asChild?: boolean;\n} & VariantProps<typeof tagRoot> &\n  React.HTMLAttributes<HTMLElement>;\n\nexport const TagIcon = React.forwardRef<HTMLElement, TagIconProps>(\n  ({ asChild, variant, disabled, className, ...props }, ref) => {\n    const Comp = asChild ? Slot : 'span';\n    return (\n      <Comp\n        ref={ref}\n        className={cn(\n          'flex h-4 w-4 shrink-0 select-none items-center justify-center',\n          'text-ds-soft-400 transition duration-200 ease-out',\n          'group-focus-within:text-ds-sub-600 group-hover:text-ds-sub-600',\n          className\n        )}\n        {...props}\n      />\n    );\n  }\n);\nTagIcon.displayName = 'TagIcon';\n\n// Dismiss (close) button inside Tag\nexport type TagCloseProps = Omit<VariantProps<typeof tagRoot>, 'disabled'> &\n  React.ButtonHTMLAttributes<HTMLButtonElement> & {\n    asChild?: boolean;\n    disabled?: boolean;\n  };\n\nexport const TagClose = React.forwardRef<HTMLButtonElement, TagCloseProps>(\n  ({ asChild, variant, disabled, className, ...props }, ref) => {\n    const Comp = asChild ? Slot : 'button';\n    return (\n      <Comp\n        ref={ref}\n        type='button'\n        className={cn(\n          'flex h-4 w-4 shrink-0 items-center justify-center focus:outline-none',\n          'text-ds-soft-400 transition duration-200 ease-out',\n          'group-focus-within:text-ds-sub-600 group-hover:text-ds-sub-600',\n          className\n        )}\n        aria-disabled={disabled}\n        {...props}\n      >\n        <RiCloseFill className='h-4 w-4' />\n      </Comp>\n    );\n  }\n);\nTagClose.displayName = 'TagClose';\n"
+    },
+    {
+      "path": "lib/tag-utils.ts",
+      "type": "registry:lib",
+      "content": "export type ObjectValues<T> = T[keyof T];\n\nexport const TAG_CATEGORY = {\n  Sector: 'sector',\n  Skill: 'skill',\n  OpportunityType: 'opportunity_type',\n  Perk: 'perk',\n  Demographic: 'demographic',\n  IncorporationType: 'incorporation_type',\n  General: 'general',\n  SpaceAccommodation: 'space_accommodation',\n  LiveStreamTopic: 'live_stream_topic',\n  EventTopic: 'event_topic',\n  Group: 'group',\n} as const;\nexport type TagCategory = ObjectValues<typeof TAG_CATEGORY>;\n\nexport interface Tag {\n  id: number;\n  slug: string;\n  label: string;\n  category: TagCategory;\n}\n"
+    }
+  ]
+}

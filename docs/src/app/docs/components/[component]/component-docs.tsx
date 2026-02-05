@@ -39,6 +39,7 @@ import { DemoLocationInput } from '@/components/demos/demo-location-input'
 import { DemoSocialsInput } from '@/components/demos/demo-socials-input'
 import { DemoInput } from '@/components/demos/demo-input'
 import { DemoSelect } from '@/components/demos/demo-select'
+import { DemoTag } from '@/components/demos/demo-tag'
 
 // Helper to render children safely
 function renderPreviewChildren(children?: string | ComponentPreviewConfig[]) {
@@ -118,6 +119,10 @@ function PreviewItem({ config }: { config: ComponentPreviewConfig }) {
           {renderPreviewChildren(children)}
         </FormGroup>
       )
+    case 'tag':
+      return (
+        <DemoTag {...(props as any)}>{renderPreviewChildren(children)}</DemoTag>
+      )
     default:
       return null
   }
@@ -159,6 +164,15 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
     docs,
     files,
   } = component
+
+  const supportComponents = [
+    'command',
+    'custom-input-wrapper',
+    'dialog',
+    'popover',
+    'key-icon',
+  ]
+  const isSupportComponent = supportComponents.includes(name)
 
   // Extract source code from the first file
   const sourceCode = files?.[0]?.content || ''
@@ -245,6 +259,19 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
           <Prose>
             {/* Lead paragraph */}
             <p className="lead">{docs?.lead || description}</p>
+
+            {isSupportComponent && (
+              <div className="my-4 border-l-4 border-amber-500 bg-amber-50 p-4 dark:border-amber-500/50 dark:bg-amber-900/20">
+                <div className="flex">
+                  <div className="ml-3">
+                    <p className="text-sm text-amber-700 dark:text-amber-200">
+                      This component is not a standalone one but is used to
+                      support other components.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
 
             <div id="input" className="scroll-mt-24" />
             <hr />

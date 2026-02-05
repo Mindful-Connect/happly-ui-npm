@@ -32,6 +32,18 @@
         "href": "/docs/components/card"
       },
       {
+        "title": "Command",
+        "href": "/docs/components/command"
+      },
+      {
+        "title": "Custom Input Wrapper",
+        "href": "/docs/components/custom-input-wrapper"
+      },
+      {
+        "title": "Dialog",
+        "href": "/docs/components/dialog"
+      },
+      {
         "title": "Divider",
         "href": "/docs/components/divider"
       },
@@ -52,6 +64,10 @@
         "href": "/docs/components/location-input"
       },
       {
+        "title": "Popover",
+        "href": "/docs/components/popover"
+      },
+      {
         "title": "Radio Card Group",
         "href": "/docs/components/radio-card-group"
       },
@@ -66,6 +82,10 @@
       {
         "title": "Socials Input",
         "href": "/docs/components/socials-input"
+      },
+      {
+        "title": "Tag",
+        "href": "/docs/components/tag"
       },
       {
         "title": "Textarea",

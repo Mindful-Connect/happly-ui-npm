@@ -53,6 +53,7 @@ export interface ComponentPreviewConfig {
     | 'socials-input'
     | 'select'
     | 'location-input'
+    | 'tag'
   props?: Record<string, unknown>
   children?: string | ComponentPreviewConfig[]
 }
