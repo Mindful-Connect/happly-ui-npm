@@ -51,6 +51,8 @@ export interface ComponentPreviewConfig {
     | 'radio-card-group'
     | 'calendar-input'
     | 'socials-input'
+    | 'select'
+    | 'location-input'
   props?: Record<string, unknown>
   children?: string | ComponentPreviewConfig[]
 }

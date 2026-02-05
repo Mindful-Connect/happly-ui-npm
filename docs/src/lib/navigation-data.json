@@ -48,12 +48,20 @@
         "href": "/docs/components/label"
       },
       {
+        "title": "Location Input",
+        "href": "/docs/components/location-input"
+      },
+      {
         "title": "Radio Card Group",
         "href": "/docs/components/radio-card-group"
       },
       {
         "title": "Radio Group",
         "href": "/docs/components/radio-group"
+      },
+      {
+        "title": "Select",
+        "href": "/docs/components/select"
       },
       {
         "title": "Socials Input",

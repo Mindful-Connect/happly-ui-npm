@@ -149,6 +149,33 @@
       ],
       "registryDependencies": ["utils", "input"],
       "files": [{ "path": "ui/socials-input.tsx", "type": "registry:ui" }]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "A customized select component based on Radix UI.",
+      "dependencies": [
+        "@radix-ui/react-select",
+        "@radix-ui/react-scroll-area",
+        "class-variance-authority",
+        "react-icons"
+      ],
+      "registryDependencies": ["utils"],
+      "files": [{ "path": "ui/select.tsx", "type": "registry:ui" }]
+    },
+    {
+      "name": "location-input",
+      "type": "registry:ui",
+      "title": "Location Input",
+      "description": "A Google Maps address autocomplete input.",
+      "dependencies": [
+        "use-debounce",
+        "@googlemaps/js-api-loader",
+        "@headlessui/react"
+      ],
+      "registryDependencies": ["utils"],
+      "files": [{ "path": "ui/location-input.tsx", "type": "registry:ui" }]
     }
   ]
 }

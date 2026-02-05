@@ -35,8 +35,10 @@ interface ComponentDocsProps {
 import { DemoPhoneInput } from '@/components/demos/demo-phone-input'
 import DemoRadioCardGroup from '@/components/demos/demo-radio-card-group'
 import { DemoCalendarInput } from '@/components/demos/demo-calendar-input'
+import { DemoLocationInput } from '@/components/demos/demo-location-input'
 import { DemoSocialsInput } from '@/components/demos/demo-socials-input'
 import { DemoInput } from '@/components/demos/demo-input'
+import { DemoSelect } from '@/components/demos/demo-select'
 
 // Helper to render children safely
 function renderPreviewChildren(children?: string | ComponentPreviewConfig[]) {
@@ -58,8 +60,12 @@ function PreviewItem({ config }: { config: ComponentPreviewConfig }) {
       return <DemoRadioCardGroup />
     case 'calendar-input':
       return <DemoCalendarInput />
+    case 'location-input':
+      return <DemoLocationInput />
     case 'socials-input':
       return <DemoSocialsInput />
+    case 'select':
+      return <DemoSelect />
     case 'button':
       return (
         <DemoButton {...(props as any)}>
