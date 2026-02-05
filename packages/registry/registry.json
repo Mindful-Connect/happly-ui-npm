@@ -176,6 +176,63 @@
       ],
       "registryDependencies": ["utils"],
       "files": [{ "path": "ui/location-input.tsx", "type": "registry:ui" }]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "description": "Fast, composable, unstyled command menu for React.",
+      "dependencies": [
+        "cmdk",
+        "@radix-ui/react-dialog",
+        "react-icons",
+        "@radix-ui/react-scroll-area"
+      ],
+      "registryDependencies": ["dialog", "utils"],
+      "files": [{ "path": "ui/command.tsx", "type": "registry:ui" }]
+    },
+    {
+      "name": "custom-input-wrapper",
+      "type": "registry:ui",
+      "title": "Custom Input Wrapper",
+      "description": "A predefined wrapper for custom inputs.",
+      "dependencies": [],
+      "registryDependencies": ["utils"],
+      "files": [{ "path": "ui/custom-input-wrapper.tsx", "type": "registry:ui" }]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "A window overlaid on either the primary window or another dialog, rendering the content underneath inert.",
+      "dependencies": [
+        "@radix-ui/react-dialog",
+        "react-icons"
+      ],
+      "registryDependencies": ["utils"],
+      "files": [{ "path": "ui/dialog.tsx", "type": "registry:ui" }]
+    },
+    {
+      "name": "tag",
+      "type": "registry:ui",
+      "title": "Tag",
+      "description": "A tag component for labeling and categorization.",
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "class-variance-authority",
+        "react-icons"
+      ],
+      "registryDependencies": ["utils"],
+      "files": [{ "path": "ui/tag.tsx", "type": "registry:ui" }]
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "Displays rich content in a portal, triggered by a button.",
+      "dependencies": ["@radix-ui/react-popover"],
+      "registryDependencies": ["utils"],
+      "files": [{ "path": "ui/popover.tsx", "type": "registry:ui" }]
     }
   ]
 }
