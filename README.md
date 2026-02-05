@@ -248,6 +248,16 @@ Include a `docs` field for automatic documentation generation:
 ```json
 {
   "name": "my-component",
+  "files": [
+    {
+      "path": "ui/my-component.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "lib/my-utils.ts",
+      "type": "registry:lib"
+    }
+  ],
   "docs": {
     "lead": "Component description",
     "usage": "import * as MyComponent from '@/components/ui/my-component'",
@@ -269,6 +279,10 @@ Include a `docs` field for automatic documentation generation:
   }
 }
 ```
+
+**Note on Files:**
+You can include multiple files in a component. The CLI will maintain the file names and place them in the correct directory based on their `type` (e.g., `registry:ui` goes to `components/ui`, `registry:lib` goes to `lib/`).
+
 
 ### Adding Preview Components
 

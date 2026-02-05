@@ -114,7 +114,13 @@ export async function add(
   const existingFiles: string[] = [];
   for (const item of items) {
     for (const file of item.files) {
-      const targetPath = getComponentPath(item.name, item.type, config);
+      // Use the file's type if available, otherwise fallback to item's type
+      const fileType = file.type || item.type;
+      
+      // Extract filename from path (e.g. "lib/utils.ts" -> "utils.ts")
+      const fileName = path.basename(file.path);
+      
+      const targetPath = getComponentPath(item.name, fileType, config, fileName);
       if (componentExists(cwd, targetPath)) {
         existingFiles.push(targetPath);
       }
@@ -147,7 +153,13 @@ export async function add(
   try {
     for (const item of items) {
       for (const file of item.files) {
-        const targetPath = getComponentPath(item.name, item.type, config);
+        // Use the file's type if available, otherwise fallback to item's type
+        const fileType = file.type || item.type;
+        
+        // Extract filename from path (e.g. "lib/utils.ts" -> "utils.ts")
+        const fileName = path.basename(file.path);
+
+        const targetPath = getComponentPath(item.name, fileType, config, fileName);
         const transformedContent = transformComponent(file, config);
         await writeComponentFile(cwd, targetPath, transformedContent);
         writtenFiles.push(targetPath);

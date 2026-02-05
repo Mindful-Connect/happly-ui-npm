@@ -76,32 +76,36 @@ export function resolveAlias(alias: string, config: HapplyConfig): string {
 export function getComponentPath(
   componentName: string,
   componentType: string,
-  config: HapplyConfig
+  config: HapplyConfig,
+  fileName?: string
 ): string {
   const ext = config.tsx ? ".tsx" : ".jsx";
   const srcPrefix = config.srcDir ? "src/" : "";
+
+  // If fileName is provided, use it. Otherwise construct from componentName
+  const finalFileName = fileName || `${componentName}${ext}`;
 
   switch (componentType) {
     case "registry:ui":
     case "registry:component":
       return path.join(
         srcPrefix + config.aliases.ui.replace("@/", ""),
-        `${componentName}${ext}`
+        finalFileName
       );
     case "registry:hook":
       return path.join(
         srcPrefix + (config.aliases.hooks || "@/hooks").replace("@/", ""),
-        `${componentName}${ext}`
+        finalFileName
       );
     case "registry:lib":
       return path.join(
         srcPrefix + (config.aliases.lib || "@/lib").replace("@/", ""),
-        `${componentName}${ext}`
+        finalFileName
       );
     default:
       return path.join(
         srcPrefix + config.aliases.ui.replace("@/", ""),
-        `${componentName}${ext}`
+        finalFileName
       );
   }
 }
