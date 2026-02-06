@@ -19,7 +19,7 @@ export const CustomInputWrapper = React.forwardRef<
         ref={ref}
         className={cn(
           // ─── container reset & layout ─────────────────────────────────────────
-          'group relative block w-full rounded-12 bg-ds-white-0 shadow-regular-xs',
+          'group shadow-regular-xs relative block w-full rounded-12 bg-white',
           disabled
             ? 'bg-ds-weak-50'
             : 'hover:[&:not(:focus-within)]:bg-ds-weak-50',

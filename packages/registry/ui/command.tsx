@@ -40,7 +40,10 @@ const CommandInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...props }, ref) => (
-  <div className='flex items-center border-b px-3' cmdk-input-wrapper=''>
+  <div
+    className="flex items-center border-b bg-white px-3"
+    cmdk-input-wrapper=""
+  >
     <RiSearchLine className='mr-2 h-4 w-4 shrink-0 opacity-50' />
     <CommandPrimitive.Input
       ref={ref}
@@ -64,6 +67,7 @@ const CommandList = React.forwardRef<
   <ScrollAreaPrimitives.Root type='auto' className='w-full'>
     <ScrollAreaPrimitives.Viewport
       className={cn(
+        'bg-white',
         'max-h-[300px] w-full scroll-py-2', // Padding if needed
         'overflow-x-hidden' // Prevent x-scrollbars
       )}

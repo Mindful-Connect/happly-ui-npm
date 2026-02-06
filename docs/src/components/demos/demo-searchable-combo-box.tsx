@@ -7,6 +7,14 @@ import { Tag } from '@/lib/tag-utils'
 const mockTranslations = {
   _domain: {
     search: 'Search',
+    tagCategory: {
+      demographic: 'demographic',
+      incorporation_type: 'incorporation type',
+      opportunity_type: 'opportunity type',
+      perk: 'perk',
+      sector: 'sector',
+      skill: 'skill',
+    },
   },
   inputs: {
     tag_combobox: {
@@ -356,7 +364,15 @@ const mockTags = [
 export function DemoSearchableComboBox() {
   const [selected, setSelected] = React.useState<Tag[]>([])
 
-  const t = (key: string) => (mockTranslations as any)[key] // Mock translation function
+  // Mock translation function
+  const t = (key: string) => {
+    const keys = key.split('.')
+    let translation = mockTranslations
+    for (const k of keys) {
+      translation = (translation as any)[k]
+    }
+    return translation
+  }
 
   const useTags = ({ customTagOptions }: any) => {
     return {
