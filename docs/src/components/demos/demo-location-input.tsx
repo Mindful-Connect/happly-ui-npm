@@ -9,18 +9,6 @@ export function DemoLocationInput() {
       <Section title="Default">
         <LocationInput location={location} setLocation={setLocation} />
       </Section>
-
-      <Section title="With Placeholder">
-        <LocationInput
-          location={location}
-          setLocation={setLocation}
-          placeholder="Search for a city..."
-        />
-      </Section>
-
-      <div className="mt-4 overflow-auto rounded bg-gray-100 p-4 text-xs">
-        <pre>{JSON.stringify(location, null, 2)}</pre>
-      </div>
     </div>
   )
 }

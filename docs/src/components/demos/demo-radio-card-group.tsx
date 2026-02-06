@@ -386,10 +386,8 @@ export default function DemoRadioCardGroup() {
   const [basicValue, setBasicValue] = useState('personal')
   const [iconValue, setIconValue] = useState('card')
   const [complexValue, setComplexValue] = useState('pro')
-  const [simpleValue, setSimpleValue] = useState('card')
   const [deselectValue, setDeselectValue] = useState<string>('personal')
-  const [noHighlightValue, setNoHighlightValue] = useState('personal')
-  const [primaryValue, setPrimaryValue] = useState('team')
+
   const [noDescriptionValue, setNoDescriptionValue] = useState('medium')
 
   return (
@@ -437,20 +435,6 @@ export default function DemoRadioCardGroup() {
         />
       </div>
 
-      {/* Simple Icons Style */}
-      <div className="flex flex-col gap-4">
-        <h3 className="text-lg font-semibold">Simple Icons Style</h3>
-        <p className="text-sm text-gray-500">
-          Use shorter spacing for icons with <code>simpleIcons</code>.
-        </p>
-        <RadioCardGroup
-          items={iconItems}
-          value={simpleValue}
-          onValueChange={setSimpleValue}
-          simpleIcons={true}
-        />
-      </div>
-
       {/* With Badges and Descriptions */}
       <div className="flex flex-col gap-4">
         <h3 className="text-lg font-semibold">With Badges</h3>
@@ -478,35 +462,6 @@ export default function DemoRadioCardGroup() {
         />
       </div>
 
-      {/* No Border Highlight */}
-      <div className="flex flex-col gap-4">
-        <h3 className="text-lg font-semibold">No Border Highlight</h3>
-        <p className="text-sm text-gray-500">
-          Selected items do not get a colored border when{' '}
-          <code>noBorderHighlightWhenSeected</code> is true.
-        </p>
-        <RadioCardGroup
-          items={basicItems}
-          value={noHighlightValue}
-          onValueChange={setNoHighlightValue}
-          noBorderHighlightWhenSeected={true}
-        />
-      </div>
-
-      {/* Primary Variant */}
-      <div className="flex flex-col gap-4">
-        <h3 className="text-lg font-semibold">Primary Variant</h3>
-        <p className="text-sm text-gray-500">
-          Highlights the selected item with the primary brand color.
-        </p>
-        <RadioCardGroup
-          items={basicItems}
-          value={primaryValue}
-          onValueChange={setPrimaryValue}
-          variant="primary"
-        />
-      </div>
-
       {/* Disabled State */}
       <div className="flex flex-col gap-4">
         <h3 className="text-lg font-semibold">Disabled</h3>
@@ -515,24 +470,6 @@ export default function DemoRadioCardGroup() {
           value="personal"
           onValueChange={() => {}}
           disabled={true}
-        />
-      </div>
-
-      {/* Read Only Item */}
-      <div className="flex flex-col gap-4">
-        <h3 className="text-lg font-semibold">Read Only Item</h3>
-        <RadioCardGroup
-          items={[
-            ...basicItems,
-            {
-              title: 'Legacy Plan',
-              value: 'legacy',
-              description: 'No longer available for new signups',
-              readOnly: true,
-            },
-          ]}
-          value={basicValue}
-          onValueChange={setBasicValue}
         />
       </div>
     </div>
