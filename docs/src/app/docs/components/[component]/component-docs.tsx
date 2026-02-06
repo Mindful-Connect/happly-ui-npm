@@ -41,6 +41,7 @@ import { DemoInput } from '@/components/demos/demo-input'
 import { DemoSelect } from '@/components/demos/demo-select'
 import { DemoTag } from '@/components/demos/demo-tag'
 import { DemoSearchableComboBox } from '@/components/demos/demo-searchable-combo-box'
+import { DemoCurrencyInput } from '@/components/demos/demo-currency-input'
 
 // Helper to render children safely
 function renderPreviewChildren(children?: string | ComponentPreviewConfig[]) {
@@ -126,6 +127,8 @@ function PreviewItem({ config }: { config: ComponentPreviewConfig }) {
       )
     case 'searchable-combo-box':
       return <DemoSearchableComboBox />
+    case 'currency-input':
+      return <DemoCurrencyInput />
     default:
       return null
   }
@@ -184,6 +187,7 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
   const exports = extractExports(sourceCode)
 
   const phoneInput = (docs as any)?.phoneInput
+  const currencyInput = (docs as any)?.currencyInput
 
   // Construct Table of Contents
   const inputChildren: import('@/lib/sections').Subsection[] = [
@@ -251,6 +255,47 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
       title: 'Phone Input',
       level: 2,
       children: phoneChildren,
+    })
+  }
+
+  if (currencyInput) {
+    const currencyChildren: import('@/lib/sections').Subsection[] = []
+    currencyChildren.push({
+      id: 'currency-input-installation',
+      title: 'Installation',
+      level: 3,
+    })
+    if (currencyInput.dependencies && currencyInput.dependencies.length > 0) {
+      currencyChildren.push({
+        id: 'currency-input-dependencies',
+        title: 'Dependencies',
+        level: 3,
+      })
+    }
+    currencyChildren.push({
+      id: 'currency-input-usage',
+      title: 'Usage',
+      level: 3,
+    })
+    if (currencyInput.examples && currencyInput.examples.length > 0) {
+      currencyChildren.push({
+        id: 'currency-input-examples',
+        title: 'Examples',
+        level: 3,
+      })
+    }
+    if (currencyInput.api && currencyInput.api.length > 0) {
+      currencyChildren.push({
+        id: 'currency-input-api',
+        title: 'API Reference',
+        level: 3,
+      })
+    }
+    tableOfContents.push({
+      id: 'currency-input',
+      title: 'Currency Input',
+      level: 2,
+      children: currencyChildren,
     })
   }
 
@@ -462,6 +507,122 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
                     <>
                       <h3 id="phone-input-api">API Reference</h3>
                       {phoneInput.api.map((apiItem: any, index: number) => (
+                        <div key={index} className="mb-8">
+                          <h4>{apiItem.name}</h4>
+                          {apiItem.description && <p>{apiItem.description}</p>}
+                          <div className="overflow-x-auto">
+                            <table>
+                              <thead>
+                                <tr>
+                                  <th>Prop</th>
+                                  <th>Type</th>
+                                  <th>Default</th>
+                                  <th>Description</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {apiItem.props.map(
+                                  (prop: any, propIndex: number) => (
+                                    <tr key={propIndex}>
+                                      <td>
+                                        <code>{prop.name}</code>
+                                      </td>
+                                      <td>
+                                        <code className="text-xs">
+                                          {prop.type}
+                                        </code>
+                                      </td>
+                                      <td>
+                                        {prop.default ? (
+                                          <code>{prop.default}</code>
+                                        ) : (
+                                          '-'
+                                        )}
+                                      </td>
+                                      <td>{prop.description}</td>
+                                    </tr>
+                                  ),
+                                )}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      ))}
+                    </>
+                  )}
+                </div>
+              </>
+            )}
+
+            {/* Currency Input Section */}
+            {currencyInput && (
+              <>
+                <div className="mt-16">
+                  <h2
+                    id="currency-input"
+                    className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white"
+                  >
+                    {currencyInput.title || 'Currency Input'}
+                  </h2>
+                  {currencyInput.lead && (
+                    <p className="lead mt-4">{currencyInput.lead}</p>
+                  )}
+
+                  <hr />
+
+                  {/* Currency Input Installation */}
+                  <h3 id="currency-input-installation">Installation</h3>
+                  <Fence language="bash">{`bunx @happlyui/cli@latest add currency-input`}</Fence>
+
+                  <hr />
+
+                  {/* Currency Input Dependencies */}
+                  {currencyInput.dependencies &&
+                    currencyInput.dependencies.length > 0 && (
+                      <>
+                        <h3 id="currency-input-dependencies">Dependencies</h3>
+                        <ul>
+                          {currencyInput.dependencies.map((dep: string) => (
+                            <li key={dep}>
+                              <code>{dep}</code>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+
+                  {/* Currency Input Usage */}
+                  <h3 id="currency-input-usage">Usage</h3>
+                  <Fence language="tsx">{currencyInput.usage}</Fence>
+
+                  {/* Currency Input Examples */}
+                  {currencyInput.examples &&
+                    currencyInput.examples.length > 0 && (
+                      <>
+                        <h3 id="currency-input-examples">Examples</h3>
+                        {currencyInput.examples.map(
+                          (example: any, index: number) => (
+                            <div key={index} className="mb-8">
+                              <h4>{example.title}</h4>
+                              {example.description && (
+                                <p>{example.description}</p>
+                              )}
+                              {example.preview &&
+                                example.preview.length > 0 && (
+                                  <PreviewGroup previews={example.preview} />
+                                )}
+                              <Fence language="tsx">{example.code}</Fence>
+                            </div>
+                          ),
+                        )}
+                      </>
+                    )}
+
+                  {/* Currency Input API */}
+                  {currencyInput.api && currencyInput.api.length > 0 && (
+                    <>
+                      <h3 id="currency-input-api">API Reference</h3>
+                      {currencyInput.api.map((apiItem: any, index: number) => (
                         <div key={index} className="mb-8">
                           <h4>{apiItem.name}</h4>
                           {apiItem.description && <p>{apiItem.description}</p>}
