@@ -97,7 +97,7 @@ export function CurrencyInput({
               )}
             </Listbox.Button>
             {open && !readOnly && (
-              <Listbox.Options className='absolute right-0 top-full z-50 mt-2.5 w-[160px] overflow-hidden rounded-2xl border border-ds-neutral-200 bg-white text-sm shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+              <Listbox.Options className='absolute right-0 top-full z-50 mt-2.5 w-[160px] overflow-hidden rounded-2xl border border-ds-neutral-200 bg-white text-sm shadow-lg focus:outline-none'>
                 {currencies.map((c) => (
                   <Listbox.Option
                     key={c.code}

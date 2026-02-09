@@ -1,5 +1,10 @@
 import { useState, useRef, useCallback } from 'react'
-import { Listbox } from '@headlessui/react'
+import {
+  Listbox,
+  ListboxOption,
+  ListboxOptions,
+  ListboxButton,
+} from '@headlessui/react'
 import { ChevronDownIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { type Currency, currencies } from '@/lib/currency-input-utils'
@@ -76,7 +81,7 @@ export function CurrencyInput({
       >
         {({ open }) => (
           <>
-            <Listbox.Button
+            <ListboxButton
               className={cn(
                 'relative flex shrink-0 cursor-default items-center gap-x-2 rounded-r-[10px] border-l border-ds-neutral-200 bg-transparent py-2 pr-2.5 pl-2 text-sm whitespace-nowrap focus:outline-none',
                 readOnly ? 'pointer-events-none' : 'cursor-pointer',
@@ -95,11 +100,11 @@ export function CurrencyInput({
                   aria-hidden="true"
                 />
               )}
-            </Listbox.Button>
+            </ListboxButton>
             {open && !readOnly && (
-              <Listbox.Options className="ring-opacity-5 absolute top-full right-0 z-50 mt-2.5 w-[160px] overflow-hidden rounded-2xl border border-ds-neutral-200 bg-white text-sm shadow-lg ring-1 ring-black focus:outline-none">
+              <ListboxOptions className="absolute top-full right-0 z-50 mt-2.5 w-[160px] overflow-hidden rounded-2xl border border-ds-neutral-200 bg-white text-sm shadow-lg focus:outline-none">
                 {currencies.map((c) => (
-                  <Listbox.Option
+                  <ListboxOption
                     key={c.code}
                     value={c}
                     className={({ active }) =>
@@ -116,9 +121,9 @@ export function CurrencyInput({
 
                       <span className="truncate">{c.label}</span>
                     </div>
-                  </Listbox.Option>
+                  </ListboxOption>
                 ))}
-              </Listbox.Options>
+              </ListboxOptions>
             )}
           </>
         )}
