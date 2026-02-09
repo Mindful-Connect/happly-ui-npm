@@ -63,28 +63,6 @@
               "type": "string"
             },
             "examples": [["button"], ["button", "input"]]
-          },
-          "files": {
-            "type": "array",
-            "description": "Files that make up this component",
-            "items": {
-              "type": "object",
-              "required": ["path", "type"],
-              "properties": {
-                "path": {
-                  "type": "string",
-                  "description": "Relative path to the file in the registry"
-                },
-                "type": {
-                  "type": "string",
-                  "description": "Type of file"
-                }
-              }
-            }
-          },
-          "docs": {
-            "type": "object",
-            "description": "Component documentation"
           }
         },
         "additionalProperties": false

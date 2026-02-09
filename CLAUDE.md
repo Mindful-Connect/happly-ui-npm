@@ -12,6 +12,9 @@ HapplyUI is a copy-paste React component registry (not a library) inspired by sh
 # Build all packages
 bun run build
 
+# Build registry index
+bun run build:registry
+
 # Build CLI only
 bun run --cwd packages/cli build
 
@@ -86,7 +89,7 @@ The `registry.json` index lists all available components with their npm and regi
 
 1. Create source file: `packages/registry/ui/my-component.tsx`
 2. Create definition: `packages/registry/ui/my-component.json` with `docs` field
-3. Add entry to `packages/registry/registry.json`
+3. Run `bun run build:registry` to update the index
 4. Merge to `production` branch - docs auto-deploy via GitHub Actions
 
 ### Component JSON Structure

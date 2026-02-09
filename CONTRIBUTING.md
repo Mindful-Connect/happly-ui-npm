@@ -245,23 +245,13 @@ Create `packages/registry/ui/my-component.json`:
 
 ### Step 3: Add to Registry Index
 
-Update `packages/registry/registry.json`:
+Run the build script to update the registry index:
 
-```json
-{
-  "items": [
-    // ... existing components
-    {
-      "name": "my-component",
-      "type": "registry:ui",
-      "title": "My Component",
-      "description": "Brief description for CLI listing.",
-      "dependencies": ["tailwind-variants"],
-      "registryDependencies": ["tv"]
-    }
-  ]
-}
+```bash
+bun run build:registry
 ```
+
+This will automatically add your component to `packages/registry/registry.json` using the metadata from your component's JSON file.
 
 ### Step 4: Add Preview Component (if needed)
 

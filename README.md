@@ -238,7 +238,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 1. Create `packages/registry/ui/my-component.tsx` with your component code
 2. Create `packages/registry/ui/my-component.json` with metadata and docs
-3. Add entry to `packages/registry/registry.json`
+3. Run `bun run build:registry` to update `packages/registry/registry.json`
 4. Open a PR to `production` - docs auto-update on merge
 
 ### Component JSON with Docs

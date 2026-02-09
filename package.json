@@ -5,6 +5,7 @@
   "scripts": {
     "build": "bun run --filter './packages/*' build",
     "dev": "bun run --filter './packages/*' dev",
+    "build:registry": "bun run scripts/build-registry.ts",
     "clean": "rm -rf packages/*/dist packages/*/.turbo"
   },
   "devDependencies": {

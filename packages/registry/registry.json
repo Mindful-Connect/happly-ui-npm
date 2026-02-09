@@ -4,395 +4,142 @@
   "homepage": "https://happly.cloud/ui",
   "items": [
     {
-      "name": "tv",
-      "type": "registry:lib",
-      "title": "Tailwind Variants",
-      "description": "Tailwind Variants wrapper with cn() for class merging.",
-      "dependencies": ["tailwind-variants"],
-      "registryDependencies": ["utils"]
-    },
-    {
-      "name": "polymorphic",
-      "type": "registry:lib",
-      "title": "Polymorphic",
-      "description": "Polymorphic component type helper for the 'as' prop pattern.",
-      "dependencies": [],
-      "registryDependencies": []
-    },
-    {
-      "name": "recursive-clone-children",
-      "type": "registry:lib",
-      "title": "Recursive Clone Children",
-      "description": "Utility to recursively clone React children and inject shared props.",
-      "dependencies": [],
-      "registryDependencies": []
-    },
-    {
-      "name": "calendar-input",
+      "name": "badge",
       "type": "registry:ui",
-      "title": "Calendar Input",
-      "description": "A date input component with calendar popover.",
-      "dependencies": [
-        "react-day-picker",
-        "date-fns",
-        "@headlessui/react",
-        "lucide-react"
-      ],
-      "registryDependencies": ["button", "utils"],
-      "files": [{ "path": "ui/calendar-input.tsx", "type": "registry:ui" }]
+      "title": "Badge",
+      "description": "A badge component for status indicators."
     },
     {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
-      "description": "A button component with multiple variants and sizes.",
-      "dependencies": ["@radix-ui/react-slot", "tailwind-variants"],
-      "registryDependencies": ["tv", "polymorphic", "recursive-clone-children"]
+      "description": "A button component with multiple variants, modes, and sizes. Use namespace import: import * as Button from '@/components/ui/button'. Supports compound component API (Button.Root, Button.Icon) and legacy shadcn/ui API."
     },
     {
-      "name": "input",
+      "name": "calendar-input",
       "type": "registry:ui",
-      "title": "Input",
-      "description": "A text input component.",
-      "dependencies": [],
-      "registryDependencies": []
-    },
-    {
-      "name": "label",
-      "type": "registry:ui",
-      "title": "Label",
-      "description": "A label component for form inputs.",
-      "dependencies": ["@radix-ui/react-label"],
-      "registryDependencies": []
+      "title": "Calendar Input",
+      "description": "A date input component with calendar popover."
     },
     {
       "name": "card",
       "type": "registry:ui",
       "title": "Card",
-      "description": "A card container component.",
-      "dependencies": [],
-      "registryDependencies": []
-    },
-    {
-      "name": "badge",
-      "type": "registry:ui",
-      "title": "Badge",
-      "description": "A badge component for status indicators.",
-      "dependencies": [],
-      "registryDependencies": []
-    },
-    {
-      "name": "divider",
-      "type": "registry:ui",
-      "title": "Divider",
-      "description": "A versatile divider component for creating visual separation between content elements.",
-      "dependencies": ["tailwind-variants"],
-      "registryDependencies": ["tv"]
-    },
-    {
-      "name": "phone-input",
-      "type": "registry:ui",
-      "title": "Phone Input",
-      "description": "A phone input component with country selection and formatting.",
-      "dependencies": [
-        "react-international-phone",
-        "libphonenumber-js",
-        "flag-icons",
-        "lucide-react",
-        "@headlessui/react"
-      ],
-      "registryDependencies": ["utils"]
-    },
-    {
-      "name": "textarea",
-      "type": "registry:ui",
-      "title": "Textarea",
-      "description": "A textarea component.",
-      "dependencies": [],
-      "registryDependencies": []
-    },
-    {
-      "name": "radio-card-group",
-      "type": "registry:ui",
-      "title": "Radio Card Group",
-      "description": "A radio group component with card styling, supporting icons, badges, and descriptions.",
-      "dependencies": [],
-      "registryDependencies": ["radio-group", "key-icon", "badge", "label", "utils"]
-    },
-    {
-      "name": "radio-group",
-      "type": "registry:ui",
-      "title": "Radio Group",
-      "description": "A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time.",
-      "dependencies": ["@radix-ui/react-radio-group"],
-      "registryDependencies": ["utils"]
-    },
-    {
-      "name": "key-icon",
-      "type": "registry:ui",
-      "title": "Key Icon",
-      "description": "An icon container with various styles and colors.",
-      "dependencies": ["class-variance-authority"],
-      "registryDependencies": ["utils"]
-    },
-    {
-      "name": "socials-input",
-      "type": "registry:ui",
-      "title": "Socials Input",
-      "description": "A dynamic input list for social media URLs with validation and icons.",
-      "dependencies": [
-        "zod",
-        "@headlessui/react",
-        "react-icons",
-        "clsx",
-        "tailwind-merge"
-      ],
-      "registryDependencies": ["utils", "input"],
-      "files": [{ "path": "ui/socials-input.tsx", "type": "registry:ui" }]
-    },
-    {
-      "name": "select",
-      "type": "registry:ui",
-      "title": "Select",
-      "description": "A customized select component based on Radix UI.",
-      "dependencies": [
-        "@radix-ui/react-select",
-        "@radix-ui/react-scroll-area",
-        "class-variance-authority",
-        "react-icons"
-      ],
-      "registryDependencies": ["utils"],
-      "files": [{ "path": "ui/select.tsx", "type": "registry:ui" }]
-    },
-    {
-      "name": "location-input",
-      "type": "registry:ui",
-      "title": "Location Input",
-      "description": "A Google Maps address autocomplete input.",
-      "dependencies": [
-        "use-debounce",
-        "@googlemaps/js-api-loader",
-        "@headlessui/react"
-      ],
-      "registryDependencies": ["utils"],
-      "files": [{ "path": "ui/location-input.tsx", "type": "registry:ui" }]
+      "description": "A card container component."
     },
     {
       "name": "command",
       "type": "registry:ui",
       "title": "Command",
-      "description": "Fast, composable, unstyled command menu for React.",
-      "dependencies": [
-        "cmdk",
-        "@radix-ui/react-dialog",
-        "react-icons",
-        "@radix-ui/react-scroll-area"
-      ],
-      "registryDependencies": ["dialog", "utils"],
-      "files": [{ "path": "ui/command.tsx", "type": "registry:ui" }]
-    },
-    {
-      "name": "custom-input-wrapper",
-      "type": "registry:ui",
-      "title": "Custom Input Wrapper",
-      "description": "A predefined wrapper for custom inputs.",
-      "dependencies": [],
-      "registryDependencies": ["utils"],
-      "files": [{ "path": "ui/custom-input-wrapper.tsx", "type": "registry:ui" }]
-    },
-    {
-      "name": "dialog",
-      "type": "registry:ui",
-      "title": "Dialog",
-      "description": "A window overlaid on either the primary window or another dialog, rendering the content underneath inert.",
-      "dependencies": [
-        "@radix-ui/react-dialog",
-        "react-icons"
-      ],
-      "registryDependencies": ["utils"],
-      "files": [{ "path": "ui/dialog.tsx", "type": "registry:ui" }]
-    },
-    {
-      "name": "tag",
-      "type": "registry:ui",
-      "title": "Tag",
-      "description": "A tag component for labeling and categorization.",
-      "dependencies": [
-        "@radix-ui/react-slot",
-        "class-variance-authority",
-        "react-icons"
-      ],
-      "registryDependencies": ["utils"],
-      "files": [
-        { "path": "ui/tag.tsx", "type": "registry:ui" },
-        { "path": "lib/tag-utils.ts", "type": "registry:lib" }
-      ],
-      "docs": {
-        "lead": "A tag component for labeling and categorization.",
-        "usage": "import { Tag, TagIcon, TagClose } from \"@/components/ui/tag\"\n\n<Tag variant=\"stroke\">\n  <TagIcon><Icon /></TagIcon>\n  Label\n  <TagClose />\n</Tag>",
-        "examples": [
-          {
-            "title": "Default",
-            "description": "Default tag variant.",
-            "code": "<Tag variant=\"stroke\">Tag Label</Tag>",
-            "preview": [
-              {
-                "component": "tag",
-                "props": { "variant": "stroke" },
-                "children": "Tag Label"
-              }
-            ]
-          },
-          {
-            "title": "Gray Variant",
-            "description": "Gray background variant.",
-            "code": "<Tag variant=\"gray\">Gray Tag</Tag>",
-            "preview": [
-              {
-                "component": "tag",
-                "props": { "variant": "gray" },
-                "children": "Gray Tag"
-              }
-            ]
-          }
-        ],
-        "api": [
-          {
-            "name": "Tag",
-            "description": "The main Tag component.",
-            "props": [
-              {
-                "name": "variant",
-                "type": "'stroke' | 'gray'",
-                "default": "'stroke'",
-                "description": "The visual style of the tag."
-              },
-              {
-                "name": "disabled",
-                "type": "boolean",
-                "default": "false",
-                "description": "Whether the tag is disabled."
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "name": "popover",
-      "type": "registry:ui",
-      "title": "Popover",
-      "description": "Displays rich content in a portal, triggered by a button.",
-      "dependencies": ["@radix-ui/react-popover"],
-      "registryDependencies": ["utils"],
-      "files": [{ "path": "ui/popover.tsx", "type": "registry:ui" }]
-    },
-    {
-      "name": "searchable-combo-box",
-      "type": "registry:ui",
-      "title": "Searchable Combo Box",
-      "description": "A searchable multi-select combobox component with tag selection.",
-      "dependencies": ["lucide-react"],
-      "registryDependencies": ["command", "custom-input-wrapper", "popover", "tag", "utils"],
-      "files": [
-        { "path": "ui/searchable-combo-box.tsx", "type": "registry:ui" },
-        { "path": "lib/searchable-combo-box-utils.ts", "type": "registry:lib" }
-      ],
-      "docs": {
-        "lead": "A searchable multi-select combobox component with tag selection.",
-        "usage": "import { SearchableMultiCombobox } from \"@/components/ui/searchable-combo-box\"\n\n// See demo for complete usage example",
-        "examples": [
-          {
-            "title": "Default",
-            "description": "Default usage with mock data.",
-            "code": "<SearchableMultiCombobox\n  selected={selected}\n  setSelected={setSelected}\n  tag=\"skill\"\n  t={t}\n  useTags={useTags}\n  placeholder=\"Select skills...\"\n  allowAdding\n/>",
-            "preview": [
-              {
-                "component": "searchable-combo-box",
-                "props": {},
-                "children": ""
-              }
-            ]
-          }
-        ]
-      }
+      "description": "Fast, composable, unstyled command menu for React."
     },
     {
       "name": "currency-input",
       "type": "registry:ui",
       "title": "Currency Input",
-      "description": "A currency input component with currency selection.",
-      "dependencies": [
-        "@headlessui/react",
-        "lucide-react",
-        "flag-icons"
-      ],
-      "registryDependencies": [
-        "utils"
-      ],
-      "files": [
-        { "path": "ui/currency-input.tsx", "type": "registry:ui" },
-        { "path": "lib/currency-input-utils.ts", "type": "registry:lib" }
-      ],
-      "docs": {
-        "lead": "A currency input component with currency selection.",
-        "usage": "import { CurrencyInput } from \"@/components/ui/currency-input\"\n\n<CurrencyInput />",
-        "examples": [
-          {
-            "title": "Default",
-            "description": "Default usage.",
-            "code": "<CurrencyInput />",
-            "preview": [
-              {
-                "component": "currency-input",
-                "props": {},
-                "children": ""
-              }
-            ]
-          }
-        ],
-        "api": [
-          {
-            "name": "CurrencyInput",
-            "description": "The CurrencyInput component.",
-            "props": [
-              {
-                "name": "value",
-                "type": "string",
-                "description": "The value of the input."
-              },
-              {
-                "name": "onChange",
-                "type": "(val: string, currency: string) => void",
-                "description": "Callback when value or currency changes."
-              },
-              {
-                "name": "defaultCurrency",
-                "type": "string",
-                "default": "\"CAD\"",
-                "description": "The default currency code."
-              },
-              {
-                "name": "placeholder",
-                "type": "string",
-                "default": "\"0.00\"",
-                "description": "Placeholder text."
-              },
-              {
-                "name": "readOnly",
-                "type": "boolean",
-                "default": "false",
-                "description": "Whether the input is read-only."
-              },
-              {
-                "name": "className",
-                "type": "string",
-                "description": "Additional CSS classes."
-              }
-            ]
-          }
-        ]
-      }
+      "description": "A currency input component with currency selection."
+    },
+    {
+      "name": "custom-input-wrapper",
+      "type": "registry:ui",
+      "title": "Custom Input Wrapper",
+      "description": "A wrapper for custom inputs with consistent styling."
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "A window overlaid on either the primary window or another dialog window."
+    },
+    {
+      "name": "divider",
+      "type": "registry:ui",
+      "title": "Divider",
+      "description": "A versatile divider component for creating visual separation between content elements. Supports multiple variants including line, text, and content dividers."
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "A text input component."
+    },
+    {
+      "name": "key-icon",
+      "type": "registry:ui",
+      "title": "Key Icon",
+      "description": "An icon container with various styles and colors."
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "A label component for form inputs."
+    },
+    {
+      "name": "location-input",
+      "type": "registry:ui",
+      "title": "Location Input",
+      "description": "A Google Maps address autocomplete input."
+    },
+    {
+      "name": "phone-input",
+      "type": "registry:ui",
+      "title": "Phone Input",
+      "description": "A phone input component with country selection and formatting."
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "Displays rich content in a portal, triggered by a button."
+    },
+    {
+      "name": "radio-card-group",
+      "type": "registry:ui",
+      "title": "Radio Card Group",
+      "description": "A radio group component with card styling, supporting icons, badges, and descriptions."
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio Group",
+      "description": "A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time."
+    },
+    {
+      "name": "searchable-combo-box",
+      "type": "registry:ui",
+      "title": "Searchable Combo Box",
+      "description": "A searchable multi-select combobox component with tag selection."
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "A customized select component based on Radix UI."
+    },
+    {
+      "name": "socials-input",
+      "type": "registry:ui",
+      "title": "Socials Input",
+      "description": "A dynamic input list for social media URLs with validation and icons."
+    },
+    {
+      "name": "tag",
+      "type": "registry:ui",
+      "title": "Tag",
+      "description": "A tag component for labeling and categorization."
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "A textarea component."
+    },
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "Utils",
+      "description": "Utility functions for class name merging."
     }
   ]
 }
