@@ -1,4 +1,4 @@
-export type ObjectValues<T> = T[keyof T];
+import { ObjectValues } from '@/lib/utils';
 
 export const TAG_CATEGORY = {
   Sector: 'sector',

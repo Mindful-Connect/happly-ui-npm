@@ -1,4 +1,4 @@
-import { ObjectValues } from './tag-utils';
+import { ObjectValues } from '@/lib/utils';
 
 export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
   U[keyof U];

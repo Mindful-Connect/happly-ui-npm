@@ -6,29 +6,6 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { RiCloseFill } from 'react-icons/ri';
 
-import {
-  // type ObjectValues,
-  // TAG_CATEGORY,
-  // type TagCategory,
-  // type Tag as TagInterface,
-} from '@/lib/tag-utils';
-
-// export type { ObjectValues, TagCategory };
-// export type Tag = TagInterface;
-// export { TAG_CATEGORY };
-
-/**
- * shadcn/ui Tag component
- *
- * Usage:
- * <Tag variant="stroke">Label</Tag>
- * <Tag variant="stroke">
- *   <Tag.Icon><Icon /></Tag.Icon>
- *   Text
- *   <Tag.Close />
- * </Tag>
- */
-
 export const tagRoot = cva(
   [
     'group inline-flex items-center min-h-[36px] gap-2 rounded-lg px-2 !text-label-sm text-ds-sub-600',
