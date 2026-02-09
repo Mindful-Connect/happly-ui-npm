@@ -51,20 +51,26 @@ const inputClassConfig = {
       'text-ds-soft-400',
       'group-hover:text-ds-sub-600',
       'group-focus-within:text-ds-sub-600',
+      // Disabled state
+      'group-has-[input:disabled]:!text-ds-disabled-300',
     ],
     affix: [
       'shrink-0 bg-ds-white-0 !text-paragraph-sm text-ds-soft-400',
       'flex items-center justify-center truncate',
       'transition duration-200 ease-out',
-
       'group-hover/input-wrapper:text-ds-sub-600',
       'group-focus-within:text-ds-sub-600',
+      // Disabled state
+      'group-has-[input:disabled]:!bg-ds-weak-50',
+      'group-has-[input:disabled]:!text-ds-disabled-300',
     ],
     inlineAffix: [
       '!text-paragraph-sm text-ds-soft-400',
       'transition duration-200 ease-out',
       'group-hover/input-wrapper:text-ds-sub-600',
       'group-focus-within:text-ds-sub-600',
+      // Disabled state
+      'group-has-[input:disabled]:!text-ds-disabled-300',
     ],
   },
   variants: {
@@ -133,13 +139,22 @@ export interface InputProps
   leftAffix?: React.ReactNode;
   rightAffix?: React.ReactNode;
   inlineAffix?: React.ReactNode;
+  /** Content to display at the end of the input area (e.g., status indicator) */
+  endContent?: React.ReactNode;
+  /** Inline suffix displayed immediately after the input text */
+  suffix?: string;
   wrapperClassName?: string;
   inputClassName?: string;
+  inputStyle?: React.CSSProperties;
   leftIconClassName?: string;
   rightIconClassName?: string;
   leftAffixClassName?: string;
   rightAffixClassName?: string;
   inlineAffixClassName?: string;
+  /** Keep left affix interactive when input is disabled */
+  leftAffixEnabled?: boolean;
+  /** Keep right affix interactive when input is disabled */
+  rightAffixEnabled?: boolean;
 }
 
 // Helper function to generate class strings for a specific slot
@@ -217,6 +232,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       className,
       wrapperClassName,
       inputClassName,
+      inputStyle,
       leftIconClassName,
       rightIconClassName,
       leftAffixClassName,
@@ -230,6 +246,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       leftAffix,
       rightAffix,
       inlineAffix,
+      endContent,
+      suffix,
+      leftAffixEnabled,
+      rightAffixEnabled,
       id,
       ...props
     },
@@ -267,10 +287,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {leftAffix && (
           <div
             data-affix
-            className={generateSlotClasses(
-              'affix',
-              variantProps,
-              leftAffixClassName
+            className={cn(
+              generateSlotClasses('affix', variantProps, leftAffixClassName),
+              leftAffixEnabled &&
+                '!pointer-events-auto !bg-ds-white-0 !text-ds-soft-400'
             )}
           >
             {leftAffix}
@@ -295,7 +315,18 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               generateSlotClasses('input', variantProps, inputClassName),
               'border-none bg-transparent p-0 outline-none focus:border-none focus:outline-none focus:ring-0'
             )}
+            style={inputStyle}
+            {...props} // Spread other native input attributes (placeholder, disabled, value, onChange, etc.)
           />
+          {suffix && (
+            <span
+              className={cn(
+                'shrink-0 whitespace-nowrap !text-paragraph-sm text-ds-disabled-300'
+              )}
+            >
+              {suffix}
+            </span>
+          )}
           {inlineAffix && (
             <span
               className={generateSlotClasses(
@@ -307,16 +338,17 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               {inlineAffix}
             </span>
           )}
+          {endContent && <div className='shrink-0'>{endContent}</div>}
           {renderedRightIcon}
         </div>
 
         {rightAffix && (
           <div
             data-affix
-            className={generateSlotClasses(
-              'affix',
-              variantProps,
-              rightAffixClassName
+            className={cn(
+              generateSlotClasses('affix', variantProps, rightAffixClassName),
+              rightAffixEnabled &&
+                '!pointer-events-auto !bg-ds-white-0 !text-ds-soft-400'
             )}
           >
             {rightAffix}
