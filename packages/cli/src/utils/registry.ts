@@ -60,6 +60,22 @@ export async function fetchRegistryIndex(
   return fetchOrRead(url) as Promise<RegistryIndex>;
 }
 
+async function fetchOrReadRaw(url: string): Promise<string> {
+  if (isLocalRegistry(url)) {
+    const localPath = url.replace("file://", "");
+    if (!existsSync(localPath)) {
+      throw new Error(`Local file not found: ${localPath}`);
+    }
+    return readFile(localPath, "utf-8");
+  }
+
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch: ${response.statusText}`);
+  }
+  return response.text();
+}
+
 /**
  * Fetch a single registry item
  */
@@ -88,8 +104,21 @@ export async function fetchRegistryItem(
 
   for (const url of paths) {
     try {
-      const item = await fetchOrRead(url);
-      return item as RegistryItem;
+      const item = (await fetchOrRead(url)) as RegistryItem;
+
+      // Hydrate missing content
+      await Promise.all(
+        item.files.map(async (file) => {
+          if (!file.content) {
+            const fileUrl = isLocal
+              ? path.join(cleanBaseUrl, file.path)
+              : `${baseUrl}/${file.path}`;
+            file.content = await fetchOrReadRaw(fileUrl);
+          }
+        })
+      );
+
+      return item;
     } catch {
       continue;
     }

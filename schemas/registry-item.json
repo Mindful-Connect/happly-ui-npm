@@ -66,10 +66,6 @@
             "description": "Relative path to the file in the registry",
             "examples": ["ui/button.tsx", "hooks/use-toast.ts"]
           },
-          "content": {
-            "type": "string",
-            "description": "Inline file content (optional, fetched from path if not provided)"
-          },
           "type": {
             "type": "string",
             "description": "Type of file, determines installation location",
@@ -115,6 +111,54 @@
         }
       },
       "additionalProperties": false
+    },
+    "docs": {
+      "type": "object",
+      "description": "Component documentation",
+      "properties": {
+        "lead": {
+          "type": "string",
+          "description": "Lead paragraph/summary"
+        },
+        "usage": {
+          "type": "string",
+          "description": "Usage example code"
+        },
+        "examples": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "description": { "type": "string" },
+              "code": { "type": "string" },
+              "preview": { "type": "array" }
+            }
+          }
+        },
+        "api": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "description": { "type": "string" },
+              "props": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "type": { "type": "string" },
+                    "default": { "type": "string" },
+                    "description": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "additionalProperties": false
