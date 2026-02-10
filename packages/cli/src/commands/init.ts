@@ -11,6 +11,7 @@ import {
   writeComponentFile,
 } from "../utils/config.js";
 import { installDependencies } from "../utils/install.js";
+import { updateTailwindConfig } from "../utils/transformers/tailwind.js";
 import { isNonInteractive, getAgentName } from "../utils/env.js";
 import type { HapplyConfig, InitOptions, BaseColor } from "../types/index.js";
 import { BASE_COLORS, DEFAULT_CONFIG } from "../types/index.js";
@@ -294,6 +295,10 @@ export async function init(options: InitOptions): Promise<void> {
         writeSpinner.text = `Updated ${cssPath}`;
       }
     }
+
+    // Apply Happly UI Tailwind Configuration (Colors, Typography, etc)
+    writeSpinner.text = "Applying Happly UI design tokens...";
+    await updateTailwindConfig(cwd, config, projectInfo.tailwindVersion);
 
     writeSpinner.succeed("Configuration written successfully");
   } catch (error) {

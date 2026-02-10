@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { type ClassValue } from 'clsx';
 import { cn } from '@/lib/utils';
-import { ReactElement, SVGProps } from 'react';
+import type { ReactElement, SVGProps } from 'react';
 
 const inputClassConfig = {
   slots: {
