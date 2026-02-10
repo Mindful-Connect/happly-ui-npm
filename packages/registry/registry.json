@@ -148,6 +148,12 @@
       "description": "A textarea component."
     },
     {
+      "name": "upload-file-input",
+      "type": "registry:ui",
+      "title": "Upload File Input",
+      "description": "A file upload component with support for drag and drop, multiple files, and S3/GCS integration."
+    },
+    {
       "name": "utils",
       "type": "registry:lib",
       "title": "Utils",

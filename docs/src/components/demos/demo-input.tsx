@@ -49,7 +49,7 @@ export function DemoInput() {
   )
 }
 
-function Section({
+export function Section({
   title,
   children,
 }: {
