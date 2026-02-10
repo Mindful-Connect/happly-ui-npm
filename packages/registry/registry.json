@@ -13,7 +13,7 @@
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
-      "description": "A button component with multiple variants, modes, and sizes. Use namespace import: import * as Button from '@/components/ui/button'. Supports compound component API (Button.Root, Button.Icon) and legacy shadcn/ui API."
+      "description": "A button component with multiple variants, modes, and sizes. Use namespace import: import { Button } from '@/components/ui/button'. Supports new variant system."
     },
     {
       "name": "calendar-input",
