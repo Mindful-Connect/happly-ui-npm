@@ -1,10 +1,9 @@
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import { existsSync } from "fs";
-import { texts, shadows, borderRadii, colors, semanticMappings } from "../templates/tokens.js";
+import { texts, shadows, borderRadii, colors, semanticMappings, baseSemanticColors, fontFamilies, backgroundImage, screens, keyframes, animations } from "../templates/tokens.js";
 import type { HapplyConfig } from "../../types/index.js";
 import { logger } from "../logger.js";
-
 /**
  * Update Tailwind configuration based on version
  */
@@ -157,7 +156,10 @@ async function updateCssV3(cwd: string, config: HapplyConfig): Promise<void> {
  */
 async function updateConfigV3(cwd: string, config: HapplyConfig): Promise<void> {
   const configPath = path.join(cwd, config.tailwind.config);
-  if (!existsSync(configPath)) return;
+  if (!existsSync(configPath)) {
+    logger.warn(`Tailwind config file not found at ${configPath}`);
+    return;
+  }
 
   let content = await readFile(configPath, "utf-8");
   
@@ -190,12 +192,13 @@ async function updateConfigV3(cwd: string, config: HapplyConfig): Promise<void> 
 }
 
 function generateV3ExtendObject(): string {
-  const ds = (colors as any).ds || {};
-  
-  // We basically json stringify the objects but we need to indent them nicely so it looks good in the file
-  // and we need to wrap keys in quotes potentially.
-  
-  const colorsJson = JSON.stringify({ ds }, null, 6).slice(2, -2); // remove outer braces
+  // Combine all colors and base semantic colors
+  const allColors = {
+    ...colors,
+    ...baseSemanticColors
+  };
+
+  const colorsJson = JSON.stringify(allColors, null, 6).slice(2, -2); // remove outer braces
   const colorsStr = `      colors: {\n${colorsJson}\n      }`;
 
   const fontSizeJson = JSON.stringify(texts, null, 6).slice(2, -2);
@@ -207,5 +210,15 @@ function generateV3ExtendObject(): string {
   const radiusJson = JSON.stringify(borderRadii, null, 6).slice(2, -2);
   const radiusStr = `      borderRadius: {\n${radiusJson}\n      }`;
 
-  return [colorsStr, fontSizeStr, shadowStr, radiusStr].join(",\n");
+  return [
+    colorsStr, 
+    fontSizeStr, 
+    shadowStr, 
+    radiusStr,
+    `      fontFamily: {\n${JSON.stringify(fontFamilies, null, 6).slice(2, -2)}\n      }`,
+    `      backgroundImage: {\n${JSON.stringify(backgroundImage, null, 6).slice(2, -2)}\n      }`,
+    `      screens: {\n${JSON.stringify(screens, null, 6).slice(2, -2)}\n      }`,
+    `      keyframes: {\n${JSON.stringify(keyframes, null, 6).slice(2, -2)}\n      }`,
+    `      animation: {\n${JSON.stringify(animations, null, 6).slice(2, -2)}\n      }`
+  ].join(",\n");
 }

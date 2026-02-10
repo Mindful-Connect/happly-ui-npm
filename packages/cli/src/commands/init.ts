@@ -289,8 +289,25 @@ export async function init(options: InitOptions): Promise<void> {
           );
           await writeFile(fullCssPath, updatedCss, "utf-8");
         } else {
-          // Prepend our CSS variables
-          await writeFile(fullCssPath, cssTemplate + "\n" + existingCss, "utf-8");
+          // Check if @tailwind directives exist
+          if (existingCss.includes("@tailwind base")) {
+            const templateWithoutDirectives = cssTemplate.replace(
+              /@tailwind\s+(base|components|utilities);\n?/g,
+              ""
+            );
+            await writeFile(
+              fullCssPath,
+              existingCss + "\n" + templateWithoutDirectives,
+              "utf-8"
+            );
+          } else {
+            // Prepend our CSS variables
+            await writeFile(
+              fullCssPath,
+              cssTemplate + "\n" + existingCss,
+              "utf-8"
+            );
+          }
         }
         writeSpinner.text = `Updated ${cssPath}`;
       }

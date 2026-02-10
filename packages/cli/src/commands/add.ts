@@ -16,6 +16,7 @@ import {
 } from "../utils/registry.js";
 import { transformComponent } from "../utils/transform.js";
 import { installDependencies } from "../utils/install.js";
+import { updateTailwindConfig } from "../utils/transformers/tailwind.js";
 import { detectProject } from "../utils/detect.js";
 import type { AddOptions, RegistryItem } from "../types/index.js";
 
@@ -199,6 +200,17 @@ export async function add(
       devDepsSpinner.fail("Failed to install dev dependencies");
       logger.warn(`Please install manually: ${devDependencies.join(" ")}`);
     }
+  }
+
+  // Apply Happly UI Tailwind Configuration
+  const spinner = ora("Updating Tailwind configuration...").start();
+  try {
+    await updateTailwindConfig(cwd, config, projectInfo.tailwindVersion);
+    spinner.succeed("Tailwind configuration updated");
+  } catch (error) {
+    spinner.fail("Failed to update Tailwind configuration");
+    // Don't fail the whole process if tailwind update fails, just warn
+    logger.warn("Please ensure your tailwind.config.ts includes Happly UI tokens.");
   }
 
   // Success message

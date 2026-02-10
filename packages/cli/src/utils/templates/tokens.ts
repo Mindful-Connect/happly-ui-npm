@@ -183,6 +183,7 @@ export const texts = {
       fontWeight: "400",
     },
   ],
+  "inherit": "inherit",
 };
 
 export const shadows = {
@@ -214,6 +215,9 @@ export const shadows = {
 };
 
 export const borderRadii = {
+  "lg": "var(--radius)",
+  "md": "calc(var(--radius) - 2px)",
+  "sm": "calc(var(--radius) - 4px)",
   "8": "0.5rem",
   "10": ".625rem",
   "12": "0.75rem",
@@ -230,6 +234,7 @@ export const colors = {
   turquoise: "#2aceb6",
   glitter: "#e4e9fe",
   clarity: {
+    "0.1": "#484854",
     0: "#575759",
     1: "#7F7F82",
     2: "#95A0BC",
@@ -249,6 +254,7 @@ export const colors = {
     bg2: "#F7F7FC",
     cyan: "#13B6E7",
     gray: "#9292A1",
+    verified: "#1393E7",
     green: "#2AAF3C",
     pink: "#DD438E",
     purple: "#4A4DEE",
@@ -566,6 +572,12 @@ export const colors = {
         10: "rgba(0, 0, 0, 0.10)",
       },
     },
+    white: {
+      16: "rgba(255, 255, 255, 0.16)",
+    },
+  },
+  overlay: {
+    DEFAULT: "rgb(var(--color-overlay))",
   },
 };
 
@@ -580,6 +592,9 @@ export const semanticMappings = {
   "text-soft-400": "var(--color-neutral-400)",
   "text-disabled-300": "var(--color-neutral-300)",
   "text-white-0": "var(--color-neutral-0)",
+
+  // Overlay
+  "overlay": "0 0 0 / 0.75",
 
   // Bg
   "bg-strong-950": "var(--color-neutral-950)",
@@ -678,4 +693,108 @@ export const semanticMappings = {
   "stable-base": "var(--color-teal-500)",
   "stable-light": "var(--color-teal-200)",
   "stable-lighter": "var(--color-teal-50)",
+};
+
+export const baseSemanticColors = {
+  background: "hsl(var(--background))",
+  foreground: "hsl(var(--foreground))",
+  card: {
+    DEFAULT: "hsl(var(--card))",
+    foreground: "hsl(var(--card-foreground))",
+  },
+  popover: {
+    DEFAULT: "hsl(var(--popover))",
+    foreground: "hsl(var(--popover-foreground))",
+  },
+  primary: {
+    DEFAULT: "hsl(var(--primary))",
+    foreground: "hsl(var(--primary-foreground))",
+  },
+  secondary: {
+    DEFAULT: "hsl(var(--secondary))",
+    foreground: "hsl(var(--secondary-foreground))",
+  },
+  muted: {
+    DEFAULT: "hsl(var(--muted))",
+    foreground: "hsl(var(--muted-foreground))",
+  },
+  accent: {
+    DEFAULT: "hsl(var(--accent))",
+    foreground: "hsl(var(--accent-foreground))",
+  },
+  destructive: {
+    DEFAULT: "hsl(var(--destructive))",
+    foreground: "hsl(var(--destructive-foreground))",
+  },
+  border: "hsl(var(--border))",
+  input: "hsl(var(--input))",
+  ring: "hsl(var(--ring))",
+};
+
+export const fontFamilies = {
+  thunder: [
+    'var(--font-thunder)',
+    'var(--font-inter)',
+    'ui-sans-serif', 
+    'system-ui', 
+    'sans-serif', 
+    '"Apple Color Emoji"', 
+    '"Segoe UI Emoji"', 
+    '"Segoe UI Symbol"', 
+    '"Noto Color Emoji"'
+  ],
+  sans: [
+    'var(--font-inter)',
+    'ui-sans-serif', 
+    'system-ui', 
+    'sans-serif', 
+    '"Apple Color Emoji"', 
+    '"Segoe UI Emoji"', 
+    '"Segoe UI Symbol"', 
+    '"Noto Color Emoji"'
+  ],
+  ubuntu: ['var(--font-ubuntu)'],
+  inter: ['var(--font-inter)', 'sans-serif'],
+  poppins: ['Poppins', 'sans-serif'],
+};
+
+export const backgroundImage = {
+  'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+  'gradient-conic':
+    'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+};
+
+export const screens = {
+  xs: '480px',
+  '1200px': '1200px',
+  '3xl': '1920px',
+  '4xl': '2560px',
+  tall: { raw: '(min-height: 910px)' },
+};
+
+export const keyframes = {
+  'accordion-down': {
+    from: { height: '0' },
+    to: { height: 'var(--radix-accordion-content-height)' },
+  },
+  'accordion-up': {
+    from: { height: 'var(--radix-accordion-content-height)' },
+    to: { height: '0' },
+  },
+  'spin-smooth': {
+    '0%': { transform: 'rotate(0deg)' },
+    '100%': { transform: 'rotate(360deg)' },
+  },
+  'copy-success': {
+    '0%': { transform: 'scale(0.5)', opacity: '0' },
+    '50%': { transform: 'scale(1.2)' },
+    '100%': { transform: 'scale(1)', opacity: '1' },
+  },
+};
+
+export const animations = {
+  'accordion-down': 'accordion-down 0.2s ease-out',
+  'accordion-up': 'accordion-up 0.2s ease-out',
+  'spin-smooth': 'spin-smooth 1s linear infinite',
+  'copy-success': 'copy-success 0.3s ease-out forwards',
 };
