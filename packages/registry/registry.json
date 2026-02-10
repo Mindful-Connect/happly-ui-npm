@@ -4,6 +4,18 @@
   "homepage": "https://happly.cloud/ui",
   "items": [
     {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "Displays a callout for user attention."
+    },
+    {
+      "name": "alert-utils",
+      "type": "registry:lib",
+      "title": "Alert Utils",
+      "description": "Utility functions and types for the Alert component."
+    },
+    {
       "name": "badge",
       "type": "registry:ui",
       "title": "Badge",

@@ -83,6 +83,10 @@
         "title": "Support components",
         "links": [
           {
+            "title": "Alert",
+            "href": "/docs/components/alert"
+          },
+          {
             "title": "Command",
             "href": "/docs/components/command"
           },

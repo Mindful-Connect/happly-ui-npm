@@ -177,6 +177,7 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
     'dialog',
     'popover',
     'key-icon',
+    'alert',
   ]
   const isSupportComponent = supportComponents.includes(name)
 

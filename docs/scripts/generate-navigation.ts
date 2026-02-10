@@ -50,6 +50,7 @@ function main() {
     'dialog',
     'popover',
     'key-icon',
+    'alert',
   ]
 
   const mainLinks = componentLinks
