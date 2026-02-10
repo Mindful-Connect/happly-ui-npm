@@ -135,7 +135,11 @@ export function LocationInput({
               place.address_components?.find((c) => c.types.includes('country'))
                 ?.long_name ?? '';
             location.formatted_address = normalizeAddress(
-              `${location.address ? location.address + ',' : ''} ${\n                location.city ? location.city + ',' : ''\n              } ${location.region ? location.region + ',' : ''} ${\n                location.country ? location.country : ''\n              }`
+              `${location.address ? location.address + ',' : ''} ${
+                location.city ? location.city + ',' : ''
+              } ${location.region ? location.region + ',' : ''} ${
+                location.country ? location.country : ''
+              }`
             );
 
             setLocationSearch(
