@@ -8,7 +8,7 @@
   "registryDependencies": [],
   "files": [
     {
-      "path": "utils/recursive-clone-children.ts",
+      "path": "lib/recursive-clone-children.ts",
       "type": "registry:lib"
     }
   ]

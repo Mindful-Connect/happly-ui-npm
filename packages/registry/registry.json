@@ -100,6 +100,12 @@
       "description": "A phone input component with country selection and formatting."
     },
     {
+      "name": "polymorphic",
+      "type": "registry:lib",
+      "title": "Polymorphic",
+      "description": "Polymorphic component type helper for the 'as' prop pattern."
+    },
+    {
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
@@ -116,6 +122,12 @@
       "type": "registry:ui",
       "title": "Radio Group",
       "description": "A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time."
+    },
+    {
+      "name": "recursive-clone-children",
+      "type": "registry:lib",
+      "title": "Recursive Clone Children",
+      "description": "Utility to recursively clone React children and inject shared props."
     },
     {
       "name": "searchable-combo-box",
@@ -146,6 +158,12 @@
       "type": "registry:ui",
       "title": "Textarea",
       "description": "A textarea component."
+    },
+    {
+      "name": "tv",
+      "type": "registry:lib",
+      "title": "Tailwind Variants",
+      "description": "Tailwind Variants wrapper with cn() for class merging."
     },
     {
       "name": "upload-file-input",

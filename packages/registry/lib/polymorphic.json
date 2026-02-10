@@ -8,7 +8,7 @@
   "registryDependencies": [],
   "files": [
     {
-      "path": "utils/polymorphic.ts",
+      "path": "lib/polymorphic.ts",
       "type": "registry:lib"
     }
   ]

@@ -7,7 +7,8 @@
   "dependencies": [
     "@radix-ui/react-slot",
     "tailwind-variants",
-    "colord"
+    "colord",
+    "react-icons"
   ],
   "registryDependencies": [
     "tv",

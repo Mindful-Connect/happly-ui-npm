@@ -12,7 +12,7 @@
   ],
   "files": [
     {
-      "path": "utils/tv.ts",
+      "path": "lib/tv.ts",
       "type": "registry:lib"
     }
   ]
