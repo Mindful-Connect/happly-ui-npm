@@ -648,7 +648,6 @@ function SocialsInputsSelectableDS({
 
     let url = value
     if (
-      value &&
       key !== 'calendar' &&
       key !== 'zoom' &&
       !value.includes('instagram.com') &&
@@ -847,7 +846,7 @@ function SocialsInputsSelectableDS({
                     rightAffix={
                       <button
                         type="button"
-                        className="hover:!text-ds-red-600 flex h-full w-10 items-center justify-center"
+                        className="flex h-full w-10 items-center justify-center hover:!text-ds-red-600"
                         onClick={() => {
                           if (readOnly) return
                           clearTimeout(errorTimeout)

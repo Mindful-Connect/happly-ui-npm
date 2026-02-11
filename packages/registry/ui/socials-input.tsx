@@ -291,7 +291,6 @@ export default function SocialsInputsSelectableDS({
 
     /* generate full social URL from handle */
     if (
-      value &&
       key !== 'calendar' &&
       key !== 'zoom' &&
       !value.includes('instagram.com') &&
