@@ -506,8 +506,6 @@ export default function UploadFile({
 
     if (!file) return
 
-    let imageDimensions: { width: number; height: number } | null = null
-
     try {
       // 1. Type Validation
       if (!allowedFileTypes.includes(file.type as MimeType)) {
@@ -544,7 +542,7 @@ export default function UploadFile({
       }
 
       // 3. Dimension Validation (Async)
-      imageDimensions = await checkImageDimensions(file)
+      await checkImageDimensions(file)
 
       setUploading(true)
 
