@@ -5,10 +5,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  SelectGroup,
-  SelectLabel,
 } from '@/components/ui/select'
-import { RiUser3Line } from 'react-icons/ri'
 
 export function DemoSelect() {
   return (
