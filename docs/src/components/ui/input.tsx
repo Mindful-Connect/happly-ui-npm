@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { type ClassValue } from 'clsx'
 import { cn } from '@/lib/utils'
-import { ReactElement, SVGProps } from 'react'
+import type { ReactElement, SVGProps } from 'react'
 
 const inputClassConfig = {
   slots: {
@@ -81,12 +81,12 @@ const inputClassConfig = {
         input: 'h-10',
       },
       small: {
-        root: 'rounded-lg',
+        root: 'rounded-10',
         wrapper: 'gap-2 px-2.5',
         input: 'h-9',
       },
       xsmall: {
-        root: 'rounded-lg',
+        root: 'rounded-10',
         wrapper: 'gap-1.5 px-2',
         input: 'h-8',
       },
@@ -195,9 +195,9 @@ function generateSlotClasses(
     let match = true
     if (cv.size) {
       if (Array.isArray(cv.size)) {
-        match = match && cv.size.includes(size)
+        match = cv.size.includes(size)
       } else {
-        match = match && cv.size === size
+        match = cv.size === size
       }
     }
 
