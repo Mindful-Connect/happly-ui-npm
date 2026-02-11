@@ -193,9 +193,9 @@ function generateSlotClasses(
     let match = true;
     if (cv.size) {
       if (Array.isArray(cv.size)) {
-        match = match && cv.size.includes(size);
+        match = cv.size.includes(size);
       } else {
-        match = match && cv.size === size;
+        match = cv.size === size;
       }
     }
 
