@@ -1,6 +1,5 @@
 import { Input } from '@/components/ui/input'
 import { RiUser3Line, RiAtLine, RiMoneyDollarCircleLine } from 'react-icons/ri'
-import { ComponentPreview } from '@/components/ComponentPreview'
 
 export function DemoInput() {
   return (
