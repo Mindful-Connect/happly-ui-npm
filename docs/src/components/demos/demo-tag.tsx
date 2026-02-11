@@ -1,7 +1,6 @@
 'use client'
 
-import * as React from 'react'
-import { Tag, TagIcon, TagClose, type TagProps } from '@/components/ui/tag'
+import { Tag, type TagProps } from '@/components/ui/tag'
 
 // --- Demo Wrapper ---
 
