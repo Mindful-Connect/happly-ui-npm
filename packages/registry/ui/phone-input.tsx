@@ -209,7 +209,7 @@ function PhoneInput({
   return (
     <div
       className={cn(
-        'relative flex h-10 w-full rounded-[10px] border shadow-[0px_1px_2px_0px_rgba(10,13,20,0.03)]',
+        'relative flex h-10 w-full rounded-10 border shadow-[0px_1px_2px_0px_rgba(10,13,20,0.03)]',
         'hover:not-focus-within:border-ds-neutral-200 hover:not-focus-within:bg-ds-weak-50',
         'focus-within:border-ds-stroke-strong-950 focus-within:shadow-button-important-focus',
         readOnly ? 'cursor-not-allowed bg-gray-100' : 'bg-white',
@@ -225,7 +225,7 @@ function PhoneInput({
           <>
             <Listbox.Button
               className={cn(
-                'relative flex shrink-0 cursor-default items-center gap-x-2 whitespace-nowrap rounded-l-[10px] border border-transparent border-r-ds-neutral-200 bg-transparent py-2 pl-2 pr-2.5 text-sm focus:outline-none',
+                'relative flex shrink-0 cursor-default items-center gap-x-2 whitespace-nowrap rounded-l-10 border border-transparent border-r-ds-neutral-200 bg-transparent py-2 pl-2 pr-2.5 text-sm focus:outline-none',
                 readOnly ? 'pointer-events-none' : 'cursor-pointer'
               )}
               style={{

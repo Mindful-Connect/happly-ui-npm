@@ -78,7 +78,7 @@ export function CurrencyInput({
           <>
             <Listbox.Button
               className={cn(
-                'relative flex shrink-0 cursor-default items-center gap-x-2 whitespace-nowrap rounded-r-[10px] border-l border-ds-neutral-200 bg-transparent py-2 pl-2 pr-2.5 text-sm focus:outline-none',
+                'relative flex shrink-0 cursor-default items-center gap-x-2 whitespace-nowrap rounded-r-10 border-l border-ds-neutral-200 bg-transparent py-2 pl-2 pr-2.5 text-sm focus:outline-none',
                 readOnly ? 'pointer-events-none' : 'cursor-pointer'
               )}
             >

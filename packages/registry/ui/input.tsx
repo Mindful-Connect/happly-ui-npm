@@ -81,12 +81,12 @@ const inputClassConfig = {
         input: 'h-10',
       },
       small: {
-        root: 'rounded-lg',
+        root: 'rounded-10',
         wrapper: 'gap-2 px-2.5',
         input: 'h-9',
       },
       xsmall: {
-        root: 'rounded-lg',
+        root: 'rounded-10',
         wrapper: 'gap-1.5 px-2',
         input: 'h-8',
       },
