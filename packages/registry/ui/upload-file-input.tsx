@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState, useRef, useId } from 'react';
+import { useEffect, useState, useRef, useId } from 'react';
 import Uppy from '@uppy/core';
 import AwsS3 from '@uppy/aws-s3'; // Compatible with GCS S3-compatible API
 import { UppyContextProvider, useDropzone, useFileInput } from '@uppy/react';
