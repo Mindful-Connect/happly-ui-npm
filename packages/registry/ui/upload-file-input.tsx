@@ -1428,10 +1428,6 @@ function FileUploadTrigger({
   });
   const { getButtonProps, getInputProps: getFileInputProps } = useFileInput();
 
-  const handleTriggerClick = useCallback(() => {
-    if (uploading) return;
-  }, [uploading]);
-
   const acceptAttr = allowedFileTypes.join(',');
 
   return (
