@@ -58,7 +58,7 @@ You can use any package manager:
 - **bun**: `bunx @happlyui/cli@latest add button`
 - **npm**: `npx @happlyui/cli@latest add button`
 - **pnpm**: `pnpx @happlyui/cli@latest add button`
-{% /callout %}
+  {% /callout %}
 
 ---
 
@@ -69,10 +69,75 @@ If you prefer to set things up manually:
 ### 1. Install dependencies
 
 ```bash
-bun add clsx tailwind-merge class-variance-authority
+bun add clsx tailwind-merge class-variance-authority tailwindcss-animate
 ```
 
-### 2. Add the utility function
+### 2. Configure Tailwind CSS
+
+We provide ready-to-use configuration files for both Tailwind v3 and v4 in the `tailwind-manual-installation` directory of the repository.
+
+#### Tailwind v3
+
+1.  Copy `tailwind-manual-installation/v3/happly-tailwind.preset.js` to your project root.
+2.  Add it to your `tailwind.config.js`:
+    ```js
+    module.exports = {
+      presets: [require('./happly-tailwind.preset.js')],
+      // ... rest of your config
+    }
+    ```
+3.  Copy the CSS variables from `tailwind-manual-installation/v3/globals.css` into your global CSS file.
+
+#### Tailwind v4
+
+1.  Copy `tailwind-manual-installation/v4/happly-theme.css` to your project (e.g., `src/happly-theme.css`).
+2.  Import it in your main CSS file:
+    ```css
+    @import './happly-theme.css';
+    ```
+
+### Conflict Resolution & Overrides
+
+When using `happly-tailwind.preset.js` (Tailwind v3), Happly's configuration is provided as a preset. This means:
+
+- **Your configuration overrides the preset**: Any keys defined in your `tailwind.config.js` will take precedence over Happly's defaults.
+- **Use `theme.extend`**: To add custom colors or fonts without removing Happly's tokens, always use `theme.extend`.
+
+  ```js
+  // ✅ Good: Extends Happly defaults
+  module.exports = {
+    theme: {
+      extend: {
+        colors: { brand: '#ff0000' },
+      },
+    },
+  }
+
+  // ❌ Bad: Overrides Happly defaults (removes semantic tokens)
+  module.exports = {
+    theme: {
+      colors: { brand: '#ff0000' },
+    },
+  }
+  ```
+
+#### Tailwind v4 Conflict Resolution
+
+For Tailwind v4:
+
+- **Import Order Matters**: Ensure `@import "./happly-theme.css";` comes **before** your own `@theme` block or variable definitions.
+- **Overriding Variables**: You can override any Happly variable by redefining it in your `:root` or `@theme` block _after_ the import.
+
+  ```css
+  @import './happly-theme.css';
+
+  @theme {
+    /* Overrides Happly's --color-primary */
+    --color-primary: red;
+  }
+  ```
+
+### 3. Add the utility function
 
 Create `src/lib/utils.ts`:
 
@@ -133,12 +198,12 @@ HapplyUI stores its configuration in `components.json`:
 
 ### Configuration options
 
-| Option | Description |
-|--------|-------------|
-| `typescript` | Whether to use TypeScript (`true`) or JavaScript (`false`) |
-| `tailwind.css` | Path to your global CSS file |
-| `aliases.ui` | Where components will be installed |
-| `aliases.utils` | Where the `cn()` utility lives |
+| Option          | Description                                                |
+| --------------- | ---------------------------------------------------------- |
+| `typescript`    | Whether to use TypeScript (`true`) or JavaScript (`false`) |
+| `tailwind.css`  | Path to your global CSS file                               |
+| `aliases.ui`    | Where components will be installed                         |
+| `aliases.utils` | Where the `cn()` utility lives                             |
 
 ---
 
