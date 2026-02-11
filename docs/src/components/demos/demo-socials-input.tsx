@@ -548,7 +548,6 @@ function SocialsInputsSelectableDS({
     const isValidFormat = validateURL(url)
     if (!isValidFormat) return { success: false, message }
 
-    const domainRequired = true // or implicit
     // Check if domain is allowed
     const validDomain = allowedSocialDomains.some((domain) =>
       url.includes(domain),
