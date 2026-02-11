@@ -2,7 +2,6 @@
 
 import {
   Button,
-  buttonVariants,
   compactButtonVariants,
   type Variant as ButtonVariant,
 } from './button';
