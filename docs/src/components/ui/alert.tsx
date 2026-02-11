@@ -1,7 +1,7 @@
-import { cn } from '@/lib/shadcn-utils';
-import { Slot } from '@radix-ui/react-slot';
-import { cva, type VariantProps } from 'class-variance-authority';
-import * as React from 'react';
+import { cn } from '@/lib/utils'
+import { Slot } from '@radix-ui/react-slot'
+import { cva, type VariantProps } from 'class-variance-authority'
+import * as React from 'react'
 import {
   RiAlertFill,
   RiCheckboxCircleFill,
@@ -9,9 +9,9 @@ import {
   RiErrorWarningFill,
   RiInformationFill,
   RiSparklingFill,
-} from 'react-icons/ri';
+} from 'react-icons/ri'
 
-import { AlertStatus, AlertStyle, AlertVariant } from '@/lib/alert-utils';
+import { AlertStatus, AlertStyle, AlertVariant } from '@/lib/alert-utils'
 
 // =============================================================================
 // Variant Definitions
@@ -70,7 +70,7 @@ const alertVariants = cva('relative flex items-start text-sm', {
     variant: 'warningLighter',
     size: 'sm',
   },
-});
+})
 
 const alertLinkVariants = cva(
   [
@@ -97,42 +97,45 @@ const alertLinkVariants = cva(
       variant: 'default',
       size: 'md',
     },
-  }
-);
+  },
+)
 
 // =============================================================================
 // Helper Functions
 // =============================================================================
 
 function getStatusFromVariant(variant: string | null | undefined): AlertStatus {
-  if (!variant) return 'warning';
-  if (variant.includes('error')) return 'error';
-  if (variant.includes('warning')) return 'warning';
-  if (variant.includes('success')) return 'success';
-  if (variant.includes('info')) return 'info';
-  if (variant.includes('feature')) return 'feature';
-  return 'warning';
+  if (!variant) return 'warning'
+  if (variant.includes('error')) return 'error'
+  if (variant.includes('warning')) return 'warning'
+  if (variant.includes('success')) return 'success'
+  if (variant.includes('info')) return 'info'
+  if (variant.includes('feature')) return 'feature'
+  return 'warning'
 }
 
 function isFilledVariant(variant: string | null | undefined): boolean {
-  return variant?.includes('Filled') ?? false;
+  return variant?.includes('Filled') ?? false
 }
 
 function isOutlineVariant(variant: string | null | undefined): boolean {
-  return variant?.includes('Outline') ?? false;
+  return variant?.includes('Outline') ?? false
 }
 
 // =============================================================================
 // Icon Components
 // =============================================================================
 
-const STATUS_ICONS: Record<AlertStatus, React.ComponentType<{ className?: string }>> = {
+const STATUS_ICONS: Record<
+  AlertStatus,
+  React.ComponentType<{ className?: string }>
+> = {
   error: RiErrorWarningFill,
   warning: RiAlertFill,
   success: RiCheckboxCircleFill,
   info: RiInformationFill,
   feature: RiSparklingFill,
-};
+}
 
 const STATUS_COLORS: Record<AlertStatus, string> = {
   error: 'text-ds-error-base',
@@ -140,33 +143,33 @@ const STATUS_COLORS: Record<AlertStatus, string> = {
   success: 'text-ds-success-base',
   info: 'text-ds-information-base',
   feature: 'text-ds-feature-base',
-};
+}
 
 function AlertIcon({
   variant,
   size,
 }: {
-  variant: string | null | undefined;
-  size: string;
+  variant: string | null | undefined
+  size: string
 }) {
-  const status = getStatusFromVariant(variant);
-  const isFilled = isFilledVariant(variant);
-  const isOutline = isOutlineVariant(variant);
-  const Icon = STATUS_ICONS[status];
+  const status = getStatusFromVariant(variant)
+  const isFilled = isFilledVariant(variant)
+  const isOutline = isOutlineVariant(variant)
+  const Icon = STATUS_ICONS[status]
 
-  const iconSize = size === 'xs' ? 'h-4 w-4' : 'h-5 w-5';
-  const iconColor = isFilled ? 'text-white' : STATUS_COLORS[status];
+  const iconSize = size === 'xs' ? 'h-4 w-4' : 'h-5 w-5'
+  const iconColor = isFilled ? 'text-white' : STATUS_COLORS[status]
 
   return (
     <div
       className={cn(
         'flex shrink-0 items-center justify-center',
-        isOutline && size !== 'md' && '-mt-[1px]'
+        isOutline && size !== 'md' && '-mt-[1px]',
       )}
     >
       <Icon className={cn(iconSize, iconColor)} />
     </div>
-  );
+  )
 }
 
 function DismissIcon({ isFilled }: { isFilled: boolean }) {
@@ -176,10 +179,10 @@ function DismissIcon({ isFilled }: { isFilled: boolean }) {
         'h-5 w-5 transition-opacity duration-75',
         isFilled
           ? 'opacity-70 hover:opacity-100'
-          : 'opacity-40 hover:opacity-75'
+          : 'opacity-40 hover:opacity-75',
       )}
     />
-  );
+  )
 }
 
 // =============================================================================
@@ -188,9 +191,9 @@ function DismissIcon({ isFilled }: { isFilled: boolean }) {
 
 type AlertProps = React.HTMLAttributes<HTMLDivElement> &
   VariantProps<typeof alertVariants> & {
-    dismissButton?: boolean;
-    onDismiss?: () => void;
-  };
+    dismissButton?: boolean
+    onDismiss?: () => void
+  }
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   (
@@ -203,15 +206,15 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
       children,
       ...props
     },
-    ref
+    ref,
   ) => {
-    const isFilled = isFilledVariant(variant);
-    const isOutline = isOutlineVariant(variant);
+    const isFilled = isFilledVariant(variant)
+    const isOutline = isOutlineVariant(variant)
 
     return (
       <div
         ref={ref}
-        role='alert'
+        role="alert"
         className={cn(alertVariants({ variant, size }), className)}
         {...props}
       >
@@ -220,7 +223,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
         <div
           className={cn(
             'alert-content flex w-full leading-tight',
-            size === 'md' && 'flex-col'
+            size === 'md' && 'flex-col',
           )}
         >
           {children}
@@ -228,7 +231,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
 
         {dismissButton && (
           <button
-            type='button'
+            type="button"
             className={cn('dismiss-button ml-auto', isOutline && '-mt-[1px]')}
             onClick={onDismiss}
           >
@@ -236,10 +239,10 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
           </button>
         )}
       </div>
-    );
-  }
-);
-Alert.displayName = 'Alert';
+    )
+  },
+)
+Alert.displayName = 'Alert'
 
 const AlertTitle = React.forwardRef<
   HTMLParagraphElement,
@@ -250,8 +253,8 @@ const AlertTitle = React.forwardRef<
     className={cn('alert-title line-clamp-1', className)}
     {...props}
   />
-));
-AlertTitle.displayName = 'AlertTitle';
+))
+AlertTitle.displayName = 'AlertTitle'
 
 const AlertDescription = React.forwardRef<
   HTMLParagraphElement,
@@ -262,16 +265,16 @@ const AlertDescription = React.forwardRef<
     className={cn('alert-description text-sm [&_p]:leading-relaxed', className)}
     {...props}
   />
-));
-AlertDescription.displayName = 'AlertDescription';
+))
+AlertDescription.displayName = 'AlertDescription'
 
 type AlertActionsProps = React.HTMLAttributes<HTMLDivElement> & {
-  separator?: React.ReactNode;
-};
+  separator?: React.ReactNode
+}
 
 const AlertActions = React.forwardRef<HTMLDivElement, AlertActionsProps>(
   ({ className, separator, children, ...props }, ref) => {
-    const childArray = React.Children.toArray(children);
+    const childArray = React.Children.toArray(children)
 
     return (
       <div
@@ -283,37 +286,37 @@ const AlertActions = React.forwardRef<HTMLDivElement, AlertActionsProps>(
           <React.Fragment key={index}>
             {child}
             {separator && index < childArray.length - 1 && (
-              <span className='text-current opacity-[0.48]'>{separator}</span>
+              <span className="text-current opacity-[0.48]">{separator}</span>
             )}
           </React.Fragment>
         ))}
       </div>
-    );
-  }
-);
-AlertActions.displayName = 'AlertActions';
+    )
+  },
+)
+AlertActions.displayName = 'AlertActions'
 
 type AlertLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> &
   VariantProps<typeof alertLinkVariants> & {
-    asChild?: boolean;
-  };
+    asChild?: boolean
+  }
 
 const AlertLink = React.forwardRef<HTMLAnchorElement, AlertLinkProps>(
   ({ className, variant, size, asChild, ...props }, ref) => {
-    const Comp = asChild ? Slot : 'a';
+    const Comp = asChild ? Slot : 'a'
     return (
       <Comp
         ref={ref}
         className={cn(alertLinkVariants({ variant, size }), className)}
         {...props}
       />
-    );
-  }
-);
-AlertLink.displayName = 'AlertLink';
+    )
+  },
+)
+AlertLink.displayName = 'AlertLink'
 
 type AlertButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
-  VariantProps<typeof alertLinkVariants>;
+  VariantProps<typeof alertLinkVariants>
 
 const AlertButton = React.forwardRef<HTMLButtonElement, AlertButtonProps>(
   ({ className, variant, size, ...props }, ref) => (
@@ -322,9 +325,9 @@ const AlertButton = React.forwardRef<HTMLButtonElement, AlertButtonProps>(
       className={cn(alertLinkVariants({ variant, size }), className)}
       {...props}
     />
-  )
-);
-AlertButton.displayName = 'AlertButton';
+  ),
+)
+AlertButton.displayName = 'AlertButton'
 
 // =============================================================================
 // Utility Function for Alerts.tsx
@@ -332,7 +335,7 @@ AlertButton.displayName = 'AlertButton';
 
 export function getAlertVariant(
   type: AlertStatus | undefined,
-  style: AlertStyle = 'light'
+  style: AlertStyle = 'light',
 ): AlertVariant {
   const typeMap: Record<AlertStatus, string> = {
     success: 'success',
@@ -340,18 +343,18 @@ export function getAlertVariant(
     info: 'info',
     warning: 'warning',
     feature: 'feature',
-  };
+  }
   const styleMap: Record<AlertStyle, string> = {
     filled: 'Filled',
     light: 'Light',
     lighter: 'Lighter',
     outline: 'Outline',
-  };
+  }
 
-  const alertType = typeMap[type ?? 'error'] ?? 'error';
-  const alertStyle = styleMap[style ?? 'lighter'] ?? 'Lighter';
+  const alertType = typeMap[type ?? 'error'] ?? 'error'
+  const alertStyle = styleMap[style ?? 'lighter'] ?? 'Lighter'
 
-  return `${alertType}${alertStyle}` as AlertVariant;
+  return `${alertType}${alertStyle}` as AlertVariant
 }
 
 // =============================================================================
@@ -367,4 +370,4 @@ export {
   AlertButton,
   alertVariants,
   alertLinkVariants,
-};
+}
