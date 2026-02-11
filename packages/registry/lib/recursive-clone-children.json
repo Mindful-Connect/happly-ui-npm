@@ -1,0 +1,15 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "recursive-clone-children",
+  "type": "registry:lib",
+  "title": "Recursive Clone Children",
+  "description": "Utility to recursively clone React children and inject shared props.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "lib/recursive-clone-children.ts",
+      "type": "registry:lib"
+    }
+  ]
+}

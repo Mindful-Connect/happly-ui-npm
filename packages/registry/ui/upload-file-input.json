@@ -1,0 +1,62 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "upload-file-input",
+  "type": "registry:ui",
+  "title": "Upload File Input",
+  "description": "A file upload component with support for drag and drop, multiple files, and S3/GCS integration.",
+  "dependencies": [
+    "@uppy/core",
+    "@uppy/aws-s3",
+    "@uppy/react",
+    "crypto-random-string",
+    "react-icons"
+  ],
+  "registryDependencies": [
+    "button",
+    "alert-utils",
+    "utils"
+  ],
+  "docs": {
+    "lead": "A file upload component with support for drag and drop, multiple files, and S3/GCS integration.",
+    "usage": "import UploadFile from \"@/components/ui/upload-file-input\"\n\n<UploadFile\n  variant=\"default\"\n  uploadLabel=\"Upload File\"\n  description=\"Support for various file types\"\n/>",
+    "examples": [
+      {
+        "title": "Showcase",
+        "description": "Upload file input with various variants.",
+        "code": "import UploadFile from \"@/components/ui/upload-file-input\"\n\nexport default function Demo() {\n  return (\n    <div className=\"flex flex-col gap-8\">\n      <UploadFile variant=\"default-image\" />\n      <UploadFile variant=\"attachment\" />\n    </div>\n  )\n}",
+        "preview": [
+          {
+            "component": "upload-file-input",
+            "props": {}
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/upload-file-input.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "lib/upload-file-input/constants.ts",
+      "type": "registry:lib"
+    },
+    {
+      "path": "lib/upload-file-input/types.ts",
+      "type": "registry:lib"
+    },
+    {
+      "path": "lib/upload-file-input/helpers.ts",
+      "type": "registry:lib"
+    },
+    {
+      "path": "lib/upload-file-input/index.ts",
+      "type": "registry:lib"
+    },
+    {
+      "path": "lib/upload-file-input-icons.tsx",
+      "type": "registry:lib"
+    }
+  ]
+}

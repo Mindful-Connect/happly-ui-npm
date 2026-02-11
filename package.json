@@ -5,11 +5,13 @@
   "scripts": {
     "build": "bun run --filter './packages/*' build",
     "dev": "bun run --filter './packages/*' dev",
+    "build:registry": "bun run scripts/build-registry.ts",
     "clean": "rm -rf packages/*/dist packages/*/.turbo"
   },
   "devDependencies": {
     "typescript": "^5.7.0",
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "prettier": "^3.0.3"
   },
   "module": "index.ts",
   "type": "module"

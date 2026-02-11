@@ -11,6 +11,7 @@ import {
   writeComponentFile,
 } from "../utils/config.js";
 import { installDependencies } from "../utils/install.js";
+import { updateTailwindConfig } from "../utils/transformers/tailwind.js";
 import { isNonInteractive, getAgentName } from "../utils/env.js";
 import type { HapplyConfig, InitOptions, BaseColor } from "../types/index.js";
 import { BASE_COLORS, DEFAULT_CONFIG } from "../types/index.js";
@@ -288,12 +289,33 @@ export async function init(options: InitOptions): Promise<void> {
           );
           await writeFile(fullCssPath, updatedCss, "utf-8");
         } else {
-          // Prepend our CSS variables
-          await writeFile(fullCssPath, cssTemplate + "\n" + existingCss, "utf-8");
+          // Check if @tailwind directives exist
+          if (existingCss.includes("@tailwind base")) {
+            const templateWithoutDirectives = cssTemplate.replace(
+              /@tailwind\s+(base|components|utilities);\n?/g,
+              ""
+            );
+            await writeFile(
+              fullCssPath,
+              existingCss + "\n" + templateWithoutDirectives,
+              "utf-8"
+            );
+          } else {
+            // Prepend our CSS variables
+            await writeFile(
+              fullCssPath,
+              cssTemplate + "\n" + existingCss,
+              "utf-8"
+            );
+          }
         }
         writeSpinner.text = `Updated ${cssPath}`;
       }
     }
+
+    // Apply Happly UI Tailwind Configuration (Colors, Typography, etc)
+    writeSpinner.text = "Applying Happly UI design tokens...";
+    await updateTailwindConfig(cwd, config, projectInfo.tailwindVersion);
 
     writeSpinner.succeed("Configuration written successfully");
   } catch (error) {

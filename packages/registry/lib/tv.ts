@@ -1,6 +1,5 @@
 import { tv as tvBase, type VariantProps } from "tailwind-variants";
 
-import { cn } from "@/lib/utils";
 
 /**
  * Tailwind Variants wrapper with cn() for class merging

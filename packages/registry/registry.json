@@ -4,76 +4,178 @@
   "homepage": "https://happly.cloud/ui",
   "items": [
     {
-      "name": "tv",
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "Displays a callout for user attention."
+    },
+    {
+      "name": "alert-utils",
       "type": "registry:lib",
-      "title": "Tailwind Variants",
-      "description": "Tailwind Variants wrapper with cn() for class merging.",
-      "dependencies": ["tailwind-variants"],
-      "registryDependencies": ["utils"]
-    },
-    {
-      "name": "polymorphic",
-      "type": "registry:lib",
-      "title": "Polymorphic",
-      "description": "Polymorphic component type helper for the 'as' prop pattern.",
-      "dependencies": [],
-      "registryDependencies": []
-    },
-    {
-      "name": "recursive-clone-children",
-      "type": "registry:lib",
-      "title": "Recursive Clone Children",
-      "description": "Utility to recursively clone React children and inject shared props.",
-      "dependencies": [],
-      "registryDependencies": []
-    },
-    {
-      "name": "button",
-      "type": "registry:ui",
-      "title": "Button",
-      "description": "A button component with multiple variants and sizes.",
-      "dependencies": ["@radix-ui/react-slot", "tailwind-variants"],
-      "registryDependencies": ["tv", "polymorphic", "recursive-clone-children"]
-    },
-    {
-      "name": "input",
-      "type": "registry:ui",
-      "title": "Input",
-      "description": "A text input component.",
-      "dependencies": [],
-      "registryDependencies": []
-    },
-    {
-      "name": "label",
-      "type": "registry:ui",
-      "title": "Label",
-      "description": "A label component for form inputs.",
-      "dependencies": ["@radix-ui/react-label"],
-      "registryDependencies": []
-    },
-    {
-      "name": "card",
-      "type": "registry:ui",
-      "title": "Card",
-      "description": "A card container component.",
-      "dependencies": [],
-      "registryDependencies": []
+      "title": "Alert Utils",
+      "description": "Utility functions and types for the Alert component."
     },
     {
       "name": "badge",
       "type": "registry:ui",
       "title": "Badge",
-      "description": "A badge component for status indicators.",
-      "dependencies": [],
-      "registryDependencies": []
+      "description": "A badge component for status indicators."
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "A button component with multiple variants, modes, and sizes. Use namespace import: import { Button } from '@/components/ui/button'. Supports new variant system."
+    },
+    {
+      "name": "calendar-input",
+      "type": "registry:ui",
+      "title": "Calendar Input",
+      "description": "A date input component with calendar popover."
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "A card container component."
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "description": "Fast, composable, unstyled command menu for React."
+    },
+    {
+      "name": "currency-input",
+      "type": "registry:ui",
+      "title": "Currency Input",
+      "description": "A currency input component with currency selection."
+    },
+    {
+      "name": "custom-input-wrapper",
+      "type": "registry:ui",
+      "title": "Custom Input Wrapper",
+      "description": "A wrapper for custom inputs with consistent styling."
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "A window overlaid on either the primary window or another dialog window."
     },
     {
       "name": "divider",
       "type": "registry:ui",
       "title": "Divider",
-      "description": "A versatile divider component for creating visual separation between content elements.",
-      "dependencies": ["tailwind-variants"],
-      "registryDependencies": ["tv"]
+      "description": "A versatile divider component for creating visual separation between content elements. Supports multiple variants including line, text, and content dividers."
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "A text input component."
+    },
+    {
+      "name": "key-icon",
+      "type": "registry:ui",
+      "title": "Key Icon",
+      "description": "An icon container with various styles and colors."
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "A label component for form inputs."
+    },
+    {
+      "name": "location-input",
+      "type": "registry:ui",
+      "title": "Location Input",
+      "description": "A Google Maps address autocomplete input."
+    },
+    {
+      "name": "phone-input",
+      "type": "registry:ui",
+      "title": "Phone Input",
+      "description": "A phone input component with country selection and formatting."
+    },
+    {
+      "name": "polymorphic",
+      "type": "registry:lib",
+      "title": "Polymorphic",
+      "description": "Polymorphic component type helper for the 'as' prop pattern."
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "Displays rich content in a portal, triggered by a button."
+    },
+    {
+      "name": "radio-card-group",
+      "type": "registry:ui",
+      "title": "Radio Card Group",
+      "description": "A radio group component with card styling, supporting icons, badges, and descriptions."
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio Group",
+      "description": "A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time."
+    },
+    {
+      "name": "recursive-clone-children",
+      "type": "registry:lib",
+      "title": "Recursive Clone Children",
+      "description": "Utility to recursively clone React children and inject shared props."
+    },
+    {
+      "name": "searchable-combo-box",
+      "type": "registry:ui",
+      "title": "Searchable Combo Box",
+      "description": "A searchable multi-select combobox component with tag selection."
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "A customized select component based on Radix UI."
+    },
+    {
+      "name": "socials-input",
+      "type": "registry:ui",
+      "title": "Socials Input",
+      "description": "A dynamic input list for social media URLs with validation and icons."
+    },
+    {
+      "name": "tag",
+      "type": "registry:ui",
+      "title": "Tag",
+      "description": "A tag component for labeling and categorization."
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "A textarea component."
+    },
+    {
+      "name": "tv",
+      "type": "registry:lib",
+      "title": "Tailwind Variants",
+      "description": "Tailwind Variants wrapper with cn() for class merging."
+    },
+    {
+      "name": "upload-file-input",
+      "type": "registry:ui",
+      "title": "Upload File Input",
+      "description": "A file upload component with support for drag and drop, multiple files, and S3/GCS integration."
+    },
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "Utils",
+      "description": "Utility functions for class name merging."
     }
   ]
 }

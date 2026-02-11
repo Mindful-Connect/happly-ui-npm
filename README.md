@@ -63,6 +63,72 @@ bunx @happlyui/cli@latest add --all
 
 If you prefer manual setup, you can copy components directly from the `packages/registry` directory.
 
+### Tailwind CSS Configuration
+
+We provide ready-to-use configuration files for both Tailwind v3 and v4 in the `tailwind-manual-installation` directory.
+
+#### Tailwind v3
+
+1.  Copy `tailwind-manual-installation/v3/happly-tailwind.preset.js` to your project root.
+2.  Add it to your `tailwind.config.js`:
+    ```js
+    module.exports = {
+      presets: [
+        require('./happly-tailwind.preset.js')
+      ],
+      // ... rest of your config
+    }
+    ```
+3.  Copy the CSS variables from `tailwind-manual-installation/v3/globals.css` into your global CSS file.
+
+#### Tailwind v4
+
+1.  Copy `tailwind-manual-installation/v4/happly-theme.css` to your project (e.g., `src/happly-theme.css`).
+2.  Import it in your main CSS file:
+    ```css
+    @import "./happly-theme.css";
+    ```
+
+### Conflict Resolution & Overrides
+
+When using `happly-tailwind.preset.js` (Tailwind v3), Happly's configuration is provided as a preset. This means:
+
+-   **Your configuration overrides the preset**: Any keys defined in your `tailwind.config.js` will take precedence over Happly's defaults.
+-   **Use `theme.extend`**: To add custom colors or fonts without removing Happly's tokens, always use `theme.extend`.
+    ```js
+    // ✅ Good: Extends Happly defaults
+    module.exports = {
+      theme: {
+        extend: {
+          colors: { 'brand': '#ff0000' }
+        }
+      }
+    }
+
+    // ❌ Bad: Overrides Happly defaults (removes semantic tokens)
+    module.exports = {
+      theme: {
+        colors: { 'brand': '#ff0000' } 
+      }
+    }
+    ```
+
+#### Tailwind v4 Conflict Resolution
+
+For Tailwind v4:
+
+-   **Import Order Matters**: Ensure `@import "./happly-theme.css";` comes **before** your own `@theme` block or variable definitions.
+-   **Overriding Variables**: You can override any Happly variable by redefining it in your `:root` or `@theme` block *after* the import.
+
+    ```css
+    @import "./happly-theme.css";
+
+    @theme {
+      /* Overrides Happly's --color-primary */
+      --color-primary: red; 
+    }
+    ```
+
 ## Usage
 
 ### Namespace Import (Recommended)
@@ -238,7 +304,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 1. Create `packages/registry/ui/my-component.tsx` with your component code
 2. Create `packages/registry/ui/my-component.json` with metadata and docs
-3. Add entry to `packages/registry/registry.json`
+3. Run `bun run build:registry` to update `packages/registry/registry.json`
 4. Open a PR to `production` - docs auto-update on merge
 
 ### Component JSON with Docs
@@ -248,6 +314,16 @@ Include a `docs` field for automatic documentation generation:
 ```json
 {
   "name": "my-component",
+  "files": [
+    {
+      "path": "ui/my-component.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "lib/my-utils.ts",
+      "type": "registry:lib"
+    }
+  ],
   "docs": {
     "lead": "Component description",
     "usage": "import * as MyComponent from '@/components/ui/my-component'",
@@ -269,6 +345,10 @@ Include a `docs` field for automatic documentation generation:
   }
 }
 ```
+
+**Note on Files:**
+You can include multiple files in a component. The CLI will maintain the file names and place them in the correct directory based on their `type` (e.g., `registry:ui` goes to `components/ui`, `registry:lib` goes to `lib/`).
+
 
 ### Adding Preview Components
 

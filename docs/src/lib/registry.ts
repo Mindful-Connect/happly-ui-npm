@@ -38,9 +38,27 @@ export interface RegistryItemWithDocs extends RegistryItem {
 
 // Preview configuration for rendering demo components
 export interface ComponentPreviewConfig {
-  component: 'button' | 'badge' | 'input' | 'label' | 'card' | 'divider'
+  component:
+    | 'button'
+    | 'badge'
+    | 'input'
+    | 'label'
+    | 'card'
+    | 'divider'
+    | 'phone-input'
+    | 'textarea'
+    | 'form-group'
+    | 'radio-card-group'
+    | 'calendar-input'
+    | 'socials-input'
+    | 'select'
+    | 'location-input'
+    | 'tag'
+    | 'searchable-combo-box'
+    | 'currency-input'
+    | 'upload-file-input'
   props?: Record<string, unknown>
-  children?: string
+  children?: string | ComponentPreviewConfig[]
 }
 
 export interface Registry {

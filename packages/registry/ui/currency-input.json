@@ -1,0 +1,84 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "currency-input",
+  "type": "registry:ui",
+  "title": "Currency Input",
+  "description": "A currency input component with currency selection.",
+  "dependencies": [
+    "@headlessui/react",
+    "lucide-react",
+    "flag-icons"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "ui/currency-input.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "lib/currency-input-utils.ts",
+      "type": "registry:lib"
+    }
+  ],
+  "docs": {
+    "lead": "A currency input component with currency selection.",
+    "usage": "import { CurrencyInput } from \"@/components/ui/currency-input\"\n\n<CurrencyInput />",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Default usage.",
+        "code": "<CurrencyInput />",
+        "preview": [
+          {
+            "component": "currency-input",
+            "props": {},
+            "children": ""
+          }
+        ]
+      }
+    ],
+    "api": [
+      {
+        "name": "CurrencyInput",
+        "description": "The CurrencyInput component.",
+        "props": [
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The value of the input."
+          },
+          {
+            "name": "onChange",
+            "type": "(val: string, currency: string) => void",
+            "description": "Callback when value or currency changes."
+          },
+          {
+            "name": "defaultCurrency",
+            "type": "string",
+            "default": "\"CAD\"",
+            "description": "The default currency code."
+          },
+          {
+            "name": "placeholder",
+            "type": "string",
+            "default": "\"0.00\"",
+            "description": "Placeholder text."
+          },
+          {
+            "name": "readOnly",
+            "type": "boolean",
+            "default": "false",
+            "description": "Whether the input is read-only."
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "description": "Additional CSS classes."
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -24,8 +24,16 @@
         "href": "/docs/components/button"
       },
       {
+        "title": "Calendar Input",
+        "href": "/docs/components/calendar-input"
+      },
+      {
         "title": "Card",
         "href": "/docs/components/card"
+      },
+      {
+        "title": "Currency Input",
+        "href": "/docs/components/currency-input"
       },
       {
         "title": "Divider",
@@ -38,6 +46,72 @@
       {
         "title": "Label",
         "href": "/docs/components/label"
+      },
+      {
+        "title": "Location Input",
+        "href": "/docs/components/location-input"
+      },
+      {
+        "title": "Radio Card Group",
+        "href": "/docs/components/radio-card-group"
+      },
+      {
+        "title": "Radio Group",
+        "href": "/docs/components/radio-group"
+      },
+      {
+        "title": "Searchable Combo Box",
+        "href": "/docs/components/searchable-combo-box"
+      },
+      {
+        "title": "Select",
+        "href": "/docs/components/select"
+      },
+      {
+        "title": "Socials Input",
+        "href": "/docs/components/socials-input"
+      },
+      {
+        "title": "Tag",
+        "href": "/docs/components/tag"
+      },
+      {
+        "title": "Textarea",
+        "href": "/docs/components/textarea"
+      },
+      {
+        "title": "Upload File Input",
+        "href": "/docs/components/upload-file-input"
+      },
+      {
+        "title": "Support components",
+        "links": [
+          {
+            "title": "Alert",
+            "href": "/docs/components/alert"
+          },
+          {
+            "title": "Command",
+            "href": "/docs/components/command"
+          },
+          {
+            "title": "Custom Input Wrapper",
+            "href": "/docs/components/custom-input-wrapper"
+          },
+          {
+            "title": "Dialog",
+            "href": "/docs/components/dialog"
+          },
+          {
+            "title": "Key Icon",
+            "href": "/docs/components/key-icon"
+          },
+          {
+            "title": "Popover",
+            "href": "/docs/components/popover"
+          }
+        ],
+        "collapsed": true
       }
     ]
   }

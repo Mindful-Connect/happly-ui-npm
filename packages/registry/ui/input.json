@@ -6,11 +6,149 @@
   "description": "A text input component.",
   "dependencies": [],
   "registryDependencies": [],
+  "docs": {
+    "lead": "A text input component.",
+    "usage": "import { Input } from \"@/components/ui/input\"\n\n<Input type=\"email\" placeholder=\"Email\" />",
+    "examples": [
+      {
+        "title": "Showcase",
+        "description": "Input component with various sizes, icons, and affixes.",
+        "code": "import { Input } from \"@/components/ui/input\"\nimport { RiUser3Line } from \"react-icons/ri\"\n\n<Input placeholder=\"Username\" leftIcon={<RiUser3Line />} />",
+        "preview": [
+          {
+            "component": "input",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "phoneInput": {
+      "title": "Phone Input",
+      "lead": "A phone input component with country selection and automatic formatting.",
+      "usage": "import * as PhoneInput from \"@/components/ui/phone-input\"\n\n<PhoneInput.Root\n  inputValue={value}\n  onChange={(val) => setValue(val)}\n  defaultCountryIso2=\"ca\"\n/>",
+      "examples": [
+        {
+          "title": "Default",
+          "description": "Default phone input with Canada selected.",
+          "code": "<PhoneInput.Root\n  inputValue={value}\n  onChange={setValue}\n  defaultCountryIso2=\"ca\"\n/>",
+          "preview": [
+            {
+              "component": "phone-input",
+              "props": {
+                "defaultCountryIso2": "ca"
+              }
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "name": "PhoneInput.Root",
+          "description": "The main component.",
+          "props": [
+            {
+              "name": "inputValue",
+              "type": "string",
+              "default": "''",
+              "description": "The current value in E.164 format."
+            },
+            {
+              "name": "onChange",
+              "type": "(value: string) => void",
+              "description": "Callback when value changes."
+            },
+            {
+              "name": "defaultCountryIso2",
+              "type": "CountryIso2",
+              "default": "'ca'",
+              "description": "Default country to select."
+            },
+            {
+              "name": "readOnly",
+              "type": "boolean",
+              "description": "Whether the input is read-only."
+            }
+          ]
+        }
+      ],
+      "dependencies": [
+        "react-international-phone",
+        "libphonenumber-js",
+        "flag-icons",
+        "lucide-react",
+        "@headlessui/react"
+      ]
+    },
+    "currencyInput": {
+      "title": "Currency Input",
+      "lead": "A currency input component with currency selection.",
+      "usage": "import { CurrencyInput } from \"@/components/ui/currency-input\"\n\n<CurrencyInput />",
+      "examples": [
+        {
+          "title": "Default",
+          "description": "Default usage.",
+          "code": "<CurrencyInput />",
+          "preview": [
+            {
+              "component": "currency-input",
+              "props": {},
+              "children": ""
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "name": "CurrencyInput",
+          "description": "The CurrencyInput component.",
+          "props": [
+            {
+              "name": "value",
+              "type": "string",
+              "description": "The value of the input."
+            },
+            {
+              "name": "onChange",
+              "type": "(val: string, currency: string) => void",
+              "description": "Callback when value or currency changes."
+            },
+            {
+              "name": "defaultCurrency",
+              "type": "string",
+              "default": "\"CAD\"",
+              "description": "The default currency code."
+            },
+            {
+              "name": "placeholder",
+              "type": "string",
+              "default": "\"0.00\"",
+              "description": "Placeholder text."
+            },
+            {
+              "name": "readOnly",
+              "type": "boolean",
+              "default": "false",
+              "description": "Whether the input is read-only."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "description": "Additional CSS classes."
+            }
+          ]
+        }
+      ],
+      "dependencies": [
+        "@headlessui/react",
+        "lucide-react",
+        "flag-icons"
+      ]
+    }
+  },
   "files": [
     {
       "path": "ui/input.tsx",
-      "type": "registry:ui",
-      "content": "import * as React from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nconst Input = React.forwardRef<HTMLInputElement, React.ComponentProps<\"input\">>(\n  ({ className, type, ...props }, ref) => {\n    return (\n      <input\n        type={type}\n        className={cn(\n          \"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm\",\n          className\n        )}\n        ref={ref}\n        {...props}\n      />\n    );\n  }\n);\nInput.displayName = \"Input\";\n\nexport { Input };\n"
+      "type": "registry:ui"
     }
   ]
 }

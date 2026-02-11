@@ -229,32 +229,29 @@ Create `packages/registry/ui/my-component.json`:
   "files": [
     {
       "path": "ui/my-component.tsx",
-      "type": "registry:ui",
-      "content": "import { tv, type VariantProps } from '@/utils/tv';\n\nconst COMPONENT_ROOT_NAME = 'MyComponentRoot';\n\nexport const myComponentVariants = tv({\n  base: 'relative flex w-full items-center',\n  variants: {\n    variant: {\n      default: 'bg-white border border-gray-200',\n      filled: 'bg-gray-100',\n      outline: 'border-2 border-gray-300',\n    },\n    size: {\n      sm: 'h-8 text-sm',\n      md: 'h-10 text-base',\n      lg: 'h-12 text-lg',\n    },\n  },\n  defaultVariants: {\n    variant: 'default',\n    size: 'md',\n  },\n});\n\ntype MyComponentRootProps = React.HTMLAttributes<HTMLDivElement> &\n  VariantProps<typeof myComponentVariants>;\n\nfunction MyComponentRoot({\n  variant,\n  size,\n  className,\n  ...rest\n}: MyComponentRootProps) {\n  return (\n    <div\n      className={myComponentVariants({ variant, size, class: className })}\n      {...rest}\n    />\n  );\n}\nMyComponentRoot.displayName = COMPONENT_ROOT_NAME;\n\nexport { MyComponentRoot as Root };\nexport { myComponentVariants };\n"
+      "type": "registry:ui"
+    },
+    // Optional: Additional files (e.g. types, helpers)
+    {
+      "path": "lib/my-component-types.ts",
+      "type": "registry:lib"
     }
   ]
 }
 ```
+
+> **Note**: The CLI supports multiple files per component. It will preserve the defined file names and place them in the correct directory based on their `type`. For example, a file with type `registry:lib` will be placed in the user's configured `lib` directory (e.g., `src/lib/my-helper.ts`), while `registry:ui` goes to the UI components folder.
+
 
 ### Step 3: Add to Registry Index
 
-Update `packages/registry/registry.json`:
+Run the build script to update the registry index:
 
-```json
-{
-  "items": [
-    // ... existing components
-    {
-      "name": "my-component",
-      "type": "registry:ui",
-      "title": "My Component",
-      "description": "Brief description for CLI listing.",
-      "dependencies": ["tailwind-variants"],
-      "registryDependencies": ["tv"]
-    }
-  ]
-}
+```bash
+bun run build:registry
 ```
+
+This will automatically add your component to `packages/registry/registry.json` using the metadata from your component's JSON file.
 
 ### Step 4: Add Preview Component (if needed)
 
@@ -438,7 +435,7 @@ chore: update dependencies
 - [ ] `docs.usage` - Import and basic usage example
 - [ ] `docs.examples` - At least 1 example with code
 - [ ] `docs.api` - All exports documented with props
-- [ ] `files[].content` - Source code inlined with `\n` for newlines
+
 - [ ] Preview component added (if applicable)
 - [ ] Tested locally: `bun run --cwd docs dev`
 

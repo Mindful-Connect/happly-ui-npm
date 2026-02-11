@@ -7,7 +7,13 @@ import fs from 'fs'
 import path from 'path'
 
 const REGISTRY_PATH = path.join(__dirname, '..', '..', 'packages', 'registry')
-const OUTPUT_PATH = path.join(__dirname, '..', 'src', 'lib', 'navigation-data.json')
+const OUTPUT_PATH = path.join(
+  __dirname,
+  '..',
+  'src',
+  'lib',
+  'navigation-data.json',
+)
 
 interface RegistryItem {
   name: string
@@ -28,12 +34,32 @@ function main() {
 
   // Filter UI components and generate navigation links
   const componentLinks = registry.items
-    .filter((item) => item.type === 'registry:ui')
+    .filter(
+      (item) => item.type === 'registry:ui' && item.name !== 'phone-input',
+    )
     .map((item) => ({
       title: item.title,
       href: `/docs/components/${item.name}`,
+      name: item.name,
     }))
     .sort((a, b) => a.title.localeCompare(b.title))
+
+  const SUPPORT_COMPONENTS = [
+    'command',
+    'custom-input-wrapper',
+    'dialog',
+    'popover',
+    'key-icon',
+    'alert',
+  ]
+
+  const mainLinks = componentLinks
+    .filter((item) => !SUPPORT_COMPONENTS.includes(item.name))
+    .map(({ name, ...rest }) => rest)
+
+  const supportLinks = componentLinks
+    .filter((item) => SUPPORT_COMPONENTS.includes(item.name))
+    .map(({ name, ...rest }) => rest)
 
   // Build full navigation structure
   const navigation = [
@@ -46,13 +72,22 @@ function main() {
     },
     {
       title: 'Components',
-      links: componentLinks,
+      links: [
+        ...mainLinks,
+        {
+          title: 'Support components',
+          links: supportLinks,
+          collapsed: true,
+        },
+      ],
     },
   ]
 
   // Write to JSON file
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(navigation, null, 2))
-  console.log(`✓ Generated navigation data with ${componentLinks.length} components`)
+  console.log(
+    `✓ Generated navigation data with ${componentLinks.length} components`,
+  )
   console.log(`  Output: ${OUTPUT_PATH}`)
 }
 
