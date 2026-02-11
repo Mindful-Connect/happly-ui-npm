@@ -1,4 +1,3 @@
-import { ObjectValues } from '@/lib/utils';
 import { FileFormatIconColor } from './types';
 
 export const fileTypes = {
