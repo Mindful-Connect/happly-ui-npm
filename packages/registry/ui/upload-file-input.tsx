@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState, useRef, ReactNode } from 'react';
+import { useCallback, useEffect, useState, useRef, useId } from 'react';
 import Uppy from '@uppy/core';
 import AwsS3 from '@uppy/aws-s3'; // Compatible with GCS S3-compatible API
 import { UppyContextProvider, useDropzone, useFileInput } from '@uppy/react';
@@ -312,9 +312,10 @@ export default function UploadFile({
   const effectiveMaxFiles =
     variant === 'attachment' ? maxNumberOfFiles || 5 : 1;
 
+  const id = useId();
   const [uppy] = useState(() =>
     new Uppy({
-      id: `${variant}-${cryptoRandomString({ length: 10 })}`,
+      id: `${id}-${variant}`,
       debug: process.env.NODE_ENV === 'development',
       autoProceed: false,
       restrictions: {
