@@ -54,7 +54,7 @@ export function DemoPhoneInput({
     const parsed = parsePhoneNumber(propInputValue)
     let newInternalFull = ''
     let newNationalDigits = ''
-    let newCountryIso2 = defaultCountryIso2
+    let newCountryIso2: CountryIso2
 
     if (parsed && parsed.isValid()) {
       newInternalFull = parsed.number
