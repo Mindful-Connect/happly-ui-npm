@@ -43,14 +43,12 @@ import {
   videoIcon,
   attachmentUploadIcon,
   getFileThumbnailIcon,
-  getFileIconByMimeType,
 } from '@/lib/upload-file-input-icons'
 import {
   getColorForExtension,
   getExtensionFromFile,
   formatUploadProgress,
   formatFileSize,
-  FileFormatIconColor,
 } from '@/lib/upload-file-input'
 
 export default function UploadFile({
