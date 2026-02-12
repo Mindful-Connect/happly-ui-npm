@@ -266,7 +266,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       hasError: currentHasError,
     };
 
-    const inputId = id || React.useId();
+    const generatedId = React.useId();
+    const inputId = id || generatedId;
 
     const renderedLeftIcon = renderSlotContent(
       leftIcon,
