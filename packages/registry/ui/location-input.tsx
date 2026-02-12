@@ -1,10 +1,4 @@
-import {
-  Fragment,
-  ReactElement,
-  SVGProps,
-  useEffect,
-  useState,
-} from 'react';
+import { Fragment, ReactElement, SVGProps, useEffect, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
 import { cn } from '@/lib/utils';
@@ -158,7 +152,7 @@ export function LocationInput({
           <div className='relative w-full'>
             <div
               className={cn(
-                'flex h-10 items-center rounded-[10px] border bg-white py-2 pl-2.5 pr-2 shadow-[0px_1px_2px_0px_rgba(10,13,20,0.03)]',
+                'flex h-10 items-center rounded-[10px] border bg-white py-2 pr-2 pl-2.5 shadow-[0px_1px_2px_0px_rgba(10,13,20,0.03)]',
                 'hover:[&:not(:focus-within)]:border-ds-neutral-200 hover:[&:not(:focus-within)]:bg-ds-weak-50',
                 'focus-within:shadow-button-important-focus focus-within:before:ring-ds-stroke-strong-950',
                 isFocused ? 'border-ds-neutral-950' : 'border-ds-neutral-200'
@@ -176,7 +170,7 @@ export function LocationInput({
               )}
               <Combobox.Input
                 value={locationSearch}
-                className='w-full border-none bg-transparent pl-1.5 text-sm text-ds-neutral-950 placeholder:text-ds-neutral-600 focus:outline-none focus:ring-0'
+                className='text-ds-neutral-950 placeholder:text-ds-neutral-600 w-full border-none bg-transparent pl-1.5 text-sm focus:ring-0 focus:outline-none'
                 onFocus={() => {
                   setLocationSearchActive(true);
                   setIsFocused(true);
@@ -200,7 +194,7 @@ export function LocationInput({
             >
               <div>
                 {locationSuggestions.length > 0 && (
-                  <Combobox.Options className='absolute z-10 mt-2.5 max-h-60 w-full overflow-auto rounded-2xl border border-ds-neutral-200 bg-white p-2 text-sm shadow-lg ring-0 focus:outline-none'>
+                  <Combobox.Options className='border-ds-neutral-200 absolute z-10 mt-2.5 max-h-60 w-full overflow-auto rounded-2xl border bg-white p-2 text-sm shadow-lg ring-0 focus:outline-none'>
                     {locationSuggestions.map((suggestion, suggestionIndex) => (
                       <Combobox.Option
                         key={suggestionIndex}
@@ -208,7 +202,7 @@ export function LocationInput({
                       >
                         {({ active, selected }) => (
                           <div
-                            className='cursor-default select-none rounded-[10px] px-3 py-2 hover:bg-ds-neutral-50'
+                            className='hover:bg-ds-neutral-50 cursor-default rounded-[10px] px-3 py-2 select-none'
                             title={suggestion.description}
                           >
                             <span

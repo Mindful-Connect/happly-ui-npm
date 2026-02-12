@@ -6,7 +6,9 @@
   "bin": {
     "happlyui": "./dist/index.js"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "bun build ./src/index.ts --outdir ./dist --target node --format esm",
     "dev": "bun run ./src/index.ts",
@@ -27,7 +29,14 @@
     "@types/fs-extra": "^11.0.4",
     "typescript": "^5.7.0"
   },
-  "keywords": ["happly", "ui", "components", "react", "tailwindcss", "design-system"],
+  "keywords": [
+    "happly",
+    "ui",
+    "components",
+    "react",
+    "tailwindcss",
+    "design-system"
+  ],
   "author": "Happly",
   "license": "MIT",
   "repository": {

@@ -11,11 +11,7 @@
     "crypto-random-string",
     "react-icons"
   ],
-  "registryDependencies": [
-    "button",
-    "alert-utils",
-    "utils"
-  ],
+  "registryDependencies": ["button", "alert-utils", "utils"],
   "docs": {
     "lead": "A file upload component with support for drag and drop, multiple files, and S3/GCS integration.",
     "usage": "import UploadFile from \"@/components/ui/upload-file-input\"\n\n<UploadFile\n  variant=\"default\"\n  uploadLabel=\"Upload File\"\n  description=\"Support for various file types\"\n/>",

@@ -1,12 +1,12 @@
-import { existsSync } from "fs";
-import { readFile, writeFile, mkdir } from "fs/promises";
-import path from "path";
-import { cosmiconfig } from "cosmiconfig";
-import type { HapplyConfig } from "../types/index.js";
-import { CONFIG_FILE } from "../types/index.js";
+import { existsSync } from 'fs';
+import { readFile, writeFile, mkdir } from 'fs/promises';
+import path from 'path';
+import { cosmiconfig } from 'cosmiconfig';
+import type { HapplyConfig } from '../types/index.js';
+import { CONFIG_FILE } from '../types/index.js';
 
-const explorer = cosmiconfig("happly", {
-  searchPlaces: [CONFIG_FILE, "happly.config.js", "happly.config.ts"],
+const explorer = cosmiconfig('happly', {
+  searchPlaces: [CONFIG_FILE, 'happly.config.js', 'happly.config.ts'],
 });
 
 /**
@@ -29,7 +29,7 @@ export async function readConfig(cwd: string): Promise<HapplyConfig | null> {
     // Fallback: try reading components.json directly
     const configPath = path.join(cwd, CONFIG_FILE);
     if (existsSync(configPath)) {
-      const content = await readFile(configPath, "utf-8");
+      const content = await readFile(configPath, 'utf-8');
       return JSON.parse(content);
     }
 
@@ -47,7 +47,7 @@ export async function writeConfig(
   config: HapplyConfig
 ): Promise<void> {
   const configPath = path.join(cwd, CONFIG_FILE);
-  await writeFile(configPath, JSON.stringify(config, null, 2) + "\n", "utf-8");
+  await writeFile(configPath, JSON.stringify(config, null, 2) + '\n', 'utf-8');
 }
 
 /**
@@ -55,10 +55,10 @@ export async function writeConfig(
  */
 export function resolveAlias(alias: string, config: HapplyConfig): string {
   const aliases: Record<string, string> = {
-    "@/components": config.aliases.components,
-    "@/lib": config.aliases.lib || "@/lib",
-    "@/hooks": config.aliases.hooks || "@/hooks",
-    "@/components/ui": config.aliases.ui,
+    '@/components': config.aliases.components,
+    '@/lib': config.aliases.lib || '@/lib',
+    '@/hooks': config.aliases.hooks || '@/hooks',
+    '@/components/ui': config.aliases.ui,
   };
 
   for (const [key, value] of Object.entries(aliases)) {
@@ -79,32 +79,32 @@ export function getComponentPath(
   config: HapplyConfig,
   fileName?: string
 ): string {
-  const ext = config.tsx ? ".tsx" : ".jsx";
-  const srcPrefix = config.srcDir ? "src/" : "";
+  const ext = config.tsx ? '.tsx' : '.jsx';
+  const srcPrefix = config.srcDir ? 'src/' : '';
 
   // If fileName is provided, use it. Otherwise construct from componentName
   const finalFileName = fileName || `${componentName}${ext}`;
 
   switch (componentType) {
-    case "registry:ui":
-    case "registry:component":
+    case 'registry:ui':
+    case 'registry:component':
       return path.join(
-        srcPrefix + config.aliases.ui.replace("@/", ""),
+        srcPrefix + config.aliases.ui.replace('@/', ''),
         finalFileName
       );
-    case "registry:hook":
+    case 'registry:hook':
       return path.join(
-        srcPrefix + (config.aliases.hooks || "@/hooks").replace("@/", ""),
+        srcPrefix + (config.aliases.hooks || '@/hooks').replace('@/', ''),
         finalFileName
       );
-    case "registry:lib":
+    case 'registry:lib':
       return path.join(
-        srcPrefix + (config.aliases.lib || "@/lib").replace("@/", ""),
+        srcPrefix + (config.aliases.lib || '@/lib').replace('@/', ''),
         finalFileName
       );
     default:
       return path.join(
-        srcPrefix + config.aliases.ui.replace("@/", ""),
+        srcPrefix + config.aliases.ui.replace('@/', ''),
         finalFileName
       );
   }
@@ -130,5 +130,5 @@ export async function writeComponentFile(
   const fullPath = path.join(cwd, relativePath);
   const dir = path.dirname(fullPath);
   await ensureDir(dir);
-  await writeFile(fullPath, content, "utf-8");
+  await writeFile(fullPath, content, 'utf-8');
 }

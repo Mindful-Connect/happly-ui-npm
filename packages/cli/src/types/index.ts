@@ -25,15 +25,15 @@ export interface HapplyConfig {
 }
 
 // Base colors available
-export type BaseColor = "slate" | "gray" | "zinc" | "neutral" | "stone";
+export type BaseColor = 'slate' | 'gray' | 'zinc' | 'neutral' | 'stone';
 
 // Registry item types
 export type RegistryItemType =
-  | "registry:ui"
-  | "registry:hook"
-  | "registry:lib"
-  | "registry:component"
-  | "registry:block";
+  | 'registry:ui'
+  | 'registry:hook'
+  | 'registry:lib'
+  | 'registry:component'
+  | 'registry:block';
 
 // Registry item file
 export interface RegistryItemFile {
@@ -90,9 +90,9 @@ export interface ProjectInfo {
   tailwindConfig: string | null;
   tailwindCss: string | null;
   tailwindVersion: TailwindVersion;
-  packageManager: "bun" | "npm" | "pnpm" | "yarn";
+  packageManager: 'bun' | 'npm' | 'pnpm' | 'yarn';
   aliases: Record<string, string>;
-  framework: "next" | "vite" | "remix" | "astro" | "unknown";
+  framework: 'next' | 'vite' | 'remix' | 'astro' | 'unknown';
 }
 
 // CLI options
@@ -114,33 +114,34 @@ export interface AddOptions {
 
 // Constants
 export const REGISTRY_URL =
-  "https://raw.githubusercontent.com/Mindful-Connect/happly-ui-npm/production/packages/registry";
+  'https://raw.githubusercontent.com/Mindful-Connect/happly-ui-npm/production/packages/registry';
 
-export const CONFIG_FILE = "components.json";
+export const CONFIG_FILE = 'components.json';
 
 export const DEFAULT_CONFIG: Partial<HapplyConfig> = {
-  $schema: "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/components.json",
+  $schema:
+    'https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/components.json',
   srcDir: true,
   tailwind: {
-    config: "tailwind.config.ts",
-    css: "src/index.css",
-    baseColor: "slate",
+    config: 'tailwind.config.ts',
+    css: 'src/index.css',
+    baseColor: 'slate',
     cssVariables: true,
   },
   tsx: true,
   aliases: {
-    components: "@/components",
-    utils: "@/lib/utils",
-    ui: "@/components/ui",
-    hooks: "@/hooks",
-    lib: "@/lib",
+    components: '@/components',
+    utils: '@/lib/utils',
+    ui: '@/components/ui',
+    hooks: '@/hooks',
+    lib: '@/lib',
   },
 };
 
 export const BASE_COLORS: BaseColor[] = [
-  "slate",
-  "gray",
-  "zinc",
-  "neutral",
-  "stone",
+  'slate',
+  'gray',
+  'zinc',
+  'neutral',
+  'stone',
 ];

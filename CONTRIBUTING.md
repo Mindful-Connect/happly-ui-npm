@@ -171,7 +171,11 @@ Create `packages/registry/ui/my-component.json`:
         "description": "The default styling for common use cases.",
         "code": "<MyComponent.Root variant=\"default\">Default</MyComponent.Root>",
         "preview": [
-          { "component": "my-component", "props": { "variant": "default" }, "children": "Default" }
+          {
+            "component": "my-component",
+            "props": { "variant": "default" },
+            "children": "Default"
+          }
         ]
       },
       {
@@ -179,9 +183,21 @@ Create `packages/registry/ui/my-component.json`:
         "description": "Available visual variants.",
         "code": "<MyComponent.Root variant=\"default\">Default</MyComponent.Root>\n<MyComponent.Root variant=\"filled\">Filled</MyComponent.Root>\n<MyComponent.Root variant=\"outline\">Outline</MyComponent.Root>",
         "preview": [
-          { "component": "my-component", "props": { "variant": "default" }, "children": "Default" },
-          { "component": "my-component", "props": { "variant": "filled" }, "children": "Filled" },
-          { "component": "my-component", "props": { "variant": "outline" }, "children": "Outline" }
+          {
+            "component": "my-component",
+            "props": { "variant": "default" },
+            "children": "Default"
+          },
+          {
+            "component": "my-component",
+            "props": { "variant": "filled" },
+            "children": "Filled"
+          },
+          {
+            "component": "my-component",
+            "props": { "variant": "outline" },
+            "children": "Outline"
+          }
         ]
       },
       {
@@ -189,9 +205,21 @@ Create `packages/registry/ui/my-component.json`:
         "description": "Available size options.",
         "code": "<MyComponent.Root size=\"sm\">Small</MyComponent.Root>\n<MyComponent.Root size=\"md\">Medium</MyComponent.Root>\n<MyComponent.Root size=\"lg\">Large</MyComponent.Root>",
         "preview": [
-          { "component": "my-component", "props": { "size": "sm" }, "children": "Small" },
-          { "component": "my-component", "props": { "size": "md" }, "children": "Medium" },
-          { "component": "my-component", "props": { "size": "lg" }, "children": "Large" }
+          {
+            "component": "my-component",
+            "props": { "size": "sm" },
+            "children": "Small"
+          },
+          {
+            "component": "my-component",
+            "props": { "size": "md" },
+            "children": "Medium"
+          },
+          {
+            "component": "my-component",
+            "props": { "size": "lg" },
+            "children": "Large"
+          }
         ]
       }
     ],
@@ -242,7 +270,6 @@ Create `packages/registry/ui/my-component.json`:
 
 > **Note**: The CLI supports multiple files per component. It will preserve the defined file names and place them in the correct directory based on their `type`. For example, a file with type `registry:lib` will be placed in the user's configured `lib` directory (e.g., `src/lib/my-helper.ts`), while `registry:ui` goes to the UI components folder.
 
-
 ### Step 3: Add to Registry Index
 
 Run the build script to update the registry index:
@@ -263,9 +290,16 @@ Edit `docs/src/lib/registry.ts`:
 
 ```ts
 export interface ComponentPreviewConfig {
-  component: 'button' | 'badge' | 'input' | 'label' | 'card' | 'divider' | 'my-component'  // Add here
-  props?: Record<string, unknown>
-  children?: string
+  component:
+    | 'button'
+    | 'badge'
+    | 'input'
+    | 'label'
+    | 'card'
+    | 'divider'
+    | 'my-component'; // Add here
+  props?: Record<string, unknown>;
+  children?: string;
 }
 ```
 
@@ -276,41 +310,43 @@ Edit `docs/src/components/ComponentPreview.tsx`:
 ```tsx
 // Add props interface
 interface DemoMyComponentProps {
-  variant?: 'default' | 'filled' | 'outline'
-  size?: 'sm' | 'md' | 'lg'
-  children?: ReactNode
+  variant?: 'default' | 'filled' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  children?: ReactNode;
 }
 
 // Add demo component (use inline styles, not Tailwind)
 export function DemoMyComponent({
   variant = 'default',
   size = 'md',
-  children
+  children,
 }: DemoMyComponentProps) {
   const baseStyles: CSSProperties = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: '8px',
-  }
+  };
 
   const variantStyles: Record<string, CSSProperties> = {
     default: { background: 'white', border: '1px solid #e5e7eb' },
     filled: { background: '#f3f4f6' },
     outline: { border: '2px solid #d1d5db' },
-  }
+  };
 
   const sizeStyles: Record<string, CSSProperties> = {
     sm: { height: '32px', fontSize: '14px', padding: '0 12px' },
     md: { height: '40px', fontSize: '16px', padding: '0 16px' },
     lg: { height: '48px', fontSize: '18px', padding: '0 20px' },
-  }
+  };
 
   return (
-    <div style={{ ...baseStyles, ...variantStyles[variant], ...sizeStyles[size] }}>
+    <div
+      style={{ ...baseStyles, ...variantStyles[variant], ...sizeStyles[size] }}
+    >
       {children}
     </div>
-  )
+  );
 }
 ```
 
@@ -333,25 +369,26 @@ case 'my-component':
 
 ### Required Fields
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `docs.lead` | `string` | Lead paragraph at top of docs page |
-| `docs.usage` | `string` | Import statement and basic usage code |
-| `docs.examples` | `array` | Array of example objects |
-| `docs.api` | `array` | API reference for each export |
+| Field           | Type     | Description                           |
+| --------------- | -------- | ------------------------------------- |
+| `docs.lead`     | `string` | Lead paragraph at top of docs page    |
+| `docs.usage`    | `string` | Import statement and basic usage code |
+| `docs.examples` | `array`  | Array of example objects              |
+| `docs.api`      | `array`  | API reference for each export         |
 
 ### Example Object Structure
 
 ```json
 {
-  "title": "Example Title",           // Required: Section heading
-  "description": "Optional text",     // Optional: Description paragraph
-  "code": "<Component />",            // Required: Code shown in docs
-  "preview": [                        // Optional: Live preview config
+  "title": "Example Title", // Required: Section heading
+  "description": "Optional text", // Optional: Description paragraph
+  "code": "<Component />", // Required: Code shown in docs
+  "preview": [
+    // Optional: Live preview config
     {
-      "component": "component-name",  // Component type for preview
-      "props": { "variant": "x" },    // Props to pass
-      "children": "Text content"      // Children/text content
+      "component": "component-name", // Component type for preview
+      "props": { "variant": "x" }, // Props to pass
+      "children": "Text content" // Children/text content
     }
   ]
 }
@@ -361,14 +398,15 @@ case 'my-component':
 
 ```json
 {
-  "name": "Component.Export",         // Required: Export name
-  "description": "What it does",      // Optional: Description
-  "props": [                          // Required: Props array
+  "name": "Component.Export", // Required: Export name
+  "description": "What it does", // Optional: Description
+  "props": [
+    // Required: Props array
     {
-      "name": "propName",             // Required: Prop name
-      "type": "'a' | 'b' | 'c'",      // Required: TypeScript type
-      "default": "'a'",               // Optional: Default value
-      "description": "What it does"   // Required: Description
+      "name": "propName", // Required: Prop name
+      "type": "'a' | 'b' | 'c'", // Required: TypeScript type
+      "default": "'a'", // Optional: Default value
+      "description": "What it does" // Required: Description
     }
   ]
 }
@@ -376,14 +414,14 @@ case 'my-component':
 
 ### Available Preview Components
 
-| Component | Available Props |
-|-----------|-----------------|
-| `button` | `variant`, `mode`, `size`, `disabled`, `iconOnly`, `children` |
-| `badge` | `variant`, `children` |
-| `input` | `type`, `placeholder`, `disabled`, `value` |
-| `label` | `disabled`, `children` |
-| `card` | `title`, `description`, `children` |
-| `divider` | `variant`, `children` |
+| Component | Available Props                                               |
+| --------- | ------------------------------------------------------------- |
+| `button`  | `variant`, `mode`, `size`, `disabled`, `iconOnly`, `children` |
+| `badge`   | `variant`, `children`                                         |
+| `input`   | `type`, `placeholder`, `disabled`, `value`                    |
+| `label`   | `disabled`, `children`                                        |
+| `card`    | `title`, `description`, `children`                            |
+| `divider` | `variant`, `children`                                         |
 
 ---
 

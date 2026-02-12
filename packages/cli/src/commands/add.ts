@@ -1,24 +1,24 @@
-import prompts from "prompts";
-import ora from "ora";
-import path from "path";
-import { logger } from "../utils/logger.js";
+import prompts from 'prompts';
+import ora from 'ora';
+import path from 'path';
+import { logger } from '../utils/logger.js';
 import {
   isInitialized,
   readConfig,
   getComponentPath,
   writeComponentFile,
-} from "../utils/config.js";
-import { componentExists } from "../utils/detect.js";
+} from '../utils/config.js';
+import { componentExists } from '../utils/detect.js';
 import {
   fetchRegistryItems,
   getAvailableComponents,
   collectDependencies,
-} from "../utils/registry.js";
-import { transformComponent } from "../utils/transform.js";
-import { installDependencies } from "../utils/install.js";
-import { updateTailwindConfig } from "../utils/transformers/tailwind.js";
-import { detectProject } from "../utils/detect.js";
-import type { AddOptions, RegistryItem } from "../types/index.js";
+} from '../utils/registry.js';
+import { transformComponent } from '../utils/transform.js';
+import { installDependencies } from '../utils/install.js';
+import { updateTailwindConfig } from '../utils/transformers/tailwind.js';
+import { detectProject } from '../utils/detect.js';
+import type { AddOptions, RegistryItem } from '../types/index.js';
 
 export async function add(
   components: string[],
@@ -29,9 +29,9 @@ export async function add(
   // Check if initialized
   if (!isInitialized(cwd)) {
     logger.error(
-      "Project not initialized. Run " +
-        logger.highlight("bunx --bun happlyui init") +
-        " first."
+      'Project not initialized. Run ' +
+        logger.highlight('bunx --bun happlyui init') +
+        ' first.'
     );
     process.exit(1);
   }
@@ -39,7 +39,7 @@ export async function add(
   // Read config
   const config = await readConfig(cwd);
   if (!config) {
-    logger.error("Failed to read configuration. Please run init again.");
+    logger.error('Failed to read configuration. Please run init again.');
     process.exit(1);
   }
 
@@ -48,63 +48,61 @@ export async function add(
 
   // If --all flag, get all components
   if (options.all) {
-    const spinner = ora("Fetching available components...").start();
+    const spinner = ora('Fetching available components...').start();
     try {
       components = await getAvailableComponents(config);
       spinner.succeed(`Found ${components.length} components`);
     } catch (error) {
-      spinner.fail("Failed to fetch components list");
+      spinner.fail('Failed to fetch components list');
       throw error;
     }
   }
 
   // If no components specified, show selection
   if (components.length === 0) {
-    const spinner = ora("Fetching available components...").start();
+    const spinner = ora('Fetching available components...').start();
     try {
       const available = await getAvailableComponents(config);
       spinner.stop();
 
       const { selected } = await prompts({
-        type: "multiselect",
-        name: "selected",
-        message: "Which components would you like to add?",
+        type: 'multiselect',
+        name: 'selected',
+        message: 'Which components would you like to add?',
         choices: available.map((name) => ({
           title: name,
           value: name,
         })),
-        hint: "- Space to select. Enter to submit.",
+        hint: '- Space to select. Enter to submit.',
       });
 
       if (!selected || selected.length === 0) {
-        logger.info("No components selected.");
+        logger.info('No components selected.');
         return;
       }
 
       components = selected;
     } catch (error) {
-      spinner.fail("Failed to fetch components");
+      spinner.fail('Failed to fetch components');
       throw error;
     }
   }
 
   logger.break();
-  logger.log(
-    logger.bold("Adding components: ") + components.join(", ")
-  );
+  logger.log(logger.bold('Adding components: ') + components.join(', '));
   logger.break();
 
   // Fetch components from registry
-  const fetchSpinner = ora("Fetching components from registry...").start();
+  const fetchSpinner = ora('Fetching components from registry...').start();
   let items: RegistryItem[];
 
   try {
     items = await fetchRegistryItems(components, config);
     fetchSpinner.succeed(
-      `Fetched ${items.length} component${items.length > 1 ? "s" : ""}`
+      `Fetched ${items.length} component${items.length > 1 ? 's' : ''}`
     );
   } catch (error) {
-    fetchSpinner.fail("Failed to fetch components");
+    fetchSpinner.fail('Failed to fetch components');
     if (error instanceof Error) {
       logger.error(error.message);
     }
@@ -117,11 +115,16 @@ export async function add(
     for (const file of item.files) {
       // Use the file's type if available, otherwise fallback to item's type
       const fileType = file.type || item.type;
-      
+
       // Extract filename from path (e.g. "lib/utils.ts" -> "utils.ts")
       const fileName = path.basename(file.path);
-      
-      const targetPath = getComponentPath(item.name, fileType, config, fileName);
+
+      const targetPath = getComponentPath(
+        item.name,
+        fileType,
+        config,
+        fileName
+      );
       if (componentExists(cwd, targetPath)) {
         existingFiles.push(targetPath);
       }
@@ -130,25 +133,25 @@ export async function add(
 
   // Prompt for overwrite if files exist
   if (existingFiles.length > 0 && !options.overwrite && !options.yes) {
-    logger.warn("The following files already exist:");
+    logger.warn('The following files already exist:');
     existingFiles.forEach((f) => logger.log(`  ${f}`));
     logger.break();
 
     const { overwrite } = await prompts({
-      type: "confirm",
-      name: "overwrite",
-      message: "Would you like to overwrite these files?",
+      type: 'confirm',
+      name: 'overwrite',
+      message: 'Would you like to overwrite these files?',
       initial: false,
     });
 
     if (!overwrite) {
-      logger.info("Installation cancelled.");
+      logger.info('Installation cancelled.');
       return;
     }
   }
 
   // Write component files
-  const writeSpinner = ora("Installing components...").start();
+  const writeSpinner = ora('Installing components...').start();
   const writtenFiles: string[] = [];
 
   try {
@@ -156,11 +159,16 @@ export async function add(
       for (const file of item.files) {
         // Use the file's type if available, otherwise fallback to item's type
         const fileType = file.type || item.type;
-        
+
         // Extract filename from path (e.g. "lib/utils.ts" -> "utils.ts")
         const fileName = path.basename(file.path);
 
-        const targetPath = getComponentPath(item.name, fileType, config, fileName);
+        const targetPath = getComponentPath(
+          item.name,
+          fileType,
+          config,
+          fileName
+        );
         const transformedContent = transformComponent(file, config);
         await writeComponentFile(cwd, targetPath, transformedContent);
         writtenFiles.push(targetPath);
@@ -168,7 +176,7 @@ export async function add(
     }
     writeSpinner.succeed(`Installed ${writtenFiles.length} files`);
   } catch (error) {
-    writeSpinner.fail("Failed to install components");
+    writeSpinner.fail('Failed to install components');
     throw error;
   }
 
@@ -176,61 +184,65 @@ export async function add(
   const { dependencies, devDependencies } = collectDependencies(items);
 
   if (dependencies.length > 0) {
-    const depsSpinner = ora("Installing dependencies...").start();
+    const depsSpinner = ora('Installing dependencies...').start();
     try {
       await installDependencies(cwd, dependencies, {
         packageManager: projectInfo.packageManager,
       });
-      depsSpinner.succeed(`Installed: ${dependencies.join(", ")}`);
+      depsSpinner.succeed(`Installed: ${dependencies.join(', ')}`);
     } catch (error) {
-      depsSpinner.fail("Failed to install dependencies");
-      logger.warn(`Please install manually: ${dependencies.join(" ")}`);
+      depsSpinner.fail('Failed to install dependencies');
+      logger.warn(`Please install manually: ${dependencies.join(' ')}`);
     }
   }
 
   if (devDependencies.length > 0) {
-    const devDepsSpinner = ora("Installing dev dependencies...").start();
+    const devDepsSpinner = ora('Installing dev dependencies...').start();
     try {
       await installDependencies(cwd, devDependencies, {
         packageManager: projectInfo.packageManager,
         dev: true,
       });
-      devDepsSpinner.succeed(`Installed dev: ${devDependencies.join(", ")}`);
+      devDepsSpinner.succeed(`Installed dev: ${devDependencies.join(', ')}`);
     } catch (error) {
-      devDepsSpinner.fail("Failed to install dev dependencies");
-      logger.warn(`Please install manually: ${devDependencies.join(" ")}`);
+      devDepsSpinner.fail('Failed to install dev dependencies');
+      logger.warn(`Please install manually: ${devDependencies.join(' ')}`);
     }
   }
 
   // Apply Happly UI Tailwind Configuration
-  const spinner = ora("Updating Tailwind configuration...").start();
+  const spinner = ora('Updating Tailwind configuration...').start();
   try {
     await updateTailwindConfig(cwd, config, projectInfo.tailwindVersion);
-    spinner.succeed("Tailwind configuration updated");
+    spinner.succeed('Tailwind configuration updated');
   } catch (error) {
-    spinner.fail("Failed to update Tailwind configuration");
+    spinner.fail('Failed to update Tailwind configuration');
     // Don't fail the whole process if tailwind update fails, just warn
-    logger.warn("Please ensure your tailwind.config.ts includes Happly UI tokens.");
+    logger.warn(
+      'Please ensure your tailwind.config.ts includes Happly UI tokens.'
+    );
   }
 
   // Success message
   logger.break();
-  logger.success("Components installed successfully!");
+  logger.success('Components installed successfully!');
   logger.break();
 
   // Show usage example
   if (items.length === 1) {
     const item = items[0];
     const importPath = config.aliases.ui;
-    logger.info("Usage:");
+    logger.info('Usage:');
     logger.log(
-      logger.dim(`  import { ${pascalCase(item.name)} } from "${importPath}/${item.name}"`)
+      logger.dim(
+        `  import { ${pascalCase(item.name)} } from "${importPath}/${item.name}"`
+      )
     );
     logger.break();
   } else {
-    logger.info("Components added:");
+    logger.info('Components added:');
     for (const file of writtenFiles) {
-      logger.log(`  ${logger.green("+")} ${file}`);
+      logger.log(`  ${logger.green('+')} ${file}`);
     }
     logger.break();
   }
@@ -241,7 +253,7 @@ export async function add(
  */
 function pascalCase(str: string): string {
   return str
-    .split("-")
+    .split('-')
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join("");
+    .join('');
 }

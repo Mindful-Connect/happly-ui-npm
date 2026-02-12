@@ -1,7 +1,9 @@
 {
   "name": "happly-ui",
   "private": true,
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "build": "bun run --filter './packages/*' build",
     "dev": "bun run --filter './packages/*' dev",
@@ -9,9 +11,10 @@
     "clean": "rm -rf packages/*/dist packages/*/.turbo"
   },
   "devDependencies": {
-    "typescript": "^5.7.0",
     "@types/bun": "latest",
-    "prettier": "^3.0.3"
+    "prettier": "^3.0.3",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "typescript": "^5.7.0"
   },
   "module": "index.ts",
   "type": "module"

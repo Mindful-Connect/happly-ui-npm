@@ -47,7 +47,7 @@ export function CurrencyInput({
     <div
       className={cn(
         'relative flex h-10 w-full rounded-[10px] border shadow-[0px_1px_2px_0px_rgba(10,13,20,0.03)]',
-        'hover:[&:not(:focus-within)]:border-transparent hover:[&:not(:focus-within)]:bg-ds-weak-50',
+        'hover:[&:not(:focus-within)]:bg-ds-weak-50 hover:[&:not(:focus-within)]:border-transparent',
         'focus-within:border-ds-stroke-strong-950 focus-within:shadow-button-important-focus',
         readOnly ? 'cursor-not-allowed bg-gray-100' : 'bg-white'
       )}
@@ -62,7 +62,7 @@ export function CurrencyInput({
         placeholder={placeholder}
         readOnly={readOnly}
         className={cn(
-          'h-full w-full flex-1 rounded-l-[10px] border-none bg-transparent px-3 py-2 text-sm outline-none ring-0 placeholder:text-ds-neutral-400 focus:outline-none focus:ring-0',
+          'placeholder:text-ds-neutral-400 h-full w-full flex-1 rounded-l-[10px] border-none bg-transparent px-3 py-2 text-sm ring-0 outline-none focus:ring-0 focus:outline-none',
           readOnly ? 'cursor-not-allowed text-gray-500' : '',
           amount ? 'text-ds-neutral-950' : 'text-ds-neutral-400'
         )}
@@ -78,7 +78,7 @@ export function CurrencyInput({
           <>
             <Listbox.Button
               className={cn(
-                'relative flex shrink-0 cursor-default items-center gap-x-2 whitespace-nowrap rounded-r-10 border-l border-ds-neutral-200 bg-transparent py-2 pl-2 pr-2.5 text-sm focus:outline-none',
+                'rounded-r-10 border-ds-neutral-200 relative flex shrink-0 cursor-default items-center gap-x-2 border-l bg-transparent py-2 pr-2.5 pl-2 text-sm whitespace-nowrap focus:outline-none',
                 readOnly ? 'pointer-events-none' : 'cursor-pointer'
               )}
             >
@@ -97,14 +97,14 @@ export function CurrencyInput({
               )}
             </Listbox.Button>
             {open && !readOnly && (
-              <Listbox.Options className='absolute right-0 top-full z-50 mt-2.5 w-[160px] overflow-hidden rounded-2xl border border-ds-neutral-200 bg-white text-sm shadow-lg focus:outline-none'>
+              <Listbox.Options className='border-ds-neutral-200 absolute top-full right-0 z-50 mt-2.5 w-[160px] overflow-hidden rounded-2xl border bg-white text-sm shadow-lg focus:outline-none'>
                 {currencies.map((c) => (
                   <Listbox.Option
                     key={c.code}
                     value={c}
                     className={({ active }) =>
                       cn(
-                        'relative cursor-default select-none rounded-[10px] p-3',
+                        'relative cursor-default rounded-[10px] p-3 select-none',
                         active ? 'bg-ds-neutral-50' : ''
                       )
                     }

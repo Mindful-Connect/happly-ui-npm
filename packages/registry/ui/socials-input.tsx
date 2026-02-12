@@ -183,13 +183,7 @@ export default function SocialsInputsSelectableDS({
     });
   }
 
-  function handleCheckSocialUrl({
-    key,
-    url,
-  }: {
-    key: string;
-    url: string;
-  }) {
+  function handleCheckSocialUrl({ key, url }: { key: string; url: string }) {
     const message = t('errorSocialUrl');
     const result = getSocialUrlSchema(message).safeParse({
       [`${name}.${key}`]: url,
@@ -539,7 +533,7 @@ export default function SocialsInputsSelectableDS({
               }}
               className={cn(
                 readOnly ? '' : '',
-                'flex w-fit cursor-pointer select-none items-center gap-x-1.5 text-sm font-medium text-[#35344E] outline-none hover:brightness-90'
+                'flex w-fit cursor-pointer items-center gap-x-1.5 text-sm font-medium text-[#35344E] outline-none select-none hover:brightness-90'
               )}
             >
               {PlusIconSquircle(open)}
@@ -569,7 +563,7 @@ export default function SocialsInputsSelectableDS({
                           addSocialInput(social.key);
                           close();
                         }}
-                        className='flex cursor-pointer items-center gap-x-[18px] p-2 shadow-[0px_4.548px_4.548px_0px_rgba(0,_0,_0,_0.01)] hover:bg-clarity-4'
+                        className='hover:bg-clarity-4 flex cursor-pointer items-center gap-x-[18px] p-2 shadow-[0px_4.548px_4.548px_0px_rgba(0,_0,_0,_0.01)]'
                       >
                         <div className='h-[30px] w-[30px]'>{social.icon}</div>
                         <span className='text-sm text-[#575759]'>
@@ -614,7 +608,7 @@ export default function SocialsInputsSelectableDS({
                     rightAffix={
                       <button
                         type='button'
-                        className='flex h-full w-10 items-center justify-center hover:!text-ds-red-600'
+                        className='hover:!text-ds-red-600 flex h-full w-10 items-center justify-center'
                         onClick={() => {
                           if (readOnly) return;
                           clearTimeout(errorTimeout);

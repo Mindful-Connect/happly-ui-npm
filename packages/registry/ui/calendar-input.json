@@ -4,7 +4,12 @@
   "type": "registry:ui",
   "title": "Calendar Input",
   "description": "A date input component with calendar popover.",
-  "dependencies": ["react-day-picker", "date-fns", "@headlessui/react", "lucide-react"],
+  "dependencies": [
+    "react-day-picker",
+    "date-fns",
+    "@headlessui/react",
+    "lucide-react"
+  ],
   "registryDependencies": ["button", "utils"],
   "docs": {
     "lead": "A date input component with calendar popover.",

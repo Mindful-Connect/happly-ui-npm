@@ -1,4 +1,4 @@
-import type { HapplyConfig, RegistryItemFile } from "../types/index.js";
+import type { HapplyConfig, RegistryItemFile } from '../types/index.js';
 
 /**
  * Transform registry component code for the target project
@@ -26,11 +26,11 @@ export function transformComponent(
 function transformImports(content: string, config: HapplyConfig): string {
   // Map of registry paths to project aliases
   const pathMappings: Record<string, string> = {
-    "@/components/ui": config.aliases.ui,
-    "@/components": config.aliases.components,
-    "@/lib/utils": config.aliases.utils,
-    "@/lib": config.aliases.lib || "@/lib",
-    "@/hooks": config.aliases.hooks || "@/hooks",
+    '@/components/ui': config.aliases.ui,
+    '@/components': config.aliases.components,
+    '@/lib/utils': config.aliases.utils,
+    '@/lib': config.aliases.lib || '@/lib',
+    '@/hooks': config.aliases.hooks || '@/hooks',
   };
 
   let result = content;
@@ -39,8 +39,8 @@ function transformImports(content: string, config: HapplyConfig): string {
   for (const [from, to] of Object.entries(pathMappings)) {
     // Match both single and double quotes
     const patterns = [
-      new RegExp(`from ["']${escapeRegex(from)}(/[^"']*)?["']`, "g"),
-      new RegExp(`import ["']${escapeRegex(from)}(/[^"']*)?["']`, "g"),
+      new RegExp(`from ["']${escapeRegex(from)}(/[^"']*)?["']`, 'g'),
+      new RegExp(`import ["']${escapeRegex(from)}(/[^"']*)?["']`, 'g'),
     ];
 
     for (const pattern of patterns) {
@@ -60,26 +60,26 @@ function transformToJs(content: string): string {
   // Remove type imports
   content = content.replace(
     /import\s+type\s*\{[^}]*\}\s*from\s*['"][^'"]+['"];?\n?/g,
-    ""
+    ''
   );
 
   // Remove type annotations from function parameters
-  content = content.replace(/:\s*\w+(\[\])?\s*(?=[,)])/g, "");
+  content = content.replace(/:\s*\w+(\[\])?\s*(?=[,)])/g, '');
 
   // Remove return type annotations
-  content = content.replace(/\):\s*\w+(\[\])?\s*(?=\s*[{=])/g, ")");
+  content = content.replace(/\):\s*\w+(\[\])?\s*(?=\s*[{=])/g, ')');
 
   // Remove generic type parameters
-  content = content.replace(/<[A-Z]\w*(\s*extends\s*[^>]+)?>/g, "");
+  content = content.replace(/<[A-Z]\w*(\s*extends\s*[^>]+)?>/g, '');
 
   // Remove interface/type declarations
   content = content.replace(
     /^(export\s+)?(interface|type)\s+\w+\s*[^{]*\{[^}]*\};?\n?/gm,
-    ""
+    ''
   );
 
   // Remove 'as' type assertions
-  content = content.replace(/\s+as\s+\w+(\[\])?/g, "");
+  content = content.replace(/\s+as\s+\w+(\[\])?/g, '');
 
   return content;
 }
@@ -88,16 +88,13 @@ function transformToJs(content: string): string {
  * Escape special regex characters
  */
 function escapeRegex(str: string): string {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 /**
  * Transform CSS variables based on config
  */
-export function transformCssVars(
-  css: string,
-  config: HapplyConfig
-): string {
+export function transformCssVars(css: string, config: HapplyConfig): string {
   if (!config.tailwind.cssVariables) {
     return css;
   }
@@ -113,7 +110,8 @@ export function transformCssVars(
 export function addUseClient(content: string, shouldAdd: boolean): string {
   if (!shouldAdd) return content;
 
-  const hasUseClient = content.includes('"use client"') || content.includes("'use client'");
+  const hasUseClient =
+    content.includes('"use client"') || content.includes("'use client'");
   if (hasUseClient) return content;
 
   return `"use client";\n\n${content}`;

@@ -47,13 +47,13 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           onChange={handleChange}
           className={cn(
             // base reset
-            'block w-full resize-none border-none !text-paragraph-sm text-ds-strong-950 outline-none',
+            '!text-paragraph-sm text-ds-strong-950 block w-full resize-none border-none outline-none',
 
             // box + padding
-            'min-h-[160px] rounded-12 bg-ds-white-0 px-3 py-2.5 shadow-regular-xs',
+            'rounded-12 bg-ds-white-0 shadow-regular-xs min-h-[160px] px-3 py-2.5',
 
             // base inset ring
-            'ring-1 ring-inset ring-ds-stroke-soft-200',
+            'ring-ds-stroke-soft-200 ring-1 ring-inset',
 
             // smooth transitions
             'transition duration-200 ease-out',
@@ -66,7 +66,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             hasError && 'ring-ds-error-base hover:ring-ds-error-base',
 
             // focus: recolor the same inset stroke + shadow
-            'focus-visible:shadow-button-important-focus focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-ds-stroke-strong-950',
+            'focus-visible:shadow-button-important-focus focus-visible:ring-ds-stroke-strong-950 focus-visible:ring-1 focus-visible:ring-inset',
 
             // error on focus
             hasError &&
@@ -77,7 +77,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 
             // placeholder styling
             !disabled &&
-              'placeholder:select-none placeholder:text-ds-soft-400 placeholder:transition placeholder:duration-200 placeholder:ease-out hover:placeholder:text-ds-sub-600 focus-visible:placeholder:text-ds-sub-600',
+              'placeholder:text-ds-soft-400 hover:placeholder:text-ds-sub-600 focus-visible:placeholder:text-ds-sub-600 placeholder:transition placeholder:duration-200 placeholder:ease-out placeholder:select-none',
 
             // disabled placeholder/text
             disabled && 'text-ds-disabled-300 placeholder:text-ds-disabled-300',
@@ -90,7 +90,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         {typeof maxLength === 'number' && (
           <span
             className={cn(
-              'pointer-events-none absolute bottom-2 right-3 !text-paragraph-xxs',
+              '!text-paragraph-xxs pointer-events-none absolute right-3 bottom-2',
               disabled ? 'text-ds-disabled-300' : 'text-ds-soft-400'
             )}
           >

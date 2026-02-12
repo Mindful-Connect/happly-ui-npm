@@ -38,8 +38,7 @@ export const tagRoot = cva(
 );
 
 export interface TagProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof tagRoot> {
+  extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof tagRoot> {
   asChild?: boolean;
 }
 
@@ -73,7 +72,7 @@ export const TagIcon = React.forwardRef<HTMLElement, TagIconProps>(
       <Comp
         ref={ref}
         className={cn(
-          'flex h-4 w-4 shrink-0 select-none items-center justify-center',
+          'flex h-4 w-4 shrink-0 items-center justify-center select-none',
           'text-ds-soft-400 transition duration-200 ease-out',
           'group-focus-within:text-ds-sub-600 group-hover:text-ds-sub-600',
           className

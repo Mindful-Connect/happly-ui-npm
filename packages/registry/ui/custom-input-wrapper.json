@@ -5,9 +5,7 @@
   "title": "Custom Input Wrapper",
   "description": "A wrapper for custom inputs with consistent styling.",
   "dependencies": [],
-  "registryDependencies": [
-    "utils"
-  ],
+  "registryDependencies": ["utils"],
   "files": [
     {
       "path": "ui/custom-input-wrapper.tsx",

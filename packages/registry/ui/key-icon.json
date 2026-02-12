@@ -4,12 +4,8 @@
   "type": "registry:ui",
   "title": "Key Icon",
   "description": "An icon container with various styles and colors.",
-  "dependencies": [
-    "class-variance-authority"
-  ],
-  "registryDependencies": [
-    "utils"
-  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["utils"],
   "files": [
     {
       "path": "ui/key-icon.tsx",

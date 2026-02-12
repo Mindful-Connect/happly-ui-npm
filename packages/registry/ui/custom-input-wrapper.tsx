@@ -19,14 +19,14 @@ export const CustomInputWrapper = React.forwardRef<
         ref={ref}
         className={cn(
           // ─── container reset & layout ─────────────────────────────────────────
-          'group shadow-regular-xs relative block w-full rounded-12 bg-white',
+          'group shadow-regular-xs rounded-12 relative block w-full bg-white',
           disabled
             ? 'bg-ds-weak-50'
             : 'hover:[&:not(:focus-within)]:bg-ds-weak-50',
           // ─── ring (inset) ────────────────────────────────────────────────────
           hasError
-            ? 'ring-1 ring-inset ring-ds-error-base hover:ring-ds-error-base'
-            : 'ring-1 ring-inset ring-ds-stroke-soft-200 hover:[&:not(:focus-within)]:ring-transparent',
+            ? 'ring-ds-error-base hover:ring-ds-error-base ring-1 ring-inset'
+            : 'ring-ds-stroke-soft-200 ring-1 ring-inset hover:[&:not(:focus-within)]:ring-transparent',
           // ─── focus ring & shadow ─────────────────────────────────────────────
           'focus-within:ring-1 focus-within:ring-inset',
           hasError

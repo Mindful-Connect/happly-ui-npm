@@ -36,12 +36,14 @@ bun packages/cli/dist/index.js list
 ## Architecture
 
 ### Monorepo Structure
+
 - **packages/cli** - CLI tool published as `@happlyui/cli`
 - **packages/registry** - Component source files and JSON definitions
 - **docs** - Documentation site (Next.js, auto-deployed to GitHub Pages)
 - **schemas** - JSON Schema files for IDE validation (hosted via jsDelivr CDN)
 
 ### CLI Flow
+
 ```
 User runs CLI command
     ↓
@@ -59,7 +61,9 @@ File Writing & npm Install
 ```
 
 ### Registry System
+
 Each component has two files:
+
 - **Source file** (`ui/button.tsx`) - The actual React component
 - **Definition file** (`ui/button.json`) - Metadata with dependencies
 
@@ -67,16 +71,16 @@ The `registry.json` index lists all available components with their npm and regi
 
 ## Key Modules
 
-| Module | Location | Purpose |
-|--------|----------|---------|
-| Entry | `cli/src/index.ts` | Commander.js CLI setup |
-| Init | `cli/src/commands/init.ts` | Project initialization |
-| Add | `cli/src/commands/add.ts` | Component installation |
-| Detect | `cli/src/utils/detect.ts` | Project config detection |
-| Registry | `cli/src/utils/registry.ts` | Fetch & resolve dependencies |
+| Module    | Location                     | Purpose                       |
+| --------- | ---------------------------- | ----------------------------- |
+| Entry     | `cli/src/index.ts`           | Commander.js CLI setup        |
+| Init      | `cli/src/commands/init.ts`   | Project initialization        |
+| Add       | `cli/src/commands/add.ts`    | Component installation        |
+| Detect    | `cli/src/utils/detect.ts`    | Project config detection      |
+| Registry  | `cli/src/utils/registry.ts`  | Fetch & resolve dependencies  |
 | Transform | `cli/src/utils/transform.ts` | Path alias & TS→JS transforms |
-| Config | `cli/src/utils/config.ts` | Read/write components.json |
-| Install | `cli/src/utils/install.ts` | Package manager abstraction |
+| Config    | `cli/src/utils/config.ts`    | Read/write components.json    |
+| Install   | `cli/src/utils/install.ts`   | Package manager abstraction   |
 
 ## Key Types (cli/src/types/index.ts)
 
@@ -121,7 +125,12 @@ The `registry.json` index lists all available components with their npm and regi
         "name": "MyComponent.Root",
         "description": "The main component",
         "props": [
-          { "name": "variant", "type": "'default' | 'alt'", "default": "'default'", "description": "The variant" }
+          {
+            "name": "variant",
+            "type": "'default' | 'alt'",
+            "default": "'default'",
+            "description": "The variant"
+          }
         ]
       }
     ]
@@ -138,6 +147,7 @@ The `registry.json` index lists all available components with their npm and regi
 ### Preview Components
 
 Available preview components for the `docs.examples[].preview` field:
+
 - `button` - DemoButton with variant, mode, size props
 - `badge` - DemoBadge with variant prop
 - `input` - DemoInput with placeholder, disabled props
@@ -203,11 +213,13 @@ bun run --cwd docs build  # Production build (uses --webpack for Markdoc)
 ## Registry URL
 
 Components are fetched from:
+
 ```
 https://raw.githubusercontent.com/Mindful-Connect/happly-ui-npm/production/packages/registry
 ```
 
 JSON Schemas are served via jsDelivr:
+
 ```
 https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/
 ```

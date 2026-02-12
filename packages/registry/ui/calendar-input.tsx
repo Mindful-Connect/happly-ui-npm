@@ -19,12 +19,11 @@ export default function DatePreview({
   className?: string;
   setDate: (date: string | null) => void;
 }) {
-
   return (
     <Popover as='div' className={cn('relaitve', className)}>
       {({ open }) => (
         <>
-          <Popover.Button className='relative flex h-10 w-full items-center space-x-2 rounded-10 border border-ds-neutral-200 bg-white p-3 text-sm placeholder:text-[#575759] focus:border-ds-neutral-950 focus:outline-none focus:ring-ds-neutral-950'>
+          <Popover.Button className='rounded-10 border-ds-neutral-200 focus:border-ds-neutral-950 focus:ring-ds-neutral-950 relative flex h-10 w-full items-center space-x-2 border bg-white p-3 text-sm placeholder:text-[#575759] focus:outline-none'>
             <CalendarIcon
               className={cn(
                 open ? 'fill-ds-neutral-950' : 'fill-ds-neutral-400'

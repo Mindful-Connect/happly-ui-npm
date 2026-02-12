@@ -1,5 +1,5 @@
-import { spawn } from "child_process";
-import type { ProjectInfo } from "../types/index.js";
+import { spawn } from 'child_process';
+import type { ProjectInfo } from '../types/index.js';
 
 /**
  * Install dependencies using the detected package manager
@@ -8,7 +8,7 @@ export async function installDependencies(
   cwd: string,
   packages: string[],
   options: {
-    packageManager: ProjectInfo["packageManager"];
+    packageManager: ProjectInfo['packageManager'];
     dev?: boolean;
   }
 ): Promise<void> {
@@ -21,11 +21,11 @@ export async function installDependencies(
   return new Promise((resolve, reject) => {
     const child = spawn(command.cmd, command.args, {
       cwd,
-      stdio: "inherit",
+      stdio: 'inherit',
       shell: true,
     });
 
-    child.on("close", (code) => {
+    child.on('close', (code) => {
       if (code === 0) {
         resolve();
       } else {
@@ -33,7 +33,7 @@ export async function installDependencies(
       }
     });
 
-    child.on("error", (err) => {
+    child.on('error', (err) => {
       reject(err);
     });
   });
@@ -43,38 +43,38 @@ export async function installDependencies(
  * Get the install command for a package manager
  */
 function getInstallCommand(
-  packageManager: ProjectInfo["packageManager"],
+  packageManager: ProjectInfo['packageManager'],
   packages: string[],
   dev: boolean
 ): { cmd: string; args: string[] } {
   const devFlag = {
-    bun: dev ? "-d" : "",
-    npm: dev ? "--save-dev" : "",
-    pnpm: dev ? "-D" : "",
-    yarn: dev ? "-D" : "",
+    bun: dev ? '-d' : '',
+    npm: dev ? '--save-dev' : '',
+    pnpm: dev ? '-D' : '',
+    yarn: dev ? '-D' : '',
   };
 
   switch (packageManager) {
-    case "bun":
+    case 'bun':
       return {
-        cmd: "bun",
-        args: ["add", devFlag.bun, ...packages].filter(Boolean),
+        cmd: 'bun',
+        args: ['add', devFlag.bun, ...packages].filter(Boolean),
       };
-    case "pnpm":
+    case 'pnpm':
       return {
-        cmd: "pnpm",
-        args: ["add", devFlag.pnpm, ...packages].filter(Boolean),
+        cmd: 'pnpm',
+        args: ['add', devFlag.pnpm, ...packages].filter(Boolean),
       };
-    case "yarn":
+    case 'yarn':
       return {
-        cmd: "yarn",
-        args: ["add", devFlag.yarn, ...packages].filter(Boolean),
+        cmd: 'yarn',
+        args: ['add', devFlag.yarn, ...packages].filter(Boolean),
       };
-    case "npm":
+    case 'npm':
     default:
       return {
-        cmd: "npm",
-        args: ["install", devFlag.npm, ...packages].filter(Boolean),
+        cmd: 'npm',
+        args: ['install', devFlag.npm, ...packages].filter(Boolean),
       };
   }
 }
@@ -84,17 +84,17 @@ function getInstallCommand(
  */
 export async function runPackageManagerCommand(
   cwd: string,
-  packageManager: ProjectInfo["packageManager"],
+  packageManager: ProjectInfo['packageManager'],
   args: string[]
 ): Promise<void> {
   return new Promise((resolve, reject) => {
     const child = spawn(packageManager, args, {
       cwd,
-      stdio: "inherit",
+      stdio: 'inherit',
       shell: true,
     });
 
-    child.on("close", (code) => {
+    child.on('close', (code) => {
       if (code === 0) {
         resolve();
       } else {
@@ -102,7 +102,7 @@ export async function runPackageManagerCommand(
       }
     });
 
-    child.on("error", (err) => {
+    child.on('error', (err) => {
       reject(err);
     });
   });

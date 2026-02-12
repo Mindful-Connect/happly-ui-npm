@@ -130,8 +130,10 @@ const inputClassConfig = {
 type InputSlotName = keyof (typeof inputClassConfig)['slots'];
 
 // Props for the Input component
-export interface InputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
+export interface InputProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'size'
+> {
   size?: 'medium' | 'small' | 'xsmall';
   hasError?: boolean;
   leftIcon?: React.ReactNode;
@@ -290,7 +292,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className={cn(
               generateSlotClasses('affix', variantProps, leftAffixClassName),
               leftAffixEnabled &&
-                '!pointer-events-auto !bg-ds-white-0 !text-ds-soft-400'
+                '!bg-ds-white-0 !text-ds-soft-400 !pointer-events-auto'
             )}
           >
             {leftAffix}
@@ -313,7 +315,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             className={cn(
               generateSlotClasses('input', variantProps, inputClassName),
-              'border-none bg-transparent p-0 outline-none focus:border-none focus:outline-none focus:ring-0'
+              'border-none bg-transparent p-0 outline-none focus:border-none focus:ring-0 focus:outline-none'
             )}
             style={inputStyle}
             {...props} // Spread other native input attributes (placeholder, disabled, value, onChange, etc.)
@@ -321,7 +323,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {suffix && (
             <span
               className={cn(
-                'shrink-0 whitespace-nowrap !text-paragraph-sm text-ds-disabled-300'
+                '!text-paragraph-sm text-ds-disabled-300 shrink-0 whitespace-nowrap'
               )}
             >
               {suffix}
@@ -348,7 +350,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className={cn(
               generateSlotClasses('affix', variantProps, rightAffixClassName),
               rightAffixEnabled &&
-                '!pointer-events-auto !bg-ds-white-0 !text-ds-soft-400'
+                '!bg-ds-white-0 !text-ds-soft-400 !pointer-events-auto'
             )}
           >
             {rightAffix}

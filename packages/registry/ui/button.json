@@ -10,11 +10,7 @@
     "colord",
     "react-icons"
   ],
-  "registryDependencies": [
-    "tv",
-    "polymorphic",
-    "recursive-clone-children"
-  ],
+  "registryDependencies": ["tv", "polymorphic", "recursive-clone-children"],
   "docs": {
     "lead": "A compound button component with variants, modes, sizes, and icon support.",
     "usage": "import { Button } from \"@/components/ui/button\"\n\n<Button variant=\"primary\" mode=\"filled\">\n  Click me\n</Button>",
