@@ -3,8 +3,9 @@
 import { useEffect, useState, useRef, useId } from 'react';
 import Uppy from '@uppy/core';
 import AwsS3 from '@uppy/aws-s3'; // Compatible with GCS S3-compatible API
+import XHRUpload from '@uppy/xhr-upload';
 import { UppyContextProvider, useDropzone, useFileInput } from '@uppy/react';
-import cryptoRandomString from 'crypto-random-string';
+
 import {
   RiDeleteBin6Line,
   RiPencilLine,
@@ -85,17 +86,17 @@ export default function UploadFile({
   const [uploading, setUploading] = useState(false);
   const [dragging, setDragging] = useState(false);
 
-  // Track files currently being uploaded (for progress cards)
-  const [uploadingFiles, setUploadingFiles] = useState<
-    Array<{
-      id: string;
-      name: string;
-      size: number;
-      type: string;
-      progress: number;
-      state: 'uploading' | 'success' | 'error';
-    }>
-  >([]);
+  type UploadingFileStatus = 'uploading' | 'success' | 'error';
+  interface UploadingFile {
+    id: string;
+    name: string;
+    size: number;
+    type: string;
+    progress: number;
+    state: UploadingFileStatus;
+  }
+
+  const [uploadingFiles, setUploadingFiles] = useState<UploadingFile[]>([]);
 
   // Determine upload mode based on variant (attachment uses presigned URL by default)
   const effectiveUploadMode =
@@ -109,152 +110,28 @@ export default function UploadFile({
         ? (fileTypes.video as MimeType[])
         : (fileTypes.image as MimeType[]);
 
-  // Presigned URL upload handler for GCS
-  const handlePresignedUrlUpload = async (files: FileList | null) => {
-    if (!files || !authToken || disabled) return;
+  // Presigned URL upload handler using Uppy
+  const handlePresignedUrlUpload = (files: FileList | null) => {
+    if (!files || !uppy || disabled) return;
 
-    setUploading(true);
-
-    const fileArray = Array.from(files);
-
-    for (const file of fileArray) {
-      // Validate file type
-      if (!allowedFileTypes.includes(file.type as MimeType)) {
-        addAlert(
-          new AlertModel({
-            type: 'error',
-            message: t('_domain.uploadFile.error.fileType', {
-              fileTypes: allowedFileTypes.join(', '),
-            }),
-            timeout: 3000,
-          })
-        );
-        continue;
-      }
-
-      // Validate file size
-      if (file.size > maxFileSize) {
-        addAlert(
-          new AlertModel({
-            type: 'error',
-            message: t('_domain.uploadFile.error.fileSize', {
-              maxSize: formatBytes({ bytes: maxFileSize, t }),
-            }),
-            timeout: 3000,
-          })
-        );
-        continue;
-      }
-
-      const fileId = cryptoRandomString({ length: 8 });
-
-      // Add to uploading files list
-      setUploadingFiles((prev) => [
-        ...prev,
-        {
-          id: fileId,
-          name: file.name,
-          size: file.size,
-          type: file.type,
-          progress: 0,
-          state: 'uploading',
-        },
-      ]);
-
+    Array.from(files).forEach((file) => {
       try {
-        // Step 1: Get presigned URL from backend
-        const preSignedResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_NEXT_API_URL}/assets/pre-signed`,
-          {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-              'Content-Type': 'application/json',
-              [WorkspaceKeyHeader]: providerCurrentWorkspaceKey,
-            },
-            body: JSON.stringify({
-              type: assetType,
-              provider_id: providerId,
-              content_type: file.type,
-              acl: acl,
-            }),
-          }
-        );
-
-        if (!preSignedResponse.ok) {
-          const errorData = await preSignedResponse.json().catch(() => ({}));
-          throw new Error(errorData.message || 'Failed to get upload URL');
-        }
-
-        const { item } = await preSignedResponse.json();
-        const { signedUrl, url } = item;
-
-        // Step 2: Upload file via XMLHttpRequest for progress tracking
-        await new Promise<void>((resolve, reject) => {
-          const xhr = new XMLHttpRequest();
-          xhr.open('PUT', signedUrl);
-          xhr.setRequestHeader('Content-Type', file.type);
-
-          xhr.upload.onprogress = (e) => {
-            if (e.lengthComputable) {
-              const pct = Math.round((e.loaded / e.total) * 100);
-              setUploadingFiles((prev) =>
-                prev.map((f) => (f.id === fileId ? { ...f, progress: pct } : f))
-              );
-            }
-          };
-
-          xhr.onload = () => {
-            if (xhr.status >= 200 && xhr.status < 300) {
-              resolve();
-            } else {
-              reject(new Error('Failed to upload file to storage'));
-            }
-          };
-
-          xhr.onerror = () => reject(new Error('Upload network error'));
-          xhr.send(file);
-        });
-
-        // Mark as success and remove after a short delay
-        setUploadingFiles((prev) =>
-          prev.map((f) =>
-            f.id === fileId ? { ...f, state: 'success', progress: 100 } : f
-          )
-        );
-        setTimeout(() => {
-          setUploadingFiles((prev) => prev.filter((f) => f.id !== fileId));
-        }, 1000);
-
-        // Step 3: Call success callback with file info
-        const fileInfo: UploadedFileInfo = {
-          url,
+        uppy.addFile({
+          source: 'file input',
           name: file.name,
-          size: file.size,
           type: file.type,
-          lastModified: file.lastModified,
-        };
-        onUploadSuccess(fileInfo);
-      } catch (err: unknown) {
-        console.error('Presigned URL upload failed:', err);
-        const errorMessage =
-          err instanceof Error ? err.message : t('_domain.errorGeneric');
-        // Mark as error
-        setUploadingFiles((prev) =>
-          prev.map((f) => (f.id === fileId ? { ...f, state: 'error' } : f))
-        );
-        addAlert(
-          new AlertModel({
-            type: 'error',
-            message: errorMessage,
-            timeout: 3000,
-          })
-        );
-        onError?.(errorMessage);
+          data: file,
+        });
+      } catch (err) {
+        if ((err as { isRestriction?: boolean })?.isRestriction) {
+          // Restriction errors are handled by 'restriction-failed' event
+          console.log('Restriction failed:', err);
+        } else {
+          console.error('Uppy add file error:', err);
+        }
       }
-    }
+    });
 
-    setUploading(false);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -313,8 +190,8 @@ export default function UploadFile({
     variant === 'attachment' ? maxNumberOfFiles || 5 : 1;
 
   const id = useId();
-  const [uppy] = useState(() =>
-    new Uppy({
+  const [uppy] = useState(() => {
+    const uppyInstance = new Uppy({
       id: `${id}-${variant}`,
       debug: process.env.NODE_ENV === 'development',
       autoProceed: false,
@@ -323,118 +200,171 @@ export default function UploadFile({
         maxNumberOfFiles: effectiveMaxFiles,
         allowedFileTypes,
       },
-    }).use(AwsS3, {
-      limit: 6,
-      shouldUseMultipart: (file: { size: number }) => file.size > chunkSize,
-      getChunkSize: (file: { size: number }) => {
-        if (file.size > chunkSize) {
-          return chunkSize;
-        }
-        return file.size;
-      },
+    });
 
-      async createMultipartUpload(file) {
-        try {
-          const response = await apiFetch('/owner/assets/s3/multipart', {
-            method: 'POST',
-            body: JSON.stringify({
-              filename: file.name,
-              type: file.type,
-              metadata: file.meta,
-            }),
-          });
-
-          return response.json();
-        } catch (error) {
-          throw new Error('Network response was not ok', { cause: error });
-        }
-      },
-
-      async listParts(file, { uploadId, key }) {
-        try {
-          const response = await apiFetch(`/owner/assets/s3/multipart/list`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              key,
-              uploadId,
-            }),
-          });
-          return response.json();
-        } catch (error) {
-          console.error('Multipart upload creation failed:', error);
-          throw new Error('Network response was not ok', { cause: error });
-        }
-      },
-
-      async signPart(file, { uploadId, key, partNumber }) {
-        try {
-          const response = await apiFetch(
-            `/owner/assets/s3/multipart/${uploadId}/${partNumber}?key=${encodeURIComponent(key)}`
-          );
-          return response.json();
-        } catch (error) {
-          console.error('Sign part failed:', error);
-          throw new Error('Network response was not ok', { cause: error });
-        }
-      },
-
-      async completeMultipartUpload(file, { uploadId, key, parts }) {
-        try {
-          const response = await apiFetch(
-            `/owner/assets/s3/multipart/${uploadId}/complete?key=${encodeURIComponent(key)}`,
+    if (effectiveUploadMode === 'presigned-url') {
+      uppyInstance.use(XHRUpload, {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        endpoint: async (file: any) => {
+          const preSignedResponse = await fetch(
+            `${process.env.NEXT_PUBLIC_NEXT_API_URL}/assets/pre-signed`,
             {
               method: 'POST',
               headers: {
+                Authorization: `Bearer ${authToken}`,
                 'Content-Type': 'application/json',
+                [WorkspaceKeyHeader]: providerCurrentWorkspaceKey,
               },
-              body: JSON.stringify({ parts, key }),
-            }
-          );
-          return response.json();
-        } catch (error) {
-          console.error('Complete multipart upload failed:', error);
-          throw new Error('Network response was not ok', { cause: error });
-        }
-      },
-
-      async abortMultipartUpload(file, { uploadId, key }) {
-        try {
-          const response = await apiFetch(
-            `/owner/assets/s3/multipart/${uploadId}?key=${encodeURIComponent(key)}`,
-            {
-              method: 'DELETE',
-            }
-          );
-          return response.json();
-        } catch (error) {
-          console.error('Abort multipart upload failed:', error);
-          throw new Error('Network response was not ok', { cause: error });
-        }
-      },
-
-      async getUploadParameters(file) {
-        try {
-          const response = await apiFetch(
-            '/owner/assets/s3/getUploadParameters',
-            {
-              method: 'POST',
               body: JSON.stringify({
-                filename: file.name,
-                contentType: file.type,
+                type: assetType,
+                provider_id: providerId,
+                content_type: file.type,
+                acl: acl,
               }),
             }
           );
 
-          return response.json();
-        } catch (error) {
-          throw new Error('Network response was not ok', { cause: error });
-        }
-      },
-    })
-  );
+          if (!preSignedResponse.ok) {
+            const errorData = await preSignedResponse.json().catch(() => ({}));
+            throw new Error(errorData.message || 'Failed to get upload URL');
+          }
+
+          const { item } = await preSignedResponse.json();
+          // XHRUpload expects { url, method, headers } or similar.
+          // Since we want to PUT to the signedUrl, we return it here.
+          // Uppy XHR endpoint can be a string or object.
+          // However, XHRUpload plugin creates an XHR request to `endpoint`.
+          // If we want to use the signed URL as the endpoint, we return it.
+
+          // Store the public URL in metadata for use in onUploadSuccess
+          file.meta = { ...file.meta, publicUrl: item.url };
+
+          return item.signedUrl;
+        },
+        method: 'PUT',
+        formData: false, // Send body as raw file bytes
+        // We need to set Content-Type header to the file type for S3 presigned URLs
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        headers: (file: any) => ({
+          'Content-Type': file.type,
+        }),
+      });
+    } else {
+      uppyInstance.use(AwsS3, {
+        limit: 6,
+        shouldUseMultipart: (file: { size: number }) => file.size > chunkSize,
+        getChunkSize: (file: { size: number }) => {
+          if (file.size > chunkSize) {
+            return chunkSize;
+          }
+          return file.size;
+        },
+
+        async createMultipartUpload(file) {
+          try {
+            const response = await apiFetch('/owner/assets/s3/multipart', {
+              method: 'POST',
+              body: JSON.stringify({
+                filename: file.name,
+                type: file.type,
+                metadata: file.meta,
+              }),
+            });
+
+            return response.json();
+          } catch (error) {
+            throw new Error('Network response was not ok', { cause: error });
+          }
+        },
+
+        async listParts(file, { uploadId, key }) {
+          try {
+            const response = await apiFetch(`/owner/assets/s3/multipart/list`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                key,
+                uploadId,
+              }),
+            });
+            return response.json();
+          } catch (error) {
+            console.error('Multipart upload creation failed:', error);
+            throw new Error('Network response was not ok', { cause: error });
+          }
+        },
+
+        async signPart(file, { uploadId, key, partNumber }) {
+          try {
+            const response = await apiFetch(
+              `/owner/assets/s3/multipart/${uploadId}/${partNumber}?key=${encodeURIComponent(key)}`
+            );
+            return response.json();
+          } catch (error) {
+            console.error('Sign part failed:', error);
+            throw new Error('Network response was not ok', { cause: error });
+          }
+        },
+
+        async completeMultipartUpload(file, { uploadId, key, parts }) {
+          try {
+            const response = await apiFetch(
+              `/owner/assets/s3/multipart/${uploadId}/complete?key=${encodeURIComponent(key)}`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ parts, key }),
+              }
+            );
+            return response.json();
+          } catch (error) {
+            console.error('Complete multipart upload failed:', error);
+            throw new Error('Network response was not ok', { cause: error });
+          }
+        },
+
+        async abortMultipartUpload(file, { uploadId, key }) {
+          try {
+            const response = await apiFetch(
+              `/owner/assets/s3/multipart/${uploadId}?key=${encodeURIComponent(key)}`,
+              {
+                method: 'DELETE',
+              }
+            );
+            return response.json();
+          } catch (error) {
+            console.error('Abort multipart upload failed:', error);
+            throw new Error('Network response was not ok', { cause: error });
+          }
+        },
+
+        async getUploadParameters(file) {
+          try {
+            const response = await apiFetch(
+              '/owner/assets/s3/getUploadParameters',
+              {
+                method: 'POST',
+                body: JSON.stringify({
+                  filename: file.name,
+                  contentType: file.type,
+                }),
+              }
+            );
+
+            return response.json();
+          } catch (error) {
+            throw new Error('Network response was not ok', { cause: error });
+          }
+        },
+      });
+    }
+
+    return uppyInstance;
+  });
 
   useEffect(() => {
     if (!uppy) return;
@@ -450,9 +380,12 @@ export default function UploadFile({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onUploadSuccessHandler = (file: any, response: any) => {
       setUploading(false);
-      if (!file || !response.body?.location) return;
+      // Use location from response (S3 multipart) or fallback to publicUrl from meta (presigned)
+      const location = response.body?.location || file.meta?.publicUrl;
+
+      if (!file || !location) return;
       const fileInfo: UploadedFileInfo = {
-        url: response.body?.location,
+        url: location,
         name: file?.name as string,
         size: file?.size as number,
         type: file?.type as string,
@@ -501,7 +434,43 @@ export default function UploadFile({
       );
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const onUploadProgress = (file: any, progress: any) => {
+      // Sync progress to React state for UI
+      setUploadingFiles((prev: UploadingFile[]) => {
+        const existing = prev.find((f) => f.id === file.id);
+        if (existing) {
+          return prev.map((f) =>
+            f.id === file.id
+              ? {
+                  ...f,
+                  progress: progress.bytesTotal
+                    ? Math.round(
+                        (progress.bytesUploaded / progress.bytesTotal) * 100
+                      )
+                    : 0,
+                }
+              : f
+          );
+        } else {
+          // File started uploading but wasn't in state (rare, but possible if added directly)
+          return [
+            ...prev,
+            {
+              id: file.id,
+              name: file.name,
+              size: file.size,
+              type: file.type,
+              progress: 0,
+              state: 'uploading',
+            },
+          ];
+        }
+      });
+    };
+
     uppy.on('file-added', onFileAdded);
+    uppy.on('upload-progress', onUploadProgress);
     uppy.on('upload-success', onUploadSuccessHandler);
     uppy.on('restriction-failed', onRestrictionFailed);
     uppy.on('error', onErrorHandler);
@@ -509,6 +478,7 @@ export default function UploadFile({
 
     return () => {
       uppy.off('file-added', onFileAdded);
+      uppy.off('upload-progress', onUploadProgress);
       uppy.off('upload-success', onUploadSuccessHandler);
       uppy.off('restriction-failed', onRestrictionFailed);
       uppy.off('error', onErrorHandler);
@@ -562,9 +532,29 @@ export default function UploadFile({
       // 3. Dimension Validation (Async)
       await checkImageDimensions(file);
 
-      setUploading(true);
+      // Add file to Uppy (handles calling .upload() largely via onFileAdded)
+      // Note: we don't need to manually call uppy.upload() here because onFileAdded does it.
+      uppy.addFile({
+        source: 'file input',
+        name: file.name,
+        type: file.type,
+        data: file,
+      });
 
-      uppy.upload();
+      // Update state to show loading immediately
+      setUploadingFiles((prev: UploadingFile[]) => [
+        ...prev,
+        {
+          id: '', // temporary, will be synced with actual ID in progress handler if needed or we can generate one.
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          progress: 0,
+          state: 'uploading',
+        },
+      ]);
+      // Remove the direct setUploadingFiles call here to avoid Sync issues.
+      // onFileAdded -> uppy.upload() -> upload events.
     } catch (error: unknown) {
       console.error('File upload process failed:', error);
 
@@ -815,7 +805,7 @@ export default function UploadFile({
                 progress={file.progress}
                 mimeType={file.type}
                 onRemove={() => {
-                  setUploadingFiles((prev) =>
+                  setUploadingFiles((prev: UploadingFile[]) =>
                     prev.filter((f) => f.id !== file.id)
                   );
                 }}
