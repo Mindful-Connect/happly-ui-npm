@@ -1,0 +1,16 @@
+# Dependency directories
+node_modules
+.pnp
+.pnp.js
+
+# Testing coverage
+coverage
+
+# Next.js build output
+.next
+out
+build
+
+# Misc
+.DS_Store
+*.pem
