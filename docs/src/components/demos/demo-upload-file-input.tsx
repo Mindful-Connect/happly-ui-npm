@@ -68,7 +68,7 @@ const t = (key: string, params?: Record<string, string>) => {
 
 // Mock empty function for apiFetch as we are disabled
 const apiFetch = async (url: string, options: any) => {
-  return {}
+  return new Response(JSON.stringify({}), { status: 200 })
 }
 
 // Mock empty function for addAlert as we are disabled

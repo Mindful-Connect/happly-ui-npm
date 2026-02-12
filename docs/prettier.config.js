@@ -7,4 +7,4 @@ module.exports = {
   jsxSingleQuote: true,
   plugins: ['prettier-plugin-tailwindcss'],
   tailwindStylesheet: './src/styles/tailwind.css',
-}
+};

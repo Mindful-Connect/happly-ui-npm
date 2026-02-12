@@ -1,8 +1,15 @@
-import React, { useState } from 'react'
-import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
-import { CreditCard, Wallet, Banknote, Building, Zap, Star } from 'lucide-react'
-import { cn } from '@/lib/utils'
-import { DemoBadge, DemoLabel } from '../ComponentPreview'
+import React, { useState } from 'react';
+import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
+import {
+  CreditCard,
+  Wallet,
+  Banknote,
+  Building,
+  Zap,
+  Star,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { DemoBadge, DemoLabel } from '../ComponentPreview';
 
 // ============================================================================
 // RadioGroup Implementation
@@ -18,48 +25,48 @@ const RadioGroup = React.forwardRef<
       {...props}
       ref={ref}
     />
-  )
-})
-RadioGroup.displayName = RadioGroupPrimitive.Root.displayName
+  );
+});
+RadioGroup.displayName = RadioGroupPrimitive.Root.displayName;
 
 const RadioGroupItem = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item> & {
-    selectElementColor?: string
-    variant?: 'default' | 'primary'
+    selectElementColor?: string;
+    variant?: 'default' | 'primary';
   }
 >(({ className, color, variant = 'default', ...props }, ref) => {
   return (
-    <div className="flex h-5 w-5 shrink-0 items-center justify-center">
+    <div className='flex h-5 w-5 shrink-0 items-center justify-center'>
       <RadioGroupPrimitive.Item
         ref={ref}
         className={cn(
           'text-primary aspect-square h-[16px] w-[16px] rounded-full border-2 border-neutral-200 transition-all duration-75 focus:outline-none focus-visible:ring-0 disabled:cursor-default disabled:opacity-50 data-[state=checked]:border-0 [&[data-state=checked]_.unchecked-shadow]:hidden',
           props.disabled && 'cursor-default',
-          className,
+          className
         )}
         {...props}
       >
         {/* This div is invisible when the RadioGroupItem is checked  */}
-        <div className="unchecked-shadow h-full w-full rounded-full bg-white shadow-sm" />
+        <div className='unchecked-shadow h-full w-full rounded-full bg-white shadow-sm' />
 
         {/* RadioGroupPrimitive.Indicator is invisible when the RadioGroupItem is not checked  */}
-        <RadioGroupPrimitive.Indicator className="flex h-full items-center justify-center transition-all duration-75">
+        <RadioGroupPrimitive.Indicator className='flex h-full items-center justify-center transition-all duration-75'>
           <div
             style={{ borderColor: color }}
             className={cn(
               'h-full w-full rounded-full border-4 transition-all duration-75',
               variant === 'primary'
                 ? 'border-primaryColor'
-                : 'border-ds-neutral-950',
+                : 'border-ds-neutral-950'
             )}
           />
         </RadioGroupPrimitive.Indicator>
       </RadioGroupPrimitive.Item>
     </div>
-  )
-})
-RadioGroupItem.displayName = RadioGroupPrimitive.Item.displayName
+  );
+});
+RadioGroupItem.displayName = RadioGroupPrimitive.Item.displayName;
 
 // ============================================================================
 // KeyIcon Implementation
@@ -74,8 +81,8 @@ type Color =
   | 'yellow'
   | 'purple'
   | 'pink'
-  | 'teal'
-type Style = 'stroke' | 'lighter'
+  | 'teal';
+type Style = 'stroke' | 'lighter';
 
 const styleMap: Record<Color, Record<Style, string>> = {
   blue: {
@@ -114,7 +121,7 @@ const styleMap: Record<Color, Record<Style, string>> = {
     stroke: 'border border-ds-neutral-200',
     lighter: 'border bg-ds-sky-100 border-ds-sky-200',
   },
-}
+};
 
 const sizeClasses = {
   sm: 'w-8 h-8 [&_svg]:size-4',
@@ -122,7 +129,7 @@ const sizeClasses = {
   lg: 'w-12 h-12 [&_svg]:size-6',
   xl: 'w-14 h-14 [&_svg]:size-7',
   '2xl': 'w-16 h-16 [&_svg]:size-8',
-}
+};
 
 function KeyIcon({
   color = 'gray',
@@ -131,11 +138,11 @@ function KeyIcon({
   style = 'stroke',
   className,
 }: {
-  color?: Color
-  icon?: React.ReactNode
-  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
-  style?: 'stroke' | 'lighter'
-  className?: string
+  color?: Color;
+  icon?: React.ReactNode;
+  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+  style?: 'stroke' | 'lighter';
+  className?: string;
 }) {
   return (
     <div
@@ -144,12 +151,12 @@ function KeyIcon({
         sizeClasses[size],
         styleMap[color][style],
         'shrink-0',
-        className,
+        className
       )}
     >
       {icon}
     </div>
-  )
+  );
 }
 
 // ============================================================================
@@ -158,15 +165,15 @@ function KeyIcon({
 
 export type RadioCardItem = {
   badge?: {
-    variant: 'default' | 'secondary' | 'destructive' | 'outline'
-    text: string
-  }
-  description?: string
-  icon?: React.ReactNode
-  readOnly?: boolean
-  title: string
-  value: string
-}
+    variant: 'default' | 'secondary' | 'destructive' | 'outline';
+    text: string;
+  };
+  description?: string;
+  icon?: React.ReactNode;
+  readOnly?: boolean;
+  title: string;
+  value: string;
+};
 
 function RadioCardGroup({
   allowDeselect,
@@ -181,17 +188,17 @@ function RadioCardGroup({
   variant = 'default',
   onValueChange,
 }: {
-  allowDeselect?: boolean
-  className?: string
-  descriptionInTitle?: boolean
-  disabled?: boolean
-  itemClassName?: string
-  items: RadioCardItem[]
-  noBorderHighlightWhenSeected?: boolean
-  simpleIcons?: boolean
-  value: string | undefined
-  variant?: 'default' | 'primary'
-  onValueChange: (value: string) => void
+  allowDeselect?: boolean;
+  className?: string;
+  descriptionInTitle?: boolean;
+  disabled?: boolean;
+  itemClassName?: string;
+  items: RadioCardItem[];
+  noBorderHighlightWhenSeected?: boolean;
+  simpleIcons?: boolean;
+  value: string | undefined;
+  variant?: 'default' | 'primary';
+  onValueChange: (value: string) => void;
 }) {
   return (
     <RadioGroup
@@ -199,7 +206,7 @@ function RadioCardGroup({
       value={value}
       onValueChange={() => {}}
       onClick={(e) => {
-        e.preventDefault()
+        e.preventDefault();
       }}
     >
       {items.map((item, index) => (
@@ -217,29 +224,29 @@ function RadioCardGroup({
                       : 'border-neutral-950'
                     : 'border-ds-neutral-200 hover:border-ds-neutral-200 hover:bg-ds-neutral-50',
                 ],
-            itemClassName,
+            itemClassName
           )}
           onClick={(e) => {
-            if (disabled || item.readOnly) return
+            if (disabled || item.readOnly) return;
             if (allowDeselect && value === item.value) {
-              onValueChange('')
-              return
+              onValueChange('');
+              return;
             }
-            onValueChange(item.value)
+            onValueChange(item.value);
           }}
         >
           <div
             className={cn(
               'flex items-center',
-              simpleIcons ? 'gap-2' : 'gap-[14px]',
+              simpleIcons ? 'gap-2' : 'gap-[14px]'
             )}
           >
             {!!item.icon &&
               (simpleIcons ? item.icon : <KeyIcon icon={item.icon} />)}
 
-            <div className="flex h-min flex-col gap-1">
-              <div className="flex gap-x-2">
-                <div className="flex flex-wrap items-center gap-x-1.5">
+            <div className='flex h-min flex-col gap-1'>
+              <div className='flex gap-x-2'>
+                <div className='flex flex-wrap items-center gap-x-1.5'>
                   <DemoLabel disabled={disabled || item.readOnly}>
                     {item.title}
                   </DemoLabel>
@@ -249,7 +256,7 @@ function RadioCardGroup({
                         'transition-colors duration-75',
                         disabled || item.readOnly
                           ? 'text-ds-neutral-400'
-                          : 'text-ds-neutral-600',
+                          : 'text-ds-neutral-600'
                       )}
                     >
                       {item.description}
@@ -269,7 +276,7 @@ function RadioCardGroup({
                     'transition-colors duration-75',
                     disabled || item.readOnly
                       ? 'text-ds-neutral-400'
-                      : 'text-ds-neutral-600',
+                      : 'text-ds-neutral-600'
                   )}
                 >
                   {item.description}
@@ -283,16 +290,16 @@ function RadioCardGroup({
             disabled={disabled || item.readOnly}
             id={item.value}
             value={item.value}
-            className="peer"
+            className='peer'
             onClick={() => {
-              if (disabled || item.readOnly) return
-              onValueChange(item.value)
+              if (disabled || item.readOnly) return;
+              onValueChange(item.value);
             }}
           />
         </div>
       ))}
     </RadioGroup>
-  )
+  );
 }
 
 // Basic usage items
@@ -312,7 +319,7 @@ const basicItems: RadioCardItem[] = [
     value: 'enterprise',
     description: 'For large organizations',
   },
-]
+];
 
 // Items without descriptions
 const noDescriptionItems: RadioCardItem[] = [
@@ -328,36 +335,36 @@ const noDescriptionItems: RadioCardItem[] = [
     title: 'Large',
     value: 'large',
   },
-]
+];
 
 // Items with icons
 const iconItems: RadioCardItem[] = [
   {
     title: 'Card',
     value: 'card',
-    icon: <CreditCard className="h-5 w-5" />,
+    icon: <CreditCard className='h-5 w-5' />,
     description: 'Pay with credit card',
   },
   {
     title: 'Wallet',
     value: 'wallet',
-    icon: <Wallet className="h-5 w-5" />,
+    icon: <Wallet className='h-5 w-5' />,
     description: 'Pay with digital wallet',
   },
   {
     title: 'Bank Transfer',
     value: 'bank',
-    icon: <Banknote className="h-5 w-5" />,
+    icon: <Banknote className='h-5 w-5' />,
     description: 'Direct bank transfer',
   },
-]
+];
 
 // Items with icons and badges
 const complexItems: RadioCardItem[] = [
   {
     title: 'Pro Plan',
     value: 'pro',
-    icon: <Zap className="h-5 w-5" />,
+    icon: <Zap className='h-5 w-5' />,
     description: 'Advanced features for power users',
     badge: {
       text: 'Popular',
@@ -367,7 +374,7 @@ const complexItems: RadioCardItem[] = [
   {
     title: 'Business Plan',
     value: 'business',
-    icon: <Building className="h-5 w-5" />,
+    icon: <Building className='h-5 w-5' />,
     description: 'Complete solution for businesses',
     badge: {
       text: 'New',
@@ -377,25 +384,25 @@ const complexItems: RadioCardItem[] = [
   {
     title: 'Starter Plan',
     value: 'starter',
-    icon: <Star className="h-5 w-5" />,
+    icon: <Star className='h-5 w-5' />,
     description: 'Basic features to get started',
   },
-]
+];
 
 export default function DemoRadioCardGroup() {
-  const [basicValue, setBasicValue] = useState('personal')
-  const [iconValue, setIconValue] = useState('card')
-  const [complexValue, setComplexValue] = useState('pro')
-  const [deselectValue, setDeselectValue] = useState<string>('personal')
+  const [basicValue, setBasicValue] = useState('personal');
+  const [iconValue, setIconValue] = useState('card');
+  const [complexValue, setComplexValue] = useState('pro');
+  const [deselectValue, setDeselectValue] = useState<string>('personal');
 
-  const [noDescriptionValue, setNoDescriptionValue] = useState('medium')
+  const [noDescriptionValue, setNoDescriptionValue] = useState('medium');
 
   return (
-    <div className="flex w-full flex-col gap-10">
+    <div className='flex w-full flex-col gap-10'>
       {/* Items without Description */}
-      <div className="flex flex-col gap-4">
-        <h3 className="text-lg font-semibold">Without Descriptions</h3>
-        <p className="text-sm text-gray-500">
+      <div className='flex flex-col gap-4'>
+        <h3 className='text-lg font-semibold'>Without Descriptions</h3>
+        <p className='text-sm text-gray-500'>
           Radio cards can be used without descriptions for a minimal look.
         </p>
         <RadioCardGroup
@@ -406,9 +413,9 @@ export default function DemoRadioCardGroup() {
       </div>
 
       {/* Basic Usage */}
-      <div className="flex flex-col gap-4">
-        <h3 className="text-lg font-semibold">Basic Usage</h3>
-        <p className="text-sm text-gray-500">
+      <div className='flex flex-col gap-4'>
+        <h3 className='text-lg font-semibold'>Basic Usage</h3>
+        <p className='text-sm text-gray-500'>
           Standard radio card group with default styling.
         </p>
         <RadioCardGroup
@@ -419,11 +426,11 @@ export default function DemoRadioCardGroup() {
       </div>
 
       {/* With Icons and Description in Title */}
-      <div className="flex flex-col gap-4">
-        <h3 className="text-lg font-semibold">
+      <div className='flex flex-col gap-4'>
+        <h3 className='text-lg font-semibold'>
           With Icons & Description in Title
         </h3>
-        <p className="text-sm text-gray-500">
+        <p className='text-sm text-gray-500'>
           Items can have icons, and descriptions can be placed inline with the
           title using <code>descriptionInTitle</code>.
         </p>
@@ -436,9 +443,9 @@ export default function DemoRadioCardGroup() {
       </div>
 
       {/* With Badges and Descriptions */}
-      <div className="flex flex-col gap-4">
-        <h3 className="text-lg font-semibold">With Badges</h3>
-        <p className="text-sm text-gray-500">
+      <div className='flex flex-col gap-4'>
+        <h3 className='text-lg font-semibold'>With Badges</h3>
+        <p className='text-sm text-gray-500'>
           Items can also include badges for status or emphasis.
         </p>
         <RadioCardGroup
@@ -449,9 +456,9 @@ export default function DemoRadioCardGroup() {
       </div>
 
       {/* Basic Usage with Deselect */}
-      <div className="flex flex-col gap-4">
-        <h3 className="text-lg font-semibold">Allow Deselect</h3>
-        <p className="text-sm text-gray-500">
+      <div className='flex flex-col gap-4'>
+        <h3 className='text-lg font-semibold'>Allow Deselect</h3>
+        <p className='text-sm text-gray-500'>
           Clicking the selected item will deselect it (returns empty string).
         </p>
         <RadioCardGroup
@@ -463,15 +470,15 @@ export default function DemoRadioCardGroup() {
       </div>
 
       {/* Disabled State */}
-      <div className="flex flex-col gap-4">
-        <h3 className="text-lg font-semibold">Disabled</h3>
+      <div className='flex flex-col gap-4'>
+        <h3 className='text-lg font-semibold'>Disabled</h3>
         <RadioCardGroup
           items={basicItems}
-          value="personal"
+          value='personal'
           onValueChange={() => {}}
           disabled={true}
         />
       </div>
     </div>
-  )
+  );
 }

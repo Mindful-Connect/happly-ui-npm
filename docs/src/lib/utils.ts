@@ -6,3 +6,5 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export type ObjectValues<T> = T[keyof T]
+
+export type ApiFetch = (url: string, options?: RequestInit) => Promise<Response>

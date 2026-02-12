@@ -1,4 +1,4 @@
-import { FileFormatIconColor } from './types'
+import { FileFormatIconColor } from './types';
 
 export const fileTypes = {
   document: [
@@ -38,7 +38,7 @@ export const fileTypes = {
     'application/x-tar',
     'application/zip',
   ],
-}
+};
 
 export const S3_ASSET_TYPE = {
   Asset: 'asset',
@@ -46,12 +46,12 @@ export const S3_ASSET_TYPE = {
   Avatar: 'avatar',
   Cover: 'cover',
   Logo: 'logo',
-} as const
+} as const;
 
 export const ACL_TYPE = {
   Private: 'private',
   PublicRead: 'public-read',
-} as const
+} as const;
 
 export const colorFallbacks: Record<FileFormatIconColor, string> = {
   red: '#FB3748',
@@ -63,6 +63,6 @@ export const colorFallbacks: Record<FileFormatIconColor, string> = {
   purple: '#7D52F4',
   pink: '#FB4BA3',
   gray: '#717784',
-}
+};
 
-export const WorkspaceKeyHeader = 'X-Happly-Workspace-Key'
+export const WorkspaceKeyHeader = 'X-Happly-Workspace-Key';

@@ -1,4 +1,4 @@
-import { ObjectValues } from '@/lib/utils'
+import { ObjectValues } from '@/lib/utils';
 
 export const TAG_CATEGORY = {
   Sector: 'sector',
@@ -12,12 +12,12 @@ export const TAG_CATEGORY = {
   LiveStreamTopic: 'live_stream_topic',
   EventTopic: 'event_topic',
   Group: 'group',
-} as const
-export type TagCategory = ObjectValues<typeof TAG_CATEGORY>
+} as const;
+export type TagCategory = ObjectValues<typeof TAG_CATEGORY>;
 
 export interface Tag {
-  id: number
-  slug: string
-  label: string
-  category: TagCategory
+  id: number;
+  slug: string;
+  label: string;
+  category: TagCategory;
 }

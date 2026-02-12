@@ -1,7 +1,7 @@
-import { ObjectValues } from '@/lib/utils'
+import { ObjectValues } from '@/lib/utils';
 
 export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
-  U[keyof U]
+  U[keyof U];
 
 export const LANGUAGE_TYPE = {
   English: 'en',
@@ -23,9 +23,9 @@ export const LANGUAGE_TYPE = {
   Dutch: 'nl',
   Romanian: 'ro',
   Hungarian: 'hu',
-} as const
-export type LanguageType = ObjectValues<typeof LANGUAGE_TYPE>
+} as const;
+export type LanguageType = ObjectValues<typeof LANGUAGE_TYPE>;
 
 export type Translatable = AtLeastOne<{
-  [K in LanguageType]?: string
-}>
+  [K in LanguageType]?: string;
+}>;

@@ -1,7 +1,7 @@
-import * as React from 'react'
-import { type ClassValue } from 'clsx'
-import { cn } from '@/lib/utils'
-import type { ReactElement, SVGProps } from 'react'
+import * as React from 'react';
+import { type ClassValue } from 'clsx';
+import { cn } from '@/lib/utils';
+import type { ReactElement, SVGProps } from 'react';
 
 const inputClassConfig = {
   slots: {
@@ -124,107 +124,107 @@ const inputClassConfig = {
   defaultVariants: {
     size: 'medium',
   },
-}
+};
 
 // Type definition for the slots in inputClassConfig
-type InputSlotName = keyof (typeof inputClassConfig)['slots']
+type InputSlotName = keyof (typeof inputClassConfig)['slots'];
 
 // Props for the Input component
 export interface InputProps extends Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   'size'
 > {
-  size?: 'medium' | 'small' | 'xsmall'
-  hasError?: boolean
-  leftIcon?: React.ReactNode
-  rightIcon?: React.ReactNode
-  leftAffix?: React.ReactNode
-  rightAffix?: React.ReactNode
-  inlineAffix?: React.ReactNode
+  size?: 'medium' | 'small' | 'xsmall';
+  hasError?: boolean;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  leftAffix?: React.ReactNode;
+  rightAffix?: React.ReactNode;
+  inlineAffix?: React.ReactNode;
   /** Content to display at the end of the input area (e.g., status indicator) */
-  endContent?: React.ReactNode
+  endContent?: React.ReactNode;
   /** Inline suffix displayed immediately after the input text */
-  suffix?: string
-  wrapperClassName?: string
-  inputClassName?: string
-  inputStyle?: React.CSSProperties
-  leftIconClassName?: string
-  rightIconClassName?: string
-  leftAffixClassName?: string
-  rightAffixClassName?: string
-  inlineAffixClassName?: string
+  suffix?: string;
+  wrapperClassName?: string;
+  inputClassName?: string;
+  inputStyle?: React.CSSProperties;
+  leftIconClassName?: string;
+  rightIconClassName?: string;
+  leftAffixClassName?: string;
+  rightAffixClassName?: string;
+  inlineAffixClassName?: string;
   /** Keep left affix interactive when input is disabled */
-  leftAffixEnabled?: boolean
+  leftAffixEnabled?: boolean;
   /** Keep right affix interactive when input is disabled */
-  rightAffixEnabled?: boolean
+  rightAffixEnabled?: boolean;
 }
 
 // Helper function to generate class strings for a specific slot
 function generateSlotClasses(
   slotName: InputSlotName,
   props: { size?: 'medium' | 'small' | 'xsmall'; hasError?: boolean },
-  additionalClasses?: ClassValue,
+  additionalClasses?: ClassValue
 ): string {
   const { size = inputClassConfig.defaultVariants.size, hasError = false } =
-    props
-  const classes: ClassValue[] = []
+    props;
+  const classes: ClassValue[] = [];
 
   if (inputClassConfig.slots[slotName]) {
-    classes.push(inputClassConfig.slots[slotName])
+    classes.push(inputClassConfig.slots[slotName]);
   }
 
   const sizeVariant =
     inputClassConfig.variants.size[
       size as keyof typeof inputClassConfig.variants.size
-    ]
+    ];
   if (sizeVariant && sizeVariant[slotName as keyof typeof sizeVariant]) {
-    classes.push(sizeVariant[slotName as keyof typeof sizeVariant])
+    classes.push(sizeVariant[slotName as keyof typeof sizeVariant]);
   }
 
-  const errorVariantKey = hasError ? 'true' : 'false'
+  const errorVariantKey = hasError ? 'true' : 'false';
   const errorVariant =
     inputClassConfig.variants.hasError[
       errorVariantKey as keyof typeof inputClassConfig.variants.hasError
-    ]
+    ];
   if (errorVariant && errorVariant[slotName as keyof typeof errorVariant]) {
-    classes.push(errorVariant[slotName as keyof typeof errorVariant])
+    classes.push(errorVariant[slotName as keyof typeof errorVariant]);
   }
 
   // 4. Compound variants
   inputClassConfig.compoundVariants.forEach((cv) => {
-    let match = true
+    let match = true;
     if (cv.size) {
       if (Array.isArray(cv.size)) {
-        match = cv.size.includes(size)
+        match = cv.size.includes(size);
       } else {
-        match = cv.size === size
+        match = cv.size === size;
       }
     }
 
     if (match && cv.class && cv.class[slotName as keyof typeof cv.class]) {
-      classes.push(cv.class[slotName as keyof typeof cv.class])
+      classes.push(cv.class[slotName as keyof typeof cv.class]);
     }
-  })
+  });
 
   if (additionalClasses) {
-    classes.push(additionalClasses)
+    classes.push(additionalClasses);
   }
 
-  return cn(classes)
+  return cn(classes);
 }
 
 function renderSlotContent(
   node: React.ReactNode,
   slot: InputSlotName,
   variantProps: Parameters<typeof generateSlotClasses>[1],
-  extraClass?: string,
+  extraClass?: string
 ): React.ReactNode {
-  if (!React.isValidElement(node)) return null
+  if (!React.isValidElement(node)) return null;
 
-  const el = node as ReactElement<SVGProps<SVGSVGElement>>
+  const el = node as ReactElement<SVGProps<SVGSVGElement>>;
   return React.cloneElement(el, {
     className: generateSlotClasses(slot, variantProps, extraClass),
-  })
+  });
 }
 
 // The main Input component, styled like shadcn/ui components.
@@ -255,31 +255,31 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       id,
       ...props
     },
-    ref,
+    ref
   ) => {
-    type InputSize = keyof typeof inputClassConfig.variants.size // "medium" | "small" | "xsmall"
+    type InputSize = keyof typeof inputClassConfig.variants.size; // "medium" | "small" | "xsmall"
     const currentSize: InputSize = (propSize ??
-      inputClassConfig.defaultVariants.size) as InputSize
-    const currentHasError = propHasError || false
+      inputClassConfig.defaultVariants.size) as InputSize;
+    const currentHasError = propHasError || false;
     const variantProps: Parameters<typeof generateSlotClasses>[1] = {
       size: currentSize,
       hasError: currentHasError,
-    }
+    };
 
-    const inputId = id || React.useId()
+    const inputId = id || React.useId();
 
     const renderedLeftIcon = renderSlotContent(
       leftIcon,
       'icon',
       variantProps,
-      leftIconClassName,
-    )
+      leftIconClassName
+    );
     const renderedRightIcon = renderSlotContent(
       rightIcon,
       'icon',
       variantProps,
-      rightIconClassName,
-    )
+      rightIconClassName
+    );
 
     return (
       <div
@@ -292,7 +292,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className={cn(
               generateSlotClasses('affix', variantProps, leftAffixClassName),
               leftAffixEnabled &&
-                '!pointer-events-auto !bg-ds-white-0 !text-ds-soft-400',
+                '!pointer-events-auto !bg-ds-white-0 !text-ds-soft-400'
             )}
           >
             {leftAffix}
@@ -304,7 +304,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           className={generateSlotClasses(
             'wrapper',
             variantProps,
-            wrapperClassName,
+            wrapperClassName
           )}
         >
           {renderedLeftIcon}
@@ -315,7 +315,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             className={cn(
               generateSlotClasses('input', variantProps, inputClassName),
-              'border-none bg-transparent p-0 outline-none focus:border-none focus:ring-0 focus:outline-none',
+              'border-none bg-transparent p-0 outline-none focus:border-none focus:ring-0 focus:outline-none'
             )}
             style={inputStyle}
             {...props} // Spread other native input attributes (placeholder, disabled, value, onChange, etc.)
@@ -323,7 +323,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {suffix && (
             <span
               className={cn(
-                'shrink-0 !text-paragraph-sm whitespace-nowrap text-ds-disabled-300',
+                'shrink-0 !text-paragraph-sm whitespace-nowrap text-ds-disabled-300'
               )}
             >
               {suffix}
@@ -334,13 +334,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               className={generateSlotClasses(
                 'inlineAffix',
                 variantProps,
-                inlineAffixClassName,
+                inlineAffixClassName
               )}
             >
               {inlineAffix}
             </span>
           )}
-          {endContent && <div className="shrink-0">{endContent}</div>}
+          {endContent && <div className='shrink-0'>{endContent}</div>}
           {renderedRightIcon}
         </div>
 
@@ -350,16 +350,16 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className={cn(
               generateSlotClasses('affix', variantProps, rightAffixClassName),
               rightAffixEnabled &&
-                '!pointer-events-auto !bg-ds-white-0 !text-ds-soft-400',
+                '!pointer-events-auto !bg-ds-white-0 !text-ds-soft-400'
             )}
           >
             {rightAffix}
           </div>
         )}
       </div>
-    )
-  },
-)
-Input.displayName = 'Input'
+    );
+  }
+);
+Input.displayName = 'Input';
 
-export { Input }
+export { Input };

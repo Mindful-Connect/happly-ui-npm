@@ -33,6 +33,8 @@ import {
   MimeType,
   fileTypes,
   checkImageDimensions,
+  FileFormatIconProps,
+  colorFallbacks,
 } from '@/lib/upload-file-input'
 
 import {
@@ -794,6 +796,7 @@ export default function UploadFile({
                 state={file.state}
                 progress={file.progress}
                 mimeType={file.type}
+                t={t}
                 onRemove={() => {
                   setUploadingFiles((prev) =>
                     prev.filter((f) => f.id !== file.id),
@@ -811,6 +814,7 @@ export default function UploadFile({
               <AttachmentListItem
                 key={attachment.id}
                 attachment={attachment}
+                t={t}
                 onRemove={() => onAttachmentRemove?.(attachment.id)}
               />
             ))}
@@ -903,6 +907,7 @@ export default function UploadFile({
                           <AttachmentListItem
                             key={attachment.id}
                             attachment={attachment}
+                            t={t}
                             onRemove={() => onAttachmentRemove?.(attachment.id)}
                           />
                         ),

@@ -1,44 +1,44 @@
-'use client'
+'use client';
 
-import { type ReactNode, type CSSProperties, useState } from 'react'
+import { type ReactNode, type CSSProperties, useState } from 'react';
 
 // =============================================================================
 // COMPONENT PREVIEW WRAPPER
 // =============================================================================
 
 interface ComponentPreviewProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export function ComponentPreview({ children }: ComponentPreviewProps) {
   return (
-    <div className="not-prose my-6 rounded-xl border border-slate-200 bg-white text-sm text-ds-neutral-950 dark:border-slate-800 dark:bg-slate-900/50">
-      <div className="flex min-h-[140px] flex-wrap items-center justify-center gap-4 p-8">
+    <div className='not-prose my-6 rounded-xl border border-slate-200 bg-white text-sm text-ds-neutral-950 dark:border-slate-800 dark:bg-slate-900/50'>
+      <div className='flex min-h-[140px] flex-wrap items-center justify-center gap-4 p-8'>
         {children}
       </div>
     </div>
-  )
+  );
 }
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button';
 
 // =============================================================================
 // DEMO BUTTON COMPONENT
 // =============================================================================
 
-type Variant = 'primary' | 'neutral' | 'error' | 'success' | 'warning'
-type Mode = 'filled' | 'stroke' | 'lighter' | 'ghost'
-type Size = 'medium' | 'small' | 'xsmall' | 'xxsmall'
+type Variant = 'primary' | 'neutral' | 'error' | 'success' | 'warning';
+type Mode = 'filled' | 'stroke' | 'lighter' | 'ghost';
+type Size = 'medium' | 'small' | 'xsmall' | 'xxsmall';
 
 interface DemoButtonProps {
-  variant?: Variant
-  mode?: Mode
-  size?: Size
-  iconOnly?: boolean
-  disabled?: boolean
-  children?: ReactNode
-  icon?: 'plus' | 'mail' | 'trash' | 'chevron-right' | 'loader'
-  iconPosition?: 'left' | 'right'
+  variant?: Variant;
+  mode?: Mode;
+  size?: Size;
+  iconOnly?: boolean;
+  disabled?: boolean;
+  children?: ReactNode;
+  icon?: 'plus' | 'mail' | 'trash' | 'chevron-right' | 'loader';
+  iconPosition?: 'left' | 'right';
 }
 
 const colors = {
@@ -59,100 +59,100 @@ const colors = {
     darker: '#dc2626',
     alpha10: 'rgba(239, 68, 68, 0.1)',
   },
-}
+};
 
 const PlusIcon = () => (
   <svg
-    width="20"
-    height="20"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
+    width='20'
+    height='20'
+    fill='none'
+    stroke='currentColor'
+    viewBox='0 0 24 24'
   >
     <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      strokeLinecap='round'
+      strokeLinejoin='round'
       strokeWidth={2}
-      d="M12 4v16m8-8H4"
+      d='M12 4v16m8-8H4'
     />
   </svg>
-)
+);
 
 const MailIcon = () => (
   <svg
-    width="20"
-    height="20"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
+    width='20'
+    height='20'
+    fill='none'
+    stroke='currentColor'
+    viewBox='0 0 24 24'
   >
     <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      strokeLinecap='round'
+      strokeLinejoin='round'
       strokeWidth={2}
-      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+      d='M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
     />
   </svg>
-)
+);
 
 const TrashIcon = () => (
   <svg
-    width="20"
-    height="20"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
+    width='20'
+    height='20'
+    fill='none'
+    stroke='currentColor'
+    viewBox='0 0 24 24'
   >
     <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      strokeLinecap='round'
+      strokeLinejoin='round'
       strokeWidth={2}
-      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+      d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'
     />
   </svg>
-)
+);
 
 const ChevronRightIcon = () => (
   <svg
-    width="20"
-    height="20"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
+    width='20'
+    height='20'
+    fill='none'
+    stroke='currentColor'
+    viewBox='0 0 24 24'
   >
     <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      strokeLinecap='round'
+      strokeLinejoin='round'
       strokeWidth={2}
-      d="M9 5l7 7-7 7"
+      d='M9 5l7 7-7 7'
     />
   </svg>
-)
+);
 
 const LoaderIcon = () => (
   <svg
-    width="20"
-    height="20"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
+    width='20'
+    height='20'
+    fill='none'
+    stroke='currentColor'
+    viewBox='0 0 24 24'
     style={{ animation: 'spin 1s linear infinite' }}
   >
     <circle
       style={{ opacity: 0.25 }}
-      cx="12"
-      cy="12"
-      r="10"
-      stroke="currentColor"
-      strokeWidth="4"
+      cx='12'
+      cy='12'
+      r='10'
+      stroke='currentColor'
+      strokeWidth='4'
     />
     <path
       style={{ opacity: 0.75 }}
-      fill="currentColor"
-      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+      fill='currentColor'
+      d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
     />
   </svg>
-)
+);
 
 const iconComponents = {
   plus: PlusIcon,
@@ -160,7 +160,7 @@ const iconComponents = {
   trash: TrashIcon,
   'chevron-right': ChevronRightIcon,
   loader: LoaderIcon,
-}
+};
 
 export function DemoButton({
   variant = 'primary',
@@ -172,7 +172,7 @@ export function DemoButton({
   icon,
   iconPosition = 'left',
 }: DemoButtonProps) {
-  const IconComponent = icon ? iconComponents[icon] : null
+  const IconComponent = icon ? iconComponents[icon] : null;
 
   return (
     <Button
@@ -190,7 +190,7 @@ export function DemoButton({
         <IconComponent />
       )}
     </Button>
-  )
+  );
 }
 
 // =============================================================================
@@ -198,7 +198,7 @@ export function DemoButton({
 // =============================================================================
 
 interface ButtonGroupProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export function ButtonGroup({ children }: ButtonGroupProps) {
@@ -213,18 +213,18 @@ export function ButtonGroup({ children }: ButtonGroupProps) {
     >
       {children}
     </div>
-  )
+  );
 }
 
 // =============================================================================
 // DEMO BADGE COMPONENT
 // =============================================================================
 
-type BadgeVariant = 'default' | 'secondary' | 'destructive' | 'outline'
+type BadgeVariant = 'default' | 'secondary' | 'destructive' | 'outline';
 
 interface DemoBadgeProps {
-  variant?: BadgeVariant
-  children?: ReactNode
+  variant?: BadgeVariant;
+  children?: ReactNode;
 }
 
 const badgeBaseStyles: CSSProperties = {
@@ -236,7 +236,7 @@ const badgeBaseStyles: CSSProperties = {
   fontWeight: 600,
   lineHeight: '1.5',
   transition: 'colors 0.2s',
-}
+};
 
 const getBadgeVariantStyles = (variant: BadgeVariant): CSSProperties => {
   const styles: Record<BadgeVariant, CSSProperties> = {
@@ -260,16 +260,16 @@ const getBadgeVariantStyles = (variant: BadgeVariant): CSSProperties => {
       color: colors.neutral[900],
       border: `1px solid ${colors.neutral[200]}`,
     },
-  }
-  return styles[variant]
-}
+  };
+  return styles[variant];
+};
 
 export function DemoBadge({ variant = 'default', children }: DemoBadgeProps) {
   return (
     <span style={{ ...badgeBaseStyles, ...getBadgeVariantStyles(variant) }}>
       {children}
     </span>
-  )
+  );
 }
 
 // =============================================================================
@@ -277,10 +277,10 @@ export function DemoBadge({ variant = 'default', children }: DemoBadgeProps) {
 // =============================================================================
 
 interface DemoInputProps {
-  type?: string
-  placeholder?: string
-  disabled?: boolean
-  value?: string
+  type?: string;
+  placeholder?: string;
+  disabled?: boolean;
+  value?: string;
 }
 
 export function DemoInput({
@@ -303,7 +303,7 @@ export function DemoInput({
     transition: 'border-color 0.2s, box-shadow 0.2s',
     opacity: disabled ? 0.5 : 1,
     cursor: disabled ? 'not-allowed' : 'text',
-  }
+  };
 
   return (
     <input
@@ -313,15 +313,15 @@ export function DemoInput({
       defaultValue={value}
       style={inputStyles}
       onFocus={(e) => {
-        e.target.style.borderColor = colors.primary.base
-        e.target.style.boxShadow = `0 0 0 3px ${colors.primary.alpha10}`
+        e.target.style.borderColor = colors.primary.base;
+        e.target.style.boxShadow = `0 0 0 3px ${colors.primary.alpha10}`;
       }}
       onBlur={(e) => {
-        e.target.style.borderColor = colors.neutral[200]
-        e.target.style.boxShadow = 'none'
+        e.target.style.borderColor = colors.neutral[200];
+        e.target.style.boxShadow = 'none';
       }}
     />
-  )
+  );
 }
 
 // =============================================================================
@@ -329,8 +329,8 @@ export function DemoInput({
 // =============================================================================
 
 interface DemoLabelProps {
-  children?: ReactNode
-  disabled?: boolean
+  children?: ReactNode;
+  disabled?: boolean;
 }
 
 export function DemoLabel({ children, disabled = false }: DemoLabelProps) {
@@ -341,9 +341,9 @@ export function DemoLabel({ children, disabled = false }: DemoLabelProps) {
     color: colors.neutral[900],
     opacity: disabled ? 0.7 : 1,
     cursor: disabled ? 'not-allowed' : 'default',
-  }
+  };
 
-  return <label style={labelStyles}>{children}</label>
+  return <label style={labelStyles}>{children}</label>;
 }
 
 // =============================================================================
@@ -351,7 +351,7 @@ export function DemoLabel({ children, disabled = false }: DemoLabelProps) {
 // =============================================================================
 
 interface DemoCardProps {
-  children?: ReactNode
+  children?: ReactNode;
 }
 
 export function DemoCard({ children }: DemoCardProps) {
@@ -363,13 +363,13 @@ export function DemoCard({ children }: DemoCardProps) {
     overflow: 'hidden',
     width: '100%',
     maxWidth: '350px',
-  }
+  };
 
-  return <div style={cardStyles}>{children}</div>
+  return <div style={cardStyles}>{children}</div>;
 }
 
 interface DemoCardHeaderProps {
-  children?: ReactNode
+  children?: ReactNode;
 }
 
 export function DemoCardHeader({ children }: DemoCardHeaderProps) {
@@ -384,11 +384,11 @@ export function DemoCardHeader({ children }: DemoCardHeaderProps) {
     >
       {children}
     </div>
-  )
+  );
 }
 
 interface DemoCardTitleProps {
-  children?: ReactNode
+  children?: ReactNode;
 }
 
 export function DemoCardTitle({ children }: DemoCardTitleProps) {
@@ -403,11 +403,11 @@ export function DemoCardTitle({ children }: DemoCardTitleProps) {
     >
       {children}
     </div>
-  )
+  );
 }
 
 interface DemoCardDescriptionProps {
-  children?: ReactNode
+  children?: ReactNode;
 }
 
 export function DemoCardDescription({ children }: DemoCardDescriptionProps) {
@@ -417,19 +417,19 @@ export function DemoCardDescription({ children }: DemoCardDescriptionProps) {
     >
       {children}
     </div>
-  )
+  );
 }
 
 interface DemoCardContentProps {
-  children?: ReactNode
+  children?: ReactNode;
 }
 
 export function DemoCardContent({ children }: DemoCardContentProps) {
-  return <div style={{ padding: '24px' }}>{children}</div>
+  return <div style={{ padding: '24px' }}>{children}</div>;
 }
 
 interface DemoCardFooterProps {
-  children?: ReactNode
+  children?: ReactNode;
 }
 
 export function DemoCardFooter({ children }: DemoCardFooterProps) {
@@ -444,7 +444,7 @@ export function DemoCardFooter({ children }: DemoCardFooterProps) {
     >
       {children}
     </div>
-  )
+  );
 }
 
 // =============================================================================
@@ -452,7 +452,7 @@ export function DemoCardFooter({ children }: DemoCardFooterProps) {
 // =============================================================================
 
 interface FormGroupProps {
-  children?: ReactNode
+  children?: ReactNode;
 }
 
 export function FormGroup({ children }: FormGroupProps) {
@@ -468,7 +468,7 @@ export function FormGroup({ children }: FormGroupProps) {
     >
       {children}
     </div>
-  )
+  );
 }
 
 // =============================================================================
@@ -481,16 +481,16 @@ type DividerVariant =
   | 'line-text'
   | 'text'
   | 'solid-text'
-  | 'content'
+  | 'content';
 
 interface DemoDividerProps {
-  variant?: DividerVariant
-  children?: ReactNode
+  variant?: DividerVariant;
+  children?: ReactNode;
 }
 
-const dividerLineColor = '#e5e7eb'
-const dividerTextColor = '#9ca3af'
-const dividerBgWeak = '#f9fafb'
+const dividerLineColor = '#e5e7eb';
+const dividerTextColor = '#9ca3af';
+const dividerBgWeak = '#f9fafb';
 
 export function DemoDivider({ variant = 'line', children }: DemoDividerProps) {
   const baseStyles: CSSProperties = {
@@ -498,14 +498,14 @@ export function DemoDivider({ variant = 'line', children }: DemoDividerProps) {
     display: 'flex',
     width: '100%',
     alignItems: 'center',
-  }
+  };
 
   const lineBeforeAfter: CSSProperties = {
     content: '""',
     flex: 1,
     height: '1px',
     backgroundColor: dividerLineColor,
-  }
+  };
 
   switch (variant) {
     case 'line':
@@ -523,7 +523,7 @@ export function DemoDivider({ variant = 'line', children }: DemoDividerProps) {
             }}
           />
         </div>
-      )
+      );
 
     case 'line-spacing':
       return (
@@ -540,7 +540,7 @@ export function DemoDivider({ variant = 'line', children }: DemoDividerProps) {
             }}
           />
         </div>
-      )
+      );
 
     case 'line-text':
       return (
@@ -559,7 +559,7 @@ export function DemoDivider({ variant = 'line', children }: DemoDividerProps) {
           {children || 'OR'}
           <div style={lineBeforeAfter} />
         </div>
-      )
+      );
 
     case 'text':
       return (
@@ -577,7 +577,7 @@ export function DemoDivider({ variant = 'line', children }: DemoDividerProps) {
         >
           {children || 'Section'}
         </div>
-      )
+      );
 
     case 'solid-text':
       return (
@@ -596,7 +596,7 @@ export function DemoDivider({ variant = 'line', children }: DemoDividerProps) {
         >
           {children || 'OR'}
         </div>
-      )
+      );
 
     case 'content':
       const contentChild =
@@ -618,23 +618,23 @@ export function DemoDivider({ variant = 'line', children }: DemoDividerProps) {
             }}
           >
             <svg
-              width="16"
-              height="16"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+              width='16'
+              height='16'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
             >
               <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                strokeLinecap='round'
+                strokeLinejoin='round'
                 strokeWidth={2}
-                d="M12 4v16m8-8H4"
+                d='M12 4v16m8-8H4'
               />
             </svg>
           </button>
         ) : (
           children || <span style={{ color: dividerTextColor }}>•</span>
-        )
+        );
 
       return (
         <div style={{ ...baseStyles, gap: '10px' }}>
@@ -642,10 +642,10 @@ export function DemoDivider({ variant = 'line', children }: DemoDividerProps) {
           {contentChild}
           <div style={lineBeforeAfter} />
         </div>
-      )
+      );
 
     default:
-      return null
+      return null;
   }
 }
 
@@ -654,11 +654,11 @@ export function DemoDivider({ variant = 'line', children }: DemoDividerProps) {
 // =============================================================================
 
 interface DemoTextareaProps {
-  placeholder?: string
-  disabled?: boolean
-  value?: string
-  id?: string
-  maxLength?: number
+  placeholder?: string;
+  disabled?: boolean;
+  value?: string;
+  id?: string;
+  maxLength?: number;
 }
 
 export function DemoTextarea({
@@ -668,7 +668,7 @@ export function DemoTextarea({
   id,
   maxLength,
 }: DemoTextareaProps) {
-  const [value, setValue] = useState(initialValue)
+  const [value, setValue] = useState(initialValue);
 
   const textareaStyles: CSSProperties = {
     display: 'flex',
@@ -688,13 +688,13 @@ export function DemoTextarea({
     resize: 'none',
     boxShadow: '0px 1px 2px 0px rgba(10, 13, 20, 0.03)', // shadow-regular-xs approx
     color: '#0E121B', // ds-strong-950
-  }
+  };
 
   const wrapperStyles: CSSProperties = {
     position: 'relative',
     width: '100%',
     maxWidth: '300px',
-  }
+  };
 
   const counterStyles: CSSProperties = {
     position: 'absolute',
@@ -703,7 +703,7 @@ export function DemoTextarea({
     fontSize: '11px',
     pointerEvents: 'none',
     color: disabled ? '#CACFD8' : '#99A0AE', // ds-disabled-300 : ds-soft-400
-  }
+  };
 
   return (
     <div style={wrapperStyles}>
@@ -716,13 +716,13 @@ export function DemoTextarea({
         onChange={(e) => setValue(e.target.value)}
         style={textareaStyles}
         onFocus={(e) => {
-          e.target.style.borderColor = '#0E121B' // ds-stroke-strong-950
+          e.target.style.borderColor = '#0E121B'; // ds-stroke-strong-950
           e.target.style.boxShadow =
-            '0 0 0 2px #FFFFFF, 0 0 0 4px rgba(153, 160, 174, 0.16)' // shadow-button-important-focus
+            '0 0 0 2px #FFFFFF, 0 0 0 4px rgba(153, 160, 174, 0.16)'; // shadow-button-important-focus
         }}
         onBlur={(e) => {
-          e.target.style.borderColor = '#E1E4EA'
-          e.target.style.boxShadow = '0px 1px 2px 0px rgba(10, 13, 20, 0.03)'
+          e.target.style.borderColor = '#E1E4EA';
+          e.target.style.boxShadow = '0px 1px 2px 0px rgba(10, 13, 20, 0.03)';
         }}
       />
       {typeof maxLength === 'number' && (
@@ -731,5 +731,5 @@ export function DemoTextarea({
         </span>
       )}
     </div>
-  )
+  );
 }

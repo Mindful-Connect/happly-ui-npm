@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import { Tag, type TagProps } from '@/components/ui/tag'
+import { Tag, type TagProps } from '@/components/ui/tag';
 
 // --- Demo Wrapper ---
 
@@ -10,5 +10,5 @@ interface DemoTagProps extends TagProps {
 }
 
 export function DemoTag(props: DemoTagProps) {
-  return <Tag {...props} />
+  return <Tag {...props} />;
 }

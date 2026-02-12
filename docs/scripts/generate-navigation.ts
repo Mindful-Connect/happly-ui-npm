@@ -3,46 +3,46 @@
  * Run this before building the docs site
  */
 
-import fs from 'fs'
-import path from 'path'
+import fs from 'fs';
+import path from 'path';
 
-const REGISTRY_PATH = path.join(__dirname, '..', '..', 'packages', 'registry')
+const REGISTRY_PATH = path.join(__dirname, '..', '..', 'packages', 'registry');
 const OUTPUT_PATH = path.join(
   __dirname,
   '..',
   'src',
   'lib',
-  'navigation-data.json',
-)
+  'navigation-data.json'
+);
 
 interface RegistryItem {
-  name: string
-  type: string
-  title: string
-  description: string
+  name: string;
+  type: string;
+  title: string;
+  description: string;
 }
 
 interface Registry {
-  items: RegistryItem[]
+  items: RegistryItem[];
 }
 
 function main() {
   // Read registry.json
-  const registryPath = path.join(REGISTRY_PATH, 'registry.json')
-  const registryContent = fs.readFileSync(registryPath, 'utf-8')
-  const registry: Registry = JSON.parse(registryContent)
+  const registryPath = path.join(REGISTRY_PATH, 'registry.json');
+  const registryContent = fs.readFileSync(registryPath, 'utf-8');
+  const registry: Registry = JSON.parse(registryContent);
 
   // Filter UI components and generate navigation links
   const componentLinks = registry.items
     .filter(
-      (item) => item.type === 'registry:ui' && item.name !== 'phone-input',
+      (item) => item.type === 'registry:ui' && item.name !== 'phone-input'
     )
     .map((item) => ({
       title: item.title,
       href: `/docs/components/${item.name}`,
       name: item.name,
     }))
-    .sort((a, b) => a.title.localeCompare(b.title))
+    .sort((a, b) => a.title.localeCompare(b.title));
 
   const SUPPORT_COMPONENTS = [
     'command',
@@ -51,15 +51,15 @@ function main() {
     'popover',
     'key-icon',
     'alert',
-  ]
+  ];
 
   const mainLinks = componentLinks
     .filter((item) => !SUPPORT_COMPONENTS.includes(item.name))
-    .map(({ name, ...rest }) => rest)
+    .map(({ name, ...rest }) => rest);
 
   const supportLinks = componentLinks
     .filter((item) => SUPPORT_COMPONENTS.includes(item.name))
-    .map(({ name, ...rest }) => rest)
+    .map(({ name, ...rest }) => rest);
 
   // Build full navigation structure
   const navigation = [
@@ -81,14 +81,14 @@ function main() {
         },
       ],
     },
-  ]
+  ];
 
   // Write to JSON file
-  fs.writeFileSync(OUTPUT_PATH, JSON.stringify(navigation, null, 2))
+  fs.writeFileSync(OUTPUT_PATH, JSON.stringify(navigation, null, 2));
   console.log(
-    `✓ Generated navigation data with ${componentLinks.length} components`,
-  )
-  console.log(`  Output: ${OUTPUT_PATH}`)
+    `✓ Generated navigation data with ${componentLinks.length} components`
+  );
+  console.log(`  Output: ${OUTPUT_PATH}`);
 }
 
-main()
+main();

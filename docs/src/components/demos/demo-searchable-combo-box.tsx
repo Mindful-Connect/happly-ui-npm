@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { SearchableMultiCombobox } from '@/components/ui/searchable-combo-box'
-import { Tag } from '@/lib/tag-utils'
+import * as React from 'react';
+import { SearchableMultiCombobox } from '@/components/ui/searchable-combo-box';
+import { Tag } from '@/lib/tag-utils';
 
 const mockTranslations = {
   _domain: {
@@ -23,7 +23,7 @@ const mockTranslations = {
       pressEnterToAdd: 'Press Enter to add what you typed',
     },
   },
-}
+};
 
 const mockTags = [
   {
@@ -359,41 +359,41 @@ const mockTags = [
     order: 0,
     style: null,
   },
-] as unknown as Tag[]
+] as unknown as Tag[];
 
 export function DemoSearchableComboBox() {
-  const [selected, setSelected] = React.useState<Tag[]>([])
+  const [selected, setSelected] = React.useState<Tag[]>([]);
 
   // Mock translation function
   const t = (key: string) => {
-    const keys = key.split('.')
-    let translation = mockTranslations
+    const keys = key.split('.');
+    let translation = mockTranslations;
     for (const k of keys) {
-      translation = (translation as any)[k]
+      translation = (translation as any)[k];
     }
-    return translation
-  }
+    return translation;
+  };
 
   const useTags = ({ customTagOptions }: any) => {
     return {
       tags: mockTags,
       status: 'success' as const,
-    }
-  }
+    };
+  };
 
   return (
-    <div className="w-full max-w-sm space-y-4">
+    <div className='w-full max-w-sm space-y-4'>
       <SearchableMultiCombobox
         selected={selected}
         setSelected={setSelected}
-        selectedLang="en"
-        tag="skill"
+        selectedLang='en'
+        tag='skill'
         t={t}
         useTags={useTags}
-        placeholder="Select skills..."
+        placeholder='Select skills...'
         allowAdding={false}
         isPreview={false}
       />
     </div>
-  )
+  );
 }

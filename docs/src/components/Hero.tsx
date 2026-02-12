@@ -1,11 +1,11 @@
-import { Fragment } from 'react'
-import clsx from 'clsx'
-import { Highlight } from 'prism-react-renderer'
+import { Fragment } from 'react';
+import clsx from 'clsx';
+import { Highlight } from 'prism-react-renderer';
 
-import { Button } from '@/components/Button'
-import { HeroBackground } from '@/components/HeroBackground'
+import { Button } from '@/components/Button';
+import { HeroBackground } from '@/components/HeroBackground';
 
-const codeLanguage = 'typescript'
+const codeLanguage = 'typescript';
 const code = `import * as Button from "@/components/ui/button"
 
 export function Example() {
@@ -14,84 +14,90 @@ export function Example() {
       Get Started
     </Button.Root>
   )
-}`
+}`;
 
 const tabs = [
   { name: 'example.tsx', isActive: true },
   { name: 'button.tsx', isActive: false },
-]
+];
 
 function TrafficLightsIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 42 10" fill="none" {...props}>
-      <circle cx="5" cy="5" r="4.5" />
-      <circle cx="21" cy="5" r="4.5" />
-      <circle cx="37" cy="5" r="4.5" />
+    <svg aria-hidden='true' viewBox='0 0 42 10' fill='none' {...props}>
+      <circle cx='5' cy='5' r='4.5' />
+      <circle cx='21' cy='5' r='4.5' />
+      <circle cx='37' cy='5' r='4.5' />
     </svg>
-  )
+  );
 }
 
 export function Hero() {
   return (
-    <div className="overflow-hidden bg-slate-900 dark:-mt-19 dark:-mb-32 dark:pt-19 dark:pb-32">
-      <div className="py-16 sm:px-2 lg:relative lg:px-0 lg:py-20">
-        <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 lg:max-w-8xl lg:grid-cols-2 lg:px-8 xl:gap-x-16 xl:px-12">
-          <div className="relative z-10 md:text-center lg:text-left">
+    <div className='overflow-hidden bg-slate-900 dark:-mt-19 dark:-mb-32 dark:pt-19 dark:pb-32'>
+      <div className='py-16 sm:px-2 lg:relative lg:px-0 lg:py-20'>
+        <div className='lg:max-w-8xl mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 lg:grid-cols-2 lg:px-8 xl:gap-x-16 xl:px-12'>
+          <div className='relative z-10 md:text-center lg:text-left'>
             {/* Purple gradient blur */}
             <div
-              className="absolute right-full bottom-full -mr-72 -mb-56 opacity-50 blur-3xl"
+              className='absolute right-full bottom-full -mr-72 -mb-56 opacity-50 blur-3xl'
               style={{
                 width: 530,
                 height: 530,
-                background: 'radial-gradient(circle, rgba(125, 82, 244, 0.4) 0%, transparent 70%)',
+                background:
+                  'radial-gradient(circle, rgba(125, 82, 244, 0.4) 0%, transparent 70%)',
               }}
             />
-            <div className="relative">
-              <p className="inline bg-gradient-to-r from-violet-200 via-purple-400 to-violet-200 bg-clip-text font-display text-5xl tracking-tight text-transparent">
+            <div className='relative'>
+              <p className='font-display inline bg-gradient-to-r from-violet-200 via-purple-400 to-violet-200 bg-clip-text text-5xl tracking-tight text-transparent'>
                 Beautiful React components you own.
               </p>
-              <p className="mt-3 text-2xl tracking-tight text-slate-400">
+              <p className='mt-3 text-2xl tracking-tight text-slate-400'>
                 A copy-paste component registry. Built with Radix UI and
                 Tailwind CSS. Fully customizable. Fully yours.
               </p>
-              <div className="mt-8 flex gap-4 md:justify-center lg:justify-start">
-                <Button href="/docs/installation">Get started</Button>
-                <Button href="https://github.com/Mindful-Connect/happly-ui-npm" variant="secondary">
+              <div className='mt-8 flex gap-4 md:justify-center lg:justify-start'>
+                <Button href='/docs/installation'>Get started</Button>
+                <Button
+                  href='https://github.com/Mindful-Connect/happly-ui-npm'
+                  variant='secondary'
+                >
                   View on GitHub
                 </Button>
               </div>
             </div>
           </div>
-          <div className="relative lg:static xl:pl-10">
-            <div className="absolute inset-x-[-50vw] -top-32 -bottom-48 mask-[linear-gradient(transparent,white,white)] lg:-top-32 lg:right-0 lg:-bottom-32 lg:left-[calc(50%+14rem)] lg:mask-none dark:mask-[linear-gradient(transparent,white,transparent)] lg:dark:mask-[linear-gradient(white,white,transparent)]">
-              <HeroBackground className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 lg:left-0 lg:translate-x-0 lg:translate-y-[-60%]" />
+          <div className='relative lg:static xl:pl-10'>
+            <div className='absolute inset-x-[-50vw] -top-32 -bottom-48 mask-[linear-gradient(transparent,white,white)] lg:-top-32 lg:right-0 lg:-bottom-32 lg:left-[calc(50%+14rem)] lg:mask-none dark:mask-[linear-gradient(transparent,white,transparent)] lg:dark:mask-[linear-gradient(white,white,transparent)]'>
+              <HeroBackground className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 lg:left-0 lg:translate-x-0 lg:translate-y-[-60%]' />
             </div>
-            <div className="relative">
+            <div className='relative'>
               {/* Purple gradient blurs */}
               <div
-                className="absolute -top-64 -right-64 opacity-50 blur-3xl"
+                className='absolute -top-64 -right-64 opacity-50 blur-3xl'
                 style={{
                   width: 530,
                   height: 530,
-                  background: 'radial-gradient(circle, rgba(125, 82, 244, 0.4) 0%, transparent 70%)',
+                  background:
+                    'radial-gradient(circle, rgba(125, 82, 244, 0.4) 0%, transparent 70%)',
                 }}
               />
               <div
-                className="absolute -right-44 -bottom-40 opacity-50 blur-3xl"
+                className='absolute -right-44 -bottom-40 opacity-50 blur-3xl'
                 style={{
                   width: 567,
                   height: 567,
-                  background: 'radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%)',
+                  background:
+                    'radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%)',
                 }}
               />
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-violet-300 via-purple-300/70 to-violet-300 opacity-10 blur-lg" />
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-violet-300 via-purple-300/70 to-violet-300 opacity-10" />
-              <div className="relative rounded-2xl bg-[#0A101F]/80 ring-1 ring-white/10 backdrop-blur-sm">
-                <div className="absolute -top-px right-11 left-20 h-px bg-gradient-to-r from-violet-300/0 via-violet-300/70 to-violet-300/0" />
-                <div className="absolute right-20 -bottom-px left-11 h-px bg-gradient-to-r from-purple-400/0 via-purple-400 to-purple-400/0" />
-                <div className="pt-4 pl-4">
-                  <TrafficLightsIcon className="h-2.5 w-auto stroke-slate-500/30" />
-                  <div className="mt-4 flex space-x-2 text-xs">
+              <div className='absolute inset-0 rounded-2xl bg-gradient-to-tr from-violet-300 via-purple-300/70 to-violet-300 opacity-10 blur-lg' />
+              <div className='absolute inset-0 rounded-2xl bg-gradient-to-tr from-violet-300 via-purple-300/70 to-violet-300 opacity-10' />
+              <div className='relative rounded-2xl bg-[#0A101F]/80 ring-1 ring-white/10 backdrop-blur-sm'>
+                <div className='absolute -top-px right-11 left-20 h-px bg-gradient-to-r from-violet-300/0 via-violet-300/70 to-violet-300/0' />
+                <div className='absolute right-20 -bottom-px left-11 h-px bg-gradient-to-r from-purple-400/0 via-purple-400 to-purple-400/0' />
+                <div className='pt-4 pl-4'>
+                  <TrafficLightsIcon className='h-2.5 w-auto stroke-slate-500/30' />
+                  <div className='mt-4 flex space-x-2 text-xs'>
                     {tabs.map((tab) => (
                       <div
                         key={tab.name}
@@ -99,13 +105,13 @@ export function Hero() {
                           'flex h-6 rounded-full',
                           tab.isActive
                             ? 'bg-gradient-to-r from-violet-400/30 via-violet-400 to-violet-400/30 p-px font-medium text-violet-300'
-                            : 'text-slate-500',
+                            : 'text-slate-500'
                         )}
                       >
                         <div
                           className={clsx(
                             'flex items-center rounded-full px-2.5',
-                            tab.isActive && 'bg-slate-800',
+                            tab.isActive && 'bg-slate-800'
                           )}
                         >
                           {tab.name}
@@ -113,10 +119,10 @@ export function Hero() {
                       </div>
                     ))}
                   </div>
-                  <div className="mt-6 flex items-start px-1 text-sm">
+                  <div className='mt-6 flex items-start px-1 text-sm'>
                     <div
-                      aria-hidden="true"
-                      className="border-r border-slate-300/5 pr-4 font-mono text-slate-600 select-none"
+                      aria-hidden='true'
+                      className='border-r border-slate-300/5 pr-4 font-mono text-slate-600 select-none'
                     >
                       {Array.from({
                         length: code.split('\n').length,
@@ -142,11 +148,11 @@ export function Hero() {
                         <pre
                           className={clsx(
                             className,
-                            'flex overflow-x-auto pb-6',
+                            'flex overflow-x-auto pb-6'
                           )}
                           style={style}
                         >
-                          <code className="px-4">
+                          <code className='px-4'>
                             {tokens.map((line, lineIndex) => (
                               <div key={lineIndex} {...getLineProps({ line })}>
                                 {line.map((token, tokenIndex) => (
@@ -169,5 +175,5 @@ export function Hero() {
         </div>
       </div>
     </div>
-  )
+  );
 }
