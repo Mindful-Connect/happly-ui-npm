@@ -68,7 +68,7 @@ interface SearchableMultiComboboxProps {
   setSelected: (tags: Tag[]) => void;
   tag: TagCategory;
   customTagOptions?: Tag[]; // to convert FormOption to Tag, use value as id
-  t: any; // pass t from useI18n for stranslations
+  t: (key: string) => string; // pass t from useI18n for stranslations
   useTags: ({
     tagCategory,
     enabled,
@@ -89,7 +89,7 @@ interface SearchableMultiComboboxProps {
           id: number;
           slug: string;
           label: string;
-          category: any;
+          category: TagCategory | string;
         }[]
       | undefined;
     status: 'loading' | 'error' | 'success';
@@ -124,7 +124,7 @@ export function SearchableMultiCombobox({
   customTagOptions, // if tagOptions are passed, we're not fetching tags
   t,
   useTags,
-  ...props
+  ..._props
 }: SearchableMultiComboboxProps & React.InputHTMLAttributes<HTMLInputElement>) {
   let prioritySlugs;
 

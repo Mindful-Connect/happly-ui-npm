@@ -43,14 +43,12 @@ import {
   videoIcon,
   attachmentUploadIcon,
   getFileThumbnailIcon,
-  getFileIconByMimeType,
 } from '@/lib/upload-file-input-icons';
 import {
   getColorForExtension,
   getExtensionFromFile,
   formatUploadProgress,
   formatFileSize,
-  FileFormatIconColor,
 } from '@/lib/upload-file-input';
 
 export default function UploadFile({
@@ -237,8 +235,10 @@ export default function UploadFile({
           lastModified: file.lastModified,
         };
         onUploadSuccess(fileInfo);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error('Presigned URL upload failed:', err);
+        const errorMessage =
+          err instanceof Error ? err.message : t('_domain.errorGeneric');
         // Mark as error
         setUploadingFiles((prev) =>
           prev.map((f) => (f.id === fileId ? { ...f, state: 'error' } : f))
@@ -246,11 +246,11 @@ export default function UploadFile({
         addAlert(
           new AlertModel({
             type: 'error',
-            message: err.message || t('_domain.errorGeneric'),
+            message: errorMessage,
             timeout: 3000,
           })
         );
-        onError?.(err.message || 'Upload failed');
+        onError?.(errorMessage);
       }
     }
 
@@ -306,7 +306,7 @@ export default function UploadFile({
       video.removeEventListener('loadeddata', () => {});
       video.removeEventListener('timeupdate', () => {});
     };
-  }, [src]);
+  }, [src, variant]);
 
   const chunkSize = 200 * 1024 * 1024;
   const effectiveMaxFiles =
@@ -325,8 +325,8 @@ export default function UploadFile({
       },
     }).use(AwsS3, {
       limit: 6,
-      shouldUseMultipart: (file: any) => file.size > chunkSize,
-      getChunkSize: (file: any) => {
+      shouldUseMultipart: (file: { size: number }) => file.size > chunkSize,
+      getChunkSize: (file: { size: number }) => {
         if (file.size > chunkSize) {
           return chunkSize;
         }
@@ -346,7 +346,7 @@ export default function UploadFile({
 
           return response.json();
         } catch (error) {
-          throw new Error('Network response was not ok');
+          throw new Error('Network response was not ok', { cause: error });
         }
       },
 
@@ -365,7 +365,7 @@ export default function UploadFile({
           return response.json();
         } catch (error) {
           console.error('Multipart upload creation failed:', error);
-          throw new Error('Network response was not ok');
+          throw new Error('Network response was not ok', { cause: error });
         }
       },
 
@@ -377,7 +377,7 @@ export default function UploadFile({
           return response.json();
         } catch (error) {
           console.error('Sign part failed:', error);
-          throw new Error('Network response was not ok');
+          throw new Error('Network response was not ok', { cause: error });
         }
       },
 
@@ -396,7 +396,7 @@ export default function UploadFile({
           return response.json();
         } catch (error) {
           console.error('Complete multipart upload failed:', error);
-          throw new Error('Network response was not ok');
+          throw new Error('Network response was not ok', { cause: error });
         }
       },
 
@@ -411,7 +411,7 @@ export default function UploadFile({
           return response.json();
         } catch (error) {
           console.error('Abort multipart upload failed:', error);
-          throw new Error('Network response was not ok');
+          throw new Error('Network response was not ok', { cause: error });
         }
       },
 
@@ -430,7 +430,7 @@ export default function UploadFile({
 
           return response.json();
         } catch (error) {
-          throw new Error('Network response was not ok');
+          throw new Error('Network response was not ok', { cause: error });
         }
       },
     })
@@ -439,14 +439,16 @@ export default function UploadFile({
   useEffect(() => {
     if (!uppy) return;
 
-    uppy.on('file-added', async (file) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const onFileAdded = async (file: any) => {
       if (!file || disabled) return;
       setDragging(false);
       uppy.upload();
       setUploading(true);
-    });
+    };
 
-    uppy.on('upload-success', (file, response) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const onUploadSuccessHandler = (file: any, response: any) => {
       setUploading(false);
       if (!file || !response.body?.location) return;
       const fileInfo: UploadedFileInfo = {
@@ -457,9 +459,10 @@ export default function UploadFile({
         lastModified: 0,
       };
       onUploadSuccess(fileInfo);
-    });
+    };
 
-    uppy.on('restriction-failed', (file, error) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const onRestrictionFailed = (file: any, error: any) => {
       setUploading(false);
       console.error('Uppy restriction failed:', error);
       addAlert(
@@ -470,9 +473,10 @@ export default function UploadFile({
         })
       );
       uppy.clear();
-    });
+    };
 
-    uppy.on('error', (file, error) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const onErrorHandler = (file: any, error: any) => {
       setUploading(false);
       console.error('Uppy error:', error);
       addAlert(
@@ -482,9 +486,10 @@ export default function UploadFile({
           timeout: 3000,
         })
       );
-    });
+    };
 
-    uppy.on('upload-error', (file, error) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const onUploadErrorHandler = (file: any, error: any) => {
       setUploading(false);
       console.error('Uppy upload error:', error);
       addAlert(
@@ -494,12 +499,26 @@ export default function UploadFile({
           timeout: 3000,
         })
       );
-    });
-  }, [uppy]);
+    };
+
+    uppy.on('file-added', onFileAdded);
+    uppy.on('upload-success', onUploadSuccessHandler);
+    uppy.on('restriction-failed', onRestrictionFailed);
+    uppy.on('error', onErrorHandler);
+    uppy.on('upload-error', onUploadErrorHandler);
+
+    return () => {
+      uppy.off('file-added', onFileAdded);
+      uppy.off('upload-success', onUploadSuccessHandler);
+      uppy.off('restriction-failed', onRestrictionFailed);
+      uppy.off('error', onErrorHandler);
+      uppy.off('upload-error', onUploadErrorHandler);
+    };
+  }, [uppy, addAlert, disabled, onUploadSuccess, t]);
 
   const handleFileChange = async (
     file: File | null | undefined,
-    fileInputRef: any
+    fileInputRef: React.RefObject<HTMLInputElement>
   ) => {
     if (fileInputRef.current) fileInputRef.current.value = '';
 
@@ -546,7 +565,7 @@ export default function UploadFile({
       setUploading(true);
 
       uppy.upload();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('File upload process failed:', error);
 
       let detailedErrorMessage: string;

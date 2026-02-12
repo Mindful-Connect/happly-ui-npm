@@ -52,9 +52,9 @@ export async function add(
     try {
       components = await getAvailableComponents(config);
       spinner.succeed(`Found ${components.length} components`);
-    } catch (error) {
+    } catch (_error) {
       spinner.fail('Failed to fetch components list');
-      throw error;
+      throw _error;
     }
   }
 
@@ -82,9 +82,9 @@ export async function add(
       }
 
       components = selected;
-    } catch (error) {
+    } catch (_error) {
       spinner.fail('Failed to fetch components');
-      throw error;
+      throw _error;
     }
   }
 
@@ -190,7 +190,7 @@ export async function add(
         packageManager: projectInfo.packageManager,
       });
       depsSpinner.succeed(`Installed: ${dependencies.join(', ')}`);
-    } catch (error) {
+    } catch {
       depsSpinner.fail('Failed to install dependencies');
       logger.warn(`Please install manually: ${dependencies.join(' ')}`);
     }
@@ -204,7 +204,7 @@ export async function add(
         dev: true,
       });
       devDepsSpinner.succeed(`Installed dev: ${devDependencies.join(', ')}`);
-    } catch (error) {
+    } catch {
       devDepsSpinner.fail('Failed to install dev dependencies');
       logger.warn(`Please install manually: ${devDependencies.join(' ')}`);
     }
@@ -215,7 +215,7 @@ export async function add(
   try {
     await updateTailwindConfig(cwd, config, projectInfo.tailwindVersion);
     spinner.succeed('Tailwind configuration updated');
-  } catch (error) {
+  } catch {
     spinner.fail('Failed to update Tailwind configuration');
     // Don't fail the whole process if tailwind update fails, just warn
     logger.warn(

@@ -342,7 +342,7 @@ SelectTrigger.displayName = SelectPrimitives.Trigger.displayName;
 const SelectTriggerIcon = React.forwardRef<
   React.ElementRef<typeof Slot>,
   React.ComponentPropsWithoutRef<typeof Slot> & { asChild?: boolean }
->(({ className, children, asChild = true, ...props }, ref) => {
+>(({ className, children, ...props }, ref) => {
   const { size, variant } = useSelectContext();
   const base = selectTriggerIconVariants({ size, variant });
   return (

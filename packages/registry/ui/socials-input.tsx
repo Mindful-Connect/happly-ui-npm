@@ -183,7 +183,15 @@ export default function SocialsInputsSelectableDS({
     });
   }
 
-  function handleCheckSocialUrl({ key, url }: { key: string; url: string }) {
+  function handleCheckSocialUrl({
+    key,
+    url,
+    t: _t,
+  }: {
+    key: string;
+    url: string;
+    t?: ReturnType<typeof useI18n>;
+  }) {
     const message = t('errorSocialUrl');
     const result = getSocialUrlSchema(message).safeParse({
       [`${name}.${key}`]: url,
@@ -219,11 +227,9 @@ export default function SocialsInputsSelectableDS({
   }
 
   const handleInputBlur = async ({
-    e,
     key,
     value,
   }: {
-    e: React.ChangeEvent<HTMLInputElement>;
     key: string;
     value: string;
   }) => {
@@ -583,7 +589,7 @@ export default function SocialsInputsSelectableDS({
       {formValue && Object.entries(formValue).length > 0 && (
         <div className='mt-4 flex flex-col gap-y-4'>
           {Object.entries(formValue as Record<string, string>)
-            .filter(([key, value]) => {
+            .filter(([key]) => {
               if (
                 key === 'business_socials_link' ||
                 !availableSocials?.includes(key)
@@ -629,7 +635,7 @@ export default function SocialsInputsSelectableDS({
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') {
                         e.preventDefault();
-                        // @ts-ignore
+                        // @ts-expect-error - e.target is typed as EventTarget which lacks blur method
                         e.target.blur();
                       }
                     }}
@@ -648,10 +654,8 @@ export default function SocialsInputsSelectableDS({
                         setFocusedInput(null);
                       }
                       handleInputBlur({
-                        e,
                         key,
                         value: e.currentTarget.value,
-                        t,
                       });
                     }}
                     onChange={(e) => {
@@ -698,7 +702,7 @@ export default function SocialsInputsSelectableDS({
 function validateURL(value: string) {
   // use regex to validate url. current issue with Zod's .url() : https://github.com/colinhacks/zod/issues/2236#issuecomment-1853298984
   const urlRegex =
-    /^(?:https:\/\/|zoommtg:\/\/)[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/g;
+    /^(?:https:\/\/|zoommtg:\/\/)[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)$/g;
   return urlRegex.test(value);
 }
 

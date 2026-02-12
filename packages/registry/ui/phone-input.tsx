@@ -53,9 +53,9 @@ function PhoneInput({
     }
 
     const parsed = parsePhoneNumber(propInputValue);
-    let newInternalFull = '';
+    let newInternalFull: string;
     let newNationalDigits = '';
-    let newCountryIso2 = defaultCountryIso2;
+    let newCountryIso2: CountryIso2;
 
     if (parsed && parsed.isValid()) {
       newInternalFull = parsed.number; // E.164
@@ -380,7 +380,7 @@ const formatNationalDigits = (
   } else {
     const formatter = new AsYouType(countryCode);
     formatter.input(digits);
-    let formatted = formatter.getNationalNumber();
+    const formatted = formatter.getNationalNumber();
     if (!formatted && digits.length > 0) {
       return digits; // Fallback for short inputs
     }

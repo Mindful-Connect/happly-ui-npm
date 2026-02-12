@@ -294,6 +294,9 @@ bun run --cwd packages/cli build
 
 # Test locally
 bun packages/cli/dist/index.js init
+
+# Lint the codebase
+bun run lint
 ```
 
 ## Contributing

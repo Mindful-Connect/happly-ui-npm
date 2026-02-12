@@ -43,7 +43,10 @@ export interface TagProps
 }
 
 export const Tag = React.forwardRef<HTMLDivElement, TagProps>(
-  ({ asChild, variant, disabled, className, children, ...props }, ref) => {
+  (
+    { asChild, variant, disabled, className, children, ...props }: TagProps,
+    ref
+  ) => {
     const Comp = asChild ? Slot : 'div';
     return (
       <Comp
@@ -66,7 +69,16 @@ type TagIconProps = {
   React.HTMLAttributes<HTMLElement>;
 
 export const TagIcon = React.forwardRef<HTMLElement, TagIconProps>(
-  ({ asChild, variant, disabled, className, ...props }, ref) => {
+  (
+    {
+      asChild,
+      variant: _variant,
+      disabled: _disabled,
+      className,
+      ...props
+    }: TagIconProps,
+    ref
+  ) => {
     const Comp = asChild ? Slot : 'span';
     return (
       <Comp
@@ -92,7 +104,16 @@ export type TagCloseProps = Omit<VariantProps<typeof tagRoot>, 'disabled'> &
   };
 
 export const TagClose = React.forwardRef<HTMLButtonElement, TagCloseProps>(
-  ({ asChild, variant, disabled, className, ...props }, ref) => {
+  (
+    {
+      asChild,
+      variant: _variant,
+      disabled,
+      className,
+      ...props
+    }: TagCloseProps,
+    ref
+  ) => {
     const Comp = asChild ? Slot : 'button';
     return (
       <Comp

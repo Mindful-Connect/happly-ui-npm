@@ -23,17 +23,27 @@ function buildRegistry() {
     process.exit(1);
   }
 
-  const items: any[] = [];
+  interface RegistryItem {
+    name: string;
+    type: string;
+    title: string;
+    description: string;
+    [key: string]: unknown;
+  }
+
+  const items: RegistryItem[] = [];
 
   const processDirectory = (dirPath: string) => {
     if (!existsSync(dirPath)) return;
-    const files = readdirSync(dirPath).filter((f) => f.endsWith('.json'));
+    const files = readdirSync(dirPath).filter((f: string) =>
+      f.endsWith('.json')
+    );
 
     for (const file of files) {
       const filePath = path.join(dirPath, file);
       try {
         const content = readFileSync(filePath, 'utf-8');
-        const item = JSON.parse(content);
+        const item = JSON.parse(content) as RegistryItem;
 
         if (!item.name || !item.type) {
           console.warn(

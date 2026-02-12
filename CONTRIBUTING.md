@@ -32,8 +32,9 @@ Feature requests are welcome! Please:
 2. **Install dependencies**: `bun install`
 3. **Make your changes**
 4. **Test your changes** thoroughly
-5. **Update documentation** if needed
-6. **Submit a pull request**
+5. **Run linting**: `bun run lint`
+6. **Update documentation** if needed
+7. **Submit a pull request**
 
 ## Development Setup
 
@@ -60,6 +61,9 @@ bun packages/cli/dist/index.js --help
 
 # Run docs locally
 bun run --cwd docs dev
+
+# Run linting
+bun run lint
 ```
 
 ### Project Structure
@@ -475,7 +479,9 @@ chore: update dependencies
 - [ ] `docs.api` - All exports documented with props
 
 - [ ] Preview component added (if applicable)
+- [ ] Preview component added (if applicable)
 - [ ] Tested locally: `bun run --cwd docs dev`
+- [ ] Lint check passed: `bun run lint`
 
 ---
 

@@ -40,6 +40,7 @@ function generateCssVariables(): string {
 
   // 1. Base Palettes (from tokens.colors.ds)
   // We skip 'primary' because it uses vars, we want the Hex definitions (blue, neutral, etc)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ds = (colors as any).ds || {};
   Object.entries(ds).forEach(([key, value]) => {
     if (key === 'primary') return; // Skip primary palette here, it's semantic
@@ -73,6 +74,7 @@ function generateThemeBlock(): string {
 
   // Font Sizes
   Object.entries(texts).forEach(([key, value]) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [fontSize, options] = value as [string, any];
     lines.push(`  --text-${key}: ${fontSize};`);
     if (options.lineHeight)
@@ -100,7 +102,9 @@ function generateThemeBlock(): string {
   // Colors (DS)
   // Maps to utilities like bg-ds-primary-dark
   // We flatten colors.ds
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ds = (colors as any).ds || {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const flattenDs = (obj: any, prefix: string) => {
     Object.entries(obj).forEach(([key, value]) => {
       if (typeof value === 'object' && value !== null) {

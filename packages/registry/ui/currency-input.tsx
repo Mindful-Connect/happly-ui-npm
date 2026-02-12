@@ -49,7 +49,8 @@ export function CurrencyInput({
         'relative flex h-10 w-full rounded-[10px] border shadow-[0px_1px_2px_0px_rgba(10,13,20,0.03)]',
         'hover:[&:not(:focus-within)]:bg-ds-weak-50 hover:[&:not(:focus-within)]:border-transparent',
         'focus-within:border-ds-stroke-strong-950 focus-within:shadow-button-important-focus',
-        readOnly ? 'cursor-not-allowed bg-gray-100' : 'bg-white'
+        readOnly ? 'cursor-not-allowed bg-gray-100' : 'bg-white',
+        className
       )}
     >
       {/* Amount input */}

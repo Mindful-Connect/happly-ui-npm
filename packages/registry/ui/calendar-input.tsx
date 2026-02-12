@@ -67,10 +67,8 @@ export default function DatePreview({
                   defaultMonth={date ? new Date(date + 'T00:00:00') : undefined}
                   selected={date ? new Date(date + 'T00:00:00') : undefined}
                   onSelect={(value) => {
-                    let valueToStore: string | null = null;
-
                     if (value instanceof Date) {
-                      valueToStore = formatToYMD(value);
+                      const valueToStore = formatToYMD(value);
 
                       setDate(valueToStore);
 

@@ -72,7 +72,7 @@ export default function RadioCardGroup({
                 ],
             itemClassName
           )}
-          onClick={(e) => {
+          onClick={() => {
             if (disabled || item.readOnly) return;
             if (allowDeselect && value === item.value) {
               onValueChange('');

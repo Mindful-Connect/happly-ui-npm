@@ -14,7 +14,7 @@ import { installDependencies } from '../utils/install.js';
 import { updateTailwindConfig } from '../utils/transformers/tailwind.js';
 import { isNonInteractive, getAgentName } from '../utils/env.js';
 import type { HapplyConfig, InitOptions, BaseColor } from '../types/index.js';
-import { BASE_COLORS, DEFAULT_CONFIG } from '../types/index.js';
+import { BASE_COLORS } from '../types/index.js';
 
 const UTILS_TEMPLATE = `import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -350,7 +350,7 @@ export async function init(options: InitOptions): Promise<void> {
     });
 
     installSpinner.succeed('Dependencies installed');
-  } catch (error) {
+  } catch {
     installSpinner.fail('Failed to install dependencies');
     logger.warn(
       'Please install manually: clsx tailwind-merge class-variance-authority'
