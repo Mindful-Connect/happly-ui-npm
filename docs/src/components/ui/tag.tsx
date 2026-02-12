@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { Slot } from '@radix-ui/react-slot'
-import { cva, type VariantProps } from 'class-variance-authority'
-import { cn } from '@/lib/utils'
-import { RiCloseFill } from 'react-icons/ri'
+import * as React from 'react';
+import { Slot } from '@radix-ui/react-slot';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
+import { RiCloseFill } from 'react-icons/ri';
 
 /**
  * shadcn/ui Tag component
@@ -46,17 +46,17 @@ export const tagRoot = cva(
       variant: 'stroke',
       disabled: false,
     },
-  },
-)
+  }
+);
 
 export interface TagProps
   extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof tagRoot> {
-  asChild?: boolean
+  asChild?: boolean;
 }
 
 export const Tag = React.forwardRef<HTMLDivElement, TagProps>(
   ({ asChild, variant, disabled, className, children, ...props }, ref) => {
-    const Comp = asChild ? Slot : 'div'
+    const Comp = asChild ? Slot : 'div';
     return (
       <Comp
         ref={ref}
@@ -66,20 +66,20 @@ export const Tag = React.forwardRef<HTMLDivElement, TagProps>(
       >
         {children}
       </Comp>
-    )
-  },
-)
-Tag.displayName = 'Tag'
+    );
+  }
+);
+Tag.displayName = 'Tag';
 
 // Slot for an icon inside the Tag
 type TagIconProps = {
-  asChild?: boolean
+  asChild?: boolean;
 } & VariantProps<typeof tagRoot> &
-  React.HTMLAttributes<HTMLElement>
+  React.HTMLAttributes<HTMLElement>;
 
 export const TagIcon = React.forwardRef<HTMLElement, TagIconProps>(
   ({ asChild, variant, disabled, className, ...props }, ref) => {
-    const Comp = asChild ? Slot : 'span'
+    const Comp = asChild ? Slot : 'span';
     return (
       <Comp
         ref={ref}
@@ -87,41 +87,41 @@ export const TagIcon = React.forwardRef<HTMLElement, TagIconProps>(
           'flex h-4 w-4 shrink-0 items-center justify-center select-none',
           'text-ds-soft-400 transition duration-200 ease-out',
           'group-focus-within:text-ds-sub-600 group-hover:text-ds-sub-600',
-          className,
+          className
         )}
         {...props}
       />
-    )
-  },
-)
-TagIcon.displayName = 'TagIcon'
+    );
+  }
+);
+TagIcon.displayName = 'TagIcon';
 
 // Dismiss (close) button inside Tag
 export type TagCloseProps = Omit<VariantProps<typeof tagRoot>, 'disabled'> &
   React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    asChild?: boolean
-    disabled?: boolean
-  }
+    asChild?: boolean;
+    disabled?: boolean;
+  };
 
 export const TagClose = React.forwardRef<HTMLButtonElement, TagCloseProps>(
   ({ asChild, variant, disabled, className, ...props }, ref) => {
-    const Comp = asChild ? Slot : 'button'
+    const Comp = asChild ? Slot : 'button';
     return (
       <Comp
         ref={ref}
-        type="button"
+        type='button'
         className={cn(
           'flex h-4 w-4 shrink-0 items-center justify-center focus:outline-none',
           'text-ds-soft-400 transition duration-200 ease-out',
           'group-focus-within:text-ds-sub-600 group-hover:text-ds-sub-600',
-          className,
+          className
         )}
         aria-disabled={disabled}
         {...props}
       >
-        <RiCloseFill className="h-4 w-4" />
+        <RiCloseFill className='h-4 w-4' />
       </Comp>
-    )
-  },
-)
-TagClose.displayName = 'TagClose'
+    );
+  }
+);
+TagClose.displayName = 'TagClose';

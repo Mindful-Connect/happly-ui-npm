@@ -60,6 +60,7 @@
     "use-debounce": "^10.1.0"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
     "@types/node": "^24.10.9",
     "@types/react": "^19.2.9",
     "@types/react-dom": "^19.2.3",

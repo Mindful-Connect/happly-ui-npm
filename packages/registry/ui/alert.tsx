@@ -126,7 +126,10 @@ function isOutlineVariant(variant: string | null | undefined): boolean {
 // Icon Components
 // =============================================================================
 
-const STATUS_ICONS: Record<AlertStatus, React.ComponentType<{ className?: string }>> = {
+const STATUS_ICONS: Record<
+  AlertStatus,
+  React.ComponentType<{ className?: string }>
+> = {
   error: RiErrorWarningFill,
   warning: RiAlertFill,
   success: RiCheckboxCircleFill,

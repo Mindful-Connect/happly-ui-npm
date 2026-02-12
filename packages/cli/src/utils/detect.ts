@@ -1,8 +1,8 @@
-import { existsSync } from "fs";
-import { readFile } from "fs/promises";
-import path from "path";
-import fg from "fast-glob";
-import type { ProjectInfo, TailwindVersion } from "../types/index.js";
+import { existsSync } from 'fs';
+import { readFile } from 'fs/promises';
+import path from 'path';
+import fg from 'fast-glob';
+import type { ProjectInfo, TailwindVersion } from '../types/index.js';
 
 /**
  * Detect project configuration
@@ -14,16 +14,16 @@ export async function detectProject(cwd: string): Promise<ProjectInfo> {
     tailwindConfig: null,
     tailwindCss: null,
     tailwindVersion: 3,
-    packageManager: "bun",
+    packageManager: 'bun',
     aliases: {},
-    framework: "unknown",
+    framework: 'unknown',
   };
 
   // Detect TypeScript
-  info.isTypeScript = existsSync(path.join(cwd, "tsconfig.json"));
+  info.isTypeScript = existsSync(path.join(cwd, 'tsconfig.json'));
 
   // Detect src directory
-  info.isSrcDir = existsSync(path.join(cwd, "src"));
+  info.isSrcDir = existsSync(path.join(cwd, 'src'));
 
   // Detect package manager
   info.packageManager = await detectPackageManager(cwd);
@@ -53,11 +53,11 @@ export async function detectProject(cwd: string): Promise<ProjectInfo> {
  */
 async function detectPackageManager(
   cwd: string
-): Promise<"bun" | "npm" | "pnpm" | "yarn"> {
-  if (existsSync(path.join(cwd, "bun.lockb"))) return "bun";
-  if (existsSync(path.join(cwd, "pnpm-lock.yaml"))) return "pnpm";
-  if (existsSync(path.join(cwd, "yarn.lock"))) return "yarn";
-  return "npm";
+): Promise<'bun' | 'npm' | 'pnpm' | 'yarn'> {
+  if (existsSync(path.join(cwd, 'bun.lockb'))) return 'bun';
+  if (existsSync(path.join(cwd, 'pnpm-lock.yaml'))) return 'pnpm';
+  if (existsSync(path.join(cwd, 'yarn.lock'))) return 'yarn';
+  return 'npm';
 }
 
 /**
@@ -65,10 +65,10 @@ async function detectPackageManager(
  */
 async function detectTailwindConfig(cwd: string): Promise<string | null> {
   const configFiles = [
-    "tailwind.config.ts",
-    "tailwind.config.js",
-    "tailwind.config.mjs",
-    "tailwind.config.cjs",
+    'tailwind.config.ts',
+    'tailwind.config.js',
+    'tailwind.config.mjs',
+    'tailwind.config.cjs',
   ];
 
   for (const file of configFiles) {
@@ -85,23 +85,23 @@ async function detectTailwindConfig(cwd: string): Promise<string | null> {
  */
 async function detectTailwindCss(cwd: string): Promise<string | null> {
   const patterns = [
-    "src/index.css",
-    "src/globals.css",
-    "src/app/globals.css",
-    "app/globals.css",
-    "styles/globals.css",
-    "src/styles/globals.css",
+    'src/index.css',
+    'src/globals.css',
+    'src/app/globals.css',
+    'app/globals.css',
+    'styles/globals.css',
+    'src/styles/globals.css',
   ];
 
   for (const pattern of patterns) {
     const fullPath = path.join(cwd, pattern);
     if (existsSync(fullPath)) {
       // Check if it contains Tailwind directives
-      const content = await readFile(fullPath, "utf-8");
+      const content = await readFile(fullPath, 'utf-8');
       if (
-        content.includes("@tailwind") ||
-        content.includes("@import") ||
-        content.includes("@config")
+        content.includes('@tailwind') ||
+        content.includes('@import') ||
+        content.includes('@config')
       ) {
         return pattern;
       }
@@ -109,15 +109,15 @@ async function detectTailwindCss(cwd: string): Promise<string | null> {
   }
 
   // Fallback: search for any CSS with Tailwind directives
-  const cssFiles = await fg(["**/*.css"], {
+  const cssFiles = await fg(['**/*.css'], {
     cwd,
-    ignore: ["node_modules/**", "dist/**", ".next/**"],
+    ignore: ['node_modules/**', 'dist/**', '.next/**'],
     absolute: false,
   });
 
   for (const file of cssFiles) {
-    const content = await readFile(path.join(cwd, file), "utf-8");
-    if (content.includes("@tailwind") || content.includes("@config")) {
+    const content = await readFile(path.join(cwd, file), 'utf-8');
+    if (content.includes('@tailwind') || content.includes('@config')) {
       return file;
     }
   }
@@ -134,18 +134,22 @@ async function detectTailwindVersion(
 ): Promise<TailwindVersion> {
   // Check package.json for Tailwind v4 indicators
   try {
-    const pkgPath = path.join(cwd, "package.json");
+    const pkgPath = path.join(cwd, 'package.json');
     if (existsSync(pkgPath)) {
-      const pkg = JSON.parse(await readFile(pkgPath, "utf-8"));
+      const pkg = JSON.parse(await readFile(pkgPath, 'utf-8'));
       const deps = { ...pkg.dependencies, ...pkg.devDependencies };
 
       // Check for v4-specific packages
-      if (deps["@tailwindcss/vite"] || deps["@tailwindcss/postcss"] || deps["@tailwindcss/cli"]) {
+      if (
+        deps['@tailwindcss/vite'] ||
+        deps['@tailwindcss/postcss'] ||
+        deps['@tailwindcss/cli']
+      ) {
         return 4;
       }
 
       // Check tailwindcss version
-      const twVersion = deps["tailwindcss"];
+      const twVersion = deps['tailwindcss'];
       if (twVersion) {
         // Parse version - handle ^4.0.0, ~4.0.0, 4.0.0, etc.
         const versionMatch = twVersion.match(/(\d+)\./);
@@ -163,9 +167,12 @@ async function detectTailwindVersion(
     try {
       const cssPath = path.join(cwd, cssFile);
       if (existsSync(cssPath)) {
-        const content = await readFile(cssPath, "utf-8");
+        const content = await readFile(cssPath, 'utf-8');
         // v4 uses @import "tailwindcss" instead of @tailwind directives
-        if (content.includes('@import "tailwindcss"') || content.includes("@import 'tailwindcss'")) {
+        if (
+          content.includes('@import "tailwindcss"') ||
+          content.includes("@import 'tailwindcss'")
+        ) {
           return 4;
         }
       }
@@ -183,43 +190,51 @@ async function detectTailwindVersion(
  */
 async function detectFramework(
   cwd: string
-): Promise<"next" | "vite" | "remix" | "astro" | "unknown"> {
+): Promise<'next' | 'vite' | 'remix' | 'astro' | 'unknown'> {
   // Check for framework config files
-  if (existsSync(path.join(cwd, "next.config.js")) ||
-      existsSync(path.join(cwd, "next.config.ts")) ||
-      existsSync(path.join(cwd, "next.config.mjs"))) {
-    return "next";
+  if (
+    existsSync(path.join(cwd, 'next.config.js')) ||
+    existsSync(path.join(cwd, 'next.config.ts')) ||
+    existsSync(path.join(cwd, 'next.config.mjs'))
+  ) {
+    return 'next';
   }
-  if (existsSync(path.join(cwd, "vite.config.ts")) ||
-      existsSync(path.join(cwd, "vite.config.js"))) {
-    return "vite";
+  if (
+    existsSync(path.join(cwd, 'vite.config.ts')) ||
+    existsSync(path.join(cwd, 'vite.config.js'))
+  ) {
+    return 'vite';
   }
-  if (existsSync(path.join(cwd, "remix.config.js")) ||
-      existsSync(path.join(cwd, "remix.config.ts"))) {
-    return "remix";
+  if (
+    existsSync(path.join(cwd, 'remix.config.js')) ||
+    existsSync(path.join(cwd, 'remix.config.ts'))
+  ) {
+    return 'remix';
   }
-  if (existsSync(path.join(cwd, "astro.config.mjs")) ||
-      existsSync(path.join(cwd, "astro.config.ts"))) {
-    return "astro";
+  if (
+    existsSync(path.join(cwd, 'astro.config.mjs')) ||
+    existsSync(path.join(cwd, 'astro.config.ts'))
+  ) {
+    return 'astro';
   }
 
   // Check package.json dependencies
   try {
-    const pkgPath = path.join(cwd, "package.json");
+    const pkgPath = path.join(cwd, 'package.json');
     if (existsSync(pkgPath)) {
-      const pkg = JSON.parse(await readFile(pkgPath, "utf-8"));
+      const pkg = JSON.parse(await readFile(pkgPath, 'utf-8'));
       const deps = { ...pkg.dependencies, ...pkg.devDependencies };
 
-      if (deps["next"]) return "next";
-      if (deps["vite"]) return "vite";
-      if (deps["@remix-run/react"]) return "remix";
-      if (deps["astro"]) return "astro";
+      if (deps['next']) return 'next';
+      if (deps['vite']) return 'vite';
+      if (deps['@remix-run/react']) return 'remix';
+      if (deps['astro']) return 'astro';
     }
   } catch {
     // Ignore errors
   }
 
-  return "unknown";
+  return 'unknown';
 }
 
 /**
@@ -229,22 +244,22 @@ async function detectAliases(cwd: string): Promise<Record<string, string>> {
   const aliases: Record<string, string> = {};
 
   try {
-    const tsconfigPath = path.join(cwd, "tsconfig.json");
+    const tsconfigPath = path.join(cwd, 'tsconfig.json');
     if (!existsSync(tsconfigPath)) return aliases;
 
-    const content = await readFile(tsconfigPath, "utf-8");
+    const content = await readFile(tsconfigPath, 'utf-8');
     // Remove comments from JSON
-    const jsonContent = content.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, "");
+    const jsonContent = content.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
     const tsconfig = JSON.parse(jsonContent);
 
     const paths = tsconfig.compilerOptions?.paths || {};
-    const baseUrl = tsconfig.compilerOptions?.baseUrl || ".";
+    const baseUrl = tsconfig.compilerOptions?.baseUrl || '.';
 
     for (const [alias, targets] of Object.entries(paths)) {
       if (Array.isArray(targets) && targets.length > 0) {
         // Convert @/* to @/
-        const cleanAlias = alias.replace("/*", "");
-        const cleanTarget = (targets[0] as string).replace("/*", "");
+        const cleanAlias = alias.replace('/*', '');
+        const cleanTarget = (targets[0] as string).replace('/*', '');
         aliases[cleanAlias] = path.join(baseUrl, cleanTarget);
       }
     }

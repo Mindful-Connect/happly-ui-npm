@@ -20,10 +20,7 @@ import { cn } from '@/lib/utils';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import * as React from 'react';
 import { ReactElement, SVGProps } from 'react';
-import {
-  LanguageType,
-  Translatable,
-} from '@/lib/searchable-combo-box-utils';
+import { LanguageType, Translatable } from '@/lib/searchable-combo-box-utils';
 
 // translation strings you'll need:
 /* 
@@ -71,22 +68,31 @@ interface SearchableMultiComboboxProps {
   setSelected: (tags: Tag[]) => void;
   tag: TagCategory;
   customTagOptions?: Tag[]; // to convert FormOption to Tag, use value as id
-  t: any; // pass t from useI18n for stranslations
-  useTags: ({ tagCategory, enabled, excludeTagSlugs, prioritySlugs, translatable, customTagOptions, }: {
-    tagCategory?: TagCategory | "payment-features" | undefined;
+  t: (key: string) => string; // pass t from useI18n for stranslations
+  useTags: ({
+    tagCategory,
+    enabled,
+    excludeTagSlugs,
+    prioritySlugs,
+    translatable,
+    customTagOptions,
+  }: {
+    tagCategory?: TagCategory | 'payment-features' | undefined;
     enabled?: boolean;
     excludeTagSlugs?: string[];
     prioritySlugs?: string[];
     translatable?: boolean;
     customTagOptions?: Tag[];
   }) => {
-      tags: {
+    tags:
+      | {
           id: number;
           slug: string;
           label: string;
-          category: any;
-      }[] | undefined;
-      status: "loading" | "error" | "success";
+          category: TagCategory | string;
+        }[]
+      | undefined;
+    status: 'loading' | 'error' | 'success';
   };
 }
 
@@ -118,7 +124,7 @@ export function SearchableMultiCombobox({
   customTagOptions, // if tagOptions are passed, we're not fetching tags
   t,
   useTags,
-  ...props
+  ..._props
 }: SearchableMultiComboboxProps & React.InputHTMLAttributes<HTMLInputElement>) {
   let prioritySlugs;
 
@@ -136,7 +142,8 @@ export function SearchableMultiCombobox({
     customTagOptions: customTagOptions,
   });
 
-  const isTagSelected = (tag: Tag) => selected.some((t: Tag) => t.slug === tag.slug);
+  const isTagSelected = (tag: Tag) =>
+    selected.some((t: Tag) => t.slug === tag.slug);
 
   const handleToggle = (tag: Tag) => {
     if (isPreview) return;
@@ -237,7 +244,7 @@ export function SearchableMultiCombobox({
             <span
               className={cn(
                 'flex-1',
-                isPreview ? 'inline capitalize text-ds-soft-400' : 'flex-1'
+                isPreview ? 'text-ds-soft-400 inline capitalize' : 'flex-1'
               )}
             >
               {placeholder ? placeholder : `${t('_domain.select')} ${tag}`}
@@ -352,7 +359,7 @@ function ConditionalPopoverContent({
 }) {
   if (isPreview) {
     return (
-      <div className='w-full rounded-12 border border-ds-soft-200 bg-popover p-0.5 text-popover-foreground shadow-regular-md outline-none'>
+      <div className='rounded-12 border-ds-soft-200 bg-popover text-popover-foreground shadow-regular-md w-full border p-0.5 outline-none'>
         {children}
       </div>
     );

@@ -32,7 +32,7 @@ export function isAIAgent(): boolean {
   const env = process.env;
 
   // Claude Code
-  if (env.CLAUDECODE === "1" || env.CLAUDE_CODE_ENTRYPOINT) {
+  if (env.CLAUDECODE === '1' || env.CLAUDE_CODE_ENTRYPOINT) {
     return true;
   }
 
@@ -96,20 +96,20 @@ export function isCI(): boolean {
 export function getAgentName(): string | null {
   const env = process.env;
 
-  if (env.CLAUDECODE === "1" || env.CLAUDE_CODE_ENTRYPOINT) {
-    return "Claude Code";
+  if (env.CLAUDECODE === '1' || env.CLAUDE_CODE_ENTRYPOINT) {
+    return 'Claude Code';
   }
   if (env.CURSOR_TRACE_ID || env.CURSOR_EDITOR) {
-    return "Cursor";
+    return 'Cursor';
   }
   if (env.GITHUB_COPILOT_CLI) {
-    return "GitHub Copilot";
+    return 'GitHub Copilot';
   }
   if (env.AIDER_MODEL || env.AIDER) {
-    return "Aider";
+    return 'Aider';
   }
   if (env.CODEIUM_API_KEY || env.WINDSURF_EDITOR) {
-    return "Windsurf/Codeium";
+    return 'Windsurf/Codeium';
   }
 
   return null;

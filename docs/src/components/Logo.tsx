@@ -1,25 +1,13 @@
-import logoImg from '@/images/logo.png'
+import logoImg from '@/images/logo.png';
 
 export function Logomark(props: React.ComponentPropsWithoutRef<'img'>) {
   return (
-    <img
-      src={logoImg.src}
-      alt="HapplyUI"
-      width={36}
-      height={36}
-      {...props}
-    />
-  )
+    <img src={logoImg.src} alt='HapplyUI' width={36} height={36} {...props} />
+  );
 }
 
 export function Logo(props: React.ComponentPropsWithoutRef<'img'>) {
   return (
-    <img
-      src={logoImg.src}
-      alt="HapplyUI"
-      width={32}
-      height={32}
-      {...props}
-    />
-  )
+    <img src={logoImg.src} alt='HapplyUI' width={32} height={32} {...props} />
+  );
 }

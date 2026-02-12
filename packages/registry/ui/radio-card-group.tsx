@@ -72,7 +72,7 @@ export default function RadioCardGroup({
                 ],
             itemClassName
           )}
-          onClick={(e) => {
+          onClick={() => {
             if (disabled || item.readOnly) return;
             if (allowDeselect && value === item.value) {
               onValueChange('');
@@ -94,7 +94,7 @@ export default function RadioCardGroup({
                       'line-clamp-1 font-medium transition-colors duration-75',
                       disabled || item.readOnly
                         ? 'text-ds-neutral-600'
-                        : 'cursor-pointer text-ds-neutral-950'
+                        : 'text-ds-neutral-950 cursor-pointer'
                     )}
                   >
                     {item.title}

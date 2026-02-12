@@ -9,10 +9,7 @@
     "@radix-ui/react-slot",
     "class-variance-authority"
   ],
-  "registryDependencies": [
-    "utils",
-    "alert-utils"
-  ],
+  "registryDependencies": ["utils", "alert-utils"],
   "docs": {
     "lead": "Displays a callout for user attention.",
     "usage": "import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'\n\n<Alert>\n  <AlertTitle>Heads up!</AlertTitle>\n  <AlertDescription>\n    You can add components to your app using the cli.\n  </AlertDescription>\n</Alert>",
@@ -35,10 +32,10 @@
             "description": "The size of the alert"
           },
           {
-             "name": "dismissButton",
-             "type": "boolean",
-             "default": "false",
-             "description": "Whether to show a dismiss button"
+            "name": "dismissButton",
+            "type": "boolean",
+            "default": "false",
+            "description": "Whether to show a dismiss button"
           },
           {
             "name": "onDismiss",

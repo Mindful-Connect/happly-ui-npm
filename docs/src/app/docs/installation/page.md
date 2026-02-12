@@ -84,7 +84,7 @@ We provide ready-to-use configuration files for both Tailwind v3 and v4 in the `
     module.exports = {
       presets: [require('./happly-tailwind.preset.js')],
       // ... rest of your config
-    }
+    };
     ```
 3.  Copy the CSS variables from `tailwind-manual-installation/v3/globals.css` into your global CSS file.
 
@@ -111,14 +111,14 @@ When using `happly-tailwind.preset.js` (Tailwind v3), Happly's configuration is 
         colors: { brand: '#ff0000' },
       },
     },
-  }
+  };
 
   // ❌ Bad: Overrides Happly defaults (removes semantic tokens)
   module.exports = {
     theme: {
       colors: { brand: '#ff0000' },
     },
-  }
+  };
   ```
 
 #### Tailwind v4 Conflict Resolution
@@ -142,11 +142,11 @@ For Tailwind v4:
 Create `src/lib/utils.ts`:
 
 ```ts
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 ```
 

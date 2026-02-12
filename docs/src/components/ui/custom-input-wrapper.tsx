@@ -1,10 +1,10 @@
-import * as React from 'react'
-import { cn } from '@/lib/utils'
+import * as React from 'react';
+import { cn } from '@/lib/utils';
 
 type CustomInputWrapperProps = React.HTMLAttributes<HTMLDivElement> & {
-  hasError?: boolean
-  disabled?: boolean
-}
+  hasError?: boolean;
+  disabled?: boolean;
+};
 
 export const CustomInputWrapper = React.forwardRef<
   HTMLDivElement,
@@ -12,14 +12,14 @@ export const CustomInputWrapper = React.forwardRef<
 >(
   (
     { className, hasError = false, disabled = false, children, ...props },
-    ref,
+    ref
   ) => {
     return (
       <div
         ref={ref}
         className={cn(
           // ─── container reset & layout ─────────────────────────────────────────
-          'group shadow-regular-xs relative block w-full rounded-12 bg-white',
+          'group relative block w-full rounded-12 bg-white shadow-regular-xs',
           disabled
             ? 'bg-ds-weak-50'
             : 'hover:[&:not(:focus-within)]:bg-ds-weak-50',
@@ -35,13 +35,13 @@ export const CustomInputWrapper = React.forwardRef<
           // ─── transitions & state resets ──────────────────────────────────────
           'transition duration-200 ease-out',
           disabled && 'ring-transparent',
-          className,
+          className
         )}
         {...props}
       >
         {children}
       </div>
-    )
-  },
-)
-CustomInputWrapper.displayName = 'CustomInputWrapper'
+    );
+  }
+);
+CustomInputWrapper.displayName = 'CustomInputWrapper';

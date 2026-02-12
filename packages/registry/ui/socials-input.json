@@ -4,7 +4,13 @@
   "type": "registry:ui",
   "title": "Socials Input",
   "description": "A dynamic input list for social media URLs with validation and icons.",
-  "dependencies": ["zod", "@headlessui/react", "react-icons", "clsx", "tailwind-merge"],
+  "dependencies": [
+    "zod",
+    "@headlessui/react",
+    "react-icons",
+    "clsx",
+    "tailwind-merge"
+  ],
   "registryDependencies": ["utils", "input"],
   "docs": {
     "lead": "A dynamic input list for social media URLs with validation and icons.",
@@ -14,9 +20,7 @@
         "title": "Default",
         "description": "Default usage with English labels.",
         "code": "<SocialsInput\n  name=\"socials\"\n  formValue={values}\n  setFormValue={setValues}\n/>",
-        "preview": [
-          { "component": "socials-input", "props": {} }
-        ]
+        "preview": [{ "component": "socials-input", "props": {} }]
       }
     ],
     "api": [

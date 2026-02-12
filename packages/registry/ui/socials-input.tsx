@@ -186,9 +186,11 @@ export default function SocialsInputsSelectableDS({
   function handleCheckSocialUrl({
     key,
     url,
+    t: _t,
   }: {
     key: string;
     url: string;
+    t?: ReturnType<typeof useI18n>;
   }) {
     const message = t('errorSocialUrl');
     const result = getSocialUrlSchema(message).safeParse({
@@ -225,11 +227,9 @@ export default function SocialsInputsSelectableDS({
   }
 
   const handleInputBlur = async ({
-    e,
     key,
     value,
   }: {
-    e: React.ChangeEvent<HTMLInputElement>;
     key: string;
     value: string;
   }) => {
@@ -539,7 +539,7 @@ export default function SocialsInputsSelectableDS({
               }}
               className={cn(
                 readOnly ? '' : '',
-                'flex w-fit cursor-pointer select-none items-center gap-x-1.5 text-sm font-medium text-[#35344E] outline-none hover:brightness-90'
+                'flex w-fit cursor-pointer items-center gap-x-1.5 text-sm font-medium text-[#35344E] outline-none select-none hover:brightness-90'
               )}
             >
               {PlusIconSquircle(open)}
@@ -569,7 +569,7 @@ export default function SocialsInputsSelectableDS({
                           addSocialInput(social.key);
                           close();
                         }}
-                        className='flex cursor-pointer items-center gap-x-[18px] p-2 shadow-[0px_4.548px_4.548px_0px_rgba(0,_0,_0,_0.01)] hover:bg-clarity-4'
+                        className='hover:bg-clarity-4 flex cursor-pointer items-center gap-x-[18px] p-2 shadow-[0px_4.548px_4.548px_0px_rgba(0,_0,_0,_0.01)]'
                       >
                         <div className='h-[30px] w-[30px]'>{social.icon}</div>
                         <span className='text-sm text-[#575759]'>
@@ -589,7 +589,7 @@ export default function SocialsInputsSelectableDS({
       {formValue && Object.entries(formValue).length > 0 && (
         <div className='mt-4 flex flex-col gap-y-4'>
           {Object.entries(formValue as Record<string, string>)
-            .filter(([key, value]) => {
+            .filter(([key]) => {
               if (
                 key === 'business_socials_link' ||
                 !availableSocials?.includes(key)
@@ -614,7 +614,7 @@ export default function SocialsInputsSelectableDS({
                     rightAffix={
                       <button
                         type='button'
-                        className='flex h-full w-10 items-center justify-center hover:!text-ds-red-600'
+                        className='hover:!text-ds-red-600 flex h-full w-10 items-center justify-center'
                         onClick={() => {
                           if (readOnly) return;
                           clearTimeout(errorTimeout);
@@ -635,7 +635,7 @@ export default function SocialsInputsSelectableDS({
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') {
                         e.preventDefault();
-                        // @ts-ignore
+                        // @ts-expect-error - e.target is typed as EventTarget which lacks blur method
                         e.target.blur();
                       }
                     }}
@@ -654,10 +654,8 @@ export default function SocialsInputsSelectableDS({
                         setFocusedInput(null);
                       }
                       handleInputBlur({
-                        e,
                         key,
                         value: e.currentTarget.value,
-                        t,
                       });
                     }}
                     onChange={(e) => {
@@ -704,7 +702,7 @@ export default function SocialsInputsSelectableDS({
 function validateURL(value: string) {
   // use regex to validate url. current issue with Zod's .url() : https://github.com/colinhacks/zod/issues/2236#issuecomment-1853298984
   const urlRegex =
-    /^(?:https:\/\/|zoommtg:\/\/)[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/g;
+    /^(?:https:\/\/|zoommtg:\/\/)[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)$/g;
   return urlRegex.test(value);
 }
 

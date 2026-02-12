@@ -37,7 +37,13 @@
           "type": {
             "type": "string",
             "description": "Type of registry item",
-            "enum": ["registry:ui", "registry:hook", "registry:lib", "registry:component", "registry:block"]
+            "enum": [
+              "registry:ui",
+              "registry:hook",
+              "registry:lib",
+              "registry:component",
+              "registry:block"
+            ]
           },
           "title": {
             "type": "string",
@@ -54,7 +60,10 @@
             "items": {
               "type": "string"
             },
-            "examples": [["@radix-ui/react-slot"], ["@radix-ui/react-dialog", "cmdk"]]
+            "examples": [
+              ["@radix-ui/react-slot"],
+              ["@radix-ui/react-dialog", "cmdk"]
+            ]
           },
           "registryDependencies": {
             "type": "array",

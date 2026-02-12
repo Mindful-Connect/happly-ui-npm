@@ -1,24 +1,24 @@
-import pc from "picocolors";
+import pc from 'picocolors';
 
 export const logger = {
   info: (message: string) => {
-    console.log(pc.cyan("ℹ"), message);
+    console.log(pc.cyan('ℹ'), message);
   },
 
   success: (message: string) => {
-    console.log(pc.green("✔"), message);
+    console.log(pc.green('✔'), message);
   },
 
   warn: (message: string) => {
-    console.log(pc.yellow("⚠"), message);
+    console.log(pc.yellow('⚠'), message);
   },
 
   error: (message: string) => {
-    console.log(pc.red("✖"), message);
+    console.log(pc.red('✖'), message);
   },
 
   break: () => {
-    console.log("");
+    console.log('');
   },
 
   log: (message: string) => {
@@ -36,15 +36,17 @@ export const logger = {
   // Box for important messages
   box: (title: string, content: string) => {
     const width = 50;
-    const line = "─".repeat(width);
-    console.log("");
+    const line = '─'.repeat(width);
+    console.log('');
     console.log(pc.cyan(`┌${line}┐`));
-    console.log(pc.cyan("│") + pc.bold(` ${title}`.padEnd(width)) + pc.cyan("│"));
+    console.log(
+      pc.cyan('│') + pc.bold(` ${title}`.padEnd(width)) + pc.cyan('│')
+    );
     console.log(pc.cyan(`├${line}┤`));
-    content.split("\n").forEach((l) => {
-      console.log(pc.cyan("│") + ` ${l}`.padEnd(width) + pc.cyan("│"));
+    content.split('\n').forEach((l) => {
+      console.log(pc.cyan('│') + ` ${l}`.padEnd(width) + pc.cyan('│'));
     });
     console.log(pc.cyan(`└${line}┘`));
-    console.log("");
+    console.log('');
   },
 };

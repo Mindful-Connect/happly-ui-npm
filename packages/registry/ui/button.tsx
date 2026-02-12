@@ -119,7 +119,8 @@ const fullRoot = cva(
 );
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof fullRoot> {
   asChild?: boolean;
   /** Shows loading spinner and disables the button */
@@ -175,10 +176,12 @@ const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {loading && (
-          <RiLoader2Fill className='h-5 w-5 shrink-0 animate-spin-smooth' />
+          <RiLoader2Fill className='animate-spin-smooth h-5 w-5 shrink-0' />
         )}
         {asChild ? (
-          <Slottable>{loading && loadingText ? loadingText : children}</Slottable>
+          <Slottable>
+            {loading && loadingText ? loadingText : children}
+          </Slottable>
         ) : loading && loadingText ? (
           loadingText
         ) : (
@@ -239,7 +242,8 @@ type CompactCtx = Pick<VariantProps<typeof compactRoot>, 'variant' | 'size'>;
 const CompactContext = React.createContext<CompactCtx | null>(null);
 
 export interface CompactProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof compactRoot> {
   asChild?: boolean;
 }
@@ -266,8 +270,7 @@ const CompactButton = React.forwardRef<HTMLButtonElement, CompactProps>(
 CompactButton.displayName = 'ButtonCompact';
 
 export interface CompactIconProps
-  extends React.HTMLAttributes<HTMLElement>,
-    CompactCtx {
+  extends React.HTMLAttributes<HTMLElement>, CompactCtx {
   asChild?: boolean;
 }
 

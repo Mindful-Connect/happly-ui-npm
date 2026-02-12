@@ -1,5 +1,4 @@
-import { tv as tvBase, type VariantProps } from "tailwind-variants";
-
+import { tv as tvBase, type VariantProps } from 'tailwind-variants';
 
 /**
  * Tailwind Variants wrapper with cn() for class merging
@@ -11,7 +10,7 @@ const tv: typeof tvBase = (options, config) =>
     twMerge: true,
     twMergeConfig: {
       classGroups: {
-        "font-size": [{ text: ["xs", "sm", "base", "lg", "xl", "2xl"] }],
+        'font-size': [{ text: ['xs', 'sm', 'base', 'lg', 'xl', '2xl'] }],
       },
     },
   });

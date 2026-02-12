@@ -39,6 +39,7 @@ bunx @happlyui/cli@latest init
 ```
 
 This will:
+
 - Create a `components.json` configuration file
 - Add the `cn` utility function
 - Configure CSS variables for theming
@@ -73,11 +74,9 @@ We provide ready-to-use configuration files for both Tailwind v3 and v4 in the `
 2.  Add it to your `tailwind.config.js`:
     ```js
     module.exports = {
-      presets: [
-        require('./happly-tailwind.preset.js')
-      ],
+      presets: [require('./happly-tailwind.preset.js')],
       // ... rest of your config
-    }
+    };
     ```
 3.  Copy the CSS variables from `tailwind-manual-installation/v3/globals.css` into your global CSS file.
 
@@ -86,48 +85,49 @@ We provide ready-to-use configuration files for both Tailwind v3 and v4 in the `
 1.  Copy `tailwind-manual-installation/v4/happly-theme.css` to your project (e.g., `src/happly-theme.css`).
 2.  Import it in your main CSS file:
     ```css
-    @import "./happly-theme.css";
+    @import './happly-theme.css';
     ```
 
 ### Conflict Resolution & Overrides
 
 When using `happly-tailwind.preset.js` (Tailwind v3), Happly's configuration is provided as a preset. This means:
 
--   **Your configuration overrides the preset**: Any keys defined in your `tailwind.config.js` will take precedence over Happly's defaults.
--   **Use `theme.extend`**: To add custom colors or fonts without removing Happly's tokens, always use `theme.extend`.
-    ```js
-    // ✅ Good: Extends Happly defaults
-    module.exports = {
-      theme: {
-        extend: {
-          colors: { 'brand': '#ff0000' }
-        }
-      }
-    }
+- **Your configuration overrides the preset**: Any keys defined in your `tailwind.config.js` will take precedence over Happly's defaults.
+- **Use `theme.extend`**: To add custom colors or fonts without removing Happly's tokens, always use `theme.extend`.
 
-    // ❌ Bad: Overrides Happly defaults (removes semantic tokens)
-    module.exports = {
-      theme: {
-        colors: { 'brand': '#ff0000' } 
-      }
-    }
-    ```
+  ```js
+  // ✅ Good: Extends Happly defaults
+  module.exports = {
+    theme: {
+      extend: {
+        colors: { brand: '#ff0000' },
+      },
+    },
+  };
+
+  // ❌ Bad: Overrides Happly defaults (removes semantic tokens)
+  module.exports = {
+    theme: {
+      colors: { brand: '#ff0000' },
+    },
+  };
+  ```
 
 #### Tailwind v4 Conflict Resolution
 
 For Tailwind v4:
 
--   **Import Order Matters**: Ensure `@import "./happly-theme.css";` comes **before** your own `@theme` block or variable definitions.
--   **Overriding Variables**: You can override any Happly variable by redefining it in your `:root` or `@theme` block *after* the import.
+- **Import Order Matters**: Ensure `@import "./happly-theme.css";` comes **before** your own `@theme` block or variable definitions.
+- **Overriding Variables**: You can override any Happly variable by redefining it in your `:root` or `@theme` block _after_ the import.
 
-    ```css
-    @import "./happly-theme.css";
+  ```css
+  @import './happly-theme.css';
 
-    @theme {
-      /* Overrides Happly's --color-primary */
-      --color-primary: red; 
-    }
-    ```
+  @theme {
+    /* Overrides Happly's --color-primary */
+    --color-primary: red;
+  }
+  ```
 
 ## Usage
 
@@ -136,80 +136,80 @@ For Tailwind v4:
 Import components using the namespace pattern for compound components:
 
 ```tsx
-import * as Button from "@/components/ui/button"
+import * as Button from '@/components/ui/button';
 
 export default function Home() {
   return (
-    <div className="flex gap-4">
+    <div className='flex gap-4'>
       {/* Primary variants */}
-      <Button.Root variant="primary" mode="filled">
+      <Button.Root variant='primary' mode='filled'>
         Primary
       </Button.Root>
-      <Button.Root variant="primary" mode="stroke">
+      <Button.Root variant='primary' mode='stroke'>
         Stroke
       </Button.Root>
-      <Button.Root variant="primary" mode="lighter">
+      <Button.Root variant='primary' mode='lighter'>
         Lighter
       </Button.Root>
-      <Button.Root variant="primary" mode="ghost">
+      <Button.Root variant='primary' mode='ghost'>
         Ghost
       </Button.Root>
 
       {/* With icons */}
-      <Button.Root variant="primary" mode="filled">
+      <Button.Root variant='primary' mode='filled'>
         <Button.Icon as={PlusIcon} />
         Add Item
       </Button.Root>
 
       {/* Icon only */}
-      <Button.Root variant="neutral" mode="stroke" size="medium" iconOnly>
+      <Button.Root variant='neutral' mode='stroke' size='medium' iconOnly>
         <Button.Icon as={SettingsIcon} />
       </Button.Root>
     </div>
-  )
+  );
 }
 ```
 
 ### Button Variants & Modes
 
-| Variant | Description |
-|---------|-------------|
+| Variant   | Description                      |
+| --------- | -------------------------------- |
 | `primary` | Brand color, main call-to-action |
-| `neutral` | Grayscale, secondary actions |
-| `error` | Destructive/danger actions |
+| `neutral` | Grayscale, secondary actions     |
+| `error`   | Destructive/danger actions       |
 
-| Mode | Description |
-|------|-------------|
-| `filled` | Solid background color |
-| `stroke` | Outlined with border |
-| `lighter` | Light background tint |
-| `ghost` | Transparent background |
+| Mode      | Description            |
+| --------- | ---------------------- |
+| `filled`  | Solid background color |
+| `stroke`  | Outlined with border   |
+| `lighter` | Light background tint  |
+| `ghost`   | Transparent background |
 
-| Size | Height |
-|------|--------|
-| `medium` | 40px (default) |
-| `small` | 36px |
-| `xsmall` | 32px |
-| `xxsmall` | 28px |
+| Size      | Height         |
+| --------- | -------------- |
+| `medium`  | 40px (default) |
+| `small`   | 36px           |
+| `xsmall`  | 32px           |
+| `xxsmall` | 28px           |
 
 ### Legacy API (Backward Compatible)
 
 For compatibility with shadcn/ui patterns:
 
 ```tsx
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
   return (
     <div>
       <Button>Click me</Button>
-      <Button variant="secondary">Secondary</Button>
-      <Button variant="destructive">Delete</Button>
-      <Button variant="outline">Outline</Button>
-      <Button variant="ghost">Ghost</Button>
-      <Button variant="link">Link</Button>
+      <Button variant='secondary'>Secondary</Button>
+      <Button variant='destructive'>Delete</Button>
+      <Button variant='outline'>Outline</Button>
+      <Button variant='ghost'>Ghost</Button>
+      <Button variant='link'>Link</Button>
     </div>
-  )
+  );
 }
 ```
 
@@ -225,14 +225,14 @@ export default function Home() {
 
 ## Components
 
-| Component | Description |
-|-----------|-------------|
-| `button` | Compound button with variants (primary, neutral, error), modes (filled, stroke, lighter, ghost), and sizes |
-| `divider` | Versatile divider with variants (line, line-spacing, line-text, text, solid-text, content) |
-| `input` | A text input component |
-| `label` | A label for form inputs |
-| `card` | A card container with header, content, and footer |
-| `badge` | A badge for status indicators |
+| Component | Description                                                                                                |
+| --------- | ---------------------------------------------------------------------------------------------------------- |
+| `button`  | Compound button with variants (primary, neutral, error), modes (filled, stroke, lighter, ghost), and sizes |
+| `divider` | Versatile divider with variants (line, line-spacing, line-text, text, solid-text, content)                 |
+| `input`   | A text input component                                                                                     |
+| `label`   | A label for form inputs                                                                                    |
+| `card`    | A card container with header, content, and footer                                                          |
+| `badge`   | A badge for status indicators                                                                              |
 
 View all components with live examples at [ui.happly.cloud](https://ui.happly.cloud).
 
@@ -294,6 +294,9 @@ bun run --cwd packages/cli build
 
 # Test locally
 bun packages/cli/dist/index.js init
+
+# Lint the codebase
+bun run lint
 ```
 
 ## Contributing
@@ -338,7 +341,12 @@ Include a `docs` field for automatic documentation generation:
       {
         "name": "MyComponent.Root",
         "props": [
-          { "name": "variant", "type": "string", "default": "'default'", "description": "The variant" }
+          {
+            "name": "variant",
+            "type": "string",
+            "default": "'default'",
+            "description": "The variant"
+          }
         ]
       }
     ]
@@ -349,12 +357,12 @@ Include a `docs` field for automatic documentation generation:
 **Note on Files:**
 You can include multiple files in a component. The CLI will maintain the file names and place them in the correct directory based on their `type` (e.g., `registry:ui` goes to `components/ui`, `registry:lib` goes to `lib/`).
 
-
 ### Adding Preview Components
 
 To add live preview support for a new component:
 
 1. Add the component type to `docs/src/lib/registry.ts`:
+
    ```ts
    export interface ComponentPreviewConfig {
      component: 'button' | 'badge' | ... | 'my-component'
@@ -362,8 +370,12 @@ To add live preview support for a new component:
    ```
 
 2. Create a Demo component in `docs/src/components/ComponentPreview.tsx`:
+
    ```tsx
-   export function DemoMyComponent({ variant, children }: DemoMyComponentProps) {
+   export function DemoMyComponent({
+     variant,
+     children,
+   }: DemoMyComponentProps) {
      // Render preview with inline styles (no Tailwind)
    }
    ```

@@ -9,9 +9,7 @@
     "class-variance-authority",
     "react-icons"
   ],
-  "registryDependencies": [
-    "utils"
-  ],
+  "registryDependencies": ["utils"],
   "docs": {
     "lead": "A tag component for labeling and categorization.",
     "usage": "import { Tag, TagIcon, TagClose } from \"@/components/ui/tag\"\n\n<Tag variant=\"stroke\">\n  <TagIcon><Icon /></TagIcon>\n  Label\n  <TagClose />\n</Tag>",

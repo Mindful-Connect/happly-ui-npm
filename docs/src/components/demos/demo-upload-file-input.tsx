@@ -1,5 +1,5 @@
-import UploadFile from '@/components/ui/upload-file-input'
-import { Section } from './demo-input'
+import UploadFile from '@/components/ui/upload-file-input';
+import { Section } from './demo-input';
 
 const t = (key: string, params?: Record<string, string>) => {
   const translations: Record<string, string> = {
@@ -50,29 +50,29 @@ const t = (key: string, params?: Record<string, string>) => {
     '_domain.bytes.kBytes': 'KB',
     '_domain.bytes.mBytes': 'MB',
     '_domain.bytes.gBytes': 'GB',
-  }
+  };
 
-  let value = translations[key] || key
+  let value = translations[key] || key;
 
   if (params) {
     Object.keys(params).forEach((paramKey) => {
       value = value.replace(
         new RegExp(`{${paramKey}}`, 'g'),
-        String(params[paramKey]),
-      )
-    })
+        String(params[paramKey])
+      );
+    });
   }
 
-  return value
-}
+  return value;
+};
 
 // Mock empty function for apiFetch as we are disabled
 const apiFetch = async (url: string, options: any) => {
-  return {}
-}
+  return new Response(JSON.stringify({}), { status: 200 });
+};
 
 // Mock empty function for addAlert as we are disabled
-const addAlert = (alert: any) => {}
+const addAlert = (alert: any) => {};
 
 const defaultProps = {
   t,
@@ -88,28 +88,28 @@ const defaultProps = {
   handleFileChange: () => {},
   onError: () => {},
   disabled: true, // IMPORTANT: Disabled as requested
-}
+};
 
 export function DemoUploadFileInput() {
   return (
-    <div className="flex w-full max-w-2xl flex-col gap-8">
-      <Section title="Image Variant">
-        <div className="flex flex-col gap-4">
-          <UploadFile {...defaultProps} variant="module-image" />
+    <div className='flex w-full max-w-2xl flex-col gap-8'>
+      <Section title='Image Variant'>
+        <div className='flex flex-col gap-4'>
+          <UploadFile {...defaultProps} variant='module-image' />
         </div>
       </Section>
 
-      <Section title="Video Variant">
-        <UploadFile {...defaultProps} variant="lesson-video" />
+      <Section title='Video Variant'>
+        <UploadFile {...defaultProps} variant='lesson-video' />
       </Section>
 
-      <Section title="Document Variant">
-        <UploadFile {...defaultProps} variant="lesson-file" />
+      <Section title='Document Variant'>
+        <UploadFile {...defaultProps} variant='lesson-file' />
       </Section>
 
-      <Section title="Attachment Variant">
-        <UploadFile {...defaultProps} variant="attachment" />
+      <Section title='Attachment Variant'>
+        <UploadFile {...defaultProps} variant='attachment' />
       </Section>
     </div>
-  )
+  );
 }

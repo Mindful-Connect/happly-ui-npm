@@ -1,4 +1,4 @@
-import type * as React from "react";
+import type * as React from 'react';
 
 /**
  * Polymorphic component type helper
@@ -47,4 +47,4 @@ export type PolymorphicComponentPropsWithRef<
  * Gets the ref type for a polymorphic component
  */
 export type PolymorphicRef<T extends React.ElementType> =
-  React.ComponentPropsWithRef<T>["ref"];
+  React.ComponentPropsWithRef<T>['ref'];

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   Command,
@@ -7,20 +7,20 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command'
-import { CustomInputWrapper } from '@/components/ui/custom-input-wrapper'
+} from '@/components/ui/command';
+import { CustomInputWrapper } from '@/components/ui/custom-input-wrapper';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover'
-import { Tag as TagPill, TagClose } from '@/components/ui/tag'
-import { Tag, TagCategory } from '@/lib/tag-utils'
-import { cn } from '@/lib/utils'
-import { Check, ChevronsUpDown } from 'lucide-react'
-import * as React from 'react'
-import { ReactElement, SVGProps } from 'react'
-import { LanguageType, Translatable } from '@/lib/searchable-combo-box-utils'
+} from '@/components/ui/popover';
+import { Tag as TagPill, TagClose } from '@/components/ui/tag';
+import { Tag, TagCategory } from '@/lib/tag-utils';
+import { cn } from '@/lib/utils';
+import { Check, ChevronsUpDown } from 'lucide-react';
+import * as React from 'react';
+import { ReactElement, SVGProps } from 'react';
+import { LanguageType, Translatable } from '@/lib/searchable-combo-box-utils';
 
 // translation strings you'll need:
 /* 
@@ -69,22 +69,22 @@ import { LanguageType, Translatable } from '@/lib/searchable-combo-box-utils'
  */
 
 interface SearchableMultiComboboxProps {
-  allowAdding?: boolean
-  className?: string
-  disabled?: boolean
-  excludeTagSlugs?: string[]
-  hasError?: boolean
-  icon?: React.ReactNode
-  isPreview?: boolean
-  max?: number
-  min?: number
-  placeholder?: string
-  selected: Tag[]
-  selectedLang?: LanguageType
-  setSelected: (tags: Tag[]) => void
-  tag: TagCategory
-  customTagOptions?: Tag[] // to convert FormOption to Tag, use value as id
-  t: any // pass t from useI18n for stranslations
+  allowAdding?: boolean;
+  className?: string;
+  disabled?: boolean;
+  excludeTagSlugs?: string[];
+  hasError?: boolean;
+  icon?: React.ReactNode;
+  isPreview?: boolean;
+  max?: number;
+  min?: number;
+  placeholder?: string;
+  selected: Tag[];
+  selectedLang?: LanguageType;
+  setSelected: (tags: Tag[]) => void;
+  tag: TagCategory;
+  customTagOptions?: Tag[]; // to convert FormOption to Tag, use value as id
+  t: any; // pass t from useI18n for stranslations
   useTags: ({
     tagCategory,
     enabled,
@@ -93,34 +93,34 @@ interface SearchableMultiComboboxProps {
     translatable,
     customTagOptions,
   }: {
-    tagCategory?: TagCategory | 'payment-features' | undefined
-    enabled?: boolean
-    excludeTagSlugs?: string[]
-    prioritySlugs?: string[]
-    translatable?: boolean
-    customTagOptions?: Tag[]
+    tagCategory?: TagCategory | 'payment-features' | undefined;
+    enabled?: boolean;
+    excludeTagSlugs?: string[];
+    prioritySlugs?: string[];
+    translatable?: boolean;
+    customTagOptions?: Tag[];
   }) => {
     tags:
       | {
-          id: number
-          slug: string
-          label: string
-          category: any
+          id: number;
+          slug: string;
+          label: string;
+          category: any;
         }[]
-      | undefined
-    status: 'loading' | 'error' | 'success'
-  }
+      | undefined;
+    status: 'loading' | 'error' | 'success';
+  };
 }
 
 const noMatchesFoundTranslatable: Translatable = {
   en: 'No matches found',
   fr: 'Aucun résultat trouvé',
-}
+};
 
 const pressEnterToAddTranslatable: Translatable = {
   en: 'Press Enter to add what you typed',
   fr: 'Appuyez sur Entrée pour ajouter ce que vous avez tapé',
-}
+};
 
 export function SearchableMultiCombobox({
   allowAdding,
@@ -142,51 +142,51 @@ export function SearchableMultiCombobox({
   useTags,
   ...props
 }: SearchableMultiComboboxProps & React.InputHTMLAttributes<HTMLInputElement>) {
-  let prioritySlugs
+  let prioritySlugs;
 
   // Here we can force an order for the tags of different taggable categories
   if (tag === 'demographic' && !isPreview) {
-    prioritySlugs = ['not-applied-to-me']
+    prioritySlugs = ['not-applied-to-me'];
   }
 
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
   const { tags = [] } = useTags({
     tagCategory: tag,
     excludeTagSlugs,
     prioritySlugs,
     translatable: isPreview,
     customTagOptions: customTagOptions,
-  })
+  });
 
   const isTagSelected = (tag: Tag) =>
-    selected.some((t: Tag) => t.slug === tag.slug)
+    selected.some((t: Tag) => t.slug === tag.slug);
 
   const handleToggle = (tag: Tag) => {
-    if (isPreview) return
+    if (isPreview) return;
 
-    const isSelected = isTagSelected(tag)
+    const isSelected = isTagSelected(tag);
 
     if (isSelected) {
       if (selected.length > min) {
-        setSelected(selected.filter((t: Tag) => t.slug !== tag.slug))
+        setSelected(selected.filter((t: Tag) => t.slug !== tag.slug));
       }
     } else {
       if (selected.length < max) {
-        setSelected([...selected, tag])
+        setSelected([...selected, tag]);
       }
     }
-  }
+  };
 
-  let sizedIcon: React.ReactNode = null
+  let sizedIcon: React.ReactNode = null;
   if (React.isValidElement(icon)) {
-    const svgIcon = icon as ReactElement<SVGProps<SVGSVGElement>>
+    const svgIcon = icon as ReactElement<SVGProps<SVGSVGElement>>;
     sizedIcon = React.cloneElement(svgIcon, {
       className: cn(
         'h-5 w-5 flex-shrink-0',
         svgIcon.props.className,
-        'text-ds-soft-400',
+        'text-ds-soft-400'
       ),
-    })
+    });
   }
 
   const recognizableTag =
@@ -195,13 +195,13 @@ export function SearchableMultiCombobox({
     tag === 'opportunity_type' ||
     tag === 'perk' ||
     tag === 'sector' ||
-    tag === 'skill'
+    tag === 'skill';
 
   // #region CommandInput placeholder
   const substringSearchForPreview = {
     en: 'Search ',
     fr: 'Rechercher ',
-  }[selectedLang as 'en' | 'fr']
+  }[selectedLang as 'en' | 'fr'];
   const substringTagCategory = customTagOptions
     ? ''
     : recognizableTag
@@ -225,7 +225,7 @@ export function SearchableMultiCombobox({
             },
           }[selectedLang as 'en' | 'fr'][tag]
         : t(`_domain.tagCategory.${tag}`)
-      : tag
+      : tag;
   const substringForAllowAdding = allowAdding
     ? isPreview
       ? {
@@ -233,12 +233,12 @@ export function SearchableMultiCombobox({
           fr: 'ou ajoutez-le',
         }[selectedLang as 'en' | 'fr']
       : t('inputs.tag_combobox.orAdd')
-    : ''
+    : '';
 
   // 'Search <tagCategory>...' or 'Search <tagCategory> or add yours...'
   const commandInputPlaceholder: string = isPreview
     ? `${substringSearchForPreview}${substringTagCategory}${substringForAllowAdding}`
-    : `${t('_domain.search')} ${substringTagCategory}${substringForAllowAdding}...`
+    : `${t('_domain.search')} ${substringTagCategory}${substringForAllowAdding}...`;
   // #endregion
 
   return (
@@ -252,7 +252,7 @@ export function SearchableMultiCombobox({
           <CustomInputWrapper
             className={cn(
               'flex h-9 flex-row items-center gap-2 p-2',
-              isPreview ? 'ps-4' : 'ps-2.5',
+              isPreview ? 'ps-4' : 'ps-2.5'
             )}
             hasError={hasError}
           >
@@ -260,12 +260,12 @@ export function SearchableMultiCombobox({
             <span
               className={cn(
                 'flex-1',
-                isPreview ? 'inline text-ds-soft-400 capitalize' : 'flex-1',
+                isPreview ? 'inline text-ds-soft-400 capitalize' : 'flex-1'
               )}
             >
               {placeholder ? placeholder : `${t('_domain.select')} ${tag}`}
             </span>
-            <ChevronsUpDown className="h-4 w-4 flex-shrink-0" />
+            <ChevronsUpDown className='h-4 w-4 flex-shrink-0' />
           </CustomInputWrapper>
         </ConditionalPopoverTrigger>
 
@@ -275,7 +275,7 @@ export function SearchableMultiCombobox({
 
             <CommandList>
               <CommandEmpty>
-                <span className="text-ds-sub-600">
+                <span className='text-ds-sub-600'>
                   {isPreview
                     ? `${noMatchesFoundTranslatable[selectedLang!]}${allowAdding ? `. ${pressEnterToAddTranslatable[selectedLang!]}` : ''}`
                     : `${t('inputs.tag_combobox.noMatchesFound')}${allowAdding ? `. ${t('inputs.tag_combobox.pressEnterToAdd')}` : ''}`}
@@ -285,8 +285,8 @@ export function SearchableMultiCombobox({
               {tags.length > 0 && (
                 <CommandGroup>
                   {tags.map((option) => {
-                    const isSelected = isTagSelected(option)
-                    const atMax = !isSelected && selected.length >= max
+                    const isSelected = isTagSelected(option);
+                    const atMax = !isSelected && selected.length >= max;
 
                     return (
                       <CommandItem
@@ -297,14 +297,14 @@ export function SearchableMultiCombobox({
                         <Check
                           className={cn(
                             'mr-2 h-4 w-4',
-                            isSelected ? 'opacity-100' : 'opacity-0',
+                            isSelected ? 'opacity-100' : 'opacity-0'
                           )}
                         />
                         {isPreview
                           ? (option.label as Translatable)[selectedLang!]
                           : option.label}
                       </CommandItem>
-                    )
+                    );
                   })}
                 </CommandGroup>
               )}
@@ -314,10 +314,10 @@ export function SearchableMultiCombobox({
       </ConditionalPopover>
 
       {!isPreview && selected.length > 0 && (
-        <div className="flex flex-wrap gap-2">
+        <div className='flex flex-wrap gap-2'>
           {selected.map((tag) => (
-            <TagPill key={tag.id} variant="stroke">
-              <span className="ms-1">{tag.label}</span>
+            <TagPill key={tag.id} variant='stroke'>
+              <span className='ms-1'>{tag.label}</span>
               <TagClose
                 onClick={() => handleToggle(tag)}
                 disabled={disabled || selected.length <= min}
@@ -327,7 +327,7 @@ export function SearchableMultiCombobox({
         </div>
       )}
     </div>
-  )
+  );
 }
 
 function ConditionalPopover({
@@ -336,58 +336,58 @@ function ConditionalPopover({
   open,
   onOpenChange,
 }: {
-  isPreview: boolean | undefined
-  children: React.ReactNode
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  isPreview: boolean | undefined;
+  children: React.ReactNode;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }) {
   if (isPreview) {
-    return <>{children}</>
+    return <>{children}</>;
   }
 
   return (
     <Popover open={open} onOpenChange={onOpenChange}>
       {children}
     </Popover>
-  )
+  );
 }
 
 function ConditionalPopoverTrigger({
   isPreview,
   children,
 }: {
-  isPreview: boolean | undefined
-  children: React.ReactNode
+  isPreview: boolean | undefined;
+  children: React.ReactNode;
 }) {
   if (isPreview) {
-    return <>{children}</>
+    return <>{children}</>;
   }
 
-  return <PopoverTrigger asChild>{children}</PopoverTrigger>
+  return <PopoverTrigger asChild>{children}</PopoverTrigger>;
 }
 
 function ConditionalPopoverContent({
   isPreview,
   children,
 }: {
-  isPreview: boolean | undefined
-  children: React.ReactNode
+  isPreview: boolean | undefined;
+  children: React.ReactNode;
 }) {
   if (isPreview) {
     return (
-      <div className="bg-popover text-popover-foreground w-full rounded-12 border border-ds-soft-200 p-0.5 shadow-regular-md outline-none">
+      <div className='bg-popover text-popover-foreground w-full rounded-12 border border-ds-soft-200 p-0.5 shadow-regular-md outline-none'>
         {children}
       </div>
-    )
+    );
   }
 
   return (
     <PopoverContent
-      align="start"
+      align='start'
       sideOffset={4}
-      className="mt-2 w-[--radix-popover-trigger-width] p-0"
+      className='mt-2 w-[--radix-popover-trigger-width] p-0'
     >
       {children}
     </PopoverContent>
-  )
+  );
 }

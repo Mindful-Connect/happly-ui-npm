@@ -1,10 +1,4 @@
-import {
-  Fragment,
-  ReactElement,
-  SVGProps,
-  useEffect,
-  useState,
-} from 'react';
+import { Fragment, ReactElement, SVGProps, useEffect, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
 import { cn } from '@/lib/utils';
@@ -14,6 +8,22 @@ import { Combobox, Transition } from '@headlessui/react';
 export interface Suggestion {
   description: string;
   place_id: string;
+}
+
+interface AddressComponent {
+  long_name: string;
+  short_name: string;
+  types: string[];
+}
+
+interface PlaceResult {
+  address_components?: AddressComponent[];
+  geometry?: {
+    location?: {
+      lat: () => number;
+      lng: () => number;
+    };
+  };
 }
 
 export type LocationRequest = {
@@ -66,14 +76,14 @@ export function LocationInput({
 
   useEffect(() => {
     (async () => {
-      if (locationSearch.length < 3) setLocationSuggestions([]);
-      if (locationSearch.length === 0) setLocation(null);
+      if (debouncedLocationSearch.length < 3) setLocationSuggestions([]);
+      if (debouncedLocationSearch.length === 0) setLocation(null);
       else {
         if (!locationSearchActive) return;
         const autocompleteService =
           new window.google.maps.places.AutocompleteService();
         const { predictions } = await autocompleteService.getPlacePredictions({
-          input: locationSearch,
+          input: debouncedLocationSearch,
           componentRestrictions: { country: ['ca', 'us', 'fr'] },
           types: ['address'],
           // types: ['(regions)'],
@@ -81,17 +91,17 @@ export function LocationInput({
         setLocationSuggestions(predictions);
       }
     })();
-  }, [debouncedLocationSearch]);
+  }, [debouncedLocationSearch, locationSearchActive, setLocation]);
 
   return (
     <Combobox
       nullable
       value={locationSearch}
-      onChange={async (value) => {
+      onChange={async (value: string | null) => {
         if (!value) return setLocation(null);
 
         const selectedPlace = locationSuggestions.find(
-          (suggestion) => suggestion.place_id === value
+          (suggestion: Suggestion) => suggestion.place_id === value
         );
         if (!selectedPlace) return;
         const location = {
@@ -112,7 +122,7 @@ export function LocationInput({
             placeId: selectedPlace.place_id,
             fields: ['geometry', 'address_components'],
           },
-          (place, status) => {
+          (place: PlaceResult, status: string) => {
             if (status !== 'OK' || !place) return;
             location.address =
               (place.address_components?.find((c) =>
@@ -144,7 +154,7 @@ export function LocationInput({
 
             setLocationSearch(
               locationSuggestions.find(
-                (suggestion) => suggestion.place_id === value
+                (suggestion: Suggestion) => suggestion.place_id === value
               )?.description ?? ''
             );
 
@@ -153,12 +163,12 @@ export function LocationInput({
         );
       }}
     >
-      {({ open }) => {
+      {() => {
         return (
           <div className='relative w-full'>
             <div
               className={cn(
-                'flex h-10 items-center rounded-[10px] border bg-white py-2 pl-2.5 pr-2 shadow-[0px_1px_2px_0px_rgba(10,13,20,0.03)]',
+                'flex h-10 items-center rounded-[10px] border bg-white py-2 pr-2 pl-2.5 shadow-[0px_1px_2px_0px_rgba(10,13,20,0.03)]',
                 'hover:[&:not(:focus-within)]:border-ds-neutral-200 hover:[&:not(:focus-within)]:bg-ds-weak-50',
                 'focus-within:shadow-button-important-focus focus-within:before:ring-ds-stroke-strong-950',
                 isFocused ? 'border-ds-neutral-950' : 'border-ds-neutral-200'
@@ -168,7 +178,7 @@ export function LocationInput({
                 <span
                   className={cn(
                     '',
-                    !!location ? 'text-ds-neutral-600' : 'text-ds-neutral-400'
+                    location ? 'text-ds-neutral-600' : 'text-ds-neutral-400'
                   )}
                 >
                   {icon}
@@ -176,7 +186,7 @@ export function LocationInput({
               )}
               <Combobox.Input
                 value={locationSearch}
-                className='w-full border-none bg-transparent pl-1.5 text-sm text-ds-neutral-950 placeholder:text-ds-neutral-600 focus:outline-none focus:ring-0'
+                className='text-ds-neutral-950 placeholder:text-ds-neutral-600 w-full border-none bg-transparent pl-1.5 text-sm focus:ring-0 focus:outline-none'
                 onFocus={() => {
                   setLocationSearchActive(true);
                   setIsFocused(true);
@@ -185,7 +195,7 @@ export function LocationInput({
                   setLocationSearchActive(false);
                   setIsFocused(false);
                 }}
-                onChange={(event) => {
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   setLocationSearch(event.target.value);
                 }}
                 placeholder={placeholder}
@@ -200,29 +210,31 @@ export function LocationInput({
             >
               <div>
                 {locationSuggestions.length > 0 && (
-                  <Combobox.Options className='absolute z-10 mt-2.5 max-h-60 w-full overflow-auto rounded-2xl border border-ds-neutral-200 bg-white p-2 text-sm shadow-lg ring-0 focus:outline-none'>
-                    {locationSuggestions.map((suggestion, suggestionIndex) => (
-                      <Combobox.Option
-                        key={suggestionIndex}
-                        value={suggestion.place_id}
-                      >
-                        {({ active, selected }) => (
-                          <div
-                            className='cursor-default select-none rounded-[10px] px-3 py-2 hover:bg-ds-neutral-50'
-                            title={suggestion.description}
-                          >
-                            <span
-                              className={cn(
-                                'block truncate',
-                                selected && 'font-medium'
-                              )}
+                  <Combobox.Options className='border-ds-neutral-200 absolute z-10 mt-2.5 max-h-60 w-full overflow-auto rounded-2xl border bg-white p-2 text-sm shadow-lg ring-0 focus:outline-none'>
+                    {locationSuggestions.map(
+                      (suggestion: Suggestion, suggestionIndex: number) => (
+                        <Combobox.Option
+                          key={suggestionIndex}
+                          value={suggestion.place_id}
+                        >
+                          {({ selected }: { selected: boolean }) => (
+                            <div
+                              className='hover:bg-ds-neutral-50 cursor-default rounded-[10px] px-3 py-2 select-none'
+                              title={suggestion.description}
                             >
-                              {suggestion.description}
-                            </span>
-                          </div>
-                        )}
-                      </Combobox.Option>
-                    ))}
+                              <span
+                                className={cn(
+                                  'block truncate',
+                                  selected && 'font-medium'
+                                )}
+                              >
+                                {suggestion.description}
+                              </span>
+                            </div>
+                          )}
+                        </Combobox.Option>
+                      )
+                    )}
                   </Combobox.Options>
                 )}
               </div>

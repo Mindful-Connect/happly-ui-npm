@@ -20,7 +20,6 @@ function Calendar({
   classNames,
   showOutsideDays = true,
   captionLayout = 'label',
-  buttonVariant = 'neutral', // This prop won't directly affect the nav buttons if using compactButtonVariants with fixed variant/size
   formatters,
   components,
   ...props
@@ -40,7 +39,7 @@ function Calendar({
       )}
       captionLayout={captionLayout}
       formatters={{
-        formatMonthDropdown: (date) =>
+        formatMonthDropdown: (date: Date) =>
           date.toLocaleString('default', { month: 'short' }),
         ...formatters,
       }}
@@ -146,7 +145,8 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        Root: ({ className, rootRef, ...props }) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        Root: ({ className, rootRef, ...props }: any) => {
           return (
             <div
               data-slot='calendar'
@@ -156,7 +156,8 @@ function Calendar({
             />
           );
         },
-        Chevron: ({ className, orientation, ...props }) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        Chevron: ({ className, orientation, ...props }: any) => {
           if (orientation === 'left') {
             return (
               <ChevronLeftIcon className={cn('size-4', className)} {...props} />
@@ -177,10 +178,11 @@ function Calendar({
           );
         },
         DayButton: CalendarDayButton,
-        WeekNumber: ({ children, ...props }) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        WeekNumber: ({ children, ...props }: any) => {
           return (
             <td {...props}>
-              <div className='size-(--cell-size) flex items-center justify-center text-center'>
+              <div className='flex size-(--cell-size) items-center justify-center text-center'>
                 {children}
               </div>
             </td>
@@ -223,7 +225,7 @@ function CalendarDayButton({
       data-range-middle={modifiers.range_middle}
       className={cn(
         // 'aspect-square size-auto min-w-(--cell-size) flex w-full flex-col gap-1 font-normal leading-none data-[range-end=true]:rounded-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md data-[range-end=true]:rounded-r-md data-[range-start=true]:rounded-l-md data-[range-end=true]:bg-primary data-[range-middle=true]:bg-accent data-[range-start=true]:bg-primary data-[selected-single=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-middle=true]:text-accent-foreground data-[range-start=true]:text-primary-foreground data-[selected-single=true]:text-primary-foreground group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-ring/50 dark:hover:text-accent-foreground [&>span]:text-xs [&>span]:opacity-70',
-        'flex aspect-square h-10 w-10 shrink-0 items-center justify-center p-0 text-center data-[selected-single=true]:bg-ds-primary-base data-[selected-single=true]:text-primary-foreground hover:data-[selected-single=true]:bg-ds-primary-base hover:data-[selected-single=true]:text-primary-foreground',
+        'data-[selected-single=true]:bg-ds-primary-base data-[selected-single=true]:text-primary-foreground hover:data-[selected-single=true]:bg-ds-primary-base hover:data-[selected-single=true]:text-primary-foreground flex aspect-square h-10 w-10 shrink-0 items-center justify-center p-0 text-center',
         defaultClassNames.day,
         className
       )}

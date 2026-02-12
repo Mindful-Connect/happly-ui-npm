@@ -1,12 +1,12 @@
-import { existsSync } from "fs";
-import { readFile } from "fs/promises";
-import path from "path";
+import { existsSync } from 'fs';
+import { readFile } from 'fs/promises';
+import path from 'path';
 import type {
   RegistryItem,
   RegistryIndex,
   HapplyConfig,
-} from "../types/index.js";
-import { REGISTRY_URL } from "../types/index.js";
+} from '../types/index.js';
+import { REGISTRY_URL } from '../types/index.js';
 
 /**
  * Get the registry URL from config or default
@@ -20,9 +20,9 @@ function getRegistryUrl(config?: HapplyConfig): string {
  */
 function isLocalRegistry(registry: string): boolean {
   return (
-    registry.startsWith("/") ||
-    registry.startsWith("./") ||
-    registry.startsWith("file://")
+    registry.startsWith('/') ||
+    registry.startsWith('./') ||
+    registry.startsWith('file://')
   );
 }
 
@@ -31,11 +31,11 @@ function isLocalRegistry(registry: string): boolean {
  */
 async function fetchOrRead(url: string): Promise<unknown> {
   if (isLocalRegistry(url)) {
-    const localPath = url.replace("file://", "");
+    const localPath = url.replace('file://', '');
     if (!existsSync(localPath)) {
       throw new Error(`Local registry file not found: ${localPath}`);
     }
-    const content = await readFile(localPath, "utf-8");
+    const content = await readFile(localPath, 'utf-8');
     return JSON.parse(content);
   }
 
@@ -54,7 +54,7 @@ export async function fetchRegistryIndex(
 ): Promise<RegistryIndex> {
   const baseUrl = getRegistryUrl(config);
   const url = isLocalRegistry(baseUrl)
-    ? path.join(baseUrl.replace("file://", ""), "registry.json")
+    ? path.join(baseUrl.replace('file://', ''), 'registry.json')
     : `${baseUrl}/registry.json`;
 
   return fetchOrRead(url) as Promise<RegistryIndex>;
@@ -62,11 +62,11 @@ export async function fetchRegistryIndex(
 
 async function fetchOrReadRaw(url: string): Promise<string> {
   if (isLocalRegistry(url)) {
-    const localPath = url.replace("file://", "");
+    const localPath = url.replace('file://', '');
     if (!existsSync(localPath)) {
       throw new Error(`Local file not found: ${localPath}`);
     }
-    return readFile(localPath, "utf-8");
+    return readFile(localPath, 'utf-8');
   }
 
   const response = await fetch(url);
@@ -85,14 +85,14 @@ export async function fetchRegistryItem(
 ): Promise<RegistryItem> {
   const baseUrl = getRegistryUrl(config);
   const isLocal = isLocalRegistry(baseUrl);
-  const cleanBaseUrl = baseUrl.replace("file://", "");
+  const cleanBaseUrl = baseUrl.replace('file://', '');
 
   // Try different paths based on component type
   const paths = isLocal
     ? [
-        path.join(cleanBaseUrl, "ui", `${name}.json`),
-        path.join(cleanBaseUrl, "hooks", `${name}.json`),
-        path.join(cleanBaseUrl, "lib", `${name}.json`),
+        path.join(cleanBaseUrl, 'ui', `${name}.json`),
+        path.join(cleanBaseUrl, 'hooks', `${name}.json`),
+        path.join(cleanBaseUrl, 'lib', `${name}.json`),
         path.join(cleanBaseUrl, `${name}.json`),
       ]
     : [

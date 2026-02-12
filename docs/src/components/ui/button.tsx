@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { Slot, Slottable } from '@radix-ui/react-slot'
-import { cva, type VariantProps } from 'class-variance-authority'
-import { cn } from '@/lib/utils'
-import { RiLoader2Fill } from 'react-icons/ri'
-import { colord } from 'colord'
+import * as React from 'react';
+import { Slot, Slottable } from '@radix-ui/react-slot';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
+import { RiLoader2Fill } from 'react-icons/ri';
+import { colord } from 'colord';
 
 // FULL-SIZE <Button>
 const modeBase: Record<string, string> = {
@@ -14,11 +14,11 @@ const modeBase: Record<string, string> = {
   lighter:
     'ring-1 ring-inset relative isolate after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:-z-10 after:transition after:duration-200 after:ease-out disabled:after:hidden',
   ghost: 'ring-1 ring-inset',
-}
+};
 
 // generate compoundVariants with correct literal types
-export type Variant = 'primary' | 'neutral' | 'error' | 'success' | 'warning'
-type Mode = 'filled' | 'stroke' | 'lighter' | 'ghost'
+export type Variant = 'primary' | 'neutral' | 'error' | 'success' | 'warning';
+type Mode = 'filled' | 'stroke' | 'lighter' | 'ghost';
 
 const compoundVariants: { variant: Variant; mode: Mode; className: string }[] =
   Object.entries({
@@ -74,15 +74,15 @@ const compoundVariants: { variant: Variant; mode: Mode; className: string }[] =
     },
   } as {
     [variant in Variant]: {
-      [mode in Mode]: string
-    }
+      [mode in Mode]: string;
+    };
   }).flatMap(([variant, modes]) =>
     Object.entries(modes).map(([mode, cls]) => ({
       variant: variant as Variant, // satisfy the union type
       mode: mode as Mode,
       className: cls,
-    })),
-  )
+    }))
+  );
 
 const fullRoot = cva(
   [
@@ -115,19 +115,19 @@ const fullRoot = cva(
     },
     compoundVariants,
     defaultVariants: { variant: 'primary', mode: 'filled', size: 'medium' },
-  },
-)
+  }
+);
 
 export interface ButtonProps
   extends
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof fullRoot> {
-  asChild?: boolean
+  asChild?: boolean;
   /** Shows loading spinner and disables the button */
-  loading?: boolean
+  loading?: boolean;
   /** Custom text to show when loading (replaces children) */
-  loadingText?: string
-  providerThemePrimaryColor?: string
+  loadingText?: string;
+  providerThemePrimaryColor?: string;
 }
 
 const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -145,22 +145,22 @@ const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(
       providerThemePrimaryColor,
       ...props
     },
-    ref,
+    ref
   ) => {
-    const Comp = asChild ? Slot : 'button'
+    const Comp = asChild ? Slot : 'button';
 
     const isPrimaryLight = providerThemePrimaryColor
       ? colord(providerThemePrimaryColor).isLight()
-      : false
+      : false;
 
     const contrastText =
       (variant ?? 'primary') === 'primary' && (mode ?? 'filled') === 'filled'
         ? isPrimaryLight
           ? 'text-ds-static-black'
           : 'text-ds-static-white'
-        : undefined
+        : undefined;
 
-    const isDisabled = disabled || loading
+    const isDisabled = disabled || loading;
 
     return (
       <Comp
@@ -169,14 +169,14 @@ const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(
           fullRoot({ variant, mode, size }),
           contrastText,
           loading && 'gap-1', // 4px gap when loading
-          className,
+          className
         )}
         disabled={isDisabled}
         aria-busy={loading}
         {...props}
       >
         {loading && (
-          <RiLoader2Fill className="animate-spin-smooth h-5 w-5 shrink-0" />
+          <RiLoader2Fill className='animate-spin-smooth h-5 w-5 shrink-0' />
         )}
         {asChild ? (
           <Slottable>
@@ -188,10 +188,10 @@ const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(
           children
         )}
       </Comp>
-    )
-  },
-)
-ButtonBase.displayName = 'Button'
+    );
+  }
+);
+ButtonBase.displayName = 'Button';
 
 // ICON-ONLY <ButtonCompact>
 const compactRoot = cva(
@@ -227,33 +227,33 @@ const compactRoot = cva(
       },
     },
     defaultVariants: { variant: 'stroke', size: 'large', fullRadius: false },
-  },
-)
-export { compactRoot as compactButtonVariants }
+  }
+);
+export { compactRoot as compactButtonVariants };
 
 const compactIcon = cva('', {
   variants: {
     size: { large: 'h-5 w-5', medium: 'h-[18px] w-[18px]' },
   },
   defaultVariants: { size: 'large' },
-})
+});
 
-type CompactCtx = Pick<VariantProps<typeof compactRoot>, 'variant' | 'size'>
-const CompactContext = React.createContext<CompactCtx | null>(null)
+type CompactCtx = Pick<VariantProps<typeof compactRoot>, 'variant' | 'size'>;
+const CompactContext = React.createContext<CompactCtx | null>(null);
 
 export interface CompactProps
   extends
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof compactRoot> {
-  asChild?: boolean
+  asChild?: boolean;
 }
 
 const CompactButton = React.forwardRef<HTMLButtonElement, CompactProps>(
   (
     { asChild, variant, size, fullRadius, className, children, ...props },
-    ref,
+    ref
   ) => {
-    const Comp = asChild ? Slot : 'button'
+    const Comp = asChild ? Slot : 'button';
     return (
       <CompactContext.Provider value={{ variant, size }}>
         <Comp
@@ -264,40 +264,40 @@ const CompactButton = React.forwardRef<HTMLButtonElement, CompactProps>(
           {children}
         </Comp>
       </CompactContext.Provider>
-    )
-  },
-)
-CompactButton.displayName = 'ButtonCompact'
+    );
+  }
+);
+CompactButton.displayName = 'ButtonCompact';
 
 export interface CompactIconProps
   extends React.HTMLAttributes<HTMLElement>, CompactCtx {
-  asChild?: boolean
+  asChild?: boolean;
 }
 
 const CompactIcon = React.forwardRef<HTMLElement, CompactIconProps>(
   ({ asChild, size, className, ...props }, ref) => {
-    const ctx = React.useContext(CompactContext)
-    const finalSize = size ?? ctx?.size ?? 'large'
-    const Comp = asChild ? Slot : 'span'
+    const ctx = React.useContext(CompactContext);
+    const finalSize = size ?? ctx?.size ?? 'large';
+    const Comp = asChild ? Slot : 'span';
     return (
       <Comp
         ref={ref}
         className={cn(
           'flex items-center justify-center',
-          compactIcon({ size: finalSize, className }),
+          compactIcon({ size: finalSize, className })
         )}
         {...props}
       />
-    )
-  },
-)
-CompactIcon.displayName = 'ButtonCompactIcon'
+    );
+  }
+);
+CompactIcon.displayName = 'ButtonCompactIcon';
 
 // MERGED EXPORT
 export const Button = Object.assign(ButtonBase, {
   Compact: Object.assign(CompactButton, { Icon: CompactIcon }),
-})
+});
 
 /* optional re-export if other components want raw CVA */
-export { CompactButton as ButtonCompact, CompactIcon as ButtonCompactIcon }
-export { fullRoot as buttonVariants }
+export { CompactButton as ButtonCompact, CompactIcon as ButtonCompactIcon };
+export { fullRoot as buttonVariants };

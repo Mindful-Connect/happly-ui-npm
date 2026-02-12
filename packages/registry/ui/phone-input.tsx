@@ -53,9 +53,9 @@ function PhoneInput({
     }
 
     const parsed = parsePhoneNumber(propInputValue);
-    let newInternalFull = '';
+    let newInternalFull: string;
     let newNationalDigits = '';
-    let newCountryIso2 = defaultCountryIso2;
+    let newCountryIso2: CountryIso2;
 
     if (parsed && parsed.isValid()) {
       newInternalFull = parsed.number; // E.164
@@ -151,7 +151,10 @@ function PhoneInput({
       const newFullNumber = `+${country.dialCode}${digits}`;
 
       // 4. Format the display value *immediately* for responsiveness
-      const newDisplayedValue = formatNationalDigits(digits, currentCountryCode);
+      const newDisplayedValue = formatNationalDigits(
+        digits,
+        currentCountryCode
+      );
 
       // 5. Update states
       setInternalFullPhone(newFullNumber);
@@ -209,7 +212,7 @@ function PhoneInput({
   return (
     <div
       className={cn(
-        'relative flex h-10 w-full rounded-10 border shadow-[0px_1px_2px_0px_rgba(10,13,20,0.03)]',
+        'rounded-10 relative flex h-10 w-full border shadow-[0px_1px_2px_0px_rgba(10,13,20,0.03)]',
         'hover:not-focus-within:border-ds-neutral-200 hover:not-focus-within:bg-ds-weak-50',
         'focus-within:border-ds-stroke-strong-950 focus-within:shadow-button-important-focus',
         readOnly ? 'cursor-not-allowed bg-gray-100' : 'bg-white',
@@ -225,7 +228,7 @@ function PhoneInput({
           <>
             <Listbox.Button
               className={cn(
-                'relative flex shrink-0 cursor-default items-center gap-x-2 whitespace-nowrap rounded-l-10 border border-transparent border-r-ds-neutral-200 bg-transparent py-2 pl-2 pr-2.5 text-sm focus:outline-none',
+                'rounded-l-10 border-r-ds-neutral-200 relative flex shrink-0 cursor-default items-center gap-x-2 border border-transparent bg-transparent py-2 pr-2.5 pl-2 text-sm whitespace-nowrap focus:outline-none',
                 readOnly ? 'pointer-events-none' : 'cursor-pointer'
               )}
               style={{
@@ -257,7 +260,7 @@ function PhoneInput({
             {open && !readOnly && (
               <Listbox.Options
                 static
-                className='absolute left-0 top-full z-50 mt-2.5 w-full max-w-[250px] overflow-hidden rounded-2xl border border-ds-neutral-200 bg-white text-base shadow-[0px_1px_2px_0px_rgba(10,13,20,0.03)] ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'
+                className='border-ds-neutral-200 ring-opacity-5 absolute top-full left-0 z-50 mt-2.5 w-full max-w-[250px] overflow-hidden rounded-2xl border bg-white text-base shadow-[0px_1px_2px_0px_rgba(10,13,20,0.03)] ring-1 ring-black focus:outline-none sm:text-sm'
               >
                 <CountryOptions />
               </Listbox.Options>
@@ -282,7 +285,7 @@ function PhoneInput({
         placeholder={placeholder}
         readOnly={readOnly}
         className={cn(
-          'h-full w-full flex-1 rounded-r-[10px] border-none bg-transparent px-3 py-2 text-sm outline-none ring-0 placeholder:text-ds-neutral-400 focus:outline-none focus:ring-0',
+          'placeholder:text-ds-neutral-400 h-full w-full flex-1 rounded-r-[10px] border-none bg-transparent px-3 py-2 text-sm ring-0 outline-none focus:ring-0 focus:outline-none',
           readOnly ? 'cursor-not-allowed text-gray-500' : '',
           propInputValue
             ? 'text-ds-neutral-950'
@@ -311,7 +314,7 @@ const CountryOption = memo(function CountryOption({ c }: { c: ParsedCountry }) {
       value={c.iso2}
       className={({ active }) =>
         cn(
-          'relative cursor-default select-none rounded-[10px] p-3 text-sm text-ds-neutral-950',
+          'text-ds-neutral-950 relative cursor-default rounded-[10px] p-3 text-sm select-none',
           active ? 'bg-ds-neutral-50' : ''
         )
       }
@@ -337,7 +340,7 @@ const CountryOption = memo(function CountryOption({ c }: { c: ParsedCountry }) {
 
 const CountryOptions = memo(function CountryOptions() {
   return (
-    <div className='max-h-[240px] overflow-y-auto p-2 scrollbar-track-slate-50 scrollbar-thumb-slate-300 focus:outline-none'>
+    <div className='scrollbar-track-slate-50 scrollbar-thumb-slate-300 max-h-[240px] overflow-y-auto p-2 focus:outline-none'>
       {preferredCountries.map((c) => (
         <CountryOption key={c.iso2} c={c} />
       ))}
@@ -377,7 +380,7 @@ const formatNationalDigits = (
   } else {
     const formatter = new AsYouType(countryCode);
     formatter.input(digits);
-    let formatted = formatter.getNationalNumber();
+    const formatted = formatter.getNationalNumber();
     if (!formatted && digits.length > 0) {
       return digits; // Fallback for short inputs
     }

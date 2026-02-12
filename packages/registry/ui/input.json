@@ -138,11 +138,7 @@
           ]
         }
       ],
-      "dependencies": [
-        "@headlessui/react",
-        "lucide-react",
-        "flag-icons"
-      ]
+      "dependencies": ["@headlessui/react", "lucide-react", "flag-icons"]
     }
   },
   "files": [

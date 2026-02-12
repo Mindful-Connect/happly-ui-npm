@@ -4,12 +4,8 @@
   "type": "registry:ui",
   "title": "Divider",
   "description": "A versatile divider component for creating visual separation between content elements. Supports multiple variants including line, text, and content dividers.",
-  "dependencies": [
-    "tailwind-variants"
-  ],
-  "registryDependencies": [
-    "tv"
-  ],
+  "dependencies": ["tailwind-variants"],
+  "registryDependencies": ["tv"],
   "docs": {
     "lead": "A versatile divider component for creating visual separation between content elements.",
     "usage": "import * as Divider from \"@/components/ui/divider\"\n\n<Divider.Root />\n<Divider.Root variant=\"line-text\">OR</Divider.Root>",

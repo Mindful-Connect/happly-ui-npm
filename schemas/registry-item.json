@@ -19,7 +19,13 @@
     "type": {
       "type": "string",
       "description": "Type of registry item",
-      "enum": ["registry:ui", "registry:hook", "registry:lib", "registry:component", "registry:block"]
+      "enum": [
+        "registry:ui",
+        "registry:hook",
+        "registry:lib",
+        "registry:component",
+        "registry:block"
+      ]
     },
     "title": {
       "type": "string",
@@ -69,7 +75,13 @@
           "type": {
             "type": "string",
             "description": "Type of file, determines installation location",
-            "enum": ["registry:ui", "registry:hook", "registry:lib", "registry:component", "registry:block"]
+            "enum": [
+              "registry:ui",
+              "registry:hook",
+              "registry:lib",
+              "registry:component",
+              "registry:block"
+            ]
           },
           "target": {
             "type": "string",

@@ -1,4 +1,4 @@
-import { ReactNode, ElementType } from 'react';
+import { ReactNode, ElementType, RefObject } from 'react';
 import { ObjectValues, ApiFetch } from '@/lib/utils';
 import { AlertModel } from '@/lib/alert-utils';
 import { fileTypes, S3_ASSET_TYPE, ACL_TYPE } from './constants';
@@ -64,7 +64,10 @@ export interface FileUploadTriggerProps {
   className?: string;
   as?: ElementType;
 
-  handleFileChange: (file: File | null | undefined, fileInputRef: any) => void;
+  handleFileChange: (
+    file: File | null | undefined,
+    fileInputRef: RefObject<HTMLInputElement>
+  ) => void;
   uploading: boolean;
 }
 

@@ -251,7 +251,8 @@ const useSelectContext = () => {
 };
 
 interface SelectRootProps
-  extends React.ComponentProps<typeof SelectPrimitives.Root>,
+  extends
+    React.ComponentProps<typeof SelectPrimitives.Root>,
     Omit<SelectContextType, 'className' | 'children'> {}
 
 const Select = ({
@@ -289,7 +290,7 @@ const SelectSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitives.Separator
     ref={ref}
-    className={cn('bg-ds-stroke-soft-200 -mx-1 my-1 h-px', className)} // Example styling
+    className={cn('-mx-1 my-1 h-px bg-ds-stroke-soft-200', className)} // Example styling
     {...props}
   />
 ));
@@ -377,9 +378,9 @@ const SelectContent = React.forwardRef<
         ref={ref}
         className={cn(
           // base
-          'relative z-50 overflow-hidden rounded-2xl bg-ds-white-0 shadow-regular-md ring-1 ring-inset ring-ds-stroke-soft-200',
+          'relative z-50 overflow-hidden rounded-2xl bg-ds-white-0 shadow-regular-md ring-1 ring-ds-stroke-soft-200 ring-inset',
           // widths
-          'min-w-[--radix-select-trigger-width] max-w-[max(var(--radix-select-trigger-width),320px)]',
+          'max-w-[max(var(--radix-select-trigger-width),320px)] min-w-[--radix-select-trigger-width]',
           // heights - consider shadcn's approach: 'max-h-96'
           'max-h-[--radix-select-content-available-height]',
           // animation
@@ -431,12 +432,12 @@ const SelectItem = React.forwardRef<
       ref={ref}
       className={cn(
         // base
-        'group relative cursor-pointer select-none rounded-lg p-2 pr-9 text-sm text-ds-strong-950',
+        'group relative cursor-pointer rounded-lg p-2 pr-9 text-sm text-ds-strong-950 select-none',
         'flex items-center gap-2 transition duration-200 ease-out',
         // disabled
         'data-[disabled]:pointer-events-none data-[disabled]:text-ds-disabled-300',
         // hover, focus
-        'data-[highlighted]:bg-ds-weak-50 data-[highlighted]:outline-0 focus:bg-ds-weak-50', // Added focus style similar to highlighted for consistency
+        'focus:bg-ds-weak-50 data-[highlighted]:bg-ds-weak-50 data-[highlighted]:outline-0', // Added focus style similar to highlighted for consistency
         {
           'gap-1.5 pr-[34px]': size === 'xsmall', // Adjusted padding for checkmark space
         },
@@ -461,7 +462,7 @@ const SelectItem = React.forwardRef<
         </span>
       </SelectPrimitives.ItemText>
       <SelectPrimitives.ItemIndicator asChild>
-        <RiCheckLine className='absolute right-2 top-1/2 h-5 w-5 shrink-0 -translate-y-1/2 text-ds-sub-600' />
+        <RiCheckLine className='absolute top-1/2 right-2 h-5 w-5 shrink-0 -translate-y-1/2 text-ds-sub-600' />
       </SelectPrimitives.ItemIndicator>
     </SelectPrimitives.Item>
   );

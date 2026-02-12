@@ -1,5 +1,5 @@
-import { Callout } from '@/components/Callout'
-import { QuickLink, QuickLinks } from '@/components/QuickLinks'
+import { Callout } from '@/components/Callout';
+import { QuickLink, QuickLinks } from '@/components/QuickLinks';
 import {
   ComponentPreview,
   DemoButton,
@@ -14,7 +14,7 @@ import {
   DemoCardContent,
   DemoCardFooter,
   FormGroup,
-} from '@/components/ComponentPreview'
+} from '@/components/ComponentPreview';
 
 const tags = {
   callout: {
@@ -119,6 +119,6 @@ const tags = {
   'form-group': {
     render: FormGroup,
   },
-}
+};
 
-export default tags
+export default tags;
