@@ -108,6 +108,7 @@ export default function UploadFile({
     assetType,
     providerId,
     acl,
+    apiFetch,
   });
 
   useEffect(() => {
@@ -117,8 +118,9 @@ export default function UploadFile({
       assetType,
       providerId,
       acl,
+      apiFetch,
     };
-  }, [authToken, providerCurrentWorkspaceKey, assetType, providerId, acl]);
+  }, [authToken, providerCurrentWorkspaceKey, assetType, providerId, acl, apiFetch]);
 
   // Determine upload mode based on variant (attachment uses presigned URL by default)
   const effectiveUploadMode =
@@ -311,6 +313,7 @@ export default function UploadFile({
 
         async createMultipartUpload(file) {
           try {
+            const { apiFetch } = latestPropsRef.current;
             const response = await apiFetch('/owner/assets/s3/multipart', {
               method: 'POST',
               body: JSON.stringify({
@@ -328,6 +331,7 @@ export default function UploadFile({
 
         async listParts(file, { uploadId, key }) {
           try {
+            const { apiFetch } = latestPropsRef.current;
             const response = await apiFetch(`/owner/assets/s3/multipart/list`, {
               method: 'POST',
               headers: {
@@ -347,6 +351,7 @@ export default function UploadFile({
 
         async signPart(file, { uploadId, key, partNumber }) {
           try {
+            const { apiFetch } = latestPropsRef.current;
             const response = await apiFetch(
               `/owner/assets/s3/multipart/${uploadId}/${partNumber}?key=${encodeURIComponent(key)}`
             );
@@ -359,6 +364,7 @@ export default function UploadFile({
 
         async completeMultipartUpload(file, { uploadId, key, parts }) {
           try {
+            const { apiFetch } = latestPropsRef.current;
             const response = await apiFetch(
               `/owner/assets/s3/multipart/${uploadId}/complete?key=${encodeURIComponent(key)}`,
               {
@@ -378,6 +384,7 @@ export default function UploadFile({
 
         async abortMultipartUpload(file, { uploadId, key }) {
           try {
+            const { apiFetch } = latestPropsRef.current;
             const response = await apiFetch(
               `/owner/assets/s3/multipart/${uploadId}?key=${encodeURIComponent(key)}`,
               {
@@ -393,6 +400,7 @@ export default function UploadFile({
 
         async getUploadParameters(file) {
           try {
+            const { apiFetch } = latestPropsRef.current;
             const response = await apiFetch(
               '/owner/assets/s3/getUploadParameters',
               {
