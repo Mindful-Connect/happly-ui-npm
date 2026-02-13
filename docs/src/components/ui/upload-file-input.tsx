@@ -4,7 +4,8 @@ import { useEffect, useState, useRef, useId } from 'react';
 import Uppy from '@uppy/core';
 import AwsS3 from '@uppy/aws-s3'; // Compatible with GCS S3-compatible API
 import XHRUpload from '@uppy/xhr-upload';
-import { UppyContextProvider, useDropzone, useFileInput } from '@uppy/react';
+import { UppyContextProvider, useDropzone } from '@uppy/react';
+import type { UppyFile } from '@uppy/core';
 
 import {
   RiDeleteBin6Line,
@@ -64,7 +65,6 @@ interface UploadingFile {
   state: UploadingFileStatus;
 }
 
-
 export default function UploadFile({
   alt = '',
   disabled,
@@ -99,8 +99,8 @@ export default function UploadFile({
   const [uploading, setUploading] = useState(false);
   const [dragging, setDragging] = useState(false);
 
-
   const [uploadingFiles, setUploadingFiles] = useState<UploadingFile[]>([]);
+  const timeoutRefs = useRef<NodeJS.Timeout[]>([]);
 
   const latestPropsRef = useRef({
     authToken,
@@ -120,7 +120,14 @@ export default function UploadFile({
       acl,
       apiFetch,
     };
-  }, [authToken, providerCurrentWorkspaceKey, assetType, providerId, acl, apiFetch]);
+  }, [
+    authToken,
+    providerCurrentWorkspaceKey,
+    assetType,
+    providerId,
+    acl,
+    apiFetch,
+  ]);
 
   // Determine upload mode based on variant (attachment uses presigned URL by default)
   const effectiveUploadMode =
@@ -207,7 +214,7 @@ export default function UploadFile({
       video.removeEventListener('loadeddata', () => {});
       video.removeEventListener('timeupdate', () => {});
     };
-  }, [src]);
+  }, [src, variant]);
 
   const chunkSize = 200 * 1024 * 1024;
   const effectiveMaxFiles =
@@ -270,8 +277,7 @@ export default function UploadFile({
 
           // Store the public URL and any required signed headers in metadata
           // for use in onUploadSuccess and when configuring XHR headers.
-          // Store the public URL and any required signed headers in metadata
-          // for use in onUploadSuccess and when configuring XHR headers.
+
           uppyInstance.setFileMeta(file.id, {
             publicUrl: item.url,
             // Optional: backend may return additional headers required by the
@@ -284,7 +290,10 @@ export default function UploadFile({
         },
         method: 'PUT',
         formData: false, // Send body as raw file bytes
-        // We need to set Content-Type header to the file type for S3 presigned URLs
+        // We need to set Content-Type header to the file type for S3 presigned URLs.
+        // Additionally, some presigned URLs may require extra headers (for example,
+        // x-amz-acl or x-amz-meta-*). If the backend provides these headers along
+        // with the presigned URL, we forward them here.
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         headers: (file: any) => {
           const extraHeaders =
@@ -303,12 +312,14 @@ export default function UploadFile({
     } else {
       uppyInstance.use(AwsS3, {
         limit: 6,
-        shouldUseMultipart: (file: any) => file.size > chunkSize,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        shouldUseMultipart: (file: any) => (file.size || 0) > chunkSize,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         getChunkSize: (file: any) => {
-          if (file.size > chunkSize) {
+          if ((file.size || 0) > chunkSize) {
             return chunkSize;
           }
-          return file.size;
+          return file.size || 0;
         },
 
         async createMultipartUpload(file) {
@@ -325,7 +336,7 @@ export default function UploadFile({
 
             return response.json();
           } catch (error) {
-            throw new Error('Network response was not ok');
+            throw new Error('Network response was not ok', { cause: error });
           }
         },
 
@@ -345,7 +356,7 @@ export default function UploadFile({
             return response.json();
           } catch (error) {
             console.error('Multipart upload creation failed:', error);
-            throw new Error('Network response was not ok');
+            throw new Error('Network response was not ok', { cause: error });
           }
         },
 
@@ -358,7 +369,7 @@ export default function UploadFile({
             return response.json();
           } catch (error) {
             console.error('Sign part failed:', error);
-            throw new Error('Network response was not ok');
+            throw new Error('Network response was not ok', { cause: error });
           }
         },
 
@@ -378,7 +389,7 @@ export default function UploadFile({
             return response.json();
           } catch (error) {
             console.error('Complete multipart upload failed:', error);
-            throw new Error('Network response was not ok');
+            throw new Error('Network response was not ok', { cause: error });
           }
         },
 
@@ -394,7 +405,7 @@ export default function UploadFile({
             return response.json();
           } catch (error) {
             console.error('Abort multipart upload failed:', error);
-            throw new Error('Network response was not ok');
+            throw new Error('Network response was not ok', { cause: error });
           }
         },
 
@@ -414,7 +425,7 @@ export default function UploadFile({
 
             return response.json();
           } catch (error) {
-            throw new Error('Network response was not ok');
+            throw new Error('Network response was not ok', { cause: error });
           }
         },
       });
@@ -424,10 +435,19 @@ export default function UploadFile({
   });
 
   useEffect(() => {
+    uppy.setOptions({
+      restrictions: {
+        maxFileSize,
+        maxNumberOfFiles: effectiveMaxFiles,
+        allowedFileTypes,
+      },
+    });
+  }, [uppy, maxFileSize, effectiveMaxFiles, allowedFileTypes]);
+
+  useEffect(() => {
     if (!uppy) return;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const onFileAdded = async (file: any) => {
+    const onFileAdded = async (file: UppyFile<any, any>) => {
       if (!file || disabled) return;
       setDragging(false);
       uppy.upload();
@@ -443,16 +463,17 @@ export default function UploadFile({
       );
 
       // Remove from list after delay
-      setTimeout(() => {
+      const timer: NodeJS.Timeout = setTimeout(() => {
         setUploadingFiles((prev: UploadingFile[]) =>
           prev.filter((f) => f.id !== file.id)
         );
       }, 2000);
+      timeoutRefs.current.push(timer);
 
       setUploading(false);
       // Use location from response (S3 multipart) or fallback to publicUrl from meta (presigned)
       const location = response.body?.location || file.meta?.publicUrl;
-      
+
       if (!file || !location) return;
       const fileInfo: UploadedFileInfo = {
         url: location,
@@ -569,12 +590,14 @@ export default function UploadFile({
       uppy.off('restriction-failed', onRestrictionFailed);
       uppy.off('error', onErrorHandler);
       uppy.off('upload-error', onUploadErrorHandler);
+      timeoutRefs.current.forEach((timer) => clearTimeout(timer));
+      timeoutRefs.current = [];
     };
-  }, [uppy]);
+  }, [uppy, addAlert, disabled, onUploadSuccess, t]);
 
   const handleFileChange = async (
     file: File | null | undefined,
-    fileInputRef: any
+    fileInputRef: React.RefObject<HTMLInputElement>
   ) => {
     if (fileInputRef.current) fileInputRef.current.value = '';
 
@@ -620,7 +643,7 @@ export default function UploadFile({
 
       // Add file to Uppy (handles calling .upload() largely via onFileAdded)
       // Note: we don't need to manually call uppy.upload() here because onFileAdded does it.
-      uppy.addFile({
+      const fileId = uppy.addFile({
         source: 'file input',
         name: file.name,
         type: file.type,
@@ -631,7 +654,7 @@ export default function UploadFile({
       setUploadingFiles((prev: UploadingFile[]) => [
         ...prev,
         {
-          id: '', // temporary, will be synced with actual ID in progress handler if needed or we can generate one.
+          id: fileId,
           name: file.name,
           size: file.size,
           type: file.type,
@@ -641,7 +664,7 @@ export default function UploadFile({
       ]);
       // Remove the direct setUploadingFiles call here to avoid Sync issues.
       // onFileAdded -> uppy.upload() -> upload events.
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('File upload process failed:', error);
 
       let detailedErrorMessage: string;
@@ -890,12 +913,12 @@ export default function UploadFile({
                 state={file.state}
                 progress={file.progress}
                 mimeType={file.type}
-                t={t}
                 onRemove={() => {
                   setUploadingFiles((prev: UploadingFile[]) =>
                     prev.filter((f) => f.id !== file.id)
                   );
                 }}
+                t={t}
               />
             ))}
           </div>
@@ -908,8 +931,8 @@ export default function UploadFile({
               <AttachmentListItem
                 key={attachment.id}
                 attachment={attachment}
-                t={t}
                 onRemove={() => onAttachmentRemove?.(attachment.id)}
+                t={t}
               />
             ))}
           </div>
@@ -1001,8 +1024,8 @@ export default function UploadFile({
                           <AttachmentListItem
                             key={attachment.id}
                             attachment={attachment}
-                            t={t}
                             onRemove={() => onAttachmentRemove?.(attachment.id)}
+                            t={t}
                           />
                         )
                       )}
@@ -1555,15 +1578,28 @@ function FileUploadTrigger({
   allowedFileTypes,
   className,
   as: WrapperTag = 'div',
+  handleFileChange,
   uploading,
 }: FileUploadTriggerProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const {
     getRootProps: getDropZoneRootProps,
     getInputProps: getDropZoneInputProps,
   } = useDropzone({
     noClick: true,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onDrop: (acceptedFiles: any[]) => {
+      if (acceptedFiles && acceptedFiles.length > 0) {
+        handleFileChange(acceptedFiles[0], fileInputRef);
+      }
+    },
   });
-  const { getButtonProps, getInputProps: getFileInputProps } = useFileInput();
+
+  const getButtonProps = () => ({
+    onClick: () => {
+      fileInputRef.current?.click();
+    },
+  });
 
   const acceptAttr = allowedFileTypes.join(',');
 
@@ -1575,6 +1611,12 @@ function FileUploadTrigger({
           display: 'block',
         }}
         tabIndex={0}
+        onKeyDown={(e: React.KeyboardEvent) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            fileInputRef.current?.click();
+          }
+        }}
         aria-disabled={uploading}
         title={
           uploading
@@ -1589,10 +1631,17 @@ function FileUploadTrigger({
       </WrapperTag>
 
       <input
-        {...getFileInputProps()}
+        ref={fileInputRef}
+        type='file'
         accept={acceptAttr}
         className='hidden'
         disabled={uploading}
+        onChange={(e) => {
+          const files = e.target.files;
+          if (files && files.length > 0) {
+            handleFileChange(files[0], fileInputRef);
+          }
+        }}
       />
 
       <input
@@ -1625,7 +1674,7 @@ function AttachmentListItem({
     <div className='flex h-[104px] items-center gap-4 overflow-hidden rounded-16 border border-ds-neutral-200 bg-white pr-6'>
       {/* Thumbnail/Icon */}
       <div
-        className='flex h-full w-[176px] shrink-0 items-center justify-center overflow-hidden bg-linear-to-t from-[#f2f2f3] via-[#f7f8f8] to-[#fcfcfc]'
+        className='flex h-full w-[176px] shrink-0 items-center justify-center overflow-hidden bg-gradient-to-t from-[#f2f2f3] via-[#f7f8f8] to-[#fcfcfc]'
         style={{ borderTopLeftRadius: '12px', borderBottomLeftRadius: '12px' }}
       >
         {isImage && attachment.file_url ? (
