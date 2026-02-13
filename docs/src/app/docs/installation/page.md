@@ -150,7 +150,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 ```
 
-### 3. Configure path aliases
+### 4. Configure path aliases
 
 In your `tsconfig.json`, add path aliases:
 
@@ -165,7 +165,7 @@ In your `tsconfig.json`, add path aliases:
 }
 ```
 
-### 4. Copy components
+### 5. Copy components
 
 Browse the [components section](/docs/components/button) and copy the source code directly into your project.
 

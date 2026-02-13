@@ -329,7 +329,7 @@ Include a `docs` field for automatic documentation generation:
   ],
   "docs": {
     "lead": "Component description",
-    "usage": "import * as MyComponent from '@/components/ui/my-component'",
+    "usage": "import * as MyComponent from '@/components/happly-ui/my-component'",
     "examples": [
       {
         "title": "Default",
