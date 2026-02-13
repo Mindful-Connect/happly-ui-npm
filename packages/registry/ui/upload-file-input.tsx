@@ -401,6 +401,19 @@ export default function UploadFile({
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onUploadSuccessHandler = (file: any, response: any) => {
+      setUploadingFiles((prev: UploadingFile[]) =>
+        prev.map((f: UploadingFile) =>
+          f.id === file.id ? { ...f, state: 'success', progress: 100 } : f
+        )
+      );
+
+      // Remove from list after delay
+      setTimeout(() => {
+        setUploadingFiles((prev: UploadingFile[]) =>
+          prev.filter((f) => f.id !== file.id)
+        );
+      }, 2000);
+
       setUploading(false);
       // Use location from response (S3 multipart) or fallback to publicUrl from meta (presigned)
       const location = response.body?.location || file.meta?.publicUrl;
