@@ -242,7 +242,7 @@ The `happly-ui-components.json` file configures how components are installed:
 
 ```json
 {
-  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/components.json",
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/happly-ui-components.json",
   "tailwind": {
     "config": "tailwind.config.ts",
     "css": "src/index.css",

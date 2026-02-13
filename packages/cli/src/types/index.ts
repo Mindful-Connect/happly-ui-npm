@@ -120,7 +120,7 @@ export const CONFIG_FILE = 'happly-ui-components.json';
 
 export const DEFAULT_CONFIG: Partial<HapplyConfig> = {
   $schema:
-    'https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/components.json',
+    'https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/happly-ui-components.json',
   srcDir: true,
   tailwind: {
     config: 'tailwind.config.ts',

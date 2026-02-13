@@ -173,13 +173,12 @@ Browse the [components section](/docs/components/button) and copy the source cod
 
 ## Configuration
 
-HapplyUI stores its configuration in `components.json`:
+HapplyUI stores its configuration in `happly-ui-components.json`:
 
 ```json
 {
-  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/components.schema.json",
-  "style": "new-york",
-  "typescript": true,
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/happly-ui-components.json",
+  "tsx": true,
   "tailwind": {
     "config": "tailwind.config.ts",
     "css": "src/styles/globals.css",
@@ -200,7 +199,7 @@ HapplyUI stores its configuration in `components.json`:
 
 | Option          | Description                                                |
 | --------------- | ---------------------------------------------------------- |
-| `typescript`    | Whether to use TypeScript (`true`) or JavaScript (`false`) |
+| `tsx`           | Whether to use TypeScript (`true`) or JavaScript (`false`) |
 | `tailwind.css`  | Path to your global CSS file                               |
 | `aliases.ui`    | Where components will be installed (default: `components/happly-ui`) |
 | `aliases.utils` | Where the `cn()` utility lives (default: `lib/happly-ui-utils`)      |

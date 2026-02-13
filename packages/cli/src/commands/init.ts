@@ -378,7 +378,7 @@ function createDefaultConfig(
 
   return {
     $schema:
-      'https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/components.json',
+      'https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/happly-ui-components.json',
     srcDir: isSrcDir,
     tailwind: {
       config: projectInfo.tailwindConfig || 'tailwind.config.ts',
@@ -411,7 +411,7 @@ function createConfig(
 ): HapplyConfig {
   return {
     $schema:
-      'https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/components.json',
+      'https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/happly-ui-components.json',
     srcDir: projectInfo.isSrcDir,
     tailwind: {
       config: projectInfo.tailwindConfig || 'tailwind.config.ts',
