@@ -440,6 +440,14 @@ export default function UploadFile({
           timeout: 3000,
         })
       );
+
+      if (file && file.id) {
+        setUploadingFiles((prev: UploadingFile[]) =>
+          prev.map((f: UploadingFile) =>
+            f.id === file.id ? { ...f, state: 'error' } : f
+          )
+        );
+      }
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -453,6 +461,14 @@ export default function UploadFile({
           timeout: 3000,
         })
       );
+
+      if (file && file.id) {
+        setUploadingFiles((prev: UploadingFile[]) =>
+          prev.map((f: UploadingFile) =>
+            f.id === file.id ? { ...f, state: 'error' } : f
+          )
+        );
+      }
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
