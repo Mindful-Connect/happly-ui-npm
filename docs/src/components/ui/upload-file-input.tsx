@@ -127,7 +127,7 @@ export default function UploadFile({
       } catch (err) {
         if ((err as { isRestriction?: boolean })?.isRestriction) {
           // Restriction errors are handled by 'restriction-failed' event
-          console.log('Restriction failed:', err);
+          console.error('Restriction failed:', err);
         } else {
           console.error('Uppy add file error:', err);
         }
@@ -238,8 +238,16 @@ export default function UploadFile({
           // However, XHRUpload plugin creates an XHR request to `endpoint`.
           // If we want to use the signed URL as the endpoint, we return it.
 
-          // Store the public URL in metadata for use in onUploadSuccess
-          file.meta = { ...file.meta, publicUrl: item.url };
+          // Store the public URL and any required signed headers in metadata
+          // for use in onUploadSuccess and when configuring XHR headers.
+          file.meta = {
+            ...file.meta,
+            publicUrl: item.url,
+            // Optional: backend may return additional headers required by the
+            // presigned URL (e.g. x-amz-acl, x-amz-meta-*). If present, we
+            // forward them via the XHRUpload headers callback.
+            signedHeaders: item.headers,
+          };
 
           return item.signedUrl;
         },
@@ -247,9 +255,19 @@ export default function UploadFile({
         formData: false, // Send body as raw file bytes
         // We need to set Content-Type header to the file type for S3 presigned URLs
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        headers: (file: any) => ({
-          'Content-Type': file.type,
-        }),
+        headers: (file: any) => {
+          const extraHeaders =
+            (file &&
+              file.meta &&
+              (file.meta as { signedHeaders?: Record<string, string> })
+                .signedHeaders) ||
+            {};
+
+          return {
+            'Content-Type': file.type,
+            ...extraHeaders,
+          };
+        },
       });
     } else {
       uppyInstance.use(AwsS3, {
@@ -1403,7 +1421,7 @@ export default function UploadFile({
                     </div>
                   ) : (
                     <div className='flex items-center gap-5 overflow-hidden rounded-16 border border-ds-neutral-200'>
-                      <div className='flex h-[104px] w-[176px] shrink-0 items-center justify-center overflow-hidden bg-linear-to-t from-[#f2f2f3] via-[#f7f8f8] to-[#fcfcfc]'>
+                      <div className='flex h-[104px] w-[176px] shrink-0 items-center justify-center overflow-hidden bg-gradient-to-t from-[#f2f2f3] via-[#f7f8f8] to-[#fcfcfc]'>
                         {fileIcon}
                       </div>
 
