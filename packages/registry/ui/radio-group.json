@@ -3,9 +3,13 @@
   "name": "radio-group",
   "type": "registry:ui",
   "title": "Radio Group",
-  "description": "A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time.",
-  "dependencies": ["@radix-ui/react-radio-group"],
-  "registryDependencies": ["utils"],
+  "description": "A set of checkable buttons\u2014known as radio buttons\u2014where no more than one of the buttons can be checked at a time.",
+  "dependencies": [
+    "@radix-ui/react-radio-group"
+  ],
+  "registryDependencies": [
+    "happly-ui-utils"
+  ],
   "files": [
     {
       "path": "ui/radio-group.tsx",

@@ -9,7 +9,7 @@ import {
   ParsedCountry,
   usePhoneInput,
 } from 'react-international-phone';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/happly-ui-utils';
 import { ChevronDownIcon } from 'lucide-react';
 import { Listbox } from '@headlessui/react';
 

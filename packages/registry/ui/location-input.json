@@ -9,7 +9,9 @@
     "@googlemaps/js-api-loader",
     "@headlessui/react"
   ],
-  "registryDependencies": ["utils"],
+  "registryDependencies": [
+    "happly-ui-utils"
+  ],
   "docs": {
     "lead": "A Google Maps address autocomplete input.",
     "usage": "import { LocationInput } from \"@/components/ui/location-input\"\n\n<LocationInput location={location} setLocation={setLocation} />",

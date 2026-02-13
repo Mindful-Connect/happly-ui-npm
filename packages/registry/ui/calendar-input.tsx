@@ -4,7 +4,7 @@ import { Fragment, FC, SVGProps } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { Calendar } from './datepicker';
 import { enCA, frCA } from 'react-day-picker/locale';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/happly-ui-utils';
 
 export default function DatePreview({
   date,

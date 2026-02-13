@@ -4,8 +4,13 @@
   "type": "registry:ui",
   "title": "Dialog",
   "description": "A window overlaid on either the primary window or another dialog window.",
-  "dependencies": ["@radix-ui/react-dialog", "react-icons"],
-  "registryDependencies": ["utils"],
+  "dependencies": [
+    "@radix-ui/react-dialog",
+    "react-icons"
+  ],
+  "registryDependencies": [
+    "happly-ui-utils"
+  ],
   "files": [
     {
       "path": "ui/dialog.tsx",

@@ -172,9 +172,9 @@
       "description": "A file upload component with support for drag and drop, multiple files, and S3/GCS integration."
     },
     {
-      "name": "utils",
+      "name": "happly-ui-utils",
       "type": "registry:lib",
-      "title": "Utils",
+      "title": "Happly UI Utils",
       "description": "Utility functions for class name merging."
     }
   ]

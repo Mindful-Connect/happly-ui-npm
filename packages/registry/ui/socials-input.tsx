@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { z } from 'zod';
 
 import { Popover, Transition } from '@headlessui/react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/happly-ui-utils';
 import { Input } from '@/components/ui/input';
 import {
   RiCalendarTodoLine,

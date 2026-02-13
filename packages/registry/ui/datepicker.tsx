@@ -5,7 +5,7 @@ import {
   compactButtonVariants,
   type Variant as ButtonVariant,
 } from './button';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/happly-ui-utils';
 import {
   ChevronDownIcon,
   ChevronLeftIcon,

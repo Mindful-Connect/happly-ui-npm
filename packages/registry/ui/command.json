@@ -10,7 +10,10 @@
     "@radix-ui/react-scroll-area",
     "react-icons"
   ],
-  "registryDependencies": ["utils", "dialog"],
+  "registryDependencies": [
+    "dialog",
+    "happly-ui-utils"
+  ],
   "files": [
     {
       "path": "ui/command.tsx",

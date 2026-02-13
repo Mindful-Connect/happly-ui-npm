@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/popover';
 import { Tag as TagPill, TagClose } from '@/components/ui/tag';
 import { Tag, TagCategory } from '@/lib/tag-utils';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/happly-ui-utils';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import * as React from 'react';
 import { ReactElement, SVGProps } from 'react';

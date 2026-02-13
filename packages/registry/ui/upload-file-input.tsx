@@ -17,7 +17,7 @@ import {
   RiErrorWarningFill,
   RiLoader4Line,
 } from 'react-icons/ri';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/happly-ui-utils';
 import { AlertModel } from '@/lib/alert-utils';
 
 import { Button, ButtonCompact } from '@/components/ui/button';

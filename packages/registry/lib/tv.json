@@ -5,7 +5,7 @@
   "title": "Tailwind Variants",
   "description": "Tailwind Variants wrapper with cn() for class merging.",
   "dependencies": ["tailwind-variants"],
-  "registryDependencies": ["utils"],
+  "registryDependencies": ["happly-ui-utils"],
   "files": [
     {
       "path": "lib/tv.ts",
