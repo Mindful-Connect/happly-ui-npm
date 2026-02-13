@@ -102,6 +102,24 @@ export default function UploadFile({
 
   const [uploadingFiles, setUploadingFiles] = useState<UploadingFile[]>([]);
 
+  const latestPropsRef = useRef({
+    authToken,
+    providerCurrentWorkspaceKey,
+    assetType,
+    providerId,
+    acl,
+  });
+
+  useEffect(() => {
+    latestPropsRef.current = {
+      authToken,
+      providerCurrentWorkspaceKey,
+      assetType,
+      providerId,
+      acl,
+    };
+  }, [authToken, providerCurrentWorkspaceKey, assetType, providerId, acl]);
+
   // Determine upload mode based on variant (attachment uses presigned URL by default)
   const effectiveUploadMode =
     uploadMode || (variant === 'attachment' ? 'presigned-url' : 'multipart');
@@ -210,6 +228,14 @@ export default function UploadFile({
       uppyInstance.use(XHRUpload, {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         endpoint: async (file: any) => {
+          const {
+            authToken,
+            providerCurrentWorkspaceKey,
+            assetType,
+            providerId,
+            acl,
+          } = latestPropsRef.current;
+
           const preSignedResponse = await fetch(
             `${process.env.NEXT_PUBLIC_NEXT_API_URL}/assets/pre-signed`,
             {
