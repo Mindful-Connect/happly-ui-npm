@@ -100,7 +100,7 @@ export default function UploadFile({
   const [dragging, setDragging] = useState(false);
 
   const [uploadingFiles, setUploadingFiles] = useState<UploadingFile[]>([]);
-  const timeoutRefs = useRef<NodeJS.Timeout[]>([]);
+  const timeoutRefs = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   const latestPropsRef = useRef({
     authToken,
@@ -447,7 +447,9 @@ export default function UploadFile({
   useEffect(() => {
     if (!uppy) return;
 
-    const onFileAdded = async (file: UppyFile<any, any>) => {
+    const onFileAdded = async (
+      file: UppyFile<any, any>
+    ) => {
       if (!file || disabled) return;
       setDragging(false);
       uppy.upload();
@@ -590,10 +592,17 @@ export default function UploadFile({
       uppy.off('restriction-failed', onRestrictionFailed);
       uppy.off('error', onErrorHandler);
       uppy.off('upload-error', onUploadErrorHandler);
-      timeoutRefs.current.forEach((timer) => clearTimeout(timer));
-      timeoutRefs.current = [];
     };
   }, [uppy, addAlert, disabled, onUploadSuccess, t]);
+
+  useEffect(() => {
+    return () => {
+      timeoutRefs.current.forEach((timer: NodeJS.Timeout) =>
+        clearTimeout(timer)
+      );
+      timeoutRefs.current = [];
+    };
+  }, []);
 
   const handleFileChange = async (
     file: File | null | undefined,
@@ -700,7 +709,7 @@ export default function UploadFile({
         {!src ? (
           <div
             className={cn(
-              'flex w-full flex-col items-center justify-center gap-5 rounded-12 border border-dashed p-8',
+              'rounded-12 flex w-full flex-col items-center justify-center gap-5 border border-dashed p-8',
               dragging
                 ? 'border-ds-primary-400 bg-ds-primary-50'
                 : 'border-ds-neutral-200'
@@ -715,10 +724,10 @@ export default function UploadFile({
               <p className='font-medium'>
                 {uploadLabel || t('_domain.uploadFile.image.title')}
               </p>
-              <p className='text-xs text-ds-neutral-600'>
+              <p className='text-ds-neutral-600 text-xs'>
                 {description || t('_domain.uploadFile.image.formats')}
               </p>
-              <p className='text-xs text-ds-neutral-600'>
+              <p className='text-ds-neutral-600 text-xs'>
                 {secondaryDescription ||
                   t('_domain.uploadFile.image.recommended.module')}
               </p>
@@ -750,7 +759,7 @@ export default function UploadFile({
         ) : (
           <div
             className={cn(
-              'flex items-center gap-5 rounded-16 border p-4',
+              'rounded-16 flex items-center gap-5 border p-4',
               dragging
                 ? 'border-ds-primary-400 bg-ds-primary-50'
                 : 'border-ds-neutral-200'
@@ -763,13 +772,13 @@ export default function UploadFile({
               className={cn(
                 'flex h-[108px] w-[192px] shrink-0 items-center justify-center overflow-hidden',
                 variant === 'default' || variant === 'module-image'
-                  ? 'h-[108px] w-[192px] rounded-8'
+                  ? 'rounded-8 h-[108px] w-[192px]'
                   : variant === 'default-image'
-                    ? 'h-[80px] w-[80px] rounded-8'
+                    ? 'rounded-8 h-[80px] w-[80px]'
                     : variant === 'lesson-image'
                       ? 'h-[80px] w-[80px] rounded-full'
                       : variant === 'programs'
-                        ? 'h-[110px] w-[110px] rounded-12'
+                        ? 'rounded-12 h-[110px] w-[110px]'
                         : ''
               )}
             >
@@ -788,11 +797,11 @@ export default function UploadFile({
                   t('_domain.uploadFile.image.preview.title.thumbnail')}
               </p>
 
-              <p className='mt-1 text-xs text-ds-neutral-600'>
+              <p className='text-ds-neutral-600 mt-1 text-xs'>
                 {description || t('_domain.uploadFile.image.formats')}
               </p>
 
-              <p className='mt-0.5 text-xs text-ds-neutral-600'>
+              <p className='text-ds-neutral-600 mt-0.5 text-xs'>
                 {secondaryDescription ||
                   t('_domain.uploadFile.image.recommended.module')}
               </p>
@@ -850,7 +859,7 @@ export default function UploadFile({
         {/* Upload area with native file input - FIRST */}
         <div
           className={cn(
-            'flex flex-col items-center justify-center gap-3 rounded-12 border border-dashed p-6 transition-colors',
+            'rounded-12 flex flex-col items-center justify-center gap-3 border border-dashed p-6 transition-colors',
             dragging
               ? 'border-ds-primary-400 bg-ds-primary-50'
               : 'border-ds-neutral-200'
@@ -862,13 +871,13 @@ export default function UploadFile({
           {attachmentUploadIcon}
 
           <div className='flex flex-col items-center gap-1 text-center'>
-            <p className='text-sm font-medium text-ds-neutral-700'>
+            <p className='text-ds-neutral-700 text-sm font-medium'>
               {uploadLabel || t('_domain.uploadFile.attachment.title')}
             </p>
-            <p className='text-xs text-ds-neutral-500'>
+            <p className='text-ds-neutral-500 text-xs'>
               {description || t('_domain.uploadFile.attachment.formats')}
             </p>
-            <p className='text-xs text-ds-neutral-500'>
+            <p className='text-ds-neutral-500 text-xs'>
               {t('_domain.uploadFile.attachment.maxSize', {
                 size: formatBytes({ bytes: maxFileSize, t }),
               })}
@@ -975,7 +984,7 @@ export default function UploadFile({
                   {/* Upload area - FIRST */}
                   <div
                     className={cn(
-                      'flex flex-col items-center justify-center gap-3 rounded-12 border border-dashed p-6 transition-colors',
+                      'rounded-12 flex flex-col items-center justify-center gap-3 border border-dashed p-6 transition-colors',
                       dragging
                         ? 'border-ds-primary-400 bg-ds-primary-50'
                         : 'border-ds-neutral-200'
@@ -984,15 +993,15 @@ export default function UploadFile({
                     {attachmentUploadIcon}
 
                     <div className='flex flex-col items-center gap-1 text-center'>
-                      <p className='text-sm font-medium text-ds-neutral-700'>
+                      <p className='text-ds-neutral-700 text-sm font-medium'>
                         {uploadLabel ||
                           t('_domain.uploadFile.attachment.title')}
                       </p>
-                      <p className='text-xs text-ds-neutral-500'>
+                      <p className='text-ds-neutral-500 text-xs'>
                         {description ||
                           t('_domain.uploadFile.attachment.formats')}
                       </p>
-                      <p className='text-xs text-ds-neutral-500'>
+                      <p className='text-ds-neutral-500 text-xs'>
                         {t('_domain.uploadFile.attachment.maxSize', {
                           size: formatBytes({ bytes: maxFileSize, t }),
                         })}
@@ -1041,8 +1050,8 @@ export default function UploadFile({
                     'flex items-center gap-5',
                     variant === 'programs'
                       ? dragging
-                        ? 'rounded-16 border border-ds-neutral-400 p-4'
-                        : 'rounded-16 border border-ds-neutral-200 p-4'
+                        ? 'rounded-16 border-ds-neutral-400 border p-4'
+                        : 'rounded-16 border-ds-neutral-200 border p-4'
                       : ''
                   )}
                 >
@@ -1050,7 +1059,7 @@ export default function UploadFile({
                     className={cn(
                       'flex items-center justify-center overflow-hidden',
                       variant === 'programs'
-                        ? 'h-[110px] w-[110px] rounded-12'
+                        ? 'rounded-12 h-[110px] w-[110px]'
                         : 'h-[80px] w-[80px] rounded-full'
                     )}
                   >
@@ -1071,7 +1080,7 @@ export default function UploadFile({
                   <div>
                     <h3
                       className={cn(
-                        'mb-0.5 text-sm font-medium text-ds-neutral-950',
+                        'text-ds-neutral-950 mb-0.5 text-sm font-medium',
                         variant === 'programs' ? 'mb-2' : ''
                       )}
                     >
@@ -1159,8 +1168,8 @@ export default function UploadFile({
                   className={cn(
                     'flex items-center gap-5',
                     dragging
-                      ? 'rounded-16 border border-ds-neutral-400 p-4'
-                      : 'rounded-16 border border-ds-neutral-200 p-4'
+                      ? 'rounded-16 border-ds-neutral-400 border p-4'
+                      : 'rounded-16 border-ds-neutral-200 border p-4'
                   )}
                 >
                   <div className='flex h-[80px] w-[80px] items-center justify-center overflow-hidden rounded-full'>
@@ -1176,12 +1185,12 @@ export default function UploadFile({
                   </div>
 
                   <div>
-                    <h3 className='mb-0.5 text-sm font-medium text-ds-neutral-950'>
+                    <h3 className='text-ds-neutral-950 mb-0.5 text-sm font-medium'>
                       {t('team.addMemberForm.inputFields.uploadImage')}
                     </h3>
 
                     <div className='mb-2'>
-                      <p className='text-sm leading-tight text-ds-neutral-600'>
+                      <p className='text-ds-neutral-600 text-sm leading-tight'>
                         {t('team.addMemberForm.inputFields.recommendedImage')}
                       </p>
                     </div>
@@ -1233,7 +1242,7 @@ export default function UploadFile({
                   {!src ? (
                     <div
                       className={cn(
-                        'flex w-full flex-col items-center justify-center gap-5 rounded-12 border border-dashed p-8',
+                        'rounded-12 flex w-full flex-col items-center justify-center gap-5 border border-dashed p-8',
                         dragging
                           ? 'border-ds-neutral-400'
                           : 'border-ds-neutral-200'
@@ -1245,7 +1254,7 @@ export default function UploadFile({
                         <p className='font-medium'>
                           {t('_domain.uploadFile.image.title')}
                         </p>
-                        <p className='text-xs text-ds-neutral-600'>
+                        <p className='text-ds-neutral-600 text-xs'>
                           {t('_domain.uploadFile.image.formats')}
                         </p>
                         {/* <p className='text-xs text-ds-neutral-600'>
@@ -1272,13 +1281,13 @@ export default function UploadFile({
                   ) : (
                     <div
                       className={cn(
-                        'flex items-center gap-5 rounded-16 border p-4',
+                        'rounded-16 flex items-center gap-5 border p-4',
                         dragging
                           ? 'border-ds-neutral-400'
                           : 'border-ds-neutral-200'
                       )}
                     >
-                      <div className='flex h-[108px] w-[192px] shrink-0 items-center justify-center overflow-hidden rounded-8'>
+                      <div className='rounded-8 flex h-[108px] w-[192px] shrink-0 items-center justify-center overflow-hidden'>
                         <img
                           src={src}
                           alt=''
@@ -1295,7 +1304,7 @@ export default function UploadFile({
                           )}
                         </p>
 
-                        <p className='mt-1 text-xs text-ds-neutral-600'>
+                        <p className='text-ds-neutral-600 mt-1 text-xs'>
                           {t('_domain.uploadFile.image.formats')}
                         </p>
 
@@ -1351,7 +1360,7 @@ export default function UploadFile({
                   {!src ? (
                     <div
                       className={cn(
-                        'drag flex flex-col items-center justify-center gap-5 rounded-12 border border-dashed p-8 transition-colors duration-75',
+                        'drag rounded-12 flex flex-col items-center justify-center gap-5 border border-dashed p-8 transition-colors duration-75',
                         dragging
                           ? 'border-ds-neutral-400'
                           : 'border-ds-neutral-200'
@@ -1363,7 +1372,7 @@ export default function UploadFile({
                         <p className='font-medium'>
                           {t('_domain.uploadFile.video.title')}
                         </p>
-                        <p className='text-xs text-ds-neutral-600'>
+                        <p className='text-ds-neutral-600 text-xs'>
                           {t('_domain.uploadFile.video.formats', {
                             bytesFormatted: formatBytes({
                               bytes: maxFileSize,
@@ -1371,7 +1380,7 @@ export default function UploadFile({
                             }),
                           })}
                         </p>
-                        <p className='text-xs text-ds-neutral-600'>
+                        <p className='text-ds-neutral-600 text-xs'>
                           {t('_domain.uploadFile.video.recommended')}
                         </p>
                       </div>
@@ -1393,8 +1402,8 @@ export default function UploadFile({
                       </Button>
                     </div>
                   ) : (
-                    <div className='flex items-center gap-5 rounded-16 border border-ds-neutral-200 p-4'>
-                      <div className='relative flex h-[108px] w-[192px] shrink-0 items-center justify-center overflow-hidden rounded-8 bg-ds-neutral-200'>
+                    <div className='rounded-16 border-ds-neutral-200 flex items-center gap-5 border p-4'>
+                      <div className='rounded-8 bg-ds-neutral-200 relative flex h-[108px] w-[192px] shrink-0 items-center justify-center overflow-hidden'>
                         {thumbnail && (
                           <img
                             src={thumbnail}
@@ -1414,7 +1423,7 @@ export default function UploadFile({
                           )}
                         </p>
 
-                        <p className='mt-1 text-xs text-ds-neutral-600'>
+                        <p className='text-ds-neutral-600 mt-1 text-xs'>
                           {t('_domain.uploadFile.video.formats', {
                             bytesFormatted: formatBytes({
                               bytes: maxFileSize,
@@ -1423,7 +1432,7 @@ export default function UploadFile({
                           })}
                         </p>
 
-                        <p className='mt-0.5 text-xs text-ds-neutral-600'>
+                        <p className='text-ds-neutral-600 mt-0.5 text-xs'>
                           {t('_domain.uploadFile.video.recommended')}
                         </p>
 
@@ -1475,7 +1484,7 @@ export default function UploadFile({
                   {!src ? (
                     <div
                       className={cn(
-                        'flex flex-col items-center justify-center gap-5 rounded-12 border border-dashed p-8',
+                        'rounded-12 flex flex-col items-center justify-center gap-5 border border-dashed p-8',
                         dragging
                           ? 'border-ds-neutral-400'
                           : 'border-ds-neutral-200'
@@ -1487,7 +1496,7 @@ export default function UploadFile({
                         <p className='font-medium'>
                           {t('_domain.uploadFile.document.title')}
                         </p>
-                        <p className='text-xs text-ds-neutral-600'>
+                        <p className='text-ds-neutral-600 text-xs'>
                           {t('_domain.uploadFile.document.formats')}
                         </p>
                       </div>
@@ -1509,7 +1518,7 @@ export default function UploadFile({
                       </Button>
                     </div>
                   ) : (
-                    <div className='flex items-center gap-5 overflow-hidden rounded-16 border border-ds-neutral-200'>
+                    <div className='rounded-16 border-ds-neutral-200 flex items-center gap-5 overflow-hidden border'>
                       <div className='flex h-[104px] w-[176px] shrink-0 items-center justify-center overflow-hidden bg-gradient-to-t from-[#f2f2f3] via-[#f7f8f8] to-[#fcfcfc]'>
                         {fileIcon}
                       </div>
@@ -1522,7 +1531,7 @@ export default function UploadFile({
                             )}
                           </p>
 
-                          <p className='mt-1 text-xs text-ds-neutral-600'>
+                          <p className='text-ds-neutral-600 mt-1 text-xs'>
                             {t('_domain.uploadFile.document.formats')}
                           </p>
                         </div>
@@ -1587,15 +1596,19 @@ function FileUploadTrigger({
     getInputProps: getDropZoneInputProps,
   } = useDropzone({
     noClick: true,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onDrop: (acceptedFiles: any[]) => {
-      if (acceptedFiles && acceptedFiles.length > 0) {
-        handleFileChange(acceptedFiles[0], fileInputRef);
+
+    onDrop: (acceptedFiles: File[]) => {
+      if (!acceptedFiles || acceptedFiles.length === 0) {
+        return;
       }
+      acceptedFiles.forEach((file) => {
+        handleFileChange(file, fileInputRef);
+      });
     },
   });
 
   const getButtonProps = () => ({
+    type: 'button',
     onClick: () => {
       fileInputRef.current?.click();
     },
@@ -1606,12 +1619,14 @@ function FileUploadTrigger({
   return (
     <>
       <WrapperTag
+        role='button'
         className={cn('', className)}
         style={{
           display: 'block',
         }}
         tabIndex={0}
         onKeyDown={(e: React.KeyboardEvent) => {
+          if (uploading) return;
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             fileInputRef.current?.click();
@@ -1671,10 +1686,10 @@ function AttachmentListItem({
     : null;
 
   return (
-    <div className='flex h-[104px] items-center gap-4 overflow-hidden rounded-16 border border-ds-neutral-200 bg-white pr-6'>
+    <div className='rounded-16 border-ds-neutral-200 flex h-[104px] items-center gap-4 overflow-hidden border bg-white pr-6'>
       {/* Thumbnail/Icon */}
       <div
-        className='flex h-full w-[176px] shrink-0 items-center justify-center overflow-hidden bg-linear-to-t from-[#f2f2f3] via-[#f7f8f8] to-[#fcfcfc]'
+        className='flex h-full w-[176px] shrink-0 items-center justify-center overflow-hidden bg-gradient-to-t from-[#f2f2f3] via-[#f7f8f8] to-[#fcfcfc]'
         style={{ borderTopLeftRadius: '12px', borderBottomLeftRadius: '12px' }}
       >
         {isImage && attachment.file_url ? (
@@ -1690,14 +1705,14 @@ function AttachmentListItem({
 
       {/* File info */}
       <div className='flex min-w-0 flex-1 flex-col gap-0.5'>
-        <p className='truncate text-sm font-medium text-ds-neutral-900'>
+        <p className='text-ds-neutral-900 truncate text-sm font-medium'>
           {attachment.file_name}
         </p>
-        <p className='text-xs text-ds-neutral-500'>
+        <p className='text-ds-neutral-500 text-xs'>
           {formatBytes({ bytes: attachment.file_size, t })}
         </p>
         {formattedDate && (
-          <p className='text-xs text-ds-neutral-400'>
+          <p className='text-ds-neutral-400 text-xs'>
             {t('_domain.uploadFile.uploadedOn')}: {formattedDate}
           </p>
         )}
@@ -1747,7 +1762,7 @@ function FileUploadCard({
   return (
     <div
       className={cn(
-        'flex w-full flex-col gap-4 overflow-hidden rounded-12 border bg-ds-white-0 py-4 pr-4 pl-3.5',
+        'rounded-12 bg-ds-white-0 flex w-full flex-col gap-4 overflow-hidden border py-4 pr-4 pl-3.5',
         isError ? 'border-ds-error-base' : 'border-ds-soft-200',
         className
       )}
@@ -1760,7 +1775,7 @@ function FileUploadCard({
         {/* Text content */}
         <div className='flex min-w-0 flex-1 flex-col gap-1'>
           {/* File name */}
-          <p className='truncate text-label-sm text-ds-strong-950'>
+          <p className='text-label-sm text-ds-strong-950 truncate'>
             {fileName}
           </p>
 
@@ -1783,7 +1798,7 @@ function FileUploadCard({
 
                 {isUploading && (
                   <div className='flex items-center gap-1'>
-                    <RiLoader2Fill className='h-4 w-4 animate-spin text-ds-information-base' />
+                    <RiLoader2Fill className='text-ds-information-base h-4 w-4 animate-spin' />
                     <span className='text-paragraph-xs text-ds-strong-950'>
                       {t('components.fileUploadCard.uploading')}
                     </span>
@@ -1792,7 +1807,7 @@ function FileUploadCard({
 
                 {isSuccess && (
                   <div className='flex items-center gap-1'>
-                    <RiCheckboxCircleFill className='h-4 w-4 text-ds-success-base' />
+                    <RiCheckboxCircleFill className='text-ds-success-base h-4 w-4' />
                     <span className='text-paragraph-xs text-ds-strong-950'>
                       {t('components.fileUploadCard.completed')}
                     </span>
@@ -1801,7 +1816,7 @@ function FileUploadCard({
 
                 {isError && (
                   <div className='flex items-center gap-1'>
-                    <RiErrorWarningFill className='h-4 w-4 text-ds-error-base' />
+                    <RiErrorWarningFill className='text-ds-error-base h-4 w-4' />
                     <span className='text-paragraph-xs text-ds-strong-950'>
                       {t('components.fileUploadCard.failed')}
                     </span>
@@ -1816,7 +1831,7 @@ function FileUploadCard({
             <button
               type='button'
               onClick={onRetry}
-              className='mt-1 w-fit text-label-sm text-ds-error-base underline hover:text-ds-error-dark'
+              className='text-label-sm text-ds-error-base hover:text-ds-error-dark mt-1 w-fit underline'
             >
               {t('components.fileUploadCard.tryAgain')}
             </button>
@@ -1847,9 +1862,9 @@ function FileUploadCard({
 
       {/* Progress bar for uploading state */}
       {isUploading && (
-        <div className='h-1.5 w-full overflow-hidden rounded-full bg-ds-soft-200'>
+        <div className='bg-ds-soft-200 h-1.5 w-full overflow-hidden rounded-full'>
           <div
-            className='h-full rounded-full bg-ds-information-base transition-all duration-300'
+            className='bg-ds-information-base h-full rounded-full transition-all duration-300'
             style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
           />
         </div>

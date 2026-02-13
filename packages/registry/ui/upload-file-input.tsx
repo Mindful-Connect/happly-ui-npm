@@ -100,7 +100,7 @@ export default function UploadFile({
   const [dragging, setDragging] = useState(false);
 
   const [uploadingFiles, setUploadingFiles] = useState<UploadingFile[]>([]);
-  const timeoutRefs = useRef<NodeJS.Timeout[]>([]);
+  const timeoutRefs = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   const latestPropsRef = useRef({
     authToken,
@@ -590,10 +590,17 @@ export default function UploadFile({
       uppy.off('restriction-failed', onRestrictionFailed);
       uppy.off('error', onErrorHandler);
       uppy.off('upload-error', onUploadErrorHandler);
-      timeoutRefs.current.forEach((timer) => clearTimeout(timer));
-      timeoutRefs.current = [];
     };
   }, [uppy, addAlert, disabled, onUploadSuccess, t]);
+
+  useEffect(() => {
+    return () => {
+      timeoutRefs.current.forEach((timer: NodeJS.Timeout) =>
+        clearTimeout(timer)
+      );
+      timeoutRefs.current = [];
+    };
+  }, []);
 
   const handleFileChange = async (
     file: File | null | undefined,
@@ -1587,15 +1594,19 @@ function FileUploadTrigger({
     getInputProps: getDropZoneInputProps,
   } = useDropzone({
     noClick: true,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onDrop: (acceptedFiles: any[]) => {
-      if (acceptedFiles && acceptedFiles.length > 0) {
-        handleFileChange(acceptedFiles[0], fileInputRef);
+
+    onDrop: (acceptedFiles: File[]) => {
+      if (!acceptedFiles || acceptedFiles.length === 0) {
+        return;
       }
+      acceptedFiles.forEach((file) => {
+        handleFileChange(file, fileInputRef);
+      });
     },
   });
 
   const getButtonProps = () => ({
+    type: 'button',
     onClick: () => {
       fileInputRef.current?.click();
     },
@@ -1606,12 +1617,14 @@ function FileUploadTrigger({
   return (
     <>
       <WrapperTag
+        role='button'
         className={cn('', className)}
         style={{
           display: 'block',
         }}
         tabIndex={0}
         onKeyDown={(e: React.KeyboardEvent) => {
+          if (uploading) return;
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             fileInputRef.current?.click();
