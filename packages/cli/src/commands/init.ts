@@ -365,7 +365,7 @@ export async function init(options: InitOptions): Promise<void> {
   logger.success('Project initialized successfully!');
   logger.break();
   logger.info('You can now add components:');
-  logger.log(`  ${logger.highlight('bunx --bun happlyui add button')}`);
+  logger.log(`  ${logger.highlight('bunx --bun @happlyui/cli add button')}`);
   logger.break();
 }
 

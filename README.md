@@ -238,7 +238,7 @@ View all components with live examples at [ui.happly.cloud](https://ui.happly.cl
 
 ## Configuration
 
-The `components.json` file configures how components are installed:
+The `happly-ui-components.json` file configures how components are installed:
 
 ```json
 {
