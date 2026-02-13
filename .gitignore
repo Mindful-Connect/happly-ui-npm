@@ -42,6 +42,9 @@ out/
 # Cursor
 .cursor/
 
+# Antigravity
+.agent/
+
 # Environment
 .env
 .env.local

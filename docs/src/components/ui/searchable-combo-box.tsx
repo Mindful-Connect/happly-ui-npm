@@ -108,7 +108,7 @@ interface SearchableMultiComboboxProps {
           category: any;
         }[]
       | undefined;
-    status: 'loading' | 'error' | 'success';
+    status: 'loading' | 'error' | 'success' | 'pending';
   };
 }
 
@@ -155,7 +155,12 @@ export function SearchableMultiCombobox({
     excludeTagSlugs,
     prioritySlugs,
     translatable: isPreview,
-    customTagOptions: customTagOptions,
+    customTagOptions:
+      customTagOptions &&
+      Array.isArray(customTagOptions) &&
+      customTagOptions.length > 0
+        ? customTagOptions
+        : undefined,
   });
 
   const isTagSelected = (tag: Tag) =>
