@@ -240,14 +240,15 @@ export default function UploadFile({
 
           // Store the public URL and any required signed headers in metadata
           // for use in onUploadSuccess and when configuring XHR headers.
-          file.meta = {
-            ...file.meta,
+          // Store the public URL and any required signed headers in metadata
+          // for use in onUploadSuccess and when configuring XHR headers.
+          uppyInstance.setFileMeta(file.id, {
             publicUrl: item.url,
             // Optional: backend may return additional headers required by the
             // presigned URL (e.g. x-amz-acl, x-amz-meta-*). If present, we
             // forward them via the XHRUpload headers callback.
             signedHeaders: item.headers,
-          };
+          });
 
           return item.signedUrl;
         },
