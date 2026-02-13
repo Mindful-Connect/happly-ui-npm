@@ -14,7 +14,7 @@ import { installDependencies } from '../utils/install.js';
 import { updateTailwindConfig } from '../utils/transformers/tailwind.js';
 import { isNonInteractive, getAgentName } from '../utils/env.js';
 import type { HapplyConfig, InitOptions, BaseColor } from '../types/index.js';
-import { BASE_COLORS } from '../types/index.js';
+import { BASE_COLORS, CONFIG_FILE } from '../types/index.js';
 
 const UTILS_TEMPLATE = `import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -242,13 +242,17 @@ export async function init(options: InitOptions): Promise<void> {
         type: 'text',
         name: 'componentsPath',
         message: 'Where should components be installed?',
-        initial: projectInfo.isSrcDir ? 'src/components/ui' : 'components/ui',
+        initial: projectInfo.isSrcDir
+          ? 'src/components/happly-ui'
+          : 'components/happly-ui',
       },
       {
         type: 'text',
         name: 'utilsPath',
         message: 'Where should utils be installed?',
-        initial: projectInfo.isSrcDir ? 'src/lib/utils' : 'lib/utils',
+        initial: projectInfo.isSrcDir
+          ? 'src/lib/happly-ui-utils'
+          : 'lib/happly-ui-utils',
       },
     ]);
 
@@ -266,7 +270,7 @@ export async function init(options: InitOptions): Promise<void> {
   try {
     // Write components.json
     await writeConfig(cwd, config);
-    writeSpinner.text = 'Created components.json';
+    writeSpinner.text = `Created ${CONFIG_FILE}`;
 
     // Write utils file
     const srcPrefix = config.srcDir ? 'src/' : '';
@@ -386,8 +390,8 @@ function createDefaultConfig(
     tsx: projectInfo.isTypeScript,
     aliases: {
       components: '@/components',
-      utils: '@/lib/utils',
-      ui: '@/components/ui',
+      utils: '@/lib/happly-ui-utils',
+      ui: '@/components/happly-ui',
       hooks: '@/hooks',
       lib: '@/lib',
     },

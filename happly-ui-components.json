@@ -1,0 +1,17 @@
+{
+  "$schema": "https://happly.cloud/schema.json",
+  "tailwind": {
+    "config": "tailwind.config.ts",
+    "css": "docs/src/styles/tailwind.css",
+    "baseColor": "slate",
+    "cssVariables": true
+  },
+  "tsx": true,
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "hooks": "@/hooks",
+    "lib": "@/lib"
+  }
+}

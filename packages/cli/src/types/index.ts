@@ -116,7 +116,7 @@ export interface AddOptions {
 export const REGISTRY_URL =
   'https://raw.githubusercontent.com/Mindful-Connect/happly-ui-npm/production/packages/registry';
 
-export const CONFIG_FILE = 'components.json';
+export const CONFIG_FILE = 'happly-ui-components.json';
 
 export const DEFAULT_CONFIG: Partial<HapplyConfig> = {
   $schema:
@@ -131,8 +131,8 @@ export const DEFAULT_CONFIG: Partial<HapplyConfig> = {
   tsx: true,
   aliases: {
     components: '@/components',
-    utils: '@/lib/utils',
-    ui: '@/components/ui',
+    utils: '@/lib/happly-ui-utils',
+    ui: '@/components/happly-ui',
     hooks: '@/hooks',
     lib: '@/lib',
   },
