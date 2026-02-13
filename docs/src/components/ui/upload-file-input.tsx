@@ -1674,7 +1674,7 @@ function AttachmentListItem({
     <div className='flex h-[104px] items-center gap-4 overflow-hidden rounded-16 border border-ds-neutral-200 bg-white pr-6'>
       {/* Thumbnail/Icon */}
       <div
-        className='flex h-full w-[176px] shrink-0 items-center justify-center overflow-hidden bg-gradient-to-t from-[#f2f2f3] via-[#f7f8f8] to-[#fcfcfc]'
+        className='flex h-full w-[176px] shrink-0 items-center justify-center overflow-hidden bg-linear-to-t from-[#f2f2f3] via-[#f7f8f8] to-[#fcfcfc]'
         style={{ borderTopLeftRadius: '12px', borderBottomLeftRadius: '12px' }}
       >
         {isImage && attachment.file_url ? (
