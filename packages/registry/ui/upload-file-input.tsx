@@ -52,6 +52,16 @@ import {
   formatFileSize,
 } from '@/lib/upload-file-input';
 
+type UploadingFileStatus = 'uploading' | 'success' | 'error';
+interface UploadingFile {
+  id: string;
+  name: string;
+  size: number;
+  type: string;
+  progress: number;
+  state: UploadingFileStatus;
+}
+
 export default function UploadFile({
   alt = '',
   disabled,
@@ -85,16 +95,6 @@ export default function UploadFile({
   const [thumbnail, setThumbnail] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [dragging, setDragging] = useState(false);
-
-  type UploadingFileStatus = 'uploading' | 'success' | 'error';
-  interface UploadingFile {
-    id: string;
-    name: string;
-    size: number;
-    type: string;
-    progress: number;
-    state: UploadingFileStatus;
-  }
 
   const [uploadingFiles, setUploadingFiles] = useState<UploadingFile[]>([]);
 
