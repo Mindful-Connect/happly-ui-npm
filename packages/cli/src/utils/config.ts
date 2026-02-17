@@ -101,6 +101,7 @@ export function getComponentPath(
     case 'registry:lib':
       return path.join(
         srcPrefix + (config.aliases.lib || '@/lib').replace('@/', ''),
+        'happly-ui',
         finalFileName
       );
     default:

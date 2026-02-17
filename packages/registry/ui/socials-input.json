@@ -11,10 +11,7 @@
     "clsx",
     "tailwind-merge"
   ],
-  "registryDependencies": [
-    "input",
-    "happly-ui-utils"
-  ],
+  "registryDependencies": ["input", "happly-ui-utils"],
   "docs": {
     "lead": "A dynamic input list for social media URLs with validation and icons.",
     "usage": "import SocialsInput from \"@/components/ui/socials-input\"\n\n<SocialsInput\n  name=\"socials\"\n  formValue={values}\n  setFormValue={setValues}\n/>",

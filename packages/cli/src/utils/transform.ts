@@ -30,28 +30,27 @@ function transformImports(content: string, config: HapplyConfig): string {
     '@/components': config.aliases.components,
     '@/lib/utils': config.aliases.utils,
     '@/lib/happly-ui-utils': config.aliases.utils,
-    '@/lib': config.aliases.lib || '@/lib',
+    '@/lib': (config.aliases.lib || '@/lib') + '/happly-ui',
     '@/hooks': config.aliases.hooks || '@/hooks',
   };
 
-  let result = content;
+  // Sort keys by length descending to match longest specifically first
+  const keys = Object.keys(pathMappings).sort((a, b) => b.length - a.length);
 
-  // Replace import paths
-  for (const [from, to] of Object.entries(pathMappings)) {
-    // Match both single and double quotes
-    const patterns = [
-      new RegExp(`from ["']${escapeRegex(from)}(/[^"']*)?["']`, 'g'),
-      new RegExp(`import ["']${escapeRegex(from)}(/[^"']*)?["']`, 'g'),
-    ];
-
-    for (const pattern of patterns) {
-      result = result.replace(pattern, (match) => {
-        return match.replace(from, to);
-      });
+  return content.replace(
+    /((?:from|import)\s+["'])([^"']*)(["'])/g,
+    (match, prefix, path, suffix) => {
+      // Check if path starts with any key
+      for (const key of keys) {
+        if (path === key || path.startsWith(key + '/')) {
+          const to = pathMappings[key];
+          const newPath = path.replace(key, to);
+          return `${prefix}${newPath}${suffix}`;
+        }
+      }
+      return match;
     }
-  }
-
-  return result;
+  );
 }
 
 /**
@@ -83,13 +82,6 @@ function transformToJs(content: string): string {
   content = content.replace(/\s+as\s+\w+(\[\])?/g, '');
 
   return content;
-}
-
-/**
- * Escape special regex characters
- */
-function escapeRegex(str: string): string {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 /**

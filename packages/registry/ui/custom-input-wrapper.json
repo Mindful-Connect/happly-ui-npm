@@ -5,9 +5,7 @@
   "title": "Custom Input Wrapper",
   "description": "A wrapper for custom inputs with consistent styling.",
   "dependencies": [],
-  "registryDependencies": [
-    "happly-ui-utils"
-  ],
+  "registryDependencies": ["happly-ui-utils"],
   "files": [
     {
       "path": "ui/custom-input-wrapper.tsx",

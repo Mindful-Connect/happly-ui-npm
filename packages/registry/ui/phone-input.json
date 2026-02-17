@@ -11,9 +11,7 @@
     "lucide-react",
     "@headlessui/react"
   ],
-  "registryDependencies": [
-    "happly-ui-utils"
-  ],
+  "registryDependencies": ["happly-ui-utils"],
   "docs": {
     "lead": "A phone input component with country selection and automatic formatting.",
     "usage": "import * as PhoneInput from \"@/components/ui/phone-input\"\n\n<PhoneInput.Root\n  inputValue={value}\n  onChange={(val) => setValue(val)}\n  defaultCountryIso2=\"ca\"\n/>",

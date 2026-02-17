@@ -9,10 +9,7 @@
     "@radix-ui/react-slot",
     "class-variance-authority"
   ],
-  "registryDependencies": [
-    "alert-utils",
-    "happly-ui-utils"
-  ],
+  "registryDependencies": ["alert-utils", "happly-ui-utils"],
   "docs": {
     "lead": "Displays a callout for user attention.",
     "usage": "import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'\n\n<Alert>\n  <AlertTitle>Heads up!</AlertTitle>\n  <AlertDescription>\n    You can add components to your app using the cli.\n  </AlertDescription>\n</Alert>",

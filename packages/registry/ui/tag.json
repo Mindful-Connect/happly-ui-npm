@@ -9,9 +9,7 @@
     "class-variance-authority",
     "react-icons"
   ],
-  "registryDependencies": [
-    "happly-ui-utils"
-  ],
+  "registryDependencies": ["happly-ui-utils"],
   "docs": {
     "lead": "A tag component for labeling and categorization.",
     "usage": "import { Tag, TagIcon, TagClose } from \"@/components/ui/tag\"\n\n<Tag variant=\"stroke\">\n  <TagIcon><Icon /></TagIcon>\n  Label\n  <TagClose />\n</Tag>",

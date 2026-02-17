@@ -4,12 +4,8 @@
   "type": "registry:ui",
   "title": "Popover",
   "description": "Displays rich content in a portal, triggered by a button.",
-  "dependencies": [
-    "@radix-ui/react-popover"
-  ],
-  "registryDependencies": [
-    "happly-ui-utils"
-  ],
+  "dependencies": ["@radix-ui/react-popover"],
+  "registryDependencies": ["happly-ui-utils"],
   "files": [
     {
       "path": "ui/popover.tsx",

@@ -10,10 +10,7 @@
     "@headlessui/react",
     "lucide-react"
   ],
-  "registryDependencies": [
-    "button",
-    "happly-ui-utils"
-  ],
+  "registryDependencies": ["button", "happly-ui-utils"],
   "docs": {
     "lead": "A date input component with calendar popover.",
     "usage": "import { CalendarInput } from '@/components/ui/calendar-input'\n\n<CalendarInput value={date} onChange={setDate} />",

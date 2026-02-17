@@ -41,7 +41,7 @@ bunx @happlyui/cli@latest init
 This will:
 
 - Create a `happly-ui-components.json` configuration file
-- Add the `cn` utility function to `lib/happly-ui-utils.ts`
+- Add the `cn` utility function to `lib/happly-ui/happly-ui-utils.ts`
 - Configure CSS variables for theming
 - Install required dependencies
 
