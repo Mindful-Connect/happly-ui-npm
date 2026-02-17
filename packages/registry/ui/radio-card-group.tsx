@@ -8,7 +8,7 @@ import KeyIcon from '@/components/ui/key-icon';
 
 export type RadioCardItem = {
   badge?: {
-    colorVar: BadgeProps['colorVar'];
+    colorVar: string;
     size: 'sm' | 'default';
     text: string;
   };
@@ -114,8 +114,10 @@ export default function RadioCardGroup({
                 </div>
                 {item.badge && (
                   <Badge
-                    size={item.badge.size}
-                    colorVar={item.badge.colorVar}
+                    {...({
+                      size: item.badge.size,
+                      colorVar: item.badge.colorVar,
+                    } as BadgeProps & { size?: string; colorVar?: string })}
                     className={disabled || item.readOnly ? 'opacity-50' : ''}
                   >
                     {item.badge.text}

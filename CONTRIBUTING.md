@@ -33,8 +33,9 @@ Feature requests are welcome! Please:
 3. **Make your changes**
 4. **Test your changes** thoroughly
 5. **Run linting**: `bun run lint`
-6. **Update documentation** if needed
-7. **Submit a pull request**
+6. **Run type checking**: `bun x tsc --noEmit`
+7. **Update documentation** if needed
+8. **Submit a pull request**
 
 ## Development Setup
 
@@ -64,6 +65,9 @@ bun run --cwd docs dev
 
 # Run linting
 bun run lint
+
+# Run type checking
+bun x tsc --noEmit
 ```
 
 ### Project Structure
@@ -482,6 +486,7 @@ chore: update dependencies
 - [ ] Preview component added (if applicable)
 - [ ] Tested locally: `bun run --cwd docs dev`
 - [ ] Lint check passed: `bun run lint`
+- [ ] Type check passed: `bun x tsc --noEmit`
 
 ---
 

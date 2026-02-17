@@ -7,7 +7,7 @@ import {
 import { DayButton, DayPicker, getDefaultClassNames } from 'react-day-picker';
 import { Popover, Transition } from '@headlessui/react';
 import { enCA, frCA } from 'react-day-picker/locale';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/happly-ui-utils';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 // =============================================================================
@@ -279,7 +279,7 @@ function CalendarDayButton({
       data-range-end={modifiers.range_end}
       data-range-middle={modifiers.range_middle}
       className={cn(
-        'data-[selected-single=true]:text-primary-foreground hover:data-[selected-single=true]:text-primary-foreground flex aspect-square h-10 w-10 shrink-0 items-center justify-center p-0 text-center data-[selected-single=true]:bg-ds-primary-base hover:data-[selected-single=true]:bg-ds-primary-base',
+        'flex aspect-square h-10 w-10 shrink-0 items-center justify-center p-0 text-center data-[selected-single=true]:bg-ds-primary-base data-[selected-single=true]:text-primary-foreground hover:data-[selected-single=true]:bg-ds-primary-base hover:data-[selected-single=true]:text-primary-foreground',
         defaultClassNames.day,
         className
       )}

@@ -8,9 +8,13 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "declaration": true,
-    "declarationMap": true,
-    "noEmit": true
-  }
+    "baseUrl": ".",
+    "paths": {
+      "@/components/ui/*": ["./packages/registry/ui/*"],
+      "@/lib/*": ["./packages/registry/lib/*"],
+      "@/*": ["./packages/registry/*"]
+    },
+    "jsx": "react-jsx"
+  },
+  "exclude": ["node_modules", "dist", "docs", "packages/cli"]
 }

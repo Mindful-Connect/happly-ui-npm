@@ -9,7 +9,7 @@
   "tsx": true,
   "aliases": {
     "components": "@/components",
-    "utils": "@/lib/utils",
+    "utils": "@/lib/happly-ui-utils",
     "ui": "@/components/ui",
     "hooks": "@/hooks",
     "lib": "@/lib"

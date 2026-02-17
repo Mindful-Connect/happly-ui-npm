@@ -62,8 +62,8 @@
         "utils": {
           "type": "string",
           "description": "Alias for the utils file (cn function)",
-          "default": "@/lib/utils",
-          "examples": ["@/lib/utils", "~/lib/utils"]
+          "default": "@/lib/happly-ui-utils",
+          "examples": ["@/lib/happly-ui-utils", "~/lib/happly-ui-utils"]
         },
         "ui": {
           "type": "string",

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Slot, Slottable } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/happly-ui-utils';
 import { RiLoader2Fill } from 'react-icons/ri';
 import { colord } from 'colord';
 

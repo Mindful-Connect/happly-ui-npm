@@ -274,13 +274,15 @@ export function SearchableMultiCombobox({
               {tags.length > 0 && (
                 <CommandGroup>
                   {tags.map((option) => {
-                    const isSelected = isTagSelected(option);
+                    const isSelected = isTagSelected(option as unknown as Tag);
                     const atMax = !isSelected && selected.length >= max;
 
                     return (
                       <CommandItem
                         key={option.slug}
-                        onSelect={() => !atMax && handleToggle(option)}
+                        onSelect={() =>
+                          !atMax && handleToggle(option as unknown as Tag)
+                        }
                         disabled={disabled || (atMax && !isSelected)}
                       >
                         <Check

@@ -297,6 +297,9 @@ bun packages/cli/dist/index.js init
 
 # Lint the codebase
 bun run lint
+
+# Type check the codebase
+bun x tsc --noEmit
 ```
 
 ## Contributing

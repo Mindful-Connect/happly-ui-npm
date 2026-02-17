@@ -26,7 +26,7 @@ import type {
 import { TableOfContents } from '@/components/TableOfContents';
 import { PrevNextLinks } from '@/components/PrevNextLinks';
 import { type Section } from '@/lib/sections';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/happly-ui-utils';
 
 interface ComponentDocsProps {
   component: RegistryItemWithDocs;

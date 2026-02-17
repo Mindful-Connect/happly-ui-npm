@@ -197,10 +197,10 @@ HapplyUI stores its configuration in `happly-ui-components.json`:
 
 ### Configuration options
 
-| Option          | Description                                                |
-| --------------- | ---------------------------------------------------------- |
-| `tsx`           | Whether to use TypeScript (`true`) or JavaScript (`false`) |
-| `tailwind.css`  | Path to your global CSS file                               |
+| Option          | Description                                                          |
+| --------------- | -------------------------------------------------------------------- |
+| `tsx`           | Whether to use TypeScript (`true`) or JavaScript (`false`)           |
+| `tailwind.css`  | Path to your global CSS file                                         |
 | `aliases.ui`    | Where components will be installed (default: `components/happly-ui`) |
 | `aliases.utils` | Where the `cn()` utility lives (default: `lib/happly-ui-utils`)      |
 

@@ -3,6 +3,12 @@ import { useDebounce } from 'use-debounce';
 
 import { cn } from '@/lib/happly-ui-utils';
 import { importLibrary, setOptions } from '@googlemaps/js-api-loader';
+
+declare global {
+  interface Window {
+    google: typeof google;
+  }
+}
 import { Combobox, Transition } from '@headlessui/react';
 
 export interface Suggestion {
@@ -122,7 +128,7 @@ export function LocationInput({
             placeId: selectedPlace.place_id,
             fields: ['geometry', 'address_components'],
           },
-          (place: PlaceResult, status: string) => {
+          (place: PlaceResult | null, status: string) => {
             if (status !== 'OK' || !place) return;
             location.address =
               (place.address_components?.find((c) =>
