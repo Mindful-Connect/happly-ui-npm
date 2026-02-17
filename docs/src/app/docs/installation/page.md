@@ -34,8 +34,8 @@ The CLI will ask you a few questions to configure your project:
 
 1. **Framework detection** — Automatically detects Next.js, Vite, etc.
 2. **TypeScript** — Whether to use TypeScript or JavaScript
-3. **Component location** — Where to install components (default: `src/components/ui`)
-4. **Utility location** — Where to put the `cn()` utility function
+3. **Component location** — Where to install components (default: `src/components/happly-ui`)
+4. **Utility location** — Where to put the `cn()` utility function (default: `src/lib/happly-ui-utils.ts`)
 
 ### Add components
 
@@ -139,7 +139,7 @@ For Tailwind v4:
 
 ### 3. Add the utility function
 
-Create `src/lib/utils.ts`:
+Create `src/lib/happly-ui-utils.ts`:
 
 ```ts
 import { type ClassValue, clsx } from 'clsx';
@@ -150,7 +150,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 ```
 
-### 3. Configure path aliases
+### 4. Configure path aliases
 
 In your `tsconfig.json`, add path aliases:
 
@@ -165,7 +165,7 @@ In your `tsconfig.json`, add path aliases:
 }
 ```
 
-### 4. Copy components
+### 5. Copy components
 
 Browse the [components section](/docs/components/button) and copy the source code directly into your project.
 
@@ -173,13 +173,12 @@ Browse the [components section](/docs/components/button) and copy the source cod
 
 ## Configuration
 
-HapplyUI stores its configuration in `components.json`:
+HapplyUI stores its configuration in `happly-ui-components.json`:
 
 ```json
 {
-  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/components.schema.json",
-  "style": "new-york",
-  "typescript": true,
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/happly-ui-components.json",
+  "tsx": true,
   "tailwind": {
     "config": "tailwind.config.ts",
     "css": "src/styles/globals.css",
@@ -188,8 +187,8 @@ HapplyUI stores its configuration in `components.json`:
   },
   "aliases": {
     "components": "@/components",
-    "utils": "@/lib/utils",
-    "ui": "@/components/ui",
+    "utils": "@/lib/happly-ui-utils",
+    "ui": "@/components/happly-ui",
     "lib": "@/lib",
     "hooks": "@/hooks"
   }
@@ -200,10 +199,10 @@ HapplyUI stores its configuration in `components.json`:
 
 | Option          | Description                                                |
 | --------------- | ---------------------------------------------------------- |
-| `typescript`    | Whether to use TypeScript (`true`) or JavaScript (`false`) |
+| `tsx`           | Whether to use TypeScript (`true`) or JavaScript (`false`) |
 | `tailwind.css`  | Path to your global CSS file                               |
-| `aliases.ui`    | Where components will be installed                         |
-| `aliases.utils` | Where the `cn()` utility lives                             |
+| `aliases.ui`    | Where components will be installed (default: `components/happly-ui`) |
+| `aliases.utils` | Where the `cn()` utility lives (default: `lib/happly-ui-utils`)      |
 
 ---
 

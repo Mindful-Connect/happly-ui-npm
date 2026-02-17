@@ -10,7 +10,7 @@
     "key-icon",
     "badge",
     "label",
-    "utils"
+    "happly-ui-utils"
   ],
   "docs": {
     "lead": "A radio group component with card styling, supporting icons, badges, and descriptions.",

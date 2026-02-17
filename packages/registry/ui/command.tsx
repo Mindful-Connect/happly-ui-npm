@@ -6,7 +6,7 @@ import { Command as CommandPrimitive } from 'cmdk';
 import * as ScrollAreaPrimitives from '@radix-ui/react-scroll-area';
 import { RiSearchLine } from 'react-icons/ri';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/happly-ui-utils';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 const Command = React.forwardRef<

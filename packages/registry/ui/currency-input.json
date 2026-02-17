@@ -4,8 +4,14 @@
   "type": "registry:ui",
   "title": "Currency Input",
   "description": "A currency input component with currency selection.",
-  "dependencies": ["@headlessui/react", "lucide-react", "flag-icons"],
-  "registryDependencies": ["utils"],
+  "dependencies": [
+    "@headlessui/react",
+    "lucide-react",
+    "flag-icons"
+  ],
+  "registryDependencies": [
+    "happly-ui-utils"
+  ],
   "files": [
     {
       "path": "ui/currency-input.tsx",

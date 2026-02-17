@@ -14,7 +14,7 @@ import { installDependencies } from '../utils/install.js';
 import { updateTailwindConfig } from '../utils/transformers/tailwind.js';
 import { isNonInteractive, getAgentName } from '../utils/env.js';
 import type { HapplyConfig, InitOptions, BaseColor } from '../types/index.js';
-import { BASE_COLORS } from '../types/index.js';
+import { BASE_COLORS, CONFIG_FILE } from '../types/index.js';
 
 const UTILS_TEMPLATE = `import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -242,13 +242,17 @@ export async function init(options: InitOptions): Promise<void> {
         type: 'text',
         name: 'componentsPath',
         message: 'Where should components be installed?',
-        initial: projectInfo.isSrcDir ? 'src/components/ui' : 'components/ui',
+        initial: projectInfo.isSrcDir
+          ? 'src/components/happly-ui'
+          : 'components/happly-ui',
       },
       {
         type: 'text',
         name: 'utilsPath',
         message: 'Where should utils be installed?',
-        initial: projectInfo.isSrcDir ? 'src/lib/utils' : 'lib/utils',
+        initial: projectInfo.isSrcDir
+          ? 'src/lib/happly-ui-utils'
+          : 'lib/happly-ui-utils',
       },
     ]);
 
@@ -266,7 +270,7 @@ export async function init(options: InitOptions): Promise<void> {
   try {
     // Write components.json
     await writeConfig(cwd, config);
-    writeSpinner.text = 'Created components.json';
+    writeSpinner.text = `Created ${CONFIG_FILE}`;
 
     // Write utils file
     const srcPrefix = config.srcDir ? 'src/' : '';
@@ -361,7 +365,7 @@ export async function init(options: InitOptions): Promise<void> {
   logger.success('Project initialized successfully!');
   logger.break();
   logger.info('You can now add components:');
-  logger.log(`  ${logger.highlight('bunx --bun happlyui add button')}`);
+  logger.log(`  ${logger.highlight('bunx --bun @happlyui/cli add button')}`);
   logger.break();
 }
 
@@ -374,7 +378,7 @@ function createDefaultConfig(
 
   return {
     $schema:
-      'https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/components.json',
+      'https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/happly-ui-components.json',
     srcDir: isSrcDir,
     tailwind: {
       config: projectInfo.tailwindConfig || 'tailwind.config.ts',
@@ -386,8 +390,8 @@ function createDefaultConfig(
     tsx: projectInfo.isTypeScript,
     aliases: {
       components: '@/components',
-      utils: '@/lib/utils',
-      ui: '@/components/ui',
+      utils: '@/lib/happly-ui-utils',
+      ui: '@/components/happly-ui',
       hooks: '@/hooks',
       lib: '@/lib',
     },
@@ -407,7 +411,7 @@ function createConfig(
 ): HapplyConfig {
   return {
     $schema:
-      'https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/components.json',
+      'https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/happly-ui-components.json',
     srcDir: projectInfo.isSrcDir,
     tailwind: {
       config: projectInfo.tailwindConfig || 'tailwind.config.ts',

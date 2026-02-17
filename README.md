@@ -40,8 +40,8 @@ bunx @happlyui/cli@latest init
 
 This will:
 
-- Create a `components.json` configuration file
-- Add the `cn` utility function
+- Create a `happly-ui-components.json` configuration file
+- Add the `cn` utility function to `lib/happly-ui-utils.ts`
 - Configure CSS variables for theming
 - Install required dependencies
 
@@ -136,7 +136,7 @@ For Tailwind v4:
 Import components using the namespace pattern for compound components:
 
 ```tsx
-import * as Button from '@/components/ui/button';
+import * as Button from '@/components/happly-ui/button';
 
 export default function Home() {
   return (
@@ -197,7 +197,7 @@ export default function Home() {
 For compatibility with shadcn/ui patterns:
 
 ```tsx
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/happly-ui/button';
 
 export default function Home() {
   return (
@@ -238,11 +238,11 @@ View all components with live examples at [ui.happly.cloud](https://ui.happly.cl
 
 ## Configuration
 
-The `components.json` file configures how components are installed:
+The `happly-ui-components.json` file configures how components are installed:
 
 ```json
 {
-  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/components.json",
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/happly-ui-components.json",
   "tailwind": {
     "config": "tailwind.config.ts",
     "css": "src/index.css",
@@ -252,8 +252,8 @@ The `components.json` file configures how components are installed:
   "tsx": true,
   "aliases": {
     "components": "@/components",
-    "utils": "@/lib/utils",
-    "ui": "@/components/ui"
+    "utils": "@/lib/happly-ui-utils",
+    "ui": "@/components/happly-ui"
   }
 }
 ```
@@ -329,7 +329,7 @@ Include a `docs` field for automatic documentation generation:
   ],
   "docs": {
     "lead": "Component description",
-    "usage": "import * as MyComponent from '@/components/ui/my-component'",
+    "usage": "import * as MyComponent from '@/components/happly-ui/my-component'",
     "examples": [
       {
         "title": "Default",

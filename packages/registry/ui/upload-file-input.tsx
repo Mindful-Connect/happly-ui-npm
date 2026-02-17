@@ -4,7 +4,8 @@ import { useEffect, useState, useRef, useId } from 'react';
 import Uppy from '@uppy/core';
 import AwsS3 from '@uppy/aws-s3'; // Compatible with GCS S3-compatible API
 import XHRUpload from '@uppy/xhr-upload';
-import { UppyContextProvider, useDropzone, useFileInput } from '@uppy/react';
+import { UppyContextProvider, useDropzone } from '@uppy/react';
+import type { UppyFile } from '@uppy/core';
 
 import {
   RiDeleteBin6Line,
@@ -16,7 +17,7 @@ import {
   RiErrorWarningFill,
   RiLoader4Line,
 } from 'react-icons/ri';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/happly-ui-utils';
 import { AlertModel } from '@/lib/alert-utils';
 
 import { Button, ButtonCompact } from '@/components/ui/button';
@@ -99,6 +100,7 @@ export default function UploadFile({
   const [dragging, setDragging] = useState(false);
 
   const [uploadingFiles, setUploadingFiles] = useState<UploadingFile[]>([]);
+  const timeoutRefs = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   const latestPropsRef = useRef({
     authToken,
@@ -275,8 +277,7 @@ export default function UploadFile({
 
           // Store the public URL and any required signed headers in metadata
           // for use in onUploadSuccess and when configuring XHR headers.
-          // Store the public URL and any required signed headers in metadata
-          // for use in onUploadSuccess and when configuring XHR headers.
+
           uppyInstance.setFileMeta(file.id, {
             publicUrl: item.url,
             // Optional: backend may return additional headers required by the
@@ -311,12 +312,14 @@ export default function UploadFile({
     } else {
       uppyInstance.use(AwsS3, {
         limit: 6,
-        shouldUseMultipart: (file: { size: number }) => file.size > chunkSize,
-        getChunkSize: (file: { size: number }) => {
-          if (file.size > chunkSize) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        shouldUseMultipart: (file: any) => (file.size || 0) > chunkSize,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        getChunkSize: (file: any) => {
+          if ((file.size || 0) > chunkSize) {
             return chunkSize;
           }
-          return file.size;
+          return file.size || 0;
         },
 
         async createMultipartUpload(file) {
@@ -432,10 +435,19 @@ export default function UploadFile({
   });
 
   useEffect(() => {
+    uppy.setOptions({
+      restrictions: {
+        maxFileSize,
+        maxNumberOfFiles: effectiveMaxFiles,
+        allowedFileTypes,
+      },
+    });
+  }, [uppy, maxFileSize, effectiveMaxFiles, allowedFileTypes]);
+
+  useEffect(() => {
     if (!uppy) return;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const onFileAdded = async (file: any) => {
+    const onFileAdded = async (file: UppyFile<any, any>) => {
       if (!file || disabled) return;
       setDragging(false);
       uppy.upload();
@@ -451,11 +463,12 @@ export default function UploadFile({
       );
 
       // Remove from list after delay
-      setTimeout(() => {
+      const timer: NodeJS.Timeout = setTimeout(() => {
         setUploadingFiles((prev: UploadingFile[]) =>
           prev.filter((f) => f.id !== file.id)
         );
       }, 2000);
+      timeoutRefs.current.push(timer);
 
       setUploading(false);
       // Use location from response (S3 multipart) or fallback to publicUrl from meta (presigned)
@@ -580,6 +593,15 @@ export default function UploadFile({
     };
   }, [uppy, addAlert, disabled, onUploadSuccess, t]);
 
+  useEffect(() => {
+    return () => {
+      timeoutRefs.current.forEach((timer: NodeJS.Timeout) =>
+        clearTimeout(timer)
+      );
+      timeoutRefs.current = [];
+    };
+  }, []);
+
   const handleFileChange = async (
     file: File | null | undefined,
     fileInputRef: React.RefObject<HTMLInputElement>
@@ -628,7 +650,7 @@ export default function UploadFile({
 
       // Add file to Uppy (handles calling .upload() largely via onFileAdded)
       // Note: we don't need to manually call uppy.upload() here because onFileAdded does it.
-      uppy.addFile({
+      const fileId = uppy.addFile({
         source: 'file input',
         name: file.name,
         type: file.type,
@@ -639,7 +661,7 @@ export default function UploadFile({
       setUploadingFiles((prev: UploadingFile[]) => [
         ...prev,
         {
-          id: '', // temporary, will be synced with actual ID in progress handler if needed or we can generate one.
+          id: fileId,
           name: file.name,
           size: file.size,
           type: file.type,
@@ -903,6 +925,7 @@ export default function UploadFile({
                     prev.filter((f) => f.id !== file.id)
                   );
                 }}
+                t={t}
               />
             ))}
           </div>
@@ -916,6 +939,7 @@ export default function UploadFile({
                 key={attachment.id}
                 attachment={attachment}
                 onRemove={() => onAttachmentRemove?.(attachment.id)}
+                t={t}
               />
             ))}
           </div>
@@ -1008,6 +1032,7 @@ export default function UploadFile({
                             key={attachment.id}
                             attachment={attachment}
                             onRemove={() => onAttachmentRemove?.(attachment.id)}
+                            t={t}
                           />
                         )
                       )}
@@ -1560,26 +1585,51 @@ function FileUploadTrigger({
   allowedFileTypes,
   className,
   as: WrapperTag = 'div',
+  handleFileChange,
   uploading,
 }: FileUploadTriggerProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const {
     getRootProps: getDropZoneRootProps,
     getInputProps: getDropZoneInputProps,
   } = useDropzone({
     noClick: true,
+
+    onDrop: (acceptedFiles: File[]) => {
+      if (!acceptedFiles || acceptedFiles.length === 0) {
+        return;
+      }
+      acceptedFiles.forEach((file) => {
+        handleFileChange(file, fileInputRef);
+      });
+    },
   });
-  const { getButtonProps, getInputProps: getFileInputProps } = useFileInput();
+
+  const getButtonProps = () => ({
+    type: 'button',
+    onClick: () => {
+      fileInputRef.current?.click();
+    },
+  });
 
   const acceptAttr = allowedFileTypes.join(',');
 
   return (
     <>
       <WrapperTag
+        role='button'
         className={cn('', className)}
         style={{
           display: 'block',
         }}
         tabIndex={0}
+        onKeyDown={(e: React.KeyboardEvent) => {
+          if (uploading) return;
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            fileInputRef.current?.click();
+          }
+        }}
         aria-disabled={uploading}
         title={
           uploading
@@ -1594,10 +1644,17 @@ function FileUploadTrigger({
       </WrapperTag>
 
       <input
-        {...getFileInputProps()}
+        ref={fileInputRef}
+        type='file'
         accept={acceptAttr}
         className='hidden'
         disabled={uploading}
+        onChange={(e) => {
+          const files = e.target.files;
+          if (files && files.length > 0) {
+            handleFileChange(files[0], fileInputRef);
+          }
+        }}
       />
 
       <input

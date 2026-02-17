@@ -11,7 +11,10 @@
     "clsx",
     "tailwind-merge"
   ],
-  "registryDependencies": ["utils", "input"],
+  "registryDependencies": [
+    "input",
+    "happly-ui-utils"
+  ],
   "docs": {
     "lead": "A dynamic input list for social media URLs with validation and icons.",
     "usage": "import SocialsInput from \"@/components/ui/socials-input\"\n\n<SocialsInput\n  name=\"socials\"\n  formValue={values}\n  setFormValue={setValues}\n/>",
@@ -20,7 +23,12 @@
         "title": "Default",
         "description": "Default usage with English labels.",
         "code": "<SocialsInput\n  name=\"socials\"\n  formValue={values}\n  setFormValue={setValues}\n/>",
-        "preview": [{ "component": "socials-input", "props": {} }]
+        "preview": [
+          {
+            "component": "socials-input",
+            "props": {}
+          }
+        ]
       }
     ],
     "api": [

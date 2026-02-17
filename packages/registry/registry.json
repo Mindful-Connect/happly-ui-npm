@@ -70,6 +70,12 @@
       "description": "A versatile divider component for creating visual separation between content elements. Supports multiple variants including line, text, and content dividers."
     },
     {
+      "name": "happly-ui-utils",
+      "type": "registry:lib",
+      "title": "Happly UI Utils",
+      "description": "Utility functions for class name merging."
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
@@ -170,12 +176,6 @@
       "type": "registry:ui",
       "title": "Upload File Input",
       "description": "A file upload component with support for drag and drop, multiple files, and S3/GCS integration."
-    },
-    {
-      "name": "utils",
-      "type": "registry:lib",
-      "title": "Utils",
-      "description": "Utility functions for class name merging."
     }
   ]
 }

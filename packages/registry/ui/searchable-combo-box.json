@@ -4,13 +4,15 @@
   "type": "registry:ui",
   "title": "Searchable Combo Box",
   "description": "A searchable multi-select combobox component with tag selection.",
-  "dependencies": ["lucide-react"],
+  "dependencies": [
+    "lucide-react"
+  ],
   "registryDependencies": [
     "command",
     "custom-input-wrapper",
     "popover",
     "tag",
-    "utils"
+    "happly-ui-utils"
   ],
   "docs": {
     "lead": "A powerful searchable multi-select combobox component for selecting and managing multiple tags or options.",

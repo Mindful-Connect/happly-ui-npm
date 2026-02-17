@@ -28,6 +28,7 @@ export async function readConfig(cwd: string): Promise<HapplyConfig | null> {
 
     // Fallback: try reading components.json directly
     const configPath = path.join(cwd, CONFIG_FILE);
+
     if (existsSync(configPath)) {
       const content = await readFile(configPath, 'utf-8');
       return JSON.parse(content);

@@ -11,7 +11,9 @@
     "class-variance-authority",
     "react-icons"
   ],
-  "registryDependencies": ["utils"],
+  "registryDependencies": [
+    "happly-ui-utils"
+  ],
   "docs": {
     "lead": "A customized select component based on Radix UI.",
     "usage": "import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\n<Select>\n  <SelectTrigger className=\"w-[180px]\">\n    <SelectValue placeholder=\"Theme\" />\n  </SelectTrigger>\n  <SelectContent>\n    <SelectItem value=\"light\">Light</SelectItem>\n    <SelectItem value=\"dark\">Dark</SelectItem>\n    <SelectItem value=\"system\">System</SelectItem>\n  </SelectContent>\n</Select>",

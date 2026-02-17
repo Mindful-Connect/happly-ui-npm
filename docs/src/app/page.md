@@ -45,7 +45,7 @@ bunx @happlyui/cli@latest init
 
 This will:
 
-1. Create a `components.json` configuration file
+1. Create a `happly-ui-components.json` configuration file
 2. Add the `cn()` utility function to your project
 3. Configure path aliases if needed
 
