@@ -10,6 +10,7 @@ import {
   ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  type LucideProps,
 } from 'lucide-react';
 import * as React from 'react';
 import { DayButton, DayPicker, getDefaultClassNames } from 'react-day-picker';
@@ -145,8 +146,13 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        Root: ({ className, rootRef, ...props }: any) => {
+        Root: ({
+          className,
+          rootRef,
+          ...props
+        }: React.HTMLAttributes<HTMLDivElement> & {
+          rootRef?: React.Ref<HTMLDivElement>;
+        }) => {
           return (
             <div
               data-slot='calendar'
@@ -156,8 +162,13 @@ function Calendar({
             />
           );
         },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        Chevron: ({ className, orientation, ...props }: any) => {
+        Chevron: ({
+          className,
+          orientation,
+          ...props
+        }: LucideProps & {
+          orientation?: 'left' | 'right' | 'up' | 'down';
+        }) => {
           if (orientation === 'left') {
             return (
               <ChevronLeftIcon className={cn('size-4', className)} {...props} />
@@ -178,8 +189,10 @@ function Calendar({
           );
         },
         DayButton: CalendarDayButton,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        WeekNumber: ({ children, ...props }: any) => {
+        WeekNumber: ({
+          children,
+          ...props
+        }: React.TdHTMLAttributes<HTMLTableCellElement>) => {
           return (
             <td {...props}>
               <div className='flex size-(--cell-size) items-center justify-center text-center'>

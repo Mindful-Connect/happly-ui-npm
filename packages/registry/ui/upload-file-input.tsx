@@ -5,7 +5,7 @@ import Uppy from '@uppy/core';
 import AwsS3 from '@uppy/aws-s3'; // Compatible with GCS S3-compatible API
 import XHRUpload from '@uppy/xhr-upload';
 import { UppyContextProvider, useDropzone } from '@uppy/react';
-import type { UppyFile } from '@uppy/core';
+import type { UppyFile, Meta } from '@uppy/core';
 
 import {
   RiDeleteBin6Line,
@@ -64,6 +64,13 @@ interface UploadingFile {
   progress: number;
   state: UploadingFileStatus;
 }
+
+interface UppyMeta extends Record<string, unknown> {
+  publicUrl?: string;
+  signedHeaders?: Record<string, string>;
+}
+
+type UppyBody = Record<string, unknown>;
 
 export default function UploadFile({
   alt = '',
@@ -222,7 +229,7 @@ export default function UploadFile({
 
   const id = useId();
   const [uppy] = useState(() => {
-    const uppyInstance = new Uppy({
+    const uppyInstance = new Uppy<UppyMeta, UppyBody>({
       id: `${id}-${variant}`,
       debug: process.env.NODE_ENV === 'development',
       autoProceed: false,
@@ -235,8 +242,10 @@ export default function UploadFile({
 
     if (effectiveUploadMode === 'presigned-url') {
       uppyInstance.use(XHRUpload, {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        endpoint: async (file: any) => {
+        endpoint: async (
+          file: UppyFile<UppyMeta, UppyBody> | UppyFile<UppyMeta, UppyBody>[]
+        ) => {
+          if (Array.isArray(file)) throw new Error('Bundling not supported');
           const {
             authToken,
             providerCurrentWorkspaceKey,
@@ -294,8 +303,7 @@ export default function UploadFile({
         // Additionally, some presigned URLs may require extra headers (for example,
         // x-amz-acl or x-amz-meta-*). If the backend provides these headers along
         // with the presigned URL, we forward them here.
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        headers: (file: any) => {
+        headers: (file: UppyFile<UppyMeta, UppyBody>) => {
           const extraHeaders =
             (file &&
               file.meta &&
@@ -312,10 +320,9 @@ export default function UploadFile({
     } else {
       uppyInstance.use(AwsS3, {
         limit: 6,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        shouldUseMultipart: (file: any) => (file.size || 0) > chunkSize,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        getChunkSize: (file: any) => {
+        shouldUseMultipart: (file: UppyFile<UppyMeta, UppyBody>) =>
+          (file.size || 0) > chunkSize,
+        getChunkSize: (file: { size: number }) => {
           if ((file.size || 0) > chunkSize) {
             return chunkSize;
           }
@@ -447,15 +454,22 @@ export default function UploadFile({
   useEffect(() => {
     if (!uppy) return;
 
-    const onFileAdded = async (file: UppyFile<any, any>) => {
+    const onFileAdded = async (file: UppyFile<UppyMeta, UppyBody>) => {
       if (!file || disabled) return;
       setDragging(false);
       uppy.upload();
       setUploading(true);
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const onUploadSuccessHandler = (file: any, response: any) => {
+    const onUploadSuccessHandler = (
+      file: UppyFile<UppyMeta, UppyBody> | undefined,
+      response: {
+        body?: { location?: string; [key: string]: unknown };
+        status: number;
+        [key: string]: unknown;
+      }
+    ) => {
+      if (!file) return;
       setUploadingFiles((prev: UploadingFile[]) =>
         prev.map((f: UploadingFile) =>
           f.id === file.id ? { ...f, state: 'success', progress: 100 } : f
@@ -485,8 +499,12 @@ export default function UploadFile({
       onUploadSuccess(fileInfo);
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const onRestrictionFailed = (file: any, error: any) => {
+    const onRestrictionFailed = (
+      arg1: UppyFile<UppyMeta, UppyBody> | Error | undefined,
+      arg2: UppyFile<UppyMeta, UppyBody> | Error | undefined
+    ) => {
+      const error = (arg1 instanceof Error ? arg1 : arg2) as Error;
+      // const file = (arg1 instanceof Error ? arg2 : arg1) as UppyFile<UppyMeta, UppyBody> | undefined;
       setUploading(false);
       console.error('Uppy restriction failed:', error);
       addAlert(
@@ -499,8 +517,7 @@ export default function UploadFile({
       uppy.clear();
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const onErrorHandler = (file: any, error: any) => {
+    const onErrorHandler = (error: Error) => {
       setUploading(false);
       console.error('Uppy error:', error);
       addAlert(
@@ -510,18 +527,16 @@ export default function UploadFile({
           timeout: 3000,
         })
       );
-
-      if (file && file.id) {
-        setUploadingFiles((prev: UploadingFile[]) =>
-          prev.map((f: UploadingFile) =>
-            f.id === file.id ? { ...f, state: 'error' } : f
-          )
-        );
-      }
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const onUploadErrorHandler = (file: any, error: any) => {
+    const onUploadErrorHandler = (
+      arg1: UppyFile<UppyMeta, UppyBody> | Error | undefined,
+      arg2: UppyFile<UppyMeta, UppyBody> | Error | undefined
+    ) => {
+      const error = (arg1 instanceof Error ? arg1 : arg2) as Error;
+      const file = (arg1 instanceof Error ? arg2 : arg1) as
+        | UppyFile<UppyMeta, UppyBody>
+        | undefined;
       setUploading(false);
       console.error('Uppy upload error:', error);
       addAlert(
@@ -541,8 +556,14 @@ export default function UploadFile({
       }
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const onUploadProgress = (file: any, progress: any) => {
+    const onUploadProgress = (
+      file: UppyFile<UppyMeta, UppyBody> | undefined,
+      progress: {
+        bytesTotal: number | null;
+        bytesUploaded: number;
+      }
+    ) => {
+      if (!file) return;
       // Sync progress to React state for UI
       setUploadingFiles((prev: UploadingFile[]) => {
         const existing = prev.find((f) => f.id === file.id);
@@ -566,7 +587,7 @@ export default function UploadFile({
             {
               id: file.id,
               name: file.name,
-              size: file.size,
+              size: file.size || 0,
               type: file.type,
               progress: 0,
               state: 'uploading',
@@ -949,7 +970,9 @@ export default function UploadFile({
   }
 
   return (
-    <UppyContextProvider uppy={uppy}>
+    <UppyContextProvider
+      uppy={uppy as unknown as Uppy<Meta, Record<string, never>>}
+    >
       <FileUploadTrigger
         acl={ACL_TYPE.PublicRead}
         assetType={ASSET_TYPE.Avatar}
@@ -1600,7 +1623,7 @@ function FileUploadTrigger({
         return;
       }
       acceptedFiles.forEach((file) => {
-        handleFileChange(file, fileInputRef as any);
+        handleFileChange(file, fileInputRef);
       });
     },
   });
@@ -1652,7 +1675,7 @@ function FileUploadTrigger({
         onChange={(e) => {
           const files = e.target.files;
           if (files && files.length > 0) {
-            handleFileChange(files[0], fileInputRef as any);
+            handleFileChange(files[0], fileInputRef);
           }
         }}
       />

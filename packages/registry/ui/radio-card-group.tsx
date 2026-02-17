@@ -117,7 +117,7 @@ export default function RadioCardGroup({
                     {...({
                       size: item.badge.size,
                       colorVar: item.badge.colorVar,
-                    } as any)}
+                    } as BadgeProps & { size?: string; colorVar?: string })}
                     className={disabled || item.readOnly ? 'opacity-50' : ''}
                   >
                     {item.badge.text}

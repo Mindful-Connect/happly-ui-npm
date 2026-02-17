@@ -66,7 +66,7 @@ export interface FileUploadTriggerProps {
 
   handleFileChange: (
     file: File | null | undefined,
-    fileInputRef: RefObject<HTMLInputElement>
+    fileInputRef: RefObject<HTMLInputElement | null>
   ) => void;
   uploading: boolean;
 }

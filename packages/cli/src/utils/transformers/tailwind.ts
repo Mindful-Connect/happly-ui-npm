@@ -40,8 +40,9 @@ function generateCssVariables(): string {
 
   // 1. Base Palettes (from tokens.colors.ds)
   // We skip 'primary' because it uses vars, we want the Hex definitions (blue, neutral, etc)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const ds = (colors as any).ds || {};
+  // Use unknown to avoid any, then narrow
+  const colorsObj = colors as Record<string, unknown>;
+  const ds = (colorsObj.ds as Record<string, unknown>) || {};
   Object.entries(ds).forEach(([key, value]) => {
     if (key === 'primary') return; // Skip primary palette here, it's semantic
     if (typeof value === 'object' && value !== null) {
@@ -74,8 +75,10 @@ function generateThemeBlock(): string {
 
   // Font Sizes
   Object.entries(texts).forEach(([key, value]) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [fontSize, options] = value as [string, any];
+    const [fontSize, options] = value as [
+      string,
+      { lineHeight?: string; letterSpacing?: string; fontWeight?: string },
+    ];
     lines.push(`  --text-${key}: ${fontSize};`);
     if (options.lineHeight)
       lines.push(`  --text-${key}--line-height: ${options.lineHeight};`);
@@ -102,13 +105,12 @@ function generateThemeBlock(): string {
   // Colors (DS)
   // Maps to utilities like bg-ds-primary-dark
   // We flatten colors.ds
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const ds = (colors as any).ds || {};
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const flattenDs = (obj: any, prefix: string) => {
+  const colorsObj = colors as Record<string, unknown>;
+  const ds = (colorsObj.ds as Record<string, unknown>) || {};
+  const flattenDs = (obj: Record<string, unknown>, prefix: string) => {
     Object.entries(obj).forEach(([key, value]) => {
       if (typeof value === 'object' && value !== null) {
-        flattenDs(value, `${prefix}-${key}`);
+        flattenDs(value as Record<string, unknown>, `${prefix}-${key}`);
       } else if (typeof value === 'string') {
         lines.push(`  --color-${prefix}-${key}: ${value};`);
       }

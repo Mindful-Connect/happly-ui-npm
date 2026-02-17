@@ -51,7 +51,7 @@ export default function SocialsInputsSelectableDS({
   setFormValue: (value: Record<string, string>) => void;
   labels?: Partial<SocialsInputLabels>;
 }) {
-  const t = (key: any) =>
+  const t = (key: string) =>
     labels?.[key as keyof SocialsInputLabels] ??
     defaultLabels[key as keyof SocialsInputLabels];
 
@@ -191,7 +191,7 @@ export default function SocialsInputsSelectableDS({
   }: {
     key: string;
     url: string;
-    t?: (key: string, values?: any) => string;
+    t?: (key: string, values?: Record<string, string | number>) => string;
   }) {
     const message = t('errorSocialUrl');
     const result = getSocialUrlSchema(message).safeParse({
@@ -325,7 +325,7 @@ export default function SocialsInputsSelectableDS({
   }: {
     e: React.ClipboardEvent<HTMLInputElement>;
     key: string;
-    t: (key: string, values?: any) => string;
+    t: (key: string, values?: Record<string, string | number>) => string;
   }) => {
     e.preventDefault();
     const text = e.clipboardData.getData('text');
