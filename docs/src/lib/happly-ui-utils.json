@@ -1,0 +1,15 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "happly-ui-utils",
+  "type": "registry:lib",
+  "title": "Happly UI Utils",
+  "description": "Utility functions for class name merging.",
+  "dependencies": ["clsx", "tailwind-merge"],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "lib/happly-ui-utils.ts",
+      "type": "registry:lib"
+    }
+  ]
+}

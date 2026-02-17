@@ -7,7 +7,16 @@ export function cn(...inputs: ClassValue[]) {
 
 export type ObjectValues<T> = T[keyof T];
 
+type ParamsOfFetch = Parameters<typeof fetch>;
+
 export type ApiFetch = (
-  url: string,
-  options?: RequestInit
-) => Promise<Response>;
+  input: ParamsOfFetch[0],
+  init?: ParamsOfFetch[1] &
+    (
+      | {
+          unauthenticated?: boolean;
+          noWorkspaceKey?: boolean;
+        }
+      | undefined
+    )
+) => ReturnType<typeof fetch>;

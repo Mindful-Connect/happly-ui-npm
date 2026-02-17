@@ -1,0 +1,56 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "alert",
+  "type": "registry:ui",
+  "title": "Alert",
+  "description": "Displays a callout for user attention.",
+  "dependencies": [
+    "react-icons",
+    "@radix-ui/react-slot",
+    "class-variance-authority"
+  ],
+  "registryDependencies": ["alert-utils", "happly-ui-utils"],
+  "docs": {
+    "lead": "Displays a callout for user attention.",
+    "usage": "import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'\n\n<Alert>\n  <AlertTitle>Heads up!</AlertTitle>\n  <AlertDescription>\n    You can add components to your app using the cli.\n  </AlertDescription>\n</Alert>",
+    "examples": [],
+    "api": [
+      {
+        "name": "Alert",
+        "description": "The main alert component.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "AlertVariant",
+            "default": "warningLighter",
+            "description": "The visual style of the alert"
+          },
+          {
+            "name": "size",
+            "type": "'xs' | 'sm' | 'md'",
+            "default": "'sm'",
+            "description": "The size of the alert"
+          },
+          {
+            "name": "dismissButton",
+            "type": "boolean",
+            "default": "false",
+            "description": "Whether to show a dismiss button"
+          },
+          {
+            "name": "onDismiss",
+            "type": "() => void",
+            "default": "-",
+            "description": "Callback when dismiss button is clicked"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/alert.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

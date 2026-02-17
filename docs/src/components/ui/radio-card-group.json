@@ -1,0 +1,37 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "radio-card-group",
+  "type": "registry:ui",
+  "title": "Radio Card Group",
+  "description": "A radio group component with card styling, supporting icons, badges, and descriptions.",
+  "dependencies": [],
+  "registryDependencies": [
+    "radio-group",
+    "key-icon",
+    "badge",
+    "label",
+    "happly-ui-utils"
+  ],
+  "docs": {
+    "lead": "A radio group component with card styling, supporting icons, badges, and descriptions.",
+    "usage": "import RadioCardGroup, { RadioCardItem } from '@/components/ui/radio-card-group'\n\nconst items: RadioCardItem[] = [\n  { title: 'Option 1', value: 'opt1' },\n  { title: 'Option 2', value: 'opt2' }\n]\n\n<RadioCardGroup items={items} value={value} onValueChange={setValue} />",
+    "examples": [
+      {
+        "title": "Basic Usage",
+        "description": "Radio Card Group with different configurations.",
+        "code": "import RadioCardGroup, { RadioCardItem } from '@/components/ui/radio-card-group'\n\n// See demo for full usage example",
+        "preview": [
+          {
+            "component": "radio-card-group"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/radio-card-group.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

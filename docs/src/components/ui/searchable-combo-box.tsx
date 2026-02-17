@@ -28,14 +28,6 @@ import { LanguageType, Translatable } from '@/lib/searchable-combo-box-utils';
   {
     _domain: {
       search: 'Search',
-      tagCategory: {
-        demographic: 'demographic',
-        incorporation_type: 'incorporation type',
-        opportunity_type: 'opportunity type',
-        perk: 'perk',
-        sector: 'sector',
-        skill: 'skill',
-      },
     },
     inputs: {
       tag_combobox: {
@@ -43,20 +35,12 @@ import { LanguageType, Translatable } from '@/lib/searchable-combo-box-utils';
         orAdd: ' or add yours',
         pressEnterToAdd: 'Press Enter to add what you typed',
       },
-    },
+    }
   }
   // fr:
   {
     _domain: {
       search: 'Rechercher',
-      tagCategory: {
-        demographic: 'démographique',
-        incorporation_type: 'type d’incorporation',
-        opportunity_type: 'type d’opportunité',
-        perk: 'avantage',
-        sector: 'secteur',
-        skill: 'compétence',
-      },
     },
     inputs: {
       tag_combobox: {
@@ -84,7 +68,7 @@ interface SearchableMultiComboboxProps {
   setSelected: (tags: Tag[]) => void;
   tag: TagCategory;
   customTagOptions?: Tag[]; // to convert FormOption to Tag, use value as id
-  t: any; // pass t from useI18n for stranslations
+  t: (key: string) => string; // pass t from useI18n for stranslations
   useTags: ({
     tagCategory,
     enabled,
@@ -105,7 +89,7 @@ interface SearchableMultiComboboxProps {
           id: number;
           slug: string;
           label: string;
-          category: any;
+          category: TagCategory | string;
         }[]
       | undefined;
     status: 'loading' | 'error' | 'success' | 'pending';
@@ -140,7 +124,7 @@ export function SearchableMultiCombobox({
   customTagOptions, // if tagOptions are passed, we're not fetching tags
   t,
   useTags,
-  ...props
+  ..._props
 }: SearchableMultiComboboxProps & React.InputHTMLAttributes<HTMLInputElement>) {
   let prioritySlugs;
 
@@ -290,13 +274,15 @@ export function SearchableMultiCombobox({
               {tags.length > 0 && (
                 <CommandGroup>
                   {tags.map((option) => {
-                    const isSelected = isTagSelected(option);
+                    const isSelected = isTagSelected(option as unknown as Tag);
                     const atMax = !isSelected && selected.length >= max;
 
                     return (
                       <CommandItem
                         key={option.slug}
-                        onSelect={() => !atMax && handleToggle(option)}
+                        onSelect={() =>
+                          !atMax && handleToggle(option as unknown as Tag)
+                        }
                         disabled={disabled || (atMax && !isSelected)}
                       >
                         <Check

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "calendar-input",
+  "type": "registry:ui",
+  "title": "Calendar Input",
+  "description": "A date input component with calendar popover.",
+  "dependencies": [
+    "react-day-picker",
+    "date-fns",
+    "@headlessui/react",
+    "lucide-react"
+  ],
+  "registryDependencies": ["button", "happly-ui-utils"],
+  "docs": {
+    "lead": "A date input component with calendar popover.",
+    "usage": "import { CalendarInput } from '@/components/ui/calendar-input'\n\n<CalendarInput value={date} onChange={setDate} />",
+    "examples": [
+      {
+        "title": "Basic Usage",
+        "description": "A simple calendar input.",
+        "code": "import { CalendarInput } from '@/components/ui/calendar-input'\n\nexport default function Demo() {\n  return <CalendarInput />\n}",
+        "preview": [
+          {
+            "component": "calendar-input"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/calendar-input.tsx",
+      "type": "registry:ui",
+      "content": ""
+    }
+  ]
+}

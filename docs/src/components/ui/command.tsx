@@ -41,7 +41,8 @@ const CommandInput = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...props }, ref) => (
   <div
-    className='flex items-center border-b border-b-ds-neutral-200 bg-white px-3'
+    className='flex items-center border-b bg-white px-3'
+    // eslint-disable-next-line react/no-unknown-property
     cmdk-input-wrapper=''
   >
     <RiSearchLine className='mr-2 h-4 w-4 shrink-0 opacity-50' />
