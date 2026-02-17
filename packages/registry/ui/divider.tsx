@@ -1,4 +1,4 @@
-import { tv, type VariantProps } from '@/utils/tv';
+import { tv, type VariantProps } from '@/lib/tv';
 
 const DIVIDER_ROOT_NAME = 'DividerRoot';
 

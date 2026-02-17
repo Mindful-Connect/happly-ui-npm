@@ -1,7 +1,7 @@
 import { Fragment, ReactElement, SVGProps, useEffect, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/happly-ui-utils';
 import { importLibrary, setOptions } from '@googlemaps/js-api-loader';
 import { Combobox, Transition } from '@headlessui/react';
 

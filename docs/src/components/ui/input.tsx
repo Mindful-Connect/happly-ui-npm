@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { type ClassValue } from 'clsx';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/happly-ui-utils';
 import type { ReactElement, SVGProps } from 'react';
 
 const inputClassConfig = {

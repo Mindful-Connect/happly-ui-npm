@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/popover';
 import { Tag as TagPill, TagClose } from '@/components/ui/tag';
 import { Tag, TagCategory } from '@/lib/tag-utils';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/happly-ui-utils';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import * as React from 'react';
 import { ReactElement, SVGProps } from 'react';
@@ -380,7 +380,7 @@ function ConditionalPopoverContent({
 }) {
   if (isPreview) {
     return (
-      <div className='bg-popover text-popover-foreground w-full rounded-12 border border-ds-soft-200 p-0.5 shadow-regular-md outline-none'>
+      <div className='w-full rounded-12 border border-ds-soft-200 bg-popover p-0.5 text-popover-foreground shadow-regular-md outline-none'>
         {children}
       </div>
     );

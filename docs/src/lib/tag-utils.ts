@@ -1,4 +1,4 @@
-import { ObjectValues } from '@/lib/utils';
+import { ObjectValues } from '@/lib/happly-ui-utils';
 
 export const TAG_CATEGORY = {
   Sector: 'sector',

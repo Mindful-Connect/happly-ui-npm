@@ -3,6 +3,12 @@ import { useDebounce } from 'use-debounce';
 
 import { cn } from '@/lib/happly-ui-utils';
 import { importLibrary, setOptions } from '@googlemaps/js-api-loader';
+
+declare global {
+  interface Window {
+    google: any;
+  }
+}
 import { Combobox, Transition } from '@headlessui/react';
 
 export interface Suggestion {

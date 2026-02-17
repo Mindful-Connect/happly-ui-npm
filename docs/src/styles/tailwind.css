@@ -876,8 +876,6 @@
   --color-stable-light: var(--color-teal-200);
   --color-stable-lighter: var(--color-teal-50);
   /* endregion */
-
-
 }
 
 @layer base {

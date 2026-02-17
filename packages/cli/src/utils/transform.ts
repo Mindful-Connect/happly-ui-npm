@@ -29,6 +29,7 @@ function transformImports(content: string, config: HapplyConfig): string {
     '@/components/ui': config.aliases.ui,
     '@/components': config.aliases.components,
     '@/lib/utils': config.aliases.utils,
+    '@/lib/happly-ui-utils': config.aliases.utils,
     '@/lib': config.aliases.lib || '@/lib',
     '@/hooks': config.aliases.hooks || '@/hooks',
   };

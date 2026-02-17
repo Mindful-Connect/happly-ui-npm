@@ -1,5 +1,5 @@
 import { ReactNode, ElementType, RefObject } from 'react';
-import { ObjectValues, ApiFetch } from '@/lib/utils';
+import { ObjectValues, ApiFetch } from '@/lib/happly-ui-utils';
 import { AlertModel } from '@/lib/alert-utils';
 import { fileTypes, S3_ASSET_TYPE, ACL_TYPE } from './constants';
 

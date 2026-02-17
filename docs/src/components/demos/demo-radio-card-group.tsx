@@ -8,7 +8,7 @@ import {
   Zap,
   Star,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/happly-ui-utils';
 import { DemoBadge, DemoLabel } from '../ComponentPreview';
 
 // ============================================================================
@@ -41,7 +41,7 @@ const RadioGroupItem = React.forwardRef<
       <RadioGroupPrimitive.Item
         ref={ref}
         className={cn(
-          'text-primary aspect-square h-[16px] w-[16px] rounded-full border-2 border-neutral-200 transition-all duration-75 focus:outline-none focus-visible:ring-0 disabled:cursor-default disabled:opacity-50 data-[state=checked]:border-0 [&[data-state=checked]_.unchecked-shadow]:hidden',
+          'aspect-square h-[16px] w-[16px] rounded-full border-2 border-neutral-200 text-primary transition-all duration-75 focus:outline-none focus-visible:ring-0 disabled:cursor-default disabled:opacity-50 data-[state=checked]:border-0 [&[data-state=checked]_.unchecked-shadow]:hidden',
           props.disabled && 'cursor-default',
           className
         )}

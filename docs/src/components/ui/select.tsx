@@ -7,7 +7,7 @@ import { Slot, Slottable } from '@radix-ui/react-slot';
 import { RiArrowDownSLine, RiCheckLine } from 'react-icons/ri';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/happly-ui-utils';
 
 // --- CVA Definitions for Select Variants ---
 

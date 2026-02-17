@@ -604,7 +604,7 @@ export default function UploadFile({
 
   const handleFileChange = async (
     file: File | null | undefined,
-    fileInputRef: React.RefObject<HTMLInputElement>
+    fileInputRef: React.RefObject<HTMLInputElement | null>
   ) => {
     if (fileInputRef.current) fileInputRef.current.value = '';
 
@@ -1600,7 +1600,7 @@ function FileUploadTrigger({
         return;
       }
       acceptedFiles.forEach((file) => {
-        handleFileChange(file, fileInputRef);
+        handleFileChange(file, fileInputRef as any);
       });
     },
   });
@@ -1652,7 +1652,7 @@ function FileUploadTrigger({
         onChange={(e) => {
           const files = e.target.files;
           if (files && files.length > 0) {
-            handleFileChange(files[0], fileInputRef);
+            handleFileChange(files[0], fileInputRef as any);
           }
         }}
       />

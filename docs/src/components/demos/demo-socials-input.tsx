@@ -936,7 +936,7 @@ export function DemoSocialsInput() {
             setFormValue={setValues}
           />
         </div>
-        <div className='text-muted-foreground text-xs'>
+        <div className='text-xs text-muted-foreground'>
           State: {JSON.stringify(values)}
         </div>
       </div>
@@ -957,7 +957,7 @@ export function DemoSocialsInput() {
             }}
           />
         </div>
-        <div className='text-muted-foreground text-xs'>
+        <div className='text-xs text-muted-foreground'>
           State: {JSON.stringify(valuesFr)}
         </div>
       </div>

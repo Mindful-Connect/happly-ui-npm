@@ -12,6 +12,9 @@ HapplyUI is a copy-paste React component registry (not a library) inspired by sh
 # Build all packages
 bun run build
 
+# Type check root
+bun x tsc --noEmit
+
 # Build registry index
 bun run build:registry
 
@@ -162,7 +165,7 @@ To add a new preview component, update `docs/src/components/ComponentPreview.tsx
 - Use Radix UI primitives for accessibility
 - Use `cva` (class-variance-authority) for variants
 - Use `cn()` utility for class merging
-- Always use `@/lib/utils` import path (transformed at install time)
+- Always use `@/lib/happly-ui-utils` import path (transformed at install time)
 - Export both component and variants config
 
 ## Release Workflow

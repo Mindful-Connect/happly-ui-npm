@@ -6,7 +6,7 @@ import {
   ListboxButton,
 } from '@headlessui/react';
 import { ChevronDownIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/happly-ui-utils';
 import { type Currency, currencies } from '@/lib/currency-input-utils';
 
 export function CurrencyInput({
