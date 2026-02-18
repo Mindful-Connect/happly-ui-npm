@@ -718,10 +718,10 @@ function getSocialUrlSchema(message: string) {
           const containsDomain = allowedSocialDomains.some((domain) =>
             value.includes(domain)
           );
-          console.log('containsDomain:', {
-            value,
-            containsDomain,
-          });
+          // console.log('containsDomain:', {
+          //   value,
+          //   containsDomain,
+          // });
           return containsDomain;
         },
         { message }
