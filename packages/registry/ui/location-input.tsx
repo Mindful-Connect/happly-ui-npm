@@ -2,7 +2,7 @@ import { Fragment, ReactElement, SVGProps, useEffect, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
 import { cn } from '@/lib/happly-ui-utils';
-import { importLibrary, setOptions } from '@googlemaps/js-api-loader';
+import { Loader } from '@googlemaps/js-api-loader';
 
 declare global {
   interface Window {
@@ -73,11 +73,13 @@ export function LocationInput({
 
   // load google maps script with places library
   useEffect(() => {
-    setOptions({
-      key: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || '',
+    const loader = new Loader({
+      apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || '',
+      version: 'weekly',
       libraries: ['places'],
     });
-    importLibrary('places').then(() => {});
+
+    loader.load().then(() => {});
   }, []);
 
   useEffect(() => {

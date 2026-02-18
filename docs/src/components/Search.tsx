@@ -18,7 +18,7 @@ import {
   type AutocompleteState,
   createAutocomplete,
 } from '@algolia/autocomplete-core';
-import { Dialog, DialogPanel } from '@headlessui/react';
+import { Dialog } from '@headlessui/react';
 import clsx from 'clsx';
 
 import { navigation } from '@/lib/navigation';
@@ -370,7 +370,7 @@ function SearchDialog({
         <div className='fixed inset-0 bg-slate-900/50 backdrop-blur-sm' />
 
         <div className='fixed inset-0 overflow-y-auto px-4 py-4 sm:px-6 sm:py-20 md:py-32 lg:px-8 lg:py-[15vh]'>
-          <DialogPanel className='mx-auto transform-gpu overflow-hidden rounded-xl bg-white shadow-xl sm:max-w-xl dark:bg-slate-800 dark:ring-1 dark:ring-slate-700'>
+          <Dialog.Panel className='mx-auto transform-gpu overflow-hidden rounded-xl bg-white shadow-xl sm:max-w-xl dark:bg-slate-800 dark:ring-1 dark:ring-slate-700'>
             <div {...autocomplete.getRootProps({})}>
               <form
                 ref={formRef}
@@ -399,7 +399,7 @@ function SearchDialog({
                 </div>
               </form>
             </div>
-          </DialogPanel>
+          </Dialog.Panel>
         </div>
       </Dialog>
     </>
