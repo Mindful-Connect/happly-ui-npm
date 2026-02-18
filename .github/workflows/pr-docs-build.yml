@@ -2,6 +2,9 @@ name: PR Build Check
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - production
 
 jobs:
   build-packages:
