@@ -67,7 +67,7 @@ const t = (key: string, params?: Record<string, string>) => {
 };
 
 // Mock empty function for apiFetch as we are disabled
-const apiFetch = async (url: string, options: any) => {
+const apiFetch = async (url: any, options: any) => {
   return new Response(JSON.stringify({}), { status: 200 });
 };
 

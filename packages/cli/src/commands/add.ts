@@ -116,8 +116,16 @@ export async function add(
       // Use the file's type if available, otherwise fallback to item's type
       const fileType = file.type || item.type;
 
-      // Extract filename from path (e.g. "lib/utils.ts" -> "utils.ts")
-      const fileName = path.basename(file.path);
+      let fileName = path.basename(file.path);
+
+      // For library files, if the file is inside a subdirectory of lib, preserve it
+      if (fileType === 'registry:lib') {
+        // file.path is like "lib/upload-file-input/constants.ts"
+        // We want "upload-file-input/constants.ts"
+        if (file.path.startsWith('lib/')) {
+          fileName = file.path.substring(4);
+        }
+      }
 
       const targetPath = getComponentPath(
         item.name,
@@ -160,8 +168,16 @@ export async function add(
         // Use the file's type if available, otherwise fallback to item's type
         const fileType = file.type || item.type;
 
-        // Extract filename from path (e.g. "lib/utils.ts" -> "utils.ts")
-        const fileName = path.basename(file.path);
+        let fileName = path.basename(file.path);
+
+        // For library files, if the file is inside a subdirectory of lib, preserve it
+        if (fileType === 'registry:lib') {
+          // file.path is like "lib/upload-file-input/constants.ts"
+          // We want "upload-file-input/constants.ts"
+          if (file.path.startsWith('lib/')) {
+            fileName = file.path.substring(4);
+          }
+        }
 
         const targetPath = getComponentPath(
           item.name,

@@ -38,7 +38,6 @@ const tags = {
     },
     render: ({ src, alt = '', caption }) => (
       <figure>
-
         <img src={src} alt={alt} />
         <figcaption>{caption}</figcaption>
       </figure>

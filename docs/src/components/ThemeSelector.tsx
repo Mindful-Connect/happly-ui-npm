@@ -1,12 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
-import {
-  Label,
-  Listbox,
-  ListboxButton,
-  ListboxOption,
-  ListboxOptions,
-} from '@headlessui/react';
+import { Listbox } from '@headlessui/react';
 import clsx from 'clsx';
 
 const themes = [
@@ -67,8 +61,8 @@ export function ThemeSelector(
 
   return (
     <Listbox as='div' value={theme} onChange={setTheme} {...props}>
-      <Label className='sr-only'>Theme</Label>
-      <ListboxButton
+      <Listbox.Label className='sr-only'>Theme</Listbox.Label>
+      <Listbox.Button
         className='flex h-6 w-6 items-center justify-center rounded-lg shadow-md ring-1 shadow-black/5 ring-black/5 dark:bg-slate-700 dark:ring-white/5 dark:ring-inset'
         aria-label='Theme'
       >
@@ -84,20 +78,20 @@ export function ThemeSelector(
             theme === 'system' ? 'fill-slate-400' : 'fill-sky-400'
           )}
         />
-      </ListboxButton>
-      <ListboxOptions className='absolute top-full left-1/2 mt-3 w-36 -translate-x-1/2 space-y-1 rounded-xl bg-white p-3 text-sm font-medium shadow-md ring-1 shadow-black/5 ring-black/5 dark:bg-slate-800 dark:ring-white/5'>
+      </Listbox.Button>
+      <Listbox.Options className='absolute top-full left-1/2 mt-3 w-36 -translate-x-1/2 space-y-1 rounded-xl bg-white p-3 text-sm font-medium shadow-md ring-1 shadow-black/5 ring-black/5 dark:bg-slate-800 dark:ring-white/5'>
         {themes.map((theme) => (
-          <ListboxOption
+          <Listbox.Option
             key={theme.value}
             value={theme.value}
-            className={({ focus, selected }) =>
+            className={({ active, selected }) =>
               clsx(
                 'flex cursor-pointer items-center rounded-[0.625rem] p-1 select-none',
                 {
                   'text-sky-500': selected,
-                  'text-slate-900 dark:text-white': focus && !selected,
-                  'text-slate-700 dark:text-slate-400': !focus && !selected,
-                  'bg-slate-100 dark:bg-slate-900/40': focus,
+                  'text-slate-900 dark:text-white': active && !selected,
+                  'text-slate-700 dark:text-slate-400': !active && !selected,
+                  'bg-slate-100 dark:bg-slate-900/40': active,
                 }
               )
             }
@@ -117,9 +111,9 @@ export function ThemeSelector(
                 <div className='ml-3'>{theme.name}</div>
               </>
             )}
-          </ListboxOption>
+          </Listbox.Option>
         ))}
-      </ListboxOptions>
+      </Listbox.Options>
     </Listbox>
   );
 }

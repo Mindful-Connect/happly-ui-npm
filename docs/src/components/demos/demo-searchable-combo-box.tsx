@@ -365,13 +365,13 @@ export function DemoSearchableComboBox() {
   const [selected, setSelected] = React.useState<Tag[]>([]);
 
   // Mock translation function
-  const t = (key: string) => {
+  const t = (key: string): string => {
     const keys = key.split('.');
     let translation = mockTranslations;
     for (const k of keys) {
       translation = (translation as any)[k];
     }
-    return translation;
+    return translation as unknown as string;
   };
 
   const useTags = ({ customTagOptions }: any) => {

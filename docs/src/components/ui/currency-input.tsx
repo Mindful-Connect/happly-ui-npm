@@ -1,10 +1,5 @@
 import { useState, useRef, useCallback } from 'react';
-import {
-  Listbox,
-  ListboxOption,
-  ListboxOptions,
-  ListboxButton,
-} from '@headlessui/react';
+import { Listbox } from '@headlessui/react';
 import { ChevronDownIcon } from 'lucide-react';
 import { cn } from '@/lib/happly-ui-utils';
 import { type Currency, currencies } from '@/lib/currency-input-utils';
@@ -54,7 +49,8 @@ export function CurrencyInput({
         'relative flex h-10 w-full rounded-[10px] border shadow-[0px_1px_2px_0px_rgba(10,13,20,0.03)]',
         'hover:[&:not(:focus-within)]:border-transparent hover:[&:not(:focus-within)]:bg-ds-weak-50',
         'focus-within:border-ds-stroke-strong-950 focus-within:shadow-button-important-focus',
-        readOnly ? 'cursor-not-allowed bg-gray-100' : 'bg-white'
+        readOnly ? 'cursor-not-allowed bg-gray-100' : 'bg-white',
+        className
       )}
     >
       {/* Amount input */}
@@ -81,9 +77,9 @@ export function CurrencyInput({
       >
         {({ open }) => (
           <>
-            <ListboxButton
+            <Listbox.Button
               className={cn(
-                'relative flex shrink-0 cursor-default items-center gap-x-2 rounded-r-[10px] border-l border-ds-neutral-200 bg-transparent py-2 pr-2.5 pl-2 text-sm whitespace-nowrap focus:outline-none',
+                'relative flex shrink-0 cursor-default items-center gap-x-2 rounded-r-10 border-l border-ds-neutral-200 bg-transparent py-2 pr-2.5 pl-2 text-sm whitespace-nowrap focus:outline-none',
                 readOnly ? 'pointer-events-none' : 'cursor-pointer'
               )}
             >
@@ -100,11 +96,11 @@ export function CurrencyInput({
                   aria-hidden='true'
                 />
               )}
-            </ListboxButton>
+            </Listbox.Button>
             {open && !readOnly && (
-              <ListboxOptions className='absolute top-full right-0 z-50 mt-2.5 w-[160px] overflow-hidden rounded-2xl border border-ds-neutral-200 bg-white text-sm shadow-lg focus:outline-none'>
+              <Listbox.Options className='absolute top-full right-0 z-50 mt-2.5 w-[160px] overflow-hidden rounded-2xl border border-ds-neutral-200 bg-white text-sm shadow-lg focus:outline-none'>
                 {currencies.map((c) => (
-                  <ListboxOption
+                  <Listbox.Option
                     key={c.code}
                     value={c}
                     className={({ active }) =>
@@ -121,9 +117,9 @@ export function CurrencyInput({
 
                       <span className='truncate'>{c.label}</span>
                     </div>
-                  </ListboxOption>
+                  </Listbox.Option>
                 ))}
-              </ListboxOptions>
+              </Listbox.Options>
             )}
           </>
         )}

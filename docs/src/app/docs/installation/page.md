@@ -35,7 +35,7 @@ The CLI will ask you a few questions to configure your project:
 1. **Framework detection** — Automatically detects Next.js, Vite, etc.
 2. **TypeScript** — Whether to use TypeScript or JavaScript
 3. **Component location** — Where to install components (default: `src/components/happly-ui`)
-4. **Utility location** — Where to put the `cn()` utility function (default: `src/lib/happly-ui-utils.ts`)
+4. **Utility location** — Where to put the `cn()` utility function (default: `src/lib/happly-ui/happly-ui-utils.ts`)
 
 ### Add components
 
@@ -139,7 +139,7 @@ For Tailwind v4:
 
 ### 3. Add the utility function
 
-Create `src/lib/happly-ui-utils.ts`:
+Create `src/lib/happly-ui/happly-ui-utils.ts`:
 
 ```ts
 import { type ClassValue, clsx } from 'clsx';
@@ -187,7 +187,7 @@ HapplyUI stores its configuration in `happly-ui-components.json`:
   },
   "aliases": {
     "components": "@/components",
-    "utils": "@/lib/happly-ui-utils",
+    "utils": "@/lib/happly-ui/happly-ui-utils",
     "ui": "@/components/happly-ui",
     "lib": "@/lib",
     "hooks": "@/hooks"

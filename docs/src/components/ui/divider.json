@@ -1,0 +1,134 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "divider",
+  "type": "registry:ui",
+  "title": "Divider",
+  "description": "A versatile divider component for creating visual separation between content elements. Supports multiple variants including line, text, and content dividers.",
+  "dependencies": ["tailwind-variants"],
+  "registryDependencies": ["tv"],
+  "docs": {
+    "lead": "A versatile divider component for creating visual separation between content elements.",
+    "usage": "import * as Divider from \"@/components/ui/divider\"\n\n<Divider.Root />\n<Divider.Root variant=\"line-text\">OR</Divider.Root>",
+    "examples": [
+      {
+        "title": "Line (Default)",
+        "description": "A simple horizontal line divider.",
+        "code": "<Divider.Root />",
+        "preview": [
+          {
+            "component": "divider",
+            "props": {
+              "variant": "line"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Line with Spacing",
+        "description": "A line divider with vertical spacing.",
+        "code": "<Divider.Root variant=\"line-spacing\" />",
+        "preview": [
+          {
+            "component": "divider",
+            "props": {
+              "variant": "line-spacing"
+            }
+          }
+        ]
+      },
+      {
+        "title": "Line with Text",
+        "description": "A divider with centered text between the lines.",
+        "code": "<Divider.Root variant=\"line-text\">OR</Divider.Root>\n<Divider.Root variant=\"line-text\">Continue with</Divider.Root>",
+        "preview": [
+          {
+            "component": "divider",
+            "props": {
+              "variant": "line-text"
+            },
+            "children": "OR"
+          },
+          {
+            "component": "divider",
+            "props": {
+              "variant": "line-text"
+            },
+            "children": "Continue with"
+          }
+        ]
+      },
+      {
+        "title": "Text Only",
+        "description": "A text-only divider without lines.",
+        "code": "<Divider.Root variant=\"text\">Section</Divider.Root>",
+        "preview": [
+          {
+            "component": "divider",
+            "props": {
+              "variant": "text"
+            },
+            "children": "Section"
+          }
+        ]
+      },
+      {
+        "title": "Solid Text",
+        "description": "Text on a solid background with uppercase styling, commonly used in modals.",
+        "code": "<Divider.Root variant=\"solid-text\">OR</Divider.Root>",
+        "preview": [
+          {
+            "component": "divider",
+            "props": {
+              "variant": "solid-text"
+            },
+            "children": "OR"
+          }
+        ]
+      },
+      {
+        "title": "Content",
+        "description": "A divider with centered content elements like icons or buttons.",
+        "code": "<Divider.Root variant=\"content\">\n  <Button.Root variant=\"neutral\" mode=\"stroke\" size=\"xsmall\" iconOnly>\n    <Button.Icon as={RiAddLine} />\n  </Button.Root>\n</Divider.Root>",
+        "preview": [
+          {
+            "component": "divider",
+            "props": {
+              "variant": "content"
+            },
+            "children": "icon-button"
+          }
+        ]
+      }
+    ],
+    "api": [
+      {
+        "name": "Divider.Root",
+        "description": "The main divider component.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'line' | 'line-spacing' | 'line-text' | 'text' | 'solid-text' | 'content'",
+            "default": "'line'",
+            "description": "The visual style of the divider"
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "description": "Additional CSS classes"
+          },
+          {
+            "name": "children",
+            "type": "ReactNode",
+            "description": "Content to display (for text and content variants)"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/divider.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

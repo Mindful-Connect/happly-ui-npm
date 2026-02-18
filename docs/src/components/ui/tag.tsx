@@ -6,18 +6,6 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/happly-ui-utils';
 import { RiCloseFill } from 'react-icons/ri';
 
-/**
- * shadcn/ui Tag component
- *
- * Usage:
- * <Tag variant="stroke">Label</Tag>
- * <Tag variant="stroke">
- *   <Tag.Icon><Icon /></Tag.Icon>
- *   Text
- *   <Tag.Close />
- * </Tag>
- */
-
 export const tagRoot = cva(
   [
     'group inline-flex items-center min-h-[36px] gap-2 rounded-lg px-2 !text-label-sm text-ds-sub-600',
@@ -55,7 +43,10 @@ export interface TagProps
 }
 
 export const Tag = React.forwardRef<HTMLDivElement, TagProps>(
-  ({ asChild, variant, disabled, className, children, ...props }, ref) => {
+  (
+    { asChild, variant, disabled, className, children, ...props }: TagProps,
+    ref
+  ) => {
     const Comp = asChild ? Slot : 'div';
     return (
       <Comp
@@ -78,7 +69,16 @@ type TagIconProps = {
   React.HTMLAttributes<HTMLElement>;
 
 export const TagIcon = React.forwardRef<HTMLElement, TagIconProps>(
-  ({ asChild, variant, disabled, className, ...props }, ref) => {
+  (
+    {
+      asChild,
+      variant: _variant,
+      disabled: _disabled,
+      className,
+      ...props
+    }: TagIconProps,
+    ref
+  ) => {
     const Comp = asChild ? Slot : 'span';
     return (
       <Comp
@@ -104,7 +104,16 @@ export type TagCloseProps = Omit<VariantProps<typeof tagRoot>, 'disabled'> &
   };
 
 export const TagClose = React.forwardRef<HTMLButtonElement, TagCloseProps>(
-  ({ asChild, variant, disabled, className, ...props }, ref) => {
+  (
+    {
+      asChild,
+      variant: _variant,
+      disabled,
+      className,
+      ...props
+    }: TagCloseProps,
+    ref
+  ) => {
     const Comp = asChild ? Slot : 'button';
     return (
       <Comp

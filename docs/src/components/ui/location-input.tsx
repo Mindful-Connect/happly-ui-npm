@@ -2,7 +2,7 @@ import { Fragment, ReactElement, SVGProps, useEffect, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
 import { cn } from '@/lib/happly-ui-utils';
-import { importLibrary, setOptions } from '@googlemaps/js-api-loader';
+import { Loader } from '@googlemaps/js-api-loader';
 
 declare global {
   interface Window {
@@ -73,11 +73,13 @@ export function LocationInput({
 
   // load google maps script with places library
   useEffect(() => {
-    setOptions({
-      key: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || '',
+    const loader = new Loader({
+      apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || '',
+      version: 'weekly',
       libraries: ['places'],
     });
-    importLibrary('places').then(() => {});
+
+    loader.load().then(() => {});
   }, []);
 
   useEffect(() => {
@@ -192,7 +194,7 @@ export function LocationInput({
               )}
               <Combobox.Input
                 value={locationSearch}
-                className='text-ds-neutral-950 placeholder:text-ds-neutral-600 w-full border-none bg-transparent pl-1.5 text-sm focus:ring-0 focus:outline-none'
+                className='w-full border-none bg-transparent pl-1.5 text-sm text-ds-neutral-950 placeholder:text-ds-neutral-600 focus:ring-0 focus:outline-none'
                 onFocus={() => {
                   setLocationSearchActive(true);
                   setIsFocused(true);
@@ -216,7 +218,7 @@ export function LocationInput({
             >
               <div>
                 {locationSuggestions.length > 0 && (
-                  <Combobox.Options className='border-ds-neutral-200 absolute z-10 mt-2.5 max-h-60 w-full overflow-auto rounded-2xl border bg-white p-2 text-sm shadow-lg ring-0 focus:outline-none'>
+                  <Combobox.Options className='absolute z-10 mt-2.5 max-h-60 w-full overflow-auto rounded-2xl border border-ds-neutral-200 bg-white p-2 text-sm shadow-lg ring-0 focus:outline-none'>
                     {locationSuggestions.map(
                       (suggestion: Suggestion, suggestionIndex: number) => (
                         <Combobox.Option
@@ -225,7 +227,7 @@ export function LocationInput({
                         >
                           {({ selected }: { selected: boolean }) => (
                             <div
-                              className='hover:bg-ds-neutral-50 cursor-default rounded-[10px] px-3 py-2 select-none'
+                              className='cursor-default rounded-[10px] px-3 py-2 select-none hover:bg-ds-neutral-50'
                               title={suggestion.description}
                             >
                               <span

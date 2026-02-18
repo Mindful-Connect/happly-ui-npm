@@ -1,0 +1,15 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "label",
+  "type": "registry:ui",
+  "title": "Label",
+  "description": "A label component for form inputs.",
+  "dependencies": ["@radix-ui/react-label"],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "ui/label.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

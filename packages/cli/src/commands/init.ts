@@ -251,8 +251,8 @@ export async function init(options: InitOptions): Promise<void> {
         name: 'utilsPath',
         message: 'Where should utils be installed?',
         initial: projectInfo.isSrcDir
-          ? 'src/lib/happly-ui-utils'
-          : 'lib/happly-ui-utils',
+          ? 'src/lib/happly-ui/happly-ui-utils'
+          : 'lib/happly-ui/happly-ui-utils',
       },
     ]);
 
@@ -390,7 +390,7 @@ function createDefaultConfig(
     tsx: projectInfo.isTypeScript,
     aliases: {
       components: '@/components',
-      utils: '@/lib/happly-ui-utils',
+      utils: '@/lib/happly-ui/happly-ui-utils',
       ui: '@/components/happly-ui',
       hooks: '@/hooks',
       lib: '@/lib',

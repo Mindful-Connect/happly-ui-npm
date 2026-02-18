@@ -1,0 +1,102 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "textarea",
+  "type": "registry:ui",
+  "title": "Textarea",
+  "description": "A textarea component.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "docs": {
+    "lead": "A textarea component.",
+    "usage": "import { Textarea } from \"@/components/ui/textarea\"\n\n<Textarea placeholder=\"Type your message here.\" />",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "A default textarea component.",
+        "code": "<Textarea placeholder=\"Type your message here.\" />",
+        "preview": [
+          {
+            "component": "textarea",
+            "props": {
+              "placeholder": "Type your message here."
+            }
+          }
+        ]
+      },
+      {
+        "title": "Disabled",
+        "description": "A disabled textarea component.",
+        "code": "<Textarea disabled placeholder=\"Type your message here.\" />",
+        "preview": [
+          {
+            "component": "textarea",
+            "props": {
+              "disabled": true,
+              "placeholder": "Type your message here."
+            }
+          }
+        ]
+      },
+      {
+        "title": "With Label",
+        "description": "A textarea with a label.",
+        "code": "<div className=\"grid w-full gap-1.5\">\n  <Label htmlFor=\"message\">Your message</Label>\n  <Textarea placeholder=\"Type your message here.\" id=\"message\" />\n</div>",
+        "preview": [
+          {
+            "component": "form-group",
+            "children": [
+              {
+                "component": "label",
+                "children": "Your message",
+                "props": {
+                  "htmlFor": "message"
+                }
+              },
+              {
+                "component": "textarea",
+                "props": {
+                  "id": "message",
+                  "placeholder": "Type your message here."
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "With Maximum Length",
+        "description": "A textarea with a maximum length.",
+        "code": "<Textarea placeholder=\"Type your message here.\" maxLength={250} />",
+        "preview": [
+          {
+            "component": "textarea",
+            "props": {
+              "placeholder": "Type your message here.",
+              "maxLength": 250
+            }
+          }
+        ]
+      }
+    ],
+    "api": [
+      {
+        "name": "Textarea",
+        "description": "The textarea component.",
+        "props": [
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Indicates whether the textarea is in an error state."
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/textarea.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}
