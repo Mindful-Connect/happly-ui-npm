@@ -6,7 +6,7 @@ import { Calendar } from './datepicker';
 import { enCA, frCA } from 'react-day-picker/locale';
 import { cn } from '@/lib/happly-ui-utils';
 
-export default function DatePreview({
+export default function CalendarInput({
   date,
   locale,
   placeholder,
