@@ -87,7 +87,7 @@ export default function RadioCardGroup({
 
             <div className='flex flex-col gap-1'>
               <div className='flex gap-x-2'>
-                <div className='flex flex-wrap items-center gap-x-1.5'>
+                <div className='flex h-5 flex-wrap items-center gap-x-1.5'>
                   <Label
                     htmlFor={item.value}
                     className={cn(
