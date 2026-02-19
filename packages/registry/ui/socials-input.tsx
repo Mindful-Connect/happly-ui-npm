@@ -43,6 +43,7 @@ export default function SocialsInputsSelectableDS({
   formValue,
   setFormValue,
   labels,
+  t,
 }: {
   name: string;
   readOnly?: boolean;
@@ -50,11 +51,10 @@ export default function SocialsInputsSelectableDS({
   formValue: Record<string, string>;
   setFormValue: (value: Record<string, string>) => void;
   labels?: Partial<SocialsInputLabels>;
+  /** Translation function */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  t: (key: string, params?: any) => string;
 }) {
-  const t = (key: string) =>
-    labels?.[key as keyof SocialsInputLabels] ??
-    defaultLabels[key as keyof SocialsInputLabels];
-
   const [errorTimeout, setErrorTimeout] = useState<number>();
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   // console.log('socials input errors:', errors);
