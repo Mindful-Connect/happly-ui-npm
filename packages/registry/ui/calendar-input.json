@@ -30,8 +30,15 @@
   "files": [
     {
       "path": "ui/calendar-input.tsx",
-      "type": "registry:ui",
-      "content": ""
+      "type": "registry:ui"
+    },
+    {
+      "path": "ui/datepicker.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "ui/datepicker.css",
+      "type": "registry:ui"
     }
   ]
 }

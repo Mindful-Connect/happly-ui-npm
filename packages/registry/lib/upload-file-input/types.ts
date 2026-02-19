@@ -120,7 +120,8 @@ export interface UploadFileProps {
   /** ACL for presigned URL uploads: 'public-read' for public bucket, 'private' for private bucket */
   acl?: AclType;
   /** Translation function */
-  t: (key: string, params?: Record<string, string>) => string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  t: (key: string, params?: any) => string;
   /** Provider ID for presigned URL uploads. const { provider_id } = useProvider(); */
   providerId: string;
   /** Provider emblem URL for presigned URL uploads. const { emblem_url } = useProvider(); */
@@ -129,9 +130,9 @@ export interface UploadFileProps {
   providerCurrentWorkspaceKey: string;
   /** Auth token for presigned URL uploads. const { token } = useAuth(); */
   authToken: string;
-  /** API fetch function */
+  /** API fetch function. const apiFetch = useApiFetch(); */
   apiFetch: ApiFetch;
-  /** Add alert function */
+  /** Add alert function. const { addAlert } = useAlerts(); */
   addAlert: (alert: AlertModel) => void;
 }
 

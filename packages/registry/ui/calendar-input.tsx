@@ -6,7 +6,7 @@ import { Calendar } from './datepicker';
 import { enCA, frCA } from 'react-day-picker/locale';
 import { cn } from '@/lib/happly-ui-utils';
 
-export default function DatePreview({
+export default function CalendarInput({
   date,
   locale,
   placeholder,
@@ -20,7 +20,7 @@ export default function DatePreview({
   setDate: (date: string | null) => void;
 }) {
   return (
-    <Popover as='div' className={cn('relaitve', className)}>
+    <Popover as='div' className={cn('relative', className)}>
       {({ open }) => (
         <>
           <Popover.Button className='rounded-10 border-ds-neutral-200 focus:border-ds-neutral-950 focus:ring-ds-neutral-950 relative flex h-10 w-full items-center space-x-2 border bg-white p-3 text-sm placeholder:text-[#575759] focus:outline-none'>

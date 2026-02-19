@@ -258,12 +258,14 @@ function PhoneInput({
               )}
             </Listbox.Button>
             {open && !readOnly && (
-              <Listbox.Options
-                static
-                className='border-ds-neutral-200 ring-opacity-5 absolute top-full left-0 z-50 mt-2.5 w-full max-w-[250px] overflow-hidden rounded-2xl border bg-white text-base shadow-[0px_1px_2px_0px_rgba(10,13,20,0.03)] ring-1 ring-black focus:outline-none sm:text-sm'
-              >
-                <CountryOptions />
-              </Listbox.Options>
+              <div className='absolute top-full left-0'>
+                <Listbox.Options
+                  static
+                  className='border-ds-neutral-200 ring-opacity-5 relative z-50 mt-2.5 w-full max-w-[250px] overflow-hidden rounded-2xl border bg-white text-base shadow-[0px_1px_2px_0px_rgba(10,13,20,0.03)] ring-1 ring-black focus:outline-none sm:text-sm'
+                >
+                  <CountryOptions />
+                </Listbox.Options>
+              </div>
             )}
           </>
         )}

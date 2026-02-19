@@ -6,7 +6,6 @@ on:
     branches:
       - production
 
-
 jobs:
   build-packages:
     name: Build Packages

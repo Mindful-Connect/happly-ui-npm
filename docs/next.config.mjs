@@ -19,8 +19,13 @@ const nextConfig = {
     config.resolve.alias = {
       ...config.resolve.alias,
       // Fix for headlessui 1.7.19 import error: transition/transition.js -> transitions/transition.js
-      [path.resolve(__dirname, 'node_modules/@headlessui/react/dist/components/transition/transition.js')]: 
-        path.resolve(__dirname, 'node_modules/@headlessui/react/dist/components/transitions/transition.js'),
+      [path.resolve(
+        __dirname,
+        'node_modules/@headlessui/react/dist/components/transition/transition.js'
+      )]: path.resolve(
+        __dirname,
+        'node_modules/@headlessui/react/dist/components/transitions/transition.js'
+      ),
     };
     return config;
   },

@@ -68,7 +68,8 @@ interface SearchableMultiComboboxProps {
   setSelected: (tags: Tag[]) => void;
   tag: TagCategory;
   customTagOptions?: Tag[]; // to convert FormOption to Tag, use value as id
-  t: (key: string) => string; // pass t from useI18n for stranslations
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  t: (key: string, params?: any) => string; // pass t from useI18n for stranslations
   useTags: ({
     tagCategory,
     enabled,
@@ -240,16 +241,15 @@ export function SearchableMultiCombobox({
         <ConditionalPopoverTrigger isPreview={isPreview}>
           <CustomInputWrapper
             className={cn(
-              'flex h-9 flex-row items-center gap-2 p-2',
-              isPreview ? 'ps-4' : 'ps-2.5'
+              'group flex h-10 cursor-pointer flex-row items-center gap-2 rounded-[10px] p-2 px-4'
             )}
             hasError={hasError}
           >
             {sizedIcon}
             <span
               className={cn(
-                'flex-1',
-                isPreview ? 'inline text-ds-soft-400 capitalize' : 'flex-1'
+                'text-ds-soft-400 group-hover:text-ds-neutral-600 inline flex-1 capitalize select-none',
+                isPreview ? ' ' : ''
               )}
             >
               {placeholder ? placeholder : `${t('_domain.select')} ${tag}`}
