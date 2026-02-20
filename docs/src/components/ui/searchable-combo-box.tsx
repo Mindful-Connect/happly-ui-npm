@@ -68,7 +68,7 @@ interface SearchableMultiComboboxProps {
   setSelected: (tags: Tag[]) => void;
   tag: TagCategory;
   customTagOptions?: Tag[]; // to convert FormOption to Tag, use value as id
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line
   t: (key: string, params?: any) => string; // pass t from useI18n for stranslations
   useTags: ({
     tagCategory,
@@ -248,7 +248,7 @@ export function SearchableMultiCombobox({
             {sizedIcon}
             <span
               className={cn(
-                'text-ds-soft-400 group-hover:text-ds-neutral-600 inline flex-1 capitalize select-none',
+                'inline flex-1 text-ds-soft-400 capitalize select-none group-hover:text-ds-neutral-600',
                 isPreview ? ' ' : ''
               )}
             >

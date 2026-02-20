@@ -118,6 +118,12 @@
       "description": "Displays rich content in a portal, triggered by a button."
     },
     {
+      "name": "progress-bar",
+      "type": "registry:ui",
+      "title": "Progress Bar",
+      "description": "A progress bar component indicating the completion status of a task."
+    },
+    {
       "name": "radio-card-group",
       "type": "registry:ui",
       "title": "Radio Card Group",

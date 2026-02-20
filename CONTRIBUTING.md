@@ -422,14 +422,15 @@ case 'my-component':
 
 ### Available Preview Components
 
-| Component | Available Props                                               |
-| --------- | ------------------------------------------------------------- |
-| `button`  | `variant`, `mode`, `size`, `disabled`, `iconOnly`, `children` |
-| `badge`   | `variant`, `children`                                         |
-| `input`   | `type`, `placeholder`, `disabled`, `value`                    |
-| `label`   | `disabled`, `children`                                        |
-| `card`    | `title`, `description`, `children`                            |
-| `divider` | `variant`, `children`                                         |
+| Component      | Available Props                                               |
+| -------------- | ------------------------------------------------------------- |
+| `button`       | `variant`, `mode`, `size`, `disabled`, `iconOnly`, `children` |
+| `badge`        | `variant`, `children`                                         |
+| `input`        | `type`, `placeholder`, `disabled`, `value`                    |
+| `label`        | `disabled`, `children`                                        |
+| `card`         | `title`, `description`, `children`                            |
+| `divider`      | `variant`, `children`                                         |
+| `progress-bar` | `variant`, `progress`                                         |
 
 ---
 
