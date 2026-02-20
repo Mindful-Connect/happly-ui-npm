@@ -79,7 +79,8 @@ export type UploadFileVariant =
   | 'lesson-file'
   | 'module-image'
   | 'programs'
-  | 'attachment';
+  | 'attachment'
+  | 'file-request';
 
 export interface UploadFileProps {
   alt?: string;
@@ -103,6 +104,8 @@ export interface UploadFileProps {
   }>;
   /** For attachment variant - callback when attachment is removed */
   onAttachmentRemove?: (attachmentId: string) => void;
+  /** For attachment variant - callback when attachment download is clicked */
+  onAttachmentDownload?: (attachmentId: string) => void;
   /** Maximum number of files allowed (for attachment variant, defaults to 5) */
   maxNumberOfFiles?: number;
   /** Accept multiple files */
@@ -120,7 +123,8 @@ export interface UploadFileProps {
   /** ACL for presigned URL uploads: 'public-read' for public bucket, 'private' for private bucket */
   acl?: AclType;
   /** Translation function */
-  t: (key: string, params?: Record<string, string>) => string;
+  // eslint-disable-next-line
+  t: (key: string, params?: any) => string;
   /** Provider ID for presigned URL uploads. const { provider_id } = useProvider(); */
   providerId: string;
   /** Provider emblem URL for presigned URL uploads. const { emblem_url } = useProvider(); */
@@ -129,10 +133,12 @@ export interface UploadFileProps {
   providerCurrentWorkspaceKey: string;
   /** Auth token for presigned URL uploads. const { token } = useAuth(); */
   authToken: string;
-  /** API fetch function */
+  /** API fetch function. const apiFetch = useApiFetch(); */
   apiFetch: ApiFetch;
-  /** Add alert function */
+  /** Add alert function. const { addAlert } = useAlerts(); */
   addAlert: (alert: AlertModel) => void;
+  /** Override allowed file types */
+  allowedFileTypes?: string[];
 }
 
 export type FileFormatIconColor =
@@ -206,3 +212,15 @@ export interface FileUploadCardProps {
   /** Translation function */
   t: (key: string, params?: Record<string, string>) => string;
 }
+
+export type AttachmentType =
+  | 'pdf' // e.g. .pdf
+  | 'image' // e.g. .jpg, .png, .gif
+  | 'video' // e.g. .mp4, .avi, .mov, .mkv
+  | 'audio' // e.g. .mp3, .wav, .ogg, .flac
+  | 'document_file' // e.g. .odt, .doc, .docx
+  | 'spreadsheet_document' // e.g. .xls, .xlsx .ods
+  | 'presentation_document' // e.g. .ppt, .pptx, .odp
+  | 'plain_text' // e.g. .txt, .md
+  | 'compressed_file' // e.g. .zip, .rar, .7z
+  | 'any';

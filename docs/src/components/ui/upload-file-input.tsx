@@ -16,6 +16,7 @@ import {
   RiCheckboxCircleFill,
   RiErrorWarningFill,
   RiLoader4Line,
+  RiCheckLine,
 } from 'react-icons/ri';
 import { cn } from '@/lib/happly-ui-utils';
 import { AlertModel } from '@/lib/alert-utils';
@@ -55,6 +56,12 @@ import {
   formatFileSize,
 } from '@/lib/upload-file-input';
 
+import { ProgressBar } from '@/components/ui/progress-bar';
+import {
+  FileFormatIcon as RequestFileFormatIcon,
+  FileDownloadIcon,
+} from '@/lib/upload-file-input/file-format-icon';
+
 type UploadingFileStatus = 'uploading' | 'success' | 'error';
 interface UploadingFile {
   id: string;
@@ -84,6 +91,7 @@ export default function UploadFile({
   onUploadSuccess,
   attachments = [],
   onAttachmentRemove,
+  onAttachmentDownload,
   maxNumberOfFiles = 1,
   multiple = false,
   uploadLabel,
@@ -99,6 +107,7 @@ export default function UploadFile({
   authToken,
   apiFetch,
   addAlert,
+  allowedFileTypes: allowedFileTypesProp,
 }: UploadFileProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -142,11 +151,12 @@ export default function UploadFile({
 
   // Allowed file types based on variant
   const allowedFileTypes =
-    variant === 'lesson-file' || variant === 'attachment'
+    allowedFileTypesProp ||
+    (variant === 'lesson-file' || variant === 'attachment'
       ? (fileTypes.document as MimeType[])
       : variant === 'lesson-video'
         ? (fileTypes.video as MimeType[])
-        : (fileTypes.image as MimeType[]);
+        : (fileTypes.image as MimeType[]));
 
   // Presigned URL upload handler using Uppy
   const handlePresignedUrlUpload = (files: FileList | null) => {
@@ -866,6 +876,240 @@ export default function UploadFile({
                 </Button>
               </div>
             </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  if (effectiveUploadMode === 'presigned-url' && variant === 'file-request') {
+    return (
+      <div className='w-full space-y-3'>
+        {/* Idle state - waiting for file upload */}
+        {uploadingFiles.length === 0 && attachments.length === 0 && (
+          <div
+            className={cn(
+              'flex h-[72px] w-full items-center justify-between gap-6 rounded-[15px] border border-ds-neutral-200 bg-white py-4 pr-4 pl-6 transition-colors',
+              dragging
+                ? 'border-ds-primary-400 bg-ds-primary-50'
+                : 'border-ds-neutral-200'
+            )}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
+            <div className='flex items-center gap-2'>
+              <div>
+                <RequestFileFormatIcon
+                  fileType={
+                    allowedFileTypes && allowedFileTypes.length === 1
+                      ? (Object.keys(fileTypes).find((type) =>
+                          fileTypes[type as keyof typeof fileTypes].includes(
+                            allowedFileTypes[0] as any
+                          )
+                        ) as any) || 'any'
+                      : 'any'
+                  }
+                />
+              </div>
+
+              <span className='flex flex-col text-sm font-bold text-[#474754]'>
+                <span>
+                  {uploadLabel || t('_domain.uploadFile.attachment.title')}
+                </span>
+                {maxFileSize && (
+                  <div className='font-normal'>
+                    {t('_form.maxFileSize')}:{' '}
+                    {formatBytes({ bytes: maxFileSize, t })}
+                  </div>
+                )}
+              </span>
+            </div>
+
+            <Button
+              type='button'
+              disabled={uploading || disabled}
+              variant='neutral'
+              mode='stroke'
+              onClick={() => fileInputRef.current?.click()}
+            >
+              {t('_domain.uploadFile.browseFile')}
+            </Button>
+            <input
+              ref={fileInputRef}
+              type='file'
+              className='hidden'
+              multiple={multiple}
+              accept={allowedFileTypes.join(',')}
+              onChange={(e) => handlePresignedUrlUpload(e.target.files)}
+            />
+          </div>
+        )}
+
+        {/* Uploading State */}
+        {uploadingFiles.length > 0 && (
+          <div className='space-y-3'>
+            {uploadingFiles.map((file) => (
+              <div
+                key={file.id}
+                className={cn(
+                  'flex h-[72px] w-full items-center justify-between gap-6 rounded-[15px] border bg-white py-4 pr-4 pl-6',
+                  file.state === 'error'
+                    ? 'border-ds-error-500'
+                    : 'border-ds-neutral-200'
+                )}
+              >
+                <div className='flex w-full items-center gap-2'>
+                  <div className='shrink-0'>
+                    <RequestFileFormatIcon
+                      fileType={
+                        ((
+                          Object.keys(fileTypes) as Array<
+                            keyof typeof fileTypes
+                          >
+                        ).find((type) =>
+                          fileTypes[type].includes(file.type as any)
+                        ) as any) || 'any'
+                      }
+                    />
+                  </div>
+
+                  <div className='flex flex-grow flex-col gap-1 overflow-hidden'>
+                    <div className='flex w-full items-center justify-between text-sm'>
+                      <span className='truncate font-medium text-[#474754]'>
+                        {file.name}
+                      </span>
+                      {file.state === 'uploading' && (
+                        <span className='shrink-0 font-medium text-[#474754]'>
+                          {formatUploadProgress(
+                            Math.round((file.progress / 100) * file.size),
+                            file.size
+                          )}{' '}
+                          • {file.progress}%
+                        </span>
+                      )}
+                      {file.state === 'error' && (
+                        <span className='text-ds-error-500 shrink-0 font-medium'>
+                          Upload Error
+                        </span>
+                      )}
+                    </div>
+                    {file.state === 'uploading' && (
+                      <ProgressBar
+                        progress={file.progress}
+                        variant='neutral'
+                        className='mt-1'
+                      />
+                    )}
+                    {file.state === 'error' && (
+                      <span className='text-xs text-[#474754]'>
+                        {formatFileSize(file.size)}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div className='flex shrink-0 items-center gap-3'>
+                  {file.state === 'error' && (
+                    <Button
+                      type='button'
+                      variant='error'
+                      mode='stroke'
+                      size='small'
+                      onClick={() => {
+                        setUploadingFiles((prev: UploadingFile[]) =>
+                          prev.filter((f) => f.id !== file.id)
+                        );
+                        fileInputRef.current?.click();
+                      }}
+                    >
+                      Try Again
+                    </Button>
+                  )}
+                  <button
+                    type='button'
+                    className='text-[#484854] hover:text-red-500'
+                    disabled={disabled}
+                    onClick={() => {
+                      setUploadingFiles((prev: UploadingFile[]) =>
+                        prev.filter((f) => f.id !== file.id)
+                      );
+                      uppy.removeFile(file.id);
+                    }}
+                  >
+                    <RiCloseLine size={24} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Completed State (Attachments list) */}
+        {attachments.length > 0 && uploadingFiles.length === 0 && (
+          <div className='space-y-4'>
+            {attachments.map((attachment) => (
+              <div
+                key={attachment.id}
+                className='flex h-[72px] w-full items-center justify-between gap-6 rounded-[15px] border border-ds-neutral-200 bg-white py-4 pr-4 pl-6'
+              >
+                <div className='flex items-center gap-2'>
+                  <div>
+                    <RequestFileFormatIcon
+                      fileType={
+                        ((
+                          Object.keys(fileTypes) as Array<
+                            keyof typeof fileTypes
+                          >
+                        ).find((type) =>
+                          fileTypes[type].includes(attachment.mime_type as any)
+                        ) as any) || 'any'
+                      }
+                    />
+                  </div>
+
+                  <span className='flex flex-col text-sm text-[#474754]'>
+                    <span className='font-bold'>
+                      {uploadLabel ||
+                        t('_domain.uploadFile.attachment.title') ||
+                        attachment.file_name}
+                    </span>
+                    <div className='flex items-center gap-1 font-normal text-ds-neutral-600'>
+                      <RiCheckboxCircleFill
+                        size={12}
+                        className='text-green-600'
+                      />
+                      <span>
+                        Completed • {formatFileSize(attachment.file_size)}
+                      </span>
+                    </div>
+                  </span>
+                </div>
+
+                <div className='flex items-center gap-4'>
+                  {onAttachmentDownload && (
+                    <button
+                      className='text-[#484854] hover:text-ds-primary-500'
+                      type='button'
+                      title={t('_domain.download')}
+                      disabled={disabled}
+                      onClick={() => onAttachmentDownload(attachment.id)}
+                    >
+                      {FileDownloadIcon(false)}
+                    </button>
+                  )}
+                  <button
+                    className='text-[#484854] hover:text-red-500'
+                    type='button'
+                    title={t('_domain.delete')}
+                    disabled={disabled}
+                    onClick={() => onAttachmentRemove?.(attachment.id)}
+                  >
+                    <RiDeleteBin6Line size={20} />
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </div>
