@@ -40,6 +40,12 @@
       "description": "A card container component."
     },
     {
+      "name": "circular-progress",
+      "type": "registry:ui",
+      "title": "Circular Progress",
+      "description": "A circular progress indicator."
+    },
+    {
       "name": "command",
       "type": "registry:ui",
       "title": "Command",

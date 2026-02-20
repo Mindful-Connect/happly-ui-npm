@@ -57,7 +57,8 @@ export interface ComponentPreviewConfig {
     | 'searchable-combo-box'
     | 'currency-input'
     | 'upload-file-input'
-    | 'progress-bar';
+    | 'progress-bar'
+    | 'circular-progress';
   props?: Record<string, unknown>;
   children?: string | ComponentPreviewConfig[];
 }
