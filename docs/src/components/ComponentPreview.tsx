@@ -21,6 +21,7 @@ export function ComponentPreview({ children }: ComponentPreviewProps) {
 }
 
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 // =============================================================================
 // DEMO BUTTON COMPONENT
@@ -220,56 +221,8 @@ export function ButtonGroup({ children }: ButtonGroupProps) {
 // DEMO BADGE COMPONENT
 // =============================================================================
 
-type BadgeVariant = 'default' | 'secondary' | 'destructive' | 'outline';
-
-interface DemoBadgeProps {
-  variant?: BadgeVariant;
-  children?: ReactNode;
-}
-
-const badgeBaseStyles: CSSProperties = {
-  display: 'inline-flex',
-  alignItems: 'center',
-  borderRadius: '9999px',
-  padding: '2px 10px',
-  fontSize: '12px',
-  fontWeight: 600,
-  lineHeight: '1.5',
-  transition: 'colors 0.2s',
-};
-
-const getBadgeVariantStyles = (variant: BadgeVariant): CSSProperties => {
-  const styles: Record<BadgeVariant, CSSProperties> = {
-    default: {
-      background: colors.primary.base,
-      color: 'white',
-      border: '1px solid transparent',
-    },
-    secondary: {
-      background: colors.neutral[100],
-      color: colors.neutral[900],
-      border: '1px solid transparent',
-    },
-    destructive: {
-      background: colors.error.base,
-      color: 'white',
-      border: '1px solid transparent',
-    },
-    outline: {
-      background: 'transparent',
-      color: colors.neutral[900],
-      border: `1px solid ${colors.neutral[200]}`,
-    },
-  };
-  return styles[variant];
-};
-
-export function DemoBadge({ variant = 'default', children }: DemoBadgeProps) {
-  return (
-    <span style={{ ...badgeBaseStyles, ...getBadgeVariantStyles(variant) }}>
-      {children}
-    </span>
-  );
+export function DemoBadge({ children, ...props }: any) {
+  return <Badge {...props}>{children}</Badge>;
 }
 
 // =============================================================================

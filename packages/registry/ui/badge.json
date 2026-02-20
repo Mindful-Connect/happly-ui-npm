@@ -4,8 +4,95 @@
   "type": "registry:ui",
   "title": "Badge",
   "description": "A badge component for status indicators.",
-  "dependencies": [],
-  "registryDependencies": [],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["happly-ui-utils"],
+  "docs": {
+    "lead": "A badge component for indicating status or displaying categorization.",
+    "usage": "import { Badge } from \"@/components/ui/badge\"\n\n<Badge colorVar=\"blueFilled\" size=\"default\">\n  Content\n</Badge>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Default styling for a badge.",
+        "code": "<Badge>Default</Badge>",
+        "preview": [
+          {
+            "component": "badge",
+            "children": "Default"
+          }
+        ]
+      },
+      {
+        "title": "Color Variants",
+        "description": "Badges come in various colors and styles.",
+        "code": "<Badge colorVar=\"blueFilled\">Blue</Badge>\n<Badge colorVar=\"redFilled\">Red</Badge>\n<Badge colorVar=\"greenText\">Green Text</Badge>",
+        "preview": [
+          {
+            "component": "badge",
+            "props": { "colorVar": "blueFilled" },
+            "children": "Blue"
+          },
+          {
+            "component": "badge",
+            "props": { "colorVar": "redFilled" },
+            "children": "Red"
+          },
+          {
+            "component": "badge",
+            "props": { "colorVar": "greenText" },
+            "children": "Green Text"
+          }
+        ]
+      },
+      {
+        "title": "Sizes",
+        "description": "Badges come in 'default' and 'sm' sizes.",
+        "code": "<Badge size=\"default\">Default Size</Badge>\n<Badge size=\"sm\">Small Size</Badge>",
+        "preview": [
+          {
+            "component": "badge",
+            "props": { "size": "default" },
+            "children": "Default Size"
+          },
+          {
+            "component": "badge",
+            "props": { "size": "sm" },
+            "children": "Small Size"
+          }
+        ]
+      }
+    ],
+    "api": [
+      {
+        "name": "Badge",
+        "description": "The main badge component.",
+        "props": [
+          {
+            "name": "icon",
+            "type": "ReactNode",
+            "description": "Optional icon for the badge"
+          },
+          {
+            "name": "iconVar",
+            "type": "'default' | 'left' | 'right'",
+            "default": "'default'",
+            "description": "Positioning variant for the icon"
+          },
+          {
+            "name": "colorVar",
+            "type": "string",
+            "default": "'default'",
+            "description": "The color and text variant (e.g., 'blueFilled', 'redLight', etc.)"
+          },
+          {
+            "name": "size",
+            "type": "'default' | 'sm'",
+            "default": "'default'",
+            "description": "The size of the badge"
+          }
+        ]
+      }
+    ]
+  },
   "files": [
     {
       "path": "ui/badge.tsx",
