@@ -157,7 +157,7 @@
       "name": "select",
       "type": "registry:ui",
       "title": "Select",
-      "description": "A customized select component based on Radix UI."
+      "description": "A customizable select component based on Radix UI, supporting various sizes and display variants."
     },
     {
       "name": "socials-input",

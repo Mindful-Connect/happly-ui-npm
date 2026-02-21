@@ -290,7 +290,7 @@ const SelectSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitives.Separator
     ref={ref}
-    className={cn('bg-ds-stroke-soft-200 -mx-1 my-1 h-px', className)} // Example styling
+    className={cn('bg-stroke-soft-200 -mx-1 my-1 h-px', className)} // Example styling
     {...props}
   />
 ));
@@ -342,7 +342,7 @@ SelectTrigger.displayName = SelectPrimitives.Trigger.displayName;
 const SelectTriggerIcon = React.forwardRef<
   React.ElementRef<typeof Slot>,
   React.ComponentPropsWithoutRef<typeof Slot> & { asChild?: boolean }
->(({ className, children, ...props }, ref) => {
+>(({ className, children, asChild = true, ...props }, ref) => {
   const { size, variant } = useSelectContext();
   const base = selectTriggerIconVariants({ size, variant });
   return (
@@ -358,9 +358,51 @@ const SelectTriggerIcon = React.forwardRef<
 });
 SelectTriggerIcon.displayName = 'SelectTriggerIcon';
 
+/**
+ * @component SelectContent
+ *
+ * @description
+ * Content wrapper for the Select component. By default, it uses a React Portal to render
+ * at the end of the document body.
+ *
+ * ⚠️ **MODAL INTEGRATION WARNING (Headless UI Dialogs)** ⚠️
+ * When using this Select inside a strict FocusTrap or outside-click listener like
+ * `@headlessui/react`'s `<Dialog>`, you will experience buggy behavior where clicking
+ * the select or its options unintentionally closes the underlying modal. This is due
+ * to inherited pointer-events and React Portal event bubbling race-conditions.
+ *
+ * **To safely use this Select inside a Headless UI `<Dialog>`:**
+ *
+ * 1. Disable the portal on this component:
+ *    `<SelectContent usePortal={false}>`
+ *
+ * 2. Stop event propagation on this component so Headless UI doesn't see "outside" clicks:
+ *    `<SelectContent
+ *       onMouseDown={(e) => e.stopPropagation()}
+ *       onMouseUp={(e) => e.stopPropagation()}
+ *       onClick={(e) => e.stopPropagation()}
+ *       onPointerDown={(e) => e.stopPropagation()}
+ *       onPointerUp={(e) => e.stopPropagation()}
+ *     >`
+ *
+ * 3. Give your Headless UI Dialog.Panel auto pointer events to overcome Radix's body lock:
+ *    `<Dialog.Panel className="pointer-events-auto ...">`
+ *
+ * 4. Add a debounce to your Dialog's onClose handler tied to the Select's onOpenChange,
+ *    otherwise dismissing the Select by clicking off of it will instantly trigger
+ *    the Dialog's onClose as well.
+ */
 const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitives.Content>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitives.Content>
+  React.ComponentPropsWithoutRef<typeof SelectPrimitives.Content> & {
+    /**
+     * Determines whether the content should be rendered in a React Portal.
+     * Set to `false` when nesting inside strict focus-trapping modals (like Headless UI Dialog)
+     * to prevent outside-click propagation bugs.
+     * @default true
+     */
+    usePortal?: boolean;
+  }
 >(
   (
     {
@@ -369,11 +411,12 @@ const SelectContent = React.forwardRef<
       children,
       sideOffset = 8, // Original was 8, shadcn default is 4
       collisionPadding = 8,
+      usePortal = true,
       ...props
     },
     ref
-  ) => (
-    <SelectPrimitives.Portal>
+  ) => {
+    const content = (
       <SelectPrimitives.Content
         ref={ref}
         className={cn(
@@ -415,8 +458,14 @@ const SelectContent = React.forwardRef<
           </ScrollAreaPrimitives.Scrollbar>
         </ScrollAreaPrimitives.Root>
       </SelectPrimitives.Content>
-    </SelectPrimitives.Portal>
-  )
+    );
+
+    return usePortal ? (
+      <SelectPrimitives.Portal>{content}</SelectPrimitives.Portal>
+    ) : (
+      content
+    );
+  }
 );
 SelectContent.displayName = SelectPrimitives.Content.displayName;
 
@@ -432,7 +481,7 @@ const SelectItem = React.forwardRef<
       ref={ref}
       className={cn(
         // base
-        'group text-ds-strong-950 relative cursor-pointer rounded-lg p-2 pr-9 text-sm select-none',
+        'group !text-paragraph-sm text-ds-strong-950 relative cursor-pointer rounded-lg p-2 pr-9 select-none',
         'flex items-center gap-2 transition duration-200 ease-out',
         // disabled
         'data-[disabled]:text-ds-disabled-300 data-[disabled]:pointer-events-none',
@@ -451,7 +500,7 @@ const SelectItem = React.forwardRef<
             // base
             'flex flex-1 items-center gap-2',
             // disabled - inherited by parent, but can be explicit if needed
-            // 'group-disabled:text-disabled-300', (already handled by Item's disabled state)
+            // 'group-disabled:text-ds-disabled-300', (already handled by Item's disabled state)
             {
               'gap-1.5': size === 'xsmall',
             }
