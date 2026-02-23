@@ -157,6 +157,7 @@ Available preview components for the `docs.examples[].preview` field:
 - `label` - DemoLabel
 - `card` - DemoCard with title, description props
 - `divider` - DemoDivider with variant prop
+- `progress-bar` - DemoProgressBar with variant, progress props
 
 To add a new preview component, update `docs/src/components/ComponentPreview.tsx` and `docs/src/lib/registry.ts`.
 

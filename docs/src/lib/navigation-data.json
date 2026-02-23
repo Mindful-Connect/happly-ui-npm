@@ -32,6 +32,10 @@
         "href": "/docs/components/card"
       },
       {
+        "title": "Circular Progress",
+        "href": "/docs/components/circular-progress"
+      },
+      {
         "title": "Currency Input",
         "href": "/docs/components/currency-input"
       },
@@ -50,6 +54,10 @@
       {
         "title": "Location Input",
         "href": "/docs/components/location-input"
+      },
+      {
+        "title": "Progress Bar",
+        "href": "/docs/components/progress-bar"
       },
       {
         "title": "Radio Card Group",

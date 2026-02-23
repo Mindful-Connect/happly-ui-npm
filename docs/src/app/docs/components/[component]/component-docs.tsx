@@ -43,6 +43,8 @@ import { DemoTag } from '@/components/demos/demo-tag';
 import { DemoSearchableComboBox } from '@/components/demos/demo-searchable-combo-box';
 import { DemoCurrencyInput } from '@/components/demos/demo-currency-input';
 import { DemoUploadFileInput } from '@/components/demos/demo-upload-file-input';
+import { DemoProgressBar } from '@/components/demos/demo-progress-bar';
+import { DemoCircularProgress } from '@/components/demos/demo-circular-progress';
 
 // Helper to render children safely
 function renderPreviewChildren(children?: string | ComponentPreviewConfig[]) {
@@ -132,6 +134,10 @@ function PreviewItem({ config }: { config: ComponentPreviewConfig }) {
       return <DemoCurrencyInput />;
     case 'upload-file-input':
       return <DemoUploadFileInput />;
+    case 'progress-bar':
+      return <DemoProgressBar {...(props as any)} />;
+    case 'circular-progress':
+      return <DemoCircularProgress {...(props as any)} />;
     default:
       return null;
   }

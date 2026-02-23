@@ -225,14 +225,15 @@ export default function Home() {
 
 ## Components
 
-| Component | Description                                                                                                |
-| --------- | ---------------------------------------------------------------------------------------------------------- |
-| `button`  | Compound button with variants (primary, neutral, error), modes (filled, stroke, lighter, ghost), and sizes |
-| `divider` | Versatile divider with variants (line, line-spacing, line-text, text, solid-text, content)                 |
-| `input`   | A text input component                                                                                     |
-| `label`   | A label for form inputs                                                                                    |
-| `card`    | A card container with header, content, and footer                                                          |
-| `badge`   | A badge for status indicators                                                                              |
+| Component      | Description                                                                                                |
+| -------------- | ---------------------------------------------------------------------------------------------------------- |
+| `button`       | Compound button with variants (primary, neutral, error), modes (filled, stroke, lighter, ghost), and sizes |
+| `divider`      | Versatile divider with variants (line, line-spacing, line-text, text, solid-text, content)                 |
+| `input`        | A text input component                                                                                     |
+| `label`        | A label for form inputs                                                                                    |
+| `card`         | A card container with header, content, and footer                                                          |
+| `badge`        | A badge for status indicators                                                                              |
+| `progress-bar` | A progress bar component indicating the completion status of a task                                        |
 
 View all components with live examples at [ui.happly.cloud](https://ui.happly.cloud).
 

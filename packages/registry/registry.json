@@ -40,6 +40,12 @@
       "description": "A card container component."
     },
     {
+      "name": "circular-progress",
+      "type": "registry:ui",
+      "title": "Circular Progress",
+      "description": "A circular progress indicator."
+    },
+    {
       "name": "command",
       "type": "registry:ui",
       "title": "Command",
@@ -115,7 +121,13 @@
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
-      "description": "Displays rich content in a portal, triggered by a button."
+      "description": "Displays rich content in a portal or inline, triggered by a button."
+    },
+    {
+      "name": "progress-bar",
+      "type": "registry:ui",
+      "title": "Progress Bar",
+      "description": "A progress bar component indicating the completion status of a task."
     },
     {
       "name": "radio-card-group",
@@ -145,7 +157,7 @@
       "name": "select",
       "type": "registry:ui",
       "title": "Select",
-      "description": "A customized select component based on Radix UI."
+      "description": "A customizable select component based on Radix UI, supporting various sizes and display variants."
     },
     {
       "name": "socials-input",

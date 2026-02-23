@@ -68,7 +68,6 @@ interface SearchableMultiComboboxProps {
   setSelected: (tags: Tag[]) => void;
   tag: TagCategory;
   customTagOptions?: Tag[]; // to convert FormOption to Tag, use value as id
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   t: (key: string, params?: any) => string; // pass t from useI18n for stranslations
   useTags: ({
     tagCategory,
@@ -95,6 +94,10 @@ interface SearchableMultiComboboxProps {
       | undefined;
     status: 'loading' | 'error' | 'success' | 'pending';
   };
+  usePortal?: boolean;
+  popoverProps?: React.ComponentPropsWithoutRef<typeof PopoverContent>;
+  onOpenChange?: (open: boolean) => void;
+  selectAllLabel?: string;
 }
 
 const noMatchesFoundTranslatable: Translatable = {
@@ -107,6 +110,42 @@ const pressEnterToAddTranslatable: Translatable = {
   fr: 'Appuyez sur Entrée pour ajouter ce que vous avez tapé',
 };
 
+/**
+ * @component SearchableMultiCombobox
+ *
+ * @description
+ * Complete multi-select combo box with searchable features and an option
+ * to permit ad-hoc creation. Supports API integration and localization.
+ *
+ * ⚠️ **MODAL INTEGRATION WARNING (Headless UI Dialogs)** ⚠️
+ * When using this Combobox inside a strict FocusTrap or outside-click listener like
+ * `@headlessui/react`'s `<Dialog>`, you might experience buggy behavior where the
+ * dropdown gets trapped behind the modal or closes the modal unintentionally.
+ *
+ * **To safely use this Combobox inside a Headless UI `<Dialog>`:**
+ *
+ * 1. Disable the portal on this component:
+ *    `<SearchableMultiCombobox usePortal={false}>`
+ *
+ * 2. Stop event propagation on the popover wrapper so Headless UI doesn't see "outside" clicks
+ *    (note: you may or may not need this depending on your layout, but if interacting with the
+ *    dropdown instantly dismisses your popover, passing this object avoids it):
+ *    `<SearchableMultiCombobox
+ *       popoverProps={{
+ *         className: 'z-[300]', // bring it in front of the dialog
+ *         onMouseDown: (e) => e.stopPropagation(),
+ *         onMouseUp: (e) => e.stopPropagation(),
+ *         onClick: (e) => e.stopPropagation(),
+ *         onPointerDown: (e) => e.stopPropagation(),
+ *         onPointerUp: (e) => e.stopPropagation(),
+ *       }}
+ *     >`
+ *
+ * 3. Give your Headless UI Dialog.Panel auto pointer events to overcome Radix's body lock:
+ *    `<Dialog.Panel className="pointer-events-auto ...">`
+ *
+ * 4. Control Dialog close behavior using `onOpenChange` to debounce outside click closure logic.
+ */
 export function SearchableMultiCombobox({
   allowAdding,
   className = 'w-full',
@@ -125,6 +164,10 @@ export function SearchableMultiCombobox({
   customTagOptions, // if tagOptions are passed, we're not fetching tags
   t,
   useTags,
+  usePortal = true,
+  popoverProps,
+  onOpenChange,
+  selectAllLabel,
   ..._props
 }: SearchableMultiComboboxProps & React.InputHTMLAttributes<HTMLInputElement>) {
   let prioritySlugs;
@@ -135,6 +178,14 @@ export function SearchableMultiCombobox({
   }
 
   const [open, setOpen] = React.useState(false);
+
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+    if (onOpenChange) {
+      onOpenChange(newOpen);
+    }
+  };
+
   const { tags = [] } = useTags({
     tagCategory: tag,
     excludeTagSlugs,
@@ -236,7 +287,7 @@ export function SearchableMultiCombobox({
       <ConditionalPopover
         isPreview={isPreview}
         open={open}
-        onOpenChange={setOpen}
+        onOpenChange={handleOpenChange}
       >
         <ConditionalPopoverTrigger isPreview={isPreview}>
           <CustomInputWrapper
@@ -258,7 +309,11 @@ export function SearchableMultiCombobox({
           </CustomInputWrapper>
         </ConditionalPopoverTrigger>
 
-        <ConditionalPopoverContent isPreview={isPreview}>
+        <ConditionalPopoverContent
+          isPreview={isPreview}
+          usePortal={usePortal}
+          {...popoverProps}
+        >
           <Command>
             <CommandInput placeholder={commandInputPlaceholder} />
 
@@ -306,15 +361,24 @@ export function SearchableMultiCombobox({
 
       {!isPreview && selected.length > 0 && (
         <div className='flex flex-wrap gap-2'>
-          {selected.map((tag) => (
-            <TagPill key={tag.id} variant='stroke'>
-              <span className='ms-1'>{tag.label}</span>
-              <TagClose
-                onClick={() => handleToggle(tag)}
-                disabled={disabled || selected.length <= min}
-              />
+          {selectAllLabel &&
+          tags.length > 0 &&
+          selected.length === tags.length ? (
+            <TagPill variant='stroke'>
+              <span>{selectAllLabel}</span>
+              <TagClose onClick={() => setSelected([])} disabled={disabled} />
             </TagPill>
-          ))}
+          ) : (
+            selected.map((tag) => (
+              <TagPill key={tag.id} variant='stroke'>
+                <span>{tag.label}</span>
+                <TagClose
+                  onClick={() => handleToggle(tag)}
+                  disabled={disabled || selected.length <= min}
+                />
+              </TagPill>
+            ))
+          )}
         </div>
       )}
     </div>
@@ -360,13 +424,23 @@ function ConditionalPopoverTrigger({
 function ConditionalPopoverContent({
   isPreview,
   children,
+  usePortal = true,
+  className,
+  ...props
 }: {
   isPreview: boolean | undefined;
   children: React.ReactNode;
-}) {
+  usePortal?: boolean;
+  className?: string;
+} & React.ComponentPropsWithoutRef<typeof PopoverContent>) {
   if (isPreview) {
     return (
-      <div className='w-full rounded-12 border border-ds-soft-200 bg-popover p-0.5 text-popover-foreground shadow-regular-md outline-none'>
+      <div
+        className={cn(
+          'rounded-12 border-ds-soft-200 bg-popover text-popover-foreground shadow-regular-md w-full border p-0.5 outline-none',
+          className
+        )}
+      >
         {children}
       </div>
     );
@@ -376,7 +450,9 @@ function ConditionalPopoverContent({
     <PopoverContent
       align='start'
       sideOffset={4}
-      className='mt-2 w-[--radix-popover-trigger-width] p-0'
+      className={cn('mt-2 w-[--radix-popover-trigger-width] p-0', className)}
+      usePortal={usePortal}
+      {...props}
     >
       {children}
     </PopoverContent>

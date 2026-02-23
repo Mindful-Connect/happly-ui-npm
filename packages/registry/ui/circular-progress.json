@@ -1,0 +1,88 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "circular-progress",
+  "type": "registry:ui",
+  "title": "Circular Progress",
+  "description": "A circular progress indicator.",
+  "dependencies": [],
+  "registryDependencies": ["happly-ui-utils"],
+  "docs": {
+    "lead": "A customizable circular progress component with smooth animations and different color variants.",
+    "usage": "import { CircularProgress } from \"@/components/happly-ui/circular-progress\"\n\n<CircularProgress fraction={0.5} size={40} />",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "The default circular progress showing 25%.",
+        "code": "<CircularProgress fraction={0.25} size={40} />",
+        "preview": [
+          {
+            "component": "circular-progress",
+            "props": {
+              "fraction": 0.25,
+              "size": 40
+            }
+          }
+        ]
+      },
+      {
+        "title": "With Color Variants",
+        "description": "Circular progress with different brand color variants.",
+        "code": "<div className=\"flex gap-4\">\n  <CircularProgress variant=\"green\" fraction={0.7} size={40} />\n  <CircularProgress variant=\"blue\" fraction={0.5} size={40} />\n  <CircularProgress variant=\"pink\" fraction={0.9} size={40} />\n</div>",
+        "preview": [
+          {
+            "component": "circular-progress",
+            "props": {
+              "variant": "green",
+              "fraction": 0.7,
+              "size": 40
+            }
+          }
+        ]
+      }
+    ],
+    "api": [
+      {
+        "name": "CircularProgress",
+        "description": "A circular progress indicator with adjustable size, stroke fraction, and color variant.",
+        "props": [
+          {
+            "name": "fraction",
+            "type": "number",
+            "default": "0",
+            "description": "The fraction of the progress to fill, typically from 0 to 1."
+          },
+          {
+            "name": "size",
+            "type": "number",
+            "default": "20",
+            "description": "The size of the circular progress indicator in pixels."
+          },
+          {
+            "name": "approximateFraction",
+            "type": "boolean",
+            "default": "false",
+            "description": "If true, snaps the visual fraction to quarters (0, 0.25, 0.5, 0.75, 1)."
+          },
+          {
+            "name": "variant",
+            "type": "'default' | 'green' | 'orange' | 'purple' | 'red' | 'blue' | 'yellow' | 'sky' | 'pink' | 'teal'",
+            "default": "'default'",
+            "description": "The color variant of the circular progress."
+          }
+        ]
+      }
+    ],
+    "files": [
+      {
+        "path": "ui/circular-progress.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/circular-progress.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}
