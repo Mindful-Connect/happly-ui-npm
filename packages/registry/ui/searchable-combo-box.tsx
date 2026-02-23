@@ -366,13 +366,13 @@ export function SearchableMultiCombobox({
           tags.length > 0 &&
           selected.length === tags.length ? (
             <TagPill variant='stroke'>
-              <span className='ms-1'>{selectAllLabel}</span>
+              <span>{selectAllLabel}</span>
               <TagClose onClick={() => setSelected([])} disabled={disabled} />
             </TagPill>
           ) : (
             selected.map((tag) => (
               <TagPill key={tag.id} variant='stroke'>
-                <span className='ms-1'>{tag.label}</span>
+                <span>{tag.label}</span>
                 <TagClose
                   onClick={() => handleToggle(tag)}
                   disabled={disabled || selected.length <= min}

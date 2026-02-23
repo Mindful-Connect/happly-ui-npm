@@ -303,7 +303,7 @@ const SelectLabel = React.forwardRef<
   <SelectPrimitives.Label
     ref={ref}
     className={cn(
-      'px-2 py-1.5 text-sm font-semibold text-ds-sub-600',
+      'text-ds-sub-600 px-2 py-1.5 text-sm font-semibold',
       className
     )} // Example styling
     {...props}
@@ -409,7 +409,7 @@ const SelectContent = React.forwardRef<
       className,
       position = 'popper',
       children,
-      sideOffset = 8, // Original was 8, shadcn default is 4
+      sideOffset = 0, // Original was 8, shadcn default is 4
       collisionPadding = 8,
       usePortal = true,
       ...props
@@ -421,7 +421,7 @@ const SelectContent = React.forwardRef<
         ref={ref}
         className={cn(
           // base
-          'relative z-50 overflow-hidden rounded-2xl bg-ds-white-0 shadow-regular-md ring-1 ring-ds-stroke-soft-200 ring-inset',
+          'bg-ds-white-0 shadow-regular-md ring-ds-stroke-soft-200 relative z-50 overflow-hidden rounded-2xl ring-1 ring-inset',
           // widths
           'max-w-[max(var(--radix-select-trigger-width),320px)] min-w-[--radix-select-trigger-width]',
           // heights - consider shadcn's approach: 'max-h-96'
@@ -454,7 +454,7 @@ const SelectContent = React.forwardRef<
             </ScrollAreaPrimitives.Viewport>
           </SelectPrimitives.Viewport>
           <ScrollAreaPrimitives.Scrollbar orientation='vertical'>
-            <ScrollAreaPrimitives.Thumb className='!w-1 rounded bg-ds-soft-200' />
+            <ScrollAreaPrimitives.Thumb className='bg-ds-soft-200 !w-1 rounded' />
           </ScrollAreaPrimitives.Scrollbar>
         </ScrollAreaPrimitives.Root>
       </SelectPrimitives.Content>
@@ -481,12 +481,12 @@ const SelectItem = React.forwardRef<
       ref={ref}
       className={cn(
         // base
-        'group relative cursor-pointer rounded-lg p-2 pr-9 !text-paragraph-sm text-ds-strong-950 select-none',
+        'group !text-paragraph-sm text-ds-strong-950 relative cursor-pointer rounded-lg p-2 pr-9 select-none',
         'flex items-center gap-2 transition duration-200 ease-out',
         // disabled
-        'data-[disabled]:pointer-events-none data-[disabled]:text-ds-disabled-300',
+        'data-[disabled]:text-ds-disabled-300 data-[disabled]:pointer-events-none',
         // hover, focus
-        'focus:bg-ds-weak-50 data-[highlighted]:bg-ds-weak-50 data-[highlighted]:outline-0', // Added focus style similar to highlighted for consistency
+        'data-[highlighted]:bg-ds-weak-50 focus:bg-ds-weak-50 data-[highlighted]:outline-0', // Added focus style similar to highlighted for consistency
         {
           'gap-1.5 pr-[34px]': size === 'xsmall', // Adjusted padding for checkmark space
         },
@@ -511,7 +511,7 @@ const SelectItem = React.forwardRef<
         </span>
       </SelectPrimitives.ItemText>
       <SelectPrimitives.ItemIndicator asChild>
-        <RiCheckLine className='absolute top-1/2 right-2 h-5 w-5 shrink-0 -translate-y-1/2 text-ds-sub-600' />
+        <RiCheckLine className='text-ds-sub-600 absolute top-1/2 right-2 h-5 w-5 shrink-0 -translate-y-1/2' />
       </SelectPrimitives.ItemIndicator>
     </SelectPrimitives.Item>
   );

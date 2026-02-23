@@ -409,7 +409,7 @@ const SelectContent = React.forwardRef<
       className,
       position = 'popper',
       children,
-      sideOffset = 8, // Original was 8, shadcn default is 4
+      sideOffset = 0, // Original was 8, shadcn default is 4
       collisionPadding = 8,
       usePortal = true,
       ...props

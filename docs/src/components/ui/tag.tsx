@@ -8,7 +8,7 @@ import { RiCloseFill } from 'react-icons/ri';
 
 export const tagRoot = cva(
   [
-    'group inline-flex items-center min-h-[36px] gap-2 rounded-lg px-2 !text-label-sm text-ds-sub-600',
+    'group inline-flex items-center py-1 gap-2 rounded-[6px] ps-2 pe-1 text-xs text-ds-sub-600',
     'transition duration-200 ease-out ring-1 ring-inset',
   ].join(' '),
   {

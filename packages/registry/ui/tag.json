@@ -3,7 +3,7 @@
   "name": "tag",
   "type": "registry:ui",
   "title": "Tag",
-  "description": "A tag component for labeling and categorization.",
+  "description": "A compact tag component for labeling and categorization.",
   "dependencies": [
     "@radix-ui/react-slot",
     "class-variance-authority",
