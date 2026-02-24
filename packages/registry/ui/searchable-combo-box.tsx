@@ -334,7 +334,7 @@ export function SearchableMultiCombobox({
 
                     return (
                       <CommandItem
-                        key={option.slug}
+                        key={crypto.randomUUID()}
                         onSelect={() =>
                           !atMax && handleToggle(option as unknown as Tag)
                         }
@@ -378,7 +378,7 @@ export function SearchableMultiCombobox({
             </TagPill>
           ) : (
             selected.map((tag) => (
-              <TagPill key={tag.id} variant='stroke'>
+              <TagPill key={crypto.randomUUID()} variant='stroke'>
                 <span>{tag.label}</span>
                 <TagClose
                   onClick={() => {
