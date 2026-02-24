@@ -7,6 +7,7 @@
   "dependencies": [
     "@uppy/core",
     "@uppy/aws-s3",
+    "@uppy/xhr-upload",
     "@uppy/react",
     "crypto-random-string",
     "react-icons"

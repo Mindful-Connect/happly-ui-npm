@@ -178,7 +178,11 @@ export interface AttachmentListItemProps {
     created_at?: string;
     created_at_formatted?: string;
   };
+  state?: 'uploading' | 'success' | 'error';
+  progress?: number;
   onRemove: () => void;
+  /** Whether the attachment is currently being deleted */
+  deleting?: boolean;
   /** Translation function */
   t: (key: string, params?: Record<string, string>) => string;
 }
