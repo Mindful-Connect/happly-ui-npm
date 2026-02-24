@@ -68,8 +68,7 @@ interface SearchableMultiComboboxProps {
   setSelected: (tags: Tag[]) => void;
   tag: TagCategory;
   customTagOptions?: Tag[]; // to convert FormOption to Tag, use value as id
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  t: (key: string, params?: any) => string; // pass t from useI18n for stranslations
+  t: (key: string, params?: unknown) => string; // pass t from useI18n for stranslations
   useTags: ({
     tagCategory,
     enabled,
@@ -367,14 +366,27 @@ export function SearchableMultiCombobox({
           selected.length === tags.length ? (
             <TagPill variant='stroke'>
               <span>{selectAllLabel}</span>
-              <TagClose onClick={() => setSelected([])} disabled={disabled} />
+              <TagClose
+                onClick={() => {
+                  if (disabled) {
+                    return;
+                  }
+                  setSelected([]);
+                }}
+                disabled={disabled}
+              />
             </TagPill>
           ) : (
             selected.map((tag) => (
               <TagPill key={tag.id} variant='stroke'>
                 <span>{tag.label}</span>
                 <TagClose
-                  onClick={() => handleToggle(tag)}
+                  onClick={() => {
+                    if (disabled) {
+                      return;
+                    }
+                    handleToggle(tag);
+                  }}
                   disabled={disabled || selected.length <= min}
                 />
               </TagPill>

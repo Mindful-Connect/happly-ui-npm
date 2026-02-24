@@ -60,6 +60,12 @@
             "description": "Translation function."
           },
           {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Whether the combobox is disabled."
+          },
+          {
             "name": "allowAdding",
             "type": "boolean",
             "default": "false",

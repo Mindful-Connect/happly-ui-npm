@@ -151,7 +151,7 @@
       "name": "searchable-combo-box",
       "type": "registry:ui",
       "title": "Searchable Combo Box",
-      "description": "A searchable multi-select combobox component with tag selection."
+      "description": "A searchable multi-select combobox component with portal controls, ad-hoc creation, and tag selection."
     },
     {
       "name": "select",
@@ -169,7 +169,7 @@
       "name": "tag",
       "type": "registry:ui",
       "title": "Tag",
-      "description": "A tag component for labeling and categorization."
+      "description": "A compact tag component for labeling and categorization."
     },
     {
       "name": "textarea",

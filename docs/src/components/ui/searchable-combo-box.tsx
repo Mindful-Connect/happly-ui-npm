@@ -68,7 +68,7 @@ interface SearchableMultiComboboxProps {
   setSelected: (tags: Tag[]) => void;
   tag: TagCategory;
   customTagOptions?: Tag[]; // to convert FormOption to Tag, use value as id
-  t: (key: string, params?: any) => string; // pass t from useI18n for stranslations
+  t: (key: string, params?: unknown) => string; // pass t from useI18n for stranslations
   useTags: ({
     tagCategory,
     enabled,
@@ -299,7 +299,7 @@ export function SearchableMultiCombobox({
             {sizedIcon}
             <span
               className={cn(
-                'text-ds-soft-400 group-hover:text-ds-neutral-600 inline flex-1 capitalize select-none',
+                'inline flex-1 text-ds-soft-400 capitalize select-none group-hover:text-ds-neutral-600',
                 isPreview ? ' ' : ''
               )}
             >
@@ -366,14 +366,27 @@ export function SearchableMultiCombobox({
           selected.length === tags.length ? (
             <TagPill variant='stroke'>
               <span>{selectAllLabel}</span>
-              <TagClose onClick={() => setSelected([])} disabled={disabled} />
+              <TagClose
+                onClick={() => {
+                  if (disabled) {
+                    return;
+                  }
+                  setSelected([]);
+                }}
+                disabled={disabled}
+              />
             </TagPill>
           ) : (
             selected.map((tag) => (
               <TagPill key={tag.id} variant='stroke'>
                 <span>{tag.label}</span>
                 <TagClose
-                  onClick={() => handleToggle(tag)}
+                  onClick={() => {
+                    if (disabled) {
+                      return;
+                    }
+                    handleToggle(tag);
+                  }}
                   disabled={disabled || selected.length <= min}
                 />
               </TagPill>
@@ -437,7 +450,7 @@ function ConditionalPopoverContent({
     return (
       <div
         className={cn(
-          'rounded-12 border-ds-soft-200 bg-popover text-popover-foreground shadow-regular-md w-full border p-0.5 outline-none',
+          'w-full rounded-12 border border-ds-soft-200 bg-popover p-0.5 text-popover-foreground shadow-regular-md outline-none',
           className
         )}
       >
