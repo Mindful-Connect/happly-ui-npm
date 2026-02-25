@@ -849,7 +849,12 @@ export default function UploadFile({
                   <img
                     src={src}
                     alt=''
-                    className='h-full w-full object-cover'
+                    className={cn(
+                      'h-full w-full',
+                      variant === 'custom-image'
+                        ? 'object-contain'
+                        : 'object-cover'
+                    )}
                   />
                 </div>
                 <div className='flex min-w-0 grow items-center justify-between gap-4 px-5'>
@@ -865,7 +870,12 @@ export default function UploadFile({
                     </p>
                     <p className='text-ds-neutral-500 text-xs'>
                       {secondaryDescription ||
-                        t('_domain.uploadFile.image.recommended.module')}
+                        (variant === 'custom-image'
+                          ? t('_domain.uploadFile.image.custom.size', {
+                              width: maxImageWidth,
+                              height: maxImageHeight,
+                            })
+                          : t('_domain.uploadFile.image.recommended.module'))}
                     </p>
                   </div>
 
