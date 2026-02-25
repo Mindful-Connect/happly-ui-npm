@@ -35,9 +35,7 @@ import {
   AttachmentType,
   checkImageDimensions,
 } from '@/lib/upload-file-input';
-
 import {
-  fileUploadIcon,
   fileIcon,
   imgUploadIcon,
   vidUploadIcon,
@@ -74,6 +72,8 @@ export default function UploadFile({
   alt = '',
   disabled,
   maxFileSize = 5 * 1024 * 1024, // 5MB default
+  maxImageWidth,
+  maxImageHeight,
   src,
   placeholder,
   variant = 'default',
@@ -319,6 +319,11 @@ export default function UploadFile({
             ...extraHeaders,
           };
         },
+        getResponseData(_xhr: XMLHttpRequest) {
+          // GCS presigned URLs return empty response bodies, which causes XHRUpload
+          // to throw JSON parsing errors. This intercepts the response to prevent that.
+          return { url: '' };
+        },
       });
     } else {
       uppyInstance.use(AwsS3, {
@@ -536,6 +541,7 @@ export default function UploadFile({
           timeout: 3000,
         })
       );
+      uppy.clear();
     };
 
     const onUploadErrorHandler = (
@@ -562,6 +568,7 @@ export default function UploadFile({
             f.id === file.id ? { ...f, state: 'error' } : f
           )
         );
+        uppy.removeFile(file.id);
       }
     };
 
@@ -676,7 +683,13 @@ export default function UploadFile({
       }
 
       // 3. Dimension Validation (Async)
-      await checkImageDimensions(file);
+      await checkImageDimensions(
+        file,
+        undefined,
+        undefined,
+        maxImageWidth,
+        maxImageHeight
+      );
 
       // Add file to Uppy (handles calling .upload() largely via onFileAdded)
       // Note: we don't need to manually call uppy.upload() here because onFileAdded does it.
@@ -729,6 +742,7 @@ export default function UploadFile({
     'default',
     'default-image',
     'programs',
+    'custom-image',
   ].includes(variant);
 
   if (effectiveUploadMode === 'presigned-url' && isImageVariant) {
@@ -755,11 +769,21 @@ export default function UploadFile({
                     {uploadLabel || t('_domain.uploadFile.image.title')}
                   </p>
                   <p className='text-ds-neutral-600 text-xs'>
-                    {description || t('_domain.uploadFile.image.formats')}
+                    {description ||
+                      (variant === 'custom-image'
+                        ? t('_domain.uploadFile.image.custom.formats', {
+                            fileSize: formatBytes({ bytes: maxFileSize, t }),
+                          })
+                        : t('_domain.uploadFile.image.formats'))}
                   </p>
                   <p className='text-ds-neutral-600 text-xs'>
                     {secondaryDescription ||
-                      t('_domain.uploadFile.image.recommended.module')}
+                      (variant === 'custom-image'
+                        ? t('_domain.uploadFile.image.custom.size', {
+                            width: maxImageWidth,
+                            height: maxImageHeight,
+                          })
+                        : t('_domain.uploadFile.image.recommended.module'))}
                   </p>
                 </div>
 
@@ -1056,6 +1080,11 @@ export default function UploadFile({
                         setUploadingFiles((prev: UploadingFile[]) =>
                           prev.filter((f) => f.id !== file.id)
                         );
+                        try {
+                          uppy.removeFile(file.id);
+                        } catch {
+                          /* ignore */
+                        }
                         fileInputRef.current?.click();
                       }}
                     >
@@ -1232,6 +1261,11 @@ export default function UploadFile({
                         setUploadingFiles((prev: UploadingFile[]) =>
                           prev.filter((f) => f.id !== file.id)
                         );
+                        try {
+                          uppy.removeFile(file.id);
+                        } catch {
+                          /* ignore */
+                        }
                       }}
                       t={t}
                     />
@@ -1557,9 +1591,11 @@ export default function UploadFile({
                           ? 'border-ds-neutral-400'
                           : 'border-ds-neutral-200'
                       )}
+                      onDragOver={handleDragOver}
+                      onDragLeave={handleDragLeave}
+                      onDrop={handleDrop}
                     >
                       {imgUploadIcon}
-
                       <div className='flex flex-col items-center gap-1 text-center'>
                         <p className='font-medium'>
                           {t('_domain.uploadFile.image.title')}
@@ -1568,7 +1604,7 @@ export default function UploadFile({
                           {t('_domain.uploadFile.image.formats')}
                         </p>
                         {/* <p className='text-xs text-ds-neutral-600'>
-                          {t('_domain.uploadFile.image.recommended.module')}
+                          {t('_domain.uploadFile.image.recommended')}
                         </p> */}
                       </div>
 
@@ -1601,16 +1637,13 @@ export default function UploadFile({
                         <img
                           src={src}
                           alt=''
-                          width='192'
-                          height='108'
-                          className='shrink-0 object-cover'
+                          className='h-full w-full object-cover'
                         />
                       </div>
-
-                      <div>
-                        <p className='font-medium'>
-                          {t(
-                            '_domain.uploadFile.image.preview.title.thumbnail'
+                      <div className='flex min-w-0 flex-1 flex-col justify-center'>
+                        <p className='truncate font-medium'>
+                          {uploadedFileName || (
+                            <span className='invisible'>...</span>
                           )}
                         </p>
 
@@ -1619,8 +1652,8 @@ export default function UploadFile({
                         </p>
 
                         {/* <p className='mt-0.5 text-xs text-ds-neutral-600'>
-                          {t('_domain.uploadFile.image.recommended.module')}
-                        </p> */}
+                          {t('_domain.uploadFile.image.recommended.module')} */}
+                        {/* </p> */}
 
                         <div className='mt-3 flex w-fit gap-3'>
                           <Button
@@ -1675,6 +1708,9 @@ export default function UploadFile({
                           ? 'border-ds-neutral-400'
                           : 'border-ds-neutral-200'
                       )}
+                      onDragOver={handleDragOver}
+                      onDragLeave={handleDragLeave}
+                      onDrop={handleDrop}
                     >
                       {vidUploadIcon}
 
@@ -1718,18 +1754,17 @@ export default function UploadFile({
                           <img
                             src={thumbnail}
                             alt=''
-                            width='192'
-                            height='108'
-                            className='shrink-0 object-cover'
+                            className='h-full w-full object-cover'
                           />
                         )}
-                        {videoIcon}
+                        <span className='absolute inset-0 flex items-center justify-center mix-blend-plus-lighter'>
+                          {videoIcon}
+                        </span>
                       </div>
-
-                      <div>
-                        <p className='font-medium'>
-                          {t(
-                            '_domain.uploadFile.video.preview.title.thumbnail'
+                      <div className='flex min-w-0 flex-1 flex-col justify-center'>
+                        <p className='truncate font-medium'>
+                          {uploadedFileName || (
+                            <span className='invisible'>...</span>
                           )}
                         </p>
 
@@ -1799,8 +1834,11 @@ export default function UploadFile({
                           ? 'border-ds-neutral-400'
                           : 'border-ds-neutral-200'
                       )}
+                      onDragOver={handleDragOver}
+                      onDragLeave={handleDragLeave}
+                      onDrop={handleDrop}
                     >
-                      {fileUploadIcon}
+                      {attachmentUploadIcon}
 
                       <div className='flex flex-col items-center gap-1 text-center'>
                         <p className='font-medium'>
@@ -1833,11 +1871,11 @@ export default function UploadFile({
                         {fileIcon}
                       </div>
 
-                      <div className='flex grow items-center justify-between gap-4'>
-                        <div>
-                          <p className='font-medium'>
-                            {t(
-                              '_domain.uploadFile.document.preview.title.thumbnail'
+                      <div className='py-4 pr-4'>
+                        <div className='flex min-w-0 flex-1 flex-col justify-center'>
+                          <p className='truncate font-medium'>
+                            {uploadedFileName || (
+                              <span className='invisible'>...</span>
                             )}
                           </p>
 
@@ -2070,11 +2108,11 @@ function AttachmentListItem({
         )}
       </div>
 
-      {/* Remove button */}
+      {/* Action button */}
       {isUploading ? (
         <button
           type='button'
-          className='text-ds-sub-600 hover:bg-ds-weak-100 hover:text-ds-strong-950 rounded-6 shrink-0 p-1 transition-colors'
+          className='hover:bg-ds-weak-100 rounded-6 text-ds-sub-600 hover:text-ds-strong-950 shrink-0 p-1 transition-colors'
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();

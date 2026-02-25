@@ -80,12 +80,15 @@ export type UploadFileVariant =
   | 'module-image'
   | 'programs'
   | 'attachment'
-  | 'file-request';
+  | 'file-request'
+  | 'custom-image';
 
 export interface UploadFileProps {
   alt?: string;
   disabled?: boolean;
   maxFileSize?: number;
+  maxImageWidth?: number;
+  maxImageHeight?: number;
   src?: string | null;
   placeholder?: React.ReactNode;
   variant?: UploadFileVariant;
