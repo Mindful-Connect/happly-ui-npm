@@ -32,24 +32,22 @@ import {
   formatBytes,
   MimeType,
   fileTypes,
-  AttachmentType,
   checkImageDimensions,
 } from '@/lib/upload-file-input';
+
 import {
+  fileUploadIcon,
   fileIcon,
   imgUploadIcon,
   vidUploadIcon,
   videoIcon,
   attachmentUploadIcon,
   getFileThumbnailIcon,
+  FileDownloadIcon,
 } from '@/lib/upload-file-input-icons';
 import { formatUploadProgress, formatFileSize } from '@/lib/upload-file-input';
 
 import { ProgressBar } from '@/components/ui/progress-bar';
-import {
-  FileFormatIcon as RequestFileFormatIcon,
-  FileDownloadIcon,
-} from '@/lib/upload-file-input/file-format-icon';
 
 type UploadingFileStatus = 'uploading' | 'success' | 'error';
 interface UploadingFile {
@@ -140,16 +138,26 @@ export default function UploadFile({
 
   // Determine upload mode based on variant (attachment uses presigned URL by default)
   const effectiveUploadMode =
-    uploadMode || (variant === 'attachment' ? 'presigned-url' : 'multipart');
+    uploadMode ||
+    (variant === 'attachment' ||
+    variant === 'file-request' ||
+    variant === 'archive' ||
+    variant === 'document'
+      ? 'presigned-url'
+      : 'multipart');
 
   // Allowed file types based on variant
   const allowedFileTypes =
     allowedFileTypesProp ||
-    (variant === 'lesson-file' || variant === 'attachment'
+    (variant === 'document'
       ? (fileTypes.document as MimeType[])
-      : variant === 'lesson-video'
-        ? (fileTypes.video as MimeType[])
-        : (fileTypes.image as MimeType[]));
+      : variant === 'archive'
+        ? (fileTypes.compressed_file as MimeType[])
+        : variant === 'lesson-file' || variant === 'attachment'
+          ? (fileTypes.document as MimeType[])
+          : variant === 'lesson-video'
+            ? (fileTypes.video as MimeType[])
+            : (fileTypes.image as MimeType[]));
 
   // Presigned URL upload handler using Uppy
   const handlePresignedUrlUpload = (files: FileList | null) => {
@@ -768,7 +776,7 @@ export default function UploadFile({
                   <p className='font-medium'>
                     {uploadLabel || t('_domain.uploadFile.image.title')}
                   </p>
-                  <p className='text-ds-neutral-600 text-xs'>
+                  <p className='text-xs text-ds-neutral-600'>
                     {description ||
                       (variant === 'custom-image'
                         ? t('_domain.uploadFile.image.custom.formats', {
@@ -776,7 +784,7 @@ export default function UploadFile({
                           })
                         : t('_domain.uploadFile.image.formats'))}
                   </p>
-                  <p className='text-ds-neutral-600 text-xs'>
+                  <p className='text-xs text-ds-neutral-600'>
                     {secondaryDescription ||
                       (variant === 'custom-image'
                         ? t('_domain.uploadFile.image.custom.size', {
@@ -859,16 +867,16 @@ export default function UploadFile({
                 </div>
                 <div className='flex min-w-0 grow items-center justify-between gap-4 px-5'>
                   <div className='flex min-w-0 flex-col gap-0.5'>
-                    <p className='text-ds-neutral-900 truncate text-sm font-medium'>
+                    <p className='truncate text-sm font-medium text-ds-neutral-900'>
                       {uploadedFileName ||
                         t('_domain.uploadFile.image.preview.title.thumbnail')}
                     </p>
-                    <p className='text-ds-neutral-500 text-xs'>
+                    <p className='text-xs text-ds-neutral-500'>
                       {uploadedFileSize > 0
                         ? formatBytes({ bytes: uploadedFileSize, t })
                         : description || t('_domain.uploadFile.image.formats')}
                     </p>
-                    <p className='text-ds-neutral-500 text-xs'>
+                    <p className='text-xs text-ds-neutral-500'>
                       {secondaryDescription ||
                         (variant === 'custom-image'
                           ? t('_domain.uploadFile.image.custom.size', {
@@ -952,69 +960,63 @@ export default function UploadFile({
     );
   }
 
-  if (effectiveUploadMode === 'presigned-url' && variant === 'file-request') {
+  if (
+    effectiveUploadMode === 'presigned-url' &&
+    (variant === 'file-request' ||
+      variant === 'archive' ||
+      variant === 'document')
+  ) {
     return (
       <div className='w-full space-y-3'>
         {/* Idle state - waiting for file upload */}
-        {uploadingFiles.length === 0 && attachments.length === 0 && (
-          <div
-            className={cn(
-              'border-ds-neutral-200 flex h-[72px] w-full items-center justify-between gap-6 rounded-[15px] border bg-white py-4 pr-4 pl-6 transition-colors',
-              dragging
-                ? 'border-ds-primary-400 bg-ds-primary-50'
-                : 'border-ds-neutral-200'
-            )}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-          >
-            <div className='flex items-center gap-2'>
-              <div>
-                <RequestFileFormatIcon
-                  fileType={
-                    allowedFileTypes && allowedFileTypes.length === 1
-                      ? (Object.keys(fileTypes).find((type) =>
-                          fileTypes[type as keyof typeof fileTypes].includes(
-                            allowedFileTypes[0] as MimeType
-                          )
-                        ) as unknown as AttachmentType) || 'any'
-                      : 'any'
-                  }
-                />
+        {uploadingFiles.length === 0 &&
+          (variant === 'document' ? !src : attachments.length === 0) && (
+            <div
+              className={cn(
+                'flex h-[72px] w-full items-center justify-between gap-6 rounded-[15px] border border-ds-neutral-200 bg-white py-4 pr-4 pl-6 transition-colors',
+                dragging
+                  ? 'border-ds-primary-400 bg-ds-primary-50'
+                  : 'border-ds-neutral-200'
+              )}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
+              <div className='flex items-center gap-2'>
+                <div>{getFileThumbnailIcon(allowedFileTypes[0])}</div>
+
+                <span className='flex flex-col text-sm font-bold text-[#474754]'>
+                  <span>
+                    {uploadLabel || t('_domain.uploadFile.attachment.title')}
+                  </span>
+                  {maxFileSize && (
+                    <div className='font-normal'>
+                      {t('_form.maxFileSize')}:{' '}
+                      {formatBytes({ bytes: maxFileSize, t })}
+                    </div>
+                  )}
+                </span>
               </div>
 
-              <span className='flex flex-col text-sm font-bold text-[#474754]'>
-                <span>
-                  {uploadLabel || t('_domain.uploadFile.attachment.title')}
-                </span>
-                {maxFileSize && (
-                  <div className='font-normal'>
-                    {t('_form.maxFileSize')}:{' '}
-                    {formatBytes({ bytes: maxFileSize, t })}
-                  </div>
-                )}
-              </span>
+              <Button
+                type='button'
+                disabled={uploading || disabled}
+                variant='neutral'
+                mode='stroke'
+                onClick={() => fileInputRef.current?.click()}
+              >
+                {t('_domain.uploadFile.browseFile')}
+              </Button>
+              <input
+                ref={fileInputRef}
+                type='file'
+                className='hidden'
+                multiple={multiple}
+                accept={allowedFileTypes.join(',')}
+                onChange={(e) => handlePresignedUrlUpload(e.target.files)}
+              />
             </div>
-
-            <Button
-              type='button'
-              disabled={uploading || disabled}
-              variant='neutral'
-              mode='stroke'
-              onClick={() => fileInputRef.current?.click()}
-            >
-              {t('_domain.uploadFile.browseFile')}
-            </Button>
-            <input
-              ref={fileInputRef}
-              type='file'
-              className='hidden'
-              multiple={multiple}
-              accept={allowedFileTypes.join(',')}
-              onChange={(e) => handlePresignedUrlUpload(e.target.files)}
-            />
-          </div>
-        )}
+          )}
 
         {/* Uploading State */}
         {uploadingFiles.length > 0 && (
@@ -1031,17 +1033,7 @@ export default function UploadFile({
               >
                 <div className='flex w-full items-center gap-2'>
                   <div className='shrink-0'>
-                    <RequestFileFormatIcon
-                      fileType={
-                        ((
-                          Object.keys(fileTypes) as Array<
-                            keyof typeof fileTypes
-                          >
-                        ).find((type) =>
-                          fileTypes[type].includes(file.type as MimeType)
-                        ) as unknown as AttachmentType) || 'any'
-                      }
-                    />
+                    {getFileThumbnailIcon(file.type as MimeType)}
                   </div>
 
                   <div className='flex flex-grow flex-col gap-1 overflow-hidden'>
@@ -1092,8 +1084,8 @@ export default function UploadFile({
                         );
                         try {
                           uppy.removeFile(file.id);
-                        } catch {
-                          /* ignore */
+                        } catch (_e) {
+                          // ignore
                         }
                         fileInputRef.current?.click();
                       }}
@@ -1121,74 +1113,122 @@ export default function UploadFile({
         )}
 
         {/* Completed State (Attachments list) */}
-        {attachments.length > 0 && uploadingFiles.length === 0 && (
-          <div className='space-y-4'>
-            {attachments.map((attachment) => (
-              <div
-                key={attachment.id}
-                className='border-ds-neutral-200 flex h-[72px] w-full items-center justify-between gap-6 rounded-[15px] border bg-white py-4 pr-4 pl-6'
-              >
-                <div className='flex items-center gap-2'>
-                  <div>
-                    <RequestFileFormatIcon
-                      fileType={
-                        ((
-                          Object.keys(fileTypes) as Array<
-                            keyof typeof fileTypes
-                          >
-                        ).find((type) =>
-                          fileTypes[type].includes(
-                            attachment.mime_type as MimeType
-                          )
-                        ) as unknown as AttachmentType) || 'any'
-                      }
-                    />
+        {((variant === 'document' && src) ||
+          ((variant === 'file-request' || variant === 'archive') &&
+            attachments.length > 0)) &&
+          uploadingFiles.length === 0 && (
+            <div className='space-y-4'>
+              {variant === 'document' && src ? (
+                <div className='flex h-[72px] w-full items-center justify-between gap-6 rounded-[15px] border border-ds-neutral-200 bg-white py-4 pr-4 pl-6'>
+                  <div className='flex items-center gap-2'>
+                    <div>{getFileThumbnailIcon(allowedFileTypes[0])}</div>
+
+                    <span className='flex flex-col text-sm text-[#474754]'>
+                      <span className='font-bold'>
+                        {uploadLabel ||
+                          t('_domain.uploadFile.attachment.title') ||
+                          uploadedFileName ||
+                          src.split('?')[0].split('/').pop()}
+                      </span>
+                      <div className='flex items-center gap-1 font-normal text-ds-neutral-600'>
+                        <RiCheckboxCircleFill
+                          size={12}
+                          className='text-green-600'
+                        />
+                        <span>
+                          Completed
+                          {uploadedFileSize > 0
+                            ? ` • ${formatFileSize(uploadedFileSize)}`
+                            : ''}
+                        </span>
+                      </div>
+                    </span>
                   </div>
 
-                  <span className='flex flex-col text-sm text-[#474754]'>
-                    <span className='font-bold'>
-                      {uploadLabel ||
-                        t('_domain.uploadFile.attachment.title') ||
-                        attachment.file_name}
-                    </span>
-                    <div className='text-ds-neutral-600 flex items-center gap-1 font-normal'>
-                      <RiCheckboxCircleFill
-                        size={12}
-                        className='text-green-600'
-                      />
-                      <span>
-                        Completed • {formatFileSize(attachment.file_size)}
-                      </span>
-                    </div>
-                  </span>
-                </div>
-
-                <div className='flex items-center gap-4'>
-                  {onAttachmentDownload && (
+                  <div className='flex items-center gap-4'>
                     <button
-                      className='hover:text-ds-primary-500 text-[#484854]'
+                      className='text-[#484854] hover:text-ds-primary-500'
                       type='button'
                       title={t('_domain.download')}
                       disabled={disabled}
-                      onClick={() => onAttachmentDownload(attachment.id)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.open(src, '_blank');
+                      }}
                     >
                       {FileDownloadIcon(false)}
                     </button>
-                  )}
-                  <button
-                    className='text-[#484854] hover:text-red-500'
-                    type='button'
-                    title={t('_domain.delete')}
-                    disabled={disabled}
-                    onClick={() => onAttachmentRemove?.(attachment.id)}
-                  >
-                    <RiDeleteBin6Line size={20} />
-                  </button>
+                    <button
+                      className='text-[#484854] hover:text-red-500'
+                      type='button'
+                      title={t('_domain.delete')}
+                      disabled={disabled}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onRemove();
+                        uppy.clear();
+                      }}
+                    >
+                      <RiDeleteBin6Line size={20} />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
+              ) : (
+                attachments.map((attachment) => (
+                  <div
+                    key={attachment.id}
+                    className='flex h-[72px] w-full items-center justify-between gap-6 rounded-[15px] border border-ds-neutral-200 bg-white py-4 pr-4 pl-6'
+                  >
+                    <div className='flex items-center gap-2'>
+                      <div>
+                        {getFileThumbnailIcon(attachment.mime_type as MimeType)}
+                      </div>
+
+                      <span className='flex flex-col text-sm text-[#474754]'>
+                        <span className='font-bold'>
+                          {uploadLabel ||
+                            t('_domain.uploadFile.attachment.title') ||
+                            attachment.file_name}
+                        </span>
+                        <div className='flex items-center gap-1 font-normal text-ds-neutral-600'>
+                          <RiCheckboxCircleFill
+                            size={12}
+                            className='text-green-600'
+                          />
+                          <span>
+                            Completed • {formatFileSize(attachment.file_size)}
+                          </span>
+                        </div>
+                      </span>
+                    </div>
+
+                    <div className='flex items-center gap-4'>
+                      {onAttachmentDownload && (
+                        <button
+                          className='text-[#484854] hover:text-ds-primary-500'
+                          type='button'
+                          title={t('_domain.download')}
+                          disabled={disabled}
+                          onClick={() => onAttachmentDownload(attachment.id)}
+                        >
+                          {FileDownloadIcon(false)}
+                        </button>
+                      )}
+                      <button
+                        className='text-[#484854] hover:text-red-500'
+                        type='button'
+                        title={t('_domain.delete')}
+                        disabled={disabled}
+                        onClick={() => onAttachmentRemove?.(attachment.id)}
+                      >
+                        <RiDeleteBin6Line size={20} />
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
       </div>
     );
   }
@@ -1199,7 +1239,7 @@ export default function UploadFile({
         {/* Upload area with native file input - FIRST */}
         <div
           className={cn(
-            'rounded-12 flex flex-col items-center justify-center gap-3 border border-dashed p-6 transition-colors',
+            'flex flex-col items-center justify-center gap-3 rounded-12 border border-dashed p-6 transition-colors',
             dragging
               ? 'border-ds-primary-400 bg-ds-primary-50'
               : 'border-ds-neutral-200'
@@ -1211,13 +1251,13 @@ export default function UploadFile({
           {attachmentUploadIcon}
 
           <div className='flex flex-col items-center gap-1 text-center'>
-            <p className='text-ds-neutral-700 text-sm font-medium'>
+            <p className='text-sm font-medium text-ds-neutral-700'>
               {uploadLabel || t('_domain.uploadFile.attachment.title')}
             </p>
-            <p className='text-ds-neutral-500 text-xs'>
+            <p className='text-xs text-ds-neutral-500'>
               {description || t('_domain.uploadFile.attachment.formats')}
             </p>
-            <p className='text-ds-neutral-500 text-xs'>
+            <p className='text-xs text-ds-neutral-500'>
               {t('_domain.uploadFile.attachment.maxSize', {
                 size: formatBytes({ bytes: maxFileSize, t }),
               })}
@@ -1271,11 +1311,6 @@ export default function UploadFile({
                         setUploadingFiles((prev: UploadingFile[]) =>
                           prev.filter((f) => f.id !== file.id)
                         );
-                        try {
-                          uppy.removeFile(file.id);
-                        } catch {
-                          /* ignore */
-                        }
                       }}
                       t={t}
                     />
@@ -1347,15 +1382,15 @@ export default function UploadFile({
                     {attachmentUploadIcon}
 
                     <div className='flex flex-col items-center gap-1 text-center'>
-                      <p className='text-ds-neutral-700 text-sm font-medium'>
+                      <p className='text-sm font-medium text-ds-neutral-700'>
                         {uploadLabel ||
                           t('_domain.uploadFile.attachment.title')}
                       </p>
-                      <p className='text-ds-neutral-500 text-xs'>
+                      <p className='text-xs text-ds-neutral-500'>
                         {description ||
                           t('_domain.uploadFile.attachment.formats')}
                       </p>
-                      <p className='text-ds-neutral-500 text-xs'>
+                      <p className='text-xs text-ds-neutral-500'>
                         {t('_domain.uploadFile.attachment.maxSize', {
                           size: formatBytes({ bytes: maxFileSize, t }),
                         })}
@@ -1404,8 +1439,8 @@ export default function UploadFile({
                     'flex items-center gap-5',
                     variant === 'programs'
                       ? dragging
-                        ? 'rounded-16 border-ds-neutral-400 border p-4'
-                        : 'rounded-16 border-ds-neutral-200 border p-4'
+                        ? 'rounded-16 border border-ds-neutral-400 p-4'
+                        : 'rounded-16 border border-ds-neutral-200 p-4'
                       : ''
                   )}
                 >
@@ -1413,7 +1448,7 @@ export default function UploadFile({
                     className={cn(
                       'flex items-center justify-center overflow-hidden',
                       variant === 'programs'
-                        ? 'rounded-12 h-[110px] w-[110px]'
+                        ? 'h-[110px] w-[110px] rounded-12'
                         : 'h-[80px] w-[80px] rounded-full'
                     )}
                   >
@@ -1434,7 +1469,7 @@ export default function UploadFile({
                   <div>
                     <h3
                       className={cn(
-                        'text-ds-neutral-950 mb-0.5 text-sm font-medium',
+                        'mb-0.5 text-sm font-medium text-ds-neutral-950',
                         variant === 'programs' ? 'mb-2' : ''
                       )}
                     >
@@ -1522,8 +1557,8 @@ export default function UploadFile({
                   className={cn(
                     'flex items-center gap-5',
                     dragging
-                      ? 'rounded-16 border-ds-neutral-400 border p-4'
-                      : 'rounded-16 border-ds-neutral-200 border p-4'
+                      ? 'rounded-16 border border-ds-neutral-400 p-4'
+                      : 'rounded-16 border border-ds-neutral-200 p-4'
                   )}
                 >
                   <div className='flex h-[80px] w-[80px] items-center justify-center overflow-hidden rounded-full'>
@@ -1539,12 +1574,12 @@ export default function UploadFile({
                   </div>
 
                   <div>
-                    <h3 className='text-ds-neutral-950 mb-0.5 text-sm font-medium'>
+                    <h3 className='mb-0.5 text-sm font-medium text-ds-neutral-950'>
                       {t('team.addMemberForm.inputFields.uploadImage')}
                     </h3>
 
                     <div className='mb-2'>
-                      <p className='text-ds-neutral-600 text-sm leading-tight'>
+                      <p className='text-sm leading-tight text-ds-neutral-600'>
                         {t('team.addMemberForm.inputFields.recommendedImage')}
                       </p>
                     </div>
@@ -1596,25 +1631,23 @@ export default function UploadFile({
                   {!src ? (
                     <div
                       className={cn(
-                        'rounded-12 flex w-full flex-col items-center justify-center gap-5 border border-dashed p-8',
+                        'flex w-full flex-col items-center justify-center gap-5 rounded-12 border border-dashed p-8',
                         dragging
                           ? 'border-ds-neutral-400'
                           : 'border-ds-neutral-200'
                       )}
-                      onDragOver={handleDragOver}
-                      onDragLeave={handleDragLeave}
-                      onDrop={handleDrop}
                     >
                       {imgUploadIcon}
+
                       <div className='flex flex-col items-center gap-1 text-center'>
                         <p className='font-medium'>
                           {t('_domain.uploadFile.image.title')}
                         </p>
-                        <p className='text-ds-neutral-600 text-xs'>
+                        <p className='text-xs text-ds-neutral-600'>
                           {t('_domain.uploadFile.image.formats')}
                         </p>
                         {/* <p className='text-xs text-ds-neutral-600'>
-                          {t('_domain.uploadFile.image.recommended')}
+                          {t('_domain.uploadFile.image.recommended.module')}
                         </p> */}
                       </div>
 
@@ -1637,33 +1670,36 @@ export default function UploadFile({
                   ) : (
                     <div
                       className={cn(
-                        'rounded-16 flex items-center gap-5 border p-4',
+                        'flex items-center gap-5 rounded-16 border p-4',
                         dragging
                           ? 'border-ds-neutral-400'
                           : 'border-ds-neutral-200'
                       )}
                     >
-                      <div className='rounded-8 flex h-[108px] w-[192px] shrink-0 items-center justify-center overflow-hidden'>
+                      <div className='flex h-[108px] w-[192px] shrink-0 items-center justify-center overflow-hidden rounded-8'>
                         <img
                           src={src}
                           alt=''
-                          className='h-full w-full object-cover'
+                          width='192'
+                          height='108'
+                          className='shrink-0 object-cover'
                         />
                       </div>
-                      <div className='flex min-w-0 flex-1 flex-col justify-center'>
-                        <p className='truncate font-medium'>
-                          {uploadedFileName || (
-                            <span className='invisible'>...</span>
+
+                      <div>
+                        <p className='font-medium'>
+                          {t(
+                            '_domain.uploadFile.image.preview.title.thumbnail'
                           )}
                         </p>
 
-                        <p className='text-ds-neutral-600 mt-1 text-xs'>
+                        <p className='mt-1 text-xs text-ds-neutral-600'>
                           {t('_domain.uploadFile.image.formats')}
                         </p>
 
                         {/* <p className='mt-0.5 text-xs text-ds-neutral-600'>
-                          {t('_domain.uploadFile.image.recommended.module')} */}
-                        {/* </p> */}
+                          {t('_domain.uploadFile.image.recommended.module')}
+                        </p> */}
 
                         <div className='mt-3 flex w-fit gap-3'>
                           <Button
@@ -1713,14 +1749,11 @@ export default function UploadFile({
                   {!src ? (
                     <div
                       className={cn(
-                        'drag rounded-12 flex flex-col items-center justify-center gap-5 border border-dashed p-8 transition-colors duration-75',
+                        'drag flex flex-col items-center justify-center gap-5 rounded-12 border border-dashed p-8 transition-colors duration-75',
                         dragging
                           ? 'border-ds-neutral-400'
                           : 'border-ds-neutral-200'
                       )}
-                      onDragOver={handleDragOver}
-                      onDragLeave={handleDragLeave}
-                      onDrop={handleDrop}
                     >
                       {vidUploadIcon}
 
@@ -1728,7 +1761,7 @@ export default function UploadFile({
                         <p className='font-medium'>
                           {t('_domain.uploadFile.video.title')}
                         </p>
-                        <p className='text-ds-neutral-600 text-xs'>
+                        <p className='text-xs text-ds-neutral-600'>
                           {t('_domain.uploadFile.video.formats', {
                             bytesFormatted: formatBytes({
                               bytes: maxFileSize,
@@ -1736,7 +1769,7 @@ export default function UploadFile({
                             }),
                           })}
                         </p>
-                        <p className='text-ds-neutral-600 text-xs'>
+                        <p className='text-xs text-ds-neutral-600'>
                           {t('_domain.uploadFile.video.recommended')}
                         </p>
                       </div>
@@ -1758,27 +1791,28 @@ export default function UploadFile({
                       </Button>
                     </div>
                   ) : (
-                    <div className='rounded-16 border-ds-neutral-200 flex items-center gap-5 border p-4'>
-                      <div className='rounded-8 bg-ds-neutral-200 relative flex h-[108px] w-[192px] shrink-0 items-center justify-center overflow-hidden'>
+                    <div className='flex items-center gap-5 rounded-16 border border-ds-neutral-200 p-4'>
+                      <div className='relative flex h-[108px] w-[192px] shrink-0 items-center justify-center overflow-hidden rounded-8 bg-ds-neutral-200'>
                         {thumbnail && (
                           <img
                             src={thumbnail}
                             alt=''
-                            className='h-full w-full object-cover'
+                            width='192'
+                            height='108'
+                            className='shrink-0 object-cover'
                           />
                         )}
-                        <span className='absolute inset-0 flex items-center justify-center mix-blend-plus-lighter'>
-                          {videoIcon}
-                        </span>
+                        {videoIcon}
                       </div>
-                      <div className='flex min-w-0 flex-1 flex-col justify-center'>
-                        <p className='truncate font-medium'>
-                          {uploadedFileName || (
-                            <span className='invisible'>...</span>
+
+                      <div>
+                        <p className='font-medium'>
+                          {t(
+                            '_domain.uploadFile.video.preview.title.thumbnail'
                           )}
                         </p>
 
-                        <p className='text-ds-neutral-600 mt-1 text-xs'>
+                        <p className='mt-1 text-xs text-ds-neutral-600'>
                           {t('_domain.uploadFile.video.formats', {
                             bytesFormatted: formatBytes({
                               bytes: maxFileSize,
@@ -1787,7 +1821,7 @@ export default function UploadFile({
                           })}
                         </p>
 
-                        <p className='text-ds-neutral-600 mt-0.5 text-xs'>
+                        <p className='mt-0.5 text-xs text-ds-neutral-600'>
                           {t('_domain.uploadFile.video.recommended')}
                         </p>
 
@@ -1839,22 +1873,19 @@ export default function UploadFile({
                   {!src ? (
                     <div
                       className={cn(
-                        'rounded-12 flex flex-col items-center justify-center gap-5 border border-dashed p-8',
+                        'flex flex-col items-center justify-center gap-5 rounded-12 border border-dashed p-8',
                         dragging
                           ? 'border-ds-neutral-400'
                           : 'border-ds-neutral-200'
                       )}
-                      onDragOver={handleDragOver}
-                      onDragLeave={handleDragLeave}
-                      onDrop={handleDrop}
                     >
-                      {attachmentUploadIcon}
+                      {fileUploadIcon}
 
                       <div className='flex flex-col items-center gap-1 text-center'>
                         <p className='font-medium'>
                           {t('_domain.uploadFile.document.title')}
                         </p>
-                        <p className='text-ds-neutral-600 text-xs'>
+                        <p className='text-xs text-ds-neutral-600'>
                           {t('_domain.uploadFile.document.formats')}
                         </p>
                       </div>
@@ -1876,20 +1907,20 @@ export default function UploadFile({
                       </Button>
                     </div>
                   ) : (
-                    <div className='rounded-16 border-ds-neutral-200 flex items-center gap-5 overflow-hidden border'>
+                    <div className='flex items-center gap-5 overflow-hidden rounded-16 border border-ds-neutral-200'>
                       <div className='flex h-[104px] w-[176px] shrink-0 items-center justify-center overflow-hidden bg-gradient-to-t from-[#f2f2f3] via-[#f7f8f8] to-[#fcfcfc]'>
                         {fileIcon}
                       </div>
 
-                      <div className='py-4 pr-4'>
-                        <div className='flex min-w-0 flex-1 flex-col justify-center'>
-                          <p className='truncate font-medium'>
-                            {uploadedFileName || (
-                              <span className='invisible'>...</span>
+                      <div className='flex grow items-center justify-between gap-4'>
+                        <div>
+                          <p className='font-medium'>
+                            {t(
+                              '_domain.uploadFile.document.preview.title.thumbnail'
                             )}
                           </p>
 
-                          <p className='text-ds-neutral-600 mt-1 text-xs'>
+                          <p className='mt-1 text-xs text-ds-neutral-600'>
                             {t('_domain.uploadFile.document.formats')}
                           </p>
                         </div>
@@ -2051,7 +2082,7 @@ function AttachmentListItem({
   return (
     <div
       className={cn(
-        'border-ds-neutral-200 flex h-[104px] items-center gap-4 overflow-hidden rounded-[16px] border bg-white pr-6',
+        'flex h-[104px] items-center gap-4 overflow-hidden rounded-[16px] border border-ds-neutral-200 bg-white pr-6',
         isError && 'border-ds-error-base'
       )}
     >
@@ -2073,18 +2104,18 @@ function AttachmentListItem({
 
       {/* File info */}
       <div className='flex min-w-0 flex-1 flex-col gap-0.5'>
-        <p className='text-ds-neutral-900 truncate text-sm font-medium'>
+        <p className='truncate text-sm font-medium text-ds-neutral-900'>
           {attachment.file_name}
         </p>
-        <p className='text-ds-neutral-500 text-xs'>
+        <p className='text-xs text-ds-neutral-500'>
           {formatBytes({ bytes: attachment.file_size, t })}
         </p>
 
         {/* Status indicator */}
         {isUploading && (
           <div className='flex items-center gap-1'>
-            <RiLoader2Fill className='text-ds-information-base h-3.5 w-3.5 animate-spin' />
-            <span className='text-ds-neutral-600 text-xs'>
+            <RiLoader2Fill className='h-3.5 w-3.5 animate-spin text-ds-information-base' />
+            <span className='text-xs text-ds-neutral-600'>
               {t('components.fileUploadCard.uploading')}
             </span>
           </div>
@@ -2092,24 +2123,24 @@ function AttachmentListItem({
 
         {isError && (
           <div className='flex items-center gap-1'>
-            <RiErrorWarningFill className='text-ds-error-base h-3.5 w-3.5' />
-            <span className='text-ds-error-base text-xs'>
+            <RiErrorWarningFill className='h-3.5 w-3.5 text-ds-error-base' />
+            <span className='text-xs text-ds-error-base'>
               {t('components.fileUploadCard.failed')}
             </span>
           </div>
         )}
 
         {!state && formattedDate && (
-          <p className='text-ds-neutral-400 text-xs'>
+          <p className='text-xs text-ds-neutral-400'>
             {t('_domain.uploadFile.uploadedOn')}: {formattedDate}
           </p>
         )}
 
         {/* Progress bar */}
         {isUploading && (
-          <div className='bg-ds-soft-200 mt-1 h-1.5 w-full overflow-hidden rounded-full'>
+          <div className='mt-1 h-1.5 w-full overflow-hidden rounded-full bg-ds-soft-200'>
             <div
-              className='bg-ds-information-base h-full rounded-full transition-all duration-300'
+              className='h-full rounded-full bg-ds-information-base transition-all duration-300'
               style={{
                 width: `${Math.min(100, Math.max(0, progress))}%`,
               }}
@@ -2118,11 +2149,11 @@ function AttachmentListItem({
         )}
       </div>
 
-      {/* Action button */}
+      {/* Remove button */}
       {isUploading ? (
         <button
           type='button'
-          className='hover:bg-ds-weak-100 rounded-6 text-ds-sub-600 hover:text-ds-strong-950 shrink-0 p-1 transition-colors'
+          className='hover:bg-ds-weak-100 rounded-6 shrink-0 p-1 text-ds-sub-600 transition-colors hover:text-ds-strong-950'
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();

@@ -80,8 +80,10 @@ export type UploadFileVariant =
   | 'module-image'
   | 'programs'
   | 'attachment'
+  | 'document'
   | 'file-request'
-  | 'custom-image';
+  | 'custom-image'
+  | 'archive';
 
 export interface UploadFileProps {
   alt?: string;
@@ -126,7 +128,6 @@ export interface UploadFileProps {
   /** ACL for presigned URL uploads: 'public-read' for public bucket, 'private' for private bucket */
   acl?: AclType;
   /** Translation function */
-  // eslint-disable-next-line
   t: (key: string, params?: any) => string;
   /** Provider ID for presigned URL uploads. const { provider_id } = useProvider(); */
   providerId: string;
@@ -190,6 +191,18 @@ export interface AttachmentListItemProps {
   t: (key: string, params?: Record<string, string>) => string;
 }
 
+export type AttachmentType =
+  | 'pdf' // e.g. .pdf
+  | 'image' // e.g. .jpg, .png, .gif
+  | 'video' // e.g. .mp4, .avi, .mov, .mkv
+  | 'audio' // e.g. .mp3, .wav, .ogg, .flac
+  | 'document_file' // e.g. .odt, .doc, .docx
+  | 'spreadsheet_document' // e.g. .xls, .xlsx .ods
+  | 'presentation_document' // e.g. .ppt, .pptx, .odp
+  | 'plain_text' // e.g. .txt, .md
+  | 'compressed_file' // e.g. .zip, .rar, .7z
+  | 'any';
+
 export type FileUploadState =
   | 'pending'
   | 'uploading'
@@ -219,15 +232,3 @@ export interface FileUploadCardProps {
   /** Translation function */
   t: (key: string, params?: Record<string, string>) => string;
 }
-
-export type AttachmentType =
-  | 'pdf' // e.g. .pdf
-  | 'image' // e.g. .jpg, .png, .gif
-  | 'video' // e.g. .mp4, .avi, .mov, .mkv
-  | 'audio' // e.g. .mp3, .wav, .ogg, .flac
-  | 'document_file' // e.g. .odt, .doc, .docx
-  | 'spreadsheet_document' // e.g. .xls, .xlsx .ods
-  | 'presentation_document' // e.g. .ppt, .pptx, .odp
-  | 'plain_text' // e.g. .txt, .md
-  | 'compressed_file' // e.g. .zip, .rar, .7z
-  | 'any';

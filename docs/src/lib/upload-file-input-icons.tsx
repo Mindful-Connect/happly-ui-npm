@@ -1,4 +1,5 @@
 import { JSX } from 'react';
+import { fileTypes } from './upload-file-input/constants';
 
 export const fileUploadIcon = (
   <svg
@@ -480,100 +481,6 @@ export const attachmentUploadIcon = (
   </svg>
 );
 
-// File icon with extension banner - document shape with folded corner and banner
-const FileIconWithBanner = ({
-  extension,
-  color,
-  lightColor,
-}: {
-  extension: string;
-  color: string;
-  lightColor: string;
-}) => (
-  <svg
-    width='32'
-    height='32'
-    viewBox='0 0 32 32'
-    fill='none'
-    xmlns='http://www.w3.org/2000/svg'
-  >
-    {/* Document body */}
-    <path
-      d='M6 4C6 2.89543 6.89543 2 8 2H18L26 10V28C26 29.1046 25.1046 30 24 30H8C6.89543 30 6 29.1046 6 28V4Z'
-      fill={lightColor}
-      stroke={color}
-      strokeWidth='1.5'
-    />
-    {/* Folded corner */}
-    <path
-      d='M18 2V8C18 9.10457 18.8954 10 20 10H26'
-      stroke={color}
-      strokeWidth='1.5'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    />
-    {/* Banner background */}
-    <rect x='4' y='14' width='24' height='10' rx='2' fill={color} />
-    {/* Extension text */}
-    <text
-      x='16'
-      y='21.5'
-      fontSize='7'
-      fontWeight='600'
-      fill='white'
-      textAnchor='middle'
-      fontFamily='system-ui, -apple-system, sans-serif'
-    >
-      {extension}
-    </text>
-  </svg>
-);
-
-// PDF icon (red)
-export const pdfFileIcon = (
-  <FileIconWithBanner extension='PDF' color='#DC2626' lightColor='#FEE2E2' />
-);
-
-// Word/DOCX icon (blue)
-export const wordFileIcon = (
-  <FileIconWithBanner extension='DOCX' color='#2563EB' lightColor='#DBEAFE' />
-);
-
-// Excel/Spreadsheet icon (green)
-export const excelFileIcon = (
-  <FileIconWithBanner extension='XLSX' color='#16A34A' lightColor='#DCFCE7' />
-);
-
-// PowerPoint icon (orange)
-export const pptFileIcon = (
-  <FileIconWithBanner extension='PPTX' color='#EA580C' lightColor='#FFEDD5' />
-);
-
-// ZIP/Archive icon (yellow/amber)
-export const zipFileIcon = (
-  <FileIconWithBanner extension='ZIP' color='#D97706' lightColor='#FEF3C7' />
-);
-
-// Image icon (purple)
-export const imageFileIcon = (
-  <FileIconWithBanner extension='PNG' color='#9333EA' lightColor='#F3E8FF' />
-);
-
-// Text icon (gray)
-export const textFileIcon = (
-  <FileIconWithBanner extension='TXT' color='#6B7280' lightColor='#F3F4F6' />
-);
-
-// CSV icon (green)
-export const csvFileIcon = (
-  <FileIconWithBanner extension='CSV' color='#16A34A' lightColor='#DCFCE7' />
-);
-
-// Generic/default file icon
-export const genericFileIcon = (
-  <FileIconWithBanner extension='FILE' color='#9CA3AF' lightColor='#F3F4F6' />
-);
-
 /**
  * Returns the appropriate file icon based on mime type
  */
@@ -586,41 +493,81 @@ const FileThumbnailIconWithBanner = ({
   color: string;
   lightColor: string;
 }) => (
+  <div className='relative flex h-10 w-10 shrink-0 items-center justify-center'>
+    {fileFormatIconBase}
+
+    <div className='absolute bottom-1.5 left-0'>
+      <ExtensionLabel extension={extension} color={color} />
+    </div>
+  </div>
+);
+
+const fileFormatIconBase = (
   <svg
-    width='48'
-    height='48'
-    viewBox='0 0 48 48'
+    width='32'
+    height='40'
+    viewBox='0 0 32 40'
     fill='none'
+    version='1.1'
+    id='svg4'
     xmlns='http://www.w3.org/2000/svg'
   >
-    {/* Document body */}
-    <path
-      d='M12 0.900391H24.6172C26.288 0.900391 27.8908 1.56367 29.0723 2.74512L40.4541 14.1279C41.6355 15.3093 42.2997 16.9113 42.2998 18.582V40.7998C42.2998 44.2791 39.4793 47.0995 36 47.0996H12C8.52061 47.0996 5.7002 44.2792 5.7002 40.7998V7.2002C5.7002 3.7208 8.52061 0.900391 12 0.900391Z'
-      fill='white'
-      stroke='#CACFD8'
-      strokeWidth='1.8'
-    />
-    {/* Folded corner */}
-    <path
-      d='M27.5996 1.19995V10.7999C27.5996 13.4509 29.7486 15.6 32.3996 15.6H41.9996'
-      stroke='#CACFD8'
-      strokeWidth='1.8'
-    />
-    {/* Badge at bottom */}
-    <rect x='0' y='21' width='43.2' height='19.8' rx='4.8' fill={color} />
-    {/* Extension text */}
-    <text
-      x='21.6'
-      y='34'
-      fontSize='10'
-      fontWeight='600'
-      fill='white'
-      textAnchor='middle'
-      fontFamily='system-ui, -apple-system, sans-serif'
-    >
-      {extension}
-    </text>
+    <g clipPath='url(#clip0_33307_2297)' id='g4' transform='translate(-4)'>
+      <path
+        d='m 10,0.75 h 10.5146 c 1.3924,0 2.7274,0.55354 3.712,1.53809 l 9.4853,9.48531 c 0.9846,0.9846 1.5381,2.3196 1.5381,3.712 V 34 c 0,2.8995 -2.3505,5.25 -5.25,5.25 H 10 C 7.10051,39.25 4.75,36.8995 4.75,34 V 6 C 4.75,3.10051 7.10051,0.75 10,0.75 Z'
+        fill='#ffffff'
+        stroke='#cacfd8'
+        strokeWidth='1.5'
+        id='path1'
+      />
+      <path
+        d='m 23,1 v 8 c 0,2.2091 1.7909,4 4,4 h 8'
+        stroke='#cacfd8'
+        strokeWidth='1.5'
+        id='path2'
+      />
+    </g>
   </svg>
+);
+
+const ExtensionLabel = ({
+  extension,
+  color,
+}: {
+  extension: string;
+  color: string;
+}) => (
+  <div className='relative'>
+    <svg
+      width='28'
+      height='16'
+      viewBox='0 0 28 16'
+      fill='none'
+      version='1.1'
+      id='svg4'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <g clipPath='url(#clip0_33307_2297)' id='g4' transform='translate(0,-18)'>
+        <path
+          d='m 0,22 c 0,-2.2091 1.79086,-4 4,-4 h 20 c 2.2091,0 4,1.7909 4,4 v 8 c 0,2.2091 -1.7909,4 -4,4 H 4 C 1.79086,34 0,32.2091 0,30 Z'
+          fill={color}
+          id='path3'
+        />
+      </g>
+    </svg>
+    <div className='absolute top-0 left-0 flex h-full w-full items-center justify-center'>
+      <span
+        // fontSize='11px'
+        // fontWeight='600'
+        // fill='white'
+        // textAnchor='middle'
+        // fontFamily='Inter'
+        className='font-white absolute text-[10px] font-medium text-white'
+      >
+        {extension}
+      </span>
+    </div>
+  </div>
 );
 
 // Thumbnail icons (larger 48x48 versions)
@@ -678,6 +625,13 @@ const csvThumbnailIcon = (
     extension='CSV'
     color='#16A34A'
     lightColor='#DCFCE7'
+  />
+);
+const genericVideoThumbnailIcon = (
+  <FileThumbnailIconWithBanner
+    extension='MP4'
+    color='#717784'
+    lightColor='#F3F4F6'
   />
 );
 const genericThumbnailIcon = (
@@ -751,89 +705,40 @@ export const getFileThumbnailIcon = (
   if (type.startsWith('text/') || name.endsWith('.txt')) {
     return textThumbnailIcon;
   }
+  if (fileTypes.video.includes(type)) {
+    return genericVideoThumbnailIcon;
+  }
   return genericThumbnailIcon;
 };
 
-/**
- * Returns the appropriate file icon based on mime type
- */
-export const getFileIconByMimeType = (
-  mimeType: string,
-  fileName?: string
-): JSX.Element => {
-  // Normalize mime type to lowercase
-  const type = mimeType?.toLowerCase() || '';
-  const name = fileName?.toLowerCase() || '';
-
-  // PDF
-  if (type === 'application/pdf' || name.endsWith('.pdf')) {
-    return pdfFileIcon;
-  }
-
-  // Word documents
-  if (
-    type === 'application/msword' ||
-    type ===
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
-    name.endsWith('.doc') ||
-    name.endsWith('.docx')
-  ) {
-    return wordFileIcon;
-  }
-
-  // CSV files (check before Excel)
-  if (type === 'text/csv' || name.endsWith('.csv')) {
-    return csvFileIcon;
-  }
-
-  // Excel spreadsheets
-  if (
-    type === 'application/vnd.ms-excel' ||
-    type ===
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
-    name.endsWith('.xls') ||
-    name.endsWith('.xlsx')
-  ) {
-    return excelFileIcon;
-  }
-
-  // PowerPoint presentations
-  if (
-    type === 'application/vnd.ms-powerpoint' ||
-    type ===
-      'application/vnd.openxmlformats-officedocument.presentationml.presentation' ||
-    name.endsWith('.ppt') ||
-    name.endsWith('.pptx')
-  ) {
-    return pptFileIcon;
-  }
-
-  // ZIP/Archives
-  if (
-    type === 'application/zip' ||
-    type === 'application/x-zip-compressed' ||
-    type === 'application/x-rar-compressed' ||
-    type === 'application/x-7z-compressed' ||
-    name.endsWith('.zip') ||
-    name.endsWith('.rar') ||
-    name.endsWith('.7z')
-  ) {
-    return zipFileIcon;
-  }
-
-  // Images
-  if (
-    type.startsWith('image/') ||
-    /\.(jpg|jpeg|png|gif|webp|svg|bmp|ico)$/i.test(name)
-  ) {
-    return imageFileIcon;
-  }
-
-  // Text files
-  if (type.startsWith('text/') || name.endsWith('.txt')) {
-    return textFileIcon;
-  }
-
-  // Default generic file icon
-  return genericFileIcon;
-};
+export const FileDownloadIcon = (_active: boolean) => (
+  <svg
+    width='28'
+    height='28'
+    viewBox='0 0 28 28'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <path
+      d='M13.5741 18.6962V12.0312M10.9854 16.0967L13.5727 18.695L16.1601 16.0967'
+      stroke='currentColor'
+      strokeWidth='1.4625'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+    <path
+      d='M16.0092 4.14848C16.6366 4.14848 17.2377 4.40359 17.6724 4.8569L21.9371 9.3002C22.35 9.72942 22.5799 10.3021 22.5799 10.8977V20.0821C22.5964 22.3958 20.7766 24.3043 18.4662 24.3984L9.55001 24.3973C7.21778 24.3459 5.3695 22.4144 5.42097 20.0821V8.26219C5.47571 5.96828 7.35575 4.13862 9.65076 4.14848H16.0092Z'
+      stroke='currentColor'
+      strokeWidth='1.4625'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+    <path
+      d='M16.5527 4.21875V7.47294C16.5517 9.0606 17.8371 10.3505 19.4259 10.3537H22.5071'
+      stroke='currentColor'
+      strokeWidth='1.4625'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
+  </svg>
+);
