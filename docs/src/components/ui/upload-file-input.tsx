@@ -971,42 +971,126 @@ export default function UploadFile({
         {/* Idle state - waiting for file upload */}
         {uploadingFiles.length === 0 &&
           (variant === 'document' ? !src : attachments.length === 0) && (
-            <div
-              className={cn(
-                'flex h-[72px] w-full items-center justify-between gap-6 rounded-[15px] border border-ds-neutral-200 bg-white py-4 pr-4 pl-6 transition-colors',
-                dragging
-                  ? 'border-ds-primary-400 bg-ds-primary-50'
-                  : 'border-ds-neutral-200'
-              )}
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-            >
-              <div className='flex items-center gap-2'>
-                <div>{getFileThumbnailIcon(allowedFileTypes[0])}</div>
-
-                <span className='flex flex-col text-sm font-bold text-[#474754]'>
-                  <span>
-                    {uploadLabel || t('_domain.uploadFile.attachment.title')}
-                  </span>
-                  {maxFileSize && (
-                    <div className='font-normal'>
-                      {t('_form.maxFileSize')}:{' '}
-                      {formatBytes({ bytes: maxFileSize, t })}
-                    </div>
+            <>
+              {variant === 'file-request' ? (
+                <div
+                  className={cn(
+                    'flex h-[72px] w-full items-center justify-between gap-6 rounded-[15px] border border-ds-neutral-200 bg-white py-4 pr-4 pl-6 transition-colors',
+                    dragging
+                      ? 'border-ds-primary-400 bg-ds-primary-50'
+                      : 'border-ds-neutral-200'
                   )}
-                </span>
-              </div>
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                >
+                  <div className='flex items-center gap-2'>
+                    <div>{getFileThumbnailIcon(allowedFileTypes[0])}</div>
 
-              <Button
-                type='button'
-                disabled={uploading || disabled}
-                variant='neutral'
-                mode='stroke'
-                onClick={() => fileInputRef.current?.click()}
-              >
-                {t('_domain.uploadFile.browseFile')}
-              </Button>
+                    <span className='flex flex-col text-sm font-bold text-[#474754]'>
+                      <span>
+                        {uploadLabel ||
+                          t('_domain.uploadFile.attachment.title')}
+                      </span>
+                      {maxFileSize && (
+                        <div className='font-normal'>
+                          {t('_form.maxFileSize')}:{' '}
+                          {formatBytes({ bytes: maxFileSize, t })}
+                        </div>
+                      )}
+                    </span>
+                  </div>
+
+                  <Button
+                    type='button'
+                    disabled={uploading || disabled}
+                    variant='neutral'
+                    mode='stroke'
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    {t('_domain.uploadFile.browseFile')}
+                  </Button>
+                </div>
+              ) : variant === 'document' ? (
+                <div
+                  className={cn(
+                    'flex flex-col items-center justify-center gap-5 rounded-[12px] border border-dashed p-8',
+                    dragging
+                      ? 'border-ds-neutral-400 bg-ds-primary-50'
+                      : 'border-ds-neutral-200'
+                  )}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                >
+                  {fileUploadIcon}
+
+                  <div className='flex flex-col items-center gap-1 text-center'>
+                    <p className='font-medium'>
+                      {uploadLabel || t('_domain.uploadFile.document.title')}
+                    </p>
+                    <p className='text-xs text-ds-neutral-600'>
+                      {description || t('_domain.uploadFile.document.formats')}
+                    </p>
+                  </div>
+
+                  <Button
+                    type='button'
+                    disabled={uploading || disabled}
+                    variant='neutral'
+                    mode='stroke'
+                    className='min-w-[94px]'
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <span className='px-1'>
+                      {t('_domain.uploadFile.browseFile')}
+                    </span>
+                  </Button>
+                </div>
+              ) : (
+                <div
+                  className={cn(
+                    'flex flex-col items-center justify-center gap-3 rounded-[12px] border border-dashed p-6 transition-colors',
+                    dragging
+                      ? 'border-ds-primary-400 bg-ds-primary-50'
+                      : 'border-ds-neutral-200'
+                  )}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                >
+                  {attachmentUploadIcon}
+
+                  <div className='flex flex-col items-center gap-1 text-center'>
+                    <p className='text-sm font-medium text-ds-neutral-700'>
+                      {uploadLabel || t('_domain.uploadFile.attachment.title')}
+                    </p>
+                    <p className='text-xs text-ds-neutral-500'>
+                      {description ||
+                        t('_domain.uploadFile.attachment.formats')}
+                    </p>
+                    <p className='text-xs text-ds-neutral-500'>
+                      {t('_domain.uploadFile.attachment.maxSize', {
+                        size: formatBytes({ bytes: maxFileSize, t }),
+                      })}
+                    </p>
+                  </div>
+
+                  <Button
+                    type='button'
+                    disabled={uploading || disabled}
+                    variant='neutral'
+                    mode='stroke'
+                    size='small'
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <span className='px-2'>
+                      {t('_domain.uploadFile.browseFile')}
+                    </span>
+                  </Button>
+                </div>
+              )}
+
               <input
                 ref={fileInputRef}
                 type='file'
@@ -1015,7 +1099,7 @@ export default function UploadFile({
                 accept={allowedFileTypes.join(',')}
                 onChange={(e) => handlePresignedUrlUpload(e.target.files)}
               />
-            </div>
+            </>
           )}
 
         {/* Uploading State */}
