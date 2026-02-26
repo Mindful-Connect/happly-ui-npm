@@ -194,7 +194,10 @@ export function LocationInput({
               )}
               <Combobox.Input
                 value={locationSearch}
-                className='w-full border-none bg-transparent pl-1.5 text-sm text-ds-neutral-950 placeholder:text-ds-neutral-600 focus:ring-0 focus:outline-none'
+                className={cn(
+                  'w-full border-none bg-transparent pl-1.5 text-sm text-ds-neutral-950 placeholder:text-ds-neutral-600 focus:ring-0 focus:outline-none',
+                  'placeholder:truncate placeholder-shown:truncate'
+                )}
                 onFocus={() => {
                   setLocationSearchActive(true);
                   setIsFocused(true);

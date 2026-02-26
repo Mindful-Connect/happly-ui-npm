@@ -281,7 +281,16 @@ const SelectGroup = React.forwardRef<
 ));
 SelectGroup.displayName = SelectPrimitives.Group.displayName;
 
-const SelectValue = SelectPrimitives.Value;
+const SelectValue = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitives.Value>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitives.Value>
+>(({ className, ...props }, ref) => (
+  <SelectPrimitives.Value
+    ref={ref}
+    className={cn('placeholder:truncate placeholder-shown:truncate', className)}
+    {...props}
+  />
+));
 SelectValue.displayName = SelectPrimitives.Value.displayName;
 
 const SelectSeparator = React.forwardRef<

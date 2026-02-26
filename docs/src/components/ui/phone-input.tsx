@@ -258,12 +258,14 @@ function PhoneInput({
               )}
             </Listbox.Button>
             {open && !readOnly && (
-              <Listbox.Options
-                static
-                className='ring-opacity-5 absolute top-full left-0 z-50 mt-2.5 w-full max-w-[250px] overflow-hidden rounded-2xl border border-ds-neutral-200 bg-white text-base shadow-[0px_1px_2px_0px_rgba(10,13,20,0.03)] ring-1 ring-black focus:outline-none sm:text-sm'
-              >
-                <CountryOptions />
-              </Listbox.Options>
+              <div className='absolute top-full left-0'>
+                <Listbox.Options
+                  static
+                  className='ring-opacity-5 relative z-50 mt-2.5 w-full max-w-[250px] overflow-hidden rounded-2xl border border-ds-neutral-200 bg-white text-base shadow-[0px_1px_2px_0px_rgba(10,13,20,0.03)] ring-1 ring-black focus:outline-none sm:text-sm'
+                >
+                  <CountryOptions />
+                </Listbox.Options>
+              </div>
             )}
           </>
         )}
@@ -286,6 +288,7 @@ function PhoneInput({
         readOnly={readOnly}
         className={cn(
           'h-full w-full flex-1 rounded-r-[10px] border-none bg-transparent px-3 py-2 text-sm ring-0 outline-none placeholder:text-ds-neutral-400 focus:ring-0 focus:outline-none',
+          'placeholder:truncate placeholder-shown:truncate',
           readOnly ? 'cursor-not-allowed text-gray-500' : '',
           propInputValue
             ? 'text-ds-neutral-950'

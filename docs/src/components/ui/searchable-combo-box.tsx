@@ -299,7 +299,7 @@ export function SearchableMultiCombobox({
             {sizedIcon}
             <span
               className={cn(
-                'inline flex-1 text-ds-soft-400 capitalize select-none group-hover:text-ds-neutral-600',
+                'inline flex-1 truncate text-ds-soft-400 capitalize select-none group-hover:text-ds-neutral-600',
                 isPreview ? ' ' : ''
               )}
             >
