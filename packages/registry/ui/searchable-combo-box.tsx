@@ -303,7 +303,9 @@ export function SearchableMultiCombobox({
                 isPreview ? ' ' : ''
               )}
             >
-              {placeholder ? placeholder : `${t('_domain.select')} ${tag}`}
+              {placeholder
+                ? placeholder
+                : `${t('_domain.select')} ${tag.split('_').join(' ')}`}
             </span>
             <ChevronsUpDown className='h-4 w-4 flex-shrink-0' />
           </CustomInputWrapper>
