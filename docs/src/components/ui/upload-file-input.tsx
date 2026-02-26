@@ -11,12 +11,10 @@ import {
   RiDeleteBin6Line,
   RiPencilLine,
   RiCloseLine,
-  RiDeleteBinLine,
   RiLoader2Fill,
   RiCheckboxCircleFill,
   RiErrorWarningFill,
   RiLoader4Line,
-  RiCheckLine,
 } from 'react-icons/ri';
 import { cn } from '@/lib/happly-ui-utils';
 import { AlertModel } from '@/lib/alert-utils';
@@ -30,14 +28,11 @@ import {
   UploadFileProps,
   FileUploadTriggerProps,
   AttachmentListItemProps,
-  FileUploadCardProps,
   WorkspaceKeyHeader,
   formatBytes,
   MimeType,
   fileTypes,
   checkImageDimensions,
-  FileFormatIconProps,
-  colorFallbacks,
 } from '@/lib/upload-file-input';
 
 import {
@@ -48,19 +43,11 @@ import {
   videoIcon,
   attachmentUploadIcon,
   getFileThumbnailIcon,
+  FileDownloadIcon,
 } from '@/lib/upload-file-input-icons';
-import {
-  getColorForExtension,
-  getExtensionFromFile,
-  formatUploadProgress,
-  formatFileSize,
-} from '@/lib/upload-file-input';
+import { formatUploadProgress, formatFileSize } from '@/lib/upload-file-input';
 
 import { ProgressBar } from '@/components/ui/progress-bar';
-import {
-  FileFormatIcon as RequestFileFormatIcon,
-  FileDownloadIcon,
-} from '@/lib/upload-file-input/file-format-icon';
 
 type UploadingFileStatus = 'uploading' | 'success' | 'error';
 interface UploadingFile {
@@ -83,6 +70,8 @@ export default function UploadFile({
   alt = '',
   disabled,
   maxFileSize = 5 * 1024 * 1024, // 5MB default
+  maxImageWidth,
+  maxImageHeight,
   src,
   placeholder,
   variant = 'default',
@@ -114,6 +103,8 @@ export default function UploadFile({
   const [thumbnail, setThumbnail] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [dragging, setDragging] = useState(false);
+  const [uploadedFileName, setUploadedFileName] = useState<string>('');
+  const [uploadedFileSize, setUploadedFileSize] = useState<number>(0);
 
   const [uploadingFiles, setUploadingFiles] = useState<UploadingFile[]>([]);
   const timeoutRefs = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -147,16 +138,26 @@ export default function UploadFile({
 
   // Determine upload mode based on variant (attachment uses presigned URL by default)
   const effectiveUploadMode =
-    uploadMode || (variant === 'attachment' ? 'presigned-url' : 'multipart');
+    uploadMode ||
+    (variant === 'attachment' ||
+    variant === 'file-request' ||
+    variant === 'archive' ||
+    variant === 'document'
+      ? 'presigned-url'
+      : 'multipart');
 
   // Allowed file types based on variant
   const allowedFileTypes =
     allowedFileTypesProp ||
-    (variant === 'lesson-file' || variant === 'attachment'
+    (variant === 'document'
       ? (fileTypes.document as MimeType[])
-      : variant === 'lesson-video'
-        ? (fileTypes.video as MimeType[])
-        : (fileTypes.image as MimeType[]));
+      : variant === 'archive'
+        ? (fileTypes.compressed_file as MimeType[])
+        : variant === 'lesson-file' || variant === 'attachment'
+          ? (fileTypes.document as MimeType[])
+          : variant === 'lesson-video'
+            ? (fileTypes.video as MimeType[])
+            : (fileTypes.image as MimeType[]));
 
   // Presigned URL upload handler using Uppy
   const handlePresignedUrlUpload = (files: FileList | null) => {
@@ -325,6 +326,11 @@ export default function UploadFile({
             'Content-Type': file.type,
             ...extraHeaders,
           };
+        },
+        getResponseData(_xhr: XMLHttpRequest) {
+          // GCS presigned URLs return empty response bodies, which causes XHRUpload
+          // to throw JSON parsing errors. This intercepts the response to prevent that.
+          return { url: '' };
         },
       });
     } else {
@@ -499,6 +505,10 @@ export default function UploadFile({
       const location = response.body?.location || file.meta?.publicUrl;
 
       if (!file || !location) return;
+
+      setUploadedFileName(file?.name as string);
+      setUploadedFileSize(file?.size as number);
+
       const fileInfo: UploadedFileInfo = {
         url: location,
         name: file?.name as string,
@@ -506,6 +516,8 @@ export default function UploadFile({
         type: file?.type as string,
         lastModified: 0,
       };
+
+      // Await success callback before removing from list if using sync pattern
       onUploadSuccess(fileInfo);
     };
 
@@ -537,6 +549,7 @@ export default function UploadFile({
           timeout: 3000,
         })
       );
+      uppy.clear();
     };
 
     const onUploadErrorHandler = (
@@ -563,6 +576,7 @@ export default function UploadFile({
             f.id === file.id ? { ...f, state: 'error' } : f
           )
         );
+        uppy.removeFile(file.id);
       }
     };
 
@@ -677,7 +691,13 @@ export default function UploadFile({
       }
 
       // 3. Dimension Validation (Async)
-      await checkImageDimensions(file);
+      await checkImageDimensions(
+        file,
+        undefined,
+        undefined,
+        maxImageWidth,
+        maxImageHeight
+      );
 
       // Add file to Uppy (handles calling .upload() largely via onFileAdded)
       // Note: we don't need to manually call uppy.upload() here because onFileAdded does it.
@@ -730,127 +750,50 @@ export default function UploadFile({
     'default',
     'default-image',
     'programs',
+    'custom-image',
   ].includes(variant);
 
   if (effectiveUploadMode === 'presigned-url' && isImageVariant) {
     return (
       <div className='space-y-3'>
         {!src ? (
-          <div
-            className={cn(
-              'flex w-full flex-col items-center justify-center gap-5 rounded-12 border border-dashed p-8',
-              dragging
-                ? 'border-ds-primary-400 bg-ds-primary-50'
-                : 'border-ds-neutral-200'
-            )}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-          >
-            {imgUploadIcon}
-
-            <div className='flex flex-col items-center gap-1 text-center'>
-              <p className='font-medium'>
-                {uploadLabel || t('_domain.uploadFile.image.title')}
-              </p>
-              <p className='text-xs text-ds-neutral-600'>
-                {description || t('_domain.uploadFile.image.formats')}
-              </p>
-              <p className='text-xs text-ds-neutral-600'>
-                {secondaryDescription ||
-                  t('_domain.uploadFile.image.recommended.module')}
-              </p>
-            </div>
-
-            <input
-              ref={fileInputRef}
-              type='file'
-              className='hidden'
-              accept={allowedFileTypes.join(',')}
-              onChange={(e) => handlePresignedUrlUpload(e.target.files)}
-            />
-            <Button
-              type='button'
-              disabled={uploading}
-              variant='neutral'
-              mode='stroke'
-              onClick={() => fileInputRef.current?.click()}
-            >
-              <span className='px-1'>
-                {uploading ? (
-                  <RiLoader4Line size={20} className='animate-spin' />
-                ) : (
-                  t('_domain.uploadFile.browseFile')
+          <>
+            {uploadingFiles.length === 0 && (
+              <div
+                className={cn(
+                  'flex w-full flex-col items-center justify-center gap-5 rounded-[16px] border border-dashed p-8',
+                  dragging
+                    ? 'border-ds-primary-400 bg-ds-primary-50'
+                    : 'border-ds-neutral-200'
                 )}
-              </span>
-            </Button>
-          </div>
-        ) : (
-          <div
-            className={cn(
-              'flex items-center gap-5 rounded-16 border p-4',
-              dragging
-                ? 'border-ds-primary-400 bg-ds-primary-50'
-                : 'border-ds-neutral-200'
-            )}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-          >
-            <div
-              className={cn(
-                'flex h-[108px] w-[192px] shrink-0 items-center justify-center overflow-hidden',
-                variant === 'default' || variant === 'module-image'
-                  ? 'h-[108px] w-[192px] rounded-8'
-                  : variant === 'default-image'
-                    ? 'h-[80px] w-[80px] rounded-8'
-                    : variant === 'lesson-image'
-                      ? 'h-[80px] w-[80px] rounded-full'
-                      : variant === 'programs'
-                        ? 'h-[110px] w-[110px] rounded-12'
-                        : ''
-              )}
-            >
-              <img
-                src={src}
-                alt=''
-                width='192'
-                height='108'
-                className='shrink-0 object-cover'
-              />
-            </div>
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+              >
+                {imgUploadIcon}
 
-            <div>
-              <p className='font-medium'>
-                {uploadLabel ||
-                  t('_domain.uploadFile.image.preview.title.thumbnail')}
-              </p>
-
-              <p className='mt-1 text-xs text-ds-neutral-600'>
-                {description || t('_domain.uploadFile.image.formats')}
-              </p>
-
-              <p className='mt-0.5 text-xs text-ds-neutral-600'>
-                {secondaryDescription ||
-                  t('_domain.uploadFile.image.recommended.module')}
-              </p>
-
-              <div className='mt-3 flex w-fit gap-3'>
-                <Button
-                  disabled={uploading}
-                  type='button'
-                  variant='error'
-                  mode='stroke'
-                  size='small'
-                  className='min-w-[74px]'
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    onRemove();
-                  }}
-                >
-                  {t('_domain.remove')}
-                </Button>
+                <div className='flex flex-col items-center gap-1 text-center'>
+                  <p className='font-medium'>
+                    {uploadLabel || t('_domain.uploadFile.image.title')}
+                  </p>
+                  <p className='text-xs text-ds-neutral-600'>
+                    {description ||
+                      (variant === 'custom-image'
+                        ? t('_domain.uploadFile.image.custom.formats', {
+                            fileSize: formatBytes({ bytes: maxFileSize, t }),
+                          })
+                        : t('_domain.uploadFile.image.formats'))}
+                  </p>
+                  <p className='text-xs text-ds-neutral-600'>
+                    {secondaryDescription ||
+                      (variant === 'custom-image'
+                        ? t('_domain.uploadFile.image.custom.size', {
+                            width: maxImageWidth,
+                            height: maxImageHeight,
+                          })
+                        : t('_domain.uploadFile.image.recommended.module'))}
+                  </p>
+                </div>
 
                 <input
                   ref={fileInputRef}
@@ -861,90 +804,303 @@ export default function UploadFile({
                 />
                 <Button
                   type='button'
-                  disabled={uploading}
                   variant='neutral'
                   mode='stroke'
-                  size='small'
-                  className='min-w-[72px]'
                   onClick={() => fileInputRef.current?.click()}
                 >
-                  {uploading ? (
-                    <RiLoader4Line size={20} className='animate-spin' />
-                  ) : (
-                    t('_domain.change')
-                  )}
+                  <span className='px-1'>
+                    {t('_domain.uploadFile.browseFile')}
+                  </span>
                 </Button>
               </div>
-            </div>
+            )}
+            {uploadingFiles.length > 0 && (
+              <div className='space-y-4'>
+                {uploadingFiles.map((file) => (
+                  <AttachmentListItem
+                    key={file.id}
+                    attachment={{
+                      id: file.id,
+                      file_name: file.name,
+                      file_size: file.size,
+                      mime_type: file.type,
+                    }}
+                    state={file.state}
+                    progress={file.progress}
+                    onRemove={() => {
+                      setUploadingFiles((prev: UploadingFile[]) =>
+                        prev.filter((f) => f.id !== file.id)
+                      );
+                    }}
+                    t={t}
+                  />
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          <div
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
+            {uploadingFiles.length === 0 && (
+              <div
+                className={cn(
+                  'flex h-[104px] items-center overflow-hidden rounded-[16px] border',
+                  dragging
+                    ? 'border-ds-neutral-400 bg-ds-primary-50'
+                    : 'border-ds-neutral-200'
+                )}
+              >
+                <div className='flex h-full w-[176px] shrink-0 items-center justify-center overflow-hidden'>
+                  <img
+                    src={src}
+                    alt=''
+                    className={cn(
+                      'h-full w-full',
+                      variant === 'custom-image'
+                        ? 'object-contain'
+                        : 'object-cover'
+                    )}
+                  />
+                </div>
+                <div className='flex min-w-0 grow items-center justify-between gap-4 px-5'>
+                  <div className='flex min-w-0 flex-col gap-0.5'>
+                    <p className='truncate text-sm font-medium text-ds-neutral-900'>
+                      {uploadedFileName ||
+                        t('_domain.uploadFile.image.preview.title.thumbnail')}
+                    </p>
+                    <p className='text-xs text-ds-neutral-500'>
+                      {uploadedFileSize > 0
+                        ? formatBytes({ bytes: uploadedFileSize, t })
+                        : description || t('_domain.uploadFile.image.formats')}
+                    </p>
+                    <p className='text-xs text-ds-neutral-500'>
+                      {secondaryDescription ||
+                        (variant === 'custom-image'
+                          ? t('_domain.uploadFile.image.custom.size', {
+                              width: maxImageWidth,
+                              height: maxImageHeight,
+                            })
+                          : t('_domain.uploadFile.image.recommended.module'))}
+                    </p>
+                  </div>
+
+                  <div className='flex shrink-0 gap-3'>
+                    <Button
+                      disabled={uploading}
+                      type='button'
+                      variant='error'
+                      mode='stroke'
+                      size='small'
+                      className='min-w-[74px]'
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onRemove();
+                      }}
+                    >
+                      {t('_domain.remove')}
+                    </Button>
+
+                    <input
+                      ref={fileInputRef}
+                      type='file'
+                      className='hidden'
+                      accept={allowedFileTypes.join(',')}
+                      onChange={(e) => handlePresignedUrlUpload(e.target.files)}
+                    />
+                    <Button
+                      type='button'
+                      disabled={uploading}
+                      variant='neutral'
+                      mode='stroke'
+                      size='small'
+                      className='min-w-[72px]'
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      {uploading ? (
+                        <RiLoader4Line size={20} className='animate-spin' />
+                      ) : (
+                        t('_domain.change')
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {uploadingFiles.length > 0 && (
+              <div className='space-y-4'>
+                {uploadingFiles.map((file) => (
+                  <AttachmentListItem
+                    key={file.id}
+                    attachment={{
+                      id: file.id,
+                      file_name: file.name,
+                      file_size: file.size,
+                      mime_type: file.type,
+                    }}
+                    state={file.state}
+                    progress={file.progress}
+                    onRemove={() => {
+                      setUploadingFiles((prev: UploadingFile[]) =>
+                        prev.filter((f) => f.id !== file.id)
+                      );
+                    }}
+                    t={t}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>
     );
   }
 
-  if (effectiveUploadMode === 'presigned-url' && variant === 'file-request') {
+  if (
+    effectiveUploadMode === 'presigned-url' &&
+    (variant === 'file-request' ||
+      variant === 'archive' ||
+      variant === 'document')
+  ) {
     return (
       <div className='w-full space-y-3'>
         {/* Idle state - waiting for file upload */}
-        {uploadingFiles.length === 0 && attachments.length === 0 && (
-          <div
-            className={cn(
-              'flex h-[72px] w-full items-center justify-between gap-6 rounded-[15px] border border-ds-neutral-200 bg-white py-4 pr-4 pl-6 transition-colors',
-              dragging
-                ? 'border-ds-primary-400 bg-ds-primary-50'
-                : 'border-ds-neutral-200'
-            )}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-          >
-            <div className='flex items-center gap-2'>
-              <div>
-                <RequestFileFormatIcon
-                  fileType={
-                    allowedFileTypes && allowedFileTypes.length === 1
-                      ? (Object.keys(fileTypes).find((type) =>
-                          fileTypes[type as keyof typeof fileTypes].includes(
-                            allowedFileTypes[0] as any
-                          )
-                        ) as any) || 'any'
-                      : 'any'
-                  }
-                />
-              </div>
+        {uploadingFiles.length === 0 &&
+          (variant === 'document' ? !src : attachments.length === 0) && (
+            <>
+              {variant === 'file-request' ? (
+                <div
+                  className={cn(
+                    'flex h-[72px] w-full items-center justify-between gap-6 rounded-[15px] border border-ds-neutral-200 bg-white py-4 pr-4 pl-6 transition-colors',
+                    dragging
+                      ? 'border-ds-primary-400 bg-ds-primary-50'
+                      : 'border-ds-neutral-200'
+                  )}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                >
+                  <div className='flex items-center gap-2'>
+                    <div>{getFileThumbnailIcon(allowedFileTypes[0])}</div>
 
-              <span className='flex flex-col text-sm font-bold text-[#474754]'>
-                <span>
-                  {uploadLabel || t('_domain.uploadFile.attachment.title')}
-                </span>
-                {maxFileSize && (
-                  <div className='font-normal'>
-                    {t('_form.maxFileSize')}:{' '}
-                    {formatBytes({ bytes: maxFileSize, t })}
+                    <span className='flex flex-col text-sm font-bold text-[#474754]'>
+                      <span>
+                        {uploadLabel ||
+                          t('_domain.uploadFile.attachment.title')}
+                      </span>
+                      {maxFileSize && (
+                        <div className='font-normal'>
+                          {t('_form.maxFileSize')}:{' '}
+                          {formatBytes({ bytes: maxFileSize, t })}
+                        </div>
+                      )}
+                    </span>
                   </div>
-                )}
-              </span>
-            </div>
 
-            <Button
-              type='button'
-              disabled={uploading || disabled}
-              variant='neutral'
-              mode='stroke'
-              onClick={() => fileInputRef.current?.click()}
-            >
-              {t('_domain.uploadFile.browseFile')}
-            </Button>
-            <input
-              ref={fileInputRef}
-              type='file'
-              className='hidden'
-              multiple={multiple}
-              accept={allowedFileTypes.join(',')}
-              onChange={(e) => handlePresignedUrlUpload(e.target.files)}
-            />
-          </div>
-        )}
+                  <Button
+                    type='button'
+                    disabled={uploading || disabled}
+                    variant='neutral'
+                    mode='stroke'
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    {t('_domain.uploadFile.browseFile')}
+                  </Button>
+                </div>
+              ) : variant === 'document' ? (
+                <div
+                  className={cn(
+                    'flex flex-col items-center justify-center gap-5 rounded-[12px] border border-dashed p-8',
+                    dragging
+                      ? 'border-ds-neutral-400 bg-ds-primary-50'
+                      : 'border-ds-neutral-200'
+                  )}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                >
+                  {fileUploadIcon}
+
+                  <div className='flex flex-col items-center gap-1 text-center'>
+                    <p className='font-medium'>
+                      {uploadLabel || t('_domain.uploadFile.document.title')}
+                    </p>
+                    <p className='text-xs text-ds-neutral-600'>
+                      {description || t('_domain.uploadFile.document.formats')}
+                    </p>
+                  </div>
+
+                  <Button
+                    type='button'
+                    disabled={uploading || disabled}
+                    variant='neutral'
+                    mode='stroke'
+                    className='min-w-[94px]'
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <span className='px-1'>
+                      {t('_domain.uploadFile.browseFile')}
+                    </span>
+                  </Button>
+                </div>
+              ) : (
+                <div
+                  className={cn(
+                    'flex flex-col items-center justify-center gap-3 rounded-[12px] border border-dashed p-6 transition-colors',
+                    dragging
+                      ? 'border-ds-primary-400 bg-ds-primary-50'
+                      : 'border-ds-neutral-200'
+                  )}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                >
+                  {attachmentUploadIcon}
+
+                  <div className='flex flex-col items-center gap-1 text-center'>
+                    <p className='text-sm font-medium text-ds-neutral-700'>
+                      {uploadLabel || t('_domain.uploadFile.attachment.title')}
+                    </p>
+                    <p className='text-xs text-ds-neutral-500'>
+                      {description ||
+                        t('_domain.uploadFile.attachment.formats')}
+                    </p>
+                    <p className='text-xs text-ds-neutral-500'>
+                      {t('_domain.uploadFile.attachment.maxSize', {
+                        size: formatBytes({ bytes: maxFileSize, t }),
+                      })}
+                    </p>
+                  </div>
+
+                  <Button
+                    type='button'
+                    disabled={uploading || disabled}
+                    variant='neutral'
+                    mode='stroke'
+                    size='small'
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <span className='px-2'>
+                      {t('_domain.uploadFile.browseFile')}
+                    </span>
+                  </Button>
+                </div>
+              )}
+
+              <input
+                ref={fileInputRef}
+                type='file'
+                className='hidden'
+                multiple={multiple}
+                accept={allowedFileTypes.join(',')}
+                onChange={(e) => handlePresignedUrlUpload(e.target.files)}
+              />
+            </>
+          )}
 
         {/* Uploading State */}
         {uploadingFiles.length > 0 && (
@@ -961,17 +1117,7 @@ export default function UploadFile({
               >
                 <div className='flex w-full items-center gap-2'>
                   <div className='shrink-0'>
-                    <RequestFileFormatIcon
-                      fileType={
-                        ((
-                          Object.keys(fileTypes) as Array<
-                            keyof typeof fileTypes
-                          >
-                        ).find((type) =>
-                          fileTypes[type].includes(file.type as any)
-                        ) as any) || 'any'
-                      }
-                    />
+                    {getFileThumbnailIcon(file.type as MimeType)}
                   </div>
 
                   <div className='flex flex-grow flex-col gap-1 overflow-hidden'>
@@ -1020,6 +1166,11 @@ export default function UploadFile({
                         setUploadingFiles((prev: UploadingFile[]) =>
                           prev.filter((f) => f.id !== file.id)
                         );
+                        try {
+                          uppy.removeFile(file.id);
+                        } catch (_e) {
+                          // ignore
+                        }
                         fileInputRef.current?.click();
                       }}
                     >
@@ -1046,72 +1197,122 @@ export default function UploadFile({
         )}
 
         {/* Completed State (Attachments list) */}
-        {attachments.length > 0 && uploadingFiles.length === 0 && (
-          <div className='space-y-4'>
-            {attachments.map((attachment) => (
-              <div
-                key={attachment.id}
-                className='flex h-[72px] w-full items-center justify-between gap-6 rounded-[15px] border border-ds-neutral-200 bg-white py-4 pr-4 pl-6'
-              >
-                <div className='flex items-center gap-2'>
-                  <div>
-                    <RequestFileFormatIcon
-                      fileType={
-                        ((
-                          Object.keys(fileTypes) as Array<
-                            keyof typeof fileTypes
-                          >
-                        ).find((type) =>
-                          fileTypes[type].includes(attachment.mime_type as any)
-                        ) as any) || 'any'
-                      }
-                    />
+        {((variant === 'document' && src) ||
+          ((variant === 'file-request' || variant === 'archive') &&
+            attachments.length > 0)) &&
+          uploadingFiles.length === 0 && (
+            <div className='space-y-4'>
+              {variant === 'document' && src ? (
+                <div className='flex h-[72px] w-full items-center justify-between gap-6 rounded-[15px] border border-ds-neutral-200 bg-white py-4 pr-4 pl-6'>
+                  <div className='flex items-center gap-2'>
+                    <div>{getFileThumbnailIcon(allowedFileTypes[0])}</div>
+
+                    <span className='flex flex-col text-sm text-[#474754]'>
+                      <span className='font-bold'>
+                        {uploadLabel ||
+                          t('_domain.uploadFile.attachment.title') ||
+                          uploadedFileName ||
+                          src.split('?')[0].split('/').pop()}
+                      </span>
+                      <div className='flex items-center gap-1 font-normal text-ds-neutral-600'>
+                        <RiCheckboxCircleFill
+                          size={12}
+                          className='text-green-600'
+                        />
+                        <span>
+                          Completed
+                          {uploadedFileSize > 0
+                            ? ` • ${formatFileSize(uploadedFileSize)}`
+                            : ''}
+                        </span>
+                      </div>
+                    </span>
                   </div>
 
-                  <span className='flex flex-col text-sm text-[#474754]'>
-                    <span className='font-bold'>
-                      {uploadLabel ||
-                        t('_domain.uploadFile.attachment.title') ||
-                        attachment.file_name}
-                    </span>
-                    <div className='flex items-center gap-1 font-normal text-ds-neutral-600'>
-                      <RiCheckboxCircleFill
-                        size={12}
-                        className='text-green-600'
-                      />
-                      <span>
-                        Completed • {formatFileSize(attachment.file_size)}
-                      </span>
-                    </div>
-                  </span>
-                </div>
-
-                <div className='flex items-center gap-4'>
-                  {onAttachmentDownload && (
+                  <div className='flex items-center gap-4'>
                     <button
                       className='text-[#484854] hover:text-ds-primary-500'
                       type='button'
                       title={t('_domain.download')}
                       disabled={disabled}
-                      onClick={() => onAttachmentDownload(attachment.id)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.open(src, '_blank');
+                      }}
                     >
                       {FileDownloadIcon(false)}
                     </button>
-                  )}
-                  <button
-                    className='text-[#484854] hover:text-red-500'
-                    type='button'
-                    title={t('_domain.delete')}
-                    disabled={disabled}
-                    onClick={() => onAttachmentRemove?.(attachment.id)}
-                  >
-                    <RiDeleteBin6Line size={20} />
-                  </button>
+                    <button
+                      className='text-[#484854] hover:text-red-500'
+                      type='button'
+                      title={t('_domain.delete')}
+                      disabled={disabled}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onRemove();
+                        uppy.clear();
+                      }}
+                    >
+                      <RiDeleteBin6Line size={20} />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
+              ) : (
+                attachments.map((attachment) => (
+                  <div
+                    key={attachment.id}
+                    className='flex h-[72px] w-full items-center justify-between gap-6 rounded-[15px] border border-ds-neutral-200 bg-white py-4 pr-4 pl-6'
+                  >
+                    <div className='flex items-center gap-2'>
+                      <div>
+                        {getFileThumbnailIcon(attachment.mime_type as MimeType)}
+                      </div>
+
+                      <span className='flex flex-col text-sm text-[#474754]'>
+                        <span className='font-bold'>
+                          {uploadLabel ||
+                            t('_domain.uploadFile.attachment.title') ||
+                            attachment.file_name}
+                        </span>
+                        <div className='flex items-center gap-1 font-normal text-ds-neutral-600'>
+                          <RiCheckboxCircleFill
+                            size={12}
+                            className='text-green-600'
+                          />
+                          <span>
+                            Completed • {formatFileSize(attachment.file_size)}
+                          </span>
+                        </div>
+                      </span>
+                    </div>
+
+                    <div className='flex items-center gap-4'>
+                      {onAttachmentDownload && (
+                        <button
+                          className='text-[#484854] hover:text-ds-primary-500'
+                          type='button'
+                          title={t('_domain.download')}
+                          disabled={disabled}
+                          onClick={() => onAttachmentDownload(attachment.id)}
+                        >
+                          {FileDownloadIcon(false)}
+                        </button>
+                      )}
+                      <button
+                        className='text-[#484854] hover:text-red-500'
+                        type='button'
+                        title={t('_domain.delete')}
+                        disabled={disabled}
+                        onClick={() => onAttachmentRemove?.(attachment.id)}
+                      >
+                        <RiDeleteBin6Line size={20} />
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
       </div>
     );
   }
@@ -1167,48 +1368,55 @@ export default function UploadFile({
           </Button>
         </div>
 
-        {/* Upload progress cards */}
-        {uploadingFiles.length > 0 && (
-          <div className='space-y-3'>
-            {uploadingFiles.map((file) => (
-              <FileUploadCard
-                key={file.id}
-                fileName={file.name}
-                fileSize={
-                  file.state === 'uploading'
-                    ? formatUploadProgress(
-                        Math.round((file.progress / 100) * file.size),
-                        file.size
-                      )
-                    : formatFileSize(file.size)
-                }
-                state={file.state}
-                progress={file.progress}
-                mimeType={file.type}
-                onRemove={() => {
-                  setUploadingFiles((prev: UploadingFile[]) =>
-                    prev.filter((f) => f.id !== file.id)
-                  );
-                }}
-                t={t}
-              />
-            ))}
-          </div>
-        )}
+        {/* Upload progress cards and attachments list */}
+        {(() => {
+          const attachmentNames = new Set(attachments.map((a) => a.file_name));
+          // Hide uploading cards for files that already appear in the attachments list
+          const visibleUploads = uploadingFiles.filter(
+            (f) => !attachmentNames.has(f.name)
+          );
 
-        {/* Attachments list - BELOW upload area */}
-        {attachments.length > 0 && (
-          <div className='space-y-4'>
-            {attachments.map((attachment) => (
-              <AttachmentListItem
-                key={attachment.id}
-                attachment={attachment}
-                onRemove={() => onAttachmentRemove?.(attachment.id)}
-                t={t}
-              />
-            ))}
-          </div>
-        )}
+          return (
+            <>
+              {visibleUploads.length > 0 && (
+                <div className='space-y-4'>
+                  {visibleUploads.map((file) => (
+                    <AttachmentListItem
+                      key={file.id}
+                      attachment={{
+                        id: file.id,
+                        file_name: file.name,
+                        file_size: file.size,
+                        mime_type: file.type,
+                      }}
+                      state={file.state}
+                      progress={file.progress}
+                      onRemove={() => {
+                        setUploadingFiles((prev: UploadingFile[]) =>
+                          prev.filter((f) => f.id !== file.id)
+                        );
+                      }}
+                      t={t}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {attachments.length > 0 && (
+                <div className='space-y-4'>
+                  {attachments.map((attachment) => (
+                    <AttachmentListItem
+                      key={attachment.id}
+                      attachment={attachment}
+                      onRemove={() => onAttachmentRemove?.(attachment.id)}
+                      t={t}
+                    />
+                  ))}
+                </div>
+              )}
+            </>
+          );
+        })()}
       </div>
     );
   }
@@ -1249,7 +1457,7 @@ export default function UploadFile({
                   {/* Upload area - FIRST */}
                   <div
                     className={cn(
-                      'flex flex-col items-center justify-center gap-3 rounded-12 border border-dashed p-6 transition-colors',
+                      'flex flex-col items-center justify-center gap-3 rounded-[16px] border border-dashed p-6 transition-colors',
                       dragging
                         ? 'border-ds-primary-400 bg-ds-primary-50'
                         : 'border-ds-neutral-200'
@@ -1936,10 +2144,15 @@ function FileUploadTrigger({
 
 function AttachmentListItem({
   attachment,
+  state,
+  progress = 0,
   onRemove,
+  deleting,
   t,
 }: AttachmentListItemProps) {
   const isImage = attachment.mime_type?.startsWith('image/');
+  const isUploading = state === 'uploading';
+  const isError = state === 'error';
 
   // Format date for display (e.g., "Jan 14, 2026")
   const formattedDate = attachment.created_at
@@ -1951,7 +2164,12 @@ function AttachmentListItem({
     : null;
 
   return (
-    <div className='flex h-[104px] items-center gap-4 overflow-hidden rounded-16 border border-ds-neutral-200 bg-white pr-6'>
+    <div
+      className={cn(
+        'flex h-[104px] items-center gap-4 overflow-hidden rounded-[16px] border border-ds-neutral-200 bg-white pr-6',
+        isError && 'border-ds-error-base'
+      )}
+    >
       {/* Thumbnail/Icon */}
       <div
         className='flex h-full w-[176px] shrink-0 items-center justify-center overflow-hidden bg-gradient-to-t from-[#f2f2f3] via-[#f7f8f8] to-[#fcfcfc]'
@@ -1976,363 +2194,78 @@ function AttachmentListItem({
         <p className='text-xs text-ds-neutral-500'>
           {formatBytes({ bytes: attachment.file_size, t })}
         </p>
-        {formattedDate && (
+
+        {/* Status indicator */}
+        {isUploading && (
+          <div className='flex items-center gap-1'>
+            <RiLoader2Fill className='h-3.5 w-3.5 animate-spin text-ds-information-base' />
+            <span className='text-xs text-ds-neutral-600'>
+              {t('components.fileUploadCard.uploading')}
+            </span>
+          </div>
+        )}
+
+        {isError && (
+          <div className='flex items-center gap-1'>
+            <RiErrorWarningFill className='h-3.5 w-3.5 text-ds-error-base' />
+            <span className='text-xs text-ds-error-base'>
+              {t('components.fileUploadCard.failed')}
+            </span>
+          </div>
+        )}
+
+        {!state && formattedDate && (
           <p className='text-xs text-ds-neutral-400'>
             {t('_domain.uploadFile.uploadedOn')}: {formattedDate}
           </p>
         )}
+
+        {/* Progress bar */}
+        {isUploading && (
+          <div className='mt-1 h-1.5 w-full overflow-hidden rounded-full bg-ds-soft-200'>
+            <div
+              className='h-full rounded-full bg-ds-information-base transition-all duration-300'
+              style={{
+                width: `${Math.min(100, Math.max(0, progress))}%`,
+              }}
+            />
+          </div>
+        )}
       </div>
 
       {/* Remove button */}
-      <Button
-        type='button'
-        variant='error'
-        mode='stroke'
-        size='small'
-        className='min-w-[74px] shrink-0'
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          onRemove();
-        }}
-      >
-        {t('_domain.remove')}
-      </Button>
-    </div>
-  );
-}
-
-function FileUploadCard({
-  fileName,
-  fileSize,
-  state,
-  progress = 0,
-  showStatus = true,
-  onRemove,
-  onRetry,
-  mimeType,
-  className,
-  t,
-}: FileUploadCardProps) {
-  // Get file extension and color
-  const extension = getExtensionFromFile(fileName, mimeType);
-  const iconColor = getColorForExtension(extension);
-
-  const isPending = state === 'pending';
-  const isUploading = state === 'uploading';
-  const isSuccess = state === 'success';
-  const isError = state === 'error';
-  const isDeleting = state === 'deleting';
-
-  return (
-    <div
-      className={cn(
-        'flex w-full flex-col gap-4 overflow-hidden rounded-12 border bg-ds-white-0 py-4 pr-4 pl-3.5',
-        isError ? 'border-ds-error-base' : 'border-ds-soft-200',
-        className
-      )}
-    >
-      {/* Main content row */}
-      <div className='flex w-full items-start gap-3'>
-        {/* File icon */}
-        <FileFormatIcon format={extension} color={iconColor} size='md' />
-
-        {/* Text content */}
-        <div className='flex min-w-0 flex-1 flex-col gap-1'>
-          {/* File name */}
-          <p className='truncate text-label-sm text-ds-strong-950'>
-            {fileName}
-          </p>
-
-          {/* Description row */}
-          <div className='flex flex-wrap items-center gap-1'>
-            <span className='text-paragraph-xs text-ds-sub-600'>
-              {fileSize}
-            </span>
-
-            {showStatus && (
-              <>
-                <span className='text-paragraph-xs text-ds-sub-600'>·</span>
-
-                {/* Status indicator */}
-                {isPending && (
-                  <span className='text-paragraph-xs text-ds-sub-600'>
-                    {t('components.fileUploadCard.ready')}
-                  </span>
-                )}
-
-                {isUploading && (
-                  <div className='flex items-center gap-1'>
-                    <RiLoader2Fill className='h-4 w-4 animate-spin text-ds-information-base' />
-                    <span className='text-paragraph-xs text-ds-strong-950'>
-                      {t('components.fileUploadCard.uploading')}
-                    </span>
-                  </div>
-                )}
-
-                {isSuccess && (
-                  <div className='flex items-center gap-1'>
-                    <RiCheckboxCircleFill className='h-4 w-4 text-ds-success-base' />
-                    <span className='text-paragraph-xs text-ds-strong-950'>
-                      {t('components.fileUploadCard.completed')}
-                    </span>
-                  </div>
-                )}
-
-                {isError && (
-                  <div className='flex items-center gap-1'>
-                    <RiErrorWarningFill className='h-4 w-4 text-ds-error-base' />
-                    <span className='text-paragraph-xs text-ds-strong-950'>
-                      {t('components.fileUploadCard.failed')}
-                    </span>
-                  </div>
-                )}
-              </>
-            )}
-          </div>
-
-          {/* Try Again link for error state */}
-          {isError && onRetry && (
-            <button
-              type='button'
-              onClick={onRetry}
-              className='mt-1 w-fit text-label-sm text-ds-error-base underline hover:text-ds-error-dark'
-            >
-              {t('components.fileUploadCard.tryAgain')}
-            </button>
-          )}
-        </div>
-
-        {/* Action button */}
+      {isUploading ? (
         <button
           type='button'
-          onClick={onRemove}
-          disabled={isDeleting}
-          className={cn(
-            'rounded-6 shrink-0 p-0.5 transition-colors',
-            isDeleting
-              ? 'text-ds-sub-400 cursor-not-allowed'
-              : isError
-                ? 'text-ds-error-base hover:bg-ds-error-lighter hover:text-ds-error-dark'
-                : 'hover:bg-ds-weak-100 text-ds-sub-600 hover:text-ds-strong-950'
-          )}
+          className='hover:bg-ds-weak-100 rounded-6 shrink-0 p-1 text-ds-sub-600 transition-colors hover:text-ds-strong-950'
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onRemove();
+          }}
         >
-          {isUploading || isPending ? (
-            <RiCloseLine className='h-5 w-5' />
-          ) : (
-            <RiDeleteBinLine className='h-5 w-5' />
-          )}
+          <RiCloseLine className='h-5 w-5' />
         </button>
-      </div>
-
-      {/* Progress bar for uploading state */}
-      {isUploading && (
-        <div className='h-1.5 w-full overflow-hidden rounded-full bg-ds-soft-200'>
-          <div
-            className='h-full rounded-full bg-ds-information-base transition-all duration-300'
-            style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
-          />
-        </div>
-      )}
-    </div>
-  );
-}
-
-function FileFormatIcon({
-  format,
-  color = 'gray',
-  size = 'md',
-  variant = 'default',
-  className,
-}: FileFormatIconProps) {
-  const badgeColor = colorFallbacks[color];
-
-  // Large size (56x56) - used for custom resources
-  if (size === 'lg') {
-    const isPlain = variant === 'plain';
-    return (
-      <div
-        className={cn('relative shrink-0', className)}
-        style={{ width: 56, height: 56 }}
-      >
-        <svg
-          width='56'
-          height='56'
-          viewBox='0 0 56 56'
-          fill='none'
-          xmlns='http://www.w3.org/2000/svg'
+      ) : (
+        <Button
+          type='button'
+          variant='error'
+          mode='stroke'
+          size='small'
+          disabled={deleting}
+          className='min-w-[74px] shrink-0'
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onRemove();
+          }}
         >
-          {/* Document body */}
-          <path
-            d='M13.2441 1.34653H28.2471C30.1549 1.34653 31.9863 2.09689 33.3457 3.43539L46.7188 16.6024C48.1057 17.9682 48.8866 19.8335 48.8867 21.7801V47.37C48.8867 51.3833 45.6334 54.6364 41.6201 54.6366H13.2441C9.2309 54.6364 5.97754 51.3832 5.97754 47.37V8.61313C5.9777 4.59999 9.231 1.34669 13.2441 1.34653Z'
-            fill='white'
-            stroke='#CACFD8'
-            strokeWidth='2.07625'
-          />
-          {/* Folded corner */}
-          <path
-            d='M31.9771 2.03848V13.8039C31.9771 16.8617 34.4559 19.3405 37.5137 19.3405H49.2791'
-            stroke='#CACFD8'
-            strokeWidth='2.07625'
-          />
-          {isPlain && (
-            <>
-              {/* Small square icon */}
-              <rect
-                x='13.9204'
-                y='19.5905'
-                width='9.32014'
-                height='9.32014'
-                rx='2.59531'
-                fill='#CACFD8'
-              />
-              {/* Text lines */}
-              <path
-                d='M15.001 36.0815H33.2396'
-                stroke='#CACFD8'
-                strokeWidth='2.59531'
-                strokeLinecap='round'
-              />
-              <path
-                d='M15.001 43.0025H40.9406'
-                stroke='#CACFD8'
-                strokeWidth='2.59531'
-                strokeLinecap='round'
-              />
-            </>
+          {deleting ? (
+            <RiLoader4Line size={20} className='animate-spin' />
+          ) : (
+            t('_domain.remove')
           )}
-        </svg>
-        {!isPlain && format && (
-          <div
-            className='absolute bottom-2 left-1 flex items-center overflow-hidden rounded px-1 py-0.5 text-[13px] leading-4 font-semibold tracking-[0.26px] text-white'
-            style={{ backgroundColor: badgeColor }}
-          >
-            <span className='uppercase'>{format}</span>
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  // Medium size (40x40)
-  if (size === 'md') {
-    const isPlain = variant === 'plain';
-    return (
-      <div
-        className={cn('relative shrink-0', className)}
-        style={{ width: 40, height: 40 }}
-      >
-        <svg
-          width='32'
-          height='40'
-          viewBox='0 0 32 40'
-          fill='none'
-          xmlns='http://www.w3.org/2000/svg'
-          className='absolute top-0 left-1/2 -translate-x-1/2'
-        >
-          <path
-            d='M4 1H20L31 12V36C31 37.6569 29.6569 39 28 39H4C2.34315 39 1 37.6569 1 36V4C1 2.34315 2.34315 1 4 1Z'
-            fill='white'
-            stroke='#CACFD8'
-            strokeWidth='1.2'
-          />
-          <path
-            d='M20 1V9C20 10.6569 21.3431 12 23 12H31'
-            stroke='#CACFD8'
-            strokeWidth='1.2'
-          />
-          {isPlain && (
-            <>
-              {/* Small square icon */}
-              <rect
-                x='6'
-                y='14'
-                width='6.5'
-                height='6.5'
-                rx='1.8'
-                fill='#CACFD8'
-              />
-              {/* Text lines */}
-              <path
-                d='M6.5 26H20'
-                stroke='#CACFD8'
-                strokeWidth='1.8'
-                strokeLinecap='round'
-              />
-              <path
-                d='M6.5 31H25.5'
-                stroke='#CACFD8'
-                strokeWidth='1.8'
-                strokeLinecap='round'
-              />
-            </>
-          )}
-        </svg>
-        {!isPlain && format && (
-          <div
-            className='absolute bottom-1.5 left-0 flex items-center overflow-hidden rounded px-[3px] py-0.5 text-[11px] leading-3 font-semibold tracking-[0.22px] text-white'
-            style={{ backgroundColor: badgeColor }}
-          >
-            <span className='uppercase'>{format}</span>
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  // XS size (32x32)
-  const isPlainXs = variant === 'plain';
-  return (
-    <div
-      className={cn('relative shrink-0', className)}
-      style={{ width: 32, height: 32 }}
-    >
-      <svg
-        width='26'
-        height='32'
-        viewBox='0 0 26 32'
-        fill='none'
-        xmlns='http://www.w3.org/2000/svg'
-        className='absolute top-0 left-1/2 -translate-x-1/2'
-      >
-        <path
-          d='M3 1H16L25 10V29C25 30.1046 24.1046 31 23 31H3C1.89543 31 1 30.1046 1 29V3C1 1.89543 1.89543 1 3 1Z'
-          fill='white'
-          stroke='#CACFD8'
-          strokeWidth='1'
-        />
-        <path
-          d='M16 1V7C16 8.65685 17.3431 10 19 10H25'
-          stroke='#CACFD8'
-          strokeWidth='1'
-        />
-        {isPlainXs && (
-          <>
-            {/* Small square icon */}
-            <rect x='5' y='11' width='5' height='5' rx='1.4' fill='#CACFD8' />
-            {/* Text lines */}
-            <path
-              d='M5.5 21H16'
-              stroke='#CACFD8'
-              strokeWidth='1.4'
-              strokeLinecap='round'
-            />
-            <path
-              d='M5.5 25H20.5'
-              stroke='#CACFD8'
-              strokeWidth='1.4'
-              strokeLinecap='round'
-            />
-          </>
-        )}
-      </svg>
-      {!isPlainXs && format && (
-        <div
-          className='absolute bottom-1 left-0 flex items-center overflow-hidden rounded-[3px] px-[3px] py-0.5 text-[8.8px] leading-[9.6px] font-semibold tracking-[0.176px] text-white'
-          style={{ backgroundColor: badgeColor }}
-        >
-          <span className='uppercase'>{format}</span>
-        </div>
+        </Button>
       )}
     </div>
   );

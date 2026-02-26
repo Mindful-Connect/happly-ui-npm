@@ -99,12 +99,12 @@ export function DemoUploadFileInput() {
         </div>
       </Section>
 
-      <Section title='Video Variant'>
-        <UploadFile {...defaultProps} variant='lesson-video' />
+      <Section title='Archive Variant'>
+        <UploadFile {...defaultProps} variant='archive' />
       </Section>
 
       <Section title='Document Variant'>
-        <UploadFile {...defaultProps} variant='lesson-file' />
+        <UploadFile {...defaultProps} variant='document' />
       </Section>
 
       <Section title='Attachment Variant'>

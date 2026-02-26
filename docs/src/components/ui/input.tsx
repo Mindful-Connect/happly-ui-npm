@@ -316,7 +316,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             className={cn(
               generateSlotClasses('input', variantProps, inputClassName),
-              'border-none bg-transparent p-0 outline-none focus:border-none focus:ring-0 focus:outline-none'
+              'border-none bg-transparent p-0 outline-none focus:border-none focus:ring-0 focus:outline-none',
+              'placeholder:truncate placeholder-shown:truncate'
             )}
             style={inputStyle}
             {...props} // Spread other native input attributes (placeholder, disabled, value, onChange, etc.)

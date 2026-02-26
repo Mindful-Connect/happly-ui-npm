@@ -288,6 +288,7 @@ function PhoneInput({
         readOnly={readOnly}
         className={cn(
           'placeholder:text-ds-neutral-400 h-full w-full flex-1 rounded-r-[10px] border-none bg-transparent px-3 py-2 text-sm ring-0 outline-none focus:ring-0 focus:outline-none',
+          'placeholder:truncate placeholder-shown:truncate',
           readOnly ? 'cursor-not-allowed text-gray-500' : '',
           propInputValue
             ? 'text-ds-neutral-950'

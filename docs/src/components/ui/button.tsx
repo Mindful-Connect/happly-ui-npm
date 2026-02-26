@@ -111,6 +111,7 @@ const fullRoot = cva(
           'h-8 gap-2.5 rounded-8 p-1 ps-1.5 !text-label-sm [&>svg]:h-3 [&>svg]:w-3',
         xxsmall:
           'h-7 gap-2.5 rounded-8 p-1 ps-1 !text-label-sm [&>svg]:h-2.5 [&>svg]:w-2.5',
+        xxxsmall: 'h-6 gap-1 [&>svg]:h-[15px] [&>svg]:w-[15px] p-0.5',
       },
     },
     compoundVariants,

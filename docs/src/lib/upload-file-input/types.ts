@@ -80,12 +80,17 @@ export type UploadFileVariant =
   | 'module-image'
   | 'programs'
   | 'attachment'
-  | 'file-request';
+  | 'document'
+  | 'file-request'
+  | 'custom-image'
+  | 'archive';
 
 export interface UploadFileProps {
   alt?: string;
   disabled?: boolean;
   maxFileSize?: number;
+  maxImageWidth?: number;
+  maxImageHeight?: number;
   src?: string | null;
   placeholder?: React.ReactNode;
   variant?: UploadFileVariant;
@@ -123,7 +128,6 @@ export interface UploadFileProps {
   /** ACL for presigned URL uploads: 'public-read' for public bucket, 'private' for private bucket */
   acl?: AclType;
   /** Translation function */
-  // eslint-disable-next-line
   t: (key: string, params?: any) => string;
   /** Provider ID for presigned URL uploads. const { provider_id } = useProvider(); */
   providerId: string;
@@ -178,10 +182,26 @@ export interface AttachmentListItemProps {
     created_at?: string;
     created_at_formatted?: string;
   };
+  state?: 'uploading' | 'success' | 'error';
+  progress?: number;
   onRemove: () => void;
+  /** Whether the attachment is currently being deleted */
+  deleting?: boolean;
   /** Translation function */
   t: (key: string, params?: Record<string, string>) => string;
 }
+
+export type AttachmentType =
+  | 'pdf' // e.g. .pdf
+  | 'image' // e.g. .jpg, .png, .gif
+  | 'video' // e.g. .mp4, .avi, .mov, .mkv
+  | 'audio' // e.g. .mp3, .wav, .ogg, .flac
+  | 'document_file' // e.g. .odt, .doc, .docx
+  | 'spreadsheet_document' // e.g. .xls, .xlsx .ods
+  | 'presentation_document' // e.g. .ppt, .pptx, .odp
+  | 'plain_text' // e.g. .txt, .md
+  | 'compressed_file' // e.g. .zip, .rar, .7z
+  | 'any';
 
 export type FileUploadState =
   | 'pending'
@@ -212,15 +232,3 @@ export interface FileUploadCardProps {
   /** Translation function */
   t: (key: string, params?: Record<string, string>) => string;
 }
-
-export type AttachmentType =
-  | 'pdf' // e.g. .pdf
-  | 'image' // e.g. .jpg, .png, .gif
-  | 'video' // e.g. .mp4, .avi, .mov, .mkv
-  | 'audio' // e.g. .mp3, .wav, .ogg, .flac
-  | 'document_file' // e.g. .odt, .doc, .docx
-  | 'spreadsheet_document' // e.g. .xls, .xlsx .ods
-  | 'presentation_document' // e.g. .ppt, .pptx, .odp
-  | 'plain_text' // e.g. .txt, .md
-  | 'compressed_file' // e.g. .zip, .rar, .7z
-  | 'any';

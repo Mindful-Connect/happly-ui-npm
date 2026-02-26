@@ -50,6 +50,7 @@ const CommandInput = React.forwardRef<
       ref={ref}
       className={cn(
         'placeholder:text-muted-foreground flex h-10 w-full rounded-lg bg-transparent py-3 text-sm disabled:cursor-not-allowed disabled:opacity-50',
+        'placeholder:truncate placeholder-shown:truncate',
         'shadow-none focus:border-none focus:ring-0 focus:outline-none',
         '!border-none !outline-none',
         className

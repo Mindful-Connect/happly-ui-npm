@@ -82,6 +82,9 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             // disabled placeholder/text
             disabled && 'text-ds-disabled-300 placeholder:text-ds-disabled-300',
 
+            // truncate placeholder
+            'placeholder:truncate placeholder-shown:truncate',
+
             className
           )}
           {...props}

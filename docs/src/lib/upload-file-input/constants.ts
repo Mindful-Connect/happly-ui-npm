@@ -22,7 +22,7 @@ export const fileTypes = {
     'application/vnd.ms-access',
   ],
   image: ['image/jpg', 'image/jpeg', 'image/png'],
-  video: ['video/mpeg', 'video/mp4', 'video/quicktime'],
+  video: ['video/mp4', 'video/mpeg', 'video/quicktime'],
   compressed_file: [
     'application/gzip',
     'application/vnd.bzip3',
@@ -38,6 +38,7 @@ export const fileTypes = {
     'application/x-tar',
     'application/zip',
   ],
+  any: ['*/*'],
 };
 
 export const S3_ASSET_TYPE = {

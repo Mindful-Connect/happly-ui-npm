@@ -7,6 +7,7 @@
   "dependencies": [
     "@uppy/core",
     "@uppy/aws-s3",
+    "@uppy/xhr-upload",
     "@uppy/react",
     "crypto-random-string",
     "react-icons"
@@ -19,7 +20,7 @@
       {
         "title": "Showcase",
         "description": "Upload file input with various variants.",
-        "code": "import UploadFile from \"@/components/ui/upload-file-input\"\n\nexport default function Demo() {\n  return (\n    <div className=\"flex flex-col gap-8\">\n      <UploadFile variant=\"default-image\" />\n      <UploadFile variant=\"attachment\" />\n    </div>\n  )\n}",
+        "code": "import UploadFile from \"@/components/ui/upload-file-input\"\n\nexport default function Demo() {\n  return (\n    <div className=\"flex flex-col gap-8\">\n      <UploadFile variant=\"default-image\" />\n      <UploadFile variant=\"attachment\" />\n      <UploadFile variant=\"document\" />\n      <UploadFile variant=\"archive\" />\n    </div>\n  )\n}",
         "preview": [
           {
             "component": "upload-file-input",
@@ -48,10 +49,6 @@
     },
     {
       "path": "lib/upload-file-input/index.ts",
-      "type": "registry:lib"
-    },
-    {
-      "path": "lib/upload-file-input/file-format-icon.tsx",
       "type": "registry:lib"
     },
     {
