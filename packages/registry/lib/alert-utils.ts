@@ -30,6 +30,8 @@ export type AlertVariant =
   | 'featureLighter'
   | 'featureOutline'
   | 'infoPrimaryFilled'
+  | 'infoPrimaryLight'
+  | 'infoPrimaryLighter'
   | 'infoDarkFilled';
 
 export class AlertModel {

@@ -23,7 +23,7 @@
             "name": "variant",
             "type": "AlertVariant",
             "default": "warningLighter",
-            "description": "The visual style of the alert"
+            "description": "The visual style of the alert (e.g., warningLighter, infoPrimaryFilled, infoPrimaryLight, infoPrimaryLighter, infoDarkFilled)"
           },
           {
             "name": "size",

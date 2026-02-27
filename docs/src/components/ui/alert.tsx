@@ -57,6 +57,8 @@ const alertVariants = cva('relative flex items-start text-sm', {
 
       // Special variants
       infoPrimaryFilled: 'bg-primaryColor text-primaryColorText',
+      infoPrimaryLight: 'bg-primaryColor/50',
+      infoPrimaryLighter: 'bg-primaryColor/10',
       infoDarkFilled: 'bg-ds-strong-950 text-white',
     },
     size: {
