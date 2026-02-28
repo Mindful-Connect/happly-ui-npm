@@ -57,8 +57,8 @@ const alertVariants = cva('relative flex items-start text-sm', {
 
       // Special variants
       infoPrimaryFilled: 'bg-primaryColor text-primaryColorText',
-      infoPrimaryLight: 'bg-primaryColor/50',
-      infoPrimaryLighter: 'bg-primaryColor/10',
+      infoPrimaryLight: 'relative bg-primaryColor/50',
+      infoPrimaryLighter: 'relative bg-primaryColor/10',
       infoDarkFilled: 'bg-ds-strong-950 text-white',
     },
     size: {
@@ -165,7 +165,7 @@ function AlertIcon({
   return (
     <div
       className={cn(
-        'flex shrink-0 items-center justify-center',
+        'z-10 flex shrink-0 items-center justify-center',
         isOutline && size !== 'md' && '-mt-[1px]'
       )}
     >
@@ -220,11 +220,23 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
         className={cn(alertVariants({ variant, size }), className)}
         {...props}
       >
+        {(variant === 'infoPrimaryLighter' ||
+          variant === 'infoPrimaryLight') && (
+          <div
+            className={cn(
+              'absolute top-0 left-0 h-full w-full bg-white',
+              size === 'md' && 'rounded-[12px]',
+              size === 'sm' && 'rounded-[8px]',
+              size === 'xs' && 'rounded-[8px]'
+            )}
+          />
+        )}
+
         <AlertIcon variant={variant} size={size as string} />
 
         <div
           className={cn(
-            'alert-content flex w-full leading-tight',
+            'alert-content z-10 flex w-full leading-tight',
             size === 'md' && 'flex-col'
           )}
         >
@@ -234,7 +246,10 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
         {dismissButton && (
           <button
             type='button'
-            className={cn('dismiss-button ml-auto', isOutline && '-mt-[1px]')}
+            className={cn(
+              'dismiss-button z-10 ml-auto',
+              isOutline && '-mt-[1px]'
+            )}
             onClick={onDismiss}
           >
             <DismissIcon isFilled={isFilled} />
