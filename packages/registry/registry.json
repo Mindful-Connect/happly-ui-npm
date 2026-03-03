@@ -19,13 +19,19 @@
       "name": "badge",
       "type": "registry:ui",
       "title": "Badge",
-      "description": "A badge component for status indicators."
+      "description": "A compound badge component with variants, colors, sizes, dot indicators, and polymorphic icon support. Uses namespace exports: Badge.Root, Badge.Icon, Badge.Dot."
     },
     {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
       "description": "A compound button component with variants, modes, sizes, and polymorphic icon support. Uses namespace exports: Button.Root, Button.Icon."
+    },
+    {
+      "name": "button-group",
+      "type": "registry:ui",
+      "title": "Button Group",
+      "description": "A compound button group component with sizes, icons, and toggle group support via asChild. Uses namespace exports: ButtonGroup.Root, ButtonGroup.Item, ButtonGroup.Icon."
     },
     {
       "name": "calendar-input",

@@ -24,6 +24,10 @@
         "href": "/docs/components/button"
       },
       {
+        "title": "Button Group",
+        "href": "/docs/components/button-group"
+      },
+      {
         "title": "Calendar Input",
         "href": "/docs/components/calendar-input"
       },

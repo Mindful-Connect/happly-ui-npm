@@ -97,14 +97,24 @@ The `registry.json` index lists all available components with their npm and regi
 - **RegistryItemType** - `"registry:ui" | "registry:hook" | "registry:lib"`
 - **ProjectInfo** - Detected project setup (framework, package manager, etc.)
 
-## Adding a New Component
+## Adding or Editing a Component
 
-1. Create source file: `packages/registry/ui/my-component.tsx`
-2. Create story file: `packages/registry/ui/my-component.stories.tsx` (CSF3 format)
-3. Create definition: `packages/registry/ui/my-component.json` with `docs` field (reference story names in `examples[].stories`)
-4. Run `bun run build:registry` to update the index
-5. Run `bun run storybook` to verify stories render correctly
-6. Merge to `production` branch - docs auto-deploy via GitHub Actions
+Follow **all** steps below whenever you create a new component or edit an existing one (add stories, change variants, rename exports, etc.):
+
+1. Create/edit source file: `packages/registry/ui/my-component.tsx`
+2. Create/edit story file: `packages/registry/ui/my-component.stories.tsx` (CSF3 format)
+3. Create/edit definition: `packages/registry/ui/my-component.json` with `docs` field (reference story names in `examples[].stories`)
+4. Rebuild the registry index: `bun run build:registry`
+5. Regenerate docs navigation and story registry:
+   ```bash
+   bun run --cwd docs scripts/generate-navigation.ts
+   bun run --cwd docs scripts/generate-story-registry.ts
+   ```
+6. Verify in Storybook: `bun run storybook`
+7. Verify in docs (if running): `bun run --cwd docs dev`
+8. Merge to `production` branch — docs auto-deploy via GitHub Actions
+
+**If you skip steps 4–5, the component will not appear in the CLI listing, the docs sidebar, or the docs story previews.**
 
 ### Component JSON Structure
 

@@ -2,6 +2,7 @@
 'use client';
 
 import { default as badgeMeta, BadgeFilled as badge_BadgeFilled, BadgeLight as badge_BadgeLight, BadgeLighter as badge_BadgeLighter, BadgeStroke as badge_BadgeStroke, BadgeColors as badge_BadgeColors, Size as badge_Size, Square as badge_Square, WithIcon as badge_WithIcon, WithDot as badge_WithDot, Disabled as badge_Disabled, AsChild as badge_AsChild } from '@/components/ui/badge.stories';
+import { default as buttonGroupMeta, Default as buttonGroup_Default, Sizes as buttonGroup_Sizes } from '@/components/ui/button-group.stories';
 import { default as buttonMeta, PrimaryVariant as button_PrimaryVariant, NeutralVariant as button_NeutralVariant, SuccessVariant as button_SuccessVariant, WarningVariant as button_WarningVariant, ErrorVariant as button_ErrorVariant, Sizes as button_Sizes, Disabled as button_Disabled, WithIcon as button_WithIcon, FullWidth as button_FullWidth, AsChild as button_AsChild } from '@/components/ui/button.stories';
 import { default as calendarInputMeta, BasicUsage as calendarInput_BasicUsage } from '@/components/ui/calendar-input.stories';
 import { default as circularProgressMeta, Default as circularProgress_Default, WithColorVariants as circularProgress_WithColorVariants } from '@/components/ui/circular-progress.stories';
@@ -38,6 +39,13 @@ export const storyRegistry: Record<string, {
     'WithDot': badge_WithDot,
     'Disabled': badge_Disabled,
     'AsChild': badge_AsChild
+    }
+  },
+  'button-group': {
+    meta: buttonGroupMeta,
+    stories: {
+    'Default': buttonGroup_Default,
+    'Sizes': buttonGroup_Sizes
     }
   },
   'button': {
