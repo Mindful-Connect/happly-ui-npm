@@ -1,0 +1,102 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "slider",
+  "type": "registry:ui",
+  "title": "Slider",
+  "description": "A slider component with single and range modes, primary and neutral variants. Uses namespace exports: Slider.Root, Slider.Thumb.",
+  "version": "1.0.0",
+  "dependencies": [
+    "@radix-ui/react-slider"
+  ],
+  "registryDependencies": [
+    "happly-ui-utils"
+  ],
+  "docs": {
+    "lead": "A slider component with single and range modes, primary and neutral color variants.",
+    "usage": "import * as Slider from \"@/components/ui/slider\"\n\n<Slider.Root defaultValue={[33]} max={100} step={1}>\n  <Slider.Thumb />\n</Slider.Root>",
+    "examples": [
+      {
+        "title": "Demo",
+        "description": "Basic single-value slider.",
+        "code": "<Slider.Root defaultValue={[33]} max={100} step={1}>\n  <Slider.Thumb />\n</Slider.Root>",
+        "stories": ["Demo"]
+      },
+      {
+        "title": "Variants",
+        "description": "Primary and neutral color variants.",
+        "code": "<Slider.Root variant=\"primary\" defaultValue={[50]} max={100}>\n  <Slider.Thumb />\n</Slider.Root>\n<Slider.Root variant=\"neutral\" defaultValue={[50]} max={100}>\n  <Slider.Thumb />\n</Slider.Root>",
+        "stories": ["Variants"]
+      },
+      {
+        "title": "Range",
+        "description": "Dual-thumb range slider.",
+        "code": "<Slider.Root defaultValue={[300, 450]} min={0} max={600}>\n  <Slider.Thumb />\n  <Slider.Thumb />\n</Slider.Root>",
+        "stories": ["Range"]
+      },
+      {
+        "title": "With Tooltip",
+        "description": "Range slider with tooltip values on each thumb.",
+        "code": "<Slider.Root defaultValue={[300, 450]} min={0} max={600} onValueChange={setValue}>\n  <Tooltip.Root open>\n    <Tooltip.Trigger asChild>\n      <Slider.Thumb />\n    </Tooltip.Trigger>\n    <Tooltip.Content size=\"xsmall\" side=\"top\">\n      {formatCurrency(value[0])}\n    </Tooltip.Content>\n  </Tooltip.Root>\n</Slider.Root>",
+        "stories": ["WithTooltip"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Slider.Root",
+        "description": "The slider container. Extends Radix Slider.Root props.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'primary' | 'neutral'",
+            "default": "'primary'",
+            "description": "Color variant for the range fill and thumb"
+          },
+          {
+            "name": "defaultValue",
+            "type": "number[]",
+            "description": "Default value(s) for uncontrolled usage"
+          },
+          {
+            "name": "value",
+            "type": "number[]",
+            "description": "Controlled value(s)"
+          },
+          {
+            "name": "onValueChange",
+            "type": "(value: number[]) => void",
+            "description": "Callback when the value changes"
+          },
+          {
+            "name": "min",
+            "type": "number",
+            "default": "0",
+            "description": "Minimum value"
+          },
+          {
+            "name": "max",
+            "type": "number",
+            "default": "100",
+            "description": "Maximum value"
+          },
+          {
+            "name": "step",
+            "type": "number",
+            "default": "1",
+            "description": "Step increment"
+          }
+        ]
+      },
+      {
+        "name": "Slider.Thumb",
+        "description": "A draggable thumb. Add one per value in the array.",
+        "props": []
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/slider.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

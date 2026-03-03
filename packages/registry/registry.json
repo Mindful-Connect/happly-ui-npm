@@ -76,10 +76,22 @@
       "description": "A card container component."
     },
     {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "An animated checkbox component built on Radix UI with check and indeterminate states, primary and neutral variants. Uses namespace exports: Checkbox.Root."
+    },
+    {
       "name": "circular-progress",
       "type": "registry:ui",
       "title": "Circular Progress",
       "description": "A circular progress indicator."
+    },
+    {
+      "name": "color-picker",
+      "type": "registry:ui",
+      "title": "Color Picker",
+      "description": "A color picker with area, sliders, swatches, eye dropper, and field inputs. Uses namespace exports: ColorPicker.Root, ColorPicker.Area, ColorPicker.Slider, ColorPicker.SliderTrack, ColorPicker.Thumb, ColorPicker.Field, ColorPicker.Swatch, ColorPicker.SwatchPicker, ColorPicker.SwatchPickerItem, ColorPicker.EyeDropperButton."
     },
     {
       "name": "command",
@@ -112,10 +124,22 @@
       "description": "A wrapper for custom inputs with consistent styling."
     },
     {
+      "name": "datepicker",
+      "type": "registry:ui",
+      "title": "Datepicker",
+      "description": "A calendar datepicker component with single date, range, and popover modes. Uses namespace exports: Datepicker.Calendar."
+    },
+    {
       "name": "dialog",
       "type": "registry:ui",
       "title": "Dialog",
       "description": "A window overlaid on either the primary window or another dialog window."
+    },
+    {
+      "name": "digit-input",
+      "type": "registry:ui",
+      "title": "Digit Input",
+      "description": "An OTP/digit input component with configurable number of slots, error, and disabled states. Uses namespace exports: DigitInput.Root."
     },
     {
       "name": "divider",
@@ -154,10 +178,16 @@
       "description": "Utility functions for class name merging."
     },
     {
+      "name": "hint",
+      "type": "registry:ui",
+      "title": "Hint",
+      "description": "A hint text component for form fields with icon, error, and disabled states. Uses namespace exports: Hint.Root, Hint.Icon."
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
-      "description": "A text input component."
+      "description": "A compound input component with wrapper, icons, affixes, and inline affixes. Uses namespace exports: Input.Root, Input.Wrapper, Input.Input, Input.Icon, Input.Affix, Input.InlineAffix."
     },
     {
       "name": "kbd",
@@ -175,7 +205,7 @@
       "name": "label",
       "type": "registry:ui",
       "title": "Label",
-      "description": "A label component for form inputs."
+      "description": "A label component with asterisk indicator and sub-text. Uses namespace exports: Label.Root, Label.Asterisk, Label.Sub."
     },
     {
       "name": "link-button",
@@ -232,6 +262,12 @@
       "description": "A circular progress indicator with SVG ring, multiple sizes, customizable color, and optional centered text content. Uses namespace exports: ProgressCircle.Root."
     },
     {
+      "name": "radio",
+      "type": "registry:ui",
+      "title": "Radio",
+      "description": "A radio group component with animated SVG indicator and primary/neutral variants. Uses namespace exports: Radio.Group, Radio.Item."
+    },
+    {
       "name": "radio-card-group",
       "type": "registry:ui",
       "title": "Radio Card Group",
@@ -259,7 +295,13 @@
       "name": "select",
       "type": "registry:ui",
       "title": "Select",
-      "description": "A customizable select component based on Radix UI, supporting various sizes and display variants."
+      "description": "A select component with multiple variants, sizes, scroll area, and item icons. Uses namespace exports: Select.Root, Select.Trigger, Select.Value, Select.Content, Select.Item, Select.ItemIcon, Select.Group, Select.GroupLabel, Select.Separator, Select.TriggerIcon."
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "A slider component with single and range modes, primary and neutral variants. Uses namespace exports: Slider.Root, Slider.Thumb."
     },
     {
       "name": "socials-input",
@@ -272,6 +314,12 @@
       "type": "registry:ui",
       "title": "Status Badge",
       "description": "A compact status indicator badge with icon or dot variants and semantic status colors (completed, pending, failed, disabled). Uses namespace exports: StatusBadge.Root, StatusBadge.Icon, StatusBadge.Dot."
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "A toggle switch component with primary and neutral variants. Uses namespace exports: Switch.Root."
     },
     {
       "name": "table",
@@ -289,7 +337,7 @@
       "name": "textarea",
       "type": "registry:ui",
       "title": "Textarea",
-      "description": "A textarea component."
+      "description": "A textarea component with character counter, resize handle, error state, and simple mode. Uses namespace exports: Textarea.Root, Textarea.CharCounter."
     },
     {
       "name": "tooltip",

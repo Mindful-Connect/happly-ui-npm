@@ -1,0 +1,145 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "color-picker",
+  "type": "registry:ui",
+  "title": "Color Picker",
+  "description": "A color picker with area, sliders, swatches, eye dropper, and field inputs. Uses namespace exports: ColorPicker.Root, ColorPicker.Area, ColorPicker.Slider, ColorPicker.SliderTrack, ColorPicker.Thumb, ColorPicker.Field, ColorPicker.Swatch, ColorPicker.SwatchPicker, ColorPicker.SwatchPickerItem, ColorPicker.EyeDropperButton.",
+  "version": "1.0.0",
+  "dependencies": [
+    "react-aria-components"
+  ],
+  "registryDependencies": [
+    "happly-ui-utils"
+  ],
+  "docs": {
+    "lead": "A color picker with area, sliders, swatches, eye dropper, and field inputs.",
+    "usage": "import * as ColorPicker from \"@/components/ui/color-picker\"\nimport { parseColor } from 'react-aria-components'\n\nconst [color, setColor] = React.useState(parseColor('hsl(228, 100%, 60%)'))\n\n<ColorPicker.Root value={color} onChange={setColor}>\n  <ColorPicker.Area colorSpace=\"hsl\" xChannel=\"saturation\" yChannel=\"lightness\">\n    <ColorPicker.Thumb />\n  </ColorPicker.Area>\n  <ColorPicker.Slider colorSpace=\"hsl\" channel=\"hue\">\n    <ColorPicker.SliderTrack>\n      <ColorPicker.Thumb />\n    </ColorPicker.SliderTrack>\n  </ColorPicker.Slider>\n</ColorPicker.Root>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Standalone color picker with area, sliders, channel inputs, and swatches.",
+        "code": "<ColorPicker.Root value={color} onChange={setColor}>\n  <ColorPicker.Area colorSpace=\"hsl\" xChannel=\"saturation\" yChannel=\"lightness\">\n    <ColorPicker.Thumb />\n  </ColorPicker.Area>\n  <ColorPicker.Slider colorSpace=\"hsl\" channel=\"hue\">\n    <ColorPicker.SliderTrack>\n      <ColorPicker.Thumb />\n    </ColorPicker.SliderTrack>\n  </ColorPicker.Slider>\n</ColorPicker.Root>",
+        "stories": ["Demo"]
+      },
+      {
+        "title": "In a Popover",
+        "description": "Color picker inside a popover triggered by a button.",
+        "code": "<ColorPicker.Root value={color} onChange={setColor}>\n  <Popover.Root>\n    <Popover.Trigger asChild>\n      <Button.Root variant=\"neutral\" mode=\"stroke\">\n        <Button.Icon as={ColorPicker.Swatch} />\n        Pick Color\n      </Button.Root>\n    </Popover.Trigger>\n    <Popover.Content>...</Popover.Content>\n  </Popover.Root>\n</ColorPicker.Root>",
+        "stories": ["PopoverDemo"]
+      }
+    ],
+    "api": [
+      {
+        "name": "ColorPicker.Root",
+        "description": "The root color picker context provider (React Aria ColorPicker).",
+        "props": [
+          {
+            "name": "value",
+            "type": "Color",
+            "description": "The current color value"
+          },
+          {
+            "name": "onChange",
+            "type": "(color: Color) => void",
+            "description": "Callback when color changes"
+          }
+        ]
+      },
+      {
+        "name": "ColorPicker.Area",
+        "description": "2D color area for selecting two color channels.",
+        "props": [
+          {
+            "name": "colorSpace",
+            "type": "ColorSpace",
+            "description": "The color space (hsl, hsb, rgb)"
+          },
+          {
+            "name": "xChannel",
+            "type": "string",
+            "description": "Channel for the x-axis"
+          },
+          {
+            "name": "yChannel",
+            "type": "string",
+            "description": "Channel for the y-axis"
+          }
+        ]
+      },
+      {
+        "name": "ColorPicker.Slider",
+        "description": "Single-channel color slider.",
+        "props": [
+          {
+            "name": "colorSpace",
+            "type": "ColorSpace",
+            "description": "The color space"
+          },
+          {
+            "name": "channel",
+            "type": "string",
+            "description": "The color channel to control"
+          }
+        ]
+      },
+      {
+        "name": "ColorPicker.SliderTrack",
+        "description": "The slider track with checkered transparency background.",
+        "props": []
+      },
+      {
+        "name": "ColorPicker.Thumb",
+        "description": "Draggable thumb for area and sliders.",
+        "props": []
+      },
+      {
+        "name": "ColorPicker.Field",
+        "description": "Color field input for direct value entry.",
+        "props": [
+          {
+            "name": "colorSpace",
+            "type": "ColorSpace",
+            "description": "The color space"
+          },
+          {
+            "name": "channel",
+            "type": "string",
+            "description": "The color channel"
+          }
+        ]
+      },
+      {
+        "name": "ColorPicker.Swatch",
+        "description": "Color swatch preview with checkered transparency background.",
+        "props": []
+      },
+      {
+        "name": "ColorPicker.SwatchPicker",
+        "description": "Container for preset color swatches.",
+        "props": []
+      },
+      {
+        "name": "ColorPicker.SwatchPickerItem",
+        "description": "Individual swatch item in the picker.",
+        "props": [
+          {
+            "name": "color",
+            "type": "string",
+            "description": "The color value for this swatch"
+          }
+        ]
+      },
+      {
+        "name": "ColorPicker.EyeDropperButton",
+        "description": "Button that opens the browser EyeDropper API. Returns null if unsupported.",
+        "props": []
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/color-picker.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

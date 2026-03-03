@@ -1,0 +1,85 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "digit-input",
+  "type": "registry:ui",
+  "title": "Digit Input",
+  "description": "An OTP/digit input component with configurable number of slots, error, and disabled states. Uses namespace exports: DigitInput.Root.",
+  "version": "1.0.0",
+  "dependencies": [
+    "react-otp-input"
+  ],
+  "registryDependencies": [
+    "happly-ui-utils"
+  ],
+  "docs": {
+    "lead": "An OTP/digit input component with configurable number of slots, error, and disabled states.",
+    "usage": "import * as DigitInput from \"@/components/ui/digit-input\"\n\n<DigitInput.Root numInputs={4} onChange={setValue} value={value} />",
+    "examples": [
+      {
+        "title": "Demo",
+        "description": "Basic 4-digit input.",
+        "code": "<DigitInput.Root numInputs={4} onChange={setValue} value={value} />",
+        "stories": ["Demo"]
+      },
+      {
+        "title": "Has Error",
+        "description": "Digit input in error state.",
+        "code": "<DigitInput.Root hasError numInputs={4} onChange={setValue} value={value} />",
+        "stories": ["HasError"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Disabled digit input.",
+        "code": "<DigitInput.Root disabled numInputs={4} onChange={setValue} value={value} />",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "Square",
+        "description": "Square-shaped digit input slots.",
+        "code": "<DigitInput.Root numInputs={4} onChange={setValue} value={value} className=\"justify-center [&>input]:aspect-square [&>input]:w-auto\" />",
+        "stories": ["Square"]
+      }
+    ],
+    "api": [
+      {
+        "name": "DigitInput.Root",
+        "description": "The digit input component. Wraps react-otp-input.",
+        "props": [
+          {
+            "name": "numInputs",
+            "type": "number",
+            "description": "Number of input slots"
+          },
+          {
+            "name": "value",
+            "type": "string",
+            "description": "Current input value"
+          },
+          {
+            "name": "onChange",
+            "type": "(value: string) => void",
+            "description": "Callback when the value changes"
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Show error styling with red ring"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disable all input slots"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/digit-input.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

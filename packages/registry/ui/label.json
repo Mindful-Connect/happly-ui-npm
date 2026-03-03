@@ -3,9 +3,53 @@
   "name": "label",
   "type": "registry:ui",
   "title": "Label",
-  "description": "A label component for form inputs.",
-  "dependencies": ["@radix-ui/react-label"],
-  "registryDependencies": [],
+  "description": "A label component with asterisk indicator and sub-text. Uses namespace exports: Label.Root, Label.Asterisk, Label.Sub.",
+  "version": "2.0.0",
+  "migration": {
+    "guide": "API changed: import as namespace `import * as Label from ...`, use `<Label.Root>`, `<Label.Asterisk>`, `<Label.Sub>`. Old named export `{ Label }` removed. New sub-components: `Label.Asterisk` (primary color), `Label.Sub` for optional text. Supports `disabled` prop on Root."
+  },
+  "dependencies": [
+    "@radix-ui/react-label"
+  ],
+  "registryDependencies": [
+    "happly-ui-utils"
+  ],
+  "docs": {
+    "lead": "A label component with required asterisk indicator and optional sub-text for form inputs.",
+    "usage": "import * as Label from \"@/components/ui/label\"\n\n<Label.Root>\n  Field Name\n  <Label.Asterisk />\n  <Label.Sub>(Optional)</Label.Sub>\n</Label.Root>",
+    "examples": [
+      {
+        "title": "Demo",
+        "description": "Label with asterisk, sub-text, and info icon.",
+        "code": "<Label.Root>\n  Last Name\n  <Label.Asterisk />\n  <Label.Sub>(Optional)</Label.Sub>\n</Label.Root>",
+        "stories": ["Demo"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Label.Root",
+        "description": "The root label element built on Radix Label.",
+        "props": [
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disable the label and apply disabled styling to all children"
+          }
+        ]
+      },
+      {
+        "name": "Label.Asterisk",
+        "description": "Required field asterisk indicator in primary color.",
+        "props": []
+      },
+      {
+        "name": "Label.Sub",
+        "description": "Secondary text displayed after the label.",
+        "props": []
+      }
+    ]
+  },
   "files": [
     {
       "path": "ui/label.tsx",

@@ -1,5 +1,3 @@
-import './datepicker.css';
-
 import { Fragment, FC, SVGProps } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { Calendar } from './datepicker';

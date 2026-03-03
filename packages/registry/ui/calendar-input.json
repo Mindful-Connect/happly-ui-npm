@@ -31,10 +31,6 @@
     {
       "path": "ui/datepicker.tsx",
       "type": "registry:ui"
-    },
-    {
-      "path": "ui/datepicker.css",
-      "type": "registry:ui"
     }
   ]
 }

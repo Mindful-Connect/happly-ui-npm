@@ -3,125 +3,81 @@
   "name": "input",
   "type": "registry:ui",
   "title": "Input",
-  "description": "A text input component.",
-  "dependencies": [],
-  "registryDependencies": [],
+  "description": "A compound input component with wrapper, icons, affixes, and inline affixes. Uses namespace exports: Input.Root, Input.Wrapper, Input.Input, Input.Icon, Input.Affix, Input.InlineAffix.",
+  "version": "2.0.0",
+  "migration": {
+    "guide": "API changed: now uses compound component pattern with namespace exports. Import as `import * as Input from ...`. Use `<Input.Root>` with `<Input.Wrapper>` and `<Input.Input>` children. Old flat `<Input>` component removed. Uses tv (tailwind-variants) instead of manual class config. Uses recursiveCloneChildren for prop propagation."
+  },
+  "dependencies": [
+    "@radix-ui/react-slot"
+  ],
+  "registryDependencies": [
+    "happly-ui-utils",
+    "polymorphic",
+    "recursive-clone-children",
+    "tv"
+  ],
   "docs": {
-    "lead": "A text input component.",
-    "usage": "import { Input } from \"@/components/ui/input\"\n\n<Input type=\"email\" placeholder=\"Email\" />",
-    "examples": [
+    "lead": "A compound input component with wrapper, icons, affixes, and size/error variants.",
+    "usage": "import * as Input from \"@/components/ui/input\"\n\n<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiSearchLine} />\n    <Input.Input placeholder=\"Search...\" />\n  </Input.Wrapper>\n</Input.Root>",
+    "examples": [],
+    "api": [
       {
-        "title": "Showcase",
-        "description": "Input component with various sizes, icons, and affixes.",
-        "code": "import { Input } from \"@/components/ui/input\"\nimport { RiUser3Line } from \"react-icons/ri\"\n\n<Input placeholder=\"Username\" leftIcon={<RiUser3Line />} />",
-        "stories": ["Sizes", "Icons", "Affixes", "States"]
+        "name": "Input.Root",
+        "description": "The root container with ring border and shadow.",
+        "props": [
+          {
+            "name": "size",
+            "type": "'medium' | 'small' | 'xsmall'",
+            "default": "'medium'",
+            "description": "Size variant"
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Show error styling"
+          },
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render as child element using Slot"
+          }
+        ]
+      },
+      {
+        "name": "Input.Wrapper",
+        "description": "Label wrapper with cursor and hover styling.",
+        "props": []
+      },
+      {
+        "name": "Input.Input",
+        "description": "The actual input element.",
+        "props": []
+      },
+      {
+        "name": "Input.Icon",
+        "description": "Icon displayed in the input wrapper.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "description": "The icon component to render"
+          }
+        ]
+      },
+      {
+        "name": "Input.Affix",
+        "description": "Affix section (prefix/suffix) with divider.",
+        "props": []
+      },
+      {
+        "name": "Input.InlineAffix",
+        "description": "Inline affix displayed within the input area.",
+        "props": []
       }
-    ],
-    "phoneInput": {
-      "title": "Phone Input",
-      "lead": "A phone input component with country selection and automatic formatting.",
-      "usage": "import * as PhoneInput from \"@/components/ui/phone-input\"\n\n<PhoneInput.Root\n  inputValue={value}\n  onChange={(val) => setValue(val)}\n  defaultCountryIso2=\"ca\"\n/>",
-      "examples": [
-        {
-          "title": "Default",
-          "description": "Default phone input with Canada selected.",
-          "code": "<PhoneInput.Root\n  inputValue={value}\n  onChange={setValue}\n  defaultCountryIso2=\"ca\"\n/>",
-          "stories": ["Default"]
-        }
-      ],
-      "api": [
-        {
-          "name": "PhoneInput.Root",
-          "description": "The main component.",
-          "props": [
-            {
-              "name": "inputValue",
-              "type": "string",
-              "default": "''",
-              "description": "The current value in E.164 format."
-            },
-            {
-              "name": "onChange",
-              "type": "(value: string) => void",
-              "description": "Callback when value changes."
-            },
-            {
-              "name": "defaultCountryIso2",
-              "type": "CountryIso2",
-              "default": "'ca'",
-              "description": "Default country to select."
-            },
-            {
-              "name": "readOnly",
-              "type": "boolean",
-              "description": "Whether the input is read-only."
-            }
-          ]
-        }
-      ],
-      "dependencies": [
-        "react-international-phone",
-        "libphonenumber-js",
-        "flag-icons",
-        "lucide-react",
-        "@headlessui/react"
-      ]
-    },
-    "currencyInput": {
-      "title": "Currency Input",
-      "lead": "A currency input component with currency selection.",
-      "usage": "import { CurrencyInput } from \"@/components/ui/currency-input\"\n\n<CurrencyInput />",
-      "examples": [
-        {
-          "title": "Default",
-          "description": "Default usage.",
-          "code": "<CurrencyInput />",
-          "stories": ["Default"]
-        }
-      ],
-      "api": [
-        {
-          "name": "CurrencyInput",
-          "description": "The CurrencyInput component.",
-          "props": [
-            {
-              "name": "value",
-              "type": "string",
-              "description": "The value of the input."
-            },
-            {
-              "name": "onChange",
-              "type": "(val: string, currency: string) => void",
-              "description": "Callback when value or currency changes."
-            },
-            {
-              "name": "defaultCurrency",
-              "type": "string",
-              "default": "\"CAD\"",
-              "description": "The default currency code."
-            },
-            {
-              "name": "placeholder",
-              "type": "string",
-              "default": "\"0.00\"",
-              "description": "Placeholder text."
-            },
-            {
-              "name": "readOnly",
-              "type": "boolean",
-              "default": "false",
-              "description": "Whether the input is read-only."
-            },
-            {
-              "name": "className",
-              "type": "string",
-              "description": "Additional CSS classes."
-            }
-          ]
-        }
-      ],
-      "dependencies": ["@headlessui/react", "lucide-react", "flag-icons"]
-    }
+    ]
   },
   "files": [
     {

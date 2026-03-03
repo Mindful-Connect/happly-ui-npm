@@ -10,17 +10,23 @@ import { default as bannerMeta, Error as banner_Error, Warning as banner_Warning
 import { default as buttonGroupMeta, Default as buttonGroup_Default, Sizes as buttonGroup_Sizes } from '@/components/ui/button-group.stories';
 import { default as buttonMeta, PrimaryVariant as button_PrimaryVariant, NeutralVariant as button_NeutralVariant, SuccessVariant as button_SuccessVariant, WarningVariant as button_WarningVariant, ErrorVariant as button_ErrorVariant, Sizes as button_Sizes, Disabled as button_Disabled, WithIcon as button_WithIcon, FullWidth as button_FullWidth, AsChild as button_AsChild } from '@/components/ui/button.stories';
 import { default as calendarInputMeta, BasicUsage as calendarInput_BasicUsage } from '@/components/ui/calendar-input.stories';
+import { default as checkboxMeta, Demo as checkbox_Demo, Variants as checkbox_Variants, Disabled as checkbox_Disabled, WithLabel as checkbox_WithLabel, WithLabelExtended as checkbox_WithLabelExtended } from '@/components/ui/checkbox.stories';
 import { default as circularProgressMeta, Default as circularProgress_Default, WithColorVariants as circularProgress_WithColorVariants } from '@/components/ui/circular-progress.stories';
+import { default as colorPickerMeta, Demo as colorPicker_Demo, PopoverDemo as colorPicker_PopoverDemo } from '@/components/ui/color-picker.stories';
 import { default as commandMenuMeta, Demo as commandMenu_Demo } from '@/components/ui/command-menu.stories';
 import { default as compactButtonMeta, Stroke as compactButton_Stroke, Ghost as compactButton_Ghost, White as compactButton_White, Modifiable as compactButton_Modifiable, Sizes as compactButton_Sizes, FullRadius as compactButton_FullRadius, Disabled as compactButton_Disabled, AsChild as compactButton_AsChild } from '@/components/ui/compact-button.stories';
 import { default as currencyInputMeta, Default as currencyInput_Default } from '@/components/ui/currency-input.stories';
+import { default as datepickerMeta, Demo as datepicker_Demo, PopoverDemo as datepicker_PopoverDemo, ApprovalDemo as datepicker_ApprovalDemo, RangeDemo as datepicker_RangeDemo } from '@/components/ui/datepicker.stories';
+import { default as digitInputMeta, Demo as digitInput_Demo, HasError as digitInput_HasError, Disabled as digitInput_Disabled, Square as digitInput_Square } from '@/components/ui/digit-input.stories';
 import { default as dividerMeta, Line as divider_Line, LineSpacing as divider_LineSpacing, LineText as divider_LineText, TextOnly as divider_TextOnly, SolidText as divider_SolidText, Content as divider_Content } from '@/components/ui/divider.stories';
 import { default as dotStepperMeta, Demo as dotStepper_Demo, WithRadixTabs as dotStepper_WithRadixTabs } from '@/components/ui/dot-stepper.stories';
 import { default as drawerMeta, Demo as drawer_Demo, Basic as drawer_Basic } from '@/components/ui/drawer.stories';
 import { default as dropdownMeta, Demo as dropdown_Demo, SubMenu as dropdown_SubMenu } from '@/components/ui/dropdown.stories';
 import { default as fancyButtonMeta, Neutral as fancyButton_Neutral, Primary as fancyButton_Primary, Error as fancyButton_Error, Basic as fancyButton_Basic, WithIcon as fancyButton_WithIcon, Sizes as fancyButton_Sizes, Disabled as fancyButton_Disabled, AsChild as fancyButton_AsChild } from '@/components/ui/fancy-button.stories';
+import { default as hintMeta, Demo as hint_Demo, Disabled as hint_Disabled, HasError as hint_HasError } from '@/components/ui/hint.stories';
 import { default as inputMeta, Sizes as input_Sizes, Icons as input_Icons, Affixes as input_Affixes, States as input_States } from '@/components/ui/input.stories';
 import { default as kbdMeta, Demo as kbd_Demo } from '@/components/ui/kbd.stories';
+import { default as labelMeta, Demo as label_Demo } from '@/components/ui/label.stories';
 import { default as linkButtonMeta, Gray as linkButton_Gray, Black as linkButton_Black, Primary as linkButton_Primary, Error as linkButton_Error, Modifiable as linkButton_Modifiable, Sizes as linkButton_Sizes, Underline as linkButton_Underline, WithIcon as linkButton_WithIcon, Disabled as linkButton_Disabled, AsChild as linkButton_AsChild } from '@/components/ui/link-button.stories';
 import { default as locationInputMeta, Default as locationInput_Default } from '@/components/ui/location-input.stories';
 import { default as modalMeta, Demo as modal_Demo, WithHeader as modal_WithHeader } from '@/components/ui/modal.stories';
@@ -30,13 +36,16 @@ import { default as popoverMeta, Demo as popover_Demo, Position as popover_Posit
 import { default as progressBarMeta, Color as progressBar_Color, WithLabel as progressBar_WithLabel, DataStorage as progressBar_DataStorage } from '@/components/ui/progress-bar.stories';
 import { default as progressCircleMeta, Default as progressCircle_Default } from '@/components/ui/progress-circle.stories';
 import { default as radioCardGroupMeta, BasicUsage as radioCardGroup_BasicUsage, WithoutDescriptions as radioCardGroup_WithoutDescriptions, WithIcons as radioCardGroup_WithIcons, WithBadges as radioCardGroup_WithBadges, AllowDeselect as radioCardGroup_AllowDeselect, Disabled as radioCardGroup_Disabled } from '@/components/ui/radio-card-group.stories';
+import { default as radioMeta, Demo as radio_Demo, Variants as radio_Variants, Disabled as radio_Disabled, WithLabel as radio_WithLabel, WithLabelExtended as radio_WithLabelExtended } from '@/components/ui/radio.stories';
 import { default as searchableComboBoxMeta, Default as searchableComboBox_Default } from '@/components/ui/searchable-combo-box.stories';
-import { default as selectMeta, Sizes as select_Sizes, Variants as select_Variants, SelectStates as select_SelectStates } from '@/components/ui/select.stories';
+import { default as selectMeta, Demo as select_Demo, WithLabelHint as select_WithLabelHint, WithIcons as select_WithIcons, Sizes as select_Sizes, WithCountryFlags as select_WithCountryFlags, WithUsers as select_WithUsers, Disabled as select_Disabled, Compact as select_Compact, CompactCountry as select_CompactCountry, CompactSizes as select_CompactSizes, InlineCountry as select_InlineCountry, InputWithInlineSelect as select_InputWithInlineSelect, WithInput as select_WithInput, WithInputSizes as select_WithInputSizes } from '@/components/ui/select.stories';
+import { default as sliderMeta, Demo as slider_Demo, Variants as slider_Variants, Range as slider_Range, WithTooltip as slider_WithTooltip } from '@/components/ui/slider.stories';
 import { default as socialsInputMeta, Default as socialsInput_Default } from '@/components/ui/socials-input.stories';
 import { default as statusBadgeMeta, Disabled as statusBadge_Disabled, Completed as statusBadge_Completed, Failed as statusBadge_Failed, Pending as statusBadge_Pending, AsChild as statusBadge_AsChild } from '@/components/ui/status-badge.stories';
+import { default as switchMeta, Demo as switch_Demo, Variants as switch_Variants, Disabled as switch_Disabled, WithLabel as switch_WithLabel, WithLabelExtended as switch_WithLabelExtended } from '@/components/ui/switch.stories';
 import { default as tableMeta, Default as table_Default } from '@/components/ui/table.stories';
 import { default as tagMeta, Stroke as tag_Stroke, Gray as tag_Gray, Disabled as tag_Disabled, WithImage as tag_WithImage, WithAvatar as tag_WithAvatar, Dismissable as tag_Dismissable } from '@/components/ui/tag.stories';
-import { default as textareaMeta, Default as textarea_Default, Disabled as textarea_Disabled, WithLabel as textarea_WithLabel, WithMaximumLength as textarea_WithMaximumLength } from '@/components/ui/textarea.stories';
+import { default as textareaMeta, Demo as textarea_Demo, InteractiveCounter as textarea_InteractiveCounter, HasError as textarea_HasError, WithLabelAndHint as textarea_WithLabelAndHint, Disabled as textarea_Disabled, Simple as textarea_Simple, SimpleResize as textarea_SimpleResize } from '@/components/ui/textarea.stories';
 import { default as tooltipMeta, Light as tooltip_Light, Size as tooltip_Size, Position as tooltip_Position, HTMLContent as tooltip_HTMLContent } from '@/components/ui/tooltip.stories';
 import { default as uploadFileInputMeta, Showcase as uploadFileInput_Showcase } from '@/components/ui/upload-file-input.stories';
 
@@ -138,11 +147,28 @@ export const storyRegistry: Record<string, {
     'BasicUsage': calendarInput_BasicUsage
     }
   },
+  'checkbox': {
+    meta: checkboxMeta,
+    stories: {
+    'Demo': checkbox_Demo,
+    'Variants': checkbox_Variants,
+    'Disabled': checkbox_Disabled,
+    'WithLabel': checkbox_WithLabel,
+    'WithLabelExtended': checkbox_WithLabelExtended
+    }
+  },
   'circular-progress': {
     meta: circularProgressMeta,
     stories: {
     'Default': circularProgress_Default,
     'WithColorVariants': circularProgress_WithColorVariants
+    }
+  },
+  'color-picker': {
+    meta: colorPickerMeta,
+    stories: {
+    'Demo': colorPicker_Demo,
+    'PopoverDemo': colorPicker_PopoverDemo
     }
   },
   'command-menu': {
@@ -168,6 +194,24 @@ export const storyRegistry: Record<string, {
     meta: currencyInputMeta,
     stories: {
     'Default': currencyInput_Default
+    }
+  },
+  'datepicker': {
+    meta: datepickerMeta,
+    stories: {
+    'Demo': datepicker_Demo,
+    'PopoverDemo': datepicker_PopoverDemo,
+    'ApprovalDemo': datepicker_ApprovalDemo,
+    'RangeDemo': datepicker_RangeDemo
+    }
+  },
+  'digit-input': {
+    meta: digitInputMeta,
+    stories: {
+    'Demo': digitInput_Demo,
+    'HasError': digitInput_HasError,
+    'Disabled': digitInput_Disabled,
+    'Square': digitInput_Square
     }
   },
   'divider': {
@@ -215,6 +259,14 @@ export const storyRegistry: Record<string, {
     'AsChild': fancyButton_AsChild
     }
   },
+  'hint': {
+    meta: hintMeta,
+    stories: {
+    'Demo': hint_Demo,
+    'Disabled': hint_Disabled,
+    'HasError': hint_HasError
+    }
+  },
   'input': {
     meta: inputMeta,
     stories: {
@@ -228,6 +280,12 @@ export const storyRegistry: Record<string, {
     meta: kbdMeta,
     stories: {
     'Demo': kbd_Demo
+    }
+  },
+  'label': {
+    meta: labelMeta,
+    stories: {
+    'Demo': label_Demo
     }
   },
   'link-button': {
@@ -305,6 +363,16 @@ export const storyRegistry: Record<string, {
     'Disabled': radioCardGroup_Disabled
     }
   },
+  'radio': {
+    meta: radioMeta,
+    stories: {
+    'Demo': radio_Demo,
+    'Variants': radio_Variants,
+    'Disabled': radio_Disabled,
+    'WithLabel': radio_WithLabel,
+    'WithLabelExtended': radio_WithLabelExtended
+    }
+  },
   'searchable-combo-box': {
     meta: searchableComboBoxMeta,
     stories: {
@@ -314,9 +382,29 @@ export const storyRegistry: Record<string, {
   'select': {
     meta: selectMeta,
     stories: {
+    'Demo': select_Demo,
+    'WithLabelHint': select_WithLabelHint,
+    'WithIcons': select_WithIcons,
     'Sizes': select_Sizes,
-    'Variants': select_Variants,
-    'SelectStates': select_SelectStates
+    'WithCountryFlags': select_WithCountryFlags,
+    'WithUsers': select_WithUsers,
+    'Disabled': select_Disabled,
+    'Compact': select_Compact,
+    'CompactCountry': select_CompactCountry,
+    'CompactSizes': select_CompactSizes,
+    'InlineCountry': select_InlineCountry,
+    'InputWithInlineSelect': select_InputWithInlineSelect,
+    'WithInput': select_WithInput,
+    'WithInputSizes': select_WithInputSizes
+    }
+  },
+  'slider': {
+    meta: sliderMeta,
+    stories: {
+    'Demo': slider_Demo,
+    'Variants': slider_Variants,
+    'Range': slider_Range,
+    'WithTooltip': slider_WithTooltip
     }
   },
   'socials-input': {
@@ -333,6 +421,16 @@ export const storyRegistry: Record<string, {
     'Failed': statusBadge_Failed,
     'Pending': statusBadge_Pending,
     'AsChild': statusBadge_AsChild
+    }
+  },
+  'switch': {
+    meta: switchMeta,
+    stories: {
+    'Demo': switch_Demo,
+    'Variants': switch_Variants,
+    'Disabled': switch_Disabled,
+    'WithLabel': switch_WithLabel,
+    'WithLabelExtended': switch_WithLabelExtended
     }
   },
   'table': {
@@ -355,10 +453,13 @@ export const storyRegistry: Record<string, {
   'textarea': {
     meta: textareaMeta,
     stories: {
-    'Default': textarea_Default,
+    'Demo': textarea_Demo,
+    'InteractiveCounter': textarea_InteractiveCounter,
+    'HasError': textarea_HasError,
+    'WithLabelAndHint': textarea_WithLabelAndHint,
     'Disabled': textarea_Disabled,
-    'WithLabel': textarea_WithLabel,
-    'WithMaximumLength': textarea_WithMaximumLength
+    'Simple': textarea_Simple,
+    'SimpleResize': textarea_SimpleResize
     }
   },
   'tooltip': {

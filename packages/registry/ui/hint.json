@@ -1,0 +1,76 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "hint",
+  "type": "registry:ui",
+  "title": "Hint",
+  "description": "A hint text component for form fields with icon, error, and disabled states. Uses namespace exports: Hint.Root, Hint.Icon.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": [
+    "happly-ui-utils",
+    "polymorphic",
+    "recursive-clone-children",
+    "tv"
+  ],
+  "docs": {
+    "lead": "A hint text component for form fields with icon support and error/disabled states.",
+    "usage": "import * as Hint from \"@/components/ui/hint\"\n\n<Hint.Root>\n  <Hint.Icon as={RiInformationFill} />\n  This is a hint text.\n</Hint.Root>",
+    "examples": [
+      {
+        "title": "Demo",
+        "description": "Hint with icon and text.",
+        "code": "<Hint.Root>\n  <Hint.Icon as={RiInformationFill} />\n  This is a hint text to help user.\n</Hint.Root>",
+        "stories": ["Demo"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Hint in disabled state.",
+        "code": "<Hint.Root disabled>\n  <Hint.Icon as={RiInformationFill} />\n  This is a hint text to help user.\n</Hint.Root>",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "Has Error",
+        "description": "Hint in error state.",
+        "code": "<Hint.Root hasError>\n  <Hint.Icon as={RiInformationFill} />\n  This is a hint text to help user.\n</Hint.Root>",
+        "stories": ["HasError"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Hint.Root",
+        "description": "The root hint container.",
+        "props": [
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Show error styling"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Show disabled styling"
+          }
+        ]
+      },
+      {
+        "name": "Hint.Icon",
+        "description": "Icon displayed before the hint text.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "description": "The icon component to render"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/hint.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

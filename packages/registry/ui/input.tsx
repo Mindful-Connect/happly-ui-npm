@@ -1,76 +1,93 @@
-import * as React from 'react';
-import { type ClassValue } from 'clsx';
-import { cn } from '@/lib/happly-ui-utils';
-import type { ReactElement, SVGProps } from 'react';
+'use client';
 
-const inputClassConfig = {
+import * as React from 'react';
+import { Slot } from '@radix-ui/react-slot';
+
+import type { PolymorphicComponentProps } from '@/lib/polymorphic';
+import { recursiveCloneChildren } from '@/lib/recursive-clone-children';
+import { tv, type VariantProps } from '@/lib/tv';
+
+const INPUT_ROOT_NAME = 'InputRoot';
+const INPUT_WRAPPER_NAME = 'InputWrapper';
+const INPUT_EL_NAME = 'InputEl';
+const INPUT_ICON_NAME = 'InputIcon';
+const INPUT_AFFIX_NAME = 'InputAffixButton';
+const INPUT_INLINE_AFFIX_NAME = 'InputInlineAffixButton';
+
+export const inputVariants = tv({
   slots: {
     root: [
       // base
-      'group relative flex w-full overflow-hidden bg-ds-white-0 text-ds-strong-950 shadow-regular-xs',
+      'group relative flex w-full overflow-hidden bg-bg-white-0 text-text-strong-950 shadow-regular-xs',
       'transition duration-200 ease-out',
-      'divide-x divide-ds-stroke-soft-200',
-      // before pseudo-element for border/ring
-      'before:absolute before:inset-0 before:ring-1 before:ring-inset before:ring-ds-stroke-soft-200',
+      'divide-x divide-stroke-soft-200',
+      // before
+      'before:absolute before:inset-0 before:ring-1 before:ring-inset before:ring-stroke-soft-200',
       'before:pointer-events-none before:rounded-[inherit]',
       'before:transition before:duration-200 before:ease-out',
-      // focus state
-      'focus-within:shadow-button-important-focus focus-within:before:ring-ds-stroke-strong-950',
-      // disabled state
-      '[&:has(input:disabled)]:pointer-events-none',
-      '[&:has(input:disabled)]:!bg-ds-weak-50',
-      '[&:has(input:disabled)]:shadow-none',
-
-      // '[&:has(input:disabled)]:before:ring-transparent',
-      '[&:has(input:disabled)]:before:ring-transparent',
-      '[&:has(input:disabled):not(:has([data-affix]))]:before:ring-transparent',
-      '[&:has(input:disabled):has([data-affix])]:before:ring-ds-stroke-soft-200',
-
-      '[&:has(input:disabled)]:hover:before:ring-ds-neutral-200',
+      // hover
+      'hover:shadow-none',
+      // focus
+      'has-[input:focus]:shadow-button-important-focus has-[input:focus]:before:ring-stroke-strong-950',
+      // disabled
+      'has-[input:disabled]:shadow-none has-[input:disabled]:before:ring-transparent',
     ],
     wrapper: [
-      'group/input-wrapper flex w-full cursor-text items-center bg-ds-white-0',
+      // base
+      'group/input-wrapper flex w-full cursor-text items-center bg-bg-white-0',
       'transition duration-200 ease-out',
-      'hover:[&:not(&:has(:focus-within))]:bg-ds-white-0',
-      // disabled state
-      '[&:has(input:disabled)]:pointer-events-none',
-      '[&:has(input:disabled)]:!bg-ds-weak-50',
+      // hover
+      'hover:[&:not(&:has(input:focus))]:bg-bg-weak-50',
+      // disabled
+      'has-[input:disabled]:pointer-events-none has-[input:disabled]:bg-bg-weak-50',
     ],
     input: [
-      'w-full bg-transparent !text-paragraph-sm text-ds-strong-950 outline-none',
+      // base
+      'w-full border-0 bg-transparent bg-none p-0 text-paragraph-sm text-text-strong-950 outline-none ring-0 focus:border-0 focus:ring-0',
       'transition duration-200 ease-out',
-      'placeholder:select-none placeholder:text-ds-soft-400 placeholder:transition placeholder:duration-200 placeholder:ease-out',
-      'group-hover/input-wrapper:[&:not(:focus-within)]:placeholder:text-ds-sub-600',
-      'focus-within:placeholder:text-ds-sub-600',
-      'group-has-[input:focus]:placeholder:text-ds-sub-600',
-      'disabled:text-ds-disabled-300 disabled:placeholder:!text-ds-disabled-300',
+      // placeholder
+      'placeholder:select-none placeholder:text-text-soft-400 placeholder:transition placeholder:duration-200 placeholder:ease-out',
+      // hover placeholder
+      'group-hover/input-wrapper:placeholder:text-text-sub-600',
+      // focus
+      'focus:outline-none',
+      // focus placeholder
+      'group-has-[input:focus]:placeholder:text-text-sub-600',
+      // disabled
+      'disabled:text-text-disabled-300 disabled:placeholder:text-text-disabled-300',
     ],
     icon: [
-      'flex h-5 w-5 shrink-0 select-none items-center justify-center',
+      // base
+      'flex size-5 shrink-0 select-none items-center justify-center',
       'transition duration-200 ease-out',
-      'text-ds-soft-400',
-      'group-hover:text-ds-sub-600',
-      'group-focus-within:text-ds-sub-600',
-      // Disabled state
-      'group-has-[input:disabled]:!text-ds-disabled-300',
+      // placeholder state
+      'group-has-[:placeholder-shown]:text-text-soft-400',
+      // filled state
+      'text-text-sub-600',
+      // hover
+      'group-has-[:placeholder-shown]:group-hover/input-wrapper:text-text-sub-600',
+      // focus
+      'group-has-[:placeholder-shown]:group-has-[input:focus]/input-wrapper:text-text-sub-600',
+      // disabled
+      'group-has-[input:disabled]/input-wrapper:text-text-disabled-300',
     ],
     affix: [
-      'shrink-0 bg-ds-white-0 !text-paragraph-sm text-ds-soft-400',
+      // base
+      'shrink-0 bg-bg-white-0 text-paragraph-sm text-text-sub-600',
       'flex items-center justify-center truncate',
       'transition duration-200 ease-out',
-      'group-hover/input-wrapper:text-ds-sub-600',
-      'group-focus-within:text-ds-sub-600',
-      // Disabled state
-      'group-has-[input:disabled]:!bg-ds-weak-50',
-      'group-has-[input:disabled]:!text-ds-disabled-300',
+      // placeholder state
+      'group-has-[:placeholder-shown]:text-text-soft-400',
+      // focus state
+      'group-has-[:placeholder-shown]:group-has-[input:focus]:text-text-sub-600',
     ],
     inlineAffix: [
-      '!text-paragraph-sm text-ds-soft-400',
-      'transition duration-200 ease-out',
-      'group-hover/input-wrapper:text-ds-sub-600',
-      'group-focus-within:text-ds-sub-600',
-      // Disabled state
-      'group-has-[input:disabled]:!text-ds-disabled-300',
+      // base
+      'text-paragraph-sm text-text-sub-600',
+      // placeholder state
+      'group-has-[:placeholder-shown]:text-text-soft-400',
+      // focus state
+      'group-has-[:placeholder-shown]:group-has-[input:focus]:text-text-sub-600',
     ],
   },
   variants: {
@@ -81,12 +98,12 @@ const inputClassConfig = {
         input: 'h-10',
       },
       small: {
-        root: 'rounded-10',
+        root: 'rounded-lg',
         wrapper: 'gap-2 px-2.5',
         input: 'h-9',
       },
       xsmall: {
-        root: 'rounded-10',
+        root: 'rounded-lg',
         wrapper: 'gap-1.5 px-2',
         input: 'h-8',
       },
@@ -94,15 +111,18 @@ const inputClassConfig = {
     hasError: {
       true: {
         root: [
-          'before:ring-ds-error-base',
-          'hover:ring-ds-error-base',
-          'focus-within:shadow-button-error-focus focus-within:before:ring-ds-error-base',
-          'has-error',
+          // base
+          'before:ring-error-base',
+          // base
+          'hover:before:ring-error-base hover:[&:not(&:has(input:focus)):has(>:only-child)]:before:ring-error-base',
+          // focus
+          'has-[input:focus]:shadow-button-error-focus has-[input:focus]:before:ring-error-base',
         ],
       },
       false: {
         root: [
-          'hover:[&:not(:has(input:focus)):has(>:only-child)]:before:ring-ds-neutral-300',
+          // hover
+          'hover:[&:not(:has(input:focus)):has(>:only-child)]:before:ring-transparent',
         ],
       },
     },
@@ -124,244 +144,171 @@ const inputClassConfig = {
   defaultVariants: {
     size: 'medium',
   },
-};
+});
 
-// Type definition for the slots in inputClassConfig
-type InputSlotName = keyof (typeof inputClassConfig)['slots'];
+type InputSharedProps = VariantProps<typeof inputVariants>;
 
-// Props for the Input component
-export interface InputProps extends Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  'size'
-> {
-  size?: 'medium' | 'small' | 'xsmall';
-  hasError?: boolean;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
-  leftAffix?: React.ReactNode;
-  rightAffix?: React.ReactNode;
-  inlineAffix?: React.ReactNode;
-  /** Content to display at the end of the input area (e.g., status indicator) */
-  endContent?: React.ReactNode;
-  /** Inline suffix displayed immediately after the input text */
-  suffix?: string;
-  wrapperClassName?: string;
-  inputClassName?: string;
-  inputStyle?: React.CSSProperties;
-  leftIconClassName?: string;
-  rightIconClassName?: string;
-  leftAffixClassName?: string;
-  rightAffixClassName?: string;
-  inlineAffixClassName?: string;
-  /** Keep left affix interactive when input is disabled */
-  leftAffixEnabled?: boolean;
-  /** Keep right affix interactive when input is disabled */
-  rightAffixEnabled?: boolean;
-}
+function InputRoot({
+  className,
+  children,
+  size,
+  hasError,
+  asChild,
+  ...rest
+}: React.HTMLAttributes<HTMLDivElement> &
+  InputSharedProps & {
+    asChild?: boolean;
+  }) {
+  const uniqueId = React.useId();
+  const Component = asChild ? Slot : 'div';
 
-// Helper function to generate class strings for a specific slot
-function generateSlotClasses(
-  slotName: InputSlotName,
-  props: { size?: 'medium' | 'small' | 'xsmall'; hasError?: boolean },
-  additionalClasses?: ClassValue
-): string {
-  const { size = inputClassConfig.defaultVariants.size, hasError = false } =
-    props;
-  const classes: ClassValue[] = [];
-
-  if (inputClassConfig.slots[slotName]) {
-    classes.push(inputClassConfig.slots[slotName]);
-  }
-
-  const sizeVariant =
-    inputClassConfig.variants.size[
-      size as keyof typeof inputClassConfig.variants.size
-    ];
-  if (sizeVariant && sizeVariant[slotName as keyof typeof sizeVariant]) {
-    classes.push(sizeVariant[slotName as keyof typeof sizeVariant]);
-  }
-
-  const errorVariantKey = hasError ? 'true' : 'false';
-  const errorVariant =
-    inputClassConfig.variants.hasError[
-      errorVariantKey as keyof typeof inputClassConfig.variants.hasError
-    ];
-  if (errorVariant && errorVariant[slotName as keyof typeof errorVariant]) {
-    classes.push(errorVariant[slotName as keyof typeof errorVariant]);
-  }
-
-  // 4. Compound variants
-  inputClassConfig.compoundVariants.forEach((cv) => {
-    let match = true;
-    if (cv.size) {
-      if (Array.isArray(cv.size)) {
-        match = cv.size.includes(size);
-      } else {
-        match = cv.size === size;
-      }
-    }
-
-    if (match && cv.class && cv.class[slotName as keyof typeof cv.class]) {
-      classes.push(cv.class[slotName as keyof typeof cv.class]);
-    }
+  const { root } = inputVariants({
+    size,
+    hasError,
   });
 
-  if (additionalClasses) {
-    classes.push(additionalClasses);
-  }
+  const sharedProps: InputSharedProps = {
+    size,
+    hasError,
+  };
 
-  return cn(classes);
+  const extendedChildren = recursiveCloneChildren(
+    children as React.ReactElement[],
+    sharedProps,
+    [
+      INPUT_WRAPPER_NAME,
+      INPUT_EL_NAME,
+      INPUT_ICON_NAME,
+      INPUT_AFFIX_NAME,
+      INPUT_INLINE_AFFIX_NAME,
+    ],
+    uniqueId,
+    asChild,
+  );
+
+  return (
+    <Component className={root({ class: className })} {...rest}>
+      {extendedChildren}
+    </Component>
+  );
 }
+InputRoot.displayName = INPUT_ROOT_NAME;
 
-function renderSlotContent(
-  node: React.ReactNode,
-  slot: InputSlotName,
-  variantProps: Parameters<typeof generateSlotClasses>[1],
-  extraClass?: string
-): React.ReactNode {
-  if (!React.isValidElement(node)) return null;
+function InputWrapper({
+  className,
+  children,
+  size,
+  hasError,
+  asChild,
+  ...rest
+}: React.HTMLAttributes<HTMLLabelElement> &
+  InputSharedProps & {
+    asChild?: boolean;
+  }) {
+  const Component = asChild ? Slot : 'label';
 
-  const el = node as ReactElement<SVGProps<SVGSVGElement>>;
-  return React.cloneElement(el, {
-    className: generateSlotClasses(slot, variantProps, extraClass),
+  const { wrapper } = inputVariants({
+    size,
+    hasError,
   });
-}
 
-// The main Input component, styled like shadcn/ui components.
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  return (
+    <Component className={wrapper({ class: className })} {...rest}>
+      {children}
+    </Component>
+  );
+}
+InputWrapper.displayName = INPUT_WRAPPER_NAME;
+
+const InputEl = React.forwardRef<
+  HTMLInputElement,
+  React.InputHTMLAttributes<HTMLInputElement> &
+    InputSharedProps & {
+      asChild?: boolean;
+    }
+>(
   (
-    {
-      className,
-      wrapperClassName,
-      inputClassName,
-      inputStyle,
-      leftIconClassName,
-      rightIconClassName,
-      leftAffixClassName,
-      rightAffixClassName,
-      inlineAffixClassName,
-      type = 'text',
-      size: propSize,
-      hasError: propHasError,
-      leftIcon,
-      rightIcon,
-      leftAffix,
-      rightAffix,
-      inlineAffix,
-      endContent,
-      suffix,
-      leftAffixEnabled,
-      rightAffixEnabled,
-      id,
-      ...props
-    },
-    ref
+    { className, type = 'text', size, hasError, asChild, ...rest },
+    forwardedRef,
   ) => {
-    type InputSize = keyof typeof inputClassConfig.variants.size; // "medium" | "small" | "xsmall"
-    const currentSize: InputSize = (propSize ??
-      inputClassConfig.defaultVariants.size) as InputSize;
-    const currentHasError = propHasError || false;
-    const variantProps: Parameters<typeof generateSlotClasses>[1] = {
-      size: currentSize,
-      hasError: currentHasError,
-    };
+    const Component = asChild ? Slot : 'input';
 
-    const generatedId = React.useId();
-    const inputId = id || generatedId;
-
-    const renderedLeftIcon = renderSlotContent(
-      leftIcon,
-      'icon',
-      variantProps,
-      leftIconClassName
-    );
-    const renderedRightIcon = renderSlotContent(
-      rightIcon,
-      'icon',
-      variantProps,
-      rightIconClassName
-    );
+    const { input } = inputVariants({
+      size,
+      hasError,
+    });
 
     return (
-      <div
-        className={generateSlotClasses('root', variantProps, className)}
-        ref={ref}
-      >
-        {leftAffix && (
-          <div
-            data-affix
-            className={cn(
-              generateSlotClasses('affix', variantProps, leftAffixClassName),
-              leftAffixEnabled &&
-                '!bg-ds-white-0 !text-ds-soft-400 !pointer-events-auto'
-            )}
-          >
-            {leftAffix}
-          </div>
-        )}
-
-        <div
-          // htmlFor={inputId}
-          className={generateSlotClasses(
-            'wrapper',
-            variantProps,
-            wrapperClassName
-          )}
-        >
-          {renderedLeftIcon}
-          <input
-            {...props} // Spread other native input attributes (placeholder, disabled, value, onChange, etc.)
-            type={type}
-            id={inputId}
-            ref={ref}
-            className={cn(
-              generateSlotClasses('input', variantProps, inputClassName),
-              'border-none bg-transparent p-0 outline-none focus:border-none focus:ring-0 focus:outline-none',
-              'placeholder:truncate placeholder-shown:truncate'
-            )}
-            style={inputStyle}
-            {...props} // Spread other native input attributes (placeholder, disabled, value, onChange, etc.)
-          />
-          {suffix && (
-            <span
-              className={cn(
-                '!text-paragraph-sm text-ds-disabled-300 shrink-0 whitespace-nowrap'
-              )}
-            >
-              {suffix}
-            </span>
-          )}
-          {inlineAffix && (
-            <span
-              className={generateSlotClasses(
-                'inlineAffix',
-                variantProps,
-                inlineAffixClassName
-              )}
-            >
-              {inlineAffix}
-            </span>
-          )}
-          {endContent && <div className='shrink-0'>{endContent}</div>}
-          {renderedRightIcon}
-        </div>
-
-        {rightAffix && (
-          <div
-            data-affix
-            className={cn(
-              generateSlotClasses('affix', variantProps, rightAffixClassName),
-              rightAffixEnabled &&
-                '!bg-ds-white-0 !text-ds-soft-400 !pointer-events-auto'
-            )}
-          >
-            {rightAffix}
-          </div>
-        )}
-      </div>
+      <Component
+        type={type}
+        className={input({ class: className })}
+        ref={forwardedRef}
+        {...rest}
+      />
     );
-  }
+  },
 );
-Input.displayName = 'Input';
+InputEl.displayName = INPUT_EL_NAME;
 
-export { Input };
+function InputIcon<T extends React.ElementType = 'div'>({
+  size,
+  hasError,
+  as,
+  className,
+  ...rest
+}: PolymorphicComponentProps<T, InputSharedProps>) {
+  const Component = as || 'div';
+  const { icon } = inputVariants({ size, hasError });
+
+  return <Component className={icon({ class: className })} {...rest} />;
+}
+InputIcon.displayName = INPUT_ICON_NAME;
+
+function InputAffix({
+  className,
+  children,
+  size,
+  hasError,
+  ...rest
+}: React.HTMLAttributes<HTMLDivElement> & InputSharedProps) {
+  const { affix } = inputVariants({
+    size,
+    hasError,
+  });
+
+  return (
+    <div className={affix({ class: className })} {...rest}>
+      {children}
+    </div>
+  );
+}
+InputAffix.displayName = INPUT_AFFIX_NAME;
+
+function InputInlineAffix({
+  className,
+  children,
+  size,
+  hasError,
+  ...rest
+}: React.HTMLAttributes<HTMLSpanElement> & InputSharedProps) {
+  const { inlineAffix } = inputVariants({
+    size,
+    hasError,
+  });
+
+  return (
+    <span className={inlineAffix({ class: className })} {...rest}>
+      {children}
+    </span>
+  );
+}
+InputInlineAffix.displayName = INPUT_INLINE_AFFIX_NAME;
+
+export {
+  InputRoot as Root,
+  InputWrapper as Wrapper,
+  InputEl as Input,
+  InputIcon as Icon,
+  InputAffix as Affix,
+  InputInlineAffix as InlineAffix,
+};

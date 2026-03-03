@@ -158,12 +158,32 @@
         "href": "/docs/components/card"
       },
       {
+        "title": "Checkbox",
+        "href": "/docs/components/checkbox"
+      },
+      {
         "title": "Circular Progress",
         "href": "/docs/components/circular-progress"
       },
       {
+        "title": "Color Picker",
+        "href": "/docs/components/color-picker"
+      },
+      {
         "title": "Currency Input",
         "href": "/docs/components/currency-input"
+      },
+      {
+        "title": "Datepicker",
+        "href": "/docs/components/datepicker"
+      },
+      {
+        "title": "Digit Input",
+        "href": "/docs/components/digit-input"
+      },
+      {
+        "title": "Hint",
+        "href": "/docs/components/hint"
       },
       {
         "title": "Input",
@@ -176,6 +196,10 @@
       {
         "title": "Location Input",
         "href": "/docs/components/location-input"
+      },
+      {
+        "title": "Radio",
+        "href": "/docs/components/radio"
       },
       {
         "title": "Radio Card Group",
@@ -194,8 +218,16 @@
         "href": "/docs/components/select"
       },
       {
+        "title": "Slider",
+        "href": "/docs/components/slider"
+      },
+      {
         "title": "Socials Input",
         "href": "/docs/components/socials-input"
+      },
+      {
+        "title": "Switch",
+        "href": "/docs/components/switch"
       },
       {
         "title": "Textarea",

@@ -1,109 +1,189 @@
+'use client';
+
 import * as React from 'react';
+
 import { cn } from '@/lib/happly-ui-utils';
 
-type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
-  hasError?: boolean;
-};
+const Textarea = React.forwardRef<
+  HTMLTextAreaElement,
+  React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
+    hasError?: boolean;
+    simple?: boolean;
+  }
+>(({ className, hasError, simple, disabled, ...rest }, forwardedRef) => {
+  return (
+    <textarea
+      className={cn(
+        [
+          // base
+          'block w-full resize-none border-none text-paragraph-sm text-text-strong-950 shadow-none outline-none ring-0',
+          !simple && [
+            'pointer-events-auto h-full min-h-[82px] bg-transparent pl-3 pr-2.5 pt-2.5',
+          ],
+          simple && [
+            'min-h-28 rounded-xl bg-bg-white-0 px-3 py-2.5 shadow-regular-xs',
+            'ring-1 ring-inset ring-stroke-soft-200',
+            'transition duration-200 ease-out',
+            // hover
+            'hover:[&:not(:focus)]:bg-bg-weak-50',
+            !hasError && [
+              // hover
+              'hover:[&:not(:focus)]:ring-transparent',
+              // focus
+              'focus:shadow-button-important-focus focus:ring-stroke-strong-950',
+            ],
+            hasError && [
+              // base
+              'ring-error-base',
+              // focus
+              'focus:shadow-button-error-focus focus:ring-error-base',
+            ],
+            disabled && ['bg-bg-weak-50 ring-transparent'],
+          ],
+          !disabled && [
+            // placeholder
+            'placeholder:select-none placeholder:text-text-soft-400 placeholder:transition placeholder:duration-200 placeholder:ease-out',
+            // hover placeholder
+            'group-hover/textarea:placeholder:text-text-sub-600',
+            // focus
+            'focus:outline-none',
+            // focus placeholder
+            'focus:placeholder:text-text-sub-600',
+          ],
+          disabled && [
+            // disabled
+            'text-text-disabled-300 placeholder:text-text-disabled-300',
+          ],
+        ],
+        className,
+      )}
+      ref={forwardedRef}
+      disabled={disabled}
+      {...rest}
+    />
+  );
+});
+Textarea.displayName = 'Textarea';
 
-const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+function ResizeHandle() {
+  return (
+    <div className='pointer-events-none size-3 cursor-s-resize'>
+      <svg
+        width='12'
+        height='12'
+        viewBox='0 0 12 12'
+        fill='none'
+        xmlns='http://www.w3.org/2000/svg'
+      >
+        <path
+          d='M9.11111 2L2 9.11111M10 6.44444L6.44444 10'
+          className='stroke-text-soft-400'
+        />
+      </svg>
+    </div>
+  );
+}
+ResizeHandle.displayName = 'ResizeHandle';
+
+type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> &
   (
-    {
-      className,
-      hasError = false,
-      disabled,
-      maxLength,
-      defaultValue,
-      value: externalValue,
-      onChange,
-      ...props
-    },
-    ref
-  ) => {
-    // Internal state for uncontrolled usage
-    const [value, setValue] = React.useState<string>(() =>
-      typeof defaultValue === 'string' ? defaultValue : ''
-    );
-
-    // Keep in sync if it's a controlled component
-    React.useEffect(() => {
-      if (externalValue !== undefined) {
-        setValue(String(externalValue));
+    | {
+        simple: true;
+        children?: never;
+        containerClassName?: never;
+        hasError?: boolean;
       }
-    }, [externalValue]);
+    | {
+        simple?: false;
+        children?: React.ReactNode;
+        containerClassName?: string;
+        hasError?: boolean;
+      }
+  );
 
-    // Combined change handler
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setValue(e.target.value);
-      onChange?.(e);
-    };
+const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+  (
+    { containerClassName, children, hasError, simple, ...rest },
+    forwardedRef,
+  ) => {
+    if (simple) {
+      return (
+        <Textarea ref={forwardedRef} simple hasError={hasError} {...rest} />
+      );
+    }
 
     return (
-      <div className='group relative'>
-        <textarea
-          ref={ref}
-          disabled={disabled}
-          maxLength={maxLength}
-          value={externalValue !== undefined ? externalValue : value}
-          onChange={handleChange}
-          className={cn(
-            // base reset
-            '!text-paragraph-sm text-ds-strong-950 block w-full resize-none border-none outline-none',
-
-            // box + padding
-            'rounded-12 bg-ds-white-0 shadow-regular-xs min-h-[160px] px-3 py-2.5',
-
-            // base inset ring
-            'ring-ds-stroke-soft-200 ring-1 ring-inset',
-
-            // smooth transitions
+      <div
+        className={cn(
+          [
+            // base
+            'group/textarea relative flex w-full flex-col rounded-xl bg-bg-white-0 pb-2.5 shadow-regular-xs',
+            'ring-1 ring-inset ring-stroke-soft-200',
             'transition duration-200 ease-out',
-
-            // hover BG & hide stroke when unfocused
-            'hover:[&:not(:focus)]:bg-ds-weak-50',
-            !hasError && 'hover:[&:not(:focus)]:ring-transparent',
-
-            // error at rest & on hover
-            hasError && 'ring-ds-error-base hover:ring-ds-error-base',
-
-            // focus: recolor the same inset stroke + shadow
-            'focus-visible:shadow-button-important-focus focus-visible:ring-ds-stroke-strong-950 focus-visible:ring-1 focus-visible:ring-inset',
-
-            // error on focus
-            hasError &&
-              'focus-visible:shadow-button-error-focus focus-visible:ring-ds-error-base',
-
+            // hover
+            'hover:[&:not(:focus-within)]:bg-bg-weak-50',
             // disabled
-            disabled && 'bg-ds-weak-50 ring-transparent',
-
-            // placeholder styling
-            !disabled &&
-              'placeholder:text-ds-soft-400 hover:placeholder:text-ds-sub-600 focus-visible:placeholder:text-ds-sub-600 placeholder:transition placeholder:duration-200 placeholder:ease-out placeholder:select-none',
-
-            // disabled placeholder/text
-            disabled && 'text-ds-disabled-300 placeholder:text-ds-disabled-300',
-
-            // truncate placeholder
-            'placeholder:truncate placeholder-shown:truncate',
-
-            className
-          )}
-          {...props}
-        />
-
-        {typeof maxLength === 'number' && (
-          <span
-            className={cn(
-              '!text-paragraph-xxs pointer-events-none absolute right-3 bottom-2',
-              disabled ? 'text-ds-disabled-300' : 'text-ds-soft-400'
-            )}
-          >
-            {value.length} / {maxLength}
-          </span>
+            'has-[[disabled]]:pointer-events-none has-[[disabled]]:bg-bg-weak-50 has-[[disabled]]:ring-transparent',
+          ],
+          !hasError && [
+            // hover
+            'hover:[&:not(:focus-within)]:ring-transparent',
+            // focus
+            'focus-within:shadow-button-important-focus focus-within:ring-stroke-strong-950',
+          ],
+          hasError && [
+            // base
+            'ring-error-base',
+            // focus
+            'focus-within:shadow-button-error-focus focus-within:ring-error-base',
+          ],
+          containerClassName,
         )}
+      >
+        <div className='grid'>
+          <div className='pointer-events-none relative z-10 flex flex-col gap-2 [grid-area:1/1]'>
+            <Textarea ref={forwardedRef} hasError={hasError} {...rest} />
+            <div className='pointer-events-none flex items-center justify-end gap-1.5 pl-3 pr-2.5'>
+              {children}
+              <ResizeHandle />
+            </div>
+          </div>
+          <div className='min-h-full resize-y overflow-hidden opacity-0 [grid-area:1/1]' />
+        </div>
       </div>
     );
-  }
+  },
 );
+TextareaRoot.displayName = 'TextareaRoot';
 
-Textarea.displayName = 'Textarea';
-export { Textarea };
+function CharCounter({
+  current,
+  max,
+  className,
+}: {
+  current?: number;
+  max?: number;
+} & React.HTMLAttributes<HTMLSpanElement>) {
+  if (current === undefined || max === undefined) return null;
+
+  const isError = current > max;
+
+  return (
+    <span
+      className={cn(
+        'text-subheading-2xs text-text-soft-400',
+        // disabled
+        'group-has-[[disabled]]/textarea:text-text-disabled-300',
+        {
+          'text-error-base': isError,
+        },
+        className,
+      )}
+    >
+      {current}/{max}
+    </span>
+  );
+}
+CharCounter.displayName = 'CharCounter';
+
+export { TextareaRoot as Root, CharCounter };
