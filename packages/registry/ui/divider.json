@@ -20,13 +20,13 @@
         "title": "Line with Spacing",
         "description": "A line divider with vertical spacing.",
         "code": "<Divider.Root variant=\"line-spacing\" />",
-        "stories": ["LineWithSpacing"]
+        "stories": ["LineSpacing"]
       },
       {
         "title": "Line with Text",
         "description": "A divider with centered text between the lines.",
         "code": "<Divider.Root variant=\"line-text\">OR</Divider.Root>\n<Divider.Root variant=\"line-text\">Continue with</Divider.Root>",
-        "stories": ["LineWithText"]
+        "stories": ["LineText"]
       },
       {
         "title": "Text Only",

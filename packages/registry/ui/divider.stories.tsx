@@ -1,69 +1,58 @@
-import { Root } from './divider';
+import { RiAddLine } from '@remixicon/react';
 
-export default { title: 'UI/Divider', component: Root };
+import * as Divider from './divider';
+import * as Button from './button';
+
+export default { title: 'UI/Divider', component: Divider.Root };
 
 export const Line = {
   render: () => (
-    <div style={{ width: '100%', maxWidth: '400px' }}>
-      <Root variant="line" />
+    <div className='w-96'>
+      <Divider.Root variant='line' />
     </div>
   ),
 };
 
-export const LineWithSpacing = {
+export const LineSpacing = {
   render: () => (
-    <div style={{ width: '100%', maxWidth: '400px' }}>
-      <Root variant="line-spacing" />
+    <div className='w-96'>
+      <Divider.Root variant='line-spacing' />
     </div>
   ),
 };
 
-export const LineWithText = {
+export const LineText = {
   render: () => (
-    <div style={{ width: '100%', maxWidth: '400px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      <Root variant="line-text">OR</Root>
-      <Root variant="line-text">Continue with</Root>
+    <div className='w-96'>
+      <Divider.Root variant='line-text'>OR</Divider.Root>
     </div>
   ),
 };
 
 export const TextOnly = {
   render: () => (
-    <div style={{ width: '100%', maxWidth: '400px' }}>
-      <Root variant="text">Section</Root>
+    <div className='w-96'>
+      <Divider.Root variant='text'>OR</Divider.Root>
     </div>
   ),
 };
 
 export const SolidText = {
   render: () => (
-    <div style={{ width: '100%', maxWidth: '400px' }}>
-      <Root variant="solid-text">OR</Root>
+    <div className='w-96'>
+      <Divider.Root variant='solid-text'>Amount &amp; Account</Divider.Root>
     </div>
   ),
 };
 
 export const Content = {
   render: () => (
-    <div style={{ width: '100%', maxWidth: '400px' }}>
-      <Root variant="content">
-        <button
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '28px',
-            height: '28px',
-            borderRadius: '6px',
-            border: '1px solid #e5e5e5',
-            background: 'white',
-            cursor: 'pointer',
-            fontSize: '16px',
-          }}
-        >
-          +
-        </button>
-      </Root>
+    <div className='w-96'>
+      <Divider.Root variant='content'>
+        <Button.Root variant='neutral' mode='stroke' size='xsmall'>
+          <Button.Icon as={RiAddLine} />
+        </Button.Root>
+      </Divider.Root>
     </div>
   ),
 };

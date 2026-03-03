@@ -12,7 +12,7 @@ import { default as calendarInputMeta, BasicUsage as calendarInput_BasicUsage } 
 import { default as circularProgressMeta, Default as circularProgress_Default, WithColorVariants as circularProgress_WithColorVariants } from '@/components/ui/circular-progress.stories';
 import { default as compactButtonMeta, Stroke as compactButton_Stroke, Ghost as compactButton_Ghost, White as compactButton_White, Modifiable as compactButton_Modifiable, Sizes as compactButton_Sizes, FullRadius as compactButton_FullRadius, Disabled as compactButton_Disabled, AsChild as compactButton_AsChild } from '@/components/ui/compact-button.stories';
 import { default as currencyInputMeta, Default as currencyInput_Default } from '@/components/ui/currency-input.stories';
-import { default as dividerMeta, Line as divider_Line, LineWithSpacing as divider_LineWithSpacing, LineWithText as divider_LineWithText, TextOnly as divider_TextOnly, SolidText as divider_SolidText, Content as divider_Content } from '@/components/ui/divider.stories';
+import { default as dividerMeta, Line as divider_Line, LineSpacing as divider_LineSpacing, LineText as divider_LineText, TextOnly as divider_TextOnly, SolidText as divider_SolidText, Content as divider_Content } from '@/components/ui/divider.stories';
 import { default as fancyButtonMeta, Neutral as fancyButton_Neutral, Primary as fancyButton_Primary, Error as fancyButton_Error, Basic as fancyButton_Basic, WithIcon as fancyButton_WithIcon, Sizes as fancyButton_Sizes, Disabled as fancyButton_Disabled, AsChild as fancyButton_AsChild } from '@/components/ui/fancy-button.stories';
 import { default as inputMeta, Sizes as input_Sizes, Icons as input_Icons, Affixes as input_Affixes, States as input_States } from '@/components/ui/input.stories';
 import { default as linkButtonMeta, Gray as linkButton_Gray, Black as linkButton_Black, Primary as linkButton_Primary, Error as linkButton_Error, Modifiable as linkButton_Modifiable, Sizes as linkButton_Sizes, Underline as linkButton_Underline, WithIcon as linkButton_WithIcon, Disabled as linkButton_Disabled, AsChild as linkButton_AsChild } from '@/components/ui/link-button.stories';
@@ -145,8 +145,8 @@ export const storyRegistry: Record<string, {
     meta: dividerMeta,
     stories: {
     'Line': divider_Line,
-    'LineWithSpacing': divider_LineWithSpacing,
-    'LineWithText': divider_LineWithText,
+    'LineSpacing': divider_LineSpacing,
+    'LineText': divider_LineText,
     'TextOnly': divider_TextOnly,
     'SolidText': divider_SolidText,
     'Content': divider_Content
