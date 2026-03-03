@@ -88,6 +88,12 @@
       "description": "A versatile divider component for creating visual separation between content elements. Supports multiple variants including line, text, and content dividers."
     },
     {
+      "name": "fancy-button",
+      "type": "registry:ui",
+      "title": "Fancy Button",
+      "description": "A compound button component with gradient overlay effects, multiple variants, and sizes. Uses namespace exports: FancyButton.Root, FancyButton.Icon."
+    },
+    {
       "name": "happly-ui-utils",
       "type": "registry:lib",
       "title": "Happly UI Utils",

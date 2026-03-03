@@ -9,6 +9,7 @@ import { default as circularProgressMeta, Default as circularProgress_Default, W
 import { default as compactButtonMeta, Stroke as compactButton_Stroke, Ghost as compactButton_Ghost, White as compactButton_White, Modifiable as compactButton_Modifiable, Sizes as compactButton_Sizes, FullRadius as compactButton_FullRadius, Disabled as compactButton_Disabled, AsChild as compactButton_AsChild } from '@/components/ui/compact-button.stories';
 import { default as currencyInputMeta, Default as currencyInput_Default } from '@/components/ui/currency-input.stories';
 import { default as dividerMeta, Line as divider_Line, LineWithSpacing as divider_LineWithSpacing, LineWithText as divider_LineWithText, TextOnly as divider_TextOnly, SolidText as divider_SolidText, Content as divider_Content } from '@/components/ui/divider.stories';
+import { default as fancyButtonMeta, Neutral as fancyButton_Neutral, Primary as fancyButton_Primary, Error as fancyButton_Error, Basic as fancyButton_Basic, WithIcon as fancyButton_WithIcon, Sizes as fancyButton_Sizes, Disabled as fancyButton_Disabled, AsChild as fancyButton_AsChild } from '@/components/ui/fancy-button.stories';
 import { default as inputMeta, Sizes as input_Sizes, Icons as input_Icons, Affixes as input_Affixes, States as input_States } from '@/components/ui/input.stories';
 import { default as locationInputMeta, Default as locationInput_Default } from '@/components/ui/location-input.stories';
 import { default as phoneInputMeta, Default as phoneInput_Default } from '@/components/ui/phone-input.stories';
@@ -105,6 +106,19 @@ export const storyRegistry: Record<string, {
     'TextOnly': divider_TextOnly,
     'SolidText': divider_SolidText,
     'Content': divider_Content
+    }
+  },
+  'fancy-button': {
+    meta: fancyButtonMeta,
+    stories: {
+    'Neutral': fancyButton_Neutral,
+    'Primary': fancyButton_Primary,
+    'Error': fancyButton_Error,
+    'Basic': fancyButton_Basic,
+    'WithIcon': fancyButton_WithIcon,
+    'Sizes': fancyButton_Sizes,
+    'Disabled': fancyButton_Disabled,
+    'AsChild': fancyButton_AsChild
     }
   },
   'input': {
