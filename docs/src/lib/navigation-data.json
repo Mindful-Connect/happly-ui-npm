@@ -42,24 +42,54 @@
         "collapsed": false
       },
       {
-        "title": "Avatar",
-        "href": "/docs/components/avatar"
-      },
-      {
-        "title": "Avatar Group",
-        "href": "/docs/components/avatar-group"
-      },
-      {
-        "title": "Avatar Group Compact",
-        "href": "/docs/components/avatar-group-compact"
-      },
-      {
-        "title": "Badge",
-        "href": "/docs/components/badge"
-      },
-      {
-        "title": "Banner",
-        "href": "/docs/components/banner"
+        "title": "Displaying data",
+        "links": [
+          {
+            "title": "Avatar",
+            "href": "/docs/components/avatar"
+          },
+          {
+            "title": "Avatar Group",
+            "href": "/docs/components/avatar-group"
+          },
+          {
+            "title": "Avatar Group Compact",
+            "href": "/docs/components/avatar-group-compact"
+          },
+          {
+            "title": "Badge",
+            "href": "/docs/components/badge"
+          },
+          {
+            "title": "Banner",
+            "href": "/docs/components/banner"
+          },
+          {
+            "title": "Divider",
+            "href": "/docs/components/divider"
+          },
+          {
+            "title": "Progress Bar",
+            "href": "/docs/components/progress-bar"
+          },
+          {
+            "title": "Progress Circle",
+            "href": "/docs/components/progress-circle"
+          },
+          {
+            "title": "Status Badge",
+            "href": "/docs/components/status-badge"
+          },
+          {
+            "title": "Table",
+            "href": "/docs/components/table"
+          },
+          {
+            "title": "Tag",
+            "href": "/docs/components/tag"
+          }
+        ],
+        "collapsed": false
       },
       {
         "title": "Calendar Input",
@@ -78,10 +108,6 @@
         "href": "/docs/components/currency-input"
       },
       {
-        "title": "Divider",
-        "href": "/docs/components/divider"
-      },
-      {
         "title": "Input",
         "href": "/docs/components/input"
       },
@@ -92,14 +118,6 @@
       {
         "title": "Location Input",
         "href": "/docs/components/location-input"
-      },
-      {
-        "title": "Progress Bar",
-        "href": "/docs/components/progress-bar"
-      },
-      {
-        "title": "Progress Circle",
-        "href": "/docs/components/progress-circle"
       },
       {
         "title": "Radio Card Group",
@@ -120,18 +138,6 @@
       {
         "title": "Socials Input",
         "href": "/docs/components/socials-input"
-      },
-      {
-        "title": "Status Badge",
-        "href": "/docs/components/status-badge"
-      },
-      {
-        "title": "Table",
-        "href": "/docs/components/table"
-      },
-      {
-        "title": "Tag",
-        "href": "/docs/components/tag"
       },
       {
         "title": "Textarea",

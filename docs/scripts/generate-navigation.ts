@@ -55,6 +55,20 @@ function main() {
     'link-button',
   ];
 
+  const DISPLAYING_DATA_COMPONENTS = [
+    'avatar',
+    'avatar-group',
+    'avatar-group-compact',
+    'badge',
+    'banner',
+    'divider',
+    'progress-bar',
+    'progress-circle',
+    'status-badge',
+    'table',
+    'tag',
+  ];
+
   const SUPPORT_COMPONENTS = [
     'command',
     'custom-input-wrapper',
@@ -64,7 +78,7 @@ function main() {
     'alert',
   ];
 
-  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...SUPPORT_COMPONENTS];
+  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...SUPPORT_COMPONENTS];
 
   const mainLinks = componentLinks
     .filter((item) => !GROUPED_COMPONENTS.includes(item.name))
@@ -72,6 +86,10 @@ function main() {
 
   const actionLinks = componentLinks
     .filter((item) => ACTION_COMPONENTS.includes(item.name))
+    .map(({ name, ...rest }) => rest);
+
+  const displayingDataLinks = componentLinks
+    .filter((item) => DISPLAYING_DATA_COMPONENTS.includes(item.name))
     .map(({ name, ...rest }) => rest);
 
   const supportLinks = componentLinks
@@ -93,6 +111,11 @@ function main() {
         {
           title: 'Actions',
           links: actionLinks,
+          collapsed: false,
+        },
+        {
+          title: 'Displaying data',
+          links: displayingDataLinks,
           collapsed: false,
         },
         ...mainLinks,
