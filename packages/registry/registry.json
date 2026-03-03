@@ -7,7 +7,7 @@
       "name": "alert",
       "type": "registry:ui",
       "title": "Alert",
-      "description": "Displays a callout for user attention."
+      "description": "A versatile alert component with multiple variants (filled, light, lighter, stroke), status colors (error, warning, success, information, feature), and sizes. Uses namespace exports: Alert.Root, Alert.Icon, Alert.CloseIcon."
     },
     {
       "name": "alert-utils",
