@@ -88,6 +88,12 @@
       "description": "Fast, composable, unstyled command menu for React."
     },
     {
+      "name": "command-menu",
+      "type": "registry:ui",
+      "title": "Command Menu",
+      "description": "A command menu component built on cmdk and Modal with search input, grouped items, and keyboard navigation footer. Uses namespace exports: CommandMenu.Dialog, CommandMenu.Input, CommandMenu.List, CommandMenu.Group, CommandMenu.Item, CommandMenu.ItemIcon, CommandMenu.Footer, CommandMenu.FooterKeyBox."
+    },
+    {
       "name": "compact-button",
       "type": "registry:ui",
       "title": "Compact Button",
@@ -118,6 +124,24 @@
       "description": "A versatile divider component for creating visual separation between content elements. Supports multiple variants including line, text, and content dividers."
     },
     {
+      "name": "dot-stepper",
+      "type": "registry:ui",
+      "title": "Dot Stepper",
+      "description": "A minimal dot-based stepper/pagination component with small and xsmall sizes. Supports asChild for Radix integration. Uses namespace exports: DotStepper.Root, DotStepper.Item."
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "A slide-in drawer panel built on Radix UI Dialog with overlay, header, body, and footer sections. Uses namespace exports: Drawer.Root, Drawer.Trigger, Drawer.Content, Drawer.Header, Drawer.Title, Drawer.Body, Drawer.Footer, Drawer.Close."
+    },
+    {
+      "name": "dropdown",
+      "type": "registry:ui",
+      "title": "Dropdown",
+      "description": "A dropdown menu component built on Radix UI with items, groups, labels, sub-menus, and directional animations. Uses namespace exports: Dropdown.Root, Dropdown.Trigger, Dropdown.Content, Dropdown.Item, Dropdown.ItemIcon, Dropdown.Group, Dropdown.Label, Dropdown.MenuSub, Dropdown.MenuSubTrigger, Dropdown.MenuSubContent."
+    },
+    {
       "name": "fancy-button",
       "type": "registry:ui",
       "title": "Fancy Button",
@@ -134,6 +158,12 @@
       "type": "registry:ui",
       "title": "Input",
       "description": "A text input component."
+    },
+    {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "Kbd",
+      "description": "A keyboard key indicator component for displaying keyboard shortcuts. Uses namespace export: Kbd.Root."
     },
     {
       "name": "key-icon",
@@ -160,6 +190,18 @@
       "description": "A Google Maps address autocomplete input."
     },
     {
+      "name": "modal",
+      "type": "registry:ui",
+      "title": "Modal",
+      "description": "A modal dialog component built on Radix UI Dialog with overlay, header, body, and footer sections. Uses namespace exports: Modal.Root, Modal.Trigger, Modal.Content, Modal.Header, Modal.Body, Modal.Footer, Modal.Close."
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "A pagination component with basic, rounded, and group variants. Supports asChild for link-based navigation. Uses namespace exports: Pagination.Root, Pagination.Item, Pagination.NavButton, Pagination.NavIcon."
+    },
+    {
       "name": "phone-input",
       "type": "registry:ui",
       "title": "Phone Input",
@@ -175,7 +217,7 @@
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
-      "description": "Displays rich content in a portal or inline, triggered by a button."
+      "description": "A popover component built on Radix UI with arrow indicator, close button, and directional animations. Uses namespace exports: Popover.Root, Popover.Trigger, Popover.Content, Popover.Close, Popover.Anchor."
     },
     {
       "name": "progress-bar",

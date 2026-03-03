@@ -3,60 +3,111 @@
   "name": "popover",
   "type": "registry:ui",
   "title": "Popover",
-  "description": "Displays rich content in a portal or inline, triggered by a button.",
-  "dependencies": ["@radix-ui/react-popover"],
-  "registryDependencies": ["happly-ui-utils"],
+  "description": "A popover component built on Radix UI with arrow indicator, close button, and directional animations. Uses namespace exports: Popover.Root, Popover.Trigger, Popover.Content, Popover.Close, Popover.Anchor.",
+  "version": "2.0.0",
+  "migration": {
+    "guide": "API changed: import as namespace `import * as Popover from ...`, use `<Popover.Root>`, `<Popover.Trigger>`, `<Popover.Content>`, `<Popover.Close>`. Old named exports `{ Popover, PopoverTrigger, PopoverContent, PopoverAnchor }` removed. `usePortal` prop removed (always uses portal). New props: `showArrow` (default true), `unstyled`. New sub-component: `Popover.Close` with absolute positioning."
+  },
+  "dependencies": [
+    "@radix-ui/react-popover",
+    "@radix-ui/react-slot"
+  ],
+  "registryDependencies": [
+    "happly-ui-utils"
+  ],
   "docs": {
-    "lead": "Displays rich content in a portal or inline, triggered by a button.",
-    "usage": "import { Popover, PopoverTrigger, PopoverContent } from \"@/components/ui/popover\"\n\n<Popover>\n  <PopoverTrigger>Open</PopoverTrigger>\n  <PopoverContent>Content here</PopoverContent>\n</Popover>",
+    "lead": "A popover component with arrow indicator, close button, and directional slide animations.",
+    "usage": "import * as Popover from \"@/components/ui/popover\"\n\n<Popover.Root>\n  <Popover.Trigger>Open</Popover.Trigger>\n  <Popover.Content>\n    <Popover.Close />\n    Content here\n  </Popover.Content>\n</Popover.Root>",
     "examples": [
       {
-        "title": "Default",
-        "description": "A simple popover with trigger button and content.",
-        "code": "<Popover>\n  <PopoverTrigger>Open</PopoverTrigger>\n  <PopoverContent>\n    <p>Popover content</p>\n  </PopoverContent>\n</Popover>",
-        "stories": ["Default"]
+        "title": "Demo",
+        "description": "Popover with icon, description, close button, and footer actions.",
+        "code": "<Popover.Root>\n  <Popover.Trigger asChild>\n    <Button.Root>Open Popover</Button.Root>\n  </Popover.Trigger>\n  <Popover.Content className=\"w-80\">\n    <Popover.Close asChild>\n      <CompactButton.Root size=\"large\" variant=\"ghost\">\n        <CompactButton.Icon as={RiCloseLine} />\n      </CompactButton.Root>\n    </Popover.Close>\n    Content here\n  </Popover.Content>\n</Popover.Root>",
+        "stories": ["Demo"]
       },
       {
-        "title": "Inline (No Portal)",
-        "description": "Popover rendered inline without a portal, useful inside modals.",
-        "code": "<PopoverContent usePortal={false}>\n  <p>Inline content</p>\n</PopoverContent>",
-        "stories": ["InlinePortal"]
+        "title": "Position",
+        "description": "Popovers positioned on top, left, and right sides.",
+        "code": "<Popover.Content side=\"top\">...</Popover.Content>\n<Popover.Content side=\"left\">...</Popover.Content>\n<Popover.Content side=\"right\">...</Popover.Content>",
+        "stories": ["Position"]
       }
     ],
     "api": [
       {
-        "name": "Popover",
-        "description": "The root popover component (Radix UI Root).",
+        "name": "Popover.Root",
+        "description": "The root popover container. Passes through Radix Popover.Root props.",
         "props": []
       },
       {
-        "name": "PopoverTrigger",
-        "description": "The trigger element that opens the popover.",
-        "props": []
-      },
-      {
-        "name": "PopoverContent",
-        "description": "The popover content wrapper.",
+        "name": "Popover.Trigger",
+        "description": "The element that triggers the popover.",
         "props": [
           {
-            "name": "usePortal",
+            "name": "asChild",
             "type": "boolean",
-            "default": "true",
-            "description": "Whether to render in a portal. Set to false for modal integration."
+            "default": "false",
+            "description": "Render as child element using Radix Slot"
+          }
+        ]
+      },
+      {
+        "name": "Popover.Content",
+        "description": "The popover content panel with arrow indicator.",
+        "props": [
+          {
+            "name": "side",
+            "type": "'top' | 'right' | 'bottom' | 'left'",
+            "default": "'bottom'",
+            "description": "The preferred side to position the popover"
           },
           {
             "name": "align",
             "type": "'start' | 'center' | 'end'",
             "default": "'center'",
-            "description": "The alignment of the popover relative to the trigger."
+            "description": "The alignment relative to the trigger"
           },
           {
             "name": "sideOffset",
             "type": "number",
-            "default": "4",
-            "description": "The distance in pixels from the trigger."
+            "default": "12",
+            "description": "Distance in pixels from the trigger"
+          },
+          {
+            "name": "showArrow",
+            "type": "boolean",
+            "default": "true",
+            "description": "Show the arrow indicator pointing to the trigger"
+          },
+          {
+            "name": "unstyled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Remove default styling (background, padding, ring)"
           }
         ]
+      },
+      {
+        "name": "Popover.Close",
+        "description": "Close button positioned absolutely in the top-right corner.",
+        "props": [
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render as child element using Radix Slot"
+          },
+          {
+            "name": "unstyled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Remove default absolute positioning"
+          }
+        ]
+      },
+      {
+        "name": "Popover.Anchor",
+        "description": "An optional anchor element for custom positioning.",
+        "props": []
       }
     ]
   },

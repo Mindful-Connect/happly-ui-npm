@@ -62,6 +62,7 @@ function main() {
     'badge',
     'banner',
     'divider',
+    'kbd',
     'progress-bar',
     'progress-circle',
     'status-badge',
@@ -69,20 +70,32 @@ function main() {
     'tag',
   ];
 
+  const NAVIGATION_COMPONENTS = [
+    'dot-stepper',
+    'pagination',
+  ];
+
   const FEEDBACK_COMPONENTS = [
     'alert',
     'tooltip',
+  ];
+
+  const OVERLAY_COMPONENTS = [
+    'command-menu',
+    'drawer',
+    'dropdown',
+    'modal',
+    'popover',
   ];
 
   const SUPPORT_COMPONENTS = [
     'command',
     'custom-input-wrapper',
     'dialog',
-    'popover',
     'key-icon',
   ];
 
-  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...FEEDBACK_COMPONENTS, ...SUPPORT_COMPONENTS];
+  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...SUPPORT_COMPONENTS];
 
   const mainLinks = componentLinks
     .filter((item) => !GROUPED_COMPONENTS.includes(item.name))
@@ -96,8 +109,16 @@ function main() {
     .filter((item) => DISPLAYING_DATA_COMPONENTS.includes(item.name))
     .map(({ name, ...rest }) => rest);
 
+  const navigationLinks = componentLinks
+    .filter((item) => NAVIGATION_COMPONENTS.includes(item.name))
+    .map(({ name, ...rest }) => rest);
+
   const feedbackLinks = componentLinks
     .filter((item) => FEEDBACK_COMPONENTS.includes(item.name))
+    .map(({ name, ...rest }) => rest);
+
+  const overlayLinks = componentLinks
+    .filter((item) => OVERLAY_COMPONENTS.includes(item.name))
     .map(({ name, ...rest }) => rest);
 
   const supportLinks = componentLinks
@@ -127,8 +148,18 @@ function main() {
           collapsed: false,
         },
         {
+          title: 'Navigation',
+          links: navigationLinks,
+          collapsed: false,
+        },
+        {
           title: 'Feedback',
           links: feedbackLinks,
+          collapsed: false,
+        },
+        {
+          title: 'Overlays',
+          links: overlayLinks,
           collapsed: false,
         },
         ...mainLinks,

@@ -1,0 +1,131 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "modal",
+  "type": "registry:ui",
+  "title": "Modal",
+  "description": "A modal dialog component built on Radix UI Dialog with overlay, header, body, and footer sections. Uses namespace exports: Modal.Root, Modal.Trigger, Modal.Content, Modal.Header, Modal.Body, Modal.Footer, Modal.Close.",
+  "version": "1.0.0",
+  "dependencies": [
+    "@radix-ui/react-dialog",
+    "@radix-ui/react-visually-hidden",
+    "@remixicon/react"
+  ],
+  "registryDependencies": [
+    "happly-ui-utils",
+    "compact-button"
+  ],
+  "docs": {
+    "lead": "A modal dialog component with overlay backdrop, optional header with icon, body, and footer sections.",
+    "usage": "import * as Modal from \"@/components/ui/modal\"\n\n<Modal.Root>\n  <Modal.Trigger>Open</Modal.Trigger>\n  <Modal.Content>\n    <Modal.Body>Content</Modal.Body>\n    <Modal.Footer>\n      <Modal.Close>Cancel</Modal.Close>\n    </Modal.Footer>\n  </Modal.Content>\n</Modal.Root>",
+    "examples": [
+      {
+        "title": "Demo",
+        "description": "Simple modal with body content, icon, and footer actions.",
+        "code": "<Modal.Root>\n  <Modal.Trigger asChild>\n    <Button.Root>Open</Button.Root>\n  </Modal.Trigger>\n  <Modal.Content>\n    <Modal.Body>Payment Received</Modal.Body>\n    <Modal.Footer>\n      <Modal.Close asChild><Button.Root>Cancel</Button.Root></Modal.Close>\n      <Button.Root>View Receipt</Button.Root>\n    </Modal.Footer>\n  </Modal.Content>\n</Modal.Root>",
+        "stories": ["Demo"]
+      },
+      {
+        "title": "With Header",
+        "description": "Modal with a header section containing icon, title, and description.",
+        "code": "<Modal.Content>\n  <Modal.Header\n    icon={RiChatSettingsLine}\n    title=\"Communication Preferences\"\n    description=\"Choose contact preferences.\"\n  />\n  <Modal.Body>...</Modal.Body>\n  <Modal.Footer>...</Modal.Footer>\n</Modal.Content>",
+        "stories": ["WithHeader"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Modal.Root",
+        "description": "Wraps the trigger and content. Passes through Radix Dialog.Root props.",
+        "props": [
+          {
+            "name": "open",
+            "type": "boolean",
+            "description": "Controlled open state"
+          },
+          {
+            "name": "onOpenChange",
+            "type": "(open: boolean) => void",
+            "description": "Callback when open state changes"
+          }
+        ]
+      },
+      {
+        "name": "Modal.Trigger",
+        "description": "The element that opens the modal.",
+        "props": [
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render as child element using Radix Slot"
+          }
+        ]
+      },
+      {
+        "name": "Modal.Content",
+        "description": "The modal popup with overlay and close button.",
+        "props": [
+          {
+            "name": "showClose",
+            "type": "boolean",
+            "default": "true",
+            "description": "Show the close button in the top-right corner"
+          },
+          {
+            "name": "overlayClassName",
+            "type": "string",
+            "description": "Additional classes for the overlay backdrop"
+          }
+        ]
+      },
+      {
+        "name": "Modal.Header",
+        "description": "Optional header with icon, title, and description. Renders children directly if provided.",
+        "props": [
+          {
+            "name": "icon",
+            "type": "RemixiconComponentType",
+            "description": "Icon component displayed in a circular container"
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "description": "The header title text"
+          },
+          {
+            "name": "description",
+            "type": "string",
+            "description": "The header description text"
+          }
+        ]
+      },
+      {
+        "name": "Modal.Body",
+        "description": "The main content area with padding.",
+        "props": []
+      },
+      {
+        "name": "Modal.Footer",
+        "description": "Footer area with border-top separator for action buttons.",
+        "props": []
+      },
+      {
+        "name": "Modal.Close",
+        "description": "Closes the modal when clicked.",
+        "props": [
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render as child element using Radix Slot"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/modal.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -69,6 +69,10 @@
             "href": "/docs/components/divider"
           },
           {
+            "title": "Kbd",
+            "href": "/docs/components/kbd"
+          },
+          {
             "title": "Progress Bar",
             "href": "/docs/components/progress-bar"
           },
@@ -92,6 +96,20 @@
         "collapsed": false
       },
       {
+        "title": "Navigation",
+        "links": [
+          {
+            "title": "Dot Stepper",
+            "href": "/docs/components/dot-stepper"
+          },
+          {
+            "title": "Pagination",
+            "href": "/docs/components/pagination"
+          }
+        ],
+        "collapsed": false
+      },
+      {
         "title": "Feedback",
         "links": [
           {
@@ -101,6 +119,32 @@
           {
             "title": "Tooltip",
             "href": "/docs/components/tooltip"
+          }
+        ],
+        "collapsed": false
+      },
+      {
+        "title": "Overlays",
+        "links": [
+          {
+            "title": "Command Menu",
+            "href": "/docs/components/command-menu"
+          },
+          {
+            "title": "Drawer",
+            "href": "/docs/components/drawer"
+          },
+          {
+            "title": "Dropdown",
+            "href": "/docs/components/dropdown"
+          },
+          {
+            "title": "Modal",
+            "href": "/docs/components/modal"
+          },
+          {
+            "title": "Popover",
+            "href": "/docs/components/popover"
           }
         ],
         "collapsed": false
@@ -179,10 +223,6 @@
           {
             "title": "Key Icon",
             "href": "/docs/components/key-icon"
-          },
-          {
-            "title": "Popover",
-            "href": "/docs/components/popover"
           }
         ],
         "collapsed": true

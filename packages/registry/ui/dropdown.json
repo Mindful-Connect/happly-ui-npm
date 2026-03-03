@@ -1,0 +1,138 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "dropdown",
+  "type": "registry:ui",
+  "title": "Dropdown",
+  "description": "A dropdown menu component built on Radix UI with items, groups, labels, sub-menus, and directional animations. Uses namespace exports: Dropdown.Root, Dropdown.Trigger, Dropdown.Content, Dropdown.Item, Dropdown.ItemIcon, Dropdown.Group, Dropdown.Label, Dropdown.MenuSub, Dropdown.MenuSubTrigger, Dropdown.MenuSubContent.",
+  "version": "1.0.0",
+  "dependencies": [
+    "@radix-ui/react-dropdown-menu",
+    "@remixicon/react"
+  ],
+  "registryDependencies": [
+    "happly-ui-utils",
+    "polymorphic"
+  ],
+  "docs": {
+    "lead": "A dropdown menu component with items, groups, sub-menus, and directional slide animations.",
+    "usage": "import * as Dropdown from \"@/components/ui/dropdown\"\n\n<Dropdown.Root>\n  <Dropdown.Trigger>Open</Dropdown.Trigger>\n  <Dropdown.Content>\n    <Dropdown.Item>Item</Dropdown.Item>\n  </Dropdown.Content>\n</Dropdown.Root>",
+    "examples": [
+      {
+        "title": "Demo",
+        "description": "Dropdown with user profile, menu items, and footer.",
+        "code": "<Dropdown.Root>\n  <Dropdown.Trigger asChild>\n    <Button.Root>Open Dropdown</Button.Root>\n  </Dropdown.Trigger>\n  <Dropdown.Content align=\"start\">\n    <Dropdown.Group>\n      <Dropdown.Item>\n        <Dropdown.ItemIcon as={RiPulseLine} />\n        Activity\n      </Dropdown.Item>\n    </Dropdown.Group>\n  </Dropdown.Content>\n</Dropdown.Root>",
+        "stories": ["Demo"]
+      },
+      {
+        "title": "Sub Menu",
+        "description": "Dropdown with nested sub-menus for hierarchical navigation.",
+        "code": "<Dropdown.MenuSub>\n  <Dropdown.MenuSubTrigger>\n    <Dropdown.ItemIcon as={RiFileList2Line} />\n    Template Options\n  </Dropdown.MenuSubTrigger>\n  <Dropdown.MenuSubContent>\n    <Dropdown.Item>Draft Post</Dropdown.Item>\n    <Dropdown.Item>Publish Now</Dropdown.Item>\n  </Dropdown.MenuSubContent>\n</Dropdown.MenuSub>",
+        "stories": ["SubMenu"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Dropdown.Root",
+        "description": "The root dropdown container. Passes through Radix DropdownMenu.Root props.",
+        "props": []
+      },
+      {
+        "name": "Dropdown.Trigger",
+        "description": "The element that opens the dropdown.",
+        "props": [
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render as child element using Radix Slot"
+          }
+        ]
+      },
+      {
+        "name": "Dropdown.Content",
+        "description": "The dropdown content panel with animations.",
+        "props": [
+          {
+            "name": "side",
+            "type": "'top' | 'right' | 'bottom' | 'left'",
+            "default": "'bottom'",
+            "description": "The preferred side to position the dropdown"
+          },
+          {
+            "name": "align",
+            "type": "'start' | 'center' | 'end'",
+            "default": "'center'",
+            "description": "The alignment relative to the trigger"
+          },
+          {
+            "name": "sideOffset",
+            "type": "number",
+            "default": "8",
+            "description": "Distance in pixels from the trigger"
+          }
+        ]
+      },
+      {
+        "name": "Dropdown.Item",
+        "description": "A selectable dropdown menu item.",
+        "props": [
+          {
+            "name": "inset",
+            "type": "boolean",
+            "default": "false",
+            "description": "Add left padding for alignment with icon items"
+          }
+        ]
+      },
+      {
+        "name": "Dropdown.ItemIcon",
+        "description": "Icon displayed inside a dropdown item.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "description": "The icon component to render"
+          }
+        ]
+      },
+      {
+        "name": "Dropdown.Group",
+        "description": "Groups related dropdown items.",
+        "props": []
+      },
+      {
+        "name": "Dropdown.Label",
+        "description": "A label for a group of dropdown items.",
+        "props": []
+      },
+      {
+        "name": "Dropdown.MenuSub",
+        "description": "Container for a sub-menu.",
+        "props": []
+      },
+      {
+        "name": "Dropdown.MenuSubTrigger",
+        "description": "The item that opens a sub-menu. Shows a right arrow indicator.",
+        "props": [
+          {
+            "name": "inset",
+            "type": "boolean",
+            "default": "false",
+            "description": "Add left padding for alignment"
+          }
+        ]
+      },
+      {
+        "name": "Dropdown.MenuSubContent",
+        "description": "The sub-menu content panel.",
+        "props": []
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/dropdown.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

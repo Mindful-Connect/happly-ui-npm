@@ -1,0 +1,37 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "kbd",
+  "type": "registry:ui",
+  "title": "Kbd",
+  "description": "A keyboard key indicator component for displaying keyboard shortcuts. Uses namespace export: Kbd.Root.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": [
+    "happly-ui-utils"
+  ],
+  "docs": {
+    "lead": "A keyboard key indicator component for displaying keyboard shortcuts inline.",
+    "usage": "import * as Kbd from \"@/components/ui/kbd\"\n\n<Kbd.Root>⌘+K</Kbd.Root>",
+    "examples": [
+      {
+        "title": "Demo",
+        "description": "Keyboard shortcut with command icon and key label.",
+        "code": "<Kbd.Root>\n  <IconCmd className=\"size-2.5\" />\n  +K\n</Kbd.Root>",
+        "stories": ["Demo"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Kbd.Root",
+        "description": "The keyboard key container. Renders as a styled div.",
+        "props": []
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/kbd.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

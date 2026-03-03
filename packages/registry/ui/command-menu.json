@@ -1,0 +1,129 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "command-menu",
+  "type": "registry:ui",
+  "title": "Command Menu",
+  "description": "A command menu component built on cmdk and Modal with search input, grouped items, and keyboard navigation footer. Uses namespace exports: CommandMenu.Dialog, CommandMenu.Input, CommandMenu.List, CommandMenu.Group, CommandMenu.Item, CommandMenu.ItemIcon, CommandMenu.Footer, CommandMenu.FooterKeyBox.",
+  "version": "1.0.0",
+  "dependencies": [
+    "cmdk",
+    "@radix-ui/react-dialog"
+  ],
+  "registryDependencies": [
+    "happly-ui-utils",
+    "polymorphic",
+    "tv",
+    "modal"
+  ],
+  "docs": {
+    "lead": "A command menu component with search input, grouped items, and keyboard navigation hints.",
+    "usage": "import * as CommandMenu from \"@/components/ui/command-menu\"\n\n<CommandMenu.Dialog open={open} onOpenChange={setOpen}>\n  <CommandMenu.Input placeholder=\"Search...\" />\n  <CommandMenu.List>\n    <CommandMenu.Group heading=\"Results\">\n      <CommandMenu.Item>Item</CommandMenu.Item>\n    </CommandMenu.Group>\n  </CommandMenu.List>\n  <CommandMenu.Footer>Footer</CommandMenu.Footer>\n</CommandMenu.Dialog>",
+    "examples": [
+      {
+        "title": "Demo",
+        "description": "Full command menu with search, tags, smart prompts, results, and keyboard navigation footer.",
+        "code": "<CommandMenu.Dialog open={open} onOpenChange={setOpen}>\n  <CommandMenu.Input placeholder=\"Search or jump to\" />\n  <CommandMenu.List>\n    <CommandMenu.Group heading=\"Smart Prompt Examples\">\n      <CommandMenu.Item>\n        <CommandMenu.ItemIcon as={RiSparklingLine} />\n        Filter your transactions\n      </CommandMenu.Item>\n    </CommandMenu.Group>\n  </CommandMenu.List>\n  <CommandMenu.Footer>\n    <CommandMenu.FooterKeyBox>...</CommandMenu.FooterKeyBox>\n    Navigate\n  </CommandMenu.Footer>\n</CommandMenu.Dialog>",
+        "stories": ["Demo"]
+      }
+    ],
+    "api": [
+      {
+        "name": "CommandMenu.Dialog",
+        "description": "The command menu dialog container built on Modal and cmdk Command.",
+        "props": [
+          {
+            "name": "open",
+            "type": "boolean",
+            "description": "Controlled open state"
+          },
+          {
+            "name": "onOpenChange",
+            "type": "(open: boolean) => void",
+            "description": "Callback when open state changes"
+          },
+          {
+            "name": "overlayClassName",
+            "type": "string",
+            "description": "Additional classes for the overlay"
+          }
+        ]
+      },
+      {
+        "name": "CommandMenu.DialogTitle",
+        "description": "Accessible title for the command menu dialog. Alias for Modal.Title.",
+        "props": []
+      },
+      {
+        "name": "CommandMenu.DialogDescription",
+        "description": "Accessible description for the command menu dialog. Alias for Modal.Description.",
+        "props": []
+      },
+      {
+        "name": "CommandMenu.Input",
+        "description": "Search input field with styled placeholder transitions.",
+        "props": [
+          {
+            "name": "placeholder",
+            "type": "string",
+            "description": "Placeholder text for the input"
+          }
+        ]
+      },
+      {
+        "name": "CommandMenu.List",
+        "description": "Scrollable list container for command items.",
+        "props": []
+      },
+      {
+        "name": "CommandMenu.Group",
+        "description": "Groups related command items with an optional heading.",
+        "props": [
+          {
+            "name": "heading",
+            "type": "string",
+            "description": "Group heading text"
+          }
+        ]
+      },
+      {
+        "name": "CommandMenu.Item",
+        "description": "A selectable command item with size variants.",
+        "props": [
+          {
+            "name": "size",
+            "type": "'small' | 'medium'",
+            "default": "'small'",
+            "description": "The size of the item"
+          }
+        ]
+      },
+      {
+        "name": "CommandMenu.ItemIcon",
+        "description": "Icon displayed inside a command item.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "description": "The icon component to render"
+          }
+        ]
+      },
+      {
+        "name": "CommandMenu.Footer",
+        "description": "Footer area for keyboard navigation hints.",
+        "props": []
+      },
+      {
+        "name": "CommandMenu.FooterKeyBox",
+        "description": "Styled keyboard key indicator box.",
+        "props": []
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/command-menu.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

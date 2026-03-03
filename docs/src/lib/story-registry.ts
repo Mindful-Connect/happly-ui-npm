@@ -11,15 +11,22 @@ import { default as buttonGroupMeta, Default as buttonGroup_Default, Sizes as bu
 import { default as buttonMeta, PrimaryVariant as button_PrimaryVariant, NeutralVariant as button_NeutralVariant, SuccessVariant as button_SuccessVariant, WarningVariant as button_WarningVariant, ErrorVariant as button_ErrorVariant, Sizes as button_Sizes, Disabled as button_Disabled, WithIcon as button_WithIcon, FullWidth as button_FullWidth, AsChild as button_AsChild } from '@/components/ui/button.stories';
 import { default as calendarInputMeta, BasicUsage as calendarInput_BasicUsage } from '@/components/ui/calendar-input.stories';
 import { default as circularProgressMeta, Default as circularProgress_Default, WithColorVariants as circularProgress_WithColorVariants } from '@/components/ui/circular-progress.stories';
+import { default as commandMenuMeta, Demo as commandMenu_Demo } from '@/components/ui/command-menu.stories';
 import { default as compactButtonMeta, Stroke as compactButton_Stroke, Ghost as compactButton_Ghost, White as compactButton_White, Modifiable as compactButton_Modifiable, Sizes as compactButton_Sizes, FullRadius as compactButton_FullRadius, Disabled as compactButton_Disabled, AsChild as compactButton_AsChild } from '@/components/ui/compact-button.stories';
 import { default as currencyInputMeta, Default as currencyInput_Default } from '@/components/ui/currency-input.stories';
 import { default as dividerMeta, Line as divider_Line, LineSpacing as divider_LineSpacing, LineText as divider_LineText, TextOnly as divider_TextOnly, SolidText as divider_SolidText, Content as divider_Content } from '@/components/ui/divider.stories';
+import { default as dotStepperMeta, Demo as dotStepper_Demo, WithRadixTabs as dotStepper_WithRadixTabs } from '@/components/ui/dot-stepper.stories';
+import { default as drawerMeta, Demo as drawer_Demo, Basic as drawer_Basic } from '@/components/ui/drawer.stories';
+import { default as dropdownMeta, Demo as dropdown_Demo, SubMenu as dropdown_SubMenu } from '@/components/ui/dropdown.stories';
 import { default as fancyButtonMeta, Neutral as fancyButton_Neutral, Primary as fancyButton_Primary, Error as fancyButton_Error, Basic as fancyButton_Basic, WithIcon as fancyButton_WithIcon, Sizes as fancyButton_Sizes, Disabled as fancyButton_Disabled, AsChild as fancyButton_AsChild } from '@/components/ui/fancy-button.stories';
 import { default as inputMeta, Sizes as input_Sizes, Icons as input_Icons, Affixes as input_Affixes, States as input_States } from '@/components/ui/input.stories';
+import { default as kbdMeta, Demo as kbd_Demo } from '@/components/ui/kbd.stories';
 import { default as linkButtonMeta, Gray as linkButton_Gray, Black as linkButton_Black, Primary as linkButton_Primary, Error as linkButton_Error, Modifiable as linkButton_Modifiable, Sizes as linkButton_Sizes, Underline as linkButton_Underline, WithIcon as linkButton_WithIcon, Disabled as linkButton_Disabled, AsChild as linkButton_AsChild } from '@/components/ui/link-button.stories';
 import { default as locationInputMeta, Default as locationInput_Default } from '@/components/ui/location-input.stories';
+import { default as modalMeta, Demo as modal_Demo, WithHeader as modal_WithHeader } from '@/components/ui/modal.stories';
+import { default as paginationMeta, Demo as pagination_Demo, Rounded as pagination_Rounded, Group as pagination_Group, AsLink as pagination_AsLink } from '@/components/ui/pagination.stories';
 import { default as phoneInputMeta, Default as phoneInput_Default } from '@/components/ui/phone-input.stories';
-import { default as popoverMeta, Default as popover_Default, InlinePortal as popover_InlinePortal } from '@/components/ui/popover.stories';
+import { default as popoverMeta, Demo as popover_Demo, Position as popover_Position } from '@/components/ui/popover.stories';
 import { default as progressBarMeta, Color as progressBar_Color, WithLabel as progressBar_WithLabel, DataStorage as progressBar_DataStorage } from '@/components/ui/progress-bar.stories';
 import { default as progressCircleMeta, Default as progressCircle_Default } from '@/components/ui/progress-circle.stories';
 import { default as radioCardGroupMeta, BasicUsage as radioCardGroup_BasicUsage, WithoutDescriptions as radioCardGroup_WithoutDescriptions, WithIcons as radioCardGroup_WithIcons, WithBadges as radioCardGroup_WithBadges, AllowDeselect as radioCardGroup_AllowDeselect, Disabled as radioCardGroup_Disabled } from '@/components/ui/radio-card-group.stories';
@@ -138,6 +145,12 @@ export const storyRegistry: Record<string, {
     'WithColorVariants': circularProgress_WithColorVariants
     }
   },
+  'command-menu': {
+    meta: commandMenuMeta,
+    stories: {
+    'Demo': commandMenu_Demo
+    }
+  },
   'compact-button': {
     meta: compactButtonMeta,
     stories: {
@@ -168,6 +181,27 @@ export const storyRegistry: Record<string, {
     'Content': divider_Content
     }
   },
+  'dot-stepper': {
+    meta: dotStepperMeta,
+    stories: {
+    'Demo': dotStepper_Demo,
+    'WithRadixTabs': dotStepper_WithRadixTabs
+    }
+  },
+  'drawer': {
+    meta: drawerMeta,
+    stories: {
+    'Demo': drawer_Demo,
+    'Basic': drawer_Basic
+    }
+  },
+  'dropdown': {
+    meta: dropdownMeta,
+    stories: {
+    'Demo': dropdown_Demo,
+    'SubMenu': dropdown_SubMenu
+    }
+  },
   'fancy-button': {
     meta: fancyButtonMeta,
     stories: {
@@ -188,6 +222,12 @@ export const storyRegistry: Record<string, {
     'Icons': input_Icons,
     'Affixes': input_Affixes,
     'States': input_States
+    }
+  },
+  'kbd': {
+    meta: kbdMeta,
+    stories: {
+    'Demo': kbd_Demo
     }
   },
   'link-button': {
@@ -211,6 +251,22 @@ export const storyRegistry: Record<string, {
     'Default': locationInput_Default
     }
   },
+  'modal': {
+    meta: modalMeta,
+    stories: {
+    'Demo': modal_Demo,
+    'WithHeader': modal_WithHeader
+    }
+  },
+  'pagination': {
+    meta: paginationMeta,
+    stories: {
+    'Demo': pagination_Demo,
+    'Rounded': pagination_Rounded,
+    'Group': pagination_Group,
+    'AsLink': pagination_AsLink
+    }
+  },
   'phone-input': {
     meta: phoneInputMeta,
     stories: {
@@ -220,8 +276,8 @@ export const storyRegistry: Record<string, {
   'popover': {
     meta: popoverMeta,
     stories: {
-    'Default': popover_Default,
-    'InlinePortal': popover_InlinePortal
+    'Demo': popover_Demo,
+    'Position': popover_Position
     }
   },
   'progress-bar': {

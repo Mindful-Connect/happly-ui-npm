@@ -1,0 +1,115 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "pagination",
+  "type": "registry:ui",
+  "title": "Pagination",
+  "description": "A pagination component with basic, rounded, and group variants. Supports asChild for link-based navigation. Uses namespace exports: Pagination.Root, Pagination.Item, Pagination.NavButton, Pagination.NavIcon.",
+  "version": "1.0.0",
+  "dependencies": [
+    "@radix-ui/react-slot",
+    "@remixicon/react"
+  ],
+  "registryDependencies": [
+    "happly-ui-utils",
+    "polymorphic",
+    "recursive-clone-children",
+    "tv"
+  ],
+  "docs": {
+    "lead": "A pagination component with three visual variants and support for both button and link-based navigation.",
+    "usage": "import * as Pagination from \"@/components/ui/pagination\"\n\n<Pagination.Root>\n  <Pagination.NavButton>\n    <Pagination.NavIcon as={RiArrowLeftSLine} />\n  </Pagination.NavButton>\n  <Pagination.Item current>1</Pagination.Item>\n  <Pagination.Item>2</Pagination.Item>\n  <Pagination.NavButton>\n    <Pagination.NavIcon as={RiArrowRightSLine} />\n  </Pagination.NavButton>\n</Pagination.Root>",
+    "examples": [
+      {
+        "title": "Demo",
+        "description": "Basic variant pagination with navigation buttons and page items.",
+        "code": "<Pagination.Root>\n  <Pagination.NavButton>\n    <Pagination.NavIcon as={RiArrowLeftSLine} />\n  </Pagination.NavButton>\n  <Pagination.Item current>4</Pagination.Item>\n  <Pagination.NavButton>\n    <Pagination.NavIcon as={RiArrowRightSLine} />\n  </Pagination.NavButton>\n</Pagination.Root>",
+        "stories": ["Demo"]
+      },
+      {
+        "title": "Rounded",
+        "description": "Rounded variant with fully circular buttons and items.",
+        "code": "<Pagination.Root variant=\"rounded\">\n  ...\n</Pagination.Root>",
+        "stories": ["Rounded"]
+      },
+      {
+        "title": "Group",
+        "description": "Group variant with connected items separated by dividers.",
+        "code": "<Pagination.Root variant=\"group\">\n  ...\n</Pagination.Root>",
+        "stories": ["Group"]
+      },
+      {
+        "title": "As Link",
+        "description": "Pagination items rendered as anchor links using the asChild pattern.",
+        "code": "<Pagination.Item asChild>\n  <a href=\"/page/1\">1</a>\n</Pagination.Item>",
+        "stories": ["AsLink"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Pagination.Root",
+        "description": "The container for pagination items. Propagates variant to children.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'basic' | 'rounded' | 'group'",
+            "default": "'basic'",
+            "description": "The visual variant"
+          },
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render as child element using Radix Slot"
+          }
+        ]
+      },
+      {
+        "name": "Pagination.Item",
+        "description": "A page number button. Renders as a button by default.",
+        "props": [
+          {
+            "name": "current",
+            "type": "boolean",
+            "default": "false",
+            "description": "Whether this is the current active page"
+          },
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render as child element using Radix Slot"
+          }
+        ]
+      },
+      {
+        "name": "Pagination.NavButton",
+        "description": "A navigation button for prev/next actions.",
+        "props": [
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render as child element using Radix Slot"
+          }
+        ]
+      },
+      {
+        "name": "Pagination.NavIcon",
+        "description": "A polymorphic icon inside a NavButton.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "description": "The icon component to render"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/pagination.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}
