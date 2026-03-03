@@ -3,61 +3,149 @@
   "name": "badge",
   "type": "registry:ui",
   "title": "Badge",
-  "description": "A badge component for status indicators.",
-  "dependencies": ["class-variance-authority"],
-  "registryDependencies": ["happly-ui-utils"],
+  "description": "A compound badge component with variants, colors, sizes, dot indicators, and polymorphic icon support. Uses namespace exports: Badge.Root, Badge.Icon, Badge.Dot.",
+  "version": "2.0.0",
+  "dependencies": [
+    "@radix-ui/react-slot"
+  ],
+  "registryDependencies": [
+    "tv",
+    "polymorphic",
+    "recursive-clone-children"
+  ],
+  "migration": {
+    "guide": "Badge v2 is a full rewrite using tv (tailwind-variants) and compound components. Replace `<Badge colorVar=\"blueFilled\">` with `<Badge.Root variant=\"filled\" color=\"blue\">`. Icons now use `<Badge.Icon as={Icon} />` instead of the `icon` prop. A new `<Badge.Dot />` sub-component replaces dot indicators. The `cva` and `happly-ui-utils` dependencies are no longer needed."
+  },
   "docs": {
-    "lead": "A badge component for indicating status or displaying categorization.",
-    "usage": "import { Badge } from \"@/components/ui/badge\"\n\n<Badge colorVar=\"blueFilled\" size=\"default\">\n  Content\n</Badge>",
+    "lead": "A compound badge component with variants, colors, sizes, dot indicators, and polymorphic icon support.",
+    "usage": "import * as Badge from \"@/components/ui/badge\"\n\n<Badge.Root variant=\"filled\" color=\"blue\">\n  <Badge.Icon as={RiFlashlightFill} />\n  Badge\n</Badge.Root>",
     "examples": [
       {
-        "title": "Default",
-        "description": "Default styling for a badge.",
-        "code": "<Badge>Default</Badge>",
-        "stories": ["Default"]
+        "title": "Filled Variant",
+        "description": "The filled variant uses a solid background with white text.",
+        "code": "<Badge.Root variant=\"filled\">Badge</Badge.Root>\n<Badge.Root variant=\"filled\" color=\"red\">Badge</Badge.Root>\n<Badge.Root variant=\"filled\" color=\"blue\">Badge</Badge.Root>",
+        "stories": ["BadgeFilled"]
       },
       {
-        "title": "Color Variants",
-        "description": "Badges come in various colors and styles.",
-        "code": "<Badge colorVar=\"blueFilled\">Blue</Badge>\n<Badge colorVar=\"redFilled\">Red</Badge>\n<Badge colorVar=\"greenText\">Green Text</Badge>",
-        "stories": ["ColorVariants"]
+        "title": "Light Variant",
+        "description": "The light variant uses a lighter background with dark text.",
+        "code": "<Badge.Root variant=\"light\">Badge</Badge.Root>\n<Badge.Root variant=\"light\" color=\"red\">Badge</Badge.Root>",
+        "stories": ["BadgeLight"]
+      },
+      {
+        "title": "Lighter Variant",
+        "description": "The lighter variant uses the lightest background tint.",
+        "code": "<Badge.Root variant=\"lighter\">Badge</Badge.Root>\n<Badge.Root variant=\"lighter\" color=\"red\">Badge</Badge.Root>",
+        "stories": ["BadgeLighter"]
+      },
+      {
+        "title": "Stroke Variant",
+        "description": "The stroke variant uses a ring outline with no background fill.",
+        "code": "<Badge.Root variant=\"stroke\">Badge</Badge.Root>\n<Badge.Root variant=\"stroke\" color=\"red\">Badge</Badge.Root>",
+        "stories": ["BadgeStroke"]
+      },
+      {
+        "title": "Colors",
+        "description": "All 10 available color options across the design system.",
+        "code": "<Badge.Root>Badge</Badge.Root>\n<Badge.Root color=\"blue\">Badge</Badge.Root>\n<Badge.Root color=\"red\">Badge</Badge.Root>\n<Badge.Root color=\"green\">Badge</Badge.Root>",
+        "stories": ["BadgeColors"]
       },
       {
         "title": "Sizes",
-        "description": "Badges come in 'default' and 'sm' sizes.",
-        "code": "<Badge size=\"default\">Default Size</Badge>\n<Badge size=\"sm\">Small Size</Badge>",
-        "stories": ["Sizes"]
+        "description": "Badges come in small (default) and medium sizes, with both icon and dot sub-components.",
+        "code": "<Badge.Root size=\"medium\">Badge</Badge.Root>\n<Badge.Root size=\"small\">Badge</Badge.Root>",
+        "stories": ["Size"]
+      },
+      {
+        "title": "Square",
+        "description": "Use the square prop for compact numeric badges.",
+        "code": "<Badge.Root square color=\"red\">2</Badge.Root>\n<Badge.Root square size=\"medium\" color=\"red\">2</Badge.Root>",
+        "stories": ["Square"]
+      },
+      {
+        "title": "With Icon",
+        "description": "Use Badge.Icon with the `as` prop for polymorphic icon rendering.",
+        "code": "<Badge.Root>\n  <Badge.Icon as={RiFlashlightFill} />\n  Badge\n</Badge.Root>",
+        "stories": ["WithIcon"]
+      },
+      {
+        "title": "With Dot",
+        "description": "Use Badge.Dot for a small status dot indicator.",
+        "code": "<Badge.Root>\n  <Badge.Dot />\n  Badge\n</Badge.Root>",
+        "stories": ["WithDot"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Disabled badges across all variants.",
+        "code": "<Badge.Root variant=\"filled\" color=\"red\" disabled>Badge</Badge.Root>\n<Badge.Root variant=\"stroke\" color=\"blue\" disabled>Badge</Badge.Root>",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "As Child",
+        "description": "Use the asChild prop with Radix Slot to render as a different element.",
+        "code": "<Badge.Root asChild>\n  <button type=\"button\">Badge</button>\n</Badge.Root>",
+        "stories": ["AsChild"]
       }
     ],
     "api": [
       {
-        "name": "Badge",
-        "description": "The main badge component.",
+        "name": "Badge.Root",
+        "description": "The main badge container component.",
         "props": [
           {
-            "name": "icon",
-            "type": "ReactNode",
-            "description": "Optional icon for the badge"
+            "name": "variant",
+            "type": "'filled' | 'light' | 'lighter' | 'stroke'",
+            "default": "'filled'",
+            "description": "The visual style"
           },
           {
-            "name": "iconVar",
-            "type": "'default' | 'left' | 'right'",
-            "default": "'default'",
-            "description": "Positioning variant for the icon"
-          },
-          {
-            "name": "colorVar",
-            "type": "string",
-            "default": "'default'",
-            "description": "The color and text variant (e.g., 'blueFilled', 'redLight', etc.)"
+            "name": "color",
+            "type": "'gray' | 'blue' | 'orange' | 'red' | 'green' | 'yellow' | 'purple' | 'sky' | 'pink' | 'teal'",
+            "default": "'gray'",
+            "description": "The color of the badge"
           },
           {
             "name": "size",
-            "type": "'default' | 'sm'",
-            "default": "'default'",
+            "type": "'small' | 'medium'",
+            "default": "'small'",
             "description": "The size of the badge"
+          },
+          {
+            "name": "square",
+            "type": "boolean",
+            "default": "false",
+            "description": "Compact mode for numeric content"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disables the badge visually"
+          },
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Renders as child element using Radix Slot"
           }
         ]
+      },
+      {
+        "name": "Badge.Icon",
+        "description": "Polymorphic icon container that receives variant props from Badge.Root.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "default": "'div'",
+            "description": "The element or component to render as"
+          }
+        ]
+      },
+      {
+        "name": "Badge.Dot",
+        "description": "A small dot indicator that inherits color from Badge.Root.",
+        "props": []
       }
     ]
   },
