@@ -19,7 +19,7 @@ import { default as linkButtonMeta, Gray as linkButton_Gray, Black as linkButton
 import { default as locationInputMeta, Default as locationInput_Default } from '@/components/ui/location-input.stories';
 import { default as phoneInputMeta, Default as phoneInput_Default } from '@/components/ui/phone-input.stories';
 import { default as popoverMeta, Default as popover_Default, InlinePortal as popover_InlinePortal } from '@/components/ui/popover.stories';
-import { default as progressBarMeta, Default as progressBar_Default, PrimaryVariant as progressBar_PrimaryVariant } from '@/components/ui/progress-bar.stories';
+import { default as progressBarMeta, Color as progressBar_Color, WithLabel as progressBar_WithLabel, DataStorage as progressBar_DataStorage } from '@/components/ui/progress-bar.stories';
 import { default as radioCardGroupMeta, BasicUsage as radioCardGroup_BasicUsage, WithoutDescriptions as radioCardGroup_WithoutDescriptions, WithIcons as radioCardGroup_WithIcons, WithBadges as radioCardGroup_WithBadges, AllowDeselect as radioCardGroup_AllowDeselect, Disabled as radioCardGroup_Disabled } from '@/components/ui/radio-card-group.stories';
 import { default as searchableComboBoxMeta, Default as searchableComboBox_Default } from '@/components/ui/searchable-combo-box.stories';
 import { default as selectMeta, Sizes as select_Sizes, Variants as select_Variants, SelectStates as select_SelectStates } from '@/components/ui/select.stories';
@@ -211,8 +211,9 @@ export const storyRegistry: Record<string, {
   'progress-bar': {
     meta: progressBarMeta,
     stories: {
-    'Default': progressBar_Default,
-    'PrimaryVariant': progressBar_PrimaryVariant
+    'Color': progressBar_Color,
+    'WithLabel': progressBar_WithLabel,
+    'DataStorage': progressBar_DataStorage
     }
   },
   'radio-card-group': {

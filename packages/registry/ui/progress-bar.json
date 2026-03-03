@@ -3,50 +3,60 @@
   "name": "progress-bar",
   "type": "registry:ui",
   "title": "Progress Bar",
-  "description": "A progress bar component indicating the completion status of a task.",
-  "dependencies": ["class-variance-authority"],
-  "registryDependencies": ["happly-ui-utils"],
+  "description": "A progress bar component indicating the completion status of a task with multiple color options.",
+  "version": "2.0.0",
+  "migration": {
+    "guide": "API changed: import as namespace `import * as ProgressBar from ...`, use `<ProgressBar.Root value={50} />` instead of `<ProgressBar progress={50} />`. The `variant` prop is replaced by `color` ('blue' | 'red' | 'orange' | 'green' | 'primary'). The `progress` prop is renamed to `value` with a configurable `max`."
+  },
+  "dependencies": [],
+  "registryDependencies": ["tv"],
   "docs": {
-    "lead": "A progress bar component to show the completion status of a task or process, with neutral and primary color variants.",
-    "usage": "import { ProgressBar } from \"@/components/happly-ui/progress-bar\"\n\n<ProgressBar variant=\"primary\" progress={50} />",
+    "lead": "A progress bar component to show the completion status of a task or process, with multiple color options.",
+    "usage": "import * as ProgressBar from \"@/components/ui/progress-bar\"\n\n<ProgressBar.Root value={50} max={100} color=\"blue\" />",
     "examples": [
       {
-        "title": "Default",
-        "description": "The default neutral progress bar.",
-        "code": "<ProgressBar variant=\"neutral\" progress={45} />",
-        "stories": ["Default"]
+        "title": "Color",
+        "description": "Progress bars in all available colors: blue (default), red, orange, green, and primary.",
+        "code": "<ProgressBar.Root value={50} color=\"blue\" />\n<ProgressBar.Root value={50} color=\"red\" />\n<ProgressBar.Root value={50} color=\"primary\" />",
+        "stories": ["Color"]
       },
       {
-        "title": "Primary Variant",
-        "description": "Progress bar using the primary brand color.",
-        "code": "<ProgressBar variant=\"primary\" progress={75} />",
-        "stories": ["PrimaryVariant"]
+        "title": "With Label",
+        "description": "A progress bar with an inline percentage label.",
+        "code": "<div className=\"flex items-center gap-2\">\n  <ProgressBar.Root value={55} />\n  <span className=\"text-paragraph-xs text-text-sub-600\">80%</span>\n</div>",
+        "stories": ["WithLabel"]
+      },
+      {
+        "title": "Data Storage Example",
+        "description": "A composed example with title, progress bar, percentage, and an upgrade link.",
+        "code": "<ProgressBar.Root value={55} />\n<LinkButton.Root variant=\"primary\" underline>Upgrade</LinkButton.Root>",
+        "stories": ["DataStorage"]
       }
     ],
     "api": [
       {
-        "name": "ProgressBar",
-        "description": "The main component for progress indication.",
+        "name": "ProgressBar.Root",
+        "description": "The main progress bar component.",
         "props": [
           {
-            "name": "variant",
-            "type": "'neutral' | 'primary'",
-            "default": "'neutral'",
-            "description": "The visual color variant of the progress bar."
+            "name": "color",
+            "type": "'blue' | 'red' | 'orange' | 'green' | 'primary'",
+            "default": "'blue'",
+            "description": "The color of the progress indicator"
           },
           {
-            "name": "progress",
+            "name": "value",
             "type": "number",
             "default": "0",
-            "description": "The current progress value, from 0 to 100."
+            "description": "The current progress value"
+          },
+          {
+            "name": "max",
+            "type": "number",
+            "default": "100",
+            "description": "The maximum progress value"
           }
         ]
-      }
-    ],
-    "files": [
-      {
-        "path": "ui/progress-bar.tsx",
-        "type": "registry:ui"
       }
     ]
   },

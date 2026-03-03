@@ -181,7 +181,7 @@
       "name": "progress-bar",
       "type": "registry:ui",
       "title": "Progress Bar",
-      "description": "A progress bar component indicating the completion status of a task."
+      "description": "A progress bar component indicating the completion status of a task with multiple color options."
     },
     {
       "name": "radio-card-group",

@@ -1,19 +1,49 @@
-import { ProgressBar } from './progress-bar';
+import * as ProgressBar from './progress-bar';
+import * as LinkButton from './link-button';
 
-export default { title: 'UI/ProgressBar', component: ProgressBar };
+export default { title: 'UI/Progress Bar', component: ProgressBar.Root };
 
-export const Default = {
+export const Color = {
   render: () => (
-    <div style={{ width: '100%', maxWidth: '400px' }}>
-      <ProgressBar variant="neutral" progress={45} />
+    <div className='flex w-96 flex-col gap-6'>
+      <ProgressBar.Root value={50} max={100} color='blue' />
+      <ProgressBar.Root value={50} max={100} color='red' />
+      <ProgressBar.Root value={50} max={100} color='orange' />
+      <ProgressBar.Root value={50} max={100} color='green' />
+      <ProgressBar.Root value={50} max={100} color='primary' />
     </div>
   ),
 };
 
-export const PrimaryVariant = {
+export const WithLabel = {
   render: () => (
-    <div style={{ width: '100%', maxWidth: '400px' }}>
-      <ProgressBar variant="primary" progress={75} />
+    <div className='w-96'>
+      <div className='flex items-center gap-2'>
+        <ProgressBar.Root value={55} />
+        <span className='text-paragraph-xs text-text-sub-600'>80%</span>
+      </div>
+    </div>
+  ),
+};
+
+export const DataStorage = {
+  render: () => (
+    <div className='w-96'>
+      <div className='space-y-1.5'>
+        <div className='flex justify-between gap-1.5'>
+          <span className='text-label-sm text-text-strong-950'>
+            Data Storage
+          </span>
+          <span className='text-paragraph-xs text-text-sub-600'>80%</span>
+        </div>
+        <ProgressBar.Root value={55} />
+        <div className='text-paragraph-xs text-text-sub-600'>
+          <LinkButton.Root variant='primary' underline>
+            Upgrade
+          </LinkButton.Root>{' '}
+          to unlock unlimited data storage.
+        </div>
+      </div>
     </div>
   ),
 };
