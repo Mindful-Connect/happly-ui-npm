@@ -1,0 +1,51 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "avatar-group",
+  "type": "registry:ui",
+  "title": "Avatar Group",
+  "description": "A compound component for displaying overlapping avatar stacks with an overflow indicator. Uses namespace exports: AvatarGroup.Root, AvatarGroup.Overflow.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": [
+    "tv",
+    "recursive-clone-children",
+    "avatar"
+  ],
+  "docs": {
+    "lead": "A compound component for displaying overlapping avatar stacks with an overflow indicator.",
+    "usage": "import * as AvatarGroup from \"@/components/ui/avatar-group\"\nimport * as Avatar from \"@/components/ui/avatar\"\n\n<AvatarGroup.Root>\n  <Avatar.Root>\n    <Avatar.Image src=\"/path/to/image.png\" />\n  </Avatar.Root>\n  <AvatarGroup.Overflow>+3</AvatarGroup.Overflow>\n</AvatarGroup.Root>",
+    "examples": [
+      {
+        "title": "Size",
+        "description": "Avatar groups come in 9 sizes matching the Avatar sizes: 80 (default), 72, 64, 56, 48, 40, 32, 24, and 20. The size prop propagates to child Avatar.Root components.",
+        "code": "<AvatarGroup.Root size=\"48\">\n  <Avatar.Root>\n    <Avatar.Image src=\"/path/to/image.png\" />\n  </Avatar.Root>\n  <Avatar.Root>\n    <Avatar.Image src=\"/path/to/image.png\" />\n  </Avatar.Root>\n  <AvatarGroup.Overflow>+9</AvatarGroup.Overflow>\n</AvatarGroup.Root>",
+        "stories": ["Size"]
+      }
+    ],
+    "api": [
+      {
+        "name": "AvatarGroup.Root",
+        "description": "The main container that arranges avatars in an overlapping stack.",
+        "props": [
+          {
+            "name": "size",
+            "type": "'80' | '72' | '64' | '56' | '48' | '40' | '32' | '24' | '20'",
+            "default": "'80'",
+            "description": "The size of all avatars in the group. Propagated to child Avatar.Root and AvatarGroup.Overflow components."
+          }
+        ]
+      },
+      {
+        "name": "AvatarGroup.Overflow",
+        "description": "A circular overflow indicator showing the count of additional avatars not displayed.",
+        "props": []
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/avatar-group.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

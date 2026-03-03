@@ -46,6 +46,10 @@
         "href": "/docs/components/avatar"
       },
       {
+        "title": "Avatar Group",
+        "href": "/docs/components/avatar-group"
+      },
+      {
         "title": "Badge",
         "href": "/docs/components/badge"
       },

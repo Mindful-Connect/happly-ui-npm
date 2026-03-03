@@ -28,6 +28,12 @@
       "description": "SVG placeholder icons for the Avatar component (user and company silhouettes)."
     },
     {
+      "name": "avatar-group",
+      "type": "registry:ui",
+      "title": "Avatar Group",
+      "description": "A compound component for displaying overlapping avatar stacks with an overflow indicator. Uses namespace exports: AvatarGroup.Root, AvatarGroup.Overflow."
+    },
+    {
       "name": "badge",
       "type": "registry:ui",
       "title": "Badge",
