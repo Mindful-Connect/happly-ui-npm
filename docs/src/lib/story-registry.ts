@@ -30,6 +30,7 @@ import { default as statusBadgeMeta, Disabled as statusBadge_Disabled, Completed
 import { default as tableMeta, Default as table_Default } from '@/components/ui/table.stories';
 import { default as tagMeta, Stroke as tag_Stroke, Gray as tag_Gray, Disabled as tag_Disabled, WithImage as tag_WithImage, WithAvatar as tag_WithAvatar, Dismissable as tag_Dismissable } from '@/components/ui/tag.stories';
 import { default as textareaMeta, Default as textarea_Default, Disabled as textarea_Disabled, WithLabel as textarea_WithLabel, WithMaximumLength as textarea_WithMaximumLength } from '@/components/ui/textarea.stories';
+import { default as tooltipMeta, Light as tooltip_Light, Size as tooltip_Size, Position as tooltip_Position, HTMLContent as tooltip_HTMLContent } from '@/components/ui/tooltip.stories';
 import { default as uploadFileInputMeta, Showcase as uploadFileInput_Showcase } from '@/components/ui/upload-file-input.stories';
 
 export const storyRegistry: Record<string, {
@@ -302,6 +303,15 @@ export const storyRegistry: Record<string, {
     'Disabled': textarea_Disabled,
     'WithLabel': textarea_WithLabel,
     'WithMaximumLength': textarea_WithMaximumLength
+    }
+  },
+  'tooltip': {
+    meta: tooltipMeta,
+    stories: {
+    'Light': tooltip_Light,
+    'Size': tooltip_Size,
+    'Position': tooltip_Position,
+    'HTMLContent': tooltip_HTMLContent
     }
   },
   'upload-file-input': {

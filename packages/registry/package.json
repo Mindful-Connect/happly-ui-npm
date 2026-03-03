@@ -6,6 +6,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@radix-ui/react-tooltip": "^1.2.8",
     "@tanstack/react-table": "^8.21.3"
   }
 }

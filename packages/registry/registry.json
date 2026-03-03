@@ -250,6 +250,12 @@
       "description": "A textarea component."
     },
     {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "A tooltip component built on Radix UI with dark/light variants, multiple sizes, and arrow indicator. Uses namespace exports: Tooltip.Root, Tooltip.Trigger, Tooltip.Content."
+    },
+    {
       "name": "tv",
       "type": "registry:lib",
       "title": "Tailwind Variants",
