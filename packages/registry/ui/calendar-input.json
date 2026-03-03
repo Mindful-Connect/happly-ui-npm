@@ -19,11 +19,7 @@
         "title": "Basic Usage",
         "description": "A simple calendar input.",
         "code": "import { CalendarInput } from '@/components/ui/calendar-input'\n\nexport default function Demo() {\n  return <CalendarInput />\n}",
-        "preview": [
-          {
-            "component": "calendar-input"
-          }
-        ]
+        "stories": ["BasicUsage"]
       }
     ]
   },

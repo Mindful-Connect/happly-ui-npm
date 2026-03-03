@@ -14,51 +14,19 @@
         "title": "Default",
         "description": "Default styling for a badge.",
         "code": "<Badge>Default</Badge>",
-        "preview": [
-          {
-            "component": "badge",
-            "children": "Default"
-          }
-        ]
+        "stories": ["Default"]
       },
       {
         "title": "Color Variants",
         "description": "Badges come in various colors and styles.",
         "code": "<Badge colorVar=\"blueFilled\">Blue</Badge>\n<Badge colorVar=\"redFilled\">Red</Badge>\n<Badge colorVar=\"greenText\">Green Text</Badge>",
-        "preview": [
-          {
-            "component": "badge",
-            "props": { "colorVar": "blueFilled" },
-            "children": "Blue"
-          },
-          {
-            "component": "badge",
-            "props": { "colorVar": "redFilled" },
-            "children": "Red"
-          },
-          {
-            "component": "badge",
-            "props": { "colorVar": "greenText" },
-            "children": "Green Text"
-          }
-        ]
+        "stories": ["ColorVariants"]
       },
       {
         "title": "Sizes",
         "description": "Badges come in 'default' and 'sm' sizes.",
         "code": "<Badge size=\"default\">Default Size</Badge>\n<Badge size=\"sm\">Small Size</Badge>",
-        "preview": [
-          {
-            "component": "badge",
-            "props": { "size": "default" },
-            "children": "Default Size"
-          },
-          {
-            "component": "badge",
-            "props": { "size": "sm" },
-            "children": "Small Size"
-          }
-        ]
+        "stories": ["Sizes"]
       }
     ],
     "api": [

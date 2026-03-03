@@ -14,30 +14,13 @@
         "title": "Default",
         "description": "The default circular progress showing 25%.",
         "code": "<CircularProgress fraction={0.25} size={40} />",
-        "preview": [
-          {
-            "component": "circular-progress",
-            "props": {
-              "fraction": 0.25,
-              "size": 40
-            }
-          }
-        ]
+        "stories": ["Default"]
       },
       {
         "title": "With Color Variants",
         "description": "Circular progress with different brand color variants.",
         "code": "<div className=\"flex gap-4\">\n  <CircularProgress variant=\"green\" fraction={0.7} size={40} />\n  <CircularProgress variant=\"blue\" fraction={0.5} size={40} />\n  <CircularProgress variant=\"pink\" fraction={0.9} size={40} />\n</div>",
-        "preview": [
-          {
-            "component": "circular-progress",
-            "props": {
-              "variant": "green",
-              "fraction": 0.7,
-              "size": 40
-            }
-          }
-        ]
+        "stories": ["WithColorVariants"]
       }
     ],
     "api": [

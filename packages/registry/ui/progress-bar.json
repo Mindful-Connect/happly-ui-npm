@@ -14,29 +14,13 @@
         "title": "Default",
         "description": "The default neutral progress bar.",
         "code": "<ProgressBar variant=\"neutral\" progress={45} />",
-        "preview": [
-          {
-            "component": "progress-bar",
-            "props": {
-              "variant": "neutral",
-              "progress": 45
-            }
-          }
-        ]
+        "stories": ["Default"]
       },
       {
         "title": "Primary Variant",
         "description": "Progress bar using the primary brand color.",
         "code": "<ProgressBar variant=\"primary\" progress={75} />",
-        "preview": [
-          {
-            "component": "progress-bar",
-            "props": {
-              "variant": "primary",
-              "progress": 75
-            }
-          }
-        ]
+        "stories": ["PrimaryVariant"]
       }
     ],
     "api": [

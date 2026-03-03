@@ -20,14 +20,7 @@
         "title": "Default",
         "description": "Default phone input with Canada selected.",
         "code": "<PhoneInput.Root\n  inputValue={value}\n  onChange={setValue}\n  defaultCountryIso2=\"ca\"\n/>",
-        "preview": [
-          {
-            "component": "phone-input",
-            "props": {
-              "defaultCountryIso2": "ca"
-            }
-          }
-        ]
+        "stories": ["Default"]
       }
     ],
     "api": [

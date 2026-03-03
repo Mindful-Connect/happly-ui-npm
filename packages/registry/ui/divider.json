@@ -14,90 +14,37 @@
         "title": "Line (Default)",
         "description": "A simple horizontal line divider.",
         "code": "<Divider.Root />",
-        "preview": [
-          {
-            "component": "divider",
-            "props": {
-              "variant": "line"
-            }
-          }
-        ]
+        "stories": ["Line"]
       },
       {
         "title": "Line with Spacing",
         "description": "A line divider with vertical spacing.",
         "code": "<Divider.Root variant=\"line-spacing\" />",
-        "preview": [
-          {
-            "component": "divider",
-            "props": {
-              "variant": "line-spacing"
-            }
-          }
-        ]
+        "stories": ["LineWithSpacing"]
       },
       {
         "title": "Line with Text",
         "description": "A divider with centered text between the lines.",
         "code": "<Divider.Root variant=\"line-text\">OR</Divider.Root>\n<Divider.Root variant=\"line-text\">Continue with</Divider.Root>",
-        "preview": [
-          {
-            "component": "divider",
-            "props": {
-              "variant": "line-text"
-            },
-            "children": "OR"
-          },
-          {
-            "component": "divider",
-            "props": {
-              "variant": "line-text"
-            },
-            "children": "Continue with"
-          }
-        ]
+        "stories": ["LineWithText"]
       },
       {
         "title": "Text Only",
         "description": "A text-only divider without lines.",
         "code": "<Divider.Root variant=\"text\">Section</Divider.Root>",
-        "preview": [
-          {
-            "component": "divider",
-            "props": {
-              "variant": "text"
-            },
-            "children": "Section"
-          }
-        ]
+        "stories": ["TextOnly"]
       },
       {
         "title": "Solid Text",
         "description": "Text on a solid background with uppercase styling, commonly used in modals.",
         "code": "<Divider.Root variant=\"solid-text\">OR</Divider.Root>",
-        "preview": [
-          {
-            "component": "divider",
-            "props": {
-              "variant": "solid-text"
-            },
-            "children": "OR"
-          }
-        ]
+        "stories": ["SolidText"]
       },
       {
         "title": "Content",
         "description": "A divider with centered content elements like icons or buttons.",
         "code": "<Divider.Root variant=\"content\">\n  <Button.Root variant=\"neutral\" mode=\"stroke\" size=\"xsmall\" iconOnly>\n    <Button.Icon as={RiAddLine} />\n  </Button.Root>\n</Divider.Root>",
-        "preview": [
-          {
-            "component": "divider",
-            "props": {
-              "variant": "content"
-            },
-            "children": "icon-button"
-          }
-        ]
+        "stories": ["Content"]
       }
     ],
     "api": [

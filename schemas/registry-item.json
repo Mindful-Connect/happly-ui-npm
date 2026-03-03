@@ -144,7 +144,11 @@
               "title": { "type": "string" },
               "description": { "type": "string" },
               "code": { "type": "string" },
-              "preview": { "type": "array" }
+              "stories": {
+                "type": "array",
+                "description": "Story export names from the component's .stories.tsx file",
+                "items": { "type": "string" }
+              }
             }
           }
         },

@@ -3,170 +3,14 @@
 import { DocsHeader } from '@/components/DocsHeader';
 import { Fence } from '@/components/Fence';
 import { Prose } from '@/components/Prose';
-import {
-  ComponentPreview,
-  DemoButton,
-  DemoBadge,
-  DemoLabel,
-  DemoCard,
-  DemoCardHeader,
-  DemoCardTitle,
-  DemoCardDescription,
-  DemoCardContent,
-  DemoDivider,
-  DemoTextarea,
-  FormGroup,
-  ButtonGroup,
-} from '@/components/ComponentPreview';
-import type {
-  RegistryItemWithDocs,
-  ComponentPreviewConfig,
-} from '@/lib/registry';
-
+import type { RegistryItemWithDocs } from '@/lib/registry';
+import { StoryPreview } from '@/components/StoryPreview';
 import { TableOfContents } from '@/components/TableOfContents';
 import { PrevNextLinks } from '@/components/PrevNextLinks';
 import { type Section } from '@/lib/sections';
-import { cn } from '@/lib/happly-ui-utils';
 
 interface ComponentDocsProps {
   component: RegistryItemWithDocs;
-}
-
-import { DemoPhoneInput } from '@/components/demos/demo-phone-input';
-import DemoRadioCardGroup from '@/components/demos/demo-radio-card-group';
-import { DemoCalendarInput } from '@/components/demos/demo-calendar-input';
-import { DemoLocationInput } from '@/components/demos/demo-location-input';
-import { DemoSocialsInput } from '@/components/demos/demo-socials-input';
-import { DemoInput } from '@/components/demos/demo-input';
-import { DemoSelect } from '@/components/demos/demo-select';
-import { DemoTag } from '@/components/demos/demo-tag';
-import { DemoSearchableComboBox } from '@/components/demos/demo-searchable-combo-box';
-import { DemoCurrencyInput } from '@/components/demos/demo-currency-input';
-import { DemoUploadFileInput } from '@/components/demos/demo-upload-file-input';
-import { DemoProgressBar } from '@/components/demos/demo-progress-bar';
-import { DemoCircularProgress } from '@/components/demos/demo-circular-progress';
-
-// Helper to render children safely
-function renderPreviewChildren(children?: string | ComponentPreviewConfig[]) {
-  if (!children) return null;
-  if (typeof children === 'string') return children;
-  return children.map((config, index) => (
-    <PreviewItem key={index} config={config} />
-  ));
-}
-
-// Render a single preview item
-function PreviewItem({ config }: { config: ComponentPreviewConfig }) {
-  const { component, props = {}, children } = config;
-
-  switch (component) {
-    case 'phone-input':
-      return <DemoPhoneInput {...(props as any)} />;
-    case 'radio-card-group':
-      return <DemoRadioCardGroup />;
-    case 'calendar-input':
-      return <DemoCalendarInput />;
-    case 'location-input':
-      return <DemoLocationInput />;
-    case 'socials-input':
-      return <DemoSocialsInput />;
-    case 'select':
-      return <DemoSelect />;
-    case 'button':
-      return (
-        <DemoButton {...(props as any)}>
-          {renderPreviewChildren(children)}
-        </DemoButton>
-      );
-    case 'badge':
-      return (
-        <DemoBadge {...(props as any)}>
-          {renderPreviewChildren(children)}
-        </DemoBadge>
-      );
-    case 'input':
-      return <DemoInput {...(props as any)} />;
-    case 'label':
-      return (
-        <DemoLabel {...(props as any)}>
-          {renderPreviewChildren(children)}
-        </DemoLabel>
-      );
-    case 'card':
-      return (
-        <DemoCard>
-          <DemoCardHeader>
-            <DemoCardTitle>
-              {(props as any).title || 'Card Title'}
-            </DemoCardTitle>
-            {(props as any).description && (
-              <DemoCardDescription>
-                {(props as any).description}
-              </DemoCardDescription>
-            )}
-          </DemoCardHeader>
-          {children && (
-            <DemoCardContent>{renderPreviewChildren(children)}</DemoCardContent>
-          )}
-        </DemoCard>
-      );
-    case 'divider':
-      return (
-        <DemoDivider {...(props as any)}>
-          {renderPreviewChildren(children)}
-        </DemoDivider>
-      );
-    case 'textarea':
-      return <DemoTextarea {...(props as any)} />;
-    case 'form-group':
-      return (
-        <FormGroup {...(props as any)}>
-          {renderPreviewChildren(children)}
-        </FormGroup>
-      );
-    case 'tag':
-      return (
-        <DemoTag {...(props as any)}>{renderPreviewChildren(children)}</DemoTag>
-      );
-    case 'searchable-combo-box':
-      return <DemoSearchableComboBox />;
-    case 'currency-input':
-      return <DemoCurrencyInput />;
-    case 'upload-file-input':
-      return <DemoUploadFileInput />;
-    case 'progress-bar':
-      return <DemoProgressBar {...(props as any)} />;
-    case 'circular-progress':
-      return <DemoCircularProgress {...(props as any)} />;
-    default:
-      return null;
-  }
-}
-
-// Render preview group
-function PreviewGroup({ previews }: { previews: ComponentPreviewConfig[] }) {
-  // Check if all previews are buttons - wrap in ButtonGroup
-  const allButtons = previews.every((p) => p.component === 'button');
-
-  if (allButtons) {
-    return (
-      <ComponentPreview>
-        <ButtonGroup>
-          {previews.map((config, index) => (
-            <PreviewItem key={index} config={config} />
-          ))}
-        </ButtonGroup>
-      </ComponentPreview>
-    );
-  }
-
-  return (
-    <ComponentPreview>
-      {previews.map((config, index) => (
-        <PreviewItem key={index} config={config} />
-      ))}
-    </ComponentPreview>
-  );
 }
 
 export function ComponentDocs({ component }: ComponentDocsProps) {
@@ -394,9 +238,9 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
                   <div key={index} className='mb-8'>
                     <h3>{example.title}</h3>
                     {example.description && <p>{example.description}</p>}
-                    {example.preview && example.preview.length > 0 && (
-                      <PreviewGroup previews={example.preview} />
-                    )}
+                    {example.stories?.length ? (
+                      <StoryPreview componentName={name} storyNames={example.stories} />
+                    ) : null}
                     <Fence language='tsx'>{example.code}</Fence>
                   </div>
                 ))}
@@ -502,9 +346,9 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
                             {example.description && (
                               <p>{example.description}</p>
                             )}
-                            {example.preview && example.preview.length > 0 && (
-                              <PreviewGroup previews={example.preview} />
-                            )}
+                            {example.stories?.length ? (
+                              <StoryPreview componentName='phone-input' storyNames={example.stories} />
+                            ) : null}
                             <Fence language='tsx'>{example.code}</Fence>
                           </div>
                         )
@@ -617,10 +461,9 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
                               {example.description && (
                                 <p>{example.description}</p>
                               )}
-                              {example.preview &&
-                                example.preview.length > 0 && (
-                                  <PreviewGroup previews={example.preview} />
-                                )}
+                              {example.stories?.length ? (
+                                <StoryPreview componentName='currency-input' storyNames={example.stories} />
+                              ) : null}
                               <Fence language='tsx'>{example.code}</Fence>
                             </div>
                           )

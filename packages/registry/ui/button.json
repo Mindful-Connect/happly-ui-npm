@@ -24,236 +24,43 @@
         "title": "Primary Variant",
         "description": "The primary variant uses the brand color for main call-to-action buttons.",
         "code": "<Button variant=\"primary\" mode=\"filled\">Filled</Button>\n<Button variant=\"primary\" mode=\"stroke\">Stroke</Button>\n<Button variant=\"primary\" mode=\"lighter\">Lighter</Button>\n<Button variant=\"primary\" mode=\"ghost\">Ghost</Button>",
-        "preview": [
-          {
-            "component": "button",
-            "props": {
-              "variant": "primary",
-              "mode": "filled"
-            },
-            "children": "Filled"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "primary",
-              "mode": "stroke"
-            },
-            "children": "Stroke"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "primary",
-              "mode": "lighter"
-            },
-            "children": "Lighter"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "primary",
-              "mode": "ghost"
-            },
-            "children": "Ghost"
-          }
-        ]
+        "stories": ["PrimaryVariant"]
       },
       {
         "title": "Neutral Variant",
         "description": "The neutral variant uses grayscale colors for secondary actions.",
         "code": "<Button variant=\"neutral\" mode=\"filled\">Filled</Button>\n<Button variant=\"neutral\" mode=\"stroke\">Stroke</Button>\n<Button variant=\"neutral\" mode=\"lighter\">Lighter</Button>\n<Button variant=\"neutral\" mode=\"ghost\">Ghost</Button>",
-        "preview": [
-          {
-            "component": "button",
-            "props": {
-              "variant": "neutral",
-              "mode": "filled"
-            },
-            "children": "Filled"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "neutral",
-              "mode": "stroke"
-            },
-            "children": "Stroke"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "neutral",
-              "mode": "lighter"
-            },
-            "children": "Lighter"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "neutral",
-              "mode": "ghost"
-            },
-            "children": "Ghost"
-          }
-        ]
+        "stories": ["NeutralVariant"]
       },
       {
         "title": "Error Variant",
         "description": "The error variant for destructive actions.",
         "code": "<Button variant=\"error\" mode=\"filled\">Filled</Button>\n<Button variant=\"error\" mode=\"stroke\">Stroke</Button>\n<Button variant=\"error\" mode=\"lighter\">Lighter</Button>\n<Button variant=\"error\" mode=\"ghost\">Ghost</Button>",
-        "preview": [
-          {
-            "component": "button",
-            "props": {
-              "variant": "error",
-              "mode": "filled"
-            },
-            "children": "Filled"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "error",
-              "mode": "stroke"
-            },
-            "children": "Stroke"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "error",
-              "mode": "lighter"
-            },
-            "children": "Lighter"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "error",
-              "mode": "ghost"
-            },
-            "children": "Ghost"
-          }
-        ]
+        "stories": ["ErrorVariant"]
       },
       {
         "title": "Success Variant",
         "description": "The success variant for positive actions.",
         "code": "<Button variant=\"success\" mode=\"filled\">Filled</Button>\n<Button variant=\"success\" mode=\"stroke\">Stroke</Button>\n<Button variant=\"success\" mode=\"lighter\">Lighter</Button>\n<Button variant=\"success\" mode=\"ghost\">Ghost</Button>",
-        "preview": [
-          {
-            "component": "button",
-            "props": {
-              "variant": "success",
-              "mode": "filled"
-            },
-            "children": "Filled"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "success",
-              "mode": "stroke"
-            },
-            "children": "Stroke"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "success",
-              "mode": "lighter"
-            },
-            "children": "Lighter"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "success",
-              "mode": "ghost"
-            },
-            "children": "Ghost"
-          }
-        ]
+        "stories": ["SuccessVariant"]
       },
       {
         "title": "Warning Variant",
         "description": "The warning variant for cautionary actions.",
         "code": "<Button variant=\"warning\" mode=\"filled\">Filled</Button>\n<Button variant=\"warning\" mode=\"stroke\">Stroke</Button>\n<Button variant=\"warning\" mode=\"lighter\">Lighter</Button>\n<Button variant=\"warning\" mode=\"ghost\">Ghost</Button>",
-        "preview": [
-          {
-            "component": "button",
-            "props": {
-              "variant": "warning",
-              "mode": "filled"
-            },
-            "children": "Filled"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "warning",
-              "mode": "stroke"
-            },
-            "children": "Stroke"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "warning",
-              "mode": "lighter"
-            },
-            "children": "Lighter"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "warning",
-              "mode": "ghost"
-            },
-            "children": "Ghost"
-          }
-        ]
+        "stories": ["WarningVariant"]
       },
       {
         "title": "Sizes",
         "description": "Buttons come in multiple sizes.",
         "code": "<Button size=\"medium\">Medium</Button>\n<Button size=\"small\">Small</Button>\n<Button size=\"xsmall\">XSmall</Button>\n<Button size=\"xxsmall\">XXSmall</Button>",
-        "preview": [
-          {
-            "component": "button",
-            "props": {
-              "size": "medium"
-            },
-            "children": "Medium"
-          },
-          {
-            "component": "button",
-            "props": {
-              "size": "small"
-            },
-            "children": "Small"
-          },
-          {
-            "component": "button",
-            "props": {
-              "size": "xsmall"
-            },
-            "children": "XSmall"
-          },
-          {
-            "component": "button",
-            "props": {
-              "size": "xxsmall"
-            },
-            "children": "XXSmall"
-          }
-        ]
+        "stories": ["Sizes"]
       },
       {
         "title": "With Icons",
         "description": "You can embed icons directly in the button.",
-        "code": "<Button variant=\"primary\" mode=\"filled\">\n  <MailIcon />\n  Send Email\n</Button>"
+        "code": "<Button variant=\"primary\" mode=\"filled\">\n  <MailIcon />\n  Send Email\n</Button>",
+        "stories": ["WithIcons"]
       }
     ],
     "api": [

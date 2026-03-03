@@ -20,12 +20,7 @@
         "title": "Default",
         "description": "Default usage with English labels.",
         "code": "<SocialsInput\n  name=\"socials\"\n  formValue={values}\n  setFormValue={setValues}\n/>",
-        "preview": [
-          {
-            "component": "socials-input",
-            "props": {}
-          }
-        ]
+        "stories": ["Default"]
       }
     ],
     "api": [

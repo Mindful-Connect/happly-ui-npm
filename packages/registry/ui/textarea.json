@@ -14,68 +14,25 @@
         "title": "Default",
         "description": "A default textarea component.",
         "code": "<Textarea placeholder=\"Type your message here.\" />",
-        "preview": [
-          {
-            "component": "textarea",
-            "props": {
-              "placeholder": "Type your message here."
-            }
-          }
-        ]
+        "stories": ["Default"]
       },
       {
         "title": "Disabled",
         "description": "A disabled textarea component.",
         "code": "<Textarea disabled placeholder=\"Type your message here.\" />",
-        "preview": [
-          {
-            "component": "textarea",
-            "props": {
-              "disabled": true,
-              "placeholder": "Type your message here."
-            }
-          }
-        ]
+        "stories": ["Disabled"]
       },
       {
         "title": "With Label",
         "description": "A textarea with a label.",
         "code": "<div className=\"grid w-full gap-1.5\">\n  <Label htmlFor=\"message\">Your message</Label>\n  <Textarea placeholder=\"Type your message here.\" id=\"message\" />\n</div>",
-        "preview": [
-          {
-            "component": "form-group",
-            "children": [
-              {
-                "component": "label",
-                "children": "Your message",
-                "props": {
-                  "htmlFor": "message"
-                }
-              },
-              {
-                "component": "textarea",
-                "props": {
-                  "id": "message",
-                  "placeholder": "Type your message here."
-                }
-              }
-            ]
-          }
-        ]
+        "stories": ["WithLabel"]
       },
       {
         "title": "With Maximum Length",
         "description": "A textarea with a maximum length.",
         "code": "<Textarea placeholder=\"Type your message here.\" maxLength={250} />",
-        "preview": [
-          {
-            "component": "textarea",
-            "props": {
-              "placeholder": "Type your message here.",
-              "maxLength": 250
-            }
-          }
-        ]
+        "stories": ["WithMaximumLength"]
       }
     ],
     "api": [

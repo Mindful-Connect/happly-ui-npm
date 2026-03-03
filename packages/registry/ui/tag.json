@@ -18,29 +18,13 @@
         "title": "Default",
         "description": "Default tag variant.",
         "code": "<Tag variant=\"stroke\">Tag Label</Tag>",
-        "preview": [
-          {
-            "component": "tag",
-            "props": {
-              "variant": "stroke"
-            },
-            "children": "Tag Label"
-          }
-        ]
+        "stories": ["Default"]
       },
       {
         "title": "Gray Variant",
         "description": "Gray background variant.",
         "code": "<Tag variant=\"gray\">Gray Tag</Tag>",
-        "preview": [
-          {
-            "component": "tag",
-            "props": {
-              "variant": "gray"
-            },
-            "children": "Gray Tag"
-          }
-        ]
+        "stories": ["GrayVariant"]
       }
     ],
     "api": [

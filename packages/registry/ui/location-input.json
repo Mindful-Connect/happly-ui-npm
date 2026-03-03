@@ -18,12 +18,7 @@
         "title": "Default",
         "description": "Default location input.",
         "code": "import { LocationInput } from \"@/components/ui/location-input\"\nimport { useState } from \"react\"\n\nexport function DemoLocationInput() {\n  const [location, setLocation] = useState<any>(null)\n\n  return (\n    <LocationInput\n      location={location}\n      setLocation={setLocation}\n    />\n  )\n}",
-        "preview": [
-          {
-            "component": "location-input",
-            "props": {}
-          }
-        ]
+        "stories": ["Default"]
       }
     ],
     "api": [

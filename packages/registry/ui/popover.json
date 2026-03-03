@@ -6,6 +6,60 @@
   "description": "Displays rich content in a portal or inline, triggered by a button.",
   "dependencies": ["@radix-ui/react-popover"],
   "registryDependencies": ["happly-ui-utils"],
+  "docs": {
+    "lead": "Displays rich content in a portal or inline, triggered by a button.",
+    "usage": "import { Popover, PopoverTrigger, PopoverContent } from \"@/components/ui/popover\"\n\n<Popover>\n  <PopoverTrigger>Open</PopoverTrigger>\n  <PopoverContent>Content here</PopoverContent>\n</Popover>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "A simple popover with trigger button and content.",
+        "code": "<Popover>\n  <PopoverTrigger>Open</PopoverTrigger>\n  <PopoverContent>\n    <p>Popover content</p>\n  </PopoverContent>\n</Popover>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Inline (No Portal)",
+        "description": "Popover rendered inline without a portal, useful inside modals.",
+        "code": "<PopoverContent usePortal={false}>\n  <p>Inline content</p>\n</PopoverContent>",
+        "stories": ["InlinePortal"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Popover",
+        "description": "The root popover component (Radix UI Root).",
+        "props": []
+      },
+      {
+        "name": "PopoverTrigger",
+        "description": "The trigger element that opens the popover.",
+        "props": []
+      },
+      {
+        "name": "PopoverContent",
+        "description": "The popover content wrapper.",
+        "props": [
+          {
+            "name": "usePortal",
+            "type": "boolean",
+            "default": "true",
+            "description": "Whether to render in a portal. Set to false for modal integration."
+          },
+          {
+            "name": "align",
+            "type": "'start' | 'center' | 'end'",
+            "default": "'center'",
+            "description": "The alignment of the popover relative to the trigger."
+          },
+          {
+            "name": "sideOffset",
+            "type": "number",
+            "default": "4",
+            "description": "The distance in pixels from the trigger."
+          }
+        ]
+      }
+    ]
+  },
   "files": [
     {
       "path": "ui/popover.tsx",

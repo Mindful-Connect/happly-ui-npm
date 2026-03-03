@@ -20,11 +20,7 @@
         "title": "Basic Usage",
         "description": "Radio Card Group with different configurations.",
         "code": "import RadioCardGroup, { RadioCardItem } from '@/components/ui/radio-card-group'\n\n// See demo for full usage example",
-        "preview": [
-          {
-            "component": "radio-card-group"
-          }
-        ]
+        "stories": ["BasicUsage", "WithoutDescriptions", "WithIcons", "WithBadges", "AllowDeselect", "Disabled"]
       }
     ]
   },

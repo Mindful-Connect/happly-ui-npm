@@ -14,12 +14,7 @@
         "title": "Showcase",
         "description": "Input component with various sizes, icons, and affixes.",
         "code": "import { Input } from \"@/components/ui/input\"\nimport { RiUser3Line } from \"react-icons/ri\"\n\n<Input placeholder=\"Username\" leftIcon={<RiUser3Line />} />",
-        "preview": [
-          {
-            "component": "input",
-            "props": {}
-          }
-        ]
+        "stories": ["Sizes", "Icons", "Affixes", "States"]
       }
     ],
     "phoneInput": {
@@ -31,14 +26,7 @@
           "title": "Default",
           "description": "Default phone input with Canada selected.",
           "code": "<PhoneInput.Root\n  inputValue={value}\n  onChange={setValue}\n  defaultCountryIso2=\"ca\"\n/>",
-          "preview": [
-            {
-              "component": "phone-input",
-              "props": {
-                "defaultCountryIso2": "ca"
-              }
-            }
-          ]
+          "stories": ["Default"]
         }
       ],
       "api": [
@@ -88,13 +76,7 @@
           "title": "Default",
           "description": "Default usage.",
           "code": "<CurrencyInput />",
-          "preview": [
-            {
-              "component": "currency-input",
-              "props": {},
-              "children": ""
-            }
-          ]
+          "stories": ["Default"]
         }
       ],
       "api": [

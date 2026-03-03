@@ -24,13 +24,7 @@
         "title": "Default",
         "description": "Default usage.",
         "code": "<CurrencyInput />",
-        "preview": [
-          {
-            "component": "currency-input",
-            "props": {},
-            "children": ""
-          }
-        ]
+        "stories": ["Default"]
       }
     ],
     "api": [

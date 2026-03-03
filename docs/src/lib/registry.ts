@@ -16,7 +16,7 @@ export interface RegistryItemWithDocs extends RegistryItem {
       title: string;
       description?: string;
       code: string;
-      preview?: ComponentPreviewConfig[];
+      stories?: string[];
     }>;
     api?: Array<{
       name: string;
@@ -34,33 +34,6 @@ export interface RegistryItemWithDocs extends RegistryItem {
     type: string;
     content: string;
   }>;
-}
-
-// Preview configuration for rendering demo components
-export interface ComponentPreviewConfig {
-  component:
-    | 'button'
-    | 'badge'
-    | 'input'
-    | 'label'
-    | 'card'
-    | 'divider'
-    | 'phone-input'
-    | 'textarea'
-    | 'form-group'
-    | 'radio-card-group'
-    | 'calendar-input'
-    | 'socials-input'
-    | 'select'
-    | 'location-input'
-    | 'tag'
-    | 'searchable-combo-box'
-    | 'currency-input'
-    | 'upload-file-input'
-    | 'progress-bar'
-    | 'circular-progress';
-  props?: Record<string, unknown>;
-  children?: string | ComponentPreviewConfig[];
 }
 
 export interface Registry {

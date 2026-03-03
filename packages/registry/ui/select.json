@@ -20,12 +20,7 @@
         "title": "Showcase",
         "description": "Select component usage with sizes, variants and states.",
         "code": "import { Select } from \"@/components/ui/select\"\n...",
-        "preview": [
-          {
-            "component": "select",
-            "props": {}
-          }
-        ]
+        "stories": ["Sizes", "Variants", "SelectStates"]
       }
     ]
   },
