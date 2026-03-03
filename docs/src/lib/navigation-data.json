@@ -64,6 +64,10 @@
         "href": "/docs/components/label"
       },
       {
+        "title": "Link Button",
+        "href": "/docs/components/link-button"
+      },
+      {
         "title": "Location Input",
         "href": "/docs/components/location-input"
       },

@@ -1,0 +1,114 @@
+import * as LinkButton from './link-button';
+import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react';
+
+export default { title: 'UI/Link Button', component: LinkButton.Root };
+
+export const Gray = {
+  render: () => <LinkButton.Root variant='gray'>Link Button</LinkButton.Root>,
+};
+
+export const Black = {
+  render: () => <LinkButton.Root variant='black'>Link Button</LinkButton.Root>,
+};
+
+export const Primary = {
+  render: () => (
+    <LinkButton.Root variant='primary'>Link Button</LinkButton.Root>
+  ),
+};
+
+export const Error = {
+  render: () => (
+    <LinkButton.Root variant='error'>Link Button</LinkButton.Root>
+  ),
+};
+
+export const Modifiable = {
+  render: () => (
+    <LinkButton.Root variant='modifiable' className='text-success-base'>
+      Link Button
+    </LinkButton.Root>
+  ),
+};
+
+export const Sizes = {
+  render: () => (
+    <div className='flex flex-col items-center gap-4'>
+      <LinkButton.Root>Link Button</LinkButton.Root>
+
+      <LinkButton.Root size='small'>Link Button</LinkButton.Root>
+    </div>
+  ),
+};
+
+export const Underline = {
+  render: () => (
+    <div className='flex flex-col items-center gap-4'>
+      <LinkButton.Root underline variant='gray'>
+        Link Button
+      </LinkButton.Root>
+      <LinkButton.Root underline variant='black'>
+        Link Button
+      </LinkButton.Root>
+      <LinkButton.Root underline variant='primary'>
+        Link Button
+      </LinkButton.Root>
+      <LinkButton.Root underline variant='error'>
+        Link Button
+      </LinkButton.Root>
+    </div>
+  ),
+};
+
+export const WithIcon = {
+  render: () => (
+    <LinkButton.Root>
+      <LinkButton.Icon as={RiArrowLeftSLine} />
+      Link Button
+      <LinkButton.Icon as={RiArrowRightSLine} />
+    </LinkButton.Root>
+  ),
+};
+
+export const Disabled = {
+  render: () => (
+    <div className='flex flex-col items-center gap-4'>
+      <LinkButton.Root variant='gray' disabled>
+        Link Button
+        <LinkButton.Icon as={RiArrowRightSLine} />
+      </LinkButton.Root>
+
+      <LinkButton.Root variant='black' disabled>
+        Link Button
+        <LinkButton.Icon as={RiArrowRightSLine} />
+      </LinkButton.Root>
+
+      <LinkButton.Root variant='primary' disabled>
+        Link Button
+        <LinkButton.Icon as={RiArrowRightSLine} />
+      </LinkButton.Root>
+
+      <LinkButton.Root variant='error' disabled>
+        Link Button
+        <LinkButton.Icon as={RiArrowRightSLine} />
+      </LinkButton.Root>
+
+      <LinkButton.Root
+        variant='modifiable'
+        className='text-success-base'
+        disabled
+      >
+        Link Button
+        <LinkButton.Icon as={RiArrowRightSLine} />
+      </LinkButton.Root>
+    </div>
+  ),
+};
+
+export const AsChild = {
+  render: () => (
+    <LinkButton.Root asChild>
+      <a href='#'>Link Button</a>
+    </LinkButton.Root>
+  ),
+};

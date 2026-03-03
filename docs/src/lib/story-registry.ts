@@ -11,6 +11,7 @@ import { default as currencyInputMeta, Default as currencyInput_Default } from '
 import { default as dividerMeta, Line as divider_Line, LineWithSpacing as divider_LineWithSpacing, LineWithText as divider_LineWithText, TextOnly as divider_TextOnly, SolidText as divider_SolidText, Content as divider_Content } from '@/components/ui/divider.stories';
 import { default as fancyButtonMeta, Neutral as fancyButton_Neutral, Primary as fancyButton_Primary, Error as fancyButton_Error, Basic as fancyButton_Basic, WithIcon as fancyButton_WithIcon, Sizes as fancyButton_Sizes, Disabled as fancyButton_Disabled, AsChild as fancyButton_AsChild } from '@/components/ui/fancy-button.stories';
 import { default as inputMeta, Sizes as input_Sizes, Icons as input_Icons, Affixes as input_Affixes, States as input_States } from '@/components/ui/input.stories';
+import { default as linkButtonMeta, Gray as linkButton_Gray, Black as linkButton_Black, Primary as linkButton_Primary, Error as linkButton_Error, Modifiable as linkButton_Modifiable, Sizes as linkButton_Sizes, Underline as linkButton_Underline, WithIcon as linkButton_WithIcon, Disabled as linkButton_Disabled, AsChild as linkButton_AsChild } from '@/components/ui/link-button.stories';
 import { default as locationInputMeta, Default as locationInput_Default } from '@/components/ui/location-input.stories';
 import { default as phoneInputMeta, Default as phoneInput_Default } from '@/components/ui/phone-input.stories';
 import { default as popoverMeta, Default as popover_Default, InlinePortal as popover_InlinePortal } from '@/components/ui/popover.stories';
@@ -128,6 +129,21 @@ export const storyRegistry: Record<string, {
     'Icons': input_Icons,
     'Affixes': input_Affixes,
     'States': input_States
+    }
+  },
+  'link-button': {
+    meta: linkButtonMeta,
+    stories: {
+    'Gray': linkButton_Gray,
+    'Black': linkButton_Black,
+    'Primary': linkButton_Primary,
+    'Error': linkButton_Error,
+    'Modifiable': linkButton_Modifiable,
+    'Sizes': linkButton_Sizes,
+    'Underline': linkButton_Underline,
+    'WithIcon': linkButton_WithIcon,
+    'Disabled': linkButton_Disabled,
+    'AsChild': linkButton_AsChild
     }
   },
   'location-input': {

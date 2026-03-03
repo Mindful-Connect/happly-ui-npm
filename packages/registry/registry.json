@@ -118,6 +118,12 @@
       "description": "A label component for form inputs."
     },
     {
+      "name": "link-button",
+      "type": "registry:ui",
+      "title": "Link Button",
+      "description": "A text-style button component with underline decoration, multiple variants, and polymorphic icon support. Uses namespace exports: LinkButton.Root, LinkButton.Icon."
+    },
+    {
       "name": "location-input",
       "type": "registry:ui",
       "title": "Location Input",
