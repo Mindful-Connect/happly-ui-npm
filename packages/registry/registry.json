@@ -16,6 +16,18 @@
       "description": "Utility functions and types for the Alert component."
     },
     {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "A compound avatar component with image, text, placeholder, status indicator, brand logo, and notification support. Uses namespace exports: Avatar.Root, Avatar.Image, Avatar.Indicator, Avatar.Status, Avatar.BrandLogo, Avatar.Notification."
+    },
+    {
+      "name": "avatar-empty-icons",
+      "type": "registry:ui",
+      "title": "Avatar Empty Icons",
+      "description": "SVG placeholder icons for the Avatar component (user and company silhouettes)."
+    },
+    {
       "name": "badge",
       "type": "registry:ui",
       "title": "Badge",

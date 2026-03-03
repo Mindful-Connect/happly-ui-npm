@@ -42,6 +42,10 @@
         "collapsed": false
       },
       {
+        "title": "Avatar",
+        "href": "/docs/components/avatar"
+      },
+      {
         "title": "Badge",
         "href": "/docs/components/badge"
       },

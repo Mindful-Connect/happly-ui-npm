@@ -1,0 +1,178 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "avatar",
+  "type": "registry:ui",
+  "title": "Avatar",
+  "description": "A compound avatar component with image, text, placeholder, status indicator, brand logo, and notification support. Uses namespace exports: Avatar.Root, Avatar.Image, Avatar.Indicator, Avatar.Status, Avatar.BrandLogo, Avatar.Notification.",
+  "version": "1.0.0",
+  "dependencies": [
+    "@radix-ui/react-slot"
+  ],
+  "registryDependencies": [
+    "tv",
+    "happly-ui-utils",
+    "recursive-clone-children",
+    "avatar-empty-icons"
+  ],
+  "docs": {
+    "lead": "A compound avatar component with image, text, placeholder, status indicator, brand logo, and notification support.",
+    "usage": "import * as Avatar from \"@/components/ui/avatar\"\n\n<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n</Avatar.Root>",
+    "examples": [
+      {
+        "title": "Color",
+        "description": "Avatar backgrounds in different colors: gray (default), yellow, blue, sky, purple, and red.",
+        "code": "<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n</Avatar.Root>\n\n<Avatar.Root color=\"yellow\">\n  <Avatar.Image src=\"/path/to/image.png\" />\n</Avatar.Root>",
+        "stories": ["Color"]
+      },
+      {
+        "title": "Size",
+        "description": "Avatars come in 9 sizes: 80 (default), 72, 64, 56, 48, 40, 32, 24, and 20.",
+        "code": "<Avatar.Root size=\"48\">\n  <Avatar.Image src=\"/path/to/image.png\" />\n</Avatar.Root>",
+        "stories": ["Size"]
+      },
+      {
+        "title": "Text",
+        "description": "Pass text children (e.g. initials) instead of an image.",
+        "code": "<Avatar.Root>EW</Avatar.Root>\n<Avatar.Root color=\"yellow\">EW</Avatar.Root>",
+        "stories": ["Text"]
+      },
+      {
+        "title": "Placeholder",
+        "description": "When no children are provided, a placeholder icon is shown. Use placeholderType to switch between user and company icons.",
+        "code": "<Avatar.Root />\n<Avatar.Root placeholderType=\"company\" />",
+        "stories": ["Placeholder"]
+      },
+      {
+        "title": "Status",
+        "description": "Show user status (online, offline, busy, away) using Avatar.Indicator and Avatar.Status.",
+        "code": "<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n  <Avatar.Indicator>\n    <Avatar.Status status=\"online\" />\n  </Avatar.Indicator>\n</Avatar.Root>",
+        "stories": ["Status"]
+      },
+      {
+        "title": "Notification",
+        "description": "Show a notification dot using Avatar.Indicator with position='top' and Avatar.Notification.",
+        "code": "<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n  <Avatar.Indicator position=\"top\">\n    <Avatar.Notification />\n  </Avatar.Indicator>\n</Avatar.Root>",
+        "stories": ["Notification"]
+      },
+      {
+        "title": "Brand Logo",
+        "description": "Show a brand logo using Avatar.Indicator with position='bottom' and Avatar.BrandLogo.",
+        "code": "<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n  <Avatar.Indicator position=\"bottom\">\n    <Avatar.BrandLogo src=\"/path/to/logo.svg\" />\n  </Avatar.Indicator>\n</Avatar.Root>",
+        "stories": ["BrandLogo"]
+      },
+      {
+        "title": "Custom SVG Indicator",
+        "description": "Pass any custom SVG or component as children to Avatar.Indicator for custom badges like verified icons.",
+        "code": "<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n  <Avatar.Indicator position=\"top\">\n    <CustomVerifiedIcon />\n  </Avatar.Indicator>\n</Avatar.Root>",
+        "stories": ["IndicatorCustomSVG"]
+      },
+      {
+        "title": "As Link",
+        "description": "Use the asChild prop with Radix Slot to render the avatar as a link or other element.",
+        "code": "<Avatar.Root asChild>\n  <a href=\"#\">\n    <Avatar.Image src=\"/path/to/image.png\" />\n  </a>\n</Avatar.Root>",
+        "stories": ["AsLink"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Avatar.Root",
+        "description": "The main avatar container component.",
+        "props": [
+          {
+            "name": "size",
+            "type": "'80' | '72' | '64' | '56' | '48' | '40' | '32' | '24' | '20'",
+            "default": "'80'",
+            "description": "The size of the avatar in pixels"
+          },
+          {
+            "name": "color",
+            "type": "'gray' | 'yellow' | 'blue' | 'sky' | 'purple' | 'red'",
+            "default": "'gray'",
+            "description": "The background color"
+          },
+          {
+            "name": "placeholderType",
+            "type": "'user' | 'company'",
+            "default": "'user'",
+            "description": "The placeholder icon type when no children are provided"
+          },
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Renders as child element using Radix Slot"
+          }
+        ]
+      },
+      {
+        "name": "Avatar.Image",
+        "description": "The avatar image element.",
+        "props": [
+          {
+            "name": "src",
+            "type": "string",
+            "description": "The image source URL"
+          },
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Renders as child element using Radix Slot"
+          }
+        ]
+      },
+      {
+        "name": "Avatar.Indicator",
+        "description": "Positioned container for status, notification, or brand logo overlays.",
+        "props": [
+          {
+            "name": "position",
+            "type": "'top' | 'bottom'",
+            "default": "'bottom'",
+            "description": "The position of the indicator"
+          }
+        ]
+      },
+      {
+        "name": "Avatar.Status",
+        "description": "A colored dot indicating user status.",
+        "props": [
+          {
+            "name": "status",
+            "type": "'online' | 'offline' | 'busy' | 'away'",
+            "default": "'online'",
+            "description": "The status type"
+          }
+        ]
+      },
+      {
+        "name": "Avatar.BrandLogo",
+        "description": "A small circular brand logo overlay.",
+        "props": [
+          {
+            "name": "src",
+            "type": "string",
+            "description": "The logo image source URL"
+          },
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Renders as child element using Radix Slot"
+          }
+        ]
+      },
+      {
+        "name": "Avatar.Notification",
+        "description": "A small red notification dot.",
+        "props": []
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/avatar.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

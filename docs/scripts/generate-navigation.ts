@@ -35,7 +35,10 @@ function main() {
   // Filter UI components and generate navigation links
   const componentLinks = registry.items
     .filter(
-      (item) => item.type === 'registry:ui' && item.name !== 'phone-input'
+      (item) =>
+        item.type === 'registry:ui' &&
+        item.name !== 'phone-input' &&
+        item.name !== 'avatar-empty-icons'
     )
     .map((item) => ({
       title: item.title,
