@@ -220,6 +220,12 @@
       "description": "A dynamic input list for social media URLs with validation and icons."
     },
     {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "A styled HTML table component with header, body, row dividers, and cell sub-components. Uses namespace exports: Table.Root, Table.Header, Table.Body, Table.Head, Table.Row, Table.RowDivider, Table.Cell, Table.Caption."
+    },
+    {
       "name": "tag",
       "type": "registry:ui",
       "title": "Tag",
