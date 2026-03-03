@@ -16,16 +16,34 @@
     "title": "Components",
     "links": [
       {
+        "title": "Actions",
+        "links": [
+          {
+            "title": "Button",
+            "href": "/docs/components/button"
+          },
+          {
+            "title": "Button Group",
+            "href": "/docs/components/button-group"
+          },
+          {
+            "title": "Compact Button",
+            "href": "/docs/components/compact-button"
+          },
+          {
+            "title": "Fancy Button",
+            "href": "/docs/components/fancy-button"
+          },
+          {
+            "title": "Link Button",
+            "href": "/docs/components/link-button"
+          }
+        ],
+        "collapsed": false
+      },
+      {
         "title": "Badge",
         "href": "/docs/components/badge"
-      },
-      {
-        "title": "Button",
-        "href": "/docs/components/button"
-      },
-      {
-        "title": "Button Group",
-        "href": "/docs/components/button-group"
       },
       {
         "title": "Calendar Input",
@@ -40,10 +58,6 @@
         "href": "/docs/components/circular-progress"
       },
       {
-        "title": "Compact Button",
-        "href": "/docs/components/compact-button"
-      },
-      {
         "title": "Currency Input",
         "href": "/docs/components/currency-input"
       },
@@ -52,20 +66,12 @@
         "href": "/docs/components/divider"
       },
       {
-        "title": "Fancy Button",
-        "href": "/docs/components/fancy-button"
-      },
-      {
         "title": "Input",
         "href": "/docs/components/input"
       },
       {
         "title": "Label",
         "href": "/docs/components/label"
-      },
-      {
-        "title": "Link Button",
-        "href": "/docs/components/link-button"
       },
       {
         "title": "Location Input",

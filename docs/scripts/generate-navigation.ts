@@ -44,6 +44,14 @@ function main() {
     }))
     .sort((a, b) => a.title.localeCompare(b.title));
 
+  const ACTION_COMPONENTS = [
+    'button',
+    'button-group',
+    'compact-button',
+    'fancy-button',
+    'link-button',
+  ];
+
   const SUPPORT_COMPONENTS = [
     'command',
     'custom-input-wrapper',
@@ -53,8 +61,14 @@ function main() {
     'alert',
   ];
 
+  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...SUPPORT_COMPONENTS];
+
   const mainLinks = componentLinks
-    .filter((item) => !SUPPORT_COMPONENTS.includes(item.name))
+    .filter((item) => !GROUPED_COMPONENTS.includes(item.name))
+    .map(({ name, ...rest }) => rest);
+
+  const actionLinks = componentLinks
+    .filter((item) => ACTION_COMPONENTS.includes(item.name))
     .map(({ name, ...rest }) => rest);
 
   const supportLinks = componentLinks
@@ -73,6 +87,11 @@ function main() {
     {
       title: 'Components',
       links: [
+        {
+          title: 'Actions',
+          links: actionLinks,
+          collapsed: false,
+        },
         ...mainLinks,
         {
           title: 'Support components',
