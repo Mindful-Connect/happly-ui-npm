@@ -2,7 +2,7 @@
 'use client';
 
 import { default as badgeMeta, Default as badge_Default, ColorVariants as badge_ColorVariants, Sizes as badge_Sizes } from '@/components/ui/badge.stories';
-import { default as buttonMeta, PrimaryVariant as button_PrimaryVariant, NeutralVariant as button_NeutralVariant, ErrorVariant as button_ErrorVariant, SuccessVariant as button_SuccessVariant, WarningVariant as button_WarningVariant, Sizes as button_Sizes, WithIcons as button_WithIcons } from '@/components/ui/button.stories';
+import { default as buttonMeta, PrimaryVariant as button_PrimaryVariant, NeutralVariant as button_NeutralVariant, ErrorVariant as button_ErrorVariant, Sizes as button_Sizes, Disabled as button_Disabled, WithIcon as button_WithIcon, FullWidth as button_FullWidth } from '@/components/ui/button.stories';
 import { default as calendarInputMeta, BasicUsage as calendarInput_BasicUsage } from '@/components/ui/calendar-input.stories';
 import { default as circularProgressMeta, Default as circularProgress_Default, WithColorVariants as circularProgress_WithColorVariants } from '@/components/ui/circular-progress.stories';
 import { default as currencyInputMeta, Default as currencyInput_Default } from '@/components/ui/currency-input.stories';
@@ -38,10 +38,10 @@ export const storyRegistry: Record<string, {
     'PrimaryVariant': button_PrimaryVariant,
     'NeutralVariant': button_NeutralVariant,
     'ErrorVariant': button_ErrorVariant,
-    'SuccessVariant': button_SuccessVariant,
-    'WarningVariant': button_WarningVariant,
     'Sizes': button_Sizes,
-    'WithIcons': button_WithIcons
+    'Disabled': button_Disabled,
+    'WithIcon': button_WithIcon,
+    'FullWidth': button_FullWidth
     }
   },
   'calendar-input': {

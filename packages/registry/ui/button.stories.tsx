@@ -1,81 +1,112 @@
-import { Button } from './button';
-import { RiMailLine } from 'react-icons/ri';
+import * as Button from './button';
+import { RiArrowRightSLine, RiFileCopyLine } from 'react-icons/ri';
 
-export default { title: 'UI/Button', component: Button };
+export default { title: 'UI/Button', component: Button.Root };
 
 export const PrimaryVariant = {
   render: () => (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-      <Button variant="primary" mode="filled">Filled</Button>
-      <Button variant="primary" mode="stroke">Stroke</Button>
-      <Button variant="primary" mode="lighter">Lighter</Button>
-      <Button variant="primary" mode="ghost">Ghost</Button>
+    <div className='flex flex-col items-center gap-4'>
+      <Button.Root variant="primary" mode="filled">Get Started</Button.Root>
+      <Button.Root variant="primary" mode="stroke">Get Started</Button.Root>
+      <Button.Root variant="primary" mode="lighter">Get Started</Button.Root>
+      <Button.Root variant="primary" mode="ghost">Get Started</Button.Root>
     </div>
   ),
 };
 
 export const NeutralVariant = {
   render: () => (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-      <Button variant="neutral" mode="filled">Filled</Button>
-      <Button variant="neutral" mode="stroke">Stroke</Button>
-      <Button variant="neutral" mode="lighter">Lighter</Button>
-      <Button variant="neutral" mode="ghost">Ghost</Button>
+    <div className='flex flex-col items-center gap-4'>
+      <Button.Root variant="neutral" mode="filled">Learn More</Button.Root>
+      <Button.Root variant="neutral" mode="stroke">Learn More</Button.Root>
+      <Button.Root variant="neutral" mode="lighter">Learn More</Button.Root>
+      <Button.Root variant="neutral" mode="ghost">Learn More</Button.Root>
     </div>
   ),
 };
 
 export const ErrorVariant = {
   render: () => (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-      <Button variant="error" mode="filled">Filled</Button>
-      <Button variant="error" mode="stroke">Stroke</Button>
-      <Button variant="error" mode="lighter">Lighter</Button>
-      <Button variant="error" mode="ghost">Ghost</Button>
-    </div>
-  ),
-};
-
-export const SuccessVariant = {
-  render: () => (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-      <Button variant="success" mode="filled">Filled</Button>
-      <Button variant="success" mode="stroke">Stroke</Button>
-      <Button variant="success" mode="lighter">Lighter</Button>
-      <Button variant="success" mode="ghost">Ghost</Button>
-    </div>
-  ),
-};
-
-export const WarningVariant = {
-  render: () => (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-      <Button variant="warning" mode="filled">Filled</Button>
-      <Button variant="warning" mode="stroke">Stroke</Button>
-      <Button variant="warning" mode="lighter">Lighter</Button>
-      <Button variant="warning" mode="ghost">Ghost</Button>
+    <div className='flex flex-col items-center gap-4'>
+      <Button.Root variant="error" mode="filled">Try Again</Button.Root>
+      <Button.Root variant="error" mode="stroke">Try Again</Button.Root>
+      <Button.Root variant="error" mode="lighter">Try Again</Button.Root>
+      <Button.Root variant="error" mode="ghost">Try Again</Button.Root>
     </div>
   ),
 };
 
 export const Sizes = {
   render: () => (
-    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px' }}>
-      <Button size="medium">Medium</Button>
-      <Button size="small">Small</Button>
-      <Button size="xsmall">XSmall</Button>
-      <Button size="xxsmall">XXSmall</Button>
+    <div className='flex flex-col items-center gap-8'>
+      <div className='flex flex-col items-center gap-4'>
+        <div className='flex items-center gap-4'>
+          <Button.Root size='medium'>Medium</Button.Root>
+          <Button.Root size='small'>Small</Button.Root>
+          <Button.Root size='xsmall'>Xsmall</Button.Root>
+          <Button.Root size='xxsmall'>Xxsmall</Button.Root>
+        </div>
+        <div className='flex items-center gap-4'>
+          <Button.Root size='medium' mode='stroke'>Medium</Button.Root>
+          <Button.Root size='small' mode='stroke'>Small</Button.Root>
+          <Button.Root size='xsmall' mode='stroke'>Xsmall</Button.Root>
+          <Button.Root size='xxsmall' mode='stroke'>Xxsmall</Button.Root>
+        </div>
+        <div className='flex items-center gap-4'>
+          <Button.Root size='medium' mode='lighter'>Medium</Button.Root>
+          <Button.Root size='small' mode='lighter'>Small</Button.Root>
+          <Button.Root size='xsmall' mode='lighter'>Xsmall</Button.Root>
+          <Button.Root size='xxsmall' mode='lighter'>Xxsmall</Button.Root>
+        </div>
+        <div className='flex items-center gap-4'>
+          <Button.Root size='medium' mode='ghost'>Medium</Button.Root>
+          <Button.Root size='small' mode='ghost'>Small</Button.Root>
+          <Button.Root size='xsmall' mode='ghost'>Xsmall</Button.Root>
+          <Button.Root size='xxsmall' mode='ghost'>Xxsmall</Button.Root>
+        </div>
+      </div>
     </div>
   ),
 };
 
-export const WithIcons = {
+export const Disabled = {
   render: () => (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-      <Button variant="primary" mode="filled">
-        <RiMailLine />
-        Send Email
-      </Button>
+    <div className='flex flex-col items-center gap-4'>
+      <Button.Root disabled>Disabled</Button.Root>
+      <Button.Root mode='stroke' disabled>
+        Disabled
+      </Button.Root>
+      <Button.Root mode='lighter' disabled>
+        Disabled
+      </Button.Root>
+      <Button.Root mode='ghost' disabled>
+        Disabled
+      </Button.Root>
+    </div>
+  ),
+};
+
+export const WithIcon = {
+  render: () => (
+    <div className='flex flex-col items-center gap-4'>
+      <Button.Root>
+        Button
+        <Button.Icon as={RiArrowRightSLine} />
+      </Button.Root>
+
+      <Button.Root>
+        <Button.Icon as={RiFileCopyLine} />
+      </Button.Root>
+    </div>
+  ),
+};
+
+export const FullWidth = {
+  render: () => (
+    <div className='w-96'>
+      <Button.Root variant='neutral' className='w-full'>
+        Learn More
+      </Button.Root>
     </div>
   ),
 };

@@ -1,10 +1,6 @@
 'use client';
 
-import {
-  Button,
-  compactButtonVariants,
-  type Variant as ButtonVariant,
-} from './button';
+import { Root as Button } from './button';
 import { cn } from '@/lib/happly-ui-utils';
 import {
   ChevronDownIcon,
@@ -25,7 +21,7 @@ function Calendar({
   components,
   ...props
 }: React.ComponentProps<typeof DayPicker> & {
-  buttonVariant?: ButtonVariant;
+  buttonVariant?: string;
 }) {
   const defaultClassNames = getDefaultClassNames();
 
@@ -65,13 +61,13 @@ function Calendar({
         ),
         nav: cn('absolute inset-0 w-full top-1', defaultClassNames.nav),
         button_previous: cn(
-          compactButtonVariants({ variant: 'ghost', size: 'large' }),
+          'relative flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-transparent text-text-sub-600 hover:bg-bg-weak-50 hover:text-text-strong-950',
           'p-0 select-none aria-disabled:opacity-50',
           'absolute left-1.5',
           defaultClassNames.button_previous
         ),
         button_next: cn(
-          compactButtonVariants({ variant: 'ghost', size: 'large' }),
+          'relative flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-transparent text-text-sub-600 hover:bg-bg-weak-50 hover:text-text-strong-950',
           'p-0 select-none aria-disabled:opacity-50',
           'absolute right-1.5',
           defaultClassNames.button_next

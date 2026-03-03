@@ -25,7 +25,7 @@
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
-      "description": "A button component with multiple variants, modes, and sizes. Use namespace import: import { Button } from '@/components/ui/button'. Supports new variant system."
+      "description": "A compound button component with variants, modes, sizes, and polymorphic icon support. Uses namespace exports: Button.Root, Button.Icon."
     },
     {
       "name": "calendar-input",
@@ -188,6 +188,12 @@
       "type": "registry:ui",
       "title": "Upload File Input",
       "description": "A file upload component with support for drag and drop, multiple files, and S3/GCS integration."
+    },
+    {
+      "name": "use-tab-observer",
+      "type": "registry:hook",
+      "title": "useTabObserver",
+      "description": "Hook to observe active tab changes using ResizeObserver and MutationObserver."
     }
   ]
 }

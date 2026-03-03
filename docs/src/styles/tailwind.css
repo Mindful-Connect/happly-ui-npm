@@ -1,7 +1,18 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@import './prism.css';
+@import '../../../packages/registry/styles/happly-theme.css';
 
+@source "../../../packages/registry";
+
+@plugin 'tailwindcss-animate';
+@plugin 'tailwind-scrollbar';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+@plugin '@tailwindcss/container-queries';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Docs-site CSS variables (shadcn-style light/dark) */
 @layer base {
   :root {
     --background: hsl(0 0% 100%);
@@ -49,25 +60,6 @@
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-@import 'tailwindcss';
-@import './prism.css';
-@import '../../../packages/registry/styles/happly-theme.css';
-
-@plugin 'tailwindcss-animate';
-@plugin 'tailwind-scrollbar';
-@plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/typography';
-@plugin '@tailwindcss/container-queries';
-
 /* Docs-specific theme extensions */
 @theme {
   /* Docs custom fonts (not in shared theme) */
@@ -90,7 +82,6 @@
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);

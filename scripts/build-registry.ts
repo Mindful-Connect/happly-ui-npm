@@ -10,6 +10,7 @@ const REGISTRY_PATH = path.resolve(__dirname, '../packages/registry');
 const UI_PATH = path.join(REGISTRY_PATH, 'ui');
 const LIB_PATH = path.join(REGISTRY_PATH, 'lib');
 const UTILS_PATH = path.join(REGISTRY_PATH, 'utils');
+const HOOKS_PATH = path.join(REGISTRY_PATH, 'hooks');
 const OUTPUT_PATH = path.join(REGISTRY_PATH, 'registry.json');
 
 const REGISTRY_SCHEMA =
@@ -71,6 +72,11 @@ function buildRegistry() {
   // Also check utils if it exists
   if (existsSync(UTILS_PATH)) {
     processDirectory(UTILS_PATH);
+  }
+
+  // Also check hooks if it exists
+  if (existsSync(HOOKS_PATH)) {
+    processDirectory(HOOKS_PATH);
   }
 
   // Sort items alphabetically

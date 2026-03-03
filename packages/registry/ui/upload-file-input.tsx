@@ -19,7 +19,7 @@ import {
 import { cn } from '@/lib/happly-ui-utils';
 import { AlertModel } from '@/lib/alert-utils';
 
-import { Button, ButtonCompact } from '@/components/ui/button';
+import { Root as Button } from '@/components/ui/button';
 
 import {
   ACL_TYPE,
@@ -2010,10 +2010,9 @@ export default function UploadFile({
                         </div>
 
                         <div className='flex w-fit gap-3 pr-6'>
-                          <ButtonCompact
+                          <button
                             {...getButtonProps()}
                             disabled={uploading}
-                            variant='modifiable'
                             className='text-ds-neutral-600'
                           >
                             {uploading ? (
@@ -2024,13 +2023,12 @@ export default function UploadFile({
                             ) : (
                               <RiPencilLine size={22} />
                             )}
-                          </ButtonCompact>
+                          </button>
 
-                          <ButtonCompact
+                          <button
                             title=''
                             disabled={uploading}
                             type='button'
-                            variant='modifiable'
                             className='text-ds-neutral-600 hover:text-ds-red-600'
                             onClick={(e: React.MouseEvent) => {
                               e.preventDefault();
@@ -2040,7 +2038,7 @@ export default function UploadFile({
                             }}
                           >
                             <RiDeleteBin6Line size={22} />
-                          </ButtonCompact>
+                          </button>
                         </div>
                       </div>
                     </div>
