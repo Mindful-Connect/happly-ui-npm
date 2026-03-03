@@ -69,16 +69,20 @@ function main() {
     'tag',
   ];
 
+  const FEEDBACK_COMPONENTS = [
+    'alert',
+    'tooltip',
+  ];
+
   const SUPPORT_COMPONENTS = [
     'command',
     'custom-input-wrapper',
     'dialog',
     'popover',
     'key-icon',
-    'alert',
   ];
 
-  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...SUPPORT_COMPONENTS];
+  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...FEEDBACK_COMPONENTS, ...SUPPORT_COMPONENTS];
 
   const mainLinks = componentLinks
     .filter((item) => !GROUPED_COMPONENTS.includes(item.name))
@@ -90,6 +94,10 @@ function main() {
 
   const displayingDataLinks = componentLinks
     .filter((item) => DISPLAYING_DATA_COMPONENTS.includes(item.name))
+    .map(({ name, ...rest }) => rest);
+
+  const feedbackLinks = componentLinks
+    .filter((item) => FEEDBACK_COMPONENTS.includes(item.name))
     .map(({ name, ...rest }) => rest);
 
   const supportLinks = componentLinks
@@ -116,6 +124,11 @@ function main() {
         {
           title: 'Displaying data',
           links: displayingDataLinks,
+          collapsed: false,
+        },
+        {
+          title: 'Feedback',
+          links: feedbackLinks,
           collapsed: false,
         },
         ...mainLinks,

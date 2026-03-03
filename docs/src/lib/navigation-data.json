@@ -92,6 +92,20 @@
         "collapsed": false
       },
       {
+        "title": "Feedback",
+        "links": [
+          {
+            "title": "Alert",
+            "href": "/docs/components/alert"
+          },
+          {
+            "title": "Tooltip",
+            "href": "/docs/components/tooltip"
+          }
+        ],
+        "collapsed": false
+      },
+      {
         "title": "Calendar Input",
         "href": "/docs/components/calendar-input"
       },
@@ -144,20 +158,12 @@
         "href": "/docs/components/textarea"
       },
       {
-        "title": "Tooltip",
-        "href": "/docs/components/tooltip"
-      },
-      {
         "title": "Upload File Input",
         "href": "/docs/components/upload-file-input"
       },
       {
         "title": "Support components",
         "links": [
-          {
-            "title": "Alert",
-            "href": "/docs/components/alert"
-          },
           {
             "title": "Command",
             "href": "/docs/components/command"
