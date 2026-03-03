@@ -50,6 +50,10 @@
         "href": "/docs/components/avatar-group"
       },
       {
+        "title": "Avatar Group Compact",
+        "href": "/docs/components/avatar-group-compact"
+      },
+      {
         "title": "Badge",
         "href": "/docs/components/badge"
       },

@@ -34,6 +34,12 @@
       "description": "A compound component for displaying overlapping avatar stacks with an overflow indicator. Uses namespace exports: AvatarGroup.Root, AvatarGroup.Overflow."
     },
     {
+      "name": "avatar-group-compact",
+      "type": "registry:ui",
+      "title": "Avatar Group Compact",
+      "description": "A compact avatar group component with pill-shaped container, overlapping avatar stack, and overflow count. Uses namespace exports: AvatarGroupCompact.Root, AvatarGroupCompact.Stack, AvatarGroupCompact.Overflow."
+    },
+    {
       "name": "badge",
       "type": "registry:ui",
       "title": "Badge",
