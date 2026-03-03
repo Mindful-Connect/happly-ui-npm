@@ -241,7 +241,7 @@
       "name": "tag",
       "type": "registry:ui",
       "title": "Tag",
-      "description": "A compact tag component for labeling and categorization."
+      "description": "A compact tag component for labeling and categorization with icon, image, avatar, and dismiss support. Uses namespace exports: Tag.Root, Tag.Icon, Tag.DismissButton."
     },
     {
       "name": "textarea",

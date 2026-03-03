@@ -27,7 +27,7 @@ import { default as selectMeta, Sizes as select_Sizes, Variants as select_Varian
 import { default as socialsInputMeta, Default as socialsInput_Default } from '@/components/ui/socials-input.stories';
 import { default as statusBadgeMeta, Disabled as statusBadge_Disabled, Completed as statusBadge_Completed, Failed as statusBadge_Failed, Pending as statusBadge_Pending, AsChild as statusBadge_AsChild } from '@/components/ui/status-badge.stories';
 import { default as tableMeta, Default as table_Default } from '@/components/ui/table.stories';
-import { default as tagMeta, Default as tag_Default, GrayVariant as tag_GrayVariant } from '@/components/ui/tag.stories';
+import { default as tagMeta, Stroke as tag_Stroke, Gray as tag_Gray, Disabled as tag_Disabled, WithImage as tag_WithImage, WithAvatar as tag_WithAvatar, Dismissable as tag_Dismissable } from '@/components/ui/tag.stories';
 import { default as textareaMeta, Default as textarea_Default, Disabled as textarea_Disabled, WithLabel as textarea_WithLabel, WithMaximumLength as textarea_WithMaximumLength } from '@/components/ui/textarea.stories';
 import { default as uploadFileInputMeta, Showcase as uploadFileInput_Showcase } from '@/components/ui/upload-file-input.stories';
 
@@ -274,8 +274,12 @@ export const storyRegistry: Record<string, {
   'tag': {
     meta: tagMeta,
     stories: {
-    'Default': tag_Default,
-    'GrayVariant': tag_GrayVariant
+    'Stroke': tag_Stroke,
+    'Gray': tag_Gray,
+    'Disabled': tag_Disabled,
+    'WithImage': tag_WithImage,
+    'WithAvatar': tag_WithAvatar,
+    'Dismissable': tag_Dismissable
     }
   },
   'textarea': {

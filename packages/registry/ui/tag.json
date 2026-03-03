@@ -3,46 +3,116 @@
   "name": "tag",
   "type": "registry:ui",
   "title": "Tag",
-  "description": "A compact tag component for labeling and categorization.",
+  "description": "A compact tag component for labeling and categorization with icon, image, avatar, and dismiss support. Uses namespace exports: Tag.Root, Tag.Icon, Tag.DismissButton.",
+  "version": "2.0.0",
+  "migration": {
+    "guide": "API changed: import as namespace `import * as Tag from ...`, use `<Tag.Root>` instead of `<Tag>`. Sub-components renamed: `TagIcon` → `Tag.Icon`, `TagClose` → `Tag.DismissButton`. Dependencies changed from `cva` + `react-icons` to `tv` + `@remixicon/react`. Old `tag-utils.ts` file is no longer included."
+  },
   "dependencies": [
     "@radix-ui/react-slot",
-    "class-variance-authority",
-    "react-icons"
+    "@remixicon/react"
   ],
-  "registryDependencies": ["happly-ui-utils"],
+  "registryDependencies": [
+    "tv",
+    "polymorphic",
+    "recursive-clone-children"
+  ],
   "docs": {
-    "lead": "A tag component for labeling and categorization.",
-    "usage": "import { Tag, TagIcon, TagClose } from \"@/components/ui/tag\"\n\n<Tag variant=\"stroke\">\n  <TagIcon><Icon /></TagIcon>\n  Label\n  <TagClose />\n</Tag>",
+    "lead": "A compact tag component for labeling and categorization with icon, image, avatar, and dismiss support.",
+    "usage": "import * as Tag from \"@/components/ui/tag\"\n\n<Tag.Root variant=\"stroke\">\n  <Tag.Icon as={RiPushpinFill} />\n  Customer\n</Tag.Root>",
     "examples": [
       {
-        "title": "Default",
-        "description": "Default tag variant.",
-        "code": "<Tag variant=\"stroke\">Tag Label</Tag>",
-        "stories": ["Default"]
+        "title": "Stroke",
+        "description": "Stroke variant tags, plain and with icon.",
+        "code": "<Tag.Root variant=\"stroke\">Tag</Tag.Root>\n<Tag.Root variant=\"stroke\">\n  <Tag.Icon as={RiPushpinFill} />\n  Customer\n</Tag.Root>",
+        "stories": ["Stroke"]
       },
       {
-        "title": "Gray Variant",
-        "description": "Gray background variant.",
-        "code": "<Tag variant=\"gray\">Gray Tag</Tag>",
-        "stories": ["GrayVariant"]
+        "title": "Gray",
+        "description": "Gray variant tags, plain and with icon.",
+        "code": "<Tag.Root variant=\"gray\">Tag</Tag.Root>\n<Tag.Root variant=\"gray\">\n  <Tag.Icon as={RiPushpinFill} />\n  Customer\n</Tag.Root>",
+        "stories": ["Gray"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Disabled tags in both stroke and gray variants.",
+        "code": "<Tag.Root variant=\"stroke\" disabled>Tag</Tag.Root>",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "With Image",
+        "description": "Tags with brand logo images using the polymorphic Icon.",
+        "code": "<Tag.Root>\n  <Tag.Icon as=\"img\" src=\"/logo.svg\" />\n  Brand\n</Tag.Root>",
+        "stories": ["WithImage"]
+      },
+      {
+        "title": "With Avatar",
+        "description": "Tag with an Avatar component as the icon.",
+        "code": "<Tag.Root>\n  <Tag.Icon as={Avatar.Root}>\n    <Avatar.Image src=\"/avatar.png\" />\n  </Tag.Icon>\n  Name\n</Tag.Root>",
+        "stories": ["WithAvatar"]
+      },
+      {
+        "title": "Dismissable",
+        "description": "Tags with a dismiss (close) button in stroke and gray variants.",
+        "code": "<Tag.Root>\n  Tag\n  <Tag.DismissButton onClick={handleDismiss} />\n</Tag.Root>",
+        "stories": ["Dismissable"]
       }
     ],
     "api": [
       {
-        "name": "Tag",
-        "description": "The main Tag component.",
+        "name": "Tag.Root",
+        "description": "The main tag container.",
         "props": [
           {
             "name": "variant",
             "type": "'stroke' | 'gray'",
             "default": "'stroke'",
-            "description": "The visual style of the tag."
+            "description": "The visual variant of the tag"
           },
           {
             "name": "disabled",
             "type": "boolean",
+            "description": "Whether the tag is disabled"
+          },
+          {
+            "name": "asChild",
+            "type": "boolean",
             "default": "false",
-            "description": "Whether the tag is disabled."
+            "description": "Render as child element using Radix Slot"
+          }
+        ]
+      },
+      {
+        "name": "Tag.Icon",
+        "description": "Renders a polymorphic icon, image, or avatar inside the tag.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "description": "The element or component to render"
+          }
+        ]
+      },
+      {
+        "name": "Tag.DismissButton",
+        "description": "A dismiss/close button with a default close icon.",
+        "props": [
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render as child element using Radix Slot"
+          }
+        ]
+      },
+      {
+        "name": "Tag.DismissIcon",
+        "description": "The close icon rendered inside DismissButton. Can be overridden.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "description": "The icon component to render"
           }
         ]
       }
@@ -52,10 +122,6 @@
     {
       "path": "ui/tag.tsx",
       "type": "registry:ui"
-    },
-    {
-      "path": "lib/tag-utils.ts",
-      "type": "registry:lib"
     }
   ]
 }
