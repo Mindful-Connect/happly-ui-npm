@@ -25,6 +25,7 @@ import { default as radioCardGroupMeta, BasicUsage as radioCardGroup_BasicUsage,
 import { default as searchableComboBoxMeta, Default as searchableComboBox_Default } from '@/components/ui/searchable-combo-box.stories';
 import { default as selectMeta, Sizes as select_Sizes, Variants as select_Variants, SelectStates as select_SelectStates } from '@/components/ui/select.stories';
 import { default as socialsInputMeta, Default as socialsInput_Default } from '@/components/ui/socials-input.stories';
+import { default as statusBadgeMeta, Disabled as statusBadge_Disabled, Completed as statusBadge_Completed, Failed as statusBadge_Failed, Pending as statusBadge_Pending, AsChild as statusBadge_AsChild } from '@/components/ui/status-badge.stories';
 import { default as tableMeta, Default as table_Default } from '@/components/ui/table.stories';
 import { default as tagMeta, Default as tag_Default, GrayVariant as tag_GrayVariant } from '@/components/ui/tag.stories';
 import { default as textareaMeta, Default as textarea_Default, Disabled as textarea_Disabled, WithLabel as textarea_WithLabel, WithMaximumLength as textarea_WithMaximumLength } from '@/components/ui/textarea.stories';
@@ -252,6 +253,16 @@ export const storyRegistry: Record<string, {
     meta: socialsInputMeta,
     stories: {
     'Default': socialsInput_Default
+    }
+  },
+  'status-badge': {
+    meta: statusBadgeMeta,
+    stories: {
+    'Disabled': statusBadge_Disabled,
+    'Completed': statusBadge_Completed,
+    'Failed': statusBadge_Failed,
+    'Pending': statusBadge_Pending,
+    'AsChild': statusBadge_AsChild
     }
   },
   'table': {

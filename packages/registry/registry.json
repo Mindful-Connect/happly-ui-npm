@@ -226,6 +226,12 @@
       "description": "A dynamic input list for social media URLs with validation and icons."
     },
     {
+      "name": "status-badge",
+      "type": "registry:ui",
+      "title": "Status Badge",
+      "description": "A compact status indicator badge with icon or dot variants and semantic status colors (completed, pending, failed, disabled). Uses namespace exports: StatusBadge.Root, StatusBadge.Icon, StatusBadge.Dot."
+    },
+    {
       "name": "table",
       "type": "registry:ui",
       "title": "Table",
