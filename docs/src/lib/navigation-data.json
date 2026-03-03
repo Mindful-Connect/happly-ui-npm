@@ -96,6 +96,60 @@
         "collapsed": false
       },
       {
+        "title": "Form",
+        "links": [
+          {
+            "title": "Checkbox",
+            "href": "/docs/components/checkbox"
+          },
+          {
+            "title": "Color Picker",
+            "href": "/docs/components/color-picker"
+          },
+          {
+            "title": "Datepicker",
+            "href": "/docs/components/datepicker"
+          },
+          {
+            "title": "Digit Input",
+            "href": "/docs/components/digit-input"
+          },
+          {
+            "title": "Hint",
+            "href": "/docs/components/hint"
+          },
+          {
+            "title": "Input",
+            "href": "/docs/components/input"
+          },
+          {
+            "title": "Label",
+            "href": "/docs/components/label"
+          },
+          {
+            "title": "Radio",
+            "href": "/docs/components/radio"
+          },
+          {
+            "title": "Select",
+            "href": "/docs/components/select"
+          },
+          {
+            "title": "Slider",
+            "href": "/docs/components/slider"
+          },
+          {
+            "title": "Switch",
+            "href": "/docs/components/switch"
+          },
+          {
+            "title": "Textarea",
+            "href": "/docs/components/textarea"
+          }
+        ],
+        "collapsed": false
+      },
+      {
         "title": "Navigation",
         "links": [
           {
@@ -158,48 +212,16 @@
         "href": "/docs/components/card"
       },
       {
-        "title": "Checkbox",
-        "href": "/docs/components/checkbox"
-      },
-      {
         "title": "Circular Progress",
         "href": "/docs/components/circular-progress"
-      },
-      {
-        "title": "Color Picker",
-        "href": "/docs/components/color-picker"
       },
       {
         "title": "Currency Input",
         "href": "/docs/components/currency-input"
       },
       {
-        "title": "Datepicker",
-        "href": "/docs/components/datepicker"
-      },
-      {
-        "title": "Digit Input",
-        "href": "/docs/components/digit-input"
-      },
-      {
-        "title": "Hint",
-        "href": "/docs/components/hint"
-      },
-      {
-        "title": "Input",
-        "href": "/docs/components/input"
-      },
-      {
-        "title": "Label",
-        "href": "/docs/components/label"
-      },
-      {
         "title": "Location Input",
         "href": "/docs/components/location-input"
-      },
-      {
-        "title": "Radio",
-        "href": "/docs/components/radio"
       },
       {
         "title": "Radio Card Group",
@@ -214,24 +236,8 @@
         "href": "/docs/components/searchable-combo-box"
       },
       {
-        "title": "Select",
-        "href": "/docs/components/select"
-      },
-      {
-        "title": "Slider",
-        "href": "/docs/components/slider"
-      },
-      {
         "title": "Socials Input",
         "href": "/docs/components/socials-input"
-      },
-      {
-        "title": "Switch",
-        "href": "/docs/components/switch"
-      },
-      {
-        "title": "Textarea",
-        "href": "/docs/components/textarea"
       },
       {
         "title": "Upload File Input",

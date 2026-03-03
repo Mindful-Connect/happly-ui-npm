@@ -88,6 +88,21 @@ function main() {
     'popover',
   ];
 
+  const FORM_COMPONENTS = [
+    'checkbox',
+    'color-picker',
+    'datepicker',
+    'digit-input',
+    'hint',
+    'input',
+    'label',
+    'radio',
+    'select',
+    'slider',
+    'switch',
+    'textarea',
+  ];
+
   const SUPPORT_COMPONENTS = [
     'command',
     'custom-input-wrapper',
@@ -95,7 +110,7 @@ function main() {
     'key-icon',
   ];
 
-  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...SUPPORT_COMPONENTS];
+  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...SUPPORT_COMPONENTS];
 
   const mainLinks = componentLinks
     .filter((item) => !GROUPED_COMPONENTS.includes(item.name))
@@ -119,6 +134,10 @@ function main() {
 
   const overlayLinks = componentLinks
     .filter((item) => OVERLAY_COMPONENTS.includes(item.name))
+    .map(({ name, ...rest }) => rest);
+
+  const formLinks = componentLinks
+    .filter((item) => FORM_COMPONENTS.includes(item.name))
     .map(({ name, ...rest }) => rest);
 
   const supportLinks = componentLinks
@@ -145,6 +164,11 @@ function main() {
         {
           title: 'Displaying data',
           links: displayingDataLinks,
+          collapsed: false,
+        },
+        {
+          title: 'Form',
+          links: formLinks,
           collapsed: false,
         },
         {
