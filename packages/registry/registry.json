@@ -58,6 +58,12 @@
       "description": "Fast, composable, unstyled command menu for React."
     },
     {
+      "name": "compact-button",
+      "type": "registry:ui",
+      "title": "Compact Button",
+      "description": "A small icon-only button component with variants, sizes, and optional full-radius. Uses namespace exports: CompactButton.Root, CompactButton.Icon."
+    },
+    {
       "name": "currency-input",
       "type": "registry:ui",
       "title": "Currency Input",

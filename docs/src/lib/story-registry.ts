@@ -6,6 +6,7 @@ import { default as buttonGroupMeta, Default as buttonGroup_Default, Sizes as bu
 import { default as buttonMeta, PrimaryVariant as button_PrimaryVariant, NeutralVariant as button_NeutralVariant, SuccessVariant as button_SuccessVariant, WarningVariant as button_WarningVariant, ErrorVariant as button_ErrorVariant, Sizes as button_Sizes, Disabled as button_Disabled, WithIcon as button_WithIcon, FullWidth as button_FullWidth, AsChild as button_AsChild } from '@/components/ui/button.stories';
 import { default as calendarInputMeta, BasicUsage as calendarInput_BasicUsage } from '@/components/ui/calendar-input.stories';
 import { default as circularProgressMeta, Default as circularProgress_Default, WithColorVariants as circularProgress_WithColorVariants } from '@/components/ui/circular-progress.stories';
+import { default as compactButtonMeta, Stroke as compactButton_Stroke, Ghost as compactButton_Ghost, White as compactButton_White, Modifiable as compactButton_Modifiable, Sizes as compactButton_Sizes, FullRadius as compactButton_FullRadius, Disabled as compactButton_Disabled, AsChild as compactButton_AsChild } from '@/components/ui/compact-button.stories';
 import { default as currencyInputMeta, Default as currencyInput_Default } from '@/components/ui/currency-input.stories';
 import { default as dividerMeta, Line as divider_Line, LineWithSpacing as divider_LineWithSpacing, LineWithText as divider_LineWithText, TextOnly as divider_TextOnly, SolidText as divider_SolidText, Content as divider_Content } from '@/components/ui/divider.stories';
 import { default as inputMeta, Sizes as input_Sizes, Icons as input_Icons, Affixes as input_Affixes, States as input_States } from '@/components/ui/input.stories';
@@ -74,6 +75,19 @@ export const storyRegistry: Record<string, {
     stories: {
     'Default': circularProgress_Default,
     'WithColorVariants': circularProgress_WithColorVariants
+    }
+  },
+  'compact-button': {
+    meta: compactButtonMeta,
+    stories: {
+    'Stroke': compactButton_Stroke,
+    'Ghost': compactButton_Ghost,
+    'White': compactButton_White,
+    'Modifiable': compactButton_Modifiable,
+    'Sizes': compactButton_Sizes,
+    'FullRadius': compactButton_FullRadius,
+    'Disabled': compactButton_Disabled,
+    'AsChild': compactButton_AsChild
     }
   },
   'currency-input': {
