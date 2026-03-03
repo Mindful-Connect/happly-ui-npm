@@ -15,8 +15,8 @@ export const alertVariants = tv({
   slots: {
     root: 'w-full',
     wrapper: [
-      'grid w-full auto-cols-auto grid-flow-col grid-cols-1 items-start has-[>svg:first-child]:grid-cols-[auto,minmax(0,1fr)]',
-      'transition duration-200 ease-out group-data-[expanded=false]/toast:group-data-[front=false]/toast:opacity-0',
+      'grid w-full auto-cols-auto grid-flow-col grid-cols-[auto,minmax(0,1fr)] items-start',
+      'transition duration-200 ease-out',
     ],
     icon: 'shrink-0',
     closeIcon: '',
