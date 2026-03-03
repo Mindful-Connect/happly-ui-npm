@@ -58,6 +58,10 @@
         "href": "/docs/components/badge"
       },
       {
+        "title": "Banner",
+        "href": "/docs/components/banner"
+      },
+      {
         "title": "Calendar Input",
         "href": "/docs/components/calendar-input"
       },

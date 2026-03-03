@@ -46,6 +46,12 @@
       "description": "A compound badge component with variants, colors, sizes, dot indicators, and polymorphic icon support. Uses namespace exports: Badge.Root, Badge.Icon, Badge.Dot."
     },
     {
+      "name": "banner",
+      "type": "registry:ui",
+      "title": "Banner",
+      "description": "A full-width banner component for alerts and announcements with multiple variants, statuses, and polymorphic icon support. Uses namespace exports: Banner.Root, Banner.Content, Banner.Icon, Banner.CloseButton."
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",

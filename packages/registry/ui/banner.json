@@ -1,0 +1,113 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "banner",
+  "type": "registry:ui",
+  "title": "Banner",
+  "description": "A full-width banner component for alerts and announcements with multiple variants, statuses, and polymorphic icon support. Uses namespace exports: Banner.Root, Banner.Content, Banner.Icon, Banner.CloseButton.",
+  "version": "1.0.0",
+  "dependencies": [
+    "@radix-ui/react-slot"
+  ],
+  "registryDependencies": [
+    "tv",
+    "polymorphic",
+    "recursive-clone-children"
+  ],
+  "docs": {
+    "lead": "A full-width banner component for alerts and announcements with multiple variants, statuses, and polymorphic icon support.",
+    "usage": "import * as Banner from \"@/components/ui/banner\"\n\n<Banner.Root variant=\"filled\" status=\"error\">\n  <Banner.Content>\n    <Banner.Icon as={RiErrorWarningFill} />\n    <span>Alert title</span>\n  </Banner.Content>\n  <Banner.CloseButton>\n    <RiCloseLine className=\"size-5\" />\n  </Banner.CloseButton>\n</Banner.Root>",
+    "examples": [
+      {
+        "title": "Error",
+        "description": "Error status across all four variants: filled, light, lighter, and stroke.",
+        "code": "<Banner.Root variant=\"filled\" status=\"error\">\n  <Banner.Content>\n    <Banner.Icon as={RiErrorWarningFill} />\n    <span className=\"text-label-sm\">Alert title</span>\n  </Banner.Content>\n  <Banner.CloseButton>\n    <RiCloseLine className=\"size-5\" />\n  </Banner.CloseButton>\n</Banner.Root>",
+        "stories": ["Error"]
+      },
+      {
+        "title": "Warning",
+        "description": "Warning status across all four variants.",
+        "code": "<Banner.Root variant=\"filled\" status=\"warning\">\n  <Banner.Content>\n    <Banner.Icon as={RiAlertFill} />\n    <span className=\"text-label-sm\">Alert title</span>\n  </Banner.Content>\n</Banner.Root>",
+        "stories": ["Warning"]
+      },
+      {
+        "title": "Success",
+        "description": "Success status across all four variants.",
+        "code": "<Banner.Root variant=\"filled\" status=\"success\">\n  <Banner.Content>\n    <Banner.Icon as={RiCheckboxCircleFill} />\n    <span className=\"text-label-sm\">Alert title</span>\n  </Banner.Content>\n</Banner.Root>",
+        "stories": ["Success"]
+      },
+      {
+        "title": "Information",
+        "description": "Information status across all four variants.",
+        "code": "<Banner.Root variant=\"filled\" status=\"information\">\n  <Banner.Content>\n    <Banner.Icon as={RiInformationFill} />\n    <span className=\"text-label-sm\">Alert title</span>\n  </Banner.Content>\n</Banner.Root>",
+        "stories": ["Information"]
+      },
+      {
+        "title": "Feature",
+        "description": "Feature status across all four variants.",
+        "code": "<Banner.Root variant=\"filled\" status=\"feature\">\n  <Banner.Content>\n    <Banner.Icon as={RiMagicFill} />\n    <span className=\"text-label-sm\">Alert title</span>\n  </Banner.Content>\n</Banner.Root>",
+        "stories": ["Feature"]
+      },
+      {
+        "title": "Primary",
+        "description": "Primary status across all four variants using the brand color.",
+        "code": "<Banner.Root variant=\"filled\" status=\"primary\">\n  <Banner.Content>\n    <Banner.Icon as={RiSparklingFill} />\n    <span className=\"text-label-sm\">Alert title</span>\n  </Banner.Content>\n</Banner.Root>",
+        "stories": ["Primary"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Banner.Root",
+        "description": "The main banner container.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'filled' | 'light' | 'lighter' | 'stroke'",
+            "default": "'filled'",
+            "description": "The visual style"
+          },
+          {
+            "name": "status",
+            "type": "'error' | 'warning' | 'success' | 'information' | 'feature' | 'primary'",
+            "default": "'feature'",
+            "description": "The status color scheme"
+          }
+        ]
+      },
+      {
+        "name": "Banner.Content",
+        "description": "Centered content area for icon, text, and links.",
+        "props": []
+      },
+      {
+        "name": "Banner.Icon",
+        "description": "Polymorphic icon container that receives variant and status from Banner.Root.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "default": "'div'",
+            "description": "The element or component to render as"
+          }
+        ]
+      },
+      {
+        "name": "Banner.CloseButton",
+        "description": "Close button positioned at the end of the banner.",
+        "props": [
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Renders as child element using Radix Slot"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/banner.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}
