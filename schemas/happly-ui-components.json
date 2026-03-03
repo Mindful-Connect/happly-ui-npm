@@ -13,7 +13,7 @@
     "tailwind": {
       "type": "object",
       "description": "Tailwind CSS configuration",
-      "required": ["config", "css", "baseColor", "cssVariables"],
+      "required": ["config", "css"],
       "properties": {
         "config": {
           "type": "string",
@@ -24,17 +24,6 @@
           "type": "string",
           "description": "Path to your global CSS file",
           "examples": ["src/index.css", "app/globals.css"]
-        },
-        "baseColor": {
-          "type": "string",
-          "description": "Base color palette for the design system",
-          "enum": ["slate", "gray", "zinc", "neutral", "stone"],
-          "default": "slate"
-        },
-        "cssVariables": {
-          "type": "boolean",
-          "description": "Whether to use CSS variables for theming",
-          "default": true
         },
         "prefix": {
           "type": "string",

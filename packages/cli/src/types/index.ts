@@ -9,8 +9,6 @@ export interface HapplyConfig {
   tailwind: {
     config: string;
     css: string;
-    baseColor: BaseColor;
-    cssVariables: boolean;
     prefix?: string;
   };
   tsx: boolean;
@@ -23,9 +21,6 @@ export interface HapplyConfig {
   };
   registry?: string;
 }
-
-// Base colors available
-export type BaseColor = 'slate' | 'gray' | 'zinc' | 'neutral' | 'stone';
 
 // Registry item types
 export type RegistryItemType =
@@ -100,8 +95,6 @@ export interface InitOptions {
   cwd?: string;
   yes?: boolean;
   defaults?: boolean;
-  baseColor?: BaseColor;
-  cssVariables?: boolean;
 }
 
 export interface AddOptions {
@@ -125,8 +118,6 @@ export const DEFAULT_CONFIG: Partial<HapplyConfig> = {
   tailwind: {
     config: 'tailwind.config.ts',
     css: 'src/index.css',
-    baseColor: 'slate',
-    cssVariables: true,
   },
   tsx: true,
   aliases: {
@@ -137,11 +128,3 @@ export const DEFAULT_CONFIG: Partial<HapplyConfig> = {
     lib: '@/lib',
   },
 };
-
-export const BASE_COLORS: BaseColor[] = [
-  'slate',
-  'gray',
-  'zinc',
-  'neutral',
-  'stone',
-];
