@@ -1,0 +1,68 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "progress-circle",
+  "type": "registry:ui",
+  "title": "Progress Circle",
+  "description": "A circular progress indicator with SVG ring, multiple sizes, customizable color, and optional centered text content. Uses namespace exports: ProgressCircle.Root.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": [
+    "tv",
+    "happly-ui-utils"
+  ],
+  "docs": {
+    "lead": "A circular progress indicator with SVG ring, multiple sizes, customizable color, and optional centered text content.",
+    "usage": "import * as ProgressCircle from \"@/components/ui/progress-circle\"\n\n<ProgressCircle.Root value={75}>75%</ProgressCircle.Root>",
+    "examples": [
+      {
+        "title": "Sizes",
+        "description": "Progress circles in all sizes (80, 72, 64, 56, 48) with percentage labels. Smaller sizes omit text.",
+        "code": "<ProgressCircle.Root value={50}>50%</ProgressCircle.Root>\n<ProgressCircle.Root size=\"56\" value={75}>75%</ProgressCircle.Root>\n<ProgressCircle.Root size=\"48\" value={100} />",
+        "stories": ["Default"]
+      }
+    ],
+    "api": [
+      {
+        "name": "ProgressCircle.Root",
+        "description": "The main circular progress component.",
+        "props": [
+          {
+            "name": "size",
+            "type": "'80' | '72' | '64' | '56' | '48' | '44'",
+            "default": "'80'",
+            "description": "The size of the circle in pixels"
+          },
+          {
+            "name": "value",
+            "type": "number",
+            "default": "0",
+            "description": "The current progress value"
+          },
+          {
+            "name": "max",
+            "type": "number",
+            "default": "100",
+            "description": "The maximum progress value"
+          },
+          {
+            "name": "color",
+            "type": "string",
+            "default": "'stroke-primary-base'",
+            "description": "Tailwind stroke class for the progress ring color"
+          },
+          {
+            "name": "children",
+            "type": "ReactNode",
+            "description": "Content displayed centered inside the circle"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/progress-circle.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

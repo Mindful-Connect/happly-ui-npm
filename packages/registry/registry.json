@@ -184,6 +184,12 @@
       "description": "A progress bar component indicating the completion status of a task with multiple color options."
     },
     {
+      "name": "progress-circle",
+      "type": "registry:ui",
+      "title": "Progress Circle",
+      "description": "A circular progress indicator with SVG ring, multiple sizes, customizable color, and optional centered text content. Uses namespace exports: ProgressCircle.Root."
+    },
+    {
       "name": "radio-card-group",
       "type": "registry:ui",
       "title": "Radio Card Group",
