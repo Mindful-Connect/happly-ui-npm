@@ -253,9 +253,11 @@
   --color-information-lighter: var(--color-blue-50);
 
   --color-warning-dark: var(--color-orange-950);
+  --color-warning-darker: var(--color-orange-700);
   --color-warning-base: var(--color-orange-500);
   --color-warning-light: var(--color-orange-200);
   --color-warning-lighter: var(--color-orange-50);
+  --color-warning-alpha-10: var(--color-orange-alpha-10);
 
   --color-error-dark: var(--color-red-950);
   --color-error-base: var(--color-red-500);
@@ -263,9 +265,11 @@
   --color-error-lighter: var(--color-red-50);
 
   --color-success-dark: var(--color-green-950);
+  --color-success-darker: var(--color-green-700);
   --color-success-base: var(--color-green-500);
   --color-success-light: var(--color-green-200);
   --color-success-lighter: var(--color-green-50);
+  --color-success-alpha-10: var(--color-green-alpha-10);
 
   --color-away-dark: var(--color-yellow-950);
   --color-away-base: var(--color-yellow-500);
@@ -421,6 +425,10 @@
     0 0 0 2px var(--color-bg-white-0), 0 0 0 4px var(--color-neutral-alpha-16);
   --shadow-button-error-focus:
     0 0 0 2px var(--color-bg-white-0), 0 0 0 4px var(--color-red-alpha-10);
+  --shadow-button-warning-focus:
+    0 0 0 2px var(--color-bg-white-0), 0 0 0 4px var(--color-orange-alpha-10);
+  --shadow-button-success-focus:
+    0 0 0 2px var(--color-bg-white-0), 0 0 0 4px var(--color-green-alpha-10);
 
   --shadow-fancy-buttons-neutral: 0 1px 2px 0 #1b1c1d7a, 0 0 0 1px #242628;
   --shadow-fancy-buttons-primary:

@@ -204,6 +204,10 @@ export const shadows = {
     '0 0 0 2px var(--color-bg-white-0), 0 0 0 4px var(--color-neutral-alpha-16)',
   'button-error-focus':
     '0 0 0 2px var(--color-bg-white-0), 0 0 0 4px var(--color-red-alpha-10)',
+  'button-warning-focus':
+    '0 0 0 2px var(--color-bg-white-0), 0 0 0 4px var(--color-orange-alpha-10)',
+  'button-success-focus':
+    '0 0 0 2px var(--color-bg-white-0), 0 0 0 4px var(--color-green-alpha-10)',
 
   'fancy-buttons-neutral': '0 1px 2px 0 #1b1c1d7a, 0 0 0 1px #242628',
   'fancy-buttons-primary':
@@ -316,9 +320,11 @@ export const colors = {
 
     // Warning
     'warning-dark': 'var(--color-warning-dark)',
+    'warning-darker': 'var(--color-warning-darker)',
     'warning-base': 'var(--color-warning-base)',
     'warning-light': 'var(--color-warning-light)',
     'warning-lighter': 'var(--color-warning-lighter)',
+    'warning-alpha-10': 'var(--color-warning-alpha-10)',
 
     // Error
     'error-darker': 'var(--color-error-darker)',
@@ -330,9 +336,11 @@ export const colors = {
 
     // Success
     'success-dark': 'var(--color-success-dark)',
+    'success-darker': 'var(--color-success-darker)',
     'success-base': 'var(--color-success-base)',
     'success-light': 'var(--color-success-light)',
     'success-lighter': 'var(--color-success-lighter)',
+    'success-alpha-10': 'var(--color-success-alpha-10)',
 
     // Away
     'away-dark': 'var(--color-away-dark)',

@@ -25,6 +25,28 @@ export const NeutralVariant = {
   ),
 };
 
+export const SuccessVariant = {
+  render: () => (
+    <div className='flex flex-col items-center gap-4'>
+      <Button.Root variant="success" mode="filled">Try Again</Button.Root>
+      <Button.Root variant="success" mode="stroke">Try Again</Button.Root>
+      <Button.Root variant="success" mode="lighter">Try Again</Button.Root>
+      <Button.Root variant="success" mode="ghost">Try Again</Button.Root>
+    </div>
+  ),
+};
+
+export const WarningVariant = {
+  render: () => (
+    <div className='flex flex-col items-center gap-4'>
+      <Button.Root variant="warning" mode="filled">Try Again</Button.Root>
+      <Button.Root variant="warning" mode="stroke">Try Again</Button.Root>
+      <Button.Root variant="warning" mode="lighter">Try Again</Button.Root>
+      <Button.Root variant="warning" mode="ghost">Try Again</Button.Root>
+    </div>
+  ),
+};
+
 export const ErrorVariant = {
   render: () => (
     <div className='flex flex-col items-center gap-4'>
@@ -110,3 +132,13 @@ export const FullWidth = {
     </div>
   ),
 };
+
+export const AsChild = {
+  render: () => (
+    <div className='flex flex-col items-center gap-4'>
+      <Button.Root asChild>
+        <a href='#'>As link</a>
+      </Button.Root>
+    </div>
+  ),
+}

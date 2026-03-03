@@ -29,6 +29,18 @@
         "stories": ["NeutralVariant"]
       },
       {
+        "title": "Success Variant",
+        "description": "The success variant for positive or confirmation actions.",
+        "code": "<Button.Root variant=\"success\" mode=\"filled\">Try Again</Button.Root>\n<Button.Root variant=\"success\" mode=\"stroke\">Try Again</Button.Root>\n<Button.Root variant=\"success\" mode=\"lighter\">Try Again</Button.Root>\n<Button.Root variant=\"success\" mode=\"ghost\">Try Again</Button.Root>",
+        "stories": ["SuccessVariant"]
+      },
+      {
+        "title": "Warning Variant",
+        "description": "The warning variant for cautionary actions.",
+        "code": "<Button.Root variant=\"warning\" mode=\"filled\">Try Again</Button.Root>\n<Button.Root variant=\"warning\" mode=\"stroke\">Try Again</Button.Root>\n<Button.Root variant=\"warning\" mode=\"lighter\">Try Again</Button.Root>\n<Button.Root variant=\"warning\" mode=\"ghost\">Try Again</Button.Root>",
+        "stories": ["WarningVariant"]
+      },
+      {
         "title": "Error Variant",
         "description": "The error variant for destructive actions.",
         "code": "<Button.Root variant=\"error\" mode=\"filled\">Try Again</Button.Root>\n<Button.Root variant=\"error\" mode=\"stroke\">Try Again</Button.Root>\n<Button.Root variant=\"error\" mode=\"lighter\">Try Again</Button.Root>\n<Button.Root variant=\"error\" mode=\"ghost\">Try Again</Button.Root>",
@@ -57,6 +69,12 @@
         "description": "Buttons can stretch to fill their container with a className override.",
         "code": "<Button.Root variant=\"neutral\" className=\"w-full\">\n  Learn More\n</Button.Root>",
         "stories": ["FullWidth"]
+      },
+      {
+        "title": "As Child",
+        "description": "Use the asChild prop with Radix Slot to render as a different element, such as a link.",
+        "code": "<Button.Root asChild>\n  <a href=\"#\">As link</a>\n</Button.Root>",
+        "stories": ["AsChild"]
       }
     ],
     "api": [
@@ -66,7 +84,7 @@
         "props": [
           {
             "name": "variant",
-            "type": "'primary' | 'neutral' | 'error'",
+            "type": "'primary' | 'neutral' | 'error' | 'warning' | 'success'",
             "default": "'primary'",
             "description": "The color variant"
           },

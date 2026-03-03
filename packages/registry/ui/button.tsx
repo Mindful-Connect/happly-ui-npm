@@ -31,6 +31,8 @@ export const buttonVariants = tv({
       primary: {},
       neutral: {},
       error: {},
+      warning: {},
+      success: {},
     },
     mode: {
       filled: {},
@@ -236,6 +238,124 @@ export const buttonVariants = tv({
           'hover:bg-red-alpha-10',
           // focus
           'focus-visible:bg-bg-white-0 focus-visible:shadow-button-error-focus focus-visible:ring-error-base',
+        ],
+      },
+    },
+    //#endregion
+
+    //#region variant=warning
+    {
+      variant: 'warning',
+      mode: 'filled',
+      class: {
+        root: [
+          // base
+          'bg-warning-base text-static-white',
+          // hover
+          'hover:bg-warning-darker',
+          // focus
+          'focus-visible:shadow-button-warning-focus',
+        ],
+      },
+    },
+    {
+      variant: 'warning',
+      mode: 'stroke',
+      class: {
+        root: [
+          // base
+          'bg-bg-white-0 text-warning-base ring-warning-base',
+          // hover
+          'hover:bg-warning-alpha-10 hover:ring-transparent',
+          // focus
+          'focus-visible:shadow-button-warning-focus',
+        ],
+      },
+    },
+    {
+      variant: 'warning',
+      mode: 'lighter',
+      class: {
+        root: [
+          // base
+          'bg-warning-alpha-10 text-warning-base ring-transparent',
+          // hover
+          'hover:bg-bg-white-0 hover:ring-warning-base',
+          // focus
+          'focus-visible:bg-bg-white-0 focus-visible:shadow-button-warning-focus focus-visible:ring-warning-base',
+        ],
+      },
+    },
+    {
+      variant: 'warning',
+      mode: 'ghost',
+      class: {
+        root: [
+          // base
+          'bg-transparent text-warning-base ring-transparent',
+          // hover
+          'hover:bg-warning-alpha-10',
+          // focus
+          'focus-visible:bg-bg-white-0 focus-visible:shadow-button-warning-focus focus-visible:ring-warning-base',
+        ],
+      },
+    },
+    //#endregion
+
+    //#region variant=success
+    {
+      variant: 'success',
+      mode: 'filled',
+      class: {
+        root: [
+          // base
+          'bg-success-base text-static-white',
+          // hover
+          'hover:bg-success-darker',
+          // focus
+          'focus-visible:shadow-button-success-focus',
+        ],
+      },
+    },
+    {
+      variant: 'success',
+      mode: 'stroke',
+      class: {
+        root: [
+          // base
+          'bg-bg-white-0 text-success-base ring-success-base',
+          // hover
+          'hover:bg-success-alpha-10 hover:ring-transparent',
+          // focus
+          'focus-visible:shadow-button-success-focus',
+        ],
+      },
+    },
+    {
+      variant: 'success',
+      mode: 'lighter',
+      class: {
+        root: [
+          // base
+          'bg-success-alpha-10 text-success-base ring-transparent',
+          // hover
+          'hover:bg-bg-white-0 hover:ring-success-base',
+          // focus
+          'focus-visible:bg-bg-white-0 focus-visible:shadow-button-success-focus focus-visible:ring-success-base',
+        ],
+      },
+    },
+    {
+      variant: 'success',
+      mode: 'ghost',
+      class: {
+        root: [
+          // base
+          'bg-transparent text-success-base ring-transparent',
+          // hover
+          'hover:bg-success-alpha-10',
+          // focus
+          'focus-visible:bg-bg-white-0 focus-visible:shadow-button-success-focus focus-visible:ring-success-base',
         ],
       },
     },
