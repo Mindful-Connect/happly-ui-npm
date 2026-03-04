@@ -76,6 +76,7 @@ export default function RadioCardGroup({
             htmlFor={disabled || item.readOnly ? undefined : itemId}
             className={cn(
               'flex w-full justify-between gap-x-3.5 rounded-xl border p-4 transition-colors duration-75',
+            item.description ? '' : 'items-center',
               disabled || item.readOnly
                 ? 'cursor-default border-neutral-200'
                 : [
