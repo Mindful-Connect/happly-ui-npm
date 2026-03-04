@@ -11,6 +11,7 @@ export interface CircularProgressProps extends React.HTMLAttributes<HTMLDivEleme
   /** Color variant of the progress bar. */
   variant?:
     | 'default'
+    | 'primary'
     | 'green'
     | 'orange'
     | 'purple'
@@ -24,6 +25,7 @@ export interface CircularProgressProps extends React.HTMLAttributes<HTMLDivEleme
 
 const variantStyles: Record<string, { track: string; fill: string }> = {
   default: { track: 'stroke-ds-neutral-200', fill: 'stroke-primaryColor' },
+  primary: { track: 'stroke-primaryColor/20', fill: 'stroke-primaryColor' },
   green: { track: 'stroke-ds-green-200', fill: 'stroke-ds-green-500' },
   orange: { track: 'stroke-ds-orange-200', fill: 'stroke-ds-orange-500' },
   purple: { track: 'stroke-ds-purple-200', fill: 'stroke-ds-purple-500' },
@@ -99,7 +101,7 @@ export const CircularProgress = React.forwardRef<
             cy={size / 2}
             r={radius}
             strokeWidth={strokeWidth}
-            className={currentStyles.track}
+            className={cn(currentStyles.track)}
           />
           {/* Filled progress circle */}
           <circle

@@ -13,7 +13,7 @@ export type RadioCardItem = {
     text: string;
   };
   description?: string;
-  icon?: React.ReactNode;
+  icon?: (isChecked: boolean) => React.ReactNode;
   readOnly?: boolean;
   title: string;
   value: string;
@@ -90,9 +90,18 @@ export default function RadioCardGroup({
             )}
             onClick={handleCardClick}
           >
-            <div className={cn('flex', simpleIcons ? 'gap-2' : 'gap-[14px]')}>
+            <div
+              className={cn(
+                'flex items-center',
+                simpleIcons ? 'gap-2' : 'gap-[14px]'
+              )}
+            >
               {!!item.icon &&
-                (simpleIcons ? item.icon : <KeyIcon icon={item.icon} />)}
+                (simpleIcons ? (
+                  item.icon(value === item.value)
+                ) : (
+                  <KeyIcon icon={item.icon(value === item.value)} />
+                ))}
 
               <div className='flex flex-col gap-1'>
                 <div className='flex gap-x-2'>

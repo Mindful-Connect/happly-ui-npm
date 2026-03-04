@@ -169,7 +169,7 @@ export type RadioCardItem = {
     text: string;
   };
   description?: string;
-  icon?: React.ReactNode;
+  icon?: (isChecked: boolean) => React.ReactNode;
   readOnly?: boolean;
   title: string;
   value: string;
@@ -235,14 +235,18 @@ function RadioCardGroup({
             onValueChange(item.value);
           }}
         >
-          <div
-            className={cn(
-              'flex items-center',
-              simpleIcons ? 'gap-2' : 'gap-[14px]'
-            )}
-          >
-            {!!item.icon &&
-              (simpleIcons ? item.icon : <KeyIcon icon={item.icon} />)}
+            <div
+              className={cn(
+                'flex items-center',
+                simpleIcons ? 'gap-2' : 'gap-[14px]'
+              )}
+            >
+              {!!item.icon &&
+                (simpleIcons ? (
+                  item.icon(value === item.value)
+                ) : (
+                  <KeyIcon icon={item.icon(value === item.value)} />
+                ))}
 
             <div className='flex h-min flex-col gap-1'>
               <div className='flex gap-x-2'>
@@ -342,19 +346,19 @@ const iconItems: RadioCardItem[] = [
   {
     title: 'Card',
     value: 'card',
-    icon: <CreditCard className='h-5 w-5' />,
+    icon: (isChecked: boolean) => <CreditCard className={cn('h-5 w-5', isChecked ? 'text-primary' : '')} />,
     description: 'Pay with credit card',
   },
   {
     title: 'Wallet',
     value: 'wallet',
-    icon: <Wallet className='h-5 w-5' />,
+    icon: (isChecked: boolean) => <Wallet className={cn('h-5 w-5', isChecked ? 'text-primary' : '')} />,
     description: 'Pay with digital wallet',
   },
   {
     title: 'Bank Transfer',
     value: 'bank',
-    icon: <Banknote className='h-5 w-5' />,
+    icon: (isChecked: boolean) => <Banknote className={cn('h-5 w-5', isChecked ? 'text-primary' : '')} />,
     description: 'Direct bank transfer',
   },
 ];
@@ -364,7 +368,7 @@ const complexItems: RadioCardItem[] = [
   {
     title: 'Pro Plan',
     value: 'pro',
-    icon: <Zap className='h-5 w-5' />,
+    icon: (isChecked: boolean) => <Zap className={cn('h-5 w-5', isChecked ? 'text-primary' : '')} />,
     description: 'Advanced features for power users',
     badge: {
       text: 'Popular',
@@ -374,7 +378,7 @@ const complexItems: RadioCardItem[] = [
   {
     title: 'Business Plan',
     value: 'business',
-    icon: <Building className='h-5 w-5' />,
+    icon: (isChecked: boolean) => <Building className={cn('h-5 w-5', isChecked ? 'text-primary' : '')} />,
     description: 'Complete solution for businesses',
     badge: {
       text: 'New',
@@ -384,7 +388,7 @@ const complexItems: RadioCardItem[] = [
   {
     title: 'Starter Plan',
     value: 'starter',
-    icon: <Star className='h-5 w-5' />,
+    icon: (isChecked: boolean) => <Star className={cn('h-5 w-5', isChecked ? 'text-primary' : '')} />,
     description: 'Basic features to get started',
   },
 ];

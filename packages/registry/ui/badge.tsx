@@ -20,6 +20,11 @@ const badgeVariants = cva(
         light: 'border-ds-neutral-200 bg-ds-neutral-200 text-ds-neutral-800',
         lighter: 'border-ds-neutral-200 bg-ds-neutral-100 text-ds-neutral-800',
 
+        primaryLight:
+          'border-primaryColor/20 bg-primaryColor/20 text-primaryColor',
+        primaryLighter:
+          'border-transparent bg-primaryColor/10 text-primaryColor',
+
         blueText: 'border-ds-neutral-200 text-ds-blue-500',
         blueFilled: 'border-ds-blue-500 bg-ds-blue-500 text-white',
         blueLight: 'border-ds-blue-200 bg-ds-blue-200 text-ds-blue-950',
@@ -71,7 +76,8 @@ const badgeVariants = cva(
         disabled: 'border-ds-neutral-200 text-ds-neutral-300',
       },
       size: {
-        default: 'h-6',
+        lg: 'h-[28px] font-medium',
+        default: 'h-6 font-medium',
         sm: 'h-5 text-[11px]',
       },
     },

@@ -85,7 +85,7 @@
           },
           {
             "name": "size",
-            "type": "'default' | 'sm'",
+            "type": "'default' | 'lg' | 'sm'",
             "default": "'default'",
             "description": "The size of the badge"
           }
