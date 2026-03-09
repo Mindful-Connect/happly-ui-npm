@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
 
-import { type Section, type Subsection } from '@/lib/sections';
+import { type Section, type Subsection, type SubSubsection } from '@/lib/sections';
 
 export function TableOfContents({
   tableOfContents,
@@ -15,7 +15,13 @@ export function TableOfContents({
 
   let getHeadings = useCallback((tableOfContents: Array<Section>) => {
     return tableOfContents
-      .flatMap((node) => [node.id, ...node.children.map((child) => child.id)])
+      .flatMap((node) => [
+        node.id,
+        ...node.children.flatMap((child) => [
+          child.id,
+          ...(child.children?.map((sub) => sub.id) ?? []),
+        ]),
+      ])
       .map((id) => {
         let el = document.getElementById(id);
         if (!el) return null;
@@ -51,11 +57,11 @@ export function TableOfContents({
     };
   }, [getHeadings, tableOfContents]);
 
-  function isActive(section: Section | Subsection) {
+  function isActive(section: Section | Subsection | SubSubsection) {
     if (section.id === currentSection) {
       return true;
     }
-    if (!section.children) {
+    if (!('children' in section) || !section.children) {
       return false;
     }
     return section.children.findIndex(isActive) > -1;
@@ -104,6 +110,28 @@ export function TableOfContents({
                           >
                             {subSection.title}
                           </Link>
+                          {subSection.children && subSection.children.length > 0 && (
+                            <ol
+                              role='list'
+                              className='mt-2 space-y-2 pl-5 text-slate-500 dark:text-slate-400'
+                            >
+                              {subSection.children.map((subSubSection) => (
+                                <li key={subSubSection.id}>
+                                  <Link
+                                    href={`#${subSubSection.id}`}
+                                    className={clsx(
+                                      'text-xs',
+                                      isActive(subSubSection)
+                                        ? 'text-sky-500'
+                                        : 'hover:text-slate-600 dark:hover:text-slate-300'
+                                    )}
+                                  >
+                                    {subSubSection.title}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ol>
+                          )}
                         </li>
                       ))}
                     </ol>

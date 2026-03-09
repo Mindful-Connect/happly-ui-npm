@@ -7,7 +7,7 @@ import type { RegistryItemWithDocs } from '@/lib/registry';
 import { StoryPreview } from '@/components/StoryPreview';
 import { TableOfContents } from '@/components/TableOfContents';
 import { PrevNextLinks } from '@/components/PrevNextLinks';
-import { type Section } from '@/lib/sections';
+import { type Section, type SubSubsection } from '@/lib/sections';
 
 interface ComponentDocsProps {
   component: RegistryItemWithDocs;
@@ -61,7 +61,12 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
   inputChildren.push({ id: 'usage', title: 'Usage', level: 3 });
 
   if (docs?.examples && docs.examples.length > 0) {
-    inputChildren.push({ id: 'examples', title: 'Examples', level: 3 });
+    const exampleChildren: SubSubsection[] = docs.examples.map((example) => ({
+      id: `example-${slugify(example.title)}`,
+      title: example.title,
+      level: 4 as const,
+    }));
+    inputChildren.push({ id: 'examples', title: 'Examples', level: 3, children: exampleChildren });
   }
 
   if (docs?.api && docs.api.length > 0) {
@@ -242,7 +247,7 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
                 <h2 id='examples'>Examples</h2>
                 {docs.examples.map((example, index) => (
                   <div key={index} className='mb-8'>
-                    <h3>{example.title}</h3>
+                    <h3 id={`example-${slugify(example.title)}`} className='scroll-mt-24'>{example.title}</h3>
                     {example.description && <p>{example.description}</p>}
                     {example.stories?.length ? (
                       <StoryPreview componentName={name} storyNames={example.stories} previewClassName={previewClassName} />
@@ -535,6 +540,13 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
       <TableOfContents tableOfContents={tableOfContents} />
     </>
   );
+}
+
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
 }
 
 // Extract exported component names from source code
