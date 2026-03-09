@@ -3,7 +3,25 @@ import { RiFlashlightFill } from 'react-icons/ri';
 
 export default { title: 'Displaying Data/Badge', component: Badge };
 
-
+export const Playground = {
+  args: {
+    children: 'Badge',
+    variant: 'filled',
+    size: 'small',
+    color: 'gray',
+    disabled: false,
+    square: false,
+  },
+  argTypes: {
+    children: { control: 'text' },
+    variant: { control: 'select', options: ['filled', 'light', 'lighter', 'stroke'] },
+    size: { control: 'select', options: ['small', 'medium'] },
+    color: { control: 'select', options: ['gray', 'blue', 'orange', 'red', 'green', 'yellow', 'purple', 'sky', 'pink', 'teal'] },
+    disabled: { control: 'boolean' },
+    square: { control: 'boolean' },
+  },
+  render: (args: any) => <Badge.Root {...args} />,
+};
 
 export const BadgeFilled = {
   render: () => (

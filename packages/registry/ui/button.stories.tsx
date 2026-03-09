@@ -3,6 +3,24 @@ import { RiArrowLeftSLine, RiArrowRightSLine, RiFileCopyLine } from 'react-icons
 
 export default { title: 'Actions/Button', component: Button.Root };
 
+export const Playground = {
+  args: {
+    children: 'Button',
+    variant: 'primary',
+    mode: 'filled',
+    size: 'medium',
+    disabled: false,
+  },
+  argTypes: {
+    children: { control: 'text' },
+    variant: { control: 'select', options: ['primary', 'neutral', 'error', 'warning', 'success'] },
+    mode: { control: 'select', options: ['filled', 'stroke', 'lighter', 'ghost'] },
+    size: { control: 'select', options: ['medium', 'small', 'xsmall', 'xxsmall'] },
+    disabled: { control: 'boolean' },
+  },
+  render: (args: any) => <Button.Root {...args} />,
+};
+
 export const PrimaryVariant = {
   render: () => (
     <div className='flex flex-col items-center gap-4'>

@@ -5,6 +5,22 @@ import * as Button from './button';
 
 export default { title: 'Displaying Data/Divider', component: Divider.Root };
 
+export const Playground = {
+  args: {
+    variant: 'line-text',
+    children: 'OR',
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['line', 'line-spacing', 'line-text', 'content', 'text', 'solid-text'] },
+    children: { control: 'text' },
+  },
+  render: (args: any) => (
+    <div className='w-96'>
+      <Divider.Root {...args} />
+    </div>
+  ),
+};
+
 export const Line = {
   render: () => (
     <div className='w-96'>

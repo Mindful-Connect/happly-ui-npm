@@ -6,6 +6,45 @@ import * as Popover from './popover';
 
 export default { title: 'Overlays/Popover', component: Popover.Root };
 
+export const Playground = {
+  args: {
+    side: 'bottom',
+    align: 'center',
+    showArrow: true,
+  },
+  argTypes: {
+    side: {
+      control: 'select',
+      options: ['top', 'right', 'bottom', 'left'],
+    },
+    align: {
+      control: 'select',
+      options: ['start', 'center', 'end'],
+    },
+    showArrow: { control: 'boolean' },
+  },
+  render: (args: any) => (
+    <Popover.Root defaultOpen>
+      <Popover.Trigger asChild>
+        <Button.Root variant='neutral' mode='stroke'>
+          Open Popover
+        </Button.Root>
+      </Popover.Trigger>
+      <Popover.Content
+        className='w-80'
+        side={args.side}
+        align={args.align}
+        showArrow={args.showArrow}
+      >
+        <div className='text-label-md text-text-strong-950'>Popover Title</div>
+        <p className='mt-1 text-paragraph-sm text-text-sub-600'>
+          This is the popover content. Adjust the controls to change position and appearance.
+        </p>
+      </Popover.Content>
+    </Popover.Root>
+  ),
+};
+
 export const Demo = {
   render: () => (
     <Popover.Root>

@@ -22,6 +22,44 @@ import * as Select from './select';
 
 export default { title: 'Form/Select', component: Select.Root };
 
+const playgroundItems = [
+  { value: 'apple', label: 'Apple' },
+  { value: 'banana', label: 'Banana' },
+  { value: 'carrot', label: 'Carrot' },
+  { value: 'broccoli', label: 'Broccoli' },
+];
+
+export const Playground = {
+  args: {
+    size: 'medium',
+    variant: 'default',
+    disabled: false,
+    hasError: false,
+  },
+  argTypes: {
+    size: { control: 'select', options: ['medium', 'small', 'xsmall'] },
+    variant: { control: 'select', options: ['default', 'compact', 'compactForInput', 'inline'] },
+    disabled: { control: 'boolean' },
+    hasError: { control: 'boolean' },
+  },
+  render: (args: any) => (
+    <div className='w-full min-w-[300px] max-w-[300px]'>
+      <Select.Root size={args.size} variant={args.variant} disabled={args.disabled} hasError={args.hasError}>
+        <Select.Trigger>
+          <Select.Value placeholder='Select an option...' />
+        </Select.Trigger>
+        <Select.Content>
+          {playgroundItems.map((item) => (
+            <Select.Item key={item.value} value={item.value}>
+              {item.label}
+            </Select.Item>
+          ))}
+        </Select.Content>
+      </Select.Root>
+    </div>
+  ),
+};
+
 const fruits = [
   { value: 'apple', label: 'Apple' },
   { value: 'carrot', label: 'Carrot' },

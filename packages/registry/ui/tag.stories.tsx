@@ -5,6 +5,20 @@ import * as Tag from './tag';
 
 export default { title: 'Displaying Data/Tag', component: Tag.Root };
 
+export const Playground = {
+  args: {
+    children: 'Tag',
+    variant: 'stroke',
+    disabled: false,
+  },
+  argTypes: {
+    children: { control: 'text' },
+    variant: { control: 'select', options: ['stroke', 'gray'] },
+    disabled: { control: 'boolean' },
+  },
+  render: (args: any) => <Tag.Root {...args} />,
+};
+
 export const Stroke = {
   render: () => (
     <div className='flex gap-6'>

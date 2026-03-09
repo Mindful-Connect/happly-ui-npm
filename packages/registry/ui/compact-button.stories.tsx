@@ -3,6 +3,26 @@ import { RiAddLine } from '@remixicon/react';
 
 export default { title: 'Actions/Compact Button', component: CompactButton.Root };
 
+export const Playground = {
+  args: {
+    variant: 'stroke',
+    size: 'large',
+    fullRadius: false,
+    disabled: false,
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['stroke', 'ghost', 'white', 'modifiable'] },
+    size: { control: 'select', options: ['large', 'medium'] },
+    fullRadius: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+  },
+  render: (args: any) => (
+    <CompactButton.Root {...args}>
+      <CompactButton.Icon as={RiAddLine} />
+    </CompactButton.Root>
+  ),
+};
+
 export const Stroke = {
   render: () => (
     <CompactButton.Root variant='stroke'>

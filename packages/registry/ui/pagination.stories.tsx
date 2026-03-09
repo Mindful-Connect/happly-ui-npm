@@ -9,6 +9,37 @@ import * as Pagination from './pagination';
 
 export default { title: 'Navigation/Pagination', component: Pagination.Root };
 
+export const Playground = {
+  args: {
+    variant: 'basic',
+    totalPages: 5,
+  },
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['basic', 'rounded', 'group'],
+    },
+    totalPages: {
+      control: { type: 'range', min: 1, max: 10, step: 1 },
+    },
+  },
+  render: (args: any) => (
+    <Pagination.Root variant={args.variant}>
+      <Pagination.NavButton>
+        <Pagination.NavIcon as={RiArrowLeftSLine} />
+      </Pagination.NavButton>
+      {Array.from({ length: args.totalPages }, (_, idx) => (
+        <Pagination.Item key={idx} current={idx === 0}>
+          {idx + 1}
+        </Pagination.Item>
+      ))}
+      <Pagination.NavButton>
+        <Pagination.NavIcon as={RiArrowRightSLine} />
+      </Pagination.NavButton>
+    </Pagination.Root>
+  ),
+};
+
 export const Demo = {
   render: () => (
     <Pagination.Root>

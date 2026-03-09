@@ -20,6 +20,34 @@ export default {
   component: SectionToggle.Root,
 };
 
+export const Playground = {
+  args: {
+    title: 'Toggle Section Title',
+    description: 'Toggle this section open or closed.',
+    defaultOpen: true,
+  },
+  argTypes: {
+    title: { control: 'text' },
+    description: { control: 'text' },
+    defaultOpen: { control: 'boolean' },
+  },
+  render: (args: any) => {
+    const [open, setOpen] = useState(args.defaultOpen);
+
+    return (
+      <SectionToggle.SectionToggle
+        className='w-full max-w-[682px]'
+        title={args.title}
+        description={args.description}
+        open={open}
+        onOpenChange={setOpen}
+      >
+        {CONTENT}
+      </SectionToggle.SectionToggle>
+    );
+  },
+};
+
 export const Default = {
   render: () => {
     const [open, setOpen] = useState(true);

@@ -6,6 +6,25 @@ import * as Hint from './hint';
 
 export default { title: 'Form/Hint', component: Hint.Root };
 
+export const Playground = {
+  args: {
+    children: 'This is a hint text to help user.',
+    disabled: false,
+    hasError: false,
+  },
+  argTypes: {
+    children: { control: 'text' },
+    disabled: { control: 'boolean' },
+    hasError: { control: 'boolean' },
+  },
+  render: (args: any) => (
+    <Hint.Root disabled={args.disabled} hasError={args.hasError}>
+      <Hint.Icon as={RiInformationFill} />
+      {args.children}
+    </Hint.Root>
+  ),
+};
+
 export const Demo = {
   render: () => (
     <Hint.Root>

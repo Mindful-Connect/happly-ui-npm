@@ -3,6 +3,29 @@ import * as Avatar from './avatar';
 
 export default { title: 'Displaying Data/Avatar Group', component: AvatarGroup.Root };
 
+export const Playground = {
+  args: {
+    size: '80',
+  },
+  argTypes: {
+    size: { control: 'select', options: ['80', '72', '64', '56', '48', '40', '32', '24', '20'] },
+  },
+  render: (args: any) => (
+    <AvatarGroup.Root {...args}>
+      <Avatar.Root>
+        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
+      </Avatar.Root>
+      <Avatar.Root>
+        <Avatar.Image src='https://i.pravatar.cc/160?img=1' />
+      </Avatar.Root>
+      <Avatar.Root>
+        <Avatar.Image src='https://i.pravatar.cc/160?img=9' />
+      </Avatar.Root>
+      <AvatarGroup.Overflow>+9</AvatarGroup.Overflow>
+    </AvatarGroup.Root>
+  ),
+};
+
 export const Size = {
   render: () => (
     <div className='flex flex-col items-center gap-6'>

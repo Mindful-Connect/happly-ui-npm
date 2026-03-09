@@ -13,6 +13,30 @@ import * as LinkButton from './link-button';
 
 export default { title: 'Displaying Data/Banner', component: Banner.Root };
 
+export const Playground = {
+  args: {
+    variant: 'filled',
+    status: 'information',
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['filled', 'light', 'lighter', 'stroke'] },
+    status: { control: 'select', options: ['error', 'warning', 'success', 'information', 'feature', 'primary'] },
+  },
+  render: (args: any) => (
+    <Banner.Root {...args}>
+      <Banner.Content>
+        <Banner.Icon as={RiInformationFill} />
+        <span className='text-label-sm'>Insert your alert title here!</span>
+        <span>&#8901;</span>
+        <span className='text-paragraph-sm'>Insert your description here.</span>
+      </Banner.Content>
+      <Banner.CloseButton>
+        <RiCloseLine className='size-5' />
+      </Banner.CloseButton>
+    </Banner.Root>
+  ),
+};
+
 export const Error = {
   render: () => (
     <div className='space-y-6'>

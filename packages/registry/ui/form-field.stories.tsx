@@ -9,6 +9,46 @@ import * as Label from './label';
 
 export default { title: 'Form/Form Field' };
 
+export const Playground = {
+  args: {
+    label: 'Email Address',
+    placeholder: 'hello@example.com',
+    hint: 'This is a hint text to help user.',
+    showAsterisk: true,
+    subText: '(Required)',
+  },
+  argTypes: {
+    label: { control: 'text' },
+    placeholder: { control: 'text' },
+    hint: { control: 'text' },
+    showAsterisk: { control: 'boolean' },
+    subText: { control: 'text' },
+  },
+  render: (args: any) => (
+    <div className='w-[300px]'>
+      <FormField.Root>
+        <Label.Root>
+          {args.label}
+          {args.showAsterisk && <Label.Asterisk />}
+          {args.subText && <Label.Sub>{args.subText}</Label.Sub>}
+        </Label.Root>
+        <Input.Root>
+          <Input.Wrapper>
+            <Input.Icon as={RiMailLine} />
+            <Input.Input placeholder={args.placeholder} />
+          </Input.Wrapper>
+        </Input.Root>
+        {args.hint && (
+          <Hint.Root>
+            <Hint.Icon as={RiInformationFill} />
+            {args.hint}
+          </Hint.Root>
+        )}
+      </FormField.Root>
+    </div>
+  ),
+};
+
 const TAG_OPTIONS = [
   { value: 'ai', label: 'AI' },
   { value: 'product', label: 'Product' },

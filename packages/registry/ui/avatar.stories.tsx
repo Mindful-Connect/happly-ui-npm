@@ -2,6 +2,24 @@ import * as Avatar from './avatar';
 
 export default { title: 'Displaying Data/Avatar', component: Avatar.Root };
 
+export const Playground = {
+  args: {
+    size: '80',
+    color: 'gray',
+    placeholderType: 'user',
+  },
+  argTypes: {
+    size: { control: 'select', options: ['80', '72', '64', '56', '48', '40', '32', '24', '20'] },
+    color: { control: 'select', options: ['gray', 'yellow', 'blue', 'sky', 'purple', 'red'] },
+    placeholderType: { control: 'select', options: ['user', 'company'] },
+  },
+  render: (args: any) => (
+    <Avatar.Root {...args}>
+      <Avatar.Image src='https://i.pravatar.cc/160?img=1' />
+    </Avatar.Root>
+  ),
+};
+
 export const Color = {
   render: () => (
     <div className='flex w-full max-w-96 flex-wrap justify-center gap-6'>

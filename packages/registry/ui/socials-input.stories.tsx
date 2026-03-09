@@ -5,6 +5,40 @@ import SocialsInput from './socials-input';
 
 export default { title: 'Needs Refactor/Socials Input', component: SocialsInput };
 
+export const Playground = {
+  args: {
+    readOnly: false,
+  },
+  argTypes: {
+    readOnly: { control: 'boolean' },
+  },
+  render: (args: any) => {
+    function SocialsInputPlayground() {
+      const [values, setValues] = useState<Record<string, string>>({});
+      return (
+        <div style={{ width: '100%', maxWidth: '500px' }}>
+          <SocialsInput
+            name='socials'
+            readOnly={args.readOnly}
+            formValue={values}
+            setFormValue={setValues}
+            t={(key: string) => {
+              const translations: Record<string, string> = {
+                '_domain.addSocialMedia': 'Add social media',
+                errorSocialUrl: 'Please enter a valid URL',
+                errorCalendarUrl: 'Please enter a valid calendar URL',
+                errorZoomUrl: 'Please enter a valid Zoom URL',
+              };
+              return translations[key] || key;
+            }}
+          />
+        </div>
+      );
+    }
+    return <SocialsInputPlayground />;
+  },
+};
+
 export const Default = {
   render: () => {
     function SocialsInputDemo() {

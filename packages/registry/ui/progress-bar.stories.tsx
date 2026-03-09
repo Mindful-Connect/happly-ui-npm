@@ -3,6 +3,24 @@ import * as LinkButton from './link-button';
 
 export default { title: 'Displaying Data/Progress Bar', component: ProgressBar.Root };
 
+export const Playground = {
+  args: {
+    value: 50,
+    max: 100,
+    color: 'blue',
+  },
+  argTypes: {
+    value: { control: { type: 'range', min: 0, max: 100, step: 1 } },
+    max: { control: 'number' },
+    color: { control: 'select', options: ['blue', 'red', 'orange', 'green', 'primary'] },
+  },
+  render: (args: any) => (
+    <div className='w-96'>
+      <ProgressBar.Root {...args} />
+    </div>
+  ),
+};
+
 export const Color = {
   render: () => (
     <div className='flex w-96 flex-col gap-6'>

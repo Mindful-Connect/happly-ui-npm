@@ -10,6 +10,24 @@ import * as Radio from './radio';
 
 export default { title: 'Form/Radio', component: Radio.Group };
 
+export const Playground = {
+  args: {
+    variant: 'primary',
+    disabled: false,
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['primary', 'neutral'] },
+    disabled: { control: 'boolean' },
+  },
+  render: (args: any) => (
+    <Radio.Group variant={args.variant} defaultValue='r1' className='flex gap-2'>
+      <Radio.Item value='r1' disabled={args.disabled} />
+      <Radio.Item value='r2' disabled={args.disabled} />
+      <Radio.Item value='r3' disabled={args.disabled} />
+    </Radio.Group>
+  ),
+};
+
 export const Demo = {
   render: () => (
     <Radio.Group defaultValue='r1' className='flex gap-2'>

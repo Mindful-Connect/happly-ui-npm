@@ -2,6 +2,16 @@ import * as Kbd from './kbd';
 
 export default { title: 'Displaying Data/Kbd', component: Kbd.Root };
 
+export const Playground = {
+  args: {
+    children: 'Ctrl+K',
+  },
+  argTypes: {
+    children: { control: 'text' },
+  },
+  render: (args: any) => <Kbd.Root {...args} />,
+};
+
 function IconCmd(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg

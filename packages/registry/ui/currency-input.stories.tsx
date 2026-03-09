@@ -6,6 +6,31 @@ import * as CurrencyInput from './currency-input';
 
 export default { title: 'Form/Composed Inputs/Currency Input' };
 
+export const Playground = {
+  args: {
+    size: 'medium',
+    hasError: false,
+    disabled: false,
+    placeholder: '0.00',
+  },
+  argTypes: {
+    size: { control: 'select', options: ['medium', 'small', 'xsmall'] },
+    hasError: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    placeholder: { control: 'text' },
+  },
+  render: (args: any) => (
+    <div className='w-full max-w-[300px]'>
+      <CurrencyInput.Root
+        size={args.size}
+        hasError={args.hasError}
+        disabled={args.disabled}
+        placeholder={args.placeholder}
+      />
+    </div>
+  ),
+};
+
 export const Default = {
   render: () => (
     <div className='w-full max-w-[300px]'>

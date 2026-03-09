@@ -11,6 +11,27 @@ import * as LinkButton from './link-button';
 
 export default { title: 'Feedback/Alert', component: Alert.Root };
 
+export const Playground = {
+  args: {
+    variant: 'filled',
+    status: 'information',
+    size: 'small',
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['filled', 'light', 'lighter', 'stroke'] },
+    status: { control: 'select', options: ['error', 'warning', 'success', 'information', 'feature'] },
+    size: { control: 'select', options: ['xsmall', 'small', 'large'] },
+  },
+  render: (args: any) => (
+    <div className='w-full max-w-96'>
+      <Alert.Root {...args}>
+        <Alert.Icon as={RiInformationFill} />
+        Insert your alert title here!
+      </Alert.Root>
+    </div>
+  ),
+};
+
 export const Filled = {
   render: () => (
     <div className='w-full max-w-96 space-y-6'>

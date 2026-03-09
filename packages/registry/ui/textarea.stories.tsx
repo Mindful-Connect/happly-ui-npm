@@ -10,6 +10,31 @@ import * as Textarea from './textarea';
 
 export default { title: 'Form/Textarea', component: Textarea.Root };
 
+export const Playground = {
+  args: {
+    placeholder: 'Jot down your thoughts...',
+    simple: false,
+    hasError: false,
+    disabled: false,
+  },
+  argTypes: {
+    placeholder: { control: 'text' },
+    simple: { control: 'boolean' },
+    hasError: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+  },
+  render: (args: any) => (
+    <div className='w-full min-w-[480px]'>
+      <Textarea.Root
+        placeholder={args.placeholder}
+        simple={args.simple}
+        hasError={args.hasError}
+        disabled={args.disabled}
+      />
+    </div>
+  ),
+};
+
 export const Demo = {
   render: () => (
     <div className='w-full min-w-[480px]'>

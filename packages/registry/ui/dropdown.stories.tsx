@@ -22,6 +22,48 @@ import * as Dropdown from './dropdown';
 
 export default { title: 'Overlays/Dropdown', component: Dropdown.Root };
 
+export const Playground = {
+  args: {
+    align: 'start',
+    side: 'bottom',
+  },
+  argTypes: {
+    align: {
+      control: 'select',
+      options: ['start', 'center', 'end'],
+    },
+    side: {
+      control: 'select',
+      options: ['top', 'right', 'bottom', 'left'],
+    },
+  },
+  render: (args: any) => (
+    <Dropdown.Root defaultOpen>
+      <Dropdown.Trigger asChild>
+        <Button.Root variant='neutral' mode='stroke'>
+          Open Dropdown
+        </Button.Root>
+      </Dropdown.Trigger>
+      <Dropdown.Content align={args.align} side={args.side}>
+        <Dropdown.Group>
+          <Dropdown.Item>
+            <Dropdown.ItemIcon as={RiSettings2Line} />
+            Settings
+          </Dropdown.Item>
+          <Dropdown.Item>
+            <Dropdown.ItemIcon as={RiAddLine} />
+            Add Item
+          </Dropdown.Item>
+          <Dropdown.Item>
+            <Dropdown.ItemIcon as={RiLogoutBoxRLine} />
+            Logout
+          </Dropdown.Item>
+        </Dropdown.Group>
+      </Dropdown.Content>
+    </Dropdown.Root>
+  ),
+};
+
 export const Demo = {
   render: () => (
     <Dropdown.Root>

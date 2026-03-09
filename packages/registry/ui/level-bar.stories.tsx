@@ -2,6 +2,22 @@ import { LevelBar } from './level-bar';
 
 export default { title: 'Displaying Data/Level Bar' };
 
+export const Playground = {
+  args: {
+    level: 2,
+    levels: 3,
+  },
+  argTypes: {
+    level: { control: { type: 'number', min: 0, max: 10 } },
+    levels: { control: { type: 'number', min: 1, max: 10 } },
+  },
+  render: (args: any) => (
+    <div className='w-[360px]'>
+      <LevelBar {...args} />
+    </div>
+  ),
+};
+
 export const Levels = {
   render: () => (
     <div className='flex w-[360px] flex-col gap-4'>

@@ -18,6 +18,36 @@ import * as Drawer from './drawer';
 
 export default { title: 'Overlays/Drawer', component: Drawer.Root };
 
+export const Playground = {
+  args: {
+    showCloseButton: true,
+  },
+  argTypes: {
+    showCloseButton: { control: 'boolean' },
+  },
+  render: (args: any) => (
+    <Drawer.Root defaultOpen>
+      <Drawer.Content>
+        <Drawer.Header showCloseButton={args.showCloseButton}>
+          <Drawer.Title>Drawer Title</Drawer.Title>
+        </Drawer.Header>
+        <Drawer.Body>
+          <div className='flex h-full items-center justify-center text-center text-paragraph-sm text-text-sub-600'>
+            Drawer body content goes here.
+          </div>
+        </Drawer.Body>
+        <Drawer.Footer className='border-t'>
+          <Drawer.Close asChild>
+            <Button.Root variant='neutral' mode='stroke' size='medium' className='w-full'>
+              Close
+            </Button.Root>
+          </Drawer.Close>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+  ),
+};
+
 const TransactionItem = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>

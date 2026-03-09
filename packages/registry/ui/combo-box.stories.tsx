@@ -15,6 +15,49 @@ import * as Label from './label';
 
 export default { title: 'Form/Composed Inputs/Combo Box' };
 
+const PLAYGROUND_OPTIONS = [
+  { value: 'option-1', label: 'Option 1' },
+  { value: 'option-2', label: 'Option 2' },
+  { value: 'option-3', label: 'Option 3' },
+  { value: 'option-4', label: 'Option 4' },
+  { value: 'option-5', label: 'Option 5' },
+];
+
+export const Playground = {
+  args: {
+    size: 'medium',
+    hasError: false,
+    disabled: false,
+    placeholder: 'Choose or search...',
+    tagVariant: 'gray',
+  },
+  argTypes: {
+    size: { control: 'select', options: ['medium', 'small', 'xsmall'] },
+    hasError: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    placeholder: { control: 'text' },
+    tagVariant: { control: 'select', options: ['stroke', 'gray'] },
+  },
+  render: (args: any) => {
+    const [value, setValue] = React.useState<string[]>([]);
+
+    return (
+      <div className='w-[300px]'>
+        <ComboBox.Root
+          options={PLAYGROUND_OPTIONS}
+          value={value}
+          onValueChange={setValue}
+          size={args.size}
+          hasError={args.hasError}
+          disabled={args.disabled}
+          placeholder={args.placeholder}
+          tagVariant={args.tagVariant}
+        />
+      </div>
+    );
+  },
+};
+
 const SECTOR_OPTIONS = [
   { value: 'grants', label: 'Grants' },
   { value: 'incubators', label: 'Incubators & Accelerators' },

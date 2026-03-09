@@ -16,6 +16,66 @@ import * as RadioCard from './radio-card';
 
 export default { title: 'Form/Radio Card' };
 
+export const Playground = {
+  args: {
+    variant: 'neutral',
+    hasError: false,
+    allowDeselect: false,
+    disabled: false,
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['neutral', 'primary'] },
+    hasError: { control: 'boolean' },
+    allowDeselect: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+  },
+  render: (args: any) => {
+    const [value, setValue] = React.useState('option-1');
+
+    return (
+      <div className='w-[480px]'>
+        <RadioCard.Root
+          value={value}
+          onValueChange={setValue}
+          variant={args.variant}
+          hasError={args.hasError}
+          allowDeselect={args.allowDeselect}
+        >
+          <RadioCard.Item value='option-1' disabled={args.disabled}>
+            <RadioCard.Content>
+              <RadioCard.Title>Option 1</RadioCard.Title>
+              <RadioCard.Description>
+                First option description
+              </RadioCard.Description>
+            </RadioCard.Content>
+            <RadioCard.Indicator />
+          </RadioCard.Item>
+
+          <RadioCard.Item value='option-2' disabled={args.disabled}>
+            <RadioCard.Content>
+              <RadioCard.Title>Option 2</RadioCard.Title>
+              <RadioCard.Description>
+                Second option description
+              </RadioCard.Description>
+            </RadioCard.Content>
+            <RadioCard.Indicator />
+          </RadioCard.Item>
+
+          <RadioCard.Item value='option-3' disabled={args.disabled}>
+            <RadioCard.Content>
+              <RadioCard.Title>Option 3</RadioCard.Title>
+              <RadioCard.Description>
+                Third option description
+              </RadioCard.Description>
+            </RadioCard.Content>
+            <RadioCard.Indicator />
+          </RadioCard.Item>
+        </RadioCard.Root>
+      </div>
+    );
+  },
+};
+
 export const Default = {
   render: () => {
     const [value, setValue] = React.useState('personal');

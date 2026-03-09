@@ -10,6 +10,27 @@ import * as Popover from './popover';
 
 export default { title: 'Form/Datepicker', component: Datepicker.Calendar };
 
+export const Playground = {
+  args: {
+    showOutsideDays: true,
+  },
+  argTypes: {
+    showOutsideDays: { control: 'boolean' },
+  },
+  render: (args: any) => {
+    const [date, setDate] = React.useState<Date | undefined>(undefined);
+
+    return (
+      <Datepicker.Calendar
+        mode='single'
+        selected={date}
+        onSelect={setDate}
+        showOutsideDays={args.showOutsideDays}
+      />
+    );
+  },
+};
+
 export const Demo = {
   render: () => {
     const [date, setDate] = React.useState<Date | undefined>(undefined);

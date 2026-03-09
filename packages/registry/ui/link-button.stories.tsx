@@ -3,6 +3,26 @@ import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react';
 
 export default { title: 'Actions/Link Button', component: LinkButton.Root };
 
+export const Playground = {
+  args: {
+    variant: 'gray',
+    size: 'medium',
+    underline: false,
+    disabled: false,
+    children: 'Link Button',
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['gray', 'black', 'primary', 'error', 'modifiable'] },
+    size: { control: 'select', options: ['medium', 'small'] },
+    underline: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    children: { control: 'text' },
+  },
+  render: (args: any) => (
+    <LinkButton.Root {...args} />
+  ),
+};
+
 export const Gray = {
   render: () => <LinkButton.Root variant='gray'>Link Button</LinkButton.Root>,
 };

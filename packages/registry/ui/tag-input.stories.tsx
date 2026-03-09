@@ -6,6 +6,35 @@ import * as TagInput from './tag-input';
 
 export default { title: 'Form/Composed Inputs/Tag Input' };
 
+export const Playground = {
+  args: {
+    size: 'medium',
+    hasError: false,
+    disabled: false,
+    placeholder: 'Add tags...',
+    tagVariant: 'stroke',
+  },
+  argTypes: {
+    size: { control: 'select', options: ['medium', 'small', 'xsmall'] },
+    hasError: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    placeholder: { control: 'text' },
+    tagVariant: { control: 'select', options: ['stroke', 'gray'] },
+  },
+  render: (args: any) => (
+    <div className='w-full max-w-[300px]'>
+      <TagInput.Root
+        defaultValue={['Example', 'Tags']}
+        size={args.size}
+        hasError={args.hasError}
+        disabled={args.disabled}
+        placeholder={args.placeholder}
+        tagVariant={args.tagVariant}
+      />
+    </div>
+  ),
+};
+
 export const Default = {
   render: () => (
     <div className='w-full max-w-[300px]'>

@@ -10,6 +10,20 @@ import * as Switch from './switch';
 
 export default { title: 'Form/Switch', component: Switch.Root };
 
+export const Playground = {
+  args: {
+    variant: 'primary',
+    disabled: false,
+    defaultChecked: false,
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['primary', 'neutral'] },
+    disabled: { control: 'boolean' },
+    defaultChecked: { control: 'boolean' },
+  },
+  render: (args: any) => <Switch.Root {...args} />,
+};
+
 export const Demo = {
   render: () => <Switch.Root />,
 };

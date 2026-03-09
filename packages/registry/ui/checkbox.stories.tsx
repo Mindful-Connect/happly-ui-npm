@@ -10,6 +10,20 @@ import * as LinkButton from './link-button';
 
 export default { title: 'Form/Checkbox', component: Checkbox.Root };
 
+export const Playground = {
+  args: {
+    variant: 'primary',
+    disabled: false,
+    defaultChecked: false,
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['primary', 'neutral'] },
+    disabled: { control: 'boolean' },
+    defaultChecked: { control: 'boolean' },
+  },
+  render: (args: any) => <Checkbox.Root {...args} />,
+};
+
 export const Demo = {
   render: () => <Checkbox.Root />,
 };

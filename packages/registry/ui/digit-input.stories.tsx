@@ -6,6 +6,34 @@ import * as DigitInput from './digit-input';
 
 export default { title: 'Form/Digit Input', component: DigitInput.Root };
 
+export const Playground = {
+  args: {
+    numInputs: 4,
+    disabled: false,
+    hasError: false,
+  },
+  argTypes: {
+    numInputs: { control: 'number', min: 1, max: 8 },
+    disabled: { control: 'boolean' },
+    hasError: { control: 'boolean' },
+  },
+  render: (args: any) => {
+    const [value, setValue] = React.useState('');
+
+    return (
+      <div className='w-full min-w-[320px] max-w-96'>
+        <DigitInput.Root
+          numInputs={args.numInputs}
+          disabled={args.disabled}
+          hasError={args.hasError}
+          onChange={(v: string) => setValue(v)}
+          value={value}
+        />
+      </div>
+    );
+  },
+};
+
 export const Demo = {
   render: () => {
     const [value, setValue] = React.useState('');

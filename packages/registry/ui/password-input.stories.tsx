@@ -7,6 +7,34 @@ import type { PasswordCriterion } from './password-input';
 
 export default { title: 'Form/Composed Inputs/Password Input' };
 
+export const Playground = {
+  args: {
+    size: 'medium',
+    hasError: false,
+    disabled: false,
+    placeholder: '••••••••••',
+    showStrength: false,
+  },
+  argTypes: {
+    size: { control: 'select', options: ['medium', 'small', 'xsmall'] },
+    hasError: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    placeholder: { control: 'text' },
+    showStrength: { control: 'boolean' },
+  },
+  render: (args: any) => (
+    <div className='w-full max-w-[300px]'>
+      <PasswordInput.Root
+        size={args.size}
+        hasError={args.hasError}
+        disabled={args.disabled}
+        placeholder={args.placeholder}
+        showStrength={args.showStrength}
+      />
+    </div>
+  ),
+};
+
 export const Default = {
   render: () => (
     <div className='w-full max-w-[300px]'>

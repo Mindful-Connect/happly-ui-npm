@@ -16,6 +16,22 @@ export default {
   title: 'Displaying Data/Key Icon',
 };
 
+export const Playground = {
+  args: {
+    size: 'md',
+    style: 'stroke',
+    color: 'gray',
+  },
+  argTypes: {
+    size: { control: 'select', options: ['sm', 'md', 'lg', 'xl', '2xl'] },
+    style: { control: 'select', options: ['stroke', 'lighter'] },
+    color: { control: 'select', options: ['gray', 'blue', 'orange', 'red', 'green', 'yellow', 'purple', 'pink', 'teal'] },
+  },
+  render: (args: any) => (
+    <KeyIcon.Root {...args} icon={<RiHome2Line />} />
+  ),
+};
+
 export const Stroke = {
   render: () => (
     <div className='flex items-end gap-4'>

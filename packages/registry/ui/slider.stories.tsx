@@ -7,6 +7,39 @@ import * as Tooltip from './tooltip';
 
 export default { title: 'Form/Slider', component: Slider.Root };
 
+export const Playground = {
+  args: {
+    variant: 'primary',
+    defaultValue: 50,
+    min: 0,
+    max: 100,
+    step: 1,
+    disabled: false,
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['primary', 'neutral'] },
+    defaultValue: { control: 'number' },
+    min: { control: 'number' },
+    max: { control: 'number' },
+    step: { control: 'number' },
+    disabled: { control: 'boolean' },
+  },
+  render: (args: any) => (
+    <div className='w-full min-w-[320px] max-w-xs'>
+      <Slider.Root
+        variant={args.variant}
+        defaultValue={[args.defaultValue]}
+        min={args.min}
+        max={args.max}
+        step={args.step}
+        disabled={args.disabled}
+      >
+        <Slider.Thumb />
+      </Slider.Root>
+    </div>
+  ),
+};
+
 export const Demo = {
   render: () => (
     <div className='w-full min-w-[320px] max-w-xs'>

@@ -45,6 +45,30 @@ import { cn } from '@/lib/happly-ui-utils';
 
 export default { title: 'Form/Input' };
 
+export const Playground = {
+  args: {
+    size: 'medium',
+    hasError: false,
+    placeholder: 'Placeholder text...',
+    disabled: false,
+  },
+  argTypes: {
+    size: { control: 'select', options: ['medium', 'small', 'xsmall'] },
+    hasError: { control: 'boolean' },
+    placeholder: { control: 'text' },
+    disabled: { control: 'boolean' },
+  },
+  render: (args: any) => (
+    <div className='w-full max-w-[300px]'>
+      <Input.Root size={args.size} hasError={args.hasError}>
+        <Input.Wrapper>
+          <Input.Input placeholder={args.placeholder} disabled={args.disabled} />
+        </Input.Wrapper>
+      </Input.Root>
+    </div>
+  ),
+};
+
 export const WithIcon = {
   render: () => (
     <div className='flex w-full max-w-[300px] flex-col gap-6'>

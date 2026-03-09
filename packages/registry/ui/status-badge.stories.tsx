@@ -9,6 +9,25 @@ import * as StatusBadge from './status-badge';
 
 export default { title: 'Displaying Data/Status Badge', component: StatusBadge.Root };
 
+export const Playground = {
+  args: {
+    children: 'Badge',
+    variant: 'stroke',
+    status: 'completed',
+  },
+  argTypes: {
+    children: { control: 'text' },
+    variant: { control: 'select', options: ['stroke', 'light'] },
+    status: { control: 'select', options: ['completed', 'pending', 'failed', 'disabled'] },
+  },
+  render: (args: any) => (
+    <StatusBadge.Root {...args}>
+      <StatusBadge.Dot />
+      {args.children}
+    </StatusBadge.Root>
+  ),
+};
+
 export const Disabled = {
   render: () => (
     <div className='flex items-center gap-6'>

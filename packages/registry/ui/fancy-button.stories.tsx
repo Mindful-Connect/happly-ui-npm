@@ -3,6 +3,24 @@ import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react';
 
 export default { title: 'Actions/Fancy Button', component: FancyButton.Root };
 
+export const Playground = {
+  args: {
+    variant: 'neutral',
+    size: 'medium',
+    disabled: false,
+    children: 'Button',
+  },
+  argTypes: {
+    variant: { control: 'select', options: ['neutral', 'primary', 'error', 'basic'] },
+    size: { control: 'select', options: ['medium', 'small', 'xsmall'] },
+    disabled: { control: 'boolean' },
+    children: { control: 'text' },
+  },
+  render: (args: any) => (
+    <FancyButton.Root {...args} />
+  ),
+};
+
 export const Neutral = {
   render: () => <FancyButton.Root variant='neutral'>Button</FancyButton.Root>,
 };

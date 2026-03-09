@@ -7,6 +7,38 @@ import * as DotStepper from './dot-stepper';
 
 export default { title: 'Navigation/Dot Stepper', component: DotStepper.Root };
 
+export const Playground = {
+  args: {
+    size: 'small',
+    steps: 4,
+  },
+  argTypes: {
+    size: {
+      control: 'select',
+      options: ['small', 'xsmall'],
+    },
+    steps: {
+      control: { type: 'range', min: 2, max: 8, step: 1 },
+    },
+  },
+  render: (args: any) => {
+    const [activeStep, setActiveStep] = React.useState(0);
+
+    return (
+      <DotStepper.Root size={args.size}>
+        {Array.from({ length: args.steps }, (_, idx) => (
+          <DotStepper.Item
+            key={idx}
+            aria-label={`Go to step ${idx}`}
+            active={activeStep === idx}
+            onClick={() => setActiveStep(idx)}
+          />
+        ))}
+      </DotStepper.Root>
+    );
+  },
+};
+
 export const Demo = {
   render: () => {
     const [activeStep, setActiveStep] = React.useState(0);

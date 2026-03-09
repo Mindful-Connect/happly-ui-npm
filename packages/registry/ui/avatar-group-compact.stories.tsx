@@ -6,6 +6,33 @@ export default {
   component: AvatarGroupCompact.Root,
 };
 
+export const Playground = {
+  args: {
+    size: '40',
+    variant: 'default',
+  },
+  argTypes: {
+    size: { control: 'select', options: ['40', '32', '24'] },
+    variant: { control: 'select', options: ['default', 'stroke'] },
+  },
+  render: (args: any) => (
+    <AvatarGroupCompact.Root {...args}>
+      <AvatarGroupCompact.Stack>
+        <Avatar.Root>
+          <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
+        </Avatar.Root>
+        <Avatar.Root>
+          <Avatar.Image src='https://i.pravatar.cc/160?img=1' />
+        </Avatar.Root>
+        <Avatar.Root>
+          <Avatar.Image src='https://i.pravatar.cc/160?img=9' />
+        </Avatar.Root>
+      </AvatarGroupCompact.Stack>
+      <AvatarGroupCompact.Overflow>+9</AvatarGroupCompact.Overflow>
+    </AvatarGroupCompact.Root>
+  ),
+};
+
 export const Default = {
   render: () => (
     <AvatarGroupCompact.Root variant='stroke'>

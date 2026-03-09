@@ -17,6 +17,60 @@ export default {
   title: 'Overlays/Emoji Dialog',
 };
 
+export const Playground = {
+  args: {
+    showClose: true,
+    showBackground: true,
+    disableAnimations: false,
+    bubbleVariant: 'secondary',
+  },
+  argTypes: {
+    showClose: { control: 'boolean' },
+    showBackground: { control: 'boolean' },
+    disableAnimations: { control: 'boolean' },
+    bubbleVariant: {
+      control: 'select',
+      options: ['secondary', 'warning', 'danger'],
+    },
+  },
+  render: (args: any) => (
+    <EmojiDialog.Root defaultOpen>
+      <EmojiDialog.Content
+        showClose={args.showClose}
+        showBackground={args.showBackground}
+        disableAnimations={args.disableAnimations}
+      >
+        <EmojiDialog.EmojiArea
+          memoji={{
+            gender: 'female',
+            person: 'angela',
+            skinTone: 'black',
+            posture: 'happy-1',
+          }}
+        >
+          <EmojiDialog.Bubble variant={args.bubbleVariant} icon={<RiSparklingLine />}>
+            Hello there!
+          </EmojiDialog.Bubble>
+        </EmojiDialog.EmojiArea>
+        <EmojiDialog.Header>
+          <EmojiDialog.Title>Playground Dialog</EmojiDialog.Title>
+          <EmojiDialog.Description>
+            Use the controls to customize this dialog.
+          </EmojiDialog.Description>
+        </EmojiDialog.Header>
+        <EmojiDialog.Footer>
+          <EmojiDialog.Close asChild>
+            <Button.Root variant='neutral' mode='stroke'>
+              Cancel
+            </Button.Root>
+          </EmojiDialog.Close>
+          <Button.Root>Confirm</Button.Root>
+        </EmojiDialog.Footer>
+      </EmojiDialog.Content>
+    </EmojiDialog.Root>
+  ),
+};
+
 export const Default = {
   render: () => (
     <EmojiDialog.Root>

@@ -8,6 +8,31 @@ import * as Modal from './modal';
 
 export default { title: 'Overlays/Modal', component: Modal.Root };
 
+export const Playground = {
+  args: {
+    showClose: true,
+  },
+  argTypes: {
+    showClose: { control: 'boolean' },
+  },
+  render: (args: any) => (
+    <Modal.Root defaultOpen>
+      <Modal.Content showClose={args.showClose}>
+        <Modal.Body>
+          <div className='text-label-md text-text-strong-950'>Modal Title</div>
+          <div className='text-paragraph-sm text-text-sub-600'>Modal content goes here.</div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Modal.Close asChild>
+            <Button.Root variant='neutral' mode='stroke' size='small' className='w-full'>Cancel</Button.Root>
+          </Modal.Close>
+          <Button.Root size='small' className='w-full'>Confirm</Button.Root>
+        </Modal.Footer>
+      </Modal.Content>
+    </Modal.Root>
+  ),
+};
+
 export const Demo = {
   render: () => {
     const [open, setOpen] = React.useState(false);

@@ -18,6 +18,46 @@ import * as Select from './select';
 
 export default { title: 'Form/Color Picker', component: ColorPicker.Root };
 
+export const Playground = {
+  args: {
+    defaultColor: 'hsl(228, 100%, 60%)',
+  },
+  argTypes: {
+    defaultColor: { control: 'text' },
+  },
+  render: (args: any) => {
+    const [color, setColor] = React.useState(
+      parseColor(args.defaultColor),
+    );
+
+    return (
+      <div className='flex w-[272px] flex-col gap-3 rounded-2xl bg-bg-white-0 p-4 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200'>
+        <ColorPicker.Root value={color} onChange={setColor}>
+          <ColorPicker.Area
+            colorSpace='hsl'
+            xChannel='saturation'
+            yChannel='lightness'
+          >
+            <ColorPicker.Thumb className='ring-static-white' />
+          </ColorPicker.Area>
+
+          <ColorPicker.Slider colorSpace='hsl' channel='hue'>
+            <ColorPicker.SliderTrack>
+              <ColorPicker.Thumb className='top-1/2' />
+            </ColorPicker.SliderTrack>
+          </ColorPicker.Slider>
+
+          <ColorPicker.Slider colorSpace='hsl' channel='alpha'>
+            <ColorPicker.SliderTrack>
+              <ColorPicker.Thumb className='top-1/2' />
+            </ColorPicker.SliderTrack>
+          </ColorPicker.Slider>
+        </ColorPicker.Root>
+      </div>
+    );
+  },
+};
+
 function EyeDropperButton() {
   return (
     <Button.Root

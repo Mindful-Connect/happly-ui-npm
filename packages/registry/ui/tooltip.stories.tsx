@@ -5,6 +5,48 @@ import * as Tooltip from './tooltip';
 
 export default { title: 'Feedback/Tooltip', component: Tooltip.Content };
 
+export const Playground = {
+  args: {
+    size: 'small',
+    variant: 'dark',
+    side: 'bottom',
+    content: 'Tooltip content.',
+  },
+  argTypes: {
+    size: {
+      control: 'select',
+      options: ['xsmall', 'small', 'medium'],
+    },
+    variant: {
+      control: 'select',
+      options: ['dark', 'light'],
+    },
+    side: {
+      control: 'select',
+      options: ['top', 'right', 'bottom', 'left'],
+    },
+    content: { control: 'text' },
+  },
+  render: (args: any) => (
+    <Tooltip.Provider>
+      <Tooltip.Root defaultOpen>
+        <Tooltip.Trigger asChild>
+          <Button.Root variant='neutral' mode='stroke' size='xsmall'>
+            Hover or focus
+          </Button.Root>
+        </Tooltip.Trigger>
+        <Tooltip.Content
+          size={args.size}
+          variant={args.variant}
+          side={args.side}
+        >
+          {args.content}
+        </Tooltip.Content>
+      </Tooltip.Root>
+    </Tooltip.Provider>
+  ),
+};
+
 export const Light = {
   render: () => (
     <Tooltip.Provider>
