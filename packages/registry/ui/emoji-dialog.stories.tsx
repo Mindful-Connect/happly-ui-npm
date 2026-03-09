@@ -14,7 +14,7 @@ import * as Input from './input';
 import * as Label from './label';
 
 export default {
-  title: 'UI/Emoji Dialog',
+  title: 'Overlays/Emoji Dialog',
 };
 
 export const Default = {
