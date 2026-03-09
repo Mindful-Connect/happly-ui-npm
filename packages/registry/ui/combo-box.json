@@ -5,8 +5,8 @@
   "title": "Combo Box",
   "description": "A searchable multi-select combo box with tag display for selected items.",
   "version": "1.0.0",
-  "dependencies": ["@remixicon/react"],
-  "registryDependencies": ["command", "popover", "select", "tag", "polymorphic", "happly-ui-utils"],
+  "dependencies": ["@remixicon/react", "@radix-ui/react-scroll-area"],
+  "registryDependencies": ["popover", "select", "tag", "polymorphic", "happly-ui-utils"],
   "docs": {
     "lead": "A searchable multi-select combo box. Select from a list of options with search filtering, tag display, and configurable min/max constraints.",
     "usage": "import * as ComboBox from \"@/components/ui/combo-box\"\n\n<ComboBox.Root\n  options={options}\n  value={selected}\n  onValueChange={setSelected}\n  placeholder=\"Select...\"\n  searchPlaceholder=\"Search...\"\n/>",
