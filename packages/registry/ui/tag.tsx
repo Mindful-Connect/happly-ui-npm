@@ -16,7 +16,7 @@ const TAG_DISMISS_ICON_NAME = 'TagDismissIcon';
 export const tagVariants = tv({
   slots: {
     root: [
-      'group/tag inline-flex h-6 items-center gap-2 rounded-md px-2 text-label-xs text-text-sub-600',
+      'group/tag inline-flex h-6 items-center gap-2 px-2 text-label-xs text-text-sub-600',
       'transition duration-200 ease-out',
       'ring-1 ring-inset',
     ],
@@ -61,6 +61,14 @@ export const tagVariants = tv({
         ],
       },
     },
+    rounded: {
+      true: {
+        root: 'rounded-full',
+      },
+      false: {
+        root: 'rounded-md',
+      },
+    },
     disabled: {
       true: {
         root: 'pointer-events-none bg-bg-weak-50 text-text-disabled-300 ring-transparent',
@@ -70,7 +78,8 @@ export const tagVariants = tv({
     },
   },
   defaultVariants: {
-    variant: 'stroke',
+    variant: 'gray',
+    rounded: true,
   },
 });
 
@@ -83,12 +92,12 @@ type TagProps = VariantProps<typeof tagVariants> &
 
 const TagRoot = React.forwardRef<HTMLDivElement, TagProps>(
   (
-    { asChild, children, variant, disabled, className, ...rest },
+    { asChild, children, variant, rounded, disabled, className, ...rest },
     forwardedRef,
   ) => {
     const uniqueId = React.useId();
     const Component = asChild ? Slot : 'div';
-    const { root } = tagVariants({ variant, disabled });
+    const { root } = tagVariants({ variant, rounded, disabled });
 
     const sharedProps: TagSharedProps = {
       variant,

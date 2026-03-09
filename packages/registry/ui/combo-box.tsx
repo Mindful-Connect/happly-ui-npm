@@ -284,7 +284,7 @@ const ComboBoxRoot = React.forwardRef<HTMLInputElement, ComboBoxRootProps>(
         {value.length > 0 && (
           <div className='flex flex-wrap gap-1.5'>
             {showSelectAll ? (
-              <Tag.Root variant={tagVariant} disabled={disabled} className='rounded-full'>
+              <Tag.Root variant={tagVariant} disabled={disabled}>
                 <span>{selectAllLabel}</span>
                 <Tag.DismissButton
                   onClick={handleRemoveAll}
@@ -296,7 +296,6 @@ const ComboBoxRoot = React.forwardRef<HTMLInputElement, ComboBoxRootProps>(
                   key={opt.value}
                   variant={tagVariant}
                   disabled={disabled || value.length <= min}
-                  className='rounded-full'
                 >
                   {opt.icon && (
                     typeof opt.icon === 'string' ? (

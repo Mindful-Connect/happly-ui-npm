@@ -8,12 +8,14 @@ export default { title: 'Displaying Data/Tag', component: Tag.Root };
 export const Playground = {
   args: {
     children: 'Tag',
-    variant: 'stroke',
+    variant: 'gray',
+    rounded: true,
     disabled: false,
   },
   argTypes: {
     children: { control: 'text' },
     variant: { control: 'select', options: ['stroke', 'gray'] },
+    rounded: { control: 'boolean' },
     disabled: { control: 'boolean' },
   },
   render: (args: any) => <Tag.Root {...args} />,
@@ -39,6 +41,28 @@ export const Gray = {
         <Tag.Icon as={RiPushpinFill} />
         Customer
       </Tag.Root>
+    </div>
+  ),
+};
+
+export const Rounded = {
+  render: () => (
+    <div className='flex flex-col items-center gap-6'>
+      <div className='flex gap-6'>
+        <Tag.Root rounded>Rounded (default)</Tag.Root>
+        <Tag.Root rounded>
+          <Tag.Icon as={RiPushpinFill} />
+          Rounded
+        </Tag.Root>
+      </div>
+
+      <div className='flex gap-6'>
+        <Tag.Root rounded={false}>Not Rounded</Tag.Root>
+        <Tag.Root rounded={false}>
+          <Tag.Icon as={RiPushpinFill} />
+          Not Rounded
+        </Tag.Root>
+      </div>
     </div>
   ),
 };

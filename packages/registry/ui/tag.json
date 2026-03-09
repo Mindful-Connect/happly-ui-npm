@@ -19,7 +19,7 @@
   ],
   "docs": {
     "lead": "A compact tag component for labeling and categorization with icon, image, avatar, and dismiss support.",
-    "usage": "import * as Tag from \"@/components/ui/tag\"\n\n<Tag.Root variant=\"stroke\">\n  <Tag.Icon as={RiPushpinFill} />\n  Customer\n</Tag.Root>",
+    "usage": "import * as Tag from \"@/components/ui/tag\"\n\n<Tag.Root>\n  <Tag.Icon as={RiPushpinFill} />\n  Customer\n</Tag.Root>",
     "examples": [
       {
         "title": "Stroke",
@@ -32,6 +32,12 @@
         "description": "Gray variant tags, plain and with icon.",
         "code": "<Tag.Root variant=\"gray\">Tag</Tag.Root>\n<Tag.Root variant=\"gray\">\n  <Tag.Icon as={RiPushpinFill} />\n  Customer\n</Tag.Root>",
         "stories": ["Gray"]
+      },
+      {
+        "title": "Rounded",
+        "description": "Tags with rounded (default, pill shape) and non-rounded (medium corners) variants.",
+        "code": "<Tag.Root rounded>Rounded</Tag.Root>\n<Tag.Root rounded={false}>Not Rounded</Tag.Root>",
+        "stories": ["Rounded"]
       },
       {
         "title": "Disabled",
@@ -66,8 +72,14 @@
           {
             "name": "variant",
             "type": "'stroke' | 'gray'",
-            "default": "'stroke'",
+            "default": "'gray'",
             "description": "The visual variant of the tag"
+          },
+          {
+            "name": "rounded",
+            "type": "boolean",
+            "default": "true",
+            "description": "Whether the tag uses fully rounded corners (pill shape) or medium rounded corners"
           },
           {
             "name": "disabled",
