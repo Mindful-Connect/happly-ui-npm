@@ -3,25 +3,26 @@
   "name": "label",
   "type": "registry:ui",
   "title": "Label",
-  "description": "A label component with asterisk indicator and sub-text. Uses namespace exports: Label.Root, Label.Asterisk, Label.Sub.",
-  "version": "2.0.0",
+  "description": "A label component with asterisk indicator, sub-text, and info icon. Uses namespace exports: Label.Root, Label.Asterisk, Label.Sub, Label.InfoIcon.",
+  "version": "3.0.0",
   "migration": {
-    "guide": "API changed: import as namespace `import * as Label from ...`, use `<Label.Root>`, `<Label.Asterisk>`, `<Label.Sub>`. Old named export `{ Label }` removed. New sub-components: `Label.Asterisk` (primary color), `Label.Sub` for optional text. Supports `disabled` prop on Root."
+    "guide": "v3 adds `Label.InfoIcon` — a built-in info circle SVG icon with default `size-5 text-text-disabled-300` styling. Override size/color via className. No breaking changes from v2."
   },
   "dependencies": [
     "@radix-ui/react-label"
   ],
   "registryDependencies": [
-    "happly-ui-utils"
+    "happly-ui-utils",
+    "tooltip"
   ],
   "docs": {
     "lead": "A label component with required asterisk indicator and optional sub-text for form inputs.",
-    "usage": "import * as Label from \"@/components/ui/label\"\n\n<Label.Root>\n  Field Name\n  <Label.Asterisk />\n  <Label.Sub>(Optional)</Label.Sub>\n</Label.Root>",
+    "usage": "import * as Label from \"@/components/ui/label\"\n\n<Label.Root>\n  Field Name\n  <Label.Asterisk />\n  <Label.Sub>(Optional)</Label.Sub>\n  <Label.Info>Helpful tooltip text</Label.Info>\n</Label.Root>",
     "examples": [
       {
         "title": "Demo",
         "description": "Label with asterisk, sub-text, and info icon.",
-        "code": "<Label.Root>\n  Last Name\n  <Label.Asterisk />\n  <Label.Sub>(Optional)</Label.Sub>\n</Label.Root>",
+        "code": "<Label.Root>\n  Last Name\n  <Label.Asterisk />\n  <Label.Sub>(Optional)</Label.Sub>\n  <Label.InfoIcon />\n</Label.Root>",
         "stories": ["Demo"]
       }
     ],
@@ -47,6 +48,27 @@
         "name": "Label.Sub",
         "description": "Secondary text displayed after the label.",
         "props": []
+      },
+      {
+        "name": "Label.InfoIcon",
+        "description": "Standalone info circle SVG icon with default size-5 and text-text-disabled-300 color. Override via className.",
+        "props": []
+      },
+      {
+        "name": "Label.Info",
+        "description": "Info icon wrapped in a tooltip. Pass tooltip text as children.",
+        "props": [
+          {
+            "name": "children",
+            "type": "React.ReactNode",
+            "description": "Tooltip content"
+          },
+          {
+            "name": "iconClassName",
+            "type": "string",
+            "description": "Override the default icon className"
+          }
+        ]
       }
     ]
   },
