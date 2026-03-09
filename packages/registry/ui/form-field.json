@@ -1,0 +1,41 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "form-field",
+  "type": "registry:ui",
+  "title": "Form Field",
+  "description": "A layout wrapper that provides consistent spacing between label, input, and hint elements.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": ["happly-ui-utils"],
+  "docs": {
+    "lead": "A thin layout wrapper for form fields. Provides consistent gap spacing between label, input, and hint components.",
+    "usage": "import * as FormField from \"@/components/ui/form-field\"\nimport * as Label from \"@/components/ui/label\"\nimport * as Hint from \"@/components/ui/hint\"\n\n<FormField.Root>\n  <Label.Root>Email<Label.Asterisk /></Label.Root>\n  <Input.Root>...</Input.Root>\n  <Hint.Root>This is a hint.</Hint.Root>\n</FormField.Root>",
+    "examples": [
+      {
+        "title": "Demo",
+        "description": "Form field with label, input, and hint.",
+        "code": "<FormField.Root>\n  <Label.Root>\n    Email Address\n    <Label.Asterisk />\n    <Label.Info>We'll use this to contact you.</Label.Info>\n  </Label.Root>\n  <Input.Root>\n    <Input.Wrapper>\n      <Input.Icon as={RiMailLine} />\n      <Input.Input placeholder=\"hello@example.com\" />\n    </Input.Wrapper>\n  </Input.Root>\n  <Hint.Root>\n    <Hint.Icon as={RiInformationFill} />\n    This is a hint text to help user.\n  </Hint.Root>\n</FormField.Root>",
+        "stories": ["Demo"]
+      }
+    ],
+    "api": [
+      {
+        "name": "FormField.Root",
+        "description": "Layout wrapper with flex-col gap-1 spacing. Accepts all div props.",
+        "props": [
+          {
+            "name": "className",
+            "type": "string",
+            "description": "Additional className to override or extend styling"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/form-field.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}
