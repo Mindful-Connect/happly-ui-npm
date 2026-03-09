@@ -207,14 +207,25 @@ export const HAPPLY_THEME_V4 = `/* HapplyUI Design Tokens — https://ui.happly.
   --color-neutral-alpha-10: var(--color-gray-alpha-10);
 
   /* HapplyUI Dynamic Primary Colors */
-  --color-primary-dark: var(--color-blue-800);
-  --color-primary-darker: var(--color-blue-700);
-  --color-primary-base: var(--color-blue-500);
-  --color-primary-light: var(--color-blue-100);
-  --color-primary-lighter: var(--color-blue-50);
-  --color-primary-alpha-24: var(--color-blue-alpha-24);
-  --color-primary-alpha-16: var(--color-blue-alpha-16);
-  --color-primary-alpha-10: var(--color-blue-alpha-10);
+  --color-primary-50: var(--color-purple-50);
+  --color-primary-100: var(--color-purple-100);
+  --color-primary-200: var(--color-purple-200);
+  --color-primary-300: var(--color-purple-300);
+  --color-primary-400: var(--color-purple-400);
+  --color-primary-500: var(--color-purple-500);
+  --color-primary-600: var(--color-purple-600);
+  --color-primary-700: var(--color-purple-700);
+  --color-primary-800: var(--color-purple-800);
+  --color-primary-900: var(--color-purple-900);
+  --color-primary-950: var(--color-purple-950);
+  --color-primary-dark: var(--color-purple-800);
+  --color-primary-darker: var(--color-purple-700);
+  --color-primary-base: var(--color-purple-500);
+  --color-primary-light: var(--color-purple-100);
+  --color-primary-lighter: var(--color-purple-50);
+  --color-primary-alpha-24: var(--color-purple-alpha-24);
+  --color-primary-alpha-16: var(--color-purple-alpha-16);
+  --color-primary-alpha-10: var(--color-purple-alpha-10);
 
   /* HapplyUI Social Colors */
   --color-social-apple: #000;
@@ -635,9 +646,9 @@ export const HAPPLY_THEME_V4 = `/* HapplyUI Design Tokens — https://ui.happly.
     --color-stable-light: var(--color-teal-alpha-24);
     --color-stable-lighter: var(--color-teal-alpha-16);
 
-    --color-primary-base: var(--color-blue-400);
-    --color-primary-light: var(--color-blue-alpha-16);
-    --color-primary-lighter: var(--color-blue-alpha-10);
+    --color-primary-base: var(--color-purple-400);
+    --color-primary-light: var(--color-purple-alpha-16);
+    --color-primary-lighter: var(--color-purple-alpha-10);
 
     --color-overlay-gray: #3333338f;
     --color-overlay-slate: #2b303b8f;
@@ -791,9 +802,9 @@ export const HAPPLY_THEME_V4 = `/* HapplyUI Design Tokens — https://ui.happly.
   --color-stable-light: var(--color-teal-alpha-24);
   --color-stable-lighter: var(--color-teal-alpha-16);
 
-  --color-primary-base: var(--color-blue-400);
-  --color-primary-light: var(--color-blue-alpha-16);
-  --color-primary-lighter: var(--color-blue-alpha-10);
+  --color-primary-base: var(--color-purple-400);
+  --color-primary-light: var(--color-purple-alpha-16);
+  --color-primary-lighter: var(--color-purple-alpha-10);
 
   --color-overlay-gray: #3333338f;
   --color-overlay-slate: #2b303b8f;
@@ -1138,14 +1149,25 @@ export const HAPPLY_THEME_V3 = `/* HapplyUI Design Tokens — https://ui.happly.
     --color-neutral-alpha-10: var(--color-gray-alpha-10);
 
     /* HapplyUI Dynamic Primary Colors */
-    --color-primary-dark: var(--color-blue-800);
-    --color-primary-darker: var(--color-blue-700);
-    --color-primary-base: var(--color-blue-500);
-    --color-primary-light: var(--color-blue-100);
-    --color-primary-lighter: var(--color-blue-50);
-    --color-primary-alpha-24: var(--color-blue-alpha-24);
-    --color-primary-alpha-16: var(--color-blue-alpha-16);
-    --color-primary-alpha-10: var(--color-blue-alpha-10);
+    --color-primary-50: var(--color-purple-50);
+    --color-primary-100: var(--color-purple-100);
+    --color-primary-200: var(--color-purple-200);
+    --color-primary-300: var(--color-purple-300);
+    --color-primary-400: var(--color-purple-400);
+    --color-primary-500: var(--color-purple-500);
+    --color-primary-600: var(--color-purple-600);
+    --color-primary-700: var(--color-purple-700);
+    --color-primary-800: var(--color-purple-800);
+    --color-primary-900: var(--color-purple-900);
+    --color-primary-950: var(--color-purple-950);
+    --color-primary-dark: var(--color-purple-800);
+    --color-primary-darker: var(--color-purple-700);
+    --color-primary-base: var(--color-purple-500);
+    --color-primary-light: var(--color-purple-100);
+    --color-primary-lighter: var(--color-purple-50);
+    --color-primary-alpha-24: var(--color-purple-alpha-24);
+    --color-primary-alpha-16: var(--color-purple-alpha-16);
+    --color-primary-alpha-10: var(--color-purple-alpha-10);
 
     /* HapplyUI Social Colors */
     --color-social-apple: #000;
@@ -1309,9 +1331,9 @@ export const HAPPLY_THEME_V3 = `/* HapplyUI Design Tokens — https://ui.happly.
     --color-stable-light: var(--color-teal-alpha-24);
     --color-stable-lighter: var(--color-teal-alpha-16);
 
-    --color-primary-base: var(--color-blue-400);
-    --color-primary-light: var(--color-blue-alpha-16);
-    --color-primary-lighter: var(--color-blue-alpha-10);
+    --color-primary-base: var(--color-purple-400);
+    --color-primary-light: var(--color-purple-alpha-16);
+    --color-primary-lighter: var(--color-purple-alpha-10);
 
     --color-overlay-gray: #3333338f;
     --color-overlay-slate: #2b303b8f;
