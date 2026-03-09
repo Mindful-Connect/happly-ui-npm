@@ -1,0 +1,180 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "combo-box",
+  "type": "registry:ui",
+  "title": "Combo Box",
+  "description": "A searchable multi-select combo box with tag display for selected items.",
+  "version": "1.0.0",
+  "dependencies": ["@remixicon/react"],
+  "registryDependencies": ["command", "popover", "select", "tag", "polymorphic", "happly-ui-utils"],
+  "docs": {
+    "lead": "A searchable multi-select combo box. Select from a list of options with search filtering, tag display, and configurable min/max constraints.",
+    "usage": "import * as ComboBox from \"@/components/ui/combo-box\"\n\n<ComboBox.Root\n  options={options}\n  value={selected}\n  onValueChange={setSelected}\n  placeholder=\"Select...\"\n  searchPlaceholder=\"Search...\"\n/>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Basic multi-select combo box with search.",
+        "code": "<ComboBox.Root\n  options={options}\n  value={value}\n  onValueChange={setValue}\n  placeholder=\"Select sectors...\"\n  searchPlaceholder=\"Search sectors...\"\n/>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "With Icon",
+        "description": "Combo box with a leading icon on the trigger.",
+        "code": "<ComboBox.Root\n  options={options}\n  value={value}\n  onValueChange={setValue}\n  placeholder=\"Select languages...\"\n  icon={RiGlobalLine}\n/>",
+        "stories": ["WithIcon"]
+      },
+      {
+        "title": "Max Selection",
+        "description": "Limit the number of selections allowed.",
+        "code": "<ComboBox.Root\n  options={options}\n  value={value}\n  onValueChange={setValue}\n  max={3}\n/>",
+        "stories": ["MaxSelection"]
+      },
+      {
+        "title": "Min Selection",
+        "description": "Prevent removing items below a minimum count.",
+        "code": "<ComboBox.Root\n  options={options}\n  value={value}\n  onValueChange={setValue}\n  min={1}\n/>",
+        "stories": ["MinSelection"]
+      },
+      {
+        "title": "Select All",
+        "description": "When all options are selected, show a single summary tag.",
+        "code": "<ComboBox.Root\n  options={options}\n  value={value}\n  onValueChange={setValue}\n  selectAllLabel=\"All languages\"\n/>",
+        "stories": ["SelectAll"]
+      },
+      {
+        "title": "Error State",
+        "description": "Error styling on the trigger.",
+        "code": "<ComboBox.Root\n  options={options}\n  value={value}\n  onValueChange={setValue}\n  hasError\n/>",
+        "stories": ["ErrorState"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Disabled combo box.",
+        "code": "<ComboBox.Root\n  options={options}\n  value={['technology']}\n  disabled\n/>",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "Small Size",
+        "description": "Smaller trigger size.",
+        "code": "<ComboBox.Root\n  options={options}\n  value={value}\n  onValueChange={setValue}\n  size=\"small\"\n/>",
+        "stories": ["SmallSize"]
+      }
+    ],
+    "api": [
+      {
+        "name": "ComboBox.Root",
+        "description": "The main combo box component. Combines a styled trigger button, searchable command popover, and tag display for selected items.",
+        "props": [
+          {
+            "name": "options",
+            "type": "ComboBoxOption[]",
+            "description": "Available options ({ value, label })"
+          },
+          {
+            "name": "value",
+            "type": "string[]",
+            "default": "[]",
+            "description": "Currently selected values (controlled)"
+          },
+          {
+            "name": "onValueChange",
+            "type": "(values: string[]) => void",
+            "description": "Callback when selection changes"
+          },
+          {
+            "name": "placeholder",
+            "type": "string",
+            "default": "'Select...'",
+            "description": "Trigger placeholder when nothing is selected"
+          },
+          {
+            "name": "searchPlaceholder",
+            "type": "string",
+            "default": "'Search...'",
+            "description": "Search input placeholder inside the dropdown"
+          },
+          {
+            "name": "emptyMessage",
+            "type": "string",
+            "default": "'No results found.'",
+            "description": "Message when no options match the search"
+          },
+          {
+            "name": "max",
+            "type": "number",
+            "default": "Infinity",
+            "description": "Maximum number of selections"
+          },
+          {
+            "name": "min",
+            "type": "number",
+            "default": "0",
+            "description": "Minimum selections (prevents removing below this)"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disabled state"
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Error state"
+          },
+          {
+            "name": "size",
+            "type": "'medium' | 'small' | 'xsmall'",
+            "default": "'medium'",
+            "description": "Trigger size"
+          },
+          {
+            "name": "icon",
+            "type": "React.ElementType",
+            "description": "Leading icon component on the trigger"
+          },
+          {
+            "name": "allowAdding",
+            "type": "boolean",
+            "default": "false",
+            "description": "Show add message when no results found"
+          },
+          {
+            "name": "addMessage",
+            "type": "string",
+            "default": "'Press Enter to add'",
+            "description": "Message when adding is allowed"
+          },
+          {
+            "name": "selectAllLabel",
+            "type": "string",
+            "description": "When provided and all options selected, show a single summary tag"
+          },
+          {
+            "name": "tagVariant",
+            "type": "'stroke' | 'gray'",
+            "default": "'stroke'",
+            "description": "Visual variant for selected tags"
+          },
+          {
+            "name": "popoverProps",
+            "type": "PopoverContentProps",
+            "description": "Props forwarded to the Popover.Content"
+          },
+          {
+            "name": "onOpenChange",
+            "type": "(open: boolean) => void",
+            "description": "Callback when popover open state changes"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/combo-box.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

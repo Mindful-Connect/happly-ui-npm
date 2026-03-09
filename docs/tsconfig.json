@@ -28,7 +28,7 @@
       "@/lib/alert-utils": ["../packages/registry/lib/alert-utils"],
       "@/lib/tag-utils": ["../packages/registry/lib/tag-utils"],
       "@/lib/currency-input-utils": ["../packages/registry/lib/currency-input-utils"],
-      "@/lib/searchable-combo-box-utils": ["../packages/registry/lib/searchable-combo-box-utils"],
+
       "@/lib/upload-file-input-icons": ["../packages/registry/lib/upload-file-input-icons"],
       "@/*": ["./src/*"]
     }

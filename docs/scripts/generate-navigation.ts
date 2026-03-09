@@ -107,6 +107,7 @@ function main() {
   ];
 
   const COMPOSED_INPUT_COMPONENTS = [
+    'combo-box',
     'currency-input',
     'password-input',
     'tag-input',

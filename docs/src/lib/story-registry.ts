@@ -11,6 +11,7 @@ import { default as buttonGroupMeta, Default as buttonGroup_Default, Sizes as bu
 import { default as buttonMeta, PrimaryVariant as button_PrimaryVariant, NeutralVariant as button_NeutralVariant, SuccessVariant as button_SuccessVariant, WarningVariant as button_WarningVariant, ErrorVariant as button_ErrorVariant, Sizes as button_Sizes, Disabled as button_Disabled, WithIcon as button_WithIcon, FullWidth as button_FullWidth, AsChild as button_AsChild, Composition as button_Composition } from '@/components/ui/button.stories';
 import { default as checkboxMeta, Demo as checkbox_Demo, Variants as checkbox_Variants, Disabled as checkbox_Disabled, WithLabel as checkbox_WithLabel, WithLabelExtended as checkbox_WithLabelExtended } from '@/components/ui/checkbox.stories';
 import { default as colorPickerMeta, Demo as colorPicker_Demo, PopoverDemo as colorPicker_PopoverDemo } from '@/components/ui/color-picker.stories';
+import { default as comboBoxMeta, Default as comboBox_Default, WithIcon as comboBox_WithIcon, MaxSelection as comboBox_MaxSelection, MinSelection as comboBox_MinSelection, SelectAll as comboBox_SelectAll, ErrorState as comboBox_ErrorState, Disabled as comboBox_Disabled, SmallSize as comboBox_SmallSize } from '@/components/ui/combo-box.stories';
 import { default as commandMenuMeta, Demo as commandMenu_Demo } from '@/components/ui/command-menu.stories';
 import { default as compactButtonMeta, Stroke as compactButton_Stroke, Ghost as compactButton_Ghost, White as compactButton_White, Modifiable as compactButton_Modifiable, Sizes as compactButton_Sizes, FullRadius as compactButton_FullRadius, Disabled as compactButton_Disabled, AsChild as compactButton_AsChild } from '@/components/ui/compact-button.stories';
 import { default as currencyInputMeta, Default as currencyInput_Default, Controlled as currencyInput_Controlled, Sizes as currencyInput_Sizes, ErrorState as currencyInput_ErrorState } from '@/components/ui/currency-input.stories';
@@ -38,7 +39,6 @@ import { default as progressBarMeta, Color as progressBar_Color, WithLabel as pr
 import { default as progressCircleMeta, Default as progressCircle_Default } from '@/components/ui/progress-circle.stories';
 import { default as radioCardMeta, Default as radioCard_Default, WithKeyIcons as radioCard_WithKeyIcons, WithSimpleIcons as radioCard_WithSimpleIcons, WithBadges as radioCard_WithBadges, InlineDescription as radioCard_InlineDescription, AllowDeselect as radioCard_AllowDeselect, Disabled as radioCard_Disabled, ErrorState as radioCard_ErrorState, Composed as radioCard_Composed, PrimaryVariant as radioCard_PrimaryVariant } from '@/components/ui/radio-card.stories';
 import { default as radioMeta, Demo as radio_Demo, Variants as radio_Variants, Disabled as radio_Disabled, WithLabel as radio_WithLabel, WithLabelExtended as radio_WithLabelExtended } from '@/components/ui/radio.stories';
-import { default as searchableComboBoxMeta, Default as searchableComboBox_Default } from '@/components/ui/searchable-combo-box.stories';
 import { default as selectMeta, Demo as select_Demo, WithLabelHint as select_WithLabelHint, WithIcons as select_WithIcons, Sizes as select_Sizes, WithCountryFlags as select_WithCountryFlags, WithUsers as select_WithUsers, Disabled as select_Disabled, Compact as select_Compact, CompactCountry as select_CompactCountry, CompactSizes as select_CompactSizes, InlineCountry as select_InlineCountry, InputWithInlineSelect as select_InputWithInlineSelect, WithInput as select_WithInput, WithInputSizes as select_WithInputSizes } from '@/components/ui/select.stories';
 import { default as sliderMeta, Demo as slider_Demo, Variants as slider_Variants, Range as slider_Range, WithTooltip as slider_WithTooltip } from '@/components/ui/slider.stories';
 import { default as socialsInputMeta, Default as socialsInput_Default } from '@/components/ui/socials-input.stories';
@@ -159,6 +159,19 @@ export const storyRegistry: Record<string, {
     stories: {
     'Demo': colorPicker_Demo,
     'PopoverDemo': colorPicker_PopoverDemo
+    }
+  },
+  'combo-box': {
+    meta: comboBoxMeta,
+    stories: {
+    'Default': comboBox_Default,
+    'WithIcon': comboBox_WithIcon,
+    'MaxSelection': comboBox_MaxSelection,
+    'MinSelection': comboBox_MinSelection,
+    'SelectAll': comboBox_SelectAll,
+    'ErrorState': comboBox_ErrorState,
+    'Disabled': comboBox_Disabled,
+    'SmallSize': comboBox_SmallSize
     }
   },
   'command-menu': {
@@ -407,12 +420,6 @@ export const storyRegistry: Record<string, {
     'Disabled': radio_Disabled,
     'WithLabel': radio_WithLabel,
     'WithLabelExtended': radio_WithLabelExtended
-    }
-  },
-  'searchable-combo-box': {
-    meta: searchableComboBoxMeta,
-    stories: {
-    'Default': searchableComboBox_Default
     }
   },
   'select': {

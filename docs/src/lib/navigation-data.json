@@ -162,6 +162,10 @@
             "title": "Composed Inputs",
             "links": [
               {
+                "title": "Combo Box",
+                "href": "/docs/components/combo-box"
+              },
+              {
                 "title": "Currency Input",
                 "href": "/docs/components/currency-input"
               },
@@ -240,10 +244,6 @@
       {
         "title": "Location Input",
         "href": "/docs/components/location-input"
-      },
-      {
-        "title": "Searchable Combo Box",
-        "href": "/docs/components/searchable-combo-box"
       },
       {
         "title": "Socials Input",

@@ -37,7 +37,7 @@ const nextConfig = {
       '@/lib/alert-utils': path.resolve(registryLib, 'alert-utils'),
       '@/lib/tag-utils': path.resolve(registryLib, 'tag-utils'),
       '@/lib/currency-input-utils': path.resolve(registryLib, 'currency-input-utils'),
-      '@/lib/searchable-combo-box-utils': path.resolve(registryLib, 'searchable-combo-box-utils'),
+
       '@/lib/upload-file-input-icons': path.resolve(registryLib, 'upload-file-input-icons'),
       // Fix for headlessui 1.7.19 import error: transition/transition.js -> transitions/transition.js
       [path.resolve(

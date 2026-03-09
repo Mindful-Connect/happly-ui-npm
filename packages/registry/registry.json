@@ -82,6 +82,12 @@
       "description": "A color picker with area, sliders, swatches, eye dropper, and field inputs. Uses namespace exports: ColorPicker.Root, ColorPicker.Area, ColorPicker.Slider, ColorPicker.SliderTrack, ColorPicker.Thumb, ColorPicker.Field, ColorPicker.Swatch, ColorPicker.SwatchPicker, ColorPicker.SwatchPickerItem, ColorPicker.EyeDropperButton."
     },
     {
+      "name": "combo-box",
+      "type": "registry:ui",
+      "title": "Combo Box",
+      "description": "A searchable multi-select combo box with tag display for selected items."
+    },
+    {
       "name": "command",
       "type": "registry:ui",
       "title": "Command",
@@ -278,12 +284,6 @@
       "type": "registry:lib",
       "title": "Recursive Clone Children",
       "description": "Utility to recursively clone React children and inject shared props."
-    },
-    {
-      "name": "searchable-combo-box",
-      "type": "registry:ui",
-      "title": "Searchable Combo Box",
-      "description": "A searchable multi-select combobox component with portal controls, ad-hoc creation, and tag selection."
     },
     {
       "name": "select",
