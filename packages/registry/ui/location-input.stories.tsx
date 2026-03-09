@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { LocationInput, type LocationRequest } from './location-input';
 
-export default { title: 'Location Input', component: LocationInput };
+export default { title: 'Form/Composed Inputs/Location Input', component: LocationInput };
 
 export const Default = {
   render: () => {

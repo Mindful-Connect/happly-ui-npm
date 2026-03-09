@@ -109,8 +109,11 @@ function main() {
   const COMPOSED_INPUT_COMPONENTS = [
     'combo-box',
     'currency-input',
+    'location-input',
     'password-input',
+    'socials-input',
     'tag-input',
+    'upload-file-input',
   ];
 
   const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS];

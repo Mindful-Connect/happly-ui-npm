@@ -13,7 +13,7 @@ import {
 import * as KeyIcon from './key-icon';
 
 export default {
-  title: 'Support Components/Key Icon',
+  title: 'Displaying Data/Key Icon',
 };
 
 export const Stroke = {
