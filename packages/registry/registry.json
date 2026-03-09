@@ -274,12 +274,6 @@
       "description": "A composable radio input styled as a card. Compose with Title, Description, Content, Indicator, KeyIcon, and Badge sub-components."
     },
     {
-      "name": "radio-group",
-      "type": "registry:ui",
-      "title": "Radio Group",
-      "description": "A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time."
-    },
-    {
       "name": "recursive-clone-children",
       "type": "registry:lib",
       "title": "Recursive Clone Children",

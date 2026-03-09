@@ -73,6 +73,10 @@
             "href": "/docs/components/kbd"
           },
           {
+            "title": "Key Icon",
+            "href": "/docs/components/key-icon"
+          },
+          {
             "title": "Level Bar",
             "href": "/docs/components/level-bar"
           },
@@ -238,10 +242,6 @@
         "href": "/docs/components/location-input"
       },
       {
-        "title": "Radio Group",
-        "href": "/docs/components/radio-group"
-      },
-      {
         "title": "Searchable Combo Box",
         "href": "/docs/components/searchable-combo-box"
       },
@@ -267,10 +267,6 @@
           {
             "title": "Dialog",
             "href": "/docs/components/dialog"
-          },
-          {
-            "title": "Key Icon",
-            "href": "/docs/components/key-icon"
           }
         ],
         "collapsed": true

@@ -63,6 +63,7 @@ function main() {
     'banner',
     'divider',
     'kbd',
+    'key-icon',
     'level-bar',
     'progress-bar',
     'progress-circle',
@@ -115,7 +116,6 @@ function main() {
     'command',
     'custom-input-wrapper',
     'dialog',
-    'key-icon',
   ];
 
   const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS, ...SUPPORT_COMPONENTS];
