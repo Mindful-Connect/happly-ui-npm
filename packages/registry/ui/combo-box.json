@@ -3,67 +3,76 @@
   "name": "combo-box",
   "type": "registry:ui",
   "title": "Combo Box",
-  "description": "A searchable multi-select combo box with tag display for selected items.",
-  "version": "1.0.0",
+  "description": "A searchable multi-select combo box with inline search input and tag display for selected items.",
+  "version": "2.0.0",
+  "migration": {
+    "guide": "v2 replaces the Select-style button trigger with an inline search input. Breaking changes: (1) Removed `icon` prop — the search icon is now built-in. (2) Removed `searchPlaceholder` — use `placeholder` instead. (3) Removed `allowAdding`/`addMessage` props. (4) Removed `popoverProps` — styling is now built-in. (5) Removed built-in `label`/`required`/`hint` — compose with Label and Hint components externally. (6) Default `tagVariant` changed from 'stroke' to 'gray'. (7) `onValueChange` signature changed to `(values, selectedOptions)` — now passes full option objects as second arg. (8) Added `name` and `defaultValue` props. (9) Ref type changed from HTMLButtonElement to HTMLInputElement. (10) Registry dependency changed from `select` to `input`. (11) Tags render as pills (rounded-full) by default."
+  },
   "dependencies": ["@remixicon/react", "@radix-ui/react-scroll-area"],
-  "registryDependencies": ["popover", "select", "tag", "polymorphic", "happly-ui-utils"],
+  "registryDependencies": ["popover", "input", "tag", "happly-ui-utils"],
   "docs": {
-    "lead": "A searchable multi-select combo box. Select from a list of options with search filtering, tag display, and configurable min/max constraints.",
-    "usage": "import * as ComboBox from \"@/components/ui/combo-box\"\n\n<ComboBox.Root\n  options={options}\n  value={selected}\n  onValueChange={setSelected}\n  placeholder=\"Select...\"\n  searchPlaceholder=\"Search...\"\n/>",
+    "lead": "A searchable multi-select combo box with inline search. Select from a list of options with search filtering and tag display for selected items. Compose with Label and Hint components for form fields.",
+    "usage": "import * as ComboBox from \"@/components/ui/combo-box\"\nimport * as Label from \"@/components/ui/label\"\n\n<Label.Root>Sectors</Label.Root>\n<ComboBox.Root\n  options={options}\n  value={selected}\n  onValueChange={setSelected}\n  name=\"sectors\"\n/>",
     "examples": [
       {
         "title": "Default",
-        "description": "Basic multi-select combo box with search.",
-        "code": "<ComboBox.Root\n  options={options}\n  value={value}\n  onValueChange={setValue}\n  placeholder=\"Select sectors...\"\n  searchPlaceholder=\"Search sectors...\"\n/>",
+        "description": "Basic multi-select combo box with label.",
+        "code": "<Label.Root>\n  Searchable Combo Box\n  <Label.Asterisk />\n  <Label.Sub>(Optional)</Label.Sub>\n</Label.Root>\n<ComboBox.Root\n  options={options}\n  value={value}\n  onValueChange={setValue}\n/>",
         "stories": ["Default"]
       },
       {
-        "title": "With Icon",
-        "description": "Combo box with a leading icon on the trigger.",
-        "code": "<ComboBox.Root\n  options={options}\n  value={value}\n  onValueChange={setValue}\n  placeholder=\"Select languages...\"\n  icon={RiGlobalLine}\n/>",
-        "stories": ["WithIcon"]
+        "title": "With Pre-selected Values",
+        "description": "Combo box with initial selections, useful for editing saved forms.",
+        "code": "<Label.Root>Tags</Label.Root>\n<ComboBox.Root\n  options={options}\n  value={['ai', 'product', 'saas']}\n  onValueChange={setValue}\n/>",
+        "stories": ["WithPreselectedValues"]
       },
       {
-        "title": "Max Selection",
-        "description": "Limit the number of selections allowed.",
-        "code": "<ComboBox.Root\n  options={options}\n  value={value}\n  onValueChange={setValue}\n  max={3}\n/>",
-        "stories": ["MaxSelection"]
+        "title": "Uncontrolled",
+        "description": "Use defaultValue for uncontrolled mode in forms.",
+        "code": "<Label.Root>Sectors</Label.Root>\n<ComboBox.Root\n  options={options}\n  defaultValue={['grants', 'loans']}\n  name=\"sectors\"\n/>",
+        "stories": ["Uncontrolled"]
       },
       {
-        "title": "Min Selection",
-        "description": "Prevent removing items below a minimum count.",
-        "code": "<ComboBox.Root\n  options={options}\n  value={value}\n  onValueChange={setValue}\n  min={1}\n/>",
-        "stories": ["MinSelection"]
+        "title": "Form Submission",
+        "description": "Use the name prop to include selected values in form submissions via hidden inputs.",
+        "code": "<ComboBox.Root\n  options={options}\n  value={value}\n  onValueChange={setValue}\n  name=\"tags\"\n/>",
+        "stories": ["FormSubmission"]
       },
       {
-        "title": "Select All",
-        "description": "When all options are selected, show a single summary tag.",
-        "code": "<ComboBox.Root\n  options={options}\n  value={value}\n  onValueChange={setValue}\n  selectAllLabel=\"All languages\"\n/>",
-        "stories": ["SelectAll"]
+        "title": "Sizes",
+        "description": "All three input sizes: medium (default), small, and xsmall.",
+        "code": "<ComboBox.Root options={options} value={value} onValueChange={setValue} />\n<ComboBox.Root options={options} value={value} onValueChange={setValue} size=\"small\" />\n<ComboBox.Root options={options} value={value} onValueChange={setValue} size=\"xsmall\" />",
+        "stories": ["Sizes"]
       },
       {
-        "title": "Error State",
-        "description": "Error styling on the trigger.",
-        "code": "<ComboBox.Root\n  options={options}\n  value={value}\n  onValueChange={setValue}\n  hasError\n/>",
-        "stories": ["ErrorState"]
+        "title": "Selection Constraints",
+        "description": "Limit selections with max, min, or both combined.",
+        "code": "<ComboBox.Root options={options} value={value} onValueChange={setValue} max={3} />\n<ComboBox.Root options={options} value={value} onValueChange={setValue} min={1} />\n<ComboBox.Root options={options} value={value} onValueChange={setValue} min={1} max={3} />",
+        "stories": ["SelectionConstraints"]
       },
       {
-        "title": "Disabled",
-        "description": "Disabled combo box.",
-        "code": "<ComboBox.Root\n  options={options}\n  value={['technology']}\n  disabled\n/>",
-        "stories": ["Disabled"]
+        "title": "Tag Variants",
+        "description": "Gray (default), stroke tag style, and selectAllLabel summary tag.",
+        "code": "<ComboBox.Root options={options} value={value} onValueChange={setValue} tagVariant=\"gray\" />\n<ComboBox.Root options={options} value={value} onValueChange={setValue} tagVariant=\"stroke\" />\n<ComboBox.Root options={options} value={allValues} onValueChange={setValue} selectAllLabel=\"All tags\" />",
+        "stories": ["TagVariants"]
       },
       {
-        "title": "Small Size",
-        "description": "Smaller trigger size.",
-        "code": "<ComboBox.Root\n  options={options}\n  value={value}\n  onValueChange={setValue}\n  size=\"small\"\n/>",
-        "stories": ["SmallSize"]
+        "title": "States",
+        "description": "Error and disabled states.",
+        "code": "<ComboBox.Root options={options} value={value} onValueChange={setValue} hasError />\n<ComboBox.Root options={options} value={['grants']} disabled />",
+        "stories": ["States"]
+      },
+      {
+        "title": "Customization",
+        "description": "Custom icon, placeholder text, and empty message.",
+        "code": "<ComboBox.Root options={options} value={value} onValueChange={setValue} icon={RiMapPinLine} placeholder=\"Search cities...\" />\n<ComboBox.Root options={options} value={value} onValueChange={setValue} placeholder=\"Type to filter skills...\" />\n<ComboBox.Root options={options} value={value} onValueChange={setValue} emptyMessage=\"No matching tags.\" />",
+        "stories": ["Customization"]
       }
     ],
     "api": [
       {
         "name": "ComboBox.Root",
-        "description": "The main combo box component. Combines a styled trigger button, searchable command popover, and tag display for selected items.",
+        "description": "The main combo box component. A base component that combines a search input, dropdown list, and tag display for selected items. Compose with Label and Hint components externally for form fields.",
         "props": [
           {
             "name": "options",
@@ -73,25 +82,35 @@
           {
             "name": "value",
             "type": "string[]",
-            "default": "[]",
             "description": "Currently selected values (controlled)"
           },
           {
+            "name": "defaultValue",
+            "type": "string[]",
+            "default": "[]",
+            "description": "Default selected values (uncontrolled)"
+          },
+          {
             "name": "onValueChange",
-            "type": "(values: string[]) => void",
-            "description": "Callback when selection changes"
+            "type": "(values: string[], selectedOptions: ComboBoxOption[]) => void",
+            "description": "Callback when selection changes — receives both raw values and full option objects"
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "description": "Form field name — renders hidden inputs for form submission"
+          },
+          {
+            "name": "icon",
+            "type": "React.ElementType",
+            "default": "RiSearchLine",
+            "description": "Leading icon component"
           },
           {
             "name": "placeholder",
             "type": "string",
-            "default": "'Select...'",
-            "description": "Trigger placeholder when nothing is selected"
-          },
-          {
-            "name": "searchPlaceholder",
-            "type": "string",
-            "default": "'Search...'",
-            "description": "Search input placeholder inside the dropdown"
+            "default": "'Choose or search...'",
+            "description": "Search input placeholder"
           },
           {
             "name": "emptyMessage",
@@ -127,24 +146,7 @@
             "name": "size",
             "type": "'medium' | 'small' | 'xsmall'",
             "default": "'medium'",
-            "description": "Trigger size"
-          },
-          {
-            "name": "icon",
-            "type": "React.ElementType",
-            "description": "Leading icon component on the trigger"
-          },
-          {
-            "name": "allowAdding",
-            "type": "boolean",
-            "default": "false",
-            "description": "Show add message when no results found"
-          },
-          {
-            "name": "addMessage",
-            "type": "string",
-            "default": "'Press Enter to add'",
-            "description": "Message when adding is allowed"
+            "description": "Input size"
           },
           {
             "name": "selectAllLabel",
@@ -154,18 +156,18 @@
           {
             "name": "tagVariant",
             "type": "'stroke' | 'gray'",
-            "default": "'stroke'",
+            "default": "'gray'",
             "description": "Visual variant for selected tags"
-          },
-          {
-            "name": "popoverProps",
-            "type": "PopoverContentProps",
-            "description": "Props forwarded to the Popover.Content"
           },
           {
             "name": "onOpenChange",
             "type": "(open: boolean) => void",
-            "description": "Callback when popover open state changes"
+            "description": "Callback when dropdown open state changes"
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "description": "Additional className for the outer wrapper"
           }
         ]
       }
