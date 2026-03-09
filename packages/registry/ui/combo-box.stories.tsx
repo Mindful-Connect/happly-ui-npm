@@ -3,7 +3,9 @@
 import * as React from 'react';
 import { RiMapPinLine } from '@remixicon/react';
 
+import { Button } from './button';
 import * as ComboBox from './combo-box';
+import * as FormField from './form-field';
 import * as Label from './label';
 
 export default { title: 'Form/Composed Inputs/Combo Box' };
@@ -32,7 +34,7 @@ export const Default = {
 
     return (
       <div className='w-[300px]'>
-        <div className='flex flex-col gap-1'>
+        <FormField.Root>
           <Label.Root>
             Searchable Combo Box
             <Label.Asterisk />
@@ -43,7 +45,7 @@ export const Default = {
             value={value}
             onValueChange={setValue}
           />
-        </div>
+        </FormField.Root>
       </div>
     );
   },
@@ -59,14 +61,14 @@ export const WithPreselectedValues = {
 
     return (
       <div className='w-[300px]'>
-        <div className='flex flex-col gap-1'>
+        <FormField.Root>
           <Label.Root>Tags</Label.Root>
           <ComboBox.Root
             options={TAG_OPTIONS}
             value={value}
             onValueChange={setValue}
           />
-        </div>
+        </FormField.Root>
       </div>
     );
   },
@@ -75,14 +77,14 @@ export const WithPreselectedValues = {
 export const Uncontrolled = {
   render: () => (
     <div className='w-[300px]'>
-      <div className='flex flex-col gap-1'>
+      <FormField.Root>
         <Label.Root>Sectors</Label.Root>
         <ComboBox.Root
           options={SECTOR_OPTIONS}
           defaultValue={['grants', 'loans']}
           name='sectors'
         />
-      </div>
+      </FormField.Root>
     </div>
   ),
 };
@@ -102,7 +104,7 @@ export const FormSubmission = {
           );
         }}
       >
-        <div className='flex flex-col gap-1'>
+        <FormField.Root>
           <Label.Root>
             Tags
             <Label.Asterisk />
@@ -113,13 +115,10 @@ export const FormSubmission = {
             onValueChange={setValue}
             name='tags'
           />
-        </div>
-        <button
-          type='submit'
-          className='mt-4 rounded-lg bg-primary-base px-4 py-2 text-label-sm text-white'
-        >
+        </FormField.Root>
+        <Button type='submit' className='mt-4 w-full'>
           Submit
-        </button>
+        </Button>
       </form>
     );
   },
@@ -134,17 +133,17 @@ export const Sizes = {
     return (
       <div className='flex flex-col gap-6'>
         <div className='w-[300px]'>
-          <div className='flex flex-col gap-1'>
+          <FormField.Root>
             <Label.Root>Medium (default)</Label.Root>
             <ComboBox.Root
               options={TAG_OPTIONS}
               value={medium}
               onValueChange={setMedium}
             />
-          </div>
+          </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <div className='flex flex-col gap-1'>
+          <FormField.Root>
             <Label.Root>Small</Label.Root>
             <ComboBox.Root
               options={TAG_OPTIONS}
@@ -152,10 +151,10 @@ export const Sizes = {
               onValueChange={setSmall}
               size='small'
             />
-          </div>
+          </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <div className='flex flex-col gap-1'>
+          <FormField.Root>
             <Label.Root>XSmall</Label.Root>
             <ComboBox.Root
               options={TAG_OPTIONS}
@@ -163,7 +162,7 @@ export const Sizes = {
               onValueChange={setXsmall}
               size='xsmall'
             />
-          </div>
+          </FormField.Root>
         </div>
       </div>
     );
@@ -185,7 +184,7 @@ export const SelectionConstraints = {
     return (
       <div className='flex flex-col gap-6'>
         <div className='w-[300px]'>
-          <div className='flex flex-col gap-1'>
+          <FormField.Root>
             <Label.Root>
               Max 3
               <Label.Sub>(select up to 3)</Label.Sub>
@@ -196,10 +195,10 @@ export const SelectionConstraints = {
               onValueChange={setMaxVal}
               max={3}
             />
-          </div>
+          </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <div className='flex flex-col gap-1'>
+          <FormField.Root>
             <Label.Root>
               Min 1
               <Label.Asterisk />
@@ -210,10 +209,10 @@ export const SelectionConstraints = {
               onValueChange={setMinVal}
               min={1}
             />
-          </div>
+          </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <div className='flex flex-col gap-1'>
+          <FormField.Root>
             <Label.Root>
               Min 1, Max 3
               <Label.Sub>(1–3 required)</Label.Sub>
@@ -225,7 +224,7 @@ export const SelectionConstraints = {
               min={1}
               max={3}
             />
-          </div>
+          </FormField.Root>
         </div>
       </div>
     );
@@ -243,7 +242,7 @@ export const TagVariants = {
     return (
       <div className='flex flex-col gap-6'>
         <div className='w-[300px]'>
-          <div className='flex flex-col gap-1'>
+          <FormField.Root>
             <Label.Root>Gray (default)</Label.Root>
             <ComboBox.Root
               options={TAG_OPTIONS}
@@ -251,10 +250,10 @@ export const TagVariants = {
               onValueChange={setGray}
               tagVariant='gray'
             />
-          </div>
+          </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <div className='flex flex-col gap-1'>
+          <FormField.Root>
             <Label.Root>Stroke</Label.Root>
             <ComboBox.Root
               options={TAG_OPTIONS}
@@ -262,10 +261,10 @@ export const TagVariants = {
               onValueChange={setStroke}
               tagVariant='stroke'
             />
-          </div>
+          </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <div className='flex flex-col gap-1'>
+          <FormField.Root>
             <Label.Root>Select All Label</Label.Root>
             <ComboBox.Root
               options={TAG_OPTIONS}
@@ -273,7 +272,7 @@ export const TagVariants = {
               onValueChange={setAll}
               selectAllLabel='All tags'
             />
-          </div>
+          </FormField.Root>
         </div>
       </div>
     );
@@ -287,7 +286,7 @@ export const States = {
     return (
       <div className='flex flex-col gap-6'>
         <div className='w-[300px]'>
-          <div className='flex flex-col gap-1'>
+          <FormField.Root>
             <Label.Root>
               Error
               <Label.Asterisk />
@@ -298,10 +297,10 @@ export const States = {
               onValueChange={setErrorVal}
               hasError
             />
-          </div>
+          </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <div className='flex flex-col gap-1'>
+          <FormField.Root>
             <Label.Root disabled>Disabled</Label.Root>
             <ComboBox.Root
               options={SECTOR_OPTIONS}
@@ -309,7 +308,7 @@ export const States = {
               onValueChange={() => {}}
               disabled
             />
-          </div>
+          </FormField.Root>
         </div>
       </div>
     );
@@ -325,7 +324,7 @@ export const Customization = {
     return (
       <div className='flex flex-col gap-6'>
         <div className='w-[300px]'>
-          <div className='flex flex-col gap-1'>
+          <FormField.Root>
             <Label.Root>Custom Icon</Label.Root>
             <ComboBox.Root
               options={[
@@ -340,10 +339,10 @@ export const Customization = {
               icon={RiMapPinLine}
               placeholder='Search cities...'
             />
-          </div>
+          </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <div className='flex flex-col gap-1'>
+          <FormField.Root>
             <Label.Root>Custom Placeholder</Label.Root>
             <ComboBox.Root
               options={[
@@ -357,10 +356,10 @@ export const Customization = {
               onValueChange={setSkills}
               placeholder='Type to filter skills...'
             />
-          </div>
+          </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <div className='flex flex-col gap-1'>
+          <FormField.Root>
             <Label.Root>Custom Empty Message</Label.Root>
             <ComboBox.Root
               options={TAG_OPTIONS}
@@ -368,7 +367,7 @@ export const Customization = {
               onValueChange={setTags}
               emptyMessage='No matching tags. Try a different search.'
             />
-          </div>
+          </FormField.Root>
         </div>
       </div>
     );

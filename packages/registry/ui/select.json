@@ -32,7 +32,7 @@
       {
         "title": "With Label and Hint",
         "description": "Select with a label and hint text.",
-        "code": "<Label.Root htmlFor=\"fruit\">Fruit</Label.Root>\n<Select.Root>\n  <Select.Trigger id=\"fruit\">\n    <Select.Value placeholder=\"Select...\" />\n  </Select.Trigger>\n  <Select.Content>\n    <Select.Item value=\"apple\">Apple</Select.Item>\n  </Select.Content>\n</Select.Root>\n<Hint.Root>\n  <Hint.Icon as={RiInformationFill} />\n  This is a hint text.\n</Hint.Root>",
+        "code": "<FormField.Root>\n  <Label.Root htmlFor=\"fruit\">Fruit</Label.Root>\n  <Select.Root>\n    <Select.Trigger id=\"fruit\">\n      <Select.Value placeholder=\"Select...\" />\n    </Select.Trigger>\n    <Select.Content>\n      <Select.Item value=\"apple\">Apple</Select.Item>\n    </Select.Content>\n  </Select.Root>\n  <Hint.Root>\n    <Hint.Icon as={RiInformationFill} />\n    This is a hint text.\n  </Hint.Root>\n</FormField.Root>",
         "stories": ["WithLabelHint"]
       },
       {

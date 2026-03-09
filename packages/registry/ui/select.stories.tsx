@@ -14,6 +14,7 @@ import {
 } from '@remixicon/react';
 
 import * as Avatar from './avatar';
+import * as FormField from './form-field';
 import * as Hint from './hint';
 import * as Input from './input';
 import * as Label from './label';
@@ -99,7 +100,7 @@ export const Demo = {
 export const WithLabelHint = {
   render: () => (
     <div className='w-full min-w-[300px] max-w-[300px]'>
-      <div className='flex flex-col gap-1'>
+      <FormField.Root>
         <Label.Root htmlFor='fruit'>Fruit</Label.Root>
         <Select.Root>
           <Select.Trigger id='fruit'>
@@ -117,7 +118,7 @@ export const WithLabelHint = {
           <Hint.Icon as={RiInformationFill} />
           This is a hint text to help user.
         </Hint.Root>
-      </div>
+      </FormField.Root>
     </div>
   ),
 };

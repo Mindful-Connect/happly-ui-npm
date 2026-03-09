@@ -48,7 +48,7 @@
       {
         "title": "Label and Hint",
         "description": "Input composed with Label and Hint components.",
-        "code": "<Label.Root htmlFor=\"email\">Email Address</Label.Root>\n<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiMailLine} />\n    <Input.Input id=\"email\" type=\"email\" placeholder=\"hello@example.com\" />\n  </Input.Wrapper>\n</Input.Root>\n<Hint.Root>\n  <Hint.Icon as={RiInformationFill} />\n  This is a hint text.\n</Hint.Root>",
+        "code": "<FormField.Root>\n  <Label.Root htmlFor=\"email\">Email Address</Label.Root>\n  <Input.Root>\n    <Input.Wrapper>\n      <Input.Icon as={RiMailLine} />\n      <Input.Input id=\"email\" type=\"email\" placeholder=\"hello@example.com\" />\n    </Input.Wrapper>\n  </Input.Root>\n  <Hint.Root>\n    <Hint.Icon as={RiInformationFill} />\n    This is a hint text.\n  </Hint.Root>\n</FormField.Root>",
         "stories": ["LabelAndHint"]
       },
       {

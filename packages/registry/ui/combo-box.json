@@ -11,8 +11,8 @@
   "dependencies": ["@remixicon/react", "@radix-ui/react-scroll-area"],
   "registryDependencies": ["popover", "input", "tag", "happly-ui-utils"],
   "docs": {
-    "lead": "A searchable multi-select combo box with inline search. Select from a list of options with search filtering and tag display for selected items. Compose with Label and Hint components for form fields.",
-    "usage": "import * as ComboBox from \"@/components/ui/combo-box\"\nimport * as Label from \"@/components/ui/label\"\n\n<Label.Root>Sectors</Label.Root>\n<ComboBox.Root\n  options={options}\n  value={selected}\n  onValueChange={setSelected}\n  name=\"sectors\"\n/>",
+    "lead": "A searchable multi-select combo box with inline search. Select from a list of options with search filtering and tag display for selected items. Compose with FormField, Label, and Hint components for form fields.",
+    "usage": "import * as ComboBox from \"@/components/ui/combo-box\"\nimport * as FormField from \"@/components/ui/form-field\"\nimport * as Label from \"@/components/ui/label\"\n\n<FormField.Root>\n  <Label.Root>Sectors</Label.Root>\n  <ComboBox.Root\n    options={options}\n    value={selected}\n    onValueChange={setSelected}\n    name=\"sectors\"\n  />\n</FormField.Root>",
     "examples": [
       {
         "title": "Default",
