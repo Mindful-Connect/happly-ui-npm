@@ -9,7 +9,6 @@ import { default as badgeMeta, BadgeFilled as badge_BadgeFilled, BadgeLight as b
 import { default as bannerMeta, Error as banner_Error, Warning as banner_Warning, Success as banner_Success, Information as banner_Information, Feature as banner_Feature, Primary as banner_Primary } from '@/components/ui/banner.stories';
 import { default as buttonGroupMeta, Default as buttonGroup_Default, Sizes as buttonGroup_Sizes } from '@/components/ui/button-group.stories';
 import { default as buttonMeta, PrimaryVariant as button_PrimaryVariant, NeutralVariant as button_NeutralVariant, SuccessVariant as button_SuccessVariant, WarningVariant as button_WarningVariant, ErrorVariant as button_ErrorVariant, Sizes as button_Sizes, Disabled as button_Disabled, WithIcon as button_WithIcon, FullWidth as button_FullWidth, AsChild as button_AsChild, Composition as button_Composition } from '@/components/ui/button.stories';
-import { default as calendarInputMeta, BasicUsage as calendarInput_BasicUsage } from '@/components/ui/calendar-input.stories';
 import { default as checkboxMeta, Demo as checkbox_Demo, Variants as checkbox_Variants, Disabled as checkbox_Disabled, WithLabel as checkbox_WithLabel, WithLabelExtended as checkbox_WithLabelExtended } from '@/components/ui/checkbox.stories';
 import { default as circularProgressMeta, Default as circularProgress_Default, WithColorVariants as circularProgress_WithColorVariants } from '@/components/ui/circular-progress.stories';
 import { default as colorPickerMeta, Demo as colorPicker_Demo, PopoverDemo as colorPicker_PopoverDemo } from '@/components/ui/color-picker.stories';
@@ -140,12 +139,6 @@ export const storyRegistry: Record<string, {
     'FullWidth': button_FullWidth,
     'AsChild': button_AsChild,
     'Composition': button_Composition
-    }
-  },
-  'calendar-input': {
-    meta: calendarInputMeta,
-    stories: {
-    'BasicUsage': calendarInput_BasicUsage
     }
   },
   'checkbox': {

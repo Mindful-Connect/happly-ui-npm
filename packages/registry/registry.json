@@ -64,12 +64,6 @@
       "description": "A compound button group component with sizes, icons, and toggle group support via asChild. Uses namespace exports: ButtonGroup.Root, ButtonGroup.Item, ButtonGroup.Icon."
     },
     {
-      "name": "calendar-input",
-      "type": "registry:ui",
-      "title": "Calendar Input",
-      "description": "A date input component with calendar popover."
-    },
-    {
       "name": "card",
       "type": "registry:ui",
       "title": "Card",
