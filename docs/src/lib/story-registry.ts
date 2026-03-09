@@ -21,6 +21,7 @@ import { default as dividerMeta, Line as divider_Line, LineSpacing as divider_Li
 import { default as dotStepperMeta, Demo as dotStepper_Demo, WithRadixTabs as dotStepper_WithRadixTabs } from '@/components/ui/dot-stepper.stories';
 import { default as drawerMeta, Demo as drawer_Demo, Basic as drawer_Basic } from '@/components/ui/drawer.stories';
 import { default as dropdownMeta, Demo as dropdown_Demo, SubMenu as dropdown_SubMenu } from '@/components/ui/dropdown.stories';
+import { default as emojiDialogMeta, Default as emojiDialog_Default, DeleteConfirmation as emojiDialog_DeleteConfirmation, UnsavedChanges as emojiDialog_UnsavedChanges, SuccessConfirmation as emojiDialog_SuccessConfirmation, WithFormContent as emojiDialog_WithFormContent, WithFloatingMemojis as emojiDialog_WithFloatingMemojis, StaticNoAnimations as emojiDialog_StaticNoAnimations, CustomEmojiArea as emojiDialog_CustomEmojiArea } from '@/components/ui/emoji-dialog.stories';
 import { default as fancyButtonMeta, Neutral as fancyButton_Neutral, Primary as fancyButton_Primary, Error as fancyButton_Error, Basic as fancyButton_Basic, WithIcon as fancyButton_WithIcon, Sizes as fancyButton_Sizes, Disabled as fancyButton_Disabled, AsChild as fancyButton_AsChild } from '@/components/ui/fancy-button.stories';
 import { default as hintMeta, Demo as hint_Demo, Disabled as hint_Disabled, HasError as hint_HasError } from '@/components/ui/hint.stories';
 import { default as inputMeta, WithIcon as input_WithIcon, Sizes as input_Sizes, WithAffix as input_WithAffix, WithInlineAffix as input_WithInlineAffix, LabelAndHint as input_LabelAndHint, WithKbd as input_WithKbd, Password as input_Password, PasswordWithLevel as input_PasswordWithLevel, Disabled as input_Disabled, ErrorState as input_ErrorState, WithButton as input_WithButton, WithTags as input_WithTags, DateFieldStory as input_DateFieldStory, PaymentInput as input_PaymentInput, WithSelect as input_WithSelect, WithInlineSelect as input_WithInlineSelect, CounterInput as input_CounterInput, Composition as input_Composition } from '@/components/ui/input.stories';
@@ -250,6 +251,19 @@ export const storyRegistry: Record<string, {
     stories: {
     'Demo': dropdown_Demo,
     'SubMenu': dropdown_SubMenu
+    }
+  },
+  'emoji-dialog': {
+    meta: emojiDialogMeta,
+    stories: {
+    'Default': emojiDialog_Default,
+    'DeleteConfirmation': emojiDialog_DeleteConfirmation,
+    'UnsavedChanges': emojiDialog_UnsavedChanges,
+    'SuccessConfirmation': emojiDialog_SuccessConfirmation,
+    'WithFormContent': emojiDialog_WithFormContent,
+    'WithFloatingMemojis': emojiDialog_WithFloatingMemojis,
+    'StaticNoAnimations': emojiDialog_StaticNoAnimations,
+    'CustomEmojiArea': emojiDialog_CustomEmojiArea
     }
   },
   'fancy-button': {

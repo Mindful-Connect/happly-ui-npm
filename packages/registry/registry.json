@@ -136,6 +136,12 @@
       "description": "A dropdown menu component built on Radix UI with items, groups, labels, sub-menus, and directional animations. Uses namespace exports: Dropdown.Root, Dropdown.Trigger, Dropdown.Content, Dropdown.Item, Dropdown.ItemIcon, Dropdown.Group, Dropdown.Label, Dropdown.MenuSub, Dropdown.MenuSubTrigger, Dropdown.MenuSubContent."
     },
     {
+      "name": "emoji-dialog",
+      "type": "registry:ui",
+      "title": "Emoji Dialog",
+      "description": "An animated modal dialog with memoji avatars, glassmorphism circle, speech bubbles, and decorative grid background. Uses namespace exports: EmojiDialog.Root, EmojiDialog.Content, EmojiDialog.EmojiArea, EmojiDialog.Bubble, EmojiDialog.Header, EmojiDialog.Title, EmojiDialog.Description, EmojiDialog.Footer."
+    },
+    {
       "name": "fancy-button",
       "type": "registry:ui",
       "title": "Fancy Button",
@@ -194,6 +200,12 @@
       "type": "registry:ui",
       "title": "Location Input",
       "description": "A Google Maps address autocomplete input."
+    },
+    {
+      "name": "memoji",
+      "type": "registry:lib",
+      "title": "Memoji",
+      "description": "Memoji types, constants, and URL helper for rendering Happly memoji avatars."
     },
     {
       "name": "modal",
