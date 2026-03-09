@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import { Popover, Transition } from '@headlessui/react';
 import { cn } from '@/lib/happly-ui-utils';
-import { Input } from '@/components/ui/input';
+import * as Input from '@/components/ui/input';
 import {
   RiCalendarTodoLine,
   RiCloseLine,
@@ -603,19 +603,68 @@ export default function SocialsInputsSelectableDS({
               if (key === 'business_socials_link') return null;
               return (
                 <div className='relative flex flex-col gap-y-1.5' key={key}>
-                  <Input
-                    placeholder={getInputPlaceholder(key)}
-                    disabled={readOnly}
-                    tabIndex={1}
-                    autoFocus={value ? false : true}
-                    spellCheck={false}
-                    value={value || ''}
-                    hasError={!!errors[`${name}.${key}`]}
-                    rightAffixClassName='border-none p-0'
-                    rightAffix={
+                  <Input.Root hasError={!!errors[`${name}.${key}`]}>
+                    <Input.Wrapper>
+                      {key === 'linkedin' ? (
+                        <Input.Icon as={RiLinkedinFill} />
+                      ) : key === 'instagram' ? (
+                        <Input.Icon as={RiInstagramLine} />
+                      ) : key === 'facebook' ? (
+                        <Input.Icon as={RiFacebookCircleFill} />
+                      ) : key === 'youtube' ? (
+                        <Input.Icon as={RiYoutubeFill} />
+                      ) : key === 'x-twitter' ? (
+                        <Input.Icon as={RiTwitterXLine} />
+                      ) : key === 'tiktok' ? (
+                        <Input.Icon as={RiTiktokFill} />
+                      ) : key === 'zoom' ? (
+                        <span className='flex size-5 shrink-0 items-center justify-center'>{zoomInputIcon}</span>
+                      ) : key === 'calendar' ? (
+                        <Input.Icon as={RiCalendarTodoLine} />
+                      ) : null}
+                      <Input.Input
+                        placeholder={getInputPlaceholder(key)}
+                        disabled={readOnly}
+                        tabIndex={1}
+                        autoFocus={value ? false : true}
+                        spellCheck={false}
+                        value={value || ''}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            // @ts-expect-error - e.target is typed as EventTarget which lacks blur method
+                            e.target.blur();
+                          }
+                        }}
+                        onPaste={async (e) => {
+                          handleInputPaste({
+                            e,
+                            key,
+                            t,
+                          });
+                        }}
+                        onFocus={() => {
+                          setFocusedInput(key);
+                        }}
+                        onBlur={async (e) => {
+                          if (focusedInput === key) {
+                            setFocusedInput(null);
+                          }
+                          handleInputBlur({
+                            key,
+                            value: e.currentTarget.value,
+                          });
+                        }}
+                        onChange={(e) => {
+                          setFormValue({
+                            ...formValue,
+                            [key]: e.target.value,
+                          });
+                        }}
+                      />
                       <button
                         type='button'
-                        className='hover:!text-ds-red-600 flex h-full w-10 items-center justify-center'
+                        className='hover:!text-ds-red-600 flex size-5 shrink-0 items-center justify-center'
                         onClick={() => {
                           if (readOnly) return;
                           clearTimeout(errorTimeout);
@@ -624,7 +673,6 @@ export default function SocialsInputsSelectableDS({
                           setErrors({
                             ...newErrors,
                           });
-                          // const newValue = { ...field.value };
                           const newValue = { ...formValue };
                           delete newValue[key];
                           setFormValue(newValue);
@@ -632,59 +680,8 @@ export default function SocialsInputsSelectableDS({
                       >
                         <RiCloseLine size={20} />
                       </button>
-                    }
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault();
-                        // @ts-expect-error - e.target is typed as EventTarget which lacks blur method
-                        e.target.blur();
-                      }
-                    }}
-                    onPaste={async (e) => {
-                      handleInputPaste({
-                        e,
-                        key,
-                        t,
-                      });
-                    }}
-                    onFocus={() => {
-                      setFocusedInput(key);
-                    }}
-                    onBlur={async (e) => {
-                      if (focusedInput === key) {
-                        setFocusedInput(null);
-                      }
-                      handleInputBlur({
-                        key,
-                        value: e.currentTarget.value,
-                      });
-                    }}
-                    onChange={(e) => {
-                      setFormValue({
-                        ...formValue,
-                        [key]: e.target.value,
-                      });
-                    }}
-                    leftIcon={
-                      key === 'linkedin' ? (
-                        <RiLinkedinFill />
-                      ) : key === 'instagram' ? (
-                        <RiInstagramLine />
-                      ) : key === 'facebook' ? (
-                        <RiFacebookCircleFill />
-                      ) : key === 'youtube' ? (
-                        <RiYoutubeFill />
-                      ) : key === 'x-twitter' ? (
-                        <RiTwitterXLine />
-                      ) : key === 'tiktok' ? (
-                        <RiTiktokFill />
-                      ) : key === 'zoom' ? (
-                        zoomInputIcon
-                      ) : key === 'calendar' ? (
-                        <RiCalendarTodoLine />
-                      ) : undefined
-                    }
-                  />
+                    </Input.Wrapper>
+                  </Input.Root>
 
                   {errors[`${name}.${key}`] && (
                     <div className='errorLine text-sm text-red-500'>

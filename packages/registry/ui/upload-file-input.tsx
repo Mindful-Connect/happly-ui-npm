@@ -47,7 +47,7 @@ import {
 } from '@/lib/upload-file-input-icons';
 import { formatUploadProgress, formatFileSize } from '@/lib/upload-file-input';
 
-import { ProgressBar } from '@/components/ui/progress-bar';
+import * as ProgressBar from '@/components/ui/progress-bar';
 
 type UploadingFileStatus = 'uploading' | 'success' | 'error';
 interface UploadingFile {
@@ -1141,9 +1141,9 @@ export default function UploadFile({
                       )}
                     </div>
                     {file.state === 'uploading' && (
-                      <ProgressBar
-                        progress={file.progress}
-                        variant='neutral'
+                      <ProgressBar.Root
+                        value={file.progress}
+                        color='blue'
                         className='mt-1'
                       />
                     )}

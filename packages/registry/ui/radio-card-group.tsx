@@ -1,7 +1,7 @@
 'use client';
 
-import { Badge, BadgeProps } from '@/components/ui/badge';
-import { Label } from '@/components/ui/label';
+import * as Badge from '@/components/ui/badge';
+import * as Label from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { cn } from '@/lib/happly-ui-utils';
 import KeyIcon from '@/components/ui/key-icon';
@@ -11,7 +11,7 @@ export type RadioCardItem = {
     colorVar: string;
     size: 'sm' | 'default';
     text: string;
-  };
+  } & Record<string, unknown>;
   description?: string;
   icon?: React.ReactNode;
   readOnly?: boolean;
@@ -71,7 +71,7 @@ export default function RadioCardGroup({
           }
         };
         return (
-          <Label
+          <Label.Root
             key={`${index}-${item.value}`}
             htmlFor={disabled || item.readOnly ? undefined : itemId}
             className={cn(
@@ -121,15 +121,11 @@ export default function RadioCardGroup({
                     )}
                   </div>
                   {item.badge && (
-                    <Badge
-                      {...({
-                        size: item.badge.size,
-                        colorVar: item.badge.colorVar,
-                      } as BadgeProps & { size?: string; colorVar?: string })}
+                    <Badge.Root
                       className={disabled || item.readOnly ? 'opacity-50' : ''}
                     >
                       {item.badge.text}
-                    </Badge>
+                    </Badge.Root>
                   )}
                 </div>
 
@@ -155,7 +151,7 @@ export default function RadioCardGroup({
               value={item.value}
               className='peer'
             />
-          </Label>
+          </Label.Root>
         );
       })}
     </RadioGroup>

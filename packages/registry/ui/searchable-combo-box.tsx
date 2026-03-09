@@ -9,12 +9,8 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { CustomInputWrapper } from '@/components/ui/custom-input-wrapper';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import { Tag as TagPill, TagClose } from '@/components/ui/tag';
+import * as Popover from '@/components/ui/popover';
+import * as TagUI from '@/components/ui/tag';
 import { Tag, TagCategory } from '@/lib/tag-utils';
 import { cn } from '@/lib/happly-ui-utils';
 import { Check, ChevronsUpDown } from 'lucide-react';
@@ -94,8 +90,7 @@ interface SearchableMultiComboboxProps {
       | undefined;
     status: 'loading' | 'error' | 'success' | 'pending';
   };
-  usePortal?: boolean;
-  popoverProps?: React.ComponentPropsWithoutRef<typeof PopoverContent>;
+  popoverProps?: React.ComponentPropsWithoutRef<typeof Popover.Content>;
   onOpenChange?: (open: boolean) => void;
   selectAllLabel?: string;
 }
@@ -164,7 +159,6 @@ export function SearchableMultiCombobox({
   customTagOptions, // if tagOptions are passed, we're not fetching tags
   t,
   useTags,
-  usePortal = true,
   popoverProps,
   onOpenChange,
   selectAllLabel,
@@ -313,7 +307,6 @@ export function SearchableMultiCombobox({
 
         <ConditionalPopoverContent
           isPreview={isPreview}
-          usePortal={usePortal}
           {...popoverProps}
         >
           <Command>
@@ -366,9 +359,9 @@ export function SearchableMultiCombobox({
           {selectAllLabel &&
           tags.length > 0 &&
           selected.length === tags.length ? (
-            <TagPill variant='stroke'>
+            <TagUI.Root variant='stroke'>
               <span>{selectAllLabel}</span>
-              <TagClose
+              <TagUI.DismissButton
                 onClick={() => {
                   if (disabled) {
                     return;
@@ -377,12 +370,12 @@ export function SearchableMultiCombobox({
                 }}
                 disabled={disabled}
               />
-            </TagPill>
+            </TagUI.Root>
           ) : (
             selected.map((tag) => (
-              <TagPill key={crypto.randomUUID()} variant='stroke'>
+              <TagUI.Root key={crypto.randomUUID()} variant='stroke'>
                 <span>{tag.label}</span>
-                <TagClose
+                <TagUI.DismissButton
                   onClick={() => {
                     if (disabled) {
                       return;
@@ -391,7 +384,7 @@ export function SearchableMultiCombobox({
                   }}
                   disabled={disabled || selected.length <= min}
                 />
-              </TagPill>
+              </TagUI.Root>
             ))
           )}
         </div>
@@ -416,9 +409,9 @@ function ConditionalPopover({
   }
 
   return (
-    <Popover open={open} onOpenChange={onOpenChange}>
+    <Popover.Root open={open} onOpenChange={onOpenChange}>
       {children}
-    </Popover>
+    </Popover.Root>
   );
 }
 
@@ -433,21 +426,19 @@ function ConditionalPopoverTrigger({
     return <>{children}</>;
   }
 
-  return <PopoverTrigger asChild>{children}</PopoverTrigger>;
+  return <Popover.Trigger asChild>{children}</Popover.Trigger>;
 }
 
 function ConditionalPopoverContent({
   isPreview,
   children,
-  usePortal = true,
   className,
   ...props
 }: {
   isPreview: boolean | undefined;
   children: React.ReactNode;
-  usePortal?: boolean;
   className?: string;
-} & React.ComponentPropsWithoutRef<typeof PopoverContent>) {
+} & React.ComponentPropsWithoutRef<typeof Popover.Content>) {
   if (isPreview) {
     return (
       <div
@@ -462,14 +453,13 @@ function ConditionalPopoverContent({
   }
 
   return (
-    <PopoverContent
+    <Popover.Content
       align='start'
       sideOffset={4}
       className={cn('mt-2 w-[--radix-popover-trigger-width] p-0', className)}
-      usePortal={usePortal}
       {...props}
     >
       {children}
-    </PopoverContent>
+    </Popover.Content>
   );
 }
