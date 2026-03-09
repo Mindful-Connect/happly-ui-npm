@@ -447,4 +447,9 @@ const ButtonComposed = React.forwardRef<HTMLButtonElement, ButtonComposedProps>(
 );
 ButtonComposed.displayName = 'ButtonComposed';
 
-export { ButtonRoot as Root, ButtonIcon as Icon, ButtonComposed as Composed };
+export {
+  ButtonRoot as Root,
+  ButtonIcon as Icon,
+  ButtonComposed as Composed,
+  ButtonComposed as Button,
+};
