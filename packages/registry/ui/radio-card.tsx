@@ -22,8 +22,10 @@ const radioCardVariants = tv({
       'focus-within:shadow-button-important-focus focus-within:ring-stroke-strong-950',
       // checked
       'has-[[data-state=checked]]:ring-stroke-strong-950',
-      // disabled
-      'has-[[data-disabled]]:pointer-events-none has-[[data-disabled]]:shadow-none has-[[data-disabled]]:ring-transparent has-[[data-disabled]]:bg-bg-weak-50',
+      // disabled (must override checked state)
+      'has-[[data-disabled]]:pointer-events-none has-[[data-disabled]]:shadow-none has-[[data-disabled]]:bg-bg-weak-50',
+      'has-[[data-disabled]]:ring-stroke-soft-200',
+      'has-[[data-disabled]]:has-[[data-state=checked]]:ring-stroke-soft-200',
     ],
     content: 'flex min-w-0 flex-1',
     title: [
