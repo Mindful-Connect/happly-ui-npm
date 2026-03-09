@@ -170,13 +170,18 @@ export async function init(options: InitOptions): Promise<void> {
     if (existsSync(fullCssPath)) {
       let existingCss = await readFile(fullCssPath, 'utf-8');
 
-      // Detect legacy shadcn vars and log info
+      // Detect existing design tokens and log info
       if (
         existingCss.includes('--background:') ||
         existingCss.includes('--foreground:')
       ) {
         logger.info(
-          'Legacy design tokens detected. These will continue to work alongside HapplyUI tokens.'
+          'Existing shadcn design tokens detected. These will continue to work alongside HapplyUI tokens.'
+        );
+      }
+      if (existingCss.includes('--color-neutral-') || existingCss.includes('--color-primary-')) {
+        logger.info(
+          'Existing design system tokens detected. Your tokens will take precedence over happly-theme.css defaults.'
         );
       }
 
@@ -207,7 +212,7 @@ export async function init(options: InitOptions): Promise<void> {
       const cssContent =
         projectInfo.tailwindVersion === 4
           ? `@import "tailwindcss";\n@import "./${HAPPLY_THEME_FILE}";\n`
-          : `@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n@import "./${HAPPLY_THEME_FILE}";\n`;
+          : `@import "./${HAPPLY_THEME_FILE}";\n\n@tailwind base;\n@tailwind components;\n@tailwind utilities;\n`;
       await writeComponentFile(cwd, cssPath, cssContent);
       writeSpinner.text = `Created ${cssPath}`;
     }
@@ -231,16 +236,11 @@ export async function init(options: InitOptions): Promise<void> {
       packageManager: projectInfo.packageManager,
     });
 
-    // Install class-variance-authority for variants
-    await installDependencies(cwd, ['class-variance-authority'], {
-      packageManager: projectInfo.packageManager,
-    });
-
     installSpinner.succeed('Dependencies installed');
   } catch {
     installSpinner.fail('Failed to install dependencies');
     logger.warn(
-      'Please install manually: clsx tailwind-merge class-variance-authority'
+      'Please install manually: clsx tailwind-merge'
     );
   }
 

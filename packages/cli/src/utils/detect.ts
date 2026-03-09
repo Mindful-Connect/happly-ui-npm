@@ -89,6 +89,8 @@ async function detectTailwindCss(cwd: string): Promise<string | null> {
     'src/globals.css',
     'src/app/globals.css',
     'app/globals.css',
+    'src/app/[locale]/globals.css',
+    'app/[locale]/globals.css',
     'styles/globals.css',
     'src/styles/globals.css',
   ];

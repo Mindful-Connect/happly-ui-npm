@@ -15,11 +15,13 @@ import {
 import type { HapplyConfig } from '../../types/index.js';
 import { logger } from '../logger.js';
 
+const HAPPLY_PLUGIN_FILE = 'happly-ui-tailwind.cjs';
+
 /**
  * Update Tailwind configuration based on version.
  *
  * For v4: tokens live in happly-theme.css (written by init). Nothing to do here.
- * For v3: inject tokens into tailwind.config.js extend + write CSS variables.
+ * For v3: write a Tailwind plugin with design tokens and register it.
  */
 export async function updateTailwindConfig(
   cwd: string,
@@ -27,8 +29,6 @@ export async function updateTailwindConfig(
   tailwindVersion: number
 ): Promise<void> {
   if (tailwindVersion === 4) {
-    // v4: All tokens are in happly-theme.css via @theme block.
-    // Init already writes the file and adds the @import.
     logger.success('Happly tokens applied via happly-theme.css (v4)');
   } else {
     await updateConfigV3(cwd, config);
@@ -36,7 +36,13 @@ export async function updateTailwindConfig(
 }
 
 /**
- * Update Tailwind Config for v3
+ * Update Tailwind Config for v3.
+ *
+ * Writes a plugin file (happly-ui-tailwind.cjs) that extends the Tailwind
+ * theme with HapplyUI design tokens. Uses Tailwind's plugin API so that
+ * colors are deep-merged with the user's existing config (including shadcn).
+ *
+ * Then registers the plugin in tailwind.config.ts plugins array.
  */
 async function updateConfigV3(
   cwd: string,
@@ -48,67 +54,88 @@ async function updateConfigV3(
     return;
   }
 
+  // Write the plugin file
+  const pluginPath = path.join(cwd, HAPPLY_PLUGIN_FILE);
+  const pluginContent = generatePluginFile();
+
+  if (existsSync(pluginPath)) {
+    logger.info(`Overwriting existing ${HAPPLY_PLUGIN_FILE}`);
+  }
+  await writeFile(pluginPath, pluginContent, 'utf-8');
+  logger.success(`Created ${HAPPLY_PLUGIN_FILE}`);
+
+  // Register plugin in tailwind config
   let content = await readFile(configPath, 'utf-8');
 
-  if (content.includes('ds:')) {
-    logger.info("Tailwind config already has 'ds' colors. Skipping update.");
+  if (content.includes(HAPPLY_PLUGIN_FILE)) {
+    logger.info(`${HAPPLY_PLUGIN_FILE} already registered in tailwind config.`);
     return;
   }
 
-  const extendContent = generateV3ExtendObject();
-
-  // Regex to find extend object
-  const extendRegex = /extend:\s*\{/;
-
-  if (extendRegex.test(content)) {
+  const pluginsRegex = /plugins:\s*\[/;
+  if (pluginsRegex.test(content)) {
     content = content.replace(
-      extendRegex,
-      (match) => `${match}\n${extendContent},`
+      pluginsRegex,
+      (match) => `${match}\n    require('./${HAPPLY_PLUGIN_FILE}'),`
     );
     await writeFile(configPath, content, 'utf-8');
-    logger.success(`Updated ${config.tailwind.config} with Happly tokens`);
+    logger.success(
+      `Registered ${HAPPLY_PLUGIN_FILE} in ${config.tailwind.config}`
+    );
   } else {
-    // If no extend block, try to create it inside theme
-    const themeRegex = /theme:\s*\{/;
-    if (themeRegex.test(content)) {
+    // No plugins array — try to add one before the closing brace of the config
+    const closingBrace = /}\s*;?\s*$/;
+    if (closingBrace.test(content)) {
       content = content.replace(
-        themeRegex,
-        (match) => `${match}\n    extend: {\n${extendContent}\n    },`
+        closingBrace,
+        `  plugins: [require('./${HAPPLY_PLUGIN_FILE}')],\n};`
       );
       await writeFile(configPath, content, 'utf-8');
       logger.success(
-        `Updated ${config.tailwind.config} with Happly tokens (new extend block)`
+        `Added plugins array with ${HAPPLY_PLUGIN_FILE} to ${config.tailwind.config}`
       );
     } else {
       logger.warn(
-        `Could not update ${config.tailwind.config}. Please add Happly tokens manually.`
+        `Could not update ${config.tailwind.config}. Add manually:\n` +
+          `  plugins: [require('./${HAPPLY_PLUGIN_FILE}')]`
       );
     }
   }
 }
 
-function generateV3ExtendObject(): string {
-  const colorsJson = JSON.stringify(colors, null, 6).slice(2, -2);
-  const colorsStr = `      colors: {\n${colorsJson}\n      }`;
+/**
+ * Generate the HapplyUI Tailwind plugin file content.
+ *
+ * This plugin extends the theme with all design tokens.
+ * Using Tailwind's plugin API ensures proper deep-merging with
+ * existing user config (shadcn primary, etc.) without key conflicts.
+ */
+function generatePluginFile(): string {
+  const config = {
+    theme: {
+      extend: {
+        colors: colors,
+        fontSize: texts,
+        boxShadow: shadows,
+        borderRadius: borderRadii,
+        fontFamily: fontFamilies,
+        backgroundImage: backgroundImage,
+        screens: screens,
+        keyframes: keyframes,
+        animation: animations,
+      },
+    },
+  };
 
-  const fontSizeJson = JSON.stringify(texts, null, 6).slice(2, -2);
-  const fontSizeStr = `      fontSize: {\n${fontSizeJson}\n      }`;
+  return `// HapplyUI Design Tokens — https://ui.happly.cloud
+// Auto-generated by @happlyui/cli — do not edit manually
+// This plugin extends your Tailwind config with HapplyUI design tokens.
+// It uses Tailwind's plugin API for proper deep-merging with your existing config.
 
-  const shadowJson = JSON.stringify(shadows, null, 6).slice(2, -2);
-  const shadowStr = `      boxShadow: {\n${shadowJson}\n      }`;
+const plugin = require('tailwindcss/plugin');
 
-  const radiusJson = JSON.stringify(borderRadii, null, 6).slice(2, -2);
-  const radiusStr = `      borderRadius: {\n${radiusJson}\n      }`;
-
-  return [
-    colorsStr,
-    fontSizeStr,
-    shadowStr,
-    radiusStr,
-    `      fontFamily: {\n${JSON.stringify(fontFamilies, null, 6).slice(2, -2)}\n      }`,
-    `      backgroundImage: {\n${JSON.stringify(backgroundImage, null, 6).slice(2, -2)}\n      }`,
-    `      screens: {\n${JSON.stringify(screens, null, 6).slice(2, -2)}\n      }`,
-    `      keyframes: {\n${JSON.stringify(keyframes, null, 6).slice(2, -2)}\n      }`,
-    `      animation: {\n${JSON.stringify(animations, null, 6).slice(2, -2)}\n      }`,
-  ].join(',\n');
+module.exports = plugin(function() {
+  // No base styles needed — CSS variables are in happly-theme.css
+}, ${JSON.stringify(config, null, 2)});
+`;
 }
