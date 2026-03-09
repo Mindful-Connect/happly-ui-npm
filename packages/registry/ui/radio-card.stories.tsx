@@ -387,13 +387,13 @@ export const Composed = {
     return (
       <div className='w-[480px]'>
         <RadioCard.Root value={value} onValueChange={setValue}>
-          <RadioCard.Composed
+          <RadioCard.RadioCard
             value='card'
             title='Credit Card'
             description='Pay with credit card'
             icon={<KeyIcon.Root icon={<RiBankCardLine />} />}
           />
-          <RadioCard.Composed
+          <RadioCard.RadioCard
             value='wallet'
             title='Digital Wallet'
             description='Pay with digital wallet'
@@ -404,7 +404,7 @@ export const Composed = {
               </Badge.Root>
             }
           />
-          <RadioCard.Composed
+          <RadioCard.RadioCard
             value='bank'
             title='Bank Transfer'
             description='Direct bank transfer'

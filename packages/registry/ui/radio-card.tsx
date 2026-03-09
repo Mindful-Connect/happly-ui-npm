@@ -312,4 +312,5 @@ export {
   RadioCardTitle as Title,
   RadioCardDescription as Description,
   RadioCardComposed as Composed,
+  RadioCardComposed as RadioCard,
 };

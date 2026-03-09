@@ -9,7 +9,7 @@
   "registryDependencies": ["radio", "tv", "happly-ui-utils"],
   "docs": {
     "lead": "A composable radio input styled as a card. Arrange titles, descriptions, icons, and badges however you want.",
-    "usage": "import * as RadioCard from \"@/components/ui/radio-card\"\n\n<RadioCard.Root value={value} onValueChange={setValue}>\n  <RadioCard.Item value=\"opt1\">\n    <RadioCard.Content>\n      <RadioCard.Title>Option 1</RadioCard.Title>\n      <RadioCard.Description>Description</RadioCard.Description>\n    </RadioCard.Content>\n    <RadioCard.Indicator />\n  </RadioCard.Item>\n</RadioCard.Root>",
+    "usage": "import { RadioCard } from \"@/components/ui/radio-card\"\n\n<RadioCard.Root value={value} onValueChange={setValue}>\n  <RadioCard\n    value=\"opt1\"\n    title=\"Option 1\"\n    description=\"Description\"\n  />\n</RadioCard.Root>",
     "examples": [
       {
         "title": "Default",
@@ -61,8 +61,8 @@
       },
       {
         "title": "Composed",
-        "description": "Shorthand component that pre-assembles Item, Content, Title, Description, and Indicator.",
-        "code": "<RadioCard.Composed\n  value=\"card\"\n  title=\"Credit Card\"\n  description=\"Pay with credit card\"\n  icon={<KeyIcon.Root icon={<RiBankCardLine />} />}\n/>",
+        "description": "Shorthand component that pre-assembles Item, Content, Title, Description, and Indicator. Import as { RadioCard } for direct use.",
+        "code": "<RadioCard\n  value=\"card\"\n  title=\"Credit Card\"\n  description=\"Pay with credit card\"\n  icon={<KeyIcon.Root icon={<RiBankCardLine />} />}\n/>",
         "stories": ["Composed"]
       },
       {
@@ -152,8 +152,8 @@
         "props": []
       },
       {
-        "name": "RadioCard.Composed",
-        "description": "Shorthand that pre-assembles Item + Content + Title + Description + Indicator. Use primitives directly for custom layouts.",
+        "name": "RadioCard",
+        "description": "Shorthand that pre-assembles Item + Content + Title + Description + Indicator. Import as { RadioCard } for direct use, or access as RadioCard.RadioCard via namespace import. Use primitives directly for custom layouts.",
         "props": [
           {
             "name": "value",
