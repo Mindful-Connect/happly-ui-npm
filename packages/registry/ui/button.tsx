@@ -426,4 +426,25 @@ function ButtonIcon<T extends React.ElementType>({
 }
 ButtonIcon.displayName = BUTTON_ICON_NAME;
 
-export { ButtonRoot as Root, ButtonIcon as Icon };
+type ButtonComposedProps = React.ComponentPropsWithoutRef<typeof ButtonRoot> & {
+  leadingIcon?: React.ElementType;
+  trailingIcon?: React.ElementType;
+};
+
+const ButtonComposed = React.forwardRef<HTMLButtonElement, ButtonComposedProps>(
+  (
+    { children, leadingIcon: LeadingIcon, trailingIcon: TrailingIcon, ...rest },
+    forwardedRef,
+  ) => {
+    return (
+      <ButtonRoot ref={forwardedRef} {...rest}>
+        {LeadingIcon && <ButtonIcon as={LeadingIcon} />}
+        {children}
+        {TrailingIcon && <ButtonIcon as={TrailingIcon} />}
+      </ButtonRoot>
+    );
+  },
+);
+ButtonComposed.displayName = 'ButtonComposed';
+
+export { ButtonRoot as Root, ButtonIcon as Icon, ButtonComposed as Composed };

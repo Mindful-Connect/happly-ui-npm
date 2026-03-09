@@ -75,6 +75,12 @@
         "description": "Use the asChild prop with Radix Slot to render as a different element, such as a link.",
         "code": "<Button.Root asChild>\n  <a href=\"#\">As link</a>\n</Button.Root>",
         "stories": ["AsChild"]
+      },
+      {
+        "title": "Composed",
+        "description": "Simplified usage via the Composed wrapper with leadingIcon and trailingIcon props.",
+        "code": "<Button.Composed\n  leadingIcon={RiArrowLeftSLine}\n  trailingIcon={RiArrowRightSLine}\n  variant=\"neutral\"\n  mode=\"stroke\"\n>\n  Button\n</Button.Composed>",
+        "stories": ["Composition"]
       }
     ],
     "api": [
@@ -123,6 +129,40 @@
             "type": "React.ElementType",
             "default": "'div'",
             "description": "The element or component to render as"
+          }
+        ]
+      },
+      {
+        "name": "Button.Composed",
+        "description": "A simplified wrapper that composes Root and Icon into a single component.",
+        "props": [
+          {
+            "name": "leadingIcon",
+            "type": "React.ElementType",
+            "description": "Icon rendered before the children"
+          },
+          {
+            "name": "trailingIcon",
+            "type": "React.ElementType",
+            "description": "Icon rendered after the children"
+          },
+          {
+            "name": "variant",
+            "type": "'primary' | 'neutral' | 'error' | 'warning' | 'success'",
+            "default": "'primary'",
+            "description": "The color variant"
+          },
+          {
+            "name": "mode",
+            "type": "'filled' | 'stroke' | 'lighter' | 'ghost'",
+            "default": "'filled'",
+            "description": "The visual style"
+          },
+          {
+            "name": "size",
+            "type": "'medium' | 'small' | 'xsmall' | 'xxsmall'",
+            "default": "'medium'",
+            "description": "The size of the button"
           }
         ]
       }

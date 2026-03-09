@@ -1,5 +1,5 @@
 import * as Button from './button';
-import { RiArrowRightSLine, RiFileCopyLine } from 'react-icons/ri';
+import { RiArrowLeftSLine, RiArrowRightSLine, RiFileCopyLine } from 'react-icons/ri';
 
 export default { title: 'UI/Button', component: Button.Root };
 
@@ -141,4 +141,27 @@ export const AsChild = {
       </Button.Root>
     </div>
   ),
-}
+};
+
+export const Composition = {
+  render: () => (
+    <div className='flex flex-col items-center gap-4'>
+      <Button.Composed
+        leadingIcon={RiArrowLeftSLine}
+        trailingIcon={RiArrowRightSLine}
+        variant='neutral'
+        mode='stroke'
+      >
+        Button
+      </Button.Composed>
+
+      <Button.Composed leadingIcon={RiFileCopyLine} variant='primary' mode='filled'>
+        Copy
+      </Button.Composed>
+
+      <Button.Composed trailingIcon={RiArrowRightSLine}>
+        Next
+      </Button.Composed>
+    </div>
+  ),
+};
