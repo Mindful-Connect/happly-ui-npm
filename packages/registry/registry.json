@@ -88,12 +88,6 @@
       "description": "A searchable multi-select combo box with tag display for selected items."
     },
     {
-      "name": "command",
-      "type": "registry:ui",
-      "title": "Command",
-      "description": "Fast, composable, unstyled command menu for React."
-    },
-    {
       "name": "command-menu",
       "type": "registry:ui",
       "title": "Command Menu",
@@ -122,12 +116,6 @@
       "type": "registry:ui",
       "title": "Datepicker",
       "description": "A calendar datepicker component with single date, range, and popover modes. Uses namespace exports: Datepicker.Calendar."
-    },
-    {
-      "name": "dialog",
-      "type": "registry:ui",
-      "title": "Dialog",
-      "description": "A window overlaid on either the primary window or another dialog window."
     },
     {
       "name": "digit-input",

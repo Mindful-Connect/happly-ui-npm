@@ -257,16 +257,8 @@
         "title": "Support components",
         "links": [
           {
-            "title": "Command",
-            "href": "/docs/components/command"
-          },
-          {
             "title": "Custom Input Wrapper",
             "href": "/docs/components/custom-input-wrapper"
-          },
-          {
-            "title": "Dialog",
-            "href": "/docs/components/dialog"
           }
         ],
         "collapsed": true
