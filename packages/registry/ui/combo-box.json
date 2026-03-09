@@ -67,6 +67,12 @@
         "description": "Custom icon, placeholder text, and empty message.",
         "code": "<ComboBox.Root options={options} value={value} onValueChange={setValue} icon={RiMapPinLine} placeholder=\"Search cities...\" />\n<ComboBox.Root options={options} value={value} onValueChange={setValue} placeholder=\"Type to filter skills...\" />\n<ComboBox.Root options={options} value={value} onValueChange={setValue} emptyMessage=\"No matching tags.\" />",
         "stories": ["Customization"]
+      },
+      {
+        "title": "With Icons",
+        "description": "Options with leading icons — supports React components and image URLs.",
+        "code": "const options = [\n  { value: 'utility', label: 'Utility Payment', icon: RiFlashlightLine },\n  { value: 'us', label: 'United States', icon: 'https://flags.example/us.svg' },\n]\n\n<ComboBox.Root options={options} value={value} onValueChange={setValue} />",
+        "stories": ["WithIcons"]
       }
     ],
     "api": [
@@ -77,7 +83,7 @@
           {
             "name": "options",
             "type": "ComboBoxOption[]",
-            "description": "Available options ({ value, label })"
+            "description": "Available options ({ value, label, icon? }). icon can be a React component or image URL string."
           },
           {
             "name": "value",

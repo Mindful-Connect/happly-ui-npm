@@ -1,7 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import { RiMapPinLine } from '@remixicon/react';
+import {
+  RiFlashlightLine,
+  RiHandCoinLine,
+  RiHome4Line,
+  RiMapPinLine,
+} from '@remixicon/react';
 
 import { Button } from './button';
 import * as ComboBox from './combo-box';
@@ -366,6 +371,52 @@ export const Customization = {
               value={tags}
               onValueChange={setTags}
               emptyMessage='No matching tags. Try a different search.'
+            />
+          </FormField.Root>
+        </div>
+      </div>
+    );
+  },
+};
+
+const ICON_OPTIONS = [
+  { value: 'utility', label: 'Utility Payment', icon: RiFlashlightLine },
+  { value: 'rent', label: 'Rent Payment', icon: RiHome4Line },
+  { value: 'donation', label: 'Donation', icon: RiHandCoinLine },
+];
+
+const FLAG_OPTIONS = [
+  { value: 'us', label: 'United States', icon: 'https://mindful-connect.github.io/circle-flags/flags/us.svg' },
+  { value: 'de', label: 'Germany', icon: 'https://mindful-connect.github.io/circle-flags/flags/de.svg' },
+  { value: 'fr', label: 'France', icon: 'https://mindful-connect.github.io/circle-flags/flags/fr.svg' },
+  { value: 'tr', label: 'Turkey', icon: 'https://mindful-connect.github.io/circle-flags/flags/tr.svg' },
+];
+
+export const WithIcons = {
+  render: () => {
+    const [icons, setIcons] = React.useState<string[]>(['utility']);
+    const [flags, setFlags] = React.useState<string[]>(['us', 'de']);
+
+    return (
+      <div className='flex flex-col gap-6'>
+        <div className='w-[300px]'>
+          <FormField.Root>
+            <Label.Root>Payment Types</Label.Root>
+            <ComboBox.Root
+              options={ICON_OPTIONS}
+              value={icons}
+              onValueChange={setIcons}
+            />
+          </FormField.Root>
+        </div>
+        <div className='w-[300px]'>
+          <FormField.Root>
+            <Label.Root>Countries</Label.Root>
+            <ComboBox.Root
+              options={FLAG_OPTIONS}
+              value={flags}
+              onValueChange={setFlags}
+              placeholder='Search countries...'
             />
           </FormField.Root>
         </div>

@@ -6,7 +6,7 @@ import * as ScrollAreaPrimitives from '@radix-ui/react-scroll-area';
 
 import { inputVariants } from '@/components/ui/input';
 import * as Popover from '@/components/ui/popover';
-import * as TagUI from '@/components/ui/tag';
+import * as Tag from '@/components/ui/tag';
 import { cn } from '@/lib/happly-ui-utils';
 
 // ─── Types ─────────────────────────────────────────────────
@@ -14,6 +14,8 @@ import { cn } from '@/lib/happly-ui-utils';
 type ComboBoxOption = {
   value: string;
   label: string;
+  /** Optional icon — a React component (e.g. Remix icon) or an image URL string */
+  icon?: React.ElementType | string;
 };
 
 type ComboBoxRootProps = {
@@ -168,8 +170,8 @@ const ComboBoxRoot = React.forwardRef<HTMLInputElement, ComboBoxRootProps>(
       setValue([]);
     }, [disabled, setValue]);
 
-    const selectedLabels = value.map(
-      (v) => options.find((o) => o.value === v)?.label ?? v,
+    const selectedOptions = value.map(
+      (v) => options.find((o) => o.value === v) ?? { value: v, label: v },
     );
 
     const showSelectAll =
@@ -240,12 +242,22 @@ const ComboBoxRoot = React.forwardRef<HTMLInputElement, ComboBoxRootProps>(
                           disabled={disabled || atMax}
                           onClick={() => handleToggle(option.value)}
                           className={cn(
-                            'relative flex w-full cursor-pointer select-none items-center rounded-10 p-2 pr-9 text-left text-paragraph-sm text-text-strong-950',
+                            'relative flex w-full cursor-pointer select-none items-center gap-2 rounded-10 p-2 pr-9 text-left text-paragraph-sm text-text-strong-950',
                             'transition duration-200 ease-out',
                             'hover:bg-bg-weak-50',
                             'disabled:pointer-events-none disabled:text-text-disabled-300',
                           )}
                         >
+                          {option.icon && (
+                            typeof option.icon === 'string' ? (
+                              <div
+                                className='size-5 shrink-0 rounded-full bg-cover bg-center bg-no-repeat'
+                                style={{ backgroundImage: `url(${option.icon})` }}
+                              />
+                            ) : (
+                              <option.icon className='size-5 shrink-0 text-text-sub-600' />
+                            )
+                          )}
                           <span className='line-clamp-1'>
                             {option.label}
                           </span>
@@ -272,25 +284,35 @@ const ComboBoxRoot = React.forwardRef<HTMLInputElement, ComboBoxRootProps>(
         {value.length > 0 && (
           <div className='flex flex-wrap gap-1.5'>
             {showSelectAll ? (
-              <TagUI.Root variant={tagVariant} disabled={disabled} className='rounded-full'>
+              <Tag.Root variant={tagVariant} disabled={disabled} className='rounded-full'>
                 <span>{selectAllLabel}</span>
-                <TagUI.DismissButton
+                <Tag.DismissButton
                   onClick={handleRemoveAll}
                 />
-              </TagUI.Root>
+              </Tag.Root>
             ) : (
-              selectedLabels.map((label, index) => (
-                <TagUI.Root
-                  key={value[index]}
+              selectedOptions.map((opt) => (
+                <Tag.Root
+                  key={opt.value}
                   variant={tagVariant}
                   disabled={disabled || value.length <= min}
                   className='rounded-full'
                 >
-                  <span>{label}</span>
-                  <TagUI.DismissButton
-                    onClick={() => handleRemove(value[index])}
+                  {opt.icon && (
+                    typeof opt.icon === 'string' ? (
+                      <Tag.Icon
+                        className='rounded-full bg-cover bg-center bg-no-repeat'
+                        style={{ backgroundImage: `url(${opt.icon})` }}
+                      />
+                    ) : (
+                      <Tag.Icon as={opt.icon} />
+                    )
+                  )}
+                  <span>{opt.label}</span>
+                  <Tag.DismissButton
+                    onClick={() => handleRemove(opt.value)}
                   />
-                </TagUI.Root>
+                </Tag.Root>
               ))
             )}
           </div>
