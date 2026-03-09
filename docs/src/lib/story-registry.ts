@@ -23,6 +23,7 @@ import { default as drawerMeta, Demo as drawer_Demo, Basic as drawer_Basic } fro
 import { default as dropdownMeta, Demo as dropdown_Demo, SubMenu as dropdown_SubMenu } from '@/components/ui/dropdown.stories';
 import { default as emojiDialogMeta, Default as emojiDialog_Default, DeleteConfirmation as emojiDialog_DeleteConfirmation, UnsavedChanges as emojiDialog_UnsavedChanges, SuccessConfirmation as emojiDialog_SuccessConfirmation, WithFormContent as emojiDialog_WithFormContent, WithFloatingMemojis as emojiDialog_WithFloatingMemojis, StaticNoAnimations as emojiDialog_StaticNoAnimations, CustomEmojiArea as emojiDialog_CustomEmojiArea } from '@/components/ui/emoji-dialog.stories';
 import { default as fancyButtonMeta, Neutral as fancyButton_Neutral, Primary as fancyButton_Primary, Error as fancyButton_Error, Basic as fancyButton_Basic, WithIcon as fancyButton_WithIcon, Sizes as fancyButton_Sizes, Disabled as fancyButton_Disabled, AsChild as fancyButton_AsChild } from '@/components/ui/fancy-button.stories';
+import { default as formFieldMeta, Demo as formField_Demo } from '@/components/ui/form-field.stories';
 import { default as hintMeta, Demo as hint_Demo, Disabled as hint_Disabled, HasError as hint_HasError } from '@/components/ui/hint.stories';
 import { default as inputMeta, WithIcon as input_WithIcon, Sizes as input_Sizes, WithAffix as input_WithAffix, WithInlineAffix as input_WithInlineAffix, LabelAndHint as input_LabelAndHint, WithKbd as input_WithKbd, Password as input_Password, PasswordWithLevel as input_PasswordWithLevel, Disabled as input_Disabled, ErrorState as input_ErrorState, WithButton as input_WithButton, WithTags as input_WithTags, DateFieldStory as input_DateFieldStory, PaymentInput as input_PaymentInput, WithSelect as input_WithSelect, WithInlineSelect as input_WithInlineSelect, CounterInput as input_CounterInput, Composition as input_Composition } from '@/components/ui/input.stories';
 import { default as kbdMeta, Demo as kbd_Demo } from '@/components/ui/kbd.stories';
@@ -280,6 +281,12 @@ export const storyRegistry: Record<string, {
     'Sizes': fancyButton_Sizes,
     'Disabled': fancyButton_Disabled,
     'AsChild': fancyButton_AsChild
+    }
+  },
+  'form-field': {
+    meta: formFieldMeta,
+    stories: {
+    'Demo': formField_Demo
     }
   },
   'hint': {

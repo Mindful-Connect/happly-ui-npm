@@ -148,6 +148,12 @@
       "description": "A compound button component with gradient overlay effects, multiple variants, and sizes. Uses namespace exports: FancyButton.Root, FancyButton.Icon."
     },
     {
+      "name": "form-field",
+      "type": "registry:ui",
+      "title": "Form Field",
+      "description": "A layout wrapper that provides consistent spacing between label, input, and hint elements."
+    },
+    {
       "name": "happly-ui-utils",
       "type": "registry:lib",
       "title": "Happly UI Utils",
