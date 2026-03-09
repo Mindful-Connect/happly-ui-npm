@@ -11,7 +11,7 @@ import { default as buttonGroupMeta, Default as buttonGroup_Default, Sizes as bu
 import { default as buttonMeta, PrimaryVariant as button_PrimaryVariant, NeutralVariant as button_NeutralVariant, SuccessVariant as button_SuccessVariant, WarningVariant as button_WarningVariant, ErrorVariant as button_ErrorVariant, Sizes as button_Sizes, Disabled as button_Disabled, WithIcon as button_WithIcon, FullWidth as button_FullWidth, AsChild as button_AsChild, Composition as button_Composition } from '@/components/ui/button.stories';
 import { default as checkboxMeta, Demo as checkbox_Demo, Variants as checkbox_Variants, Disabled as checkbox_Disabled, WithLabel as checkbox_WithLabel, WithLabelExtended as checkbox_WithLabelExtended } from '@/components/ui/checkbox.stories';
 import { default as colorPickerMeta, Demo as colorPicker_Demo, PopoverDemo as colorPicker_PopoverDemo } from '@/components/ui/color-picker.stories';
-import { default as comboBoxMeta, Default as comboBox_Default, WithIcon as comboBox_WithIcon, MaxSelection as comboBox_MaxSelection, MinSelection as comboBox_MinSelection, SelectAll as comboBox_SelectAll, ErrorState as comboBox_ErrorState, Disabled as comboBox_Disabled, SmallSize as comboBox_SmallSize } from '@/components/ui/combo-box.stories';
+import { default as comboBoxMeta, Default as comboBox_Default, WithPreselectedValues as comboBox_WithPreselectedValues, Uncontrolled as comboBox_Uncontrolled, FormSubmission as comboBox_FormSubmission, Sizes as comboBox_Sizes, SelectionConstraints as comboBox_SelectionConstraints, TagVariants as comboBox_TagVariants, States as comboBox_States, Customization as comboBox_Customization } from '@/components/ui/combo-box.stories';
 import { default as commandMenuMeta, Demo as commandMenu_Demo } from '@/components/ui/command-menu.stories';
 import { default as compactButtonMeta, Stroke as compactButton_Stroke, Ghost as compactButton_Ghost, White as compactButton_White, Modifiable as compactButton_Modifiable, Sizes as compactButton_Sizes, FullRadius as compactButton_FullRadius, Disabled as compactButton_Disabled, AsChild as compactButton_AsChild } from '@/components/ui/compact-button.stories';
 import { default as currencyInputMeta, Default as currencyInput_Default, Controlled as currencyInput_Controlled, Sizes as currencyInput_Sizes, ErrorState as currencyInput_ErrorState } from '@/components/ui/currency-input.stories';
@@ -168,13 +168,14 @@ export const storyRegistry: Record<string, {
     meta: comboBoxMeta,
     stories: {
     'Default': comboBox_Default,
-    'WithIcon': comboBox_WithIcon,
-    'MaxSelection': comboBox_MaxSelection,
-    'MinSelection': comboBox_MinSelection,
-    'SelectAll': comboBox_SelectAll,
-    'ErrorState': comboBox_ErrorState,
-    'Disabled': comboBox_Disabled,
-    'SmallSize': comboBox_SmallSize
+    'WithPreselectedValues': comboBox_WithPreselectedValues,
+    'Uncontrolled': comboBox_Uncontrolled,
+    'FormSubmission': comboBox_FormSubmission,
+    'Sizes': comboBox_Sizes,
+    'SelectionConstraints': comboBox_SelectionConstraints,
+    'TagVariants': comboBox_TagVariants,
+    'States': comboBox_States,
+    'Customization': comboBox_Customization
     }
   },
   'command-menu': {
