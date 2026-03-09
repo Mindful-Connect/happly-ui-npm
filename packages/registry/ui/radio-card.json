@@ -60,6 +60,12 @@
         "stories": ["Disabled"]
       },
       {
+        "title": "Composed",
+        "description": "Shorthand component that pre-assembles Item, Content, Title, Description, and Indicator.",
+        "code": "<RadioCard.Composed\n  value=\"card\"\n  title=\"Credit Card\"\n  description=\"Pay with credit card\"\n  icon={<KeyIcon.Root icon={<RiBankCardLine />} />}\n/>",
+        "stories": ["Composed"]
+      },
+      {
         "title": "Primary Variant",
         "description": "Primary colored radio indicator.",
         "code": "<RadioCard.Root variant=\"primary\" value={value} onValueChange={setValue}>\n  ...\n</RadioCard.Root>",
@@ -144,6 +150,49 @@
         "name": "RadioCard.Indicator",
         "description": "The radio circle indicator. Reads value and disabled from the parent Item context.",
         "props": []
+      },
+      {
+        "name": "RadioCard.Composed",
+        "description": "Shorthand that pre-assembles Item + Content + Title + Description + Indicator. Use primitives directly for custom layouts.",
+        "props": [
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The radio value for this card"
+          },
+          {
+            "name": "title",
+            "type": "React.ReactNode",
+            "description": "Card title"
+          },
+          {
+            "name": "description",
+            "type": "React.ReactNode",
+            "description": "Card description"
+          },
+          {
+            "name": "icon",
+            "type": "React.ReactNode",
+            "description": "Leading element (e.g. KeyIcon.Root or raw icon)"
+          },
+          {
+            "name": "badge",
+            "type": "React.ReactNode",
+            "description": "Badge element rendered next to the title"
+          },
+          {
+            "name": "inline",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render title and description inline"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disabled state"
+          }
+        ]
       }
     ]
   },

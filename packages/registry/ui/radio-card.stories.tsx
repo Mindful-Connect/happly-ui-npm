@@ -320,6 +320,42 @@ export const ErrorState = {
   },
 };
 
+export const Composed = {
+  render: () => {
+    const [value, setValue] = React.useState('card');
+
+    return (
+      <div className='w-[480px]'>
+        <RadioCard.Root value={value} onValueChange={setValue}>
+          <RadioCard.Composed
+            value='card'
+            title='Credit Card'
+            description='Pay with credit card'
+            icon={<KeyIcon.Root icon={<RiBankCardLine />} />}
+          />
+          <RadioCard.Composed
+            value='wallet'
+            title='Digital Wallet'
+            description='Pay with digital wallet'
+            icon={<KeyIcon.Root icon={<RiWalletLine />} />}
+            badge={
+              <Badge.Root variant='light' color='blue' size='small'>
+                Popular
+              </Badge.Root>
+            }
+          />
+          <RadioCard.Composed
+            value='bank'
+            title='Bank Transfer'
+            description='Direct bank transfer'
+            icon={<KeyIcon.Root icon={<RiBankLine />} />}
+          />
+        </RadioCard.Root>
+      </div>
+    );
+  },
+};
+
 export const PrimaryVariant = {
   render: () => {
     const [value, setValue] = React.useState('small');

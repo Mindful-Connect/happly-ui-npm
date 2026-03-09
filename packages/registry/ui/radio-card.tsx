@@ -259,6 +259,49 @@ const RadioCardDescription = React.forwardRef<
 });
 RadioCardDescription.displayName = 'RadioCardDescription';
 
+// ─── Composed ─────────────────────────────────────────────
+
+type RadioCardComposedProps = Omit<
+  React.ComponentPropsWithoutRef<'label'>,
+  'title'
+> & {
+  value: string;
+  disabled?: boolean;
+  title: React.ReactNode;
+  description?: React.ReactNode;
+  icon?: React.ReactNode;
+  badge?: React.ReactNode;
+  inline?: boolean;
+};
+
+const RadioCardComposed = React.forwardRef<HTMLLabelElement, RadioCardComposedProps>(
+  (
+    { title, description, icon, badge, inline, value, disabled, ...rest },
+    forwardedRef,
+  ) => {
+    return (
+      <RadioCardItem ref={forwardedRef} value={value} disabled={disabled} {...rest}>
+        {icon}
+        <RadioCardContent inline={inline}>
+          {badge ? (
+            <div className='flex items-center gap-2'>
+              <RadioCardTitle>{title}</RadioCardTitle>
+              {badge}
+            </div>
+          ) : (
+            <RadioCardTitle>{title}</RadioCardTitle>
+          )}
+          {description && (
+            <RadioCardDescription>{description}</RadioCardDescription>
+          )}
+        </RadioCardContent>
+        <RadioCardIndicator />
+      </RadioCardItem>
+    );
+  },
+);
+RadioCardComposed.displayName = 'RadioCardComposed';
+
 // ─── Exports ──────────────────────────────────────────────
 
 export {
@@ -268,4 +311,5 @@ export {
   RadioCardContent as Content,
   RadioCardTitle as Title,
   RadioCardDescription as Description,
+  RadioCardComposed as Composed,
 };
