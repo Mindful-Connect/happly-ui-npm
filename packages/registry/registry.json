@@ -274,6 +274,18 @@
       "description": "Utility to recursively clone React children and inject shared props."
     },
     {
+      "name": "section",
+      "type": "registry:ui",
+      "title": "Section",
+      "description": "A two-column section layout with a title/description header on the left and content area on the right. Uses namespace exports: Section.Root, Section.Header, Section.Title, Section.Description, Section.Content, Section.Section (composed)."
+    },
+    {
+      "name": "section-toggle",
+      "type": "registry:ui",
+      "title": "Section Toggle",
+      "description": "A collapsible section with a title, description, and switch toggle that reveals content when enabled. Uses namespace exports: SectionToggle.Root, SectionToggle.Header, SectionToggle.TextGroup, SectionToggle.Title, SectionToggle.Description, SectionToggle.Content, SectionToggle.SectionToggle (composed)."
+    },
+    {
       "name": "select",
       "type": "registry:ui",
       "title": "Select",

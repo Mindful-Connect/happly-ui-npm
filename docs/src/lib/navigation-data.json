@@ -227,6 +227,10 @@
             "href": "/docs/components/dropdown"
           },
           {
+            "title": "Emoji Dialog",
+            "href": "/docs/components/emoji-dialog"
+          },
+          {
             "title": "Modal",
             "href": "/docs/components/modal"
           },
@@ -238,8 +242,18 @@
         "collapsed": false
       },
       {
-        "title": "Emoji Dialog",
-        "href": "/docs/components/emoji-dialog"
+        "title": "Sections",
+        "links": [
+          {
+            "title": "Section",
+            "href": "/docs/components/section"
+          },
+          {
+            "title": "Section Toggle",
+            "href": "/docs/components/section-toggle"
+          }
+        ],
+        "collapsed": false
       },
       {
         "title": "Needs Refactor",

@@ -86,6 +86,7 @@ function main() {
     'command-menu',
     'drawer',
     'dropdown',
+    'emoji-dialog',
     'modal',
     'popover',
   ];
@@ -113,6 +114,11 @@ function main() {
     'tag-input',
   ];
 
+  const SECTION_COMPONENTS = [
+    'section',
+    'section-toggle',
+  ];
+
   const LEGACY_COMPONENTS = [
     'location-input',
     'phone-input',
@@ -120,7 +126,7 @@ function main() {
     'upload-file-input',
   ];
 
-  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS, ...LEGACY_COMPONENTS];
+  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS, ...SECTION_COMPONENTS, ...LEGACY_COMPONENTS];
 
   const mainLinks = componentLinks
     .filter((item) => !GROUPED_COMPONENTS.includes(item.name))
@@ -152,6 +158,10 @@ function main() {
 
   const composedInputLinks = componentLinks
     .filter((item) => COMPOSED_INPUT_COMPONENTS.includes(item.name))
+    .map(({ name, ...rest }) => rest);
+
+  const sectionLinks = componentLinks
+    .filter((item) => SECTION_COMPONENTS.includes(item.name))
     .map(({ name, ...rest }) => rest);
 
   const legacyLinks = componentLinks
@@ -205,6 +215,11 @@ function main() {
         {
           title: 'Overlays',
           links: overlayLinks,
+          collapsed: false,
+        },
+        {
+          title: 'Sections',
+          links: sectionLinks,
           collapsed: false,
         },
         ...mainLinks,

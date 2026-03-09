@@ -267,7 +267,7 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
                           </tr>
                         </thead>
                         <tbody>
-                          {apiItem.props.map((prop, propIndex) => (
+                          {apiItem.props?.map((prop, propIndex) => (
                             <tr key={propIndex}>
                               <td>
                                 <code>{prop.name}</code>

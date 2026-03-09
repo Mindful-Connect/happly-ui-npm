@@ -40,6 +40,8 @@ import { default as progressBarMeta, Color as progressBar_Color, WithLabel as pr
 import { default as progressCircleMeta, Default as progressCircle_Default } from '@/components/ui/progress-circle.stories';
 import { default as radioCardMeta, Default as radioCard_Default, WithKeyIcons as radioCard_WithKeyIcons, WithSimpleIcons as radioCard_WithSimpleIcons, WithBadges as radioCard_WithBadges, InlineDescription as radioCard_InlineDescription, AllowDeselect as radioCard_AllowDeselect, Disabled as radioCard_Disabled, ErrorState as radioCard_ErrorState, Composed as radioCard_Composed, PrimaryVariant as radioCard_PrimaryVariant } from '@/components/ui/radio-card.stories';
 import { default as radioMeta, Demo as radio_Demo, Variants as radio_Variants, Disabled as radio_Disabled, WithLabel as radio_WithLabel, WithLabelExtended as radio_WithLabelExtended } from '@/components/ui/radio.stories';
+import { default as sectionToggleMeta, Default as sectionToggle_Default, Collapsed as sectionToggle_Collapsed, Composed as sectionToggle_Composed } from '@/components/ui/section-toggle.stories';
+import { default as sectionMeta, Default as section_Default, WithCustomHeaderWidth as section_WithCustomHeaderWidth, Composed as section_Composed } from '@/components/ui/section.stories';
 import { default as selectMeta, Demo as select_Demo, WithLabelHint as select_WithLabelHint, WithIcons as select_WithIcons, Sizes as select_Sizes, WithCountryFlags as select_WithCountryFlags, WithUsers as select_WithUsers, Disabled as select_Disabled, Compact as select_Compact, CompactCountry as select_CompactCountry, CompactSizes as select_CompactSizes, InlineCountry as select_InlineCountry, InputWithInlineSelect as select_InputWithInlineSelect, WithInput as select_WithInput, WithInputSizes as select_WithInputSizes } from '@/components/ui/select.stories';
 import { default as sliderMeta, Demo as slider_Demo, Variants as slider_Variants, Range as slider_Range, WithTooltip as slider_WithTooltip } from '@/components/ui/slider.stories';
 import { default as socialsInputMeta, Default as socialsInput_Default } from '@/components/ui/socials-input.stories';
@@ -434,6 +436,22 @@ export const storyRegistry: Record<string, {
     'Disabled': radio_Disabled,
     'WithLabel': radio_WithLabel,
     'WithLabelExtended': radio_WithLabelExtended
+    }
+  },
+  'section-toggle': {
+    meta: sectionToggleMeta,
+    stories: {
+    'Default': sectionToggle_Default,
+    'Collapsed': sectionToggle_Collapsed,
+    'Composed': sectionToggle_Composed
+    }
+  },
+  'section': {
+    meta: sectionMeta,
+    stories: {
+    'Default': section_Default,
+    'WithCustomHeaderWidth': section_WithCustomHeaderWidth,
+    'Composed': section_Composed
     }
   },
   'select': {

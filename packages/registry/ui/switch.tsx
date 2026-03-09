@@ -12,9 +12,9 @@ const CHECKED_CLASSES = {
     'group-active:data-[state=checked]/switch:bg-primary-base',
   ],
   neutral: [
-    'group-data-[state=checked]/switch:bg-text-strong-950',
-    'group-hover:data-[state=checked]/switch:bg-text-strong-950',
-    'group-active:data-[state=checked]/switch:bg-text-strong-950',
+    'group-data-[state=checked]/switch:bg-static-black',
+    'group-hover:data-[state=checked]/switch:bg-static-black',
+    'group-active:data-[state=checked]/switch:bg-static-black',
   ],
 } as const;
 
