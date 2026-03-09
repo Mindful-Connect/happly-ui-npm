@@ -170,24 +170,12 @@
                 "href": "/docs/components/currency-input"
               },
               {
-                "title": "Location Input",
-                "href": "/docs/components/location-input"
-              },
-              {
                 "title": "Password Input",
                 "href": "/docs/components/password-input"
               },
               {
-                "title": "Socials Input",
-                "href": "/docs/components/socials-input"
-              },
-              {
                 "title": "Tag Input",
                 "href": "/docs/components/tag-input"
-              },
-              {
-                "title": "Upload File Input",
-                "href": "/docs/components/upload-file-input"
               }
             ],
             "collapsed": false
@@ -248,6 +236,24 @@
           }
         ],
         "collapsed": false
+      },
+      {
+        "title": "Needs Refactor",
+        "links": [
+          {
+            "title": "Location Input",
+            "href": "/docs/components/location-input"
+          },
+          {
+            "title": "Socials Input",
+            "href": "/docs/components/socials-input"
+          },
+          {
+            "title": "Upload File Input",
+            "href": "/docs/components/upload-file-input"
+          }
+        ],
+        "collapsed": true
       }
     ]
   }

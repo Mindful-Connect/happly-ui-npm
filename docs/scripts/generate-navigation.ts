@@ -109,14 +109,18 @@ function main() {
   const COMPOSED_INPUT_COMPONENTS = [
     'combo-box',
     'currency-input',
-    'location-input',
     'password-input',
-    'socials-input',
     'tag-input',
+  ];
+
+  const LEGACY_COMPONENTS = [
+    'location-input',
+    'phone-input',
+    'socials-input',
     'upload-file-input',
   ];
 
-  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS];
+  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS, ...LEGACY_COMPONENTS];
 
   const mainLinks = componentLinks
     .filter((item) => !GROUPED_COMPONENTS.includes(item.name))
@@ -148,6 +152,10 @@ function main() {
 
   const composedInputLinks = componentLinks
     .filter((item) => COMPOSED_INPUT_COMPONENTS.includes(item.name))
+    .map(({ name, ...rest }) => rest);
+
+  const legacyLinks = componentLinks
+    .filter((item) => LEGACY_COMPONENTS.includes(item.name))
     .map(({ name, ...rest }) => rest);
 
   // Build full navigation structure
@@ -200,6 +208,11 @@ function main() {
           collapsed: false,
         },
         ...mainLinks,
+        {
+          title: 'Needs Refactor',
+          links: legacyLinks,
+          collapsed: true,
+        },
       ],
     },
   ];
