@@ -50,7 +50,7 @@
           {
             "name": "defaultCurrency",
             "type": "string",
-            "default": "'EUR'",
+            "default": "'CAD'",
             "description": "Default currency code"
           },
           {

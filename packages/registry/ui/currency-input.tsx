@@ -13,11 +13,9 @@ type CurrencyOption = {
 };
 
 const defaultCurrencies: CurrencyOption[] = [
-  { code: 'EUR', symbol: '€', label: 'EUR', icon: 'https://mindful-connect.github.io/circle-flags/flags/eu.svg' },
-  { code: 'USD', symbol: '$', label: 'USD', icon: 'https://mindful-connect.github.io/circle-flags/flags/us.svg' },
-  { code: 'TRY', symbol: '₺', label: 'TRY', icon: 'https://mindful-connect.github.io/circle-flags/flags/tr.svg' },
-  { code: 'GBP', symbol: '£', label: 'GBP', icon: 'https://mindful-connect.github.io/circle-flags/flags/gb.svg' },
   { code: 'CAD', symbol: '$', label: 'CAD', icon: 'https://mindful-connect.github.io/circle-flags/flags/ca.svg' },
+  { code: 'USD', symbol: '$', label: 'USD', icon: 'https://mindful-connect.github.io/circle-flags/flags/us.svg' },
+  { code: 'EUR', symbol: '€', label: 'EUR', icon: 'https://mindful-connect.github.io/circle-flags/flags/eu.svg' },
 ];
 
 type CurrencyInputProps = Omit<
@@ -41,7 +39,7 @@ const CurrencyInputRoot = React.forwardRef<HTMLInputElement, CurrencyInputProps>
       value,
       onValueChange,
       currency: controlledCurrency,
-      defaultCurrency = 'EUR',
+      defaultCurrency = 'CAD',
       onCurrencyChange,
       currencies = defaultCurrencies,
       currencySymbol,
