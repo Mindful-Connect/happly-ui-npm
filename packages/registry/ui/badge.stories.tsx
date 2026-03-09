@@ -1,7 +1,7 @@
 import * as Badge from './badge';
 import { RiFlashlightFill } from 'react-icons/ri';
 
-export default { title: 'UI/Badge', component: Badge };
+export default { title: 'Displaying Data/Badge', component: Badge };
 
 
 

@@ -3,7 +3,7 @@ import { RiGlobalLine } from '@remixicon/react';
 import * as Button from './button';
 import * as Tooltip from './tooltip';
 
-export default { title: 'UI/Tooltip', component: Tooltip.Content };
+export default { title: 'Feedback/Tooltip', component: Tooltip.Content };
 
 export const Light = {
   render: () => (

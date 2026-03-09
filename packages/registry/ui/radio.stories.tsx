@@ -8,7 +8,7 @@ import * as Label from './label';
 import * as LinkButton from './link-button';
 import * as Radio from './radio';
 
-export default { title: 'UI/Radio', component: Radio.Group };
+export default { title: 'Form/Radio', component: Radio.Group };
 
 export const Demo = {
   render: () => (

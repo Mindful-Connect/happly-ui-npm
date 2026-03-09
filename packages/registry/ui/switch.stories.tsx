@@ -8,7 +8,7 @@ import * as Label from './label';
 import * as LinkButton from './link-button';
 import * as Switch from './switch';
 
-export default { title: 'UI/Switch', component: Switch.Root };
+export default { title: 'Form/Switch', component: Switch.Root };
 
 export const Demo = {
   render: () => <Switch.Root />,

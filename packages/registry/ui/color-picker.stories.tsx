@@ -16,7 +16,7 @@ import * as Input from './input';
 import * as Popover from './popover';
 import * as Select from './select';
 
-export default { title: 'UI/Color Picker', component: ColorPicker.Root };
+export default { title: 'Form/Color Picker', component: ColorPicker.Root };
 
 function EyeDropperButton() {
   return (

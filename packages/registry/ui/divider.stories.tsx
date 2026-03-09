@@ -3,7 +3,7 @@ import { RiAddLine } from '@remixicon/react';
 import * as Divider from './divider';
 import * as Button from './button';
 
-export default { title: 'UI/Divider', component: Divider.Root };
+export default { title: 'Displaying Data/Divider', component: Divider.Root };
 
 export const Line = {
   render: () => (

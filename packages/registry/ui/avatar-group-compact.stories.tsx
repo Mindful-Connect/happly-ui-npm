@@ -2,7 +2,7 @@ import * as AvatarGroupCompact from './avatar-group-compact';
 import * as Avatar from './avatar';
 
 export default {
-  title: 'UI/Avatar Group Compact',
+  title: 'Displaying Data/Avatar Group Compact',
   component: AvatarGroupCompact.Root,
 };
 

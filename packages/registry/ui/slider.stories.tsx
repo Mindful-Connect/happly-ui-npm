@@ -5,7 +5,7 @@ import * as React from 'react';
 import * as Slider from './slider';
 import * as Tooltip from './tooltip';
 
-export default { title: 'UI/Slider', component: Slider.Root };
+export default { title: 'Form/Slider', component: Slider.Root };
 
 export const Demo = {
   render: () => (

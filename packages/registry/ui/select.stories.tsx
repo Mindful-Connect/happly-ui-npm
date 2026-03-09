@@ -19,7 +19,7 @@ import * as Input from './input';
 import * as Label from './label';
 import * as Select from './select';
 
-export default { title: 'UI/Select', component: Select.Root };
+export default { title: 'Form/Select', component: Select.Root };
 
 const fruits = [
   { value: 'apple', label: 'Apple' },

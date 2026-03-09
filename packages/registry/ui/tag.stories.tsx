@@ -3,7 +3,7 @@ import { RiPushpinFill } from '@remixicon/react';
 import * as Avatar from './avatar';
 import * as Tag from './tag';
 
-export default { title: 'UI/Tag', component: Tag.Root };
+export default { title: 'Displaying Data/Tag', component: Tag.Root };
 
 export const Stroke = {
   render: () => (

@@ -20,7 +20,7 @@ import * as Button from './button';
 import * as Divider from './divider';
 import * as Dropdown from './dropdown';
 
-export default { title: 'UI/Dropdown', component: Dropdown.Root };
+export default { title: 'Overlays/Dropdown', component: Dropdown.Root };
 
 export const Demo = {
   render: () => (

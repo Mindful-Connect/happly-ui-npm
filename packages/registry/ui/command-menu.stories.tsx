@@ -21,7 +21,7 @@ import * as Kbd from './kbd';
 import * as LinkButton from './link-button';
 import * as Tag from './tag';
 
-export default { title: 'UI/Command Menu', component: CommandMenu.Dialog };
+export default { title: 'Overlays/Command Menu', component: CommandMenu.Dialog };
 
 export const Demo = {
   render: () => {

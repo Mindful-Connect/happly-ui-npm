@@ -7,7 +7,7 @@ import * as Hint from './hint';
 import * as Label from './label';
 import * as Textarea from './textarea';
 
-export default { title: 'UI/Textarea', component: Textarea.Root };
+export default { title: 'Form/Textarea', component: Textarea.Root };
 
 function IconInfoCustom(props: React.SVGProps<SVGSVGElement>) {
   return (

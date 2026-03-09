@@ -5,7 +5,7 @@ import * as TabsPrimitives from '@radix-ui/react-tabs';
 
 import * as DotStepper from './dot-stepper';
 
-export default { title: 'UI/Dot Stepper', component: DotStepper.Root };
+export default { title: 'Navigation/Dot Stepper', component: DotStepper.Root };
 
 export const Demo = {
   render: () => {

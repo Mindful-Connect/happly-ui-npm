@@ -7,7 +7,7 @@ import {
 
 import * as StatusBadge from './status-badge';
 
-export default { title: 'UI/Status Badge', component: StatusBadge.Root };
+export default { title: 'Displaying Data/Status Badge', component: StatusBadge.Root };
 
 export const Disabled = {
   render: () => (

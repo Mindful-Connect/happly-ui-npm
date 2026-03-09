@@ -8,7 +8,7 @@ import * as Button from './button';
 import * as Datepicker from './datepicker';
 import * as Popover from './popover';
 
-export default { title: 'UI/Datepicker', component: Datepicker.Calendar };
+export default { title: 'Form/Datepicker', component: Datepicker.Calendar };
 
 export const Demo = {
   render: () => {

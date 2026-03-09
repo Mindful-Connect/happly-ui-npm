@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import * as DigitInput from './digit-input';
 
-export default { title: 'UI/Digit Input', component: DigitInput.Root };
+export default { title: 'Form/Digit Input', component: DigitInput.Root };
 
 export const Demo = {
   render: () => {

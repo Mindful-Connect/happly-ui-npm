@@ -1,7 +1,7 @@
 import * as LinkButton from './link-button';
 import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react';
 
-export default { title: 'UI/Link Button', component: LinkButton.Root };
+export default { title: 'Actions/Link Button', component: LinkButton.Root };
 
 export const Gray = {
   render: () => <LinkButton.Root variant='gray'>Link Button</LinkButton.Root>,

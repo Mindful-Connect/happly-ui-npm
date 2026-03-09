@@ -7,7 +7,7 @@ import {
 
 import * as Pagination from './pagination';
 
-export default { title: 'UI/Pagination', component: Pagination.Root };
+export default { title: 'Navigation/Pagination', component: Pagination.Root };
 
 export const Demo = {
   render: () => (

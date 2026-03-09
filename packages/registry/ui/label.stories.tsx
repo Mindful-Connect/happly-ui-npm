@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import * as Label from './label';
 
-export default { title: 'UI/Label', component: Label.Root };
+export default { title: 'Form/Label', component: Label.Root };
 
 function IconInfoCustom(props: React.SVGProps<SVGSVGElement>) {
   return (

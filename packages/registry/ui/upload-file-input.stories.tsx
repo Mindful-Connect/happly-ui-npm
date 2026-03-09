@@ -2,7 +2,7 @@
 
 import UploadFile from './upload-file-input';
 
-export default { title: 'UI/UploadFileInput', component: UploadFile };
+export default { title: 'Upload File Input', component: UploadFile };
 
 const t = (key: string, params?: Record<string, string>) => {
   const translations: Record<string, string> = {

@@ -1,7 +1,7 @@
 import * as ProgressBar from './progress-bar';
 import * as LinkButton from './link-button';
 
-export default { title: 'UI/Progress Bar', component: ProgressBar.Root };
+export default { title: 'Displaying Data/Progress Bar', component: ProgressBar.Root };
 
 export const Color = {
   render: () => (

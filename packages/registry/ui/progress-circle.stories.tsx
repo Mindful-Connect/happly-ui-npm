@@ -1,6 +1,6 @@
 import * as ProgressCircle from './progress-circle';
 
-export default { title: 'UI/Progress Circle', component: ProgressCircle.Root };
+export default { title: 'Displaying Data/Progress Circle', component: ProgressCircle.Root };
 
 export const Default = {
   render: () => (

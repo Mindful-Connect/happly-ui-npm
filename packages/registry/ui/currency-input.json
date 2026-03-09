@@ -3,70 +3,103 @@
   "name": "currency-input",
   "type": "registry:ui",
   "title": "Currency Input",
-  "description": "A currency input component with currency selection.",
-  "dependencies": ["@headlessui/react", "lucide-react", "flag-icons"],
-  "registryDependencies": ["happly-ui-utils"],
-  "files": [
-    {
-      "path": "ui/currency-input.tsx",
-      "type": "registry:ui"
-    },
-    {
-      "path": "lib/currency-input-utils.ts",
-      "type": "registry:lib"
-    }
-  ],
+  "description": "A composed currency input with inline currency symbol and currency selector dropdown. Built on Input and Select primitives.",
+  "version": "2.0.0",
+  "migration": {
+    "guide": "API changed: import as namespace `import * as CurrencyInput from ...`, use `<CurrencyInput.Root />`. The `onChange` callback is split into `onValueChange` (amount) and `onCurrencyChange` (currency code). The `defaultCurrency` now takes a currency code string ('EUR') instead of a label. Dependencies changed: removed @headlessui/react, lucide-react, flag-icons; now uses Input + Select primitives. The lib/currency-input-utils file is no longer needed."
+  },
+  "dependencies": [],
+  "registryDependencies": ["input", "select"],
   "docs": {
-    "lead": "A currency input component with currency selection.",
-    "usage": "import { CurrencyInput } from \"@/components/ui/currency-input\"\n\n<CurrencyInput />",
+    "lead": "A composed currency input with inline currency symbol and currency selector dropdown. Built on Input and Select primitives.",
+    "usage": "import * as CurrencyInput from \"@/components/ui/currency-input\"\n\n<CurrencyInput.Root onValueChange={(amount) => console.log(amount)} />",
     "examples": [
       {
         "title": "Default",
-        "description": "Default usage.",
-        "code": "<CurrencyInput />",
+        "description": "Currency input with default currencies.",
+        "code": "<CurrencyInput.Root onValueChange={(amount) => console.log(amount)} />",
         "stories": ["Default"]
+      },
+      {
+        "title": "Controlled",
+        "description": "Fully controlled currency input.",
+        "code": "<CurrencyInput.Root\n  value={amount}\n  onValueChange={setAmount}\n  currency={currency}\n  onCurrencyChange={setCurrency}\n/>",
+        "stories": ["Controlled"]
       }
     ],
     "api": [
       {
-        "name": "CurrencyInput",
-        "description": "The CurrencyInput component.",
+        "name": "CurrencyInput.Root",
+        "description": "The composed currency input component. Forwards ref to the underlying input element.",
         "props": [
           {
             "name": "value",
             "type": "string",
-            "description": "The value of the input."
+            "description": "Amount value (controlled)"
           },
           {
-            "name": "onChange",
-            "type": "(val: string, currency: string) => void",
-            "description": "Callback when value or currency changes."
+            "name": "onValueChange",
+            "type": "(amount: string) => void",
+            "description": "Amount change callback"
+          },
+          {
+            "name": "currency",
+            "type": "string",
+            "description": "Currency code (controlled)"
           },
           {
             "name": "defaultCurrency",
             "type": "string",
-            "default": "\"CAD\"",
-            "description": "The default currency code."
+            "default": "'EUR'",
+            "description": "Default currency code"
+          },
+          {
+            "name": "onCurrencyChange",
+            "type": "(currency: string) => void",
+            "description": "Currency change callback"
+          },
+          {
+            "name": "currencies",
+            "type": "CurrencyOption[]",
+            "description": "Available currencies: { code, symbol, label, icon? }"
+          },
+          {
+            "name": "currencySymbol",
+            "type": "string",
+            "description": "Override the inline currency symbol"
+          },
+          {
+            "name": "size",
+            "type": "'medium' | 'small' | 'xsmall'",
+            "default": "'medium'",
+            "description": "Input size"
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Error state"
           },
           {
             "name": "placeholder",
             "type": "string",
-            "default": "\"0.00\"",
-            "description": "Placeholder text."
+            "default": "'0.00'",
+            "description": "Placeholder text"
           },
           {
-            "name": "readOnly",
+            "name": "disabled",
             "type": "boolean",
             "default": "false",
-            "description": "Whether the input is read-only."
-          },
-          {
-            "name": "className",
-            "type": "string",
-            "description": "Additional CSS classes."
+            "description": "Disabled state"
           }
         ]
       }
     ]
-  }
+  },
+  "files": [
+    {
+      "path": "ui/currency-input.tsx",
+      "type": "registry:ui"
+    }
+  ]
 }

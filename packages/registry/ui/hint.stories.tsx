@@ -4,7 +4,7 @@ import { RiInformationFill } from '@remixicon/react';
 
 import * as Hint from './hint';
 
-export default { title: 'UI/Hint', component: Hint.Root };
+export default { title: 'Form/Hint', component: Hint.Root };
 
 export const Demo = {
   render: () => (

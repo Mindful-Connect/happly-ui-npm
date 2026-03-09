@@ -13,7 +13,7 @@ import { default as checkboxMeta, Demo as checkbox_Demo, Variants as checkbox_Va
 import { default as colorPickerMeta, Demo as colorPicker_Demo, PopoverDemo as colorPicker_PopoverDemo } from '@/components/ui/color-picker.stories';
 import { default as commandMenuMeta, Demo as commandMenu_Demo } from '@/components/ui/command-menu.stories';
 import { default as compactButtonMeta, Stroke as compactButton_Stroke, Ghost as compactButton_Ghost, White as compactButton_White, Modifiable as compactButton_Modifiable, Sizes as compactButton_Sizes, FullRadius as compactButton_FullRadius, Disabled as compactButton_Disabled, AsChild as compactButton_AsChild } from '@/components/ui/compact-button.stories';
-import { default as currencyInputMeta, Default as currencyInput_Default } from '@/components/ui/currency-input.stories';
+import { default as currencyInputMeta, Default as currencyInput_Default, Controlled as currencyInput_Controlled, Sizes as currencyInput_Sizes, ErrorState as currencyInput_ErrorState } from '@/components/ui/currency-input.stories';
 import { default as datepickerMeta, Demo as datepicker_Demo, PopoverDemo as datepicker_PopoverDemo, ApprovalDemo as datepicker_ApprovalDemo, RangeDemo as datepicker_RangeDemo } from '@/components/ui/datepicker.stories';
 import { default as digitInputMeta, Demo as digitInput_Demo, HasError as digitInput_HasError, Disabled as digitInput_Disabled, Square as digitInput_Square } from '@/components/ui/digit-input.stories';
 import { default as dividerMeta, Line as divider_Line, LineSpacing as divider_LineSpacing, LineText as divider_LineText, TextOnly as divider_TextOnly, SolidText as divider_SolidText, Content as divider_Content } from '@/components/ui/divider.stories';
@@ -25,10 +25,12 @@ import { default as hintMeta, Demo as hint_Demo, Disabled as hint_Disabled, HasE
 import { default as inputMeta, WithIcon as input_WithIcon, Sizes as input_Sizes, WithAffix as input_WithAffix, WithInlineAffix as input_WithInlineAffix, LabelAndHint as input_LabelAndHint, WithKbd as input_WithKbd, Password as input_Password, PasswordWithLevel as input_PasswordWithLevel, Disabled as input_Disabled, ErrorState as input_ErrorState, WithButton as input_WithButton, WithTags as input_WithTags, DateFieldStory as input_DateFieldStory, PaymentInput as input_PaymentInput, WithSelect as input_WithSelect, WithInlineSelect as input_WithInlineSelect, CounterInput as input_CounterInput, Composition as input_Composition } from '@/components/ui/input.stories';
 import { default as kbdMeta, Demo as kbd_Demo } from '@/components/ui/kbd.stories';
 import { default as labelMeta, Demo as label_Demo } from '@/components/ui/label.stories';
+import { default as levelBarMeta, Levels as levelBar_Levels, CustomSegments as levelBar_CustomSegments } from '@/components/ui/level-bar.stories';
 import { default as linkButtonMeta, Gray as linkButton_Gray, Black as linkButton_Black, Primary as linkButton_Primary, Error as linkButton_Error, Modifiable as linkButton_Modifiable, Sizes as linkButton_Sizes, Underline as linkButton_Underline, WithIcon as linkButton_WithIcon, Disabled as linkButton_Disabled, AsChild as linkButton_AsChild } from '@/components/ui/link-button.stories';
 import { default as locationInputMeta, Default as locationInput_Default } from '@/components/ui/location-input.stories';
 import { default as modalMeta, Demo as modal_Demo, WithHeader as modal_WithHeader } from '@/components/ui/modal.stories';
 import { default as paginationMeta, Demo as pagination_Demo, Rounded as pagination_Rounded, Group as pagination_Group, AsLink as pagination_AsLink } from '@/components/ui/pagination.stories';
+import { default as passwordInputMeta, Default as passwordInput_Default, WithStrength as passwordInput_WithStrength, Sizes as passwordInput_Sizes, ErrorState as passwordInput_ErrorState } from '@/components/ui/password-input.stories';
 import { default as phoneInputMeta, Default as phoneInput_Default } from '@/components/ui/phone-input.stories';
 import { default as popoverMeta, Demo as popover_Demo, Position as popover_Position } from '@/components/ui/popover.stories';
 import { default as progressBarMeta, Color as progressBar_Color, WithLabel as progressBar_WithLabel, DataStorage as progressBar_DataStorage } from '@/components/ui/progress-bar.stories';
@@ -42,6 +44,7 @@ import { default as socialsInputMeta, Default as socialsInput_Default } from '@/
 import { default as statusBadgeMeta, Disabled as statusBadge_Disabled, Completed as statusBadge_Completed, Failed as statusBadge_Failed, Pending as statusBadge_Pending, AsChild as statusBadge_AsChild } from '@/components/ui/status-badge.stories';
 import { default as switchMeta, Demo as switch_Demo, Variants as switch_Variants, Disabled as switch_Disabled, WithLabel as switch_WithLabel, WithLabelExtended as switch_WithLabelExtended } from '@/components/ui/switch.stories';
 import { default as tableMeta, Default as table_Default } from '@/components/ui/table.stories';
+import { default as tagInputMeta, Default as tagInput_Default, Controlled as tagInput_Controlled, MaxTags as tagInput_MaxTags, GrayVariant as tagInput_GrayVariant, Sizes as tagInput_Sizes } from '@/components/ui/tag-input.stories';
 import { default as tagMeta, Stroke as tag_Stroke, Gray as tag_Gray, Disabled as tag_Disabled, WithImage as tag_WithImage, WithAvatar as tag_WithAvatar, Dismissable as tag_Dismissable } from '@/components/ui/tag.stories';
 import { default as textareaMeta, Demo as textarea_Demo, InteractiveCounter as textarea_InteractiveCounter, HasError as textarea_HasError, WithLabelAndHint as textarea_WithLabelAndHint, Disabled as textarea_Disabled, Simple as textarea_Simple, SimpleResize as textarea_SimpleResize } from '@/components/ui/textarea.stories';
 import { default as tooltipMeta, Light as tooltip_Light, Size as tooltip_Size, Position as tooltip_Position, HTMLContent as tooltip_HTMLContent } from '@/components/ui/tooltip.stories';
@@ -179,7 +182,10 @@ export const storyRegistry: Record<string, {
   'currency-input': {
     meta: currencyInputMeta,
     stories: {
-    'Default': currencyInput_Default
+    'Default': currencyInput_Default,
+    'Controlled': currencyInput_Controlled,
+    'Sizes': currencyInput_Sizes,
+    'ErrorState': currencyInput_ErrorState
     }
   },
   'datepicker': {
@@ -288,6 +294,13 @@ export const storyRegistry: Record<string, {
     'Demo': label_Demo
     }
   },
+  'level-bar': {
+    meta: levelBarMeta,
+    stories: {
+    'Levels': levelBar_Levels,
+    'CustomSegments': levelBar_CustomSegments
+    }
+  },
   'link-button': {
     meta: linkButtonMeta,
     stories: {
@@ -323,6 +336,15 @@ export const storyRegistry: Record<string, {
     'Rounded': pagination_Rounded,
     'Group': pagination_Group,
     'AsLink': pagination_AsLink
+    }
+  },
+  'password-input': {
+    meta: passwordInputMeta,
+    stories: {
+    'Default': passwordInput_Default,
+    'WithStrength': passwordInput_WithStrength,
+    'Sizes': passwordInput_Sizes,
+    'ErrorState': passwordInput_ErrorState
     }
   },
   'phone-input': {
@@ -437,6 +459,16 @@ export const storyRegistry: Record<string, {
     meta: tableMeta,
     stories: {
     'Default': table_Default
+    }
+  },
+  'tag-input': {
+    meta: tagInputMeta,
+    stories: {
+    'Default': tagInput_Default,
+    'Controlled': tagInput_Controlled,
+    'MaxTags': tagInput_MaxTags,
+    'GrayVariant': tagInput_GrayVariant,
+    'Sizes': tagInput_Sizes
     }
   },
   'tag': {

@@ -73,6 +73,10 @@
             "href": "/docs/components/kbd"
           },
           {
+            "title": "Level Bar",
+            "href": "/docs/components/level-bar"
+          },
+          {
             "title": "Progress Bar",
             "href": "/docs/components/progress-bar"
           },
@@ -145,6 +149,24 @@
           {
             "title": "Textarea",
             "href": "/docs/components/textarea"
+          },
+          {
+            "title": "Composed Inputs",
+            "links": [
+              {
+                "title": "Currency Input",
+                "href": "/docs/components/currency-input"
+              },
+              {
+                "title": "Password Input",
+                "href": "/docs/components/password-input"
+              },
+              {
+                "title": "Tag Input",
+                "href": "/docs/components/tag-input"
+              }
+            ],
+            "collapsed": false
           }
         ],
         "collapsed": false
@@ -206,10 +228,6 @@
       {
         "title": "Card",
         "href": "/docs/components/card"
-      },
-      {
-        "title": "Currency Input",
-        "href": "/docs/components/currency-input"
       },
       {
         "title": "Location Input",

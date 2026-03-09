@@ -1,7 +1,7 @@
 import * as ButtonGroup from './button-group';
 import { RiLayout2Line, RiLayoutGridLine, RiListCheck } from '@remixicon/react';
 
-export default { title: 'UI/Button Group', component: ButtonGroup.Root };
+export default { title: 'Actions/Button Group', component: ButtonGroup.Root };
 
 export const Default = {
   render: () => (

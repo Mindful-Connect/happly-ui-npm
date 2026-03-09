@@ -103,7 +103,7 @@
       "name": "currency-input",
       "type": "registry:ui",
       "title": "Currency Input",
-      "description": "A currency input component with currency selection."
+      "description": "A composed currency input with inline currency symbol and currency selector dropdown. Built on Input and Select primitives."
     },
     {
       "name": "custom-input-wrapper",
@@ -196,6 +196,12 @@
       "description": "A label component with asterisk indicator and sub-text. Uses namespace exports: Label.Root, Label.Asterisk, Label.Sub."
     },
     {
+      "name": "level-bar",
+      "type": "registry:ui",
+      "title": "Level Bar",
+      "description": "A segmented level indicator for displaying strength, progress, or multi-step status."
+    },
+    {
       "name": "link-button",
       "type": "registry:ui",
       "title": "Link Button",
@@ -218,6 +224,12 @@
       "type": "registry:ui",
       "title": "Pagination",
       "description": "A pagination component with basic, rounded, and group variants. Supports asChild for link-based navigation. Uses namespace exports: Pagination.Root, Pagination.Item, Pagination.NavButton, Pagination.NavIcon."
+    },
+    {
+      "name": "password-input",
+      "type": "registry:ui",
+      "title": "Password Input",
+      "description": "A composed password input with show/hide toggle and optional strength indicator with criteria checklist."
     },
     {
       "name": "phone-input",
@@ -320,6 +332,12 @@
       "type": "registry:ui",
       "title": "Tag",
       "description": "A compact tag component for labeling and categorization with icon, image, avatar, and dismiss support. Uses namespace exports: Tag.Root, Tag.Icon, Tag.DismissButton."
+    },
+    {
+      "name": "tag-input",
+      "type": "registry:ui",
+      "title": "Tag Input",
+      "description": "A tag input component with controlled/uncontrolled pattern, add-on-Enter, remove-on-dismiss, backspace-to-delete-last."
     },
     {
       "name": "textarea",

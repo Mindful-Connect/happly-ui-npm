@@ -1,6 +1,6 @@
 import * as Kbd from './kbd';
 
-export default { title: 'UI/Kbd', component: Kbd.Root };
+export default { title: 'Displaying Data/Kbd', component: Kbd.Root };
 
 function IconCmd(props: React.SVGProps<SVGSVGElement>) {
   return (

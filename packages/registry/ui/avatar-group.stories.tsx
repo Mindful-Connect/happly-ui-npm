@@ -1,7 +1,7 @@
 import * as AvatarGroup from './avatar-group';
 import * as Avatar from './avatar';
 
-export default { title: 'UI/Avatar Group', component: AvatarGroup.Root };
+export default { title: 'Displaying Data/Avatar Group', component: AvatarGroup.Root };
 
 export const Size = {
   render: () => (

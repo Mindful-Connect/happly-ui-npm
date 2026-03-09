@@ -9,7 +9,7 @@ import {
 import * as Alert from './alert';
 import * as LinkButton from './link-button';
 
-export default { title: 'UI/Alert', component: Alert.Root };
+export default { title: 'Feedback/Alert', component: Alert.Root };
 
 export const Filled = {
   render: () => (

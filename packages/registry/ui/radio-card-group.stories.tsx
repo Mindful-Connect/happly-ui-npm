@@ -4,7 +4,7 @@ import { useState } from 'react';
 import RadioCardGroup, { type RadioCardItem } from './radio-card-group';
 import { CreditCard, Wallet, Banknote, Building, Zap, Star } from 'lucide-react';
 
-export default { title: 'UI/RadioCardGroup', component: RadioCardGroup };
+export default { title: 'Radio Card Group', component: RadioCardGroup };
 
 const basicItems: RadioCardItem[] = [
   { title: 'Personal', value: 'personal', description: 'For individual use' },

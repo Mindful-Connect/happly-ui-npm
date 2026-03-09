@@ -1,7 +1,7 @@
 import * as Button from './button';
 import { RiArrowLeftSLine, RiArrowRightSLine, RiFileCopyLine } from 'react-icons/ri';
 
-export default { title: 'UI/Button', component: Button.Root };
+export default { title: 'Actions/Button', component: Button.Root };
 
 export const PrimaryVariant = {
   render: () => (

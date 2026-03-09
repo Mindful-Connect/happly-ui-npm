@@ -1,6 +1,6 @@
 import * as Avatar from './avatar';
 
-export default { title: 'UI/Avatar', component: Avatar.Root };
+export default { title: 'Displaying Data/Avatar', component: Avatar.Root };
 
 export const Color = {
   render: () => (

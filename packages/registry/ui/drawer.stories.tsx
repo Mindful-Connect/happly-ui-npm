@@ -16,7 +16,7 @@ import * as CompactButton from './compact-button';
 import * as Divider from './divider';
 import * as Drawer from './drawer';
 
-export default { title: 'UI/Drawer', component: Drawer.Root };
+export default { title: 'Overlays/Drawer', component: Drawer.Root };
 
 const TransactionItem = React.forwardRef<
   HTMLButtonElement,

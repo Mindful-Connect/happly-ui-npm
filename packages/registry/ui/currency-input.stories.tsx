@@ -1,25 +1,54 @@
 'use client';
 
-import { useState } from 'react';
-import { CurrencyInput } from './currency-input';
+import * as React from 'react';
 
-export default { title: 'UI/CurrencyInput', component: CurrencyInput };
+import * as CurrencyInput from './currency-input';
+
+export default { title: 'Form/Composed Inputs/Currency Input' };
 
 export const Default = {
+  render: () => (
+    <div className='w-full max-w-[300px]'>
+      <CurrencyInput.Root />
+    </div>
+  ),
+};
+
+export const Controlled = {
   render: () => {
-    const [value, setValue] = useState('');
+    const [amount, setAmount] = React.useState('');
+    const [currency, setCurrency] = React.useState('USD');
 
     return (
-      <div style={{ maxWidth: '384px', width: '100%' }}>
-        <CurrencyInput
-          value={value}
-          onChange={(val) => setValue(val)}
-          placeholder="0.00"
+      <div className='w-full max-w-[300px]'>
+        <CurrencyInput.Root
+          value={amount}
+          onValueChange={setAmount}
+          currency={currency}
+          onCurrencyChange={setCurrency}
         />
-        <div style={{ marginTop: '16px', fontSize: '14px', color: '#6b7280' }}>
-          Value: {value || '(empty)'}
-        </div>
+        <p className='mt-2 text-paragraph-xs text-text-sub-600'>
+          Amount: {amount || '—'} | Currency: {currency}
+        </p>
       </div>
     );
   },
+};
+
+export const Sizes = {
+  render: () => (
+    <div className='flex w-full max-w-[300px] flex-col gap-6'>
+      <CurrencyInput.Root size='medium' />
+      <CurrencyInput.Root size='small' />
+      <CurrencyInput.Root size='xsmall' />
+    </div>
+  ),
+};
+
+export const ErrorState = {
+  render: () => (
+    <div className='w-full max-w-[300px]'>
+      <CurrencyInput.Root hasError />
+    </div>
+  ),
 };

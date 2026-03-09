@@ -1,7 +1,7 @@
 import * as CompactButton from './compact-button';
 import { RiAddLine } from '@remixicon/react';
 
-export default { title: 'UI/Compact Button', component: CompactButton.Root };
+export default { title: 'Actions/Compact Button', component: CompactButton.Root };
 
 export const Stroke = {
   render: () => (

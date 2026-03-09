@@ -4,7 +4,7 @@ import * as Button from './button';
 import * as CompactButton from './compact-button';
 import * as Popover from './popover';
 
-export default { title: 'UI/Popover', component: Popover.Root };
+export default { title: 'Overlays/Popover', component: Popover.Root };
 
 export const Demo = {
   render: () => (

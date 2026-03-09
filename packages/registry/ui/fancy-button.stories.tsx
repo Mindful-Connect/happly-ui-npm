@@ -1,7 +1,7 @@
 import * as FancyButton from './fancy-button';
 import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react';
 
-export default { title: 'UI/Fancy Button', component: FancyButton.Root };
+export default { title: 'Actions/Fancy Button', component: FancyButton.Root };
 
 export const Neutral = {
   render: () => <FancyButton.Root variant='neutral'>Button</FancyButton.Root>,

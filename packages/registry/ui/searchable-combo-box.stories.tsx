@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { SearchableMultiCombobox } from './searchable-combo-box';
 
-export default { title: 'UI/SearchableComboBox', component: SearchableMultiCombobox };
+export default { title: 'Searchable Combo Box', component: SearchableMultiCombobox };
 
 const mockTags = [
   { id: 88, slug: '3d-modeling', category: 'skill', label: '3D Modeling', order: 0 },

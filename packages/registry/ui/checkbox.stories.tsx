@@ -8,7 +8,7 @@ import * as Checkbox from './checkbox';
 import * as Label from './label';
 import * as LinkButton from './link-button';
 
-export default { title: 'UI/Checkbox', component: Checkbox.Root };
+export default { title: 'Form/Checkbox', component: Checkbox.Root };
 
 export const Demo = {
   render: () => <Checkbox.Root />,

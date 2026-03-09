@@ -290,7 +290,7 @@ function DataTableDemo() {
   );
 }
 
-export default { title: 'UI/Table', component: Table.Root };
+export default { title: 'Displaying Data/Table', component: Table.Root };
 
 export const Default = {
   render: () => <DataTableDemo />,

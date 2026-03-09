@@ -6,7 +6,7 @@ import { RiChatSettingsLine, RiCheckboxCircleFill } from '@remixicon/react';
 import * as Button from './button';
 import * as Modal from './modal';
 
-export default { title: 'UI/Modal', component: Modal.Root };
+export default { title: 'Overlays/Modal', component: Modal.Root };
 
 export const Demo = {
   render: () => {

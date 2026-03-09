@@ -11,7 +11,7 @@ import {
 import * as Banner from './banner';
 import * as LinkButton from './link-button';
 
-export default { title: 'UI/Banner', component: Banner.Root };
+export default { title: 'Displaying Data/Banner', component: Banner.Root };
 
 export const Error = {
   render: () => (

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import SocialsInput from './socials-input';
 
-export default { title: 'UI/SocialsInput', component: SocialsInput };
+export default { title: 'Socials Input', component: SocialsInput };
 
 export const Default = {
   render: () => {

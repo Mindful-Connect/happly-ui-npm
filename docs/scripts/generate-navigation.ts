@@ -63,6 +63,7 @@ function main() {
     'banner',
     'divider',
     'kbd',
+    'level-bar',
     'progress-bar',
     'progress-circle',
     'status-badge',
@@ -103,6 +104,12 @@ function main() {
     'textarea',
   ];
 
+  const COMPOSED_INPUT_COMPONENTS = [
+    'currency-input',
+    'password-input',
+    'tag-input',
+  ];
+
   const SUPPORT_COMPONENTS = [
     'command',
     'custom-input-wrapper',
@@ -110,7 +117,7 @@ function main() {
     'key-icon',
   ];
 
-  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...SUPPORT_COMPONENTS];
+  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS, ...SUPPORT_COMPONENTS];
 
   const mainLinks = componentLinks
     .filter((item) => !GROUPED_COMPONENTS.includes(item.name))
@@ -138,6 +145,10 @@ function main() {
 
   const formLinks = componentLinks
     .filter((item) => FORM_COMPONENTS.includes(item.name))
+    .map(({ name, ...rest }) => rest);
+
+  const composedInputLinks = componentLinks
+    .filter((item) => COMPOSED_INPUT_COMPONENTS.includes(item.name))
     .map(({ name, ...rest }) => rest);
 
   const supportLinks = componentLinks
@@ -168,7 +179,14 @@ function main() {
         },
         {
           title: 'Form',
-          links: formLinks,
+          links: [
+            ...formLinks,
+            {
+              title: 'Composed Inputs',
+              links: composedInputLinks,
+              collapsed: false,
+            },
+          ],
           collapsed: false,
         },
         {
