@@ -36,7 +36,7 @@ import { default as phoneInputMeta, Default as phoneInput_Default } from '@/comp
 import { default as popoverMeta, Demo as popover_Demo, Position as popover_Position } from '@/components/ui/popover.stories';
 import { default as progressBarMeta, Color as progressBar_Color, WithLabel as progressBar_WithLabel, DataStorage as progressBar_DataStorage } from '@/components/ui/progress-bar.stories';
 import { default as progressCircleMeta, Default as progressCircle_Default } from '@/components/ui/progress-circle.stories';
-import { default as radioCardMeta, Default as radioCard_Default, WithKeyIcons as radioCard_WithKeyIcons, WithSimpleIcons as radioCard_WithSimpleIcons, WithBadges as radioCard_WithBadges, InlineDescription as radioCard_InlineDescription, AllowDeselect as radioCard_AllowDeselect, Disabled as radioCard_Disabled, ErrorState as radioCard_ErrorState, PrimaryVariant as radioCard_PrimaryVariant } from '@/components/ui/radio-card.stories';
+import { default as radioCardMeta, Default as radioCard_Default, WithKeyIcons as radioCard_WithKeyIcons, WithSimpleIcons as radioCard_WithSimpleIcons, WithBadges as radioCard_WithBadges, InlineDescription as radioCard_InlineDescription, AllowDeselect as radioCard_AllowDeselect, Disabled as radioCard_Disabled, ErrorState as radioCard_ErrorState, Composed as radioCard_Composed, PrimaryVariant as radioCard_PrimaryVariant } from '@/components/ui/radio-card.stories';
 import { default as radioMeta, Demo as radio_Demo, Variants as radio_Variants, Disabled as radio_Disabled, WithLabel as radio_WithLabel, WithLabelExtended as radio_WithLabelExtended } from '@/components/ui/radio.stories';
 import { default as searchableComboBoxMeta, Default as searchableComboBox_Default } from '@/components/ui/searchable-combo-box.stories';
 import { default as selectMeta, Demo as select_Demo, WithLabelHint as select_WithLabelHint, WithIcons as select_WithIcons, Sizes as select_Sizes, WithCountryFlags as select_WithCountryFlags, WithUsers as select_WithUsers, Disabled as select_Disabled, Compact as select_Compact, CompactCountry as select_CompactCountry, CompactSizes as select_CompactSizes, InlineCountry as select_InlineCountry, InputWithInlineSelect as select_InputWithInlineSelect, WithInput as select_WithInput, WithInputSizes as select_WithInputSizes } from '@/components/ui/select.stories';
@@ -395,6 +395,7 @@ export const storyRegistry: Record<string, {
     'AllowDeselect': radioCard_AllowDeselect,
     'Disabled': radioCard_Disabled,
     'ErrorState': radioCard_ErrorState,
+    'Composed': radioCard_Composed,
     'PrimaryVariant': radioCard_PrimaryVariant
     }
   },
