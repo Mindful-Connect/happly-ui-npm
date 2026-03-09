@@ -10,7 +10,6 @@ import { default as bannerMeta, Error as banner_Error, Warning as banner_Warning
 import { default as buttonGroupMeta, Default as buttonGroup_Default, Sizes as buttonGroup_Sizes } from '@/components/ui/button-group.stories';
 import { default as buttonMeta, PrimaryVariant as button_PrimaryVariant, NeutralVariant as button_NeutralVariant, SuccessVariant as button_SuccessVariant, WarningVariant as button_WarningVariant, ErrorVariant as button_ErrorVariant, Sizes as button_Sizes, Disabled as button_Disabled, WithIcon as button_WithIcon, FullWidth as button_FullWidth, AsChild as button_AsChild, Composition as button_Composition } from '@/components/ui/button.stories';
 import { default as checkboxMeta, Demo as checkbox_Demo, Variants as checkbox_Variants, Disabled as checkbox_Disabled, WithLabel as checkbox_WithLabel, WithLabelExtended as checkbox_WithLabelExtended } from '@/components/ui/checkbox.stories';
-import { default as circularProgressMeta, Default as circularProgress_Default, WithColorVariants as circularProgress_WithColorVariants } from '@/components/ui/circular-progress.stories';
 import { default as colorPickerMeta, Demo as colorPicker_Demo, PopoverDemo as colorPicker_PopoverDemo } from '@/components/ui/color-picker.stories';
 import { default as commandMenuMeta, Demo as commandMenu_Demo } from '@/components/ui/command-menu.stories';
 import { default as compactButtonMeta, Stroke as compactButton_Stroke, Ghost as compactButton_Ghost, White as compactButton_White, Modifiable as compactButton_Modifiable, Sizes as compactButton_Sizes, FullRadius as compactButton_FullRadius, Disabled as compactButton_Disabled, AsChild as compactButton_AsChild } from '@/components/ui/compact-button.stories';
@@ -23,7 +22,7 @@ import { default as drawerMeta, Demo as drawer_Demo, Basic as drawer_Basic } fro
 import { default as dropdownMeta, Demo as dropdown_Demo, SubMenu as dropdown_SubMenu } from '@/components/ui/dropdown.stories';
 import { default as fancyButtonMeta, Neutral as fancyButton_Neutral, Primary as fancyButton_Primary, Error as fancyButton_Error, Basic as fancyButton_Basic, WithIcon as fancyButton_WithIcon, Sizes as fancyButton_Sizes, Disabled as fancyButton_Disabled, AsChild as fancyButton_AsChild } from '@/components/ui/fancy-button.stories';
 import { default as hintMeta, Demo as hint_Demo, Disabled as hint_Disabled, HasError as hint_HasError } from '@/components/ui/hint.stories';
-import { default as inputMeta, WithIcon as input_WithIcon, Sizes as input_Sizes, WithAffix as input_WithAffix, WithInlineAffix as input_WithInlineAffix, LabelAndHint as input_LabelAndHint, WithKbd as input_WithKbd, Password as input_Password, PasswordWithLevel as input_PasswordWithLevel, Disabled as input_Disabled, ErrorState as input_ErrorState, WithButton as input_WithButton, WithTags as input_WithTags, DateField as input_DateField, CounterInput as input_CounterInput, Composition as input_Composition } from '@/components/ui/input.stories';
+import { default as inputMeta, WithIcon as input_WithIcon, Sizes as input_Sizes, WithAffix as input_WithAffix, WithInlineAffix as input_WithInlineAffix, LabelAndHint as input_LabelAndHint, WithKbd as input_WithKbd, Password as input_Password, PasswordWithLevel as input_PasswordWithLevel, Disabled as input_Disabled, ErrorState as input_ErrorState, WithButton as input_WithButton, WithTags as input_WithTags, DateFieldStory as input_DateFieldStory, PaymentInput as input_PaymentInput, WithSelect as input_WithSelect, WithInlineSelect as input_WithInlineSelect, CounterInput as input_CounterInput, Composition as input_Composition } from '@/components/ui/input.stories';
 import { default as kbdMeta, Demo as kbd_Demo } from '@/components/ui/kbd.stories';
 import { default as labelMeta, Demo as label_Demo } from '@/components/ui/label.stories';
 import { default as linkButtonMeta, Gray as linkButton_Gray, Black as linkButton_Black, Primary as linkButton_Primary, Error as linkButton_Error, Modifiable as linkButton_Modifiable, Sizes as linkButton_Sizes, Underline as linkButton_Underline, WithIcon as linkButton_WithIcon, Disabled as linkButton_Disabled, AsChild as linkButton_AsChild } from '@/components/ui/link-button.stories';
@@ -151,13 +150,6 @@ export const storyRegistry: Record<string, {
     'WithLabelExtended': checkbox_WithLabelExtended
     }
   },
-  'circular-progress': {
-    meta: circularProgressMeta,
-    stories: {
-    'Default': circularProgress_Default,
-    'WithColorVariants': circularProgress_WithColorVariants
-    }
-  },
   'color-picker': {
     meta: colorPickerMeta,
     stories: {
@@ -276,7 +268,10 @@ export const storyRegistry: Record<string, {
     'ErrorState': input_ErrorState,
     'WithButton': input_WithButton,
     'WithTags': input_WithTags,
-    'DateField': input_DateField,
+    'DateFieldStory': input_DateFieldStory,
+    'PaymentInput': input_PaymentInput,
+    'WithSelect': input_WithSelect,
+    'WithInlineSelect': input_WithInlineSelect,
     'CounterInput': input_CounterInput,
     'Composition': input_Composition
     }

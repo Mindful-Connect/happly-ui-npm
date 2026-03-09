@@ -100,6 +100,30 @@
         "stories": ["CounterInput"]
       },
       {
+        "title": "Date Field",
+        "description": "Date input using React Aria DateField with inputVariants styling.",
+        "code": "import { DateField, DateInput, DateSegment, Label } from 'react-aria-components';\nimport { inputVariants } from '@/components/ui/input';\n\nconst { root, wrapper, icon } = inputVariants();\n\n<DateField>\n  <Label>Date</Label>\n  <div className={root()}>\n    <div className={wrapper({ class: 'h-10' })}>\n      <RiCalendarLine className={icon()} />\n      <DateInput className=\"flex\">\n        {(segment) => <DateSegment segment={segment} />}\n      </DateInput>\n    </div>\n  </div>\n</DateField>",
+        "stories": ["DateFieldStory"]
+      },
+      {
+        "title": "Payment Input",
+        "description": "Credit card number input with auto-detection using react-payment-inputs.",
+        "code": "import { usePaymentInputs } from 'react-payment-inputs';\n\nconst { getCardNumberProps, meta } = usePaymentInputs();\n\n<Input.Root>\n  <Input.Wrapper className=\"pr-2\">\n    <Input.Icon as={RiBankCardLine} />\n    <Input.Input\n      {...getCardNumberProps()}\n      placeholder=\"0000 0000 0000 0000\"\n    />\n    <img src={cardIcon} alt=\"\" className=\"h-6 w-8 shrink-0\" />\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["PaymentInput"]
+      },
+      {
+        "title": "With Select",
+        "description": "Input combined with a compact select for currency picking.",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.InlineAffix>€</Input.InlineAffix>\n    <Input.Input placeholder=\"0.00\" />\n  </Input.Wrapper>\n  <Select.Root variant=\"compactForInput\" defaultValue=\"EUR\">\n    <Select.Trigger>\n      <Select.Value />\n    </Select.Trigger>\n    <Select.Content>\n      <Select.Item value=\"EUR\">EUR</Select.Item>\n    </Select.Content>\n  </Select.Root>\n</Input.Root>",
+        "stories": ["WithSelect"]
+      },
+      {
+        "title": "With Inline Select",
+        "description": "Input with an inline select for permissions inside the wrapper.",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiUser6Line} />\n    <Input.Input placeholder=\"Placeholder text...\" />\n    <Select.Root variant=\"inline\" defaultValue=\"view\">\n      <Select.Trigger>\n        <Select.TriggerIcon as={RiGlobalLine} />\n        <Select.Value />\n      </Select.Trigger>\n      <Select.Content>\n        <Select.Item value=\"view\">can view</Select.Item>\n        <Select.Item value=\"edit\">can edit</Select.Item>\n      </Select.Content>\n    </Select.Root>\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["WithInlineSelect"]
+      },
+      {
         "title": "Composed",
         "description": "Simplified usage via the Composed wrapper with leadingIcon, trailingIcon, and node slots.",
         "code": "import * as Input from \"@/components/ui/input\"\n\n<Input.Composed\n  leadingIcon={RiLock2Line}\n  type=\"password\"\n  placeholder=\"••••••••••\"\n  inlineTrailingNode={<button>Toggle</button>}\n/>",

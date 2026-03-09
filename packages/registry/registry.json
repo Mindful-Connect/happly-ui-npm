@@ -76,12 +76,6 @@
       "description": "An animated checkbox component built on Radix UI with check and indeterminate states, primary and neutral variants. Uses namespace exports: Checkbox.Root."
     },
     {
-      "name": "circular-progress",
-      "type": "registry:ui",
-      "title": "Circular Progress",
-      "description": "A circular progress indicator."
-    },
-    {
       "name": "color-picker",
       "type": "registry:ui",
       "title": "Color Picker",

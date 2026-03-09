@@ -3,11 +3,14 @@
 import * as React from 'react';
 import {
   RiAddLine,
+  RiBankCardLine,
+  RiCalendarLine,
   RiCheckboxCircleFill,
   RiCloseCircleFill,
   RiEyeLine,
   RiEyeOffLine,
   RiFileCopyLine,
+  RiGlobalLine,
   RiInformationFill,
   RiLinksLine,
   RiLock2Line,
@@ -19,11 +22,15 @@ import {
 } from '@remixicon/react';
 import {
   Button as ReactAriaButton,
+  DateField as ReactAriaDateField,
+  DateInput as ReactAriaDateInput,
+  DateSegment as ReactAriaDateSegment,
   Group as ReactAriaGroup,
   Input as ReactAriaInput,
   Label as ReactAriaLabel,
   NumberField as ReactAriaNumberField,
 } from 'react-aria-components';
+import { usePaymentInputs } from 'react-payment-inputs';
 
 import { compactButtonVariants } from './compact-button';
 import * as Hint from './hint';
@@ -31,6 +38,7 @@ import * as Input from './input';
 import { inputVariants } from './input';
 import * as Kbd from './kbd';
 import * as Label from './label';
+import * as Select from './select';
 import * as Tag from './tag';
 import { cn } from '@/lib/happly-ui-utils';
 
@@ -506,33 +514,142 @@ export const WithTags = {
   },
 };
 
-export const DateField = {
+export const DateFieldStory = {
   name: 'Date Field (React Aria)',
   render: () => {
     const { root, wrapper, icon } = inputVariants();
     return (
       <div className='w-full max-w-[300px]'>
-        <div className='flex flex-col gap-1'>
-          <Label.Root>Date</Label.Root>
+        <ReactAriaDateField className='flex flex-col gap-1'>
+          <Label.Root asChild>
+            <ReactAriaLabel>Date</ReactAriaLabel>
+          </Label.Root>
           <div className={root()}>
             <div className={wrapper({ class: 'h-10' })}>
-              <span className={icon()}>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  viewBox='0 0 24 24'
-                  fill='currentColor'
-                  className='size-5'
-                >
-                  <path d='M9 1V3H15V1H17V3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H7V1H9ZM20 11H4V19H20V11ZM7 5H4V9H20V5H17V7H15V5H9V7H7V5Z' />
-                </svg>
-              </span>
-              <Input.Input placeholder='MM / DD / YYYY' />
+              <RiCalendarLine className={icon()} />
+              <ReactAriaDateInput className='flex'>
+                {(segment) => (
+                  <ReactAriaDateSegment
+                    segment={segment}
+                    className='flex items-center rounded p-0.5 text-paragraph-sm uppercase leading-none text-text-strong-950 caret-transparent outline-none focus:bg-bg-weak-50 focus:outline-none'
+                  />
+                )}
+              </ReactAriaDateInput>
             </div>
           </div>
+        </ReactAriaDateField>
+      </div>
+    );
+  },
+};
+
+export const PaymentInput = {
+  render: () => {
+    const { getCardNumberProps, meta } = usePaymentInputs();
+    const { cardType } = meta;
+
+    const cardIcon = React.useMemo(() => {
+      if (cardType?.displayName === 'Visa') {
+        return '/images/payment-methods/visa.svg';
+      }
+      if (cardType?.displayName === 'Mastercard') {
+        return '/images/payment-methods/mastercard.svg';
+      }
+      if (cardType?.displayName === 'American Express') {
+        return '/images/payment-methods/amex.svg';
+      }
+      return '/images/payment-methods/placeholder.svg';
+    }, [cardType?.displayName]);
+
+    return (
+      <div className='w-full max-w-[300px]'>
+        <div className='flex flex-col gap-1'>
+          <Label.Root htmlFor='card-number'>
+            Card Number <Label.Asterisk />
+          </Label.Root>
+
+          <Input.Root>
+            <Input.Wrapper className='pr-2'>
+              <Input.Icon as={RiBankCardLine} />
+              <Input.Input
+                {...getCardNumberProps()}
+                id='card-number'
+                placeholder='0000 0000 0000 0000'
+              />
+              <img src={cardIcon} alt='' className='h-6 w-8 shrink-0' />
+            </Input.Wrapper>
+          </Input.Root>
         </div>
       </div>
     );
   },
+};
+
+const currencies = [
+  { icon: 'https://mindful-connect.github.io/circle-flags/flags/eu.svg', value: 'EUR', label: 'EUR' },
+  { icon: 'https://mindful-connect.github.io/circle-flags/flags/us.svg', value: 'USD', label: 'USD' },
+  { icon: 'https://mindful-connect.github.io/circle-flags/flags/tr.svg', value: 'TRY', label: 'TRY' },
+];
+
+export const WithSelect = {
+  render: () => (
+    <div className='w-full max-w-[300px]'>
+      <Input.Root>
+        <Input.Wrapper>
+          <Input.InlineAffix>€</Input.InlineAffix>
+          <Input.Input placeholder='0.00' />
+        </Input.Wrapper>
+        <Select.Root variant='compactForInput' defaultValue='EUR'>
+          <Select.Trigger>
+            <Select.Value />
+          </Select.Trigger>
+          <Select.Content>
+            {currencies.map((item) => (
+              <Select.Item key={item.value} value={item.value}>
+                <Select.ItemIcon
+                  style={{
+                    backgroundImage: `url(${item.icon})`,
+                  }}
+                />
+                {item.label}
+              </Select.Item>
+            ))}
+          </Select.Content>
+        </Select.Root>
+      </Input.Root>
+    </div>
+  ),
+};
+
+const permissions = [
+  { value: 'view', label: 'can view' },
+  { value: 'edit', label: 'can edit' },
+];
+
+export const WithInlineSelect = {
+  render: () => (
+    <div className='w-full max-w-[300px]'>
+      <Input.Root>
+        <Input.Wrapper>
+          <Input.Icon as={RiUser6Line} />
+          <Input.Input placeholder='Placeholder text...' />
+          <Select.Root variant='inline' defaultValue='view'>
+            <Select.Trigger>
+              <Select.TriggerIcon as={RiGlobalLine} />
+              <Select.Value />
+            </Select.Trigger>
+            <Select.Content>
+              {permissions.map((item) => (
+                <Select.Item key={item.value} value={item.value}>
+                  {item.label}
+                </Select.Item>
+              ))}
+            </Select.Content>
+          </Select.Root>
+        </Input.Wrapper>
+      </Input.Root>
+    </div>
+  ),
 };
 
 export const CounterInput = {
