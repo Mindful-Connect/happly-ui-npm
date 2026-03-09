@@ -241,7 +241,7 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
                     {example.stories?.length ? (
                       <StoryPreview componentName={name} storyNames={example.stories} />
                     ) : null}
-                    <Fence language='tsx'>{example.code}</Fence>
+                    {example.code && <Fence language='tsx'>{example.code}</Fence>}
                   </div>
                 ))}
                 <hr />

@@ -20,7 +20,88 @@
   "docs": {
     "lead": "A compound input component with wrapper, icons, affixes, and size/error variants.",
     "usage": "import * as Input from \"@/components/ui/input\"\n\n<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiSearchLine} />\n    <Input.Input placeholder=\"Search...\" />\n  </Input.Wrapper>\n</Input.Root>",
-    "examples": [],
+    "examples": [
+      {
+        "title": "With Icon",
+        "description": "Input with leading or trailing icons.",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiUser6Line} />\n    <Input.Input placeholder=\"Placeholder text...\" />\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["WithIcon"]
+      },
+      {
+        "title": "Sizes",
+        "description": "Available size variants: medium, small, and xsmall.",
+        "code": "<Input.Root size=\"small\">\n  <Input.Wrapper>\n    <Input.Icon as={RiUser6Line} />\n    <Input.Input placeholder=\"Placeholder text...\" />\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["Sizes"]
+      },
+      {
+        "title": "With Affix",
+        "description": "Input with prefix or suffix affix sections separated by a divider.",
+        "code": "<Input.Root>\n  <Input.Affix>https://</Input.Affix>\n  <Input.Wrapper>\n    <Input.Input placeholder=\"www.example.com\" />\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["WithAffix"]
+      },
+      {
+        "title": "With Inline Affix",
+        "description": "Input with an inline affix displayed within the input area.",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.InlineAffix>€</Input.InlineAffix>\n    <Input.Input placeholder=\"0.00\" />\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["WithInlineAffix"]
+      },
+      {
+        "title": "Label and Hint",
+        "description": "Input composed with Label and Hint components.",
+        "code": "<Label.Root htmlFor=\"email\">Email Address</Label.Root>\n<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiMailLine} />\n    <Input.Input id=\"email\" type=\"email\" placeholder=\"hello@example.com\" />\n  </Input.Wrapper>\n</Input.Root>\n<Hint.Root>\n  <Hint.Icon as={RiInformationFill} />\n  This is a hint text.\n</Hint.Root>",
+        "stories": ["LabelAndHint"]
+      },
+      {
+        "title": "With Kbd",
+        "description": "Input with a keyboard shortcut indicator.",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiSearch2Line} />\n    <Input.Input placeholder=\"Search...\" />\n    <Kbd.Root>⌘1</Kbd.Root>\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["WithKbd"]
+      },
+      {
+        "title": "Password",
+        "description": "Password input with show/hide toggle.",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiLock2Line} />\n    <Input.Input type=\"password\" placeholder=\"••••••••••\" />\n    <button onClick={() => setShowPassword(s => !s)}>Toggle</button>\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["Password"]
+      },
+      {
+        "title": "Password with Strength Level",
+        "description": "Password input with a strength indicator and criteria checklist.",
+        "stories": ["PasswordWithLevel"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Disabled input state.",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Input placeholder=\"Placeholder text...\" disabled />\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "Error State",
+        "description": "Input with error styling.",
+        "code": "<Input.Root hasError>\n  <Input.Wrapper>\n    <Input.Input placeholder=\"Placeholder text...\" />\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["ErrorState"]
+      },
+      {
+        "title": "With Button",
+        "description": "Input with an action button alongside.",
+        "stories": ["WithButton"]
+      },
+      {
+        "title": "With Tags",
+        "description": "Input that creates tags on Enter key press.",
+        "stories": ["WithTags"]
+      },
+      {
+        "title": "Counter Input",
+        "description": "Number field with increment/decrement buttons using React Aria.",
+        "stories": ["CounterInput"]
+      },
+      {
+        "title": "Composed",
+        "description": "Simplified usage via the Composed wrapper with leadingIcon, trailingIcon, and node slots.",
+        "code": "import * as Input from \"@/components/ui/input\"\n\n<Input.Composed\n  leadingIcon={RiLock2Line}\n  type=\"password\"\n  placeholder=\"••••••••••\"\n  inlineTrailingNode={<button>Toggle</button>}\n/>",
+        "stories": ["Composition"]
+      }
+    ],
     "api": [
       {
         "name": "Input.Root",
@@ -76,6 +157,54 @@
         "name": "Input.InlineAffix",
         "description": "Inline affix displayed within the input area.",
         "props": []
+      },
+      {
+        "name": "Input.Composed",
+        "description": "A simplified wrapper that composes Root, Wrapper, Input, and Icon into a single component.",
+        "props": [
+          {
+            "name": "size",
+            "type": "'medium' | 'small' | 'xsmall'",
+            "default": "'medium'",
+            "description": "Size variant"
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Show error styling"
+          },
+          {
+            "name": "leadingIcon",
+            "type": "React.ElementType",
+            "description": "Icon rendered before the input"
+          },
+          {
+            "name": "trailingIcon",
+            "type": "React.ElementType",
+            "description": "Icon rendered after the input"
+          },
+          {
+            "name": "leadingNode",
+            "type": "React.ReactNode",
+            "description": "Node rendered before the wrapper (e.g. Affix)"
+          },
+          {
+            "name": "trailingNode",
+            "type": "React.ReactNode",
+            "description": "Node rendered after the wrapper (e.g. Affix)"
+          },
+          {
+            "name": "inlineLeadingNode",
+            "type": "React.ReactNode",
+            "description": "Node rendered inside the wrapper before icons"
+          },
+          {
+            "name": "inlineTrailingNode",
+            "type": "React.ReactNode",
+            "description": "Node rendered inside the wrapper after icons"
+          }
+        ]
       }
     ]
   },

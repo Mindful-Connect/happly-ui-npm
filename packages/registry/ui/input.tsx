@@ -304,6 +304,51 @@ function InputInlineAffix({
 }
 InputInlineAffix.displayName = INPUT_INLINE_AFFIX_NAME;
 
+type InputProps = React.ComponentPropsWithoutRef<typeof InputEl> &
+  Pick<
+    React.ComponentPropsWithoutRef<typeof InputRoot>,
+    'hasError' | 'size'
+  > & {
+    leadingIcon?: React.ElementType;
+    trailingIcon?: React.ElementType;
+    leadingNode?: React.ReactNode;
+    trailingNode?: React.ReactNode;
+    inlineLeadingNode?: React.ReactNode;
+    inlineTrailingNode?: React.ReactNode;
+  };
+
+const InputComposed = React.forwardRef<HTMLInputElement, InputProps>(
+  (
+    {
+      size,
+      hasError,
+      leadingIcon: LeadingIcon,
+      trailingIcon: TrailingIcon,
+      leadingNode,
+      trailingNode,
+      inlineLeadingNode,
+      inlineTrailingNode,
+      ...rest
+    },
+    forwardedRef,
+  ) => {
+    return (
+      <InputRoot size={size} hasError={hasError}>
+        {leadingNode}
+        <InputWrapper>
+          {inlineLeadingNode}
+          {LeadingIcon && <InputIcon as={LeadingIcon} />}
+          <InputEl ref={forwardedRef} type='text' {...rest} />
+          {TrailingIcon && <InputIcon as={TrailingIcon} />}
+          {inlineTrailingNode}
+        </InputWrapper>
+        {trailingNode}
+      </InputRoot>
+    );
+  },
+);
+InputComposed.displayName = 'InputComposed';
+
 export {
   InputRoot as Root,
   InputWrapper as Wrapper,
@@ -311,4 +356,5 @@ export {
   InputIcon as Icon,
   InputAffix as Affix,
   InputInlineAffix as InlineAffix,
+  InputComposed as Composed,
 };

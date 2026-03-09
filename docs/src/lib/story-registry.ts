@@ -24,7 +24,7 @@ import { default as drawerMeta, Demo as drawer_Demo, Basic as drawer_Basic } fro
 import { default as dropdownMeta, Demo as dropdown_Demo, SubMenu as dropdown_SubMenu } from '@/components/ui/dropdown.stories';
 import { default as fancyButtonMeta, Neutral as fancyButton_Neutral, Primary as fancyButton_Primary, Error as fancyButton_Error, Basic as fancyButton_Basic, WithIcon as fancyButton_WithIcon, Sizes as fancyButton_Sizes, Disabled as fancyButton_Disabled, AsChild as fancyButton_AsChild } from '@/components/ui/fancy-button.stories';
 import { default as hintMeta, Demo as hint_Demo, Disabled as hint_Disabled, HasError as hint_HasError } from '@/components/ui/hint.stories';
-import { default as inputMeta, Sizes as input_Sizes, Icons as input_Icons, Affixes as input_Affixes, States as input_States } from '@/components/ui/input.stories';
+import { default as inputMeta, WithIcon as input_WithIcon, Sizes as input_Sizes, WithAffix as input_WithAffix, WithInlineAffix as input_WithInlineAffix, LabelAndHint as input_LabelAndHint, WithKbd as input_WithKbd, Password as input_Password, PasswordWithLevel as input_PasswordWithLevel, Disabled as input_Disabled, ErrorState as input_ErrorState, WithButton as input_WithButton, WithTags as input_WithTags, DateField as input_DateField, CounterInput as input_CounterInput, Composition as input_Composition } from '@/components/ui/input.stories';
 import { default as kbdMeta, Demo as kbd_Demo } from '@/components/ui/kbd.stories';
 import { default as labelMeta, Demo as label_Demo } from '@/components/ui/label.stories';
 import { default as linkButtonMeta, Gray as linkButton_Gray, Black as linkButton_Black, Primary as linkButton_Primary, Error as linkButton_Error, Modifiable as linkButton_Modifiable, Sizes as linkButton_Sizes, Underline as linkButton_Underline, WithIcon as linkButton_WithIcon, Disabled as linkButton_Disabled, AsChild as linkButton_AsChild } from '@/components/ui/link-button.stories';
@@ -270,10 +270,21 @@ export const storyRegistry: Record<string, {
   'input': {
     meta: inputMeta,
     stories: {
+    'WithIcon': input_WithIcon,
     'Sizes': input_Sizes,
-    'Icons': input_Icons,
-    'Affixes': input_Affixes,
-    'States': input_States
+    'WithAffix': input_WithAffix,
+    'WithInlineAffix': input_WithInlineAffix,
+    'LabelAndHint': input_LabelAndHint,
+    'WithKbd': input_WithKbd,
+    'Password': input_Password,
+    'PasswordWithLevel': input_PasswordWithLevel,
+    'Disabled': input_Disabled,
+    'ErrorState': input_ErrorState,
+    'WithButton': input_WithButton,
+    'WithTags': input_WithTags,
+    'DateField': input_DateField,
+    'CounterInput': input_CounterInput,
+    'Composition': input_Composition
     }
   },
   'kbd': {
