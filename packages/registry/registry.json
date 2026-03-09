@@ -187,7 +187,7 @@
       "name": "key-icon",
       "type": "registry:ui",
       "title": "Key Icon",
-      "description": "An icon container with various styles and colors."
+      "description": "An icon container with various styles, sizes, and colors."
     },
     {
       "name": "label",
@@ -268,10 +268,10 @@
       "description": "A radio group component with animated SVG indicator and primary/neutral variants. Uses namespace exports: Radio.Group, Radio.Item."
     },
     {
-      "name": "radio-card-group",
+      "name": "radio-card",
       "type": "registry:ui",
-      "title": "Radio Card Group",
-      "description": "A radio group component with card styling, supporting icons, badges, and descriptions."
+      "title": "Radio Card",
+      "description": "A composable radio input styled as a card. Compose with Title, Description, Content, Indicator, KeyIcon, and Badge sub-components."
     },
     {
       "name": "radio-group",

@@ -1,69 +1,25 @@
+import * as React from 'react';
+
 import { cn } from '@/lib/happly-ui-utils';
-import { cva } from 'class-variance-authority';
+import { tv, type VariantProps } from '@/lib/tv';
 
-type Color =
-  | 'blue'
-  | 'gray'
-  | 'orange'
-  | 'red'
-  | 'green'
-  | 'yellow'
-  | 'purple'
-  | 'pink'
-  | 'teal';
-type Style = 'stroke' | 'lighter';
-
-const compoundVariants: { color: Color; style: Style; className: string }[] =
-  Object.entries({
-    blue: {
-      stroke: 'border border-ds-neutral-200',
-      lighter: 'border bg-ds-blue-50 border-ds-blue-100',
-    },
-    gray: {
-      stroke: 'border border-ds-neutral-200',
-      lighter: 'border bg-ds-blue-100 border-ds-blue-200',
-    },
-    orange: {
-      stroke: 'border border-ds-neutral-200',
-      lighter: 'border bg-ds-blue-50 border-ds-blue-100',
-    },
-    red: {
-      stroke: 'border border-ds-neutral-200',
-      lighter: 'border bg-ds-blue-50 border-ds-blue-100',
-    },
-    green: {
-      stroke: 'border border-ds-neutral-200',
-      lighter: 'border bg-ds-green-100 border-ds-green-200',
-    },
-    yellow: {
-      stroke: 'border border-ds-neutral-200',
-      lighter: 'border bg-ds-blue-50 border-ds-blue-100',
-    },
-    purple: {
-      stroke: 'border border-ds-neutral-200',
-      lighter: 'border bg-ds-blue-50 border-ds-blue-100',
-    },
-    pink: {
-      stroke: 'border border-ds-neutral-200',
-      lighter: 'border bg-ds-blue-50 border-ds-blue-100',
-    },
-    teal: {
-      stroke: 'border border-ds-neutral-200',
-      lighter: 'border bg-ds-sky-100 border-ds-sky-200',
-    },
-  }).flatMap(([color, styles]) =>
-    Object.entries(styles).map(([style, cls]) => ({
-      color: color as Color,
-      style: style as Style,
-      className: cls,
-    }))
-  );
-
-const keyIconVariants = cva('flex items-center justify-center rounded-full', {
+const keyIconVariants = tv({
+  base: 'flex shrink-0 items-center justify-center overflow-hidden rounded-full',
   variants: {
+    size: {
+      sm: 'size-8 p-1.5 [&_svg]:size-5',
+      md: 'size-10 p-2.5 [&_svg]:size-5',
+      lg: 'size-12 p-3 [&_svg]:size-6',
+      xl: 'size-14 p-3.5 [&_svg]:size-7',
+      '2xl': 'size-16 p-4 [&_svg]:size-8',
+    },
+    style: {
+      stroke: 'bg-bg-white-0 ring-1 ring-inset ring-stroke-soft-200 shadow-regular-xs',
+      lighter: 'ring-1 ring-inset',
+    },
     color: {
-      blue: '',
       gray: '',
+      blue: '',
       orange: '',
       red: '',
       green: '',
@@ -72,19 +28,19 @@ const keyIconVariants = cva('flex items-center justify-center rounded-full', {
       pink: '',
       teal: '',
     },
-    size: {
-      sm: 'w-8 h-8 [&_svg]:size-4',
-      md: 'w-10 h-10 [&_svg]:size-4',
-      lg: 'w-12 h-12 [&_svg]:size-6',
-      xl: 'w-14 h-14[&_svg]:size-7',
-      '2xl': 'w-16 h-16 [&_svg]:size-8',
-    },
-    style: {
-      stroke: '',
-      lighter: '',
-    },
   },
-  compoundVariants,
+  compoundVariants: [
+    // lighter color variants
+    { style: 'lighter', color: 'gray', class: 'bg-faded-lighter ring-stroke-soft-200' },
+    { style: 'lighter', color: 'blue', class: 'bg-information-lighter ring-blue-100' },
+    { style: 'lighter', color: 'orange', class: 'bg-warning-lighter ring-orange-100' },
+    { style: 'lighter', color: 'red', class: 'bg-error-lighter ring-red-100' },
+    { style: 'lighter', color: 'green', class: 'bg-success-lighter ring-green-200' },
+    { style: 'lighter', color: 'yellow', class: 'bg-away-lighter ring-yellow-200' },
+    { style: 'lighter', color: 'purple', class: 'bg-feature-lighter ring-purple-100' },
+    { style: 'lighter', color: 'pink', class: 'bg-highlighted-lighter ring-pink-100' },
+    { style: 'lighter', color: 'teal', class: 'bg-verified-lighter ring-sky-200' },
+  ],
   defaultVariants: {
     size: 'md',
     style: 'stroke',
@@ -92,41 +48,24 @@ const keyIconVariants = cva('flex items-center justify-center rounded-full', {
   },
 });
 
-export default function KeyIcon({
-  color = 'gray',
-  icon,
-  size = 'md',
-  style = 'stroke',
-  className,
-}: {
-  color?:
-    | 'blue'
-    | 'gray'
-    | 'orange'
-    | 'red'
-    | 'green'
-    | 'yellow'
-    | 'purple'
-    | 'pink'
-    | 'teal';
-  icon?: React.ReactNode;
-  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
-  style?: 'stroke' | 'lighter';
-  className?: string;
-}) {
-  return (
-    <div
-      className={cn(
-        keyIconVariants({
-          color,
-          size,
-          style,
-        }),
-        'shrink-0',
-        className
-      )}
-    >
-      {icon}
-    </div>
-  );
-}
+type KeyIconProps = React.ComponentPropsWithoutRef<'div'> &
+  VariantProps<typeof keyIconVariants> & {
+    icon?: React.ReactNode;
+  };
+
+const KeyIconRoot = React.forwardRef<HTMLDivElement, KeyIconProps>(
+  ({ className, size, style, color, icon, children, ...rest }, forwardedRef) => {
+    return (
+      <div
+        ref={forwardedRef}
+        className={cn(keyIconVariants({ size, style, color }), className)}
+        {...rest}
+      >
+        {icon ?? children}
+      </div>
+    );
+  },
+);
+KeyIconRoot.displayName = 'KeyIconRoot';
+
+export { KeyIconRoot as Root, keyIconVariants };

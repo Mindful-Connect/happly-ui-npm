@@ -4,7 +4,7 @@ export default { title: 'Displaying Data/Level Bar' };
 
 export const Levels = {
   render: () => (
-    <div className='flex w-full max-w-[300px] flex-col gap-4'>
+    <div className='flex w-[360px] flex-col gap-4'>
       <div className='flex flex-col gap-1'>
         <span className='text-paragraph-xs text-text-sub-600'>Level 0</span>
         <LevelBar level={0} />
@@ -36,7 +36,7 @@ export const CustomSegments = {
     };
 
     return (
-      <div className='flex w-full max-w-[300px] flex-col gap-4'>
+      <div className='flex w-[360px] flex-col gap-4'>
         <div className='flex flex-col gap-1'>
           <span className='text-paragraph-xs text-text-sub-600'>
             5 segments, level 0

@@ -135,6 +135,10 @@
             "href": "/docs/components/radio"
           },
           {
+            "title": "Radio Card",
+            "href": "/docs/components/radio-card"
+          },
+          {
             "title": "Select",
             "href": "/docs/components/select"
           },
@@ -232,10 +236,6 @@
       {
         "title": "Location Input",
         "href": "/docs/components/location-input"
-      },
-      {
-        "title": "Radio Card Group",
-        "href": "/docs/components/radio-card-group"
       },
       {
         "title": "Radio Group",

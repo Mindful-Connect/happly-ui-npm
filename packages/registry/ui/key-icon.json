@@ -3,9 +3,74 @@
   "name": "key-icon",
   "type": "registry:ui",
   "title": "Key Icon",
-  "description": "An icon container with various styles and colors.",
-  "dependencies": ["class-variance-authority"],
-  "registryDependencies": ["happly-ui-utils"],
+  "description": "An icon container with various styles, sizes, and colors.",
+  "version": "2.0.0",
+  "dependencies": [],
+  "registryDependencies": ["tv", "happly-ui-utils"],
+  "migration": {
+    "guide": "KeyIcon now uses namespace exports (KeyIcon.Root instead of default export). Replace `import KeyIcon from` with `import * as KeyIcon from`. The `icon` prop still works, but you can also pass children. Switched from cva to tv. Removed class-variance-authority dependency."
+  },
+  "docs": {
+    "lead": "An icon container with configurable styles, sizes, and semantic colors.",
+    "usage": "import * as KeyIcon from \"@/components/ui/key-icon\"\n\n<KeyIcon.Root icon={<RiHomeLine />} />",
+    "examples": [
+      {
+        "title": "Stroke Style",
+        "description": "Default stroke style with neutral border and shadow.",
+        "code": "<KeyIcon.Root icon={<RiHomeLine />} />",
+        "stories": ["Stroke"]
+      },
+      {
+        "title": "Lighter Style",
+        "description": "Lighter style with semantic background and border colors.",
+        "code": "<KeyIcon.Root style=\"lighter\" color=\"blue\" icon={<RiSearchLine />} />",
+        "stories": ["Lighter"]
+      },
+      {
+        "title": "Sizes",
+        "description": "Available sizes from sm (32px) to 2xl (64px).",
+        "code": "<KeyIcon.Root size=\"lg\" icon={<RiHomeLine />} />",
+        "stories": ["Sizes"]
+      },
+      {
+        "title": "Colors",
+        "description": "All available semantic colors in both styles.",
+        "code": "<KeyIcon.Root style=\"lighter\" color=\"green\" icon={<RiCheckLine />} />",
+        "stories": ["Colors"]
+      }
+    ],
+    "api": [
+      {
+        "name": "KeyIcon.Root",
+        "description": "The icon container element.",
+        "props": [
+          {
+            "name": "icon",
+            "type": "React.ReactNode",
+            "description": "The icon to display. Alternatively, pass as children."
+          },
+          {
+            "name": "size",
+            "type": "'sm' | 'md' | 'lg' | 'xl' | '2xl'",
+            "default": "'md'",
+            "description": "Container size."
+          },
+          {
+            "name": "style",
+            "type": "'stroke' | 'lighter'",
+            "default": "'stroke'",
+            "description": "Visual style variant."
+          },
+          {
+            "name": "color",
+            "type": "'gray' | 'blue' | 'orange' | 'red' | 'green' | 'yellow' | 'purple' | 'pink' | 'teal'",
+            "default": "'gray'",
+            "description": "Semantic color. Only affects the lighter style."
+          }
+        ]
+      }
+    ]
+  },
   "files": [
     {
       "path": "ui/key-icon.tsx",

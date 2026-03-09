@@ -24,6 +24,7 @@ import { default as fancyButtonMeta, Neutral as fancyButton_Neutral, Primary as 
 import { default as hintMeta, Demo as hint_Demo, Disabled as hint_Disabled, HasError as hint_HasError } from '@/components/ui/hint.stories';
 import { default as inputMeta, WithIcon as input_WithIcon, Sizes as input_Sizes, WithAffix as input_WithAffix, WithInlineAffix as input_WithInlineAffix, LabelAndHint as input_LabelAndHint, WithKbd as input_WithKbd, Password as input_Password, PasswordWithLevel as input_PasswordWithLevel, Disabled as input_Disabled, ErrorState as input_ErrorState, WithButton as input_WithButton, WithTags as input_WithTags, DateFieldStory as input_DateFieldStory, PaymentInput as input_PaymentInput, WithSelect as input_WithSelect, WithInlineSelect as input_WithInlineSelect, CounterInput as input_CounterInput, Composition as input_Composition } from '@/components/ui/input.stories';
 import { default as kbdMeta, Demo as kbd_Demo } from '@/components/ui/kbd.stories';
+import { default as keyIconMeta, Stroke as keyIcon_Stroke, Lighter as keyIcon_Lighter, Sizes as keyIcon_Sizes, Colors as keyIcon_Colors } from '@/components/ui/key-icon.stories';
 import { default as labelMeta, Demo as label_Demo } from '@/components/ui/label.stories';
 import { default as levelBarMeta, Levels as levelBar_Levels, CustomSegments as levelBar_CustomSegments } from '@/components/ui/level-bar.stories';
 import { default as linkButtonMeta, Gray as linkButton_Gray, Black as linkButton_Black, Primary as linkButton_Primary, Error as linkButton_Error, Modifiable as linkButton_Modifiable, Sizes as linkButton_Sizes, Underline as linkButton_Underline, WithIcon as linkButton_WithIcon, Disabled as linkButton_Disabled, AsChild as linkButton_AsChild } from '@/components/ui/link-button.stories';
@@ -35,7 +36,7 @@ import { default as phoneInputMeta, Default as phoneInput_Default } from '@/comp
 import { default as popoverMeta, Demo as popover_Demo, Position as popover_Position } from '@/components/ui/popover.stories';
 import { default as progressBarMeta, Color as progressBar_Color, WithLabel as progressBar_WithLabel, DataStorage as progressBar_DataStorage } from '@/components/ui/progress-bar.stories';
 import { default as progressCircleMeta, Default as progressCircle_Default } from '@/components/ui/progress-circle.stories';
-import { default as radioCardGroupMeta, BasicUsage as radioCardGroup_BasicUsage, WithoutDescriptions as radioCardGroup_WithoutDescriptions, WithIcons as radioCardGroup_WithIcons, WithBadges as radioCardGroup_WithBadges, AllowDeselect as radioCardGroup_AllowDeselect, Disabled as radioCardGroup_Disabled } from '@/components/ui/radio-card-group.stories';
+import { default as radioCardMeta, Default as radioCard_Default, WithKeyIcons as radioCard_WithKeyIcons, WithSimpleIcons as radioCard_WithSimpleIcons, WithBadges as radioCard_WithBadges, InlineDescription as radioCard_InlineDescription, AllowDeselect as radioCard_AllowDeselect, Disabled as radioCard_Disabled, ErrorState as radioCard_ErrorState, PrimaryVariant as radioCard_PrimaryVariant } from '@/components/ui/radio-card.stories';
 import { default as radioMeta, Demo as radio_Demo, Variants as radio_Variants, Disabled as radio_Disabled, WithLabel as radio_WithLabel, WithLabelExtended as radio_WithLabelExtended } from '@/components/ui/radio.stories';
 import { default as searchableComboBoxMeta, Default as searchableComboBox_Default } from '@/components/ui/searchable-combo-box.stories';
 import { default as selectMeta, Demo as select_Demo, WithLabelHint as select_WithLabelHint, WithIcons as select_WithIcons, Sizes as select_Sizes, WithCountryFlags as select_WithCountryFlags, WithUsers as select_WithUsers, Disabled as select_Disabled, Compact as select_Compact, CompactCountry as select_CompactCountry, CompactSizes as select_CompactSizes, InlineCountry as select_InlineCountry, InputWithInlineSelect as select_InputWithInlineSelect, WithInput as select_WithInput, WithInputSizes as select_WithInputSizes } from '@/components/ui/select.stories';
@@ -288,6 +289,15 @@ export const storyRegistry: Record<string, {
     'Demo': kbd_Demo
     }
   },
+  'key-icon': {
+    meta: keyIconMeta,
+    stories: {
+    'Stroke': keyIcon_Stroke,
+    'Lighter': keyIcon_Lighter,
+    'Sizes': keyIcon_Sizes,
+    'Colors': keyIcon_Colors
+    }
+  },
   'label': {
     meta: labelMeta,
     stories: {
@@ -374,15 +384,18 @@ export const storyRegistry: Record<string, {
     'Default': progressCircle_Default
     }
   },
-  'radio-card-group': {
-    meta: radioCardGroupMeta,
+  'radio-card': {
+    meta: radioCardMeta,
     stories: {
-    'BasicUsage': radioCardGroup_BasicUsage,
-    'WithoutDescriptions': radioCardGroup_WithoutDescriptions,
-    'WithIcons': radioCardGroup_WithIcons,
-    'WithBadges': radioCardGroup_WithBadges,
-    'AllowDeselect': radioCardGroup_AllowDeselect,
-    'Disabled': radioCardGroup_Disabled
+    'Default': radioCard_Default,
+    'WithKeyIcons': radioCard_WithKeyIcons,
+    'WithSimpleIcons': radioCard_WithSimpleIcons,
+    'WithBadges': radioCard_WithBadges,
+    'InlineDescription': radioCard_InlineDescription,
+    'AllowDeselect': radioCard_AllowDeselect,
+    'Disabled': radioCard_Disabled,
+    'ErrorState': radioCard_ErrorState,
+    'PrimaryVariant': radioCard_PrimaryVariant
     }
   },
   'radio': {

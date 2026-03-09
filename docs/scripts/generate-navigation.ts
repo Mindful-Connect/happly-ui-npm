@@ -98,6 +98,7 @@ function main() {
     'input',
     'label',
     'radio',
+    'radio-card',
     'select',
     'slider',
     'switch',
