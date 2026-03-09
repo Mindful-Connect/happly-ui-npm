@@ -6,11 +6,12 @@ import { ComponentPreview } from './ComponentPreview';
 interface StoryPreviewProps {
   componentName: string;
   storyNames: string[];
+  previewClassName?: string;
 }
 
-export function StoryPreview({ componentName, storyNames }: StoryPreviewProps) {
+export function StoryPreview({ componentName, storyNames, previewClassName }: StoryPreviewProps) {
   return (
-    <ComponentPreview>
+    <ComponentPreview className={previewClassName}>
       {storyNames.map((name) => {
         const render = getStory(componentName, name);
         return render ? <div key={name}>{render()}</div> : null;

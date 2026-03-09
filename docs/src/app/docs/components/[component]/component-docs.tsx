@@ -24,6 +24,12 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
     files,
   } = component;
 
+  // Components that need a custom preview background
+  const previewBgOverrides: Record<string, string> = {
+    section: 'bg-bg-weak-50',
+  };
+  const previewClassName = previewBgOverrides[name];
+
   const supportComponents = [
     'command',
     'custom-input-wrapper',
@@ -239,7 +245,7 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
                     <h3>{example.title}</h3>
                     {example.description && <p>{example.description}</p>}
                     {example.stories?.length ? (
-                      <StoryPreview componentName={name} storyNames={example.stories} />
+                      <StoryPreview componentName={name} storyNames={example.stories} previewClassName={previewClassName} />
                     ) : null}
                     {example.code && <Fence language='tsx'>{example.code}</Fence>}
                   </div>
