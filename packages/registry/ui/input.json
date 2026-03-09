@@ -66,6 +66,7 @@
       {
         "title": "Password with Strength Level",
         "description": "Password input with a strength indicator and criteria checklist.",
+        "code": "const [showPassword, setShowPassword] = React.useState(false);\nconst [newPassword, setNewPassword] = React.useState('');\n\n<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiLock2Line} />\n    <Input.Input\n      type={showPassword ? 'text' : 'password'}\n      placeholder=\"••••••••••\"\n      value={newPassword}\n      onChange={handleNewPasswordChange}\n    />\n    <button onClick={() => setShowPassword((s) => !s)}>\n      {showPassword ? <RiEyeOffLine /> : <RiEyeLine />}\n    </button>\n  </Input.Wrapper>\n</Input.Root>\n\n{/* Strength bar and criteria checklist */}\n<LevelBar levels={3} level={trueCriteriaCount} />",
         "stories": ["PasswordWithLevel"]
       },
       {
@@ -83,16 +84,19 @@
       {
         "title": "With Button",
         "description": "Input with an action button alongside.",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiLinksLine} />\n    <Input.Input placeholder=\"www.example.com\" />\n  </Input.Wrapper>\n  <button className=\"inline-flex h-10 items-center justify-center px-3.5\">\n    <RiFileCopyLine className=\"size-5\" />\n  </button>\n</Input.Root>",
         "stories": ["WithButton"]
       },
       {
         "title": "With Tags",
         "description": "Input that creates tags on Enter key press.",
+        "code": "const [tags, setTags] = React.useState(['Berlin', 'London', 'Paris']);\nconst [inputValue, setInputValue] = React.useState('');\n\n<Input.Root>\n  <Input.Wrapper>\n    <Input.Input\n      placeholder=\"Add tags...\"\n      value={inputValue}\n      onChange={(e) => setInputValue(e.target.value)}\n      onKeyDown={(e) => {\n        if (e.key === 'Enter' && inputValue.trim()) {\n          setTags([...tags, inputValue.trim()]);\n          setInputValue('');\n        }\n      }}\n    />\n  </Input.Wrapper>\n</Input.Root>\n\n<div className=\"mt-2 flex flex-wrap gap-2\">\n  {tags.map((tag) => (\n    <Tag.Root key={tag}>\n      {tag}\n      <Tag.DismissButton onClick={() => removeTag(tag)} />\n    </Tag.Root>\n  ))}\n</div>",
         "stories": ["WithTags"]
       },
       {
         "title": "Counter Input",
         "description": "Number field with increment/decrement buttons using React Aria.",
+        "code": "import { Button, Group, Input, Label, NumberField } from 'react-aria-components';\nimport { compactButtonVariants } from '@/components/ui/compact-button';\nimport { inputVariants } from '@/components/ui/input';\n\nconst { root, wrapper, input } = inputVariants();\nconst { root: btnRoot, icon: btnIcon } = compactButtonVariants({ variant: 'ghost' });\n\n<NumberField defaultValue={16} minValue={0}>\n  <Label>Counter Input</Label>\n  <div className={root()}>\n    <Group className={wrapper()}>\n      <Button slot=\"decrement\" className={btnRoot()}>\n        <RiSubtractLine className={btnIcon()} />\n      </Button>\n      <Input className={input({ class: 'text-center' })} />\n      <Button slot=\"increment\" className={btnRoot()}>\n        <RiAddLine className={btnIcon()} />\n      </Button>\n    </Group>\n  </div>\n</NumberField>",
         "stories": ["CounterInput"]
       },
       {
