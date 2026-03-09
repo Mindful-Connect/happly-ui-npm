@@ -113,11 +113,7 @@ function main() {
     'tag-input',
   ];
 
-  const SUPPORT_COMPONENTS = [
-    'custom-input-wrapper',
-  ];
-
-  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS, ...SUPPORT_COMPONENTS];
+  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS];
 
   const mainLinks = componentLinks
     .filter((item) => !GROUPED_COMPONENTS.includes(item.name))
@@ -149,10 +145,6 @@ function main() {
 
   const composedInputLinks = componentLinks
     .filter((item) => COMPOSED_INPUT_COMPONENTS.includes(item.name))
-    .map(({ name, ...rest }) => rest);
-
-  const supportLinks = componentLinks
-    .filter((item) => SUPPORT_COMPONENTS.includes(item.name))
     .map(({ name, ...rest }) => rest);
 
   // Build full navigation structure
@@ -205,11 +197,6 @@ function main() {
           collapsed: false,
         },
         ...mainLinks,
-        {
-          title: 'Support components',
-          links: supportLinks,
-          collapsed: true,
-        },
       ],
     },
   ];

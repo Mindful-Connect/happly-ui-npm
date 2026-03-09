@@ -100,12 +100,6 @@
       "description": "A composed currency input with inline currency symbol and currency selector dropdown. Built on Input and Select primitives."
     },
     {
-      "name": "custom-input-wrapper",
-      "type": "registry:ui",
-      "title": "Custom Input Wrapper",
-      "description": "A wrapper for custom inputs with consistent styling."
-    },
-    {
       "name": "datepicker",
       "type": "registry:ui",
       "title": "Datepicker",
