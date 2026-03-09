@@ -78,7 +78,7 @@ const ComboBoxRoot = React.forwardRef<HTMLInputElement, ComboBoxRootProps>(
       onOpenChange: onOpenChangeProp,
       className,
     },
-    forwardedRef,
+    forwardedRef
   ) => {
     // Controlled / uncontrolled value
     const [internalValue, setInternalValue] = React.useState(defaultValue);
@@ -91,7 +91,7 @@ const ComboBoxRoot = React.forwardRef<HTMLInputElement, ComboBoxRootProps>(
           .filter(Boolean) as ComboBoxOption[];
         onValueChange?.(next, selectedOptions);
       },
-      [valueProp, onValueChange, options],
+      [valueProp, onValueChange, options]
     );
 
     const [open, setOpen] = React.useState(false);
@@ -108,7 +108,7 @@ const ComboBoxRoot = React.forwardRef<HTMLInputElement, ComboBoxRootProps>(
         if (typeof forwardedRef === 'function') forwardedRef(node);
         else if (forwardedRef) forwardedRef.current = node;
       },
-      [forwardedRef],
+      [forwardedRef]
     );
 
     const {
@@ -133,12 +133,12 @@ const ComboBoxRoot = React.forwardRef<HTMLInputElement, ComboBoxRootProps>(
         if (!newOpen) setSearch('');
         onOpenChangeProp?.(newOpen);
       },
-      [onOpenChangeProp],
+      [onOpenChangeProp]
     );
 
     const isSelected = React.useCallback(
       (optionValue: string) => value.includes(optionValue),
-      [value],
+      [value]
     );
 
     const handleToggle = React.useCallback(
@@ -154,7 +154,7 @@ const ComboBoxRoot = React.forwardRef<HTMLInputElement, ComboBoxRootProps>(
           }
         }
       },
-      [isSelected, value, min, max, setValue],
+      [isSelected, value, min, max, setValue]
     );
 
     const handleRemove = React.useCallback(
@@ -162,7 +162,7 @@ const ComboBoxRoot = React.forwardRef<HTMLInputElement, ComboBoxRootProps>(
         if (disabled || value.length <= min) return;
         setValue(value.filter((v) => v !== optionValue));
       },
-      [disabled, value, min, setValue],
+      [disabled, value, min, setValue]
     );
 
     const handleRemoveAll = React.useCallback(() => {
@@ -171,7 +171,7 @@ const ComboBoxRoot = React.forwardRef<HTMLInputElement, ComboBoxRootProps>(
     }, [disabled, setValue]);
 
     const selectedOptions = value.map(
-      (v) => options.find((o) => o.value === v) ?? { value: v, label: v },
+      (v) => options.find((o) => o.value === v) ?? { value: v, label: v }
     );
 
     const showSelectAll =
@@ -224,7 +224,7 @@ const ComboBoxRoot = React.forwardRef<HTMLInputElement, ComboBoxRootProps>(
                 aria-multiselectable='true'
               >
                 {filteredOptions.length === 0 ? (
-                  <div className='py-6 text-center text-paragraph-sm text-text-sub-600'>
+                  <div className='text-paragraph-sm text-text-sub-600 py-6 text-center'>
                     {emptyMessage}
                   </div>
                 ) : (
@@ -242,30 +242,29 @@ const ComboBoxRoot = React.forwardRef<HTMLInputElement, ComboBoxRootProps>(
                           disabled={disabled || atMax}
                           onClick={() => handleToggle(option.value)}
                           className={cn(
-                            'relative flex w-full cursor-pointer select-none items-center gap-2 rounded-10 p-2 pr-9 text-left text-paragraph-sm text-text-strong-950',
+                            'rounded-10 text-paragraph-sm text-text-strong-950 relative flex w-full cursor-pointer items-center gap-2 p-2 pr-9 text-left select-none',
                             'transition duration-200 ease-out',
                             'hover:bg-bg-weak-50',
-                            'disabled:pointer-events-none disabled:text-text-disabled-300',
+                            'disabled:text-text-disabled-300 disabled:pointer-events-none'
                           )}
                         >
-                          {option.icon && (
-                            typeof option.icon === 'string' ? (
+                          {option.icon &&
+                            (typeof option.icon === 'string' ? (
                               <div
                                 className='size-5 shrink-0 rounded-full bg-cover bg-center bg-no-repeat'
-                                style={{ backgroundImage: `url(${option.icon})` }}
+                                style={{
+                                  backgroundImage: `url(${option.icon})`,
+                                }}
                               />
                             ) : (
-                              <option.icon className='size-5 shrink-0 text-text-sub-600' />
-                            )
-                          )}
-                          <span className='line-clamp-1'>
-                            {option.label}
-                          </span>
+                              <option.icon className='text-text-sub-600 size-5 shrink-0' />
+                            ))}
+                          <span className='line-clamp-1'>{option.label}</span>
                           <RiCheckLine
                             className={cn(
-                              'absolute right-2 top-1/2 size-5 shrink-0 -translate-y-1/2 text-text-sub-600',
+                              'text-text-sub-600 absolute top-1/2 right-2 size-5 shrink-0 -translate-y-1/2',
                               'transition duration-200 ease-out',
-                              selected ? 'opacity-100' : 'opacity-0',
+                              selected ? 'opacity-100' : 'opacity-0'
                             )}
                           />
                         </button>
@@ -275,7 +274,7 @@ const ComboBoxRoot = React.forwardRef<HTMLInputElement, ComboBoxRootProps>(
                 )}
               </ScrollAreaPrimitives.Viewport>
               <ScrollAreaPrimitives.Scrollbar orientation='vertical'>
-                <ScrollAreaPrimitives.Thumb className='!w-1 rounded bg-bg-soft-200' />
+                <ScrollAreaPrimitives.Thumb className='bg-bg-soft-200 !w-1 rounded' />
               </ScrollAreaPrimitives.Scrollbar>
             </ScrollAreaPrimitives.Root>
           </Popover.Content>
@@ -286,9 +285,7 @@ const ComboBoxRoot = React.forwardRef<HTMLInputElement, ComboBoxRootProps>(
             {showSelectAll ? (
               <Tag.Root variant={tagVariant} disabled={disabled}>
                 <span>{selectAllLabel}</span>
-                <Tag.DismissButton
-                  onClick={handleRemoveAll}
-                />
+                <Tag.DismissButton onClick={handleRemoveAll} />
               </Tag.Root>
             ) : (
               selectedOptions.map((opt) => (
@@ -297,20 +294,17 @@ const ComboBoxRoot = React.forwardRef<HTMLInputElement, ComboBoxRootProps>(
                   variant={tagVariant}
                   disabled={disabled || value.length <= min}
                 >
-                  {opt.icon && (
-                    typeof opt.icon === 'string' ? (
+                  {opt.icon &&
+                    (typeof opt.icon === 'string' ? (
                       <Tag.Icon
                         className='rounded-full bg-cover bg-center bg-no-repeat'
                         style={{ backgroundImage: `url(${opt.icon})` }}
                       />
                     ) : (
                       <Tag.Icon as={opt.icon} />
-                    )
-                  )}
+                    ))}
                   <span>{opt.label}</span>
-                  <Tag.DismissButton
-                    onClick={() => handleRemove(opt.value)}
-                  />
+                  <Tag.DismissButton onClick={() => handleRemove(opt.value)} />
                 </Tag.Root>
               ))
             )}
@@ -324,7 +318,7 @@ const ComboBoxRoot = React.forwardRef<HTMLInputElement, ComboBoxRootProps>(
           ))}
       </div>
     );
-  },
+  }
 );
 ComboBoxRoot.displayName = 'ComboBoxRoot';
 

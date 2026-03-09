@@ -8,15 +8,8 @@
   "migration": {
     "guide": "API changed: import as namespace `import * as Tag from ...`, use `<Tag.Root>` instead of `<Tag>`. Sub-components renamed: `TagIcon` → `Tag.Icon`, `TagClose` → `Tag.DismissButton`. Dependencies changed from `cva` + `react-icons` to `tv` + `@remixicon/react`. Old `tag-utils.ts` file is no longer included."
   },
-  "dependencies": [
-    "@radix-ui/react-slot",
-    "@remixicon/react"
-  ],
-  "registryDependencies": [
-    "tv",
-    "polymorphic",
-    "recursive-clone-children"
-  ],
+  "dependencies": ["@radix-ui/react-slot", "@remixicon/react"],
+  "registryDependencies": ["tv", "polymorphic", "recursive-clone-children"],
   "docs": {
     "lead": "A compact tag component for labeling and categorization with icon, image, avatar, and dismiss support.",
     "usage": "import * as Tag from \"@/components/ui/tag\"\n\n<Tag.Root>\n  <Tag.Icon as={RiPushpinFill} />\n  Customer\n</Tag.Root>",
