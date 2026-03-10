@@ -29,7 +29,7 @@ const TagInputRoot = React.forwardRef<HTMLInputElement, TagInputProps>(
       size,
       hasError,
       placeholder = 'Add tags...',
-      tagVariant = 'stroke',
+      tagVariant = 'gray',
       maxTags,
       allowDuplicates = false,
       triggerKeys = ['Enter'],
