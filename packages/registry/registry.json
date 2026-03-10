@@ -148,6 +148,24 @@
       "description": "A compound button component with gradient overlay effects, multiple variants, and sizes. Uses namespace exports: FancyButton.Root, FancyButton.Icon."
     },
     {
+      "name": "file-format-icon",
+      "type": "registry:ui",
+      "title": "File Format Icon",
+      "description": "A file icon with a colored format badge, useful for representing file types."
+    },
+    {
+      "name": "file-upload",
+      "type": "registry:ui",
+      "title": "File Upload",
+      "description": "A dropzone-style file upload area with type presets for document, image, video, audio, and attachment uploads."
+    },
+    {
+      "name": "file-upload-card",
+      "type": "registry:ui",
+      "title": "File Upload Card",
+      "description": "A card component for displaying uploaded file state with thumbnail, progress, and actions."
+    },
+    {
       "name": "form-field",
       "type": "registry:ui",
       "title": "Form Field",

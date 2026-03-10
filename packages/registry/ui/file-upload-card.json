@@ -1,0 +1,176 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "file-upload-card",
+  "type": "registry:ui",
+  "title": "File Upload Card",
+  "description": "A card component for displaying uploaded file state with thumbnail, progress, and actions.",
+  "version": "1.0.0",
+  "dependencies": ["@remixicon/react"],
+  "registryDependencies": ["tv", "happly-ui-utils", "button"],
+  "docs": {
+    "lead": "A compound card component for displaying uploaded files with thumbnails, upload progress, error states, and remove actions. Supports document, image, video, and audio file types.",
+    "usage": "import * as FileUploadCard from \"@/components/ui/file-upload-card\"\nimport * as FileFormatIcon from \"@/components/ui/file-format-icon\"\n\n<FileUploadCard.Root>\n  <FileUploadCard.Thumbnail>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" />\n  </FileUploadCard.Thumbnail>\n  <FileUploadCard.Content>\n    <FileUploadCard.Body>\n      <FileUploadCard.Name>File.pdf</FileUploadCard.Name>\n      <FileUploadCard.Meta>2.5 MB</FileUploadCard.Meta>\n    </FileUploadCard.Body>\n    <FileUploadCard.Actions>\n      <FileUploadCard.RemoveButton />\n    </FileUploadCard.Actions>\n  </FileUploadCard.Content>\n</FileUploadCard.Root>",
+    "examples": [
+      {
+        "title": "Uploading",
+        "description": "Shows upload progress with a spinner, progress bar, and close button.",
+        "code": "<FileUploadCard.Root>\n  <FileUploadCard.Thumbnail>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" />\n  </FileUploadCard.Thumbnail>\n  <FileUploadCard.Content>\n    <FileUploadCard.Body>\n      <FileUploadCard.Name>DataAnalysis.pdf</FileUploadCard.Name>\n      <FileUploadCard.Status status=\"uploading\">Uploading...</FileUploadCard.Status>\n      <FileUploadCard.Progress value={35} />\n    </FileUploadCard.Body>\n    <FileUploadCard.Actions>\n      <FileUploadCard.CloseButton />\n    </FileUploadCard.Actions>\n  </FileUploadCard.Content>\n</FileUploadCard.Root>",
+        "stories": ["Uploading"]
+      },
+      {
+        "title": "Failed",
+        "description": "Error state with a retry link and remove button.",
+        "code": "<FileUploadCard.Root>\n  ...\n  <FileUploadCard.Status status=\"failed\">Failed</FileUploadCard.Status>\n  <FileUploadCard.RetryLink />\n  ...\n</FileUploadCard.Root>",
+        "stories": ["Failed"]
+      },
+      {
+        "title": "Completed Document",
+        "description": "A successfully uploaded document with file format icon.",
+        "code": "<FileUploadCard.Root>...</FileUploadCard.Root>",
+        "stories": ["CompletedDocument"]
+      },
+      {
+        "title": "Completed Image",
+        "description": "An uploaded image with a photo thumbnail.",
+        "code": "<FileUploadCard.Root>...</FileUploadCard.Root>",
+        "stories": ["CompletedImage"]
+      },
+      {
+        "title": "Completed Video",
+        "description": "An uploaded video with a thumbnail and play overlay.",
+        "code": "<FileUploadCard.Root>...</FileUploadCard.Root>",
+        "stories": ["CompletedVideo"]
+      },
+      {
+        "title": "Completed Audio",
+        "description": "An uploaded audio file with a speaker icon thumbnail.",
+        "code": "<FileUploadCard.Root>...</FileUploadCard.Root>",
+        "stories": ["CompletedAudio"]
+      }
+    ],
+    "api": [
+      {
+        "name": "FileUploadCard.Root",
+        "description": "The card container with rounded border and shadow.",
+        "props": []
+      },
+      {
+        "name": "FileUploadCard.Thumbnail",
+        "description": "Left-side thumbnail area (176×104px, gray background).",
+        "props": []
+      },
+      {
+        "name": "FileUploadCard.Image",
+        "description": "An image thumbnail that fills the thumbnail area.",
+        "props": [
+          {
+            "name": "src",
+            "type": "string",
+            "description": "The image source URL."
+          }
+        ]
+      },
+      {
+        "name": "FileUploadCard.Video",
+        "description": "A video thumbnail with a centered video icon overlay.",
+        "props": [
+          {
+            "name": "src",
+            "type": "string",
+            "description": "The video thumbnail image URL."
+          }
+        ]
+      },
+      {
+        "name": "FileUploadCard.Audio",
+        "description": "An audio thumbnail with a speaker icon.",
+        "props": []
+      },
+      {
+        "name": "FileUploadCard.Content",
+        "description": "Right-side content area containing body and actions.",
+        "props": []
+      },
+      {
+        "name": "FileUploadCard.Body",
+        "description": "Stacks filename, meta, and hint vertically with gap-1 (4px). Use for completed states.",
+        "props": []
+      },
+      {
+        "name": "FileUploadCard.UploadBody",
+        "description": "Stacks info group and progress/retry vertically with gap-3 (12px). Use for uploading/failed states.",
+        "props": []
+      },
+      {
+        "name": "FileUploadCard.InfoGroup",
+        "description": "Groups name and status with gap-1.5 (6px). Use inside UploadBody.",
+        "props": []
+      },
+      {
+        "name": "FileUploadCard.Name",
+        "description": "The filename text (truncated).",
+        "props": []
+      },
+      {
+        "name": "FileUploadCard.Meta",
+        "description": "Secondary info like file size.",
+        "props": []
+      },
+      {
+        "name": "FileUploadCard.Hint",
+        "description": "Tertiary info like upload date or size recommendations.",
+        "props": []
+      },
+      {
+        "name": "FileUploadCard.Status",
+        "description": "Upload status indicator with icon.",
+        "props": [
+          {
+            "name": "status",
+            "type": "'uploading' | 'failed'",
+            "description": "The upload status. Shows a spinner for uploading, error icon for failed."
+          }
+        ]
+      },
+      {
+        "name": "FileUploadCard.Progress",
+        "description": "A progress bar for upload progress.",
+        "props": [
+          {
+            "name": "value",
+            "type": "number",
+            "default": "0",
+            "description": "Current progress value."
+          },
+          {
+            "name": "max",
+            "type": "number",
+            "default": "100",
+            "description": "Maximum progress value."
+          }
+        ]
+      },
+      {
+        "name": "FileUploadCard.RemoveButton",
+        "description": "A red outline button for removing the file.",
+        "props": []
+      },
+      {
+        "name": "FileUploadCard.CloseButton",
+        "description": "A subtle close (×) button for canceling uploads.",
+        "props": []
+      },
+      {
+        "name": "FileUploadCard.RetryLink",
+        "description": "A red underlined link for retrying failed uploads.",
+        "props": []
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/file-upload-card.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -24,11 +24,12 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
     files,
   } = component;
 
-  // Components that need a custom preview background
-  const previewBgOverrides: Record<string, string> = {
+  // Components that need custom preview styling
+  const previewClassOverrides: Record<string, string> = {
     section: 'bg-bg-weak-50',
+    'file-upload-card': '[&>div]:w-full',
   };
-  const previewClassName = previewBgOverrides[name];
+  const previewClassName = previewClassOverrides[name];
 
   const supportComponents = [
     'command',

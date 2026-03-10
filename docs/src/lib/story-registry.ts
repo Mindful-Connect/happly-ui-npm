@@ -23,6 +23,9 @@ import { default as drawerMeta, Playground as drawer_Playground, Demo as drawer_
 import { default as dropdownMeta, Playground as dropdown_Playground, Demo as dropdown_Demo, SubMenu as dropdown_SubMenu } from '@/components/ui/dropdown.stories';
 import { default as emojiDialogMeta, Playground as emojiDialog_Playground, Default as emojiDialog_Default, DeleteConfirmation as emojiDialog_DeleteConfirmation, UnsavedChanges as emojiDialog_UnsavedChanges, SuccessConfirmation as emojiDialog_SuccessConfirmation, WithFormContent as emojiDialog_WithFormContent, WithFloatingMemojis as emojiDialog_WithFloatingMemojis, StaticNoAnimations as emojiDialog_StaticNoAnimations, CustomEmojiArea as emojiDialog_CustomEmojiArea } from '@/components/ui/emoji-dialog.stories';
 import { default as fancyButtonMeta, Playground as fancyButton_Playground, Neutral as fancyButton_Neutral, Primary as fancyButton_Primary, Error as fancyButton_Error, Basic as fancyButton_Basic, WithIcon as fancyButton_WithIcon, Sizes as fancyButton_Sizes, Disabled as fancyButton_Disabled, AsChild as fancyButton_AsChild } from '@/components/ui/fancy-button.stories';
+import { default as fileFormatIconMeta, Default as fileFormatIcon_Default, Colors as fileFormatIcon_Colors, Sizes as fileFormatIcon_Sizes } from '@/components/ui/file-format-icon.stories';
+import { default as fileUploadCardMeta, Uploading as fileUploadCard_Uploading, Failed as fileUploadCard_Failed, CompletedDocument as fileUploadCard_CompletedDocument, CompletedImage as fileUploadCard_CompletedImage, CompletedVideo as fileUploadCard_CompletedVideo, CompletedAudio as fileUploadCard_CompletedAudio } from '@/components/ui/file-upload-card.stories';
+import { default as fileUploadMeta, Document as fileUpload_Document, Image as fileUpload_Image, Video as fileUpload_Video, Audio as fileUpload_Audio, Attachment as fileUpload_Attachment, CustomOverrides as fileUpload_CustomOverrides } from '@/components/ui/file-upload.stories';
 import { default as formFieldMeta, Playground as formField_Playground, Demo as formField_Demo } from '@/components/ui/form-field.stories';
 import { default as hintMeta, Playground as hint_Playground, Demo as hint_Demo, Disabled as hint_Disabled, HasError as hint_HasError } from '@/components/ui/hint.stories';
 import { default as inputMeta, Playground as input_Playground, WithIcon as input_WithIcon, Sizes as input_Sizes, WithAffix as input_WithAffix, WithInlineAffix as input_WithInlineAffix, LabelAndHint as input_LabelAndHint, WithKbd as input_WithKbd, Password as input_Password, PasswordWithLevel as input_PasswordWithLevel, Disabled as input_Disabled, ErrorState as input_ErrorState, WithButton as input_WithButton, WithTags as input_WithTags, DateFieldStory as input_DateFieldStory, PaymentInput as input_PaymentInput, WithSelect as input_WithSelect, WithInlineSelect as input_WithInlineSelect, CounterInput as input_CounterInput, Composition as input_Composition } from '@/components/ui/input.stories';
@@ -304,6 +307,36 @@ export const storyRegistry: Record<string, {
     'Sizes': fancyButton_Sizes,
     'Disabled': fancyButton_Disabled,
     'AsChild': fancyButton_AsChild
+    }
+  },
+  'file-format-icon': {
+    meta: fileFormatIconMeta,
+    stories: {
+    'Default': fileFormatIcon_Default,
+    'Colors': fileFormatIcon_Colors,
+    'Sizes': fileFormatIcon_Sizes
+    }
+  },
+  'file-upload-card': {
+    meta: fileUploadCardMeta,
+    stories: {
+    'Uploading': fileUploadCard_Uploading,
+    'Failed': fileUploadCard_Failed,
+    'CompletedDocument': fileUploadCard_CompletedDocument,
+    'CompletedImage': fileUploadCard_CompletedImage,
+    'CompletedVideo': fileUploadCard_CompletedVideo,
+    'CompletedAudio': fileUploadCard_CompletedAudio
+    }
+  },
+  'file-upload': {
+    meta: fileUploadMeta,
+    stories: {
+    'Document': fileUpload_Document,
+    'Image': fileUpload_Image,
+    'Video': fileUpload_Video,
+    'Audio': fileUpload_Audio,
+    'Attachment': fileUpload_Attachment,
+    'CustomOverrides': fileUpload_CustomOverrides
     }
   },
   'form-field': {

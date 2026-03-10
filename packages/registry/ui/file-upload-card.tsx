@@ -1,0 +1,385 @@
+import * as React from 'react';
+import {
+  RiCloseLine,
+  RiErrorWarningFill,
+  RiLoader2Fill,
+  RiVideoFill,
+  RiVolumeUpFill,
+} from '@remixicon/react';
+
+import { cn } from '@/lib/happly-ui-utils';
+import { tv, type VariantProps } from '@/lib/tv';
+import * as Button from '@/components/ui/button';
+
+// ─── Variants ────────────────────────────────────────────────────────────────
+
+const fileUploadCardVariants = tv({
+  base: 'flex w-full items-center overflow-clip rounded-xl border border-stroke-soft-200 bg-bg-white-0 shadow-regular-xs',
+});
+
+// ─── Root ────────────────────────────────────────────────────────────────────
+
+type FileUploadCardRootProps = React.HTMLAttributes<HTMLDivElement> &
+  VariantProps<typeof fileUploadCardVariants>;
+
+const FileUploadCardRoot = React.forwardRef<HTMLDivElement, FileUploadCardRootProps>(
+  ({ className, ...rest }, forwardedRef) => {
+    return (
+      <div ref={forwardedRef} className={cn(fileUploadCardVariants(), className)} {...rest} />
+    );
+  },
+);
+FileUploadCardRoot.displayName = 'FileUploadCardRoot';
+
+// ─── Thumbnail ───────────────────────────────────────────────────────────────
+
+const FileUploadCardThumbnail = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, children, ...rest }, forwardedRef) => {
+  return (
+    <div
+      ref={forwardedRef}
+      className={cn(
+        'flex h-[104px] w-44 shrink-0 items-center justify-center overflow-clip bg-bg-weak-50',
+        className,
+      )}
+      {...rest}
+    >
+      {children}
+    </div>
+  );
+});
+FileUploadCardThumbnail.displayName = 'FileUploadCardThumbnail';
+
+// ─── Image Thumbnail ─────────────────────────────────────────────────────────
+
+const FileUploadCardImage = React.forwardRef<
+  HTMLImageElement,
+  React.ImgHTMLAttributes<HTMLImageElement>
+>(({ className, alt = '', ...rest }, forwardedRef) => {
+  return (
+    <img
+      ref={forwardedRef}
+      alt={alt}
+      className={cn('h-full w-full object-cover', className)}
+      {...rest}
+    />
+  );
+});
+FileUploadCardImage.displayName = 'FileUploadCardImage';
+
+// ─── Video Thumbnail ─────────────────────────────────────────────────────────
+
+const FileUploadCardVideo = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & { src: string; alt?: string }
+>(({ className, src, alt = '', children, ...rest }, forwardedRef) => {
+  return (
+    <div ref={forwardedRef} className={cn('relative h-full w-full', className)} {...rest}>
+      <img src={src} alt={alt} className='h-full w-full object-cover' />
+      <div className='absolute inset-0 flex items-center justify-center'>
+        <RiVideoFill className='size-8 text-text-soft-400' />
+      </div>
+      {children}
+    </div>
+  );
+});
+FileUploadCardVideo.displayName = 'FileUploadCardVideo';
+
+// ─── Audio Thumbnail ─────────────────────────────────────────────────────────
+
+const FileUploadCardAudio = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...rest }, forwardedRef) => {
+  return (
+    <div
+      ref={forwardedRef}
+      className={cn('flex h-full w-full items-center justify-center bg-bg-weak-50', className)}
+      {...rest}
+    >
+      <div className='flex items-center justify-center rounded-full bg-white/40 p-2.5'>
+        <RiVolumeUpFill className='size-8 text-text-sub-600' />
+      </div>
+    </div>
+  );
+});
+FileUploadCardAudio.displayName = 'FileUploadCardAudio';
+
+// ─── Content ─────────────────────────────────────────────────────────────────
+
+const FileUploadCardContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...rest }, forwardedRef) => {
+  return (
+    <div
+      ref={forwardedRef}
+      className={cn(
+        'flex flex-1 items-center gap-4 self-stretch pl-5 pr-6 py-4',
+        className,
+      )}
+      {...rest}
+    />
+  );
+});
+FileUploadCardContent.displayName = 'FileUploadCardContent';
+
+// ─── Body (filename + meta stacked vertically) ──────────────────────────────
+
+const FileUploadCardBody = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...rest }, forwardedRef) => {
+  return (
+    <div
+      ref={forwardedRef}
+      className={cn('flex min-w-0 flex-1 flex-col justify-center gap-1', className)}
+      {...rest}
+    />
+  );
+});
+FileUploadCardBody.displayName = 'FileUploadCardBody';
+
+// ─── Upload Body (uploading/failed: different gap structure) ─────────────────
+
+const FileUploadCardUploadBody = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...rest }, forwardedRef) => {
+  return (
+    <div
+      ref={forwardedRef}
+      className={cn('flex min-w-0 flex-1 flex-col justify-center gap-3', className)}
+      {...rest}
+    />
+  );
+});
+FileUploadCardUploadBody.displayName = 'FileUploadCardUploadBody';
+
+// ─── Info Group (name + status with gap-1.5 for upload states) ───────────────
+
+const FileUploadCardInfoGroup = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...rest }, forwardedRef) => {
+  return (
+    <div
+      ref={forwardedRef}
+      className={cn('flex flex-col gap-1.5', className)}
+      {...rest}
+    />
+  );
+});
+FileUploadCardInfoGroup.displayName = 'FileUploadCardInfoGroup';
+
+// ─── Name ────────────────────────────────────────────────────────────────────
+
+const FileUploadCardName = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...rest }, forwardedRef) => {
+  return (
+    <p
+      ref={forwardedRef}
+      className={cn('truncate text-label-sm text-text-strong-950', className)}
+      {...rest}
+    />
+  );
+});
+FileUploadCardName.displayName = 'FileUploadCardName';
+
+// ─── Meta ────────────────────────────────────────────────────────────────────
+
+const FileUploadCardMeta = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...rest }, forwardedRef) => {
+  return (
+    <p
+      ref={forwardedRef}
+      className={cn('truncate text-paragraph-xs text-text-sub-600', className)}
+      {...rest}
+    />
+  );
+});
+FileUploadCardMeta.displayName = 'FileUploadCardMeta';
+
+// ─── Hint ────────────────────────────────────────────────────────────────────
+
+const FileUploadCardHint = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...rest }, forwardedRef) => {
+  return (
+    <p
+      ref={forwardedRef}
+      className={cn('truncate text-paragraph-xs text-text-soft-400', className)}
+      {...rest}
+    />
+  );
+});
+FileUploadCardHint.displayName = 'FileUploadCardHint';
+
+// ─── Status ──────────────────────────────────────────────────────────────────
+
+type FileUploadCardStatusProps = React.HTMLAttributes<HTMLDivElement> & {
+  status: 'uploading' | 'failed';
+};
+
+const FileUploadCardStatus = React.forwardRef<HTMLDivElement, FileUploadCardStatusProps>(
+  ({ className, status, children, ...rest }, forwardedRef) => {
+    return (
+      <div
+        ref={forwardedRef}
+        className={cn('flex items-center gap-1', className)}
+        {...rest}
+      >
+        {status === 'uploading' && (
+          <RiLoader2Fill className='size-4 shrink-0 animate-spin text-text-sub-600' />
+        )}
+        {status === 'failed' && (
+          <RiErrorWarningFill className='size-4 shrink-0 text-error-base' />
+        )}
+        <span className='text-paragraph-xs text-text-strong-950'>{children}</span>
+      </div>
+    );
+  },
+);
+FileUploadCardStatus.displayName = 'FileUploadCardStatus';
+
+// ─── Progress ────────────────────────────────────────────────────────────────
+
+type FileUploadCardProgressProps = React.HTMLAttributes<HTMLDivElement> & {
+  value?: number;
+  max?: number;
+};
+
+const FileUploadCardProgress = React.forwardRef<HTMLDivElement, FileUploadCardProgressProps>(
+  ({ className, value = 0, max = 100, ...rest }, forwardedRef) => {
+    const safeValue = Math.min(max, Math.max(value, 0));
+
+    return (
+      <div
+        ref={forwardedRef}
+        className={cn('h-1.5 w-full overflow-clip rounded-full bg-bg-soft-200', className)}
+        {...rest}
+      >
+        <div
+          className='h-full rounded-full bg-information-base transition-all duration-300 ease-out'
+          style={{ width: `${(safeValue / max) * 100}%` }}
+          role='progressbar'
+          aria-valuenow={safeValue}
+          aria-valuemax={max}
+        />
+      </div>
+    );
+  },
+);
+FileUploadCardProgress.displayName = 'FileUploadCardProgress';
+
+// ─── Actions ─────────────────────────────────────────────────────────────────
+
+const FileUploadCardActions = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...rest }, forwardedRef) => {
+  return (
+    <div
+      ref={forwardedRef}
+      className={cn('flex shrink-0 items-center', className)}
+      {...rest}
+    />
+  );
+});
+FileUploadCardActions.displayName = 'FileUploadCardActions';
+
+// ─── Remove Button ───────────────────────────────────────────────────────────
+
+const FileUploadCardRemoveButton = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentPropsWithoutRef<typeof Button.Root>
+>(({ className, children = 'Remove', ...rest }, forwardedRef) => {
+  return (
+    <Button.Root
+      ref={forwardedRef}
+      variant='error'
+      mode='stroke'
+      size='xsmall'
+      className={className}
+      {...rest}
+    >
+      {children}
+    </Button.Root>
+  );
+});
+FileUploadCardRemoveButton.displayName = 'FileUploadCardRemoveButton';
+
+// ─── Close Button ────────────────────────────────────────────────────────────
+
+const FileUploadCardCloseButton = React.forwardRef<
+  HTMLButtonElement,
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+>(({ className, ...rest }, forwardedRef) => {
+  return (
+    <button
+      ref={forwardedRef}
+      type='button'
+      className={cn(
+        'flex shrink-0 items-center justify-center rounded-md p-0.5 text-text-sub-600',
+        'transition duration-200 ease-out hover:text-text-strong-950',
+        className,
+      )}
+      {...rest}
+    >
+      <RiCloseLine className='size-5' />
+    </button>
+  );
+});
+FileUploadCardCloseButton.displayName = 'FileUploadCardCloseButton';
+
+// ─── Retry Link ──────────────────────────────────────────────────────────────
+
+const FileUploadCardRetryLink = React.forwardRef<
+  HTMLButtonElement,
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+>(({ className, children = 'Try Again', ...rest }, forwardedRef) => {
+  return (
+    <button
+      ref={forwardedRef}
+      type='button'
+      className={cn(
+        'self-start text-label-sm text-error-base underline decoration-solid',
+        'transition duration-200 ease-out hover:text-error-dark',
+        className,
+      )}
+      {...rest}
+    >
+      {children}
+    </button>
+  );
+});
+FileUploadCardRetryLink.displayName = 'FileUploadCardRetryLink';
+
+export {
+  FileUploadCardRoot as Root,
+  FileUploadCardThumbnail as Thumbnail,
+  FileUploadCardImage as Image,
+  FileUploadCardVideo as Video,
+  FileUploadCardAudio as Audio,
+  FileUploadCardContent as Content,
+  FileUploadCardBody as Body,
+  FileUploadCardUploadBody as UploadBody,
+  FileUploadCardInfoGroup as InfoGroup,
+  FileUploadCardName as Name,
+  FileUploadCardMeta as Meta,
+  FileUploadCardHint as Hint,
+  FileUploadCardStatus as Status,
+  FileUploadCardProgress as Progress,
+  FileUploadCardActions as Actions,
+  FileUploadCardRemoveButton as RemoveButton,
+  FileUploadCardCloseButton as CloseButton,
+  FileUploadCardRetryLink as RetryLink,
+  fileUploadCardVariants,
+};
