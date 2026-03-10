@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {
+  RiCheckboxCircleFill,
   RiCloseLine,
+  RiDeleteBinLine,
   RiErrorWarningFill,
   RiLoader2Fill,
   RiVideoFill,
@@ -364,6 +366,166 @@ const FileUploadCardRetryLink = React.forwardRef<
 });
 FileUploadCardRetryLink.displayName = 'FileUploadCardRetryLink';
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// COMPACT VARIANT
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ─── Compact Root ───────────────────────────────────────────────────────────
+
+const compactRootVariants = tv({
+  base: 'flex w-full flex-col items-start justify-center gap-4 overflow-clip rounded-xl border bg-bg-white-0 pl-3.5 pr-4 py-4',
+  variants: {
+    error: {
+      true: 'border-error-base',
+      false: 'border-stroke-soft-200',
+    },
+  },
+  defaultVariants: {
+    error: false,
+  },
+});
+
+type CompactRootProps = React.HTMLAttributes<HTMLDivElement> & {
+  error?: boolean;
+};
+
+const FileUploadCardCompactRoot = React.forwardRef<HTMLDivElement, CompactRootProps>(
+  ({ className, error, children, ...rest }, forwardedRef) => {
+    return (
+      <div ref={forwardedRef} className={cn(compactRootVariants({ error }), className)} {...rest}>
+        {children}
+      </div>
+    );
+  },
+);
+FileUploadCardCompactRoot.displayName = 'FileUploadCardCompactRoot';
+
+// ─── Compact Content ────────────────────────────────────────────────────────
+
+const FileUploadCardCompactContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...rest }, forwardedRef) => {
+  return (
+    <div
+      ref={forwardedRef}
+      className={cn('flex w-full items-start gap-3', className)}
+      {...rest}
+    />
+  );
+});
+FileUploadCardCompactContent.displayName = 'FileUploadCardCompactContent';
+
+// ─── Compact Body ───────────────────────────────────────────────────────────
+
+const FileUploadCardCompactBody = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...rest }, forwardedRef) => {
+  return (
+    <div
+      ref={forwardedRef}
+      className={cn('flex min-w-0 flex-1 flex-col items-start gap-1', className)}
+      {...rest}
+    />
+  );
+});
+FileUploadCardCompactBody.displayName = 'FileUploadCardCompactBody';
+
+// ─── Compact Error Body ─────────────────────────────────────────────────────
+
+const FileUploadCardCompactErrorBody = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...rest }, forwardedRef) => {
+  return (
+    <div
+      ref={forwardedRef}
+      className={cn('flex min-w-0 flex-1 flex-col items-start gap-2', className)}
+      {...rest}
+    />
+  );
+});
+FileUploadCardCompactErrorBody.displayName = 'FileUploadCardCompactErrorBody';
+
+// ─── Compact Description ────────────────────────────────────────────────────
+
+const FileUploadCardCompactDescription = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...rest }, forwardedRef) => {
+  return (
+    <div
+      ref={forwardedRef}
+      className={cn('flex w-full items-center gap-1', className)}
+      {...rest}
+    />
+  );
+});
+FileUploadCardCompactDescription.displayName = 'FileUploadCardCompactDescription';
+
+// ─── Compact Dot Separator ──────────────────────────────────────────────────
+
+function FileUploadCardDot({ className }: { className?: string }) {
+  return (
+    <span className={cn('shrink-0 text-paragraph-xs text-text-sub-600', className)}>∙</span>
+  );
+}
+FileUploadCardDot.displayName = 'FileUploadCardDot';
+
+// ─── Compact Status ─────────────────────────────────────────────────────────
+
+type CompactStatusProps = React.HTMLAttributes<HTMLDivElement> & {
+  status: 'uploading' | 'completed' | 'failed';
+};
+
+const FileUploadCardCompactStatus = React.forwardRef<HTMLDivElement, CompactStatusProps>(
+  ({ className, status, children, ...rest }, forwardedRef) => {
+    return (
+      <div
+        ref={forwardedRef}
+        className={cn('flex shrink-0 items-start gap-1', className)}
+        {...rest}
+      >
+        {status === 'uploading' && (
+          <RiLoader2Fill className='size-4 shrink-0 animate-spin text-text-sub-600' />
+        )}
+        {status === 'completed' && (
+          <RiCheckboxCircleFill className='size-4 shrink-0 text-success-base' />
+        )}
+        {status === 'failed' && (
+          <RiErrorWarningFill className='size-4 shrink-0 text-error-base' />
+        )}
+        <span className='text-paragraph-xs text-text-strong-950'>{children}</span>
+      </div>
+    );
+  },
+);
+FileUploadCardCompactStatus.displayName = 'FileUploadCardCompactStatus';
+
+// ─── Delete Button ──────────────────────────────────────────────────────────
+
+const FileUploadCardDeleteButton = React.forwardRef<
+  HTMLButtonElement,
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+>(({ className, ...rest }, forwardedRef) => {
+  return (
+    <button
+      ref={forwardedRef}
+      type='button'
+      className={cn(
+        'flex shrink-0 items-center justify-center rounded-md p-0.5 text-text-sub-600',
+        'transition duration-200 ease-out hover:text-text-strong-950',
+        className,
+      )}
+      {...rest}
+    >
+      <RiDeleteBinLine className='size-5' />
+    </button>
+  );
+});
+FileUploadCardDeleteButton.displayName = 'FileUploadCardDeleteButton';
+
 export {
   FileUploadCardRoot as Root,
   FileUploadCardThumbnail as Thumbnail,
@@ -383,5 +545,14 @@ export {
   FileUploadCardRemoveButton as RemoveButton,
   FileUploadCardCloseButton as CloseButton,
   FileUploadCardRetryLink as RetryLink,
+  FileUploadCardCompactRoot as CompactRoot,
+  FileUploadCardCompactContent as CompactContent,
+  FileUploadCardCompactBody as CompactBody,
+  FileUploadCardCompactErrorBody as CompactErrorBody,
+  FileUploadCardCompactDescription as CompactDescription,
+  FileUploadCardDot as Dot,
+  FileUploadCardCompactStatus as CompactStatus,
+  FileUploadCardDeleteButton as DeleteButton,
   fileUploadCardVariants,
+  compactRootVariants,
 };

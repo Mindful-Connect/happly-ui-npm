@@ -46,6 +46,24 @@
         "description": "An uploaded audio file with a speaker icon thumbnail.",
         "code": "<FileUploadCard.Root>...</FileUploadCard.Root>",
         "stories": ["CompletedAudio"]
+      },
+      {
+        "title": "Compact: Uploading",
+        "description": "Compact variant with inline icon, description, status, and progress bar.",
+        "code": "<FileUploadCard.CompactRoot>\n  <FileUploadCard.CompactContent>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" size=\"medium\" />\n    <FileUploadCard.CompactBody>\n      <FileUploadCard.Name>my-cv.pdf</FileUploadCard.Name>\n      <FileUploadCard.CompactDescription>\n        <FileUploadCard.Meta>0 KB of 120 KB</FileUploadCard.Meta>\n        <FileUploadCard.Dot />\n        <FileUploadCard.CompactStatus status=\"uploading\">Uploading...</FileUploadCard.CompactStatus>\n      </FileUploadCard.CompactDescription>\n    </FileUploadCard.CompactBody>\n    <FileUploadCard.CloseButton />\n  </FileUploadCard.CompactContent>\n  <FileUploadCard.Progress value={10} />\n</FileUploadCard.CompactRoot>",
+        "stories": ["CompactUploading"]
+      },
+      {
+        "title": "Compact: Completed",
+        "description": "Compact variant showing completed state with a delete button.",
+        "code": "<FileUploadCard.CompactRoot>\n  <FileUploadCard.CompactContent>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" size=\"medium\" />\n    <FileUploadCard.CompactBody>\n      <FileUploadCard.Name>my-cv.pdf</FileUploadCard.Name>\n      <FileUploadCard.CompactDescription>\n        <FileUploadCard.Meta>0 KB of 120 KB</FileUploadCard.Meta>\n        <FileUploadCard.Dot />\n        <FileUploadCard.CompactStatus status=\"completed\">Completed</FileUploadCard.CompactStatus>\n      </FileUploadCard.CompactDescription>\n    </FileUploadCard.CompactBody>\n    <FileUploadCard.DeleteButton />\n  </FileUploadCard.CompactContent>\n</FileUploadCard.CompactRoot>",
+        "stories": ["CompactCompleted"]
+      },
+      {
+        "title": "Compact: Failed",
+        "description": "Compact variant with red error border, retry link, and delete button.",
+        "code": "<FileUploadCard.CompactRoot error>\n  <FileUploadCard.CompactContent>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" size=\"medium\" />\n    <FileUploadCard.CompactErrorBody>\n      <FileUploadCard.CompactBody>\n        <FileUploadCard.Name>my-cv.pdf</FileUploadCard.Name>\n        <FileUploadCard.CompactDescription>\n          <FileUploadCard.Meta>0 KB of 120 KB</FileUploadCard.Meta>\n          <FileUploadCard.Dot />\n          <FileUploadCard.CompactStatus status=\"failed\">Failed</FileUploadCard.CompactStatus>\n        </FileUploadCard.CompactDescription>\n      </FileUploadCard.CompactBody>\n      <FileUploadCard.RetryLink />\n    </FileUploadCard.CompactErrorBody>\n    <FileUploadCard.DeleteButton />\n  </FileUploadCard.CompactContent>\n</FileUploadCard.CompactRoot>",
+        "stories": ["CompactFailed"]
       }
     ],
     "api": [
@@ -163,6 +181,59 @@
       {
         "name": "FileUploadCard.RetryLink",
         "description": "A red underlined link for retrying failed uploads.",
+        "props": []
+      },
+      {
+        "name": "FileUploadCard.CompactRoot",
+        "description": "Compact card container without thumbnail area. Supports error border.",
+        "props": [
+          {
+            "name": "error",
+            "type": "boolean",
+            "default": "false",
+            "description": "When true, applies a red error border."
+          }
+        ]
+      },
+      {
+        "name": "FileUploadCard.CompactContent",
+        "description": "Row layout for icon, text body, and action button.",
+        "props": []
+      },
+      {
+        "name": "FileUploadCard.CompactBody",
+        "description": "Stacks name and description vertically with gap-1.",
+        "props": []
+      },
+      {
+        "name": "FileUploadCard.CompactErrorBody",
+        "description": "Wraps CompactBody and RetryLink with gap-2. Use for failed states.",
+        "props": []
+      },
+      {
+        "name": "FileUploadCard.CompactDescription",
+        "description": "Inline row for meta, dot separator, and status.",
+        "props": []
+      },
+      {
+        "name": "FileUploadCard.Dot",
+        "description": "A dot separator (∙) for inline descriptions.",
+        "props": []
+      },
+      {
+        "name": "FileUploadCard.CompactStatus",
+        "description": "Status indicator with icon for compact variant.",
+        "props": [
+          {
+            "name": "status",
+            "type": "'uploading' | 'completed' | 'failed'",
+            "description": "The upload status. Shows spinner, checkmark, or error icon."
+          }
+        ]
+      },
+      {
+        "name": "FileUploadCard.DeleteButton",
+        "description": "A subtle delete bin icon button for removing files.",
         "props": []
       }
     ]

@@ -128,3 +128,66 @@ export const CompletedAudio = {
     </FileUploadCard.Root>
   ),
 };
+
+// ─── Compact Variant Stories ────────────────────────────────────────────────
+
+export const CompactUploading = {
+  render: () => (
+    <FileUploadCard.CompactRoot className='w-[400px]'>
+      <FileUploadCard.CompactContent>
+        <FileFormatIcon.Root format='PDF' color='red' size='medium' />
+        <FileUploadCard.CompactBody>
+          <FileUploadCard.Name>my-cv.pdf</FileUploadCard.Name>
+          <FileUploadCard.CompactDescription>
+            <FileUploadCard.Meta>0 KB of 120 KB</FileUploadCard.Meta>
+            <FileUploadCard.Dot />
+            <FileUploadCard.CompactStatus status='uploading'>Uploading...</FileUploadCard.CompactStatus>
+          </FileUploadCard.CompactDescription>
+        </FileUploadCard.CompactBody>
+        <FileUploadCard.CloseButton />
+      </FileUploadCard.CompactContent>
+      <FileUploadCard.Progress value={10} />
+    </FileUploadCard.CompactRoot>
+  ),
+};
+
+export const CompactCompleted = {
+  render: () => (
+    <FileUploadCard.CompactRoot className='w-[400px]'>
+      <FileUploadCard.CompactContent>
+        <FileFormatIcon.Root format='PDF' color='red' size='medium' />
+        <FileUploadCard.CompactBody>
+          <FileUploadCard.Name>my-cv.pdf</FileUploadCard.Name>
+          <FileUploadCard.CompactDescription>
+            <FileUploadCard.Meta>0 KB of 120 KB</FileUploadCard.Meta>
+            <FileUploadCard.Dot />
+            <FileUploadCard.CompactStatus status='completed'>Completed</FileUploadCard.CompactStatus>
+          </FileUploadCard.CompactDescription>
+        </FileUploadCard.CompactBody>
+        <FileUploadCard.DeleteButton />
+      </FileUploadCard.CompactContent>
+    </FileUploadCard.CompactRoot>
+  ),
+};
+
+export const CompactFailed = {
+  render: () => (
+    <FileUploadCard.CompactRoot error className='w-[400px]'>
+      <FileUploadCard.CompactContent>
+        <FileFormatIcon.Root format='PDF' color='red' size='medium' />
+        <FileUploadCard.CompactErrorBody>
+          <FileUploadCard.CompactBody>
+            <FileUploadCard.Name>my-cv.pdf</FileUploadCard.Name>
+            <FileUploadCard.CompactDescription>
+              <FileUploadCard.Meta>0 KB of 120 KB</FileUploadCard.Meta>
+              <FileUploadCard.Dot />
+              <FileUploadCard.CompactStatus status='failed'>Failed</FileUploadCard.CompactStatus>
+            </FileUploadCard.CompactDescription>
+          </FileUploadCard.CompactBody>
+          <FileUploadCard.RetryLink />
+        </FileUploadCard.CompactErrorBody>
+        <FileUploadCard.DeleteButton />
+      </FileUploadCard.CompactContent>
+    </FileUploadCard.CompactRoot>
+  ),
+};
