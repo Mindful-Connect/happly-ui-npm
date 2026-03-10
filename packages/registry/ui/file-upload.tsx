@@ -219,8 +219,9 @@ const FileUploadRoot = React.forwardRef<
   HTMLLabelElement,
   React.LabelHTMLAttributes<HTMLLabelElement> & {
     asChild?: boolean;
+    dragging?: boolean;
   }
->(({ className, asChild, ...rest }, forwardedRef) => {
+>(({ className, asChild, dragging, ...rest }, forwardedRef) => {
   const Component = asChild ? Slot : 'label';
 
   return (
@@ -230,6 +231,7 @@ const FileUploadRoot = React.forwardRef<
         'flex w-full cursor-pointer flex-col items-center gap-5 rounded-xl border border-dashed border-stroke-sub-300 bg-bg-white-0 p-8 text-center',
         'transition duration-200 ease-out',
         'hover:bg-bg-weak-50',
+        dragging && 'border-primary-base bg-primary-alpha-10',
         className,
       )}
       {...rest}

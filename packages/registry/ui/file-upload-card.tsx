@@ -12,6 +12,7 @@ import {
 import { cn } from '@/lib/happly-ui-utils';
 import { tv, type VariantProps } from '@/lib/tv';
 import * as Button from '@/components/ui/button';
+import * as FileFormatIcon from '@/components/ui/file-format-icon';
 
 // ─── Variants ────────────────────────────────────────────────────────────────
 
@@ -526,6 +527,193 @@ const FileUploadCardDeleteButton = React.forwardRef<
 });
 FileUploadCardDeleteButton.displayName = 'FileUploadCardDeleteButton';
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// ITEM PRESET
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ─── Inline helpers ─────────────────────────────────────────────────────────
+
+function formatFileSize(bytes: number): string {
+  if (bytes === 0) return '0 B';
+  const units = ['B', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(1024));
+  return `${(bytes / Math.pow(1024, i)).toFixed(i === 0 ? 0 : 1)} ${units[i]}`;
+}
+
+function getFileFormat(name: string): string {
+  const ext = name.split('.').pop()?.toUpperCase() ?? '';
+  return ext;
+}
+
+function getFormatColor(format: string): 'red' | 'orange' | 'yellow' | 'green' | 'sky' | 'blue' | 'purple' | 'pink' | 'gray' {
+  const map: Record<string, 'red' | 'orange' | 'yellow' | 'green' | 'sky' | 'blue' | 'purple' | 'pink' | 'gray'> = {
+    PDF: 'red',
+    DOC: 'blue', DOCX: 'blue',
+    XLS: 'green', XLSX: 'green', CSV: 'green',
+    PPT: 'orange', PPTX: 'orange',
+    ZIP: 'purple', RAR: 'purple', '7Z': 'purple',
+    PNG: 'sky', JPG: 'sky', JPEG: 'sky', GIF: 'sky', WEBP: 'sky', SVG: 'sky',
+    MP4: 'pink', MOV: 'pink', AVI: 'pink', WEBM: 'pink',
+    MP3: 'yellow', WAV: 'yellow', OGG: 'yellow',
+    TXT: 'gray', JSON: 'gray', XML: 'gray',
+  };
+  return map[format] ?? 'gray';
+}
+
+function isImageType(type: string): boolean {
+  return type.startsWith('image/');
+}
+
+// ─── Item component ─────────────────────────────────────────────────────────
+
+interface FileUploadCardItemFile {
+  id: string;
+  name: string;
+  size: number;
+  type: string;
+  progress: number;
+  status: 'pending' | 'uploading' | 'completed' | 'failed';
+  url?: string;
+  preview?: string;
+  error?: string;
+}
+
+interface FileUploadCardItemProps {
+  file: FileUploadCardItemFile;
+  variant?: 'default' | 'compact';
+  onRemove?: () => void;
+  onRetry?: () => void;
+  onClose?: () => void;
+  className?: string;
+}
+
+function FileUploadCardItem({ file, variant = 'default', onRemove, onRetry, onClose, className }: FileUploadCardItemProps) {
+  const format = getFileFormat(file.name);
+  const color = getFormatColor(format);
+  const size = formatFileSize(file.size);
+  const isImage = isImageType(file.type);
+  const isActive = file.status === 'uploading' || file.status === 'pending';
+
+  if (variant === 'compact') {
+    if (file.status === 'failed') {
+      return (
+        <FileUploadCardCompactRoot error className={className}>
+          <FileUploadCardCompactContent>
+            <FileFormatIcon.Root format={format} color={color} size='medium' />
+            <FileUploadCardCompactErrorBody>
+              <FileUploadCardCompactBody>
+                <FileUploadCardName>{file.name}</FileUploadCardName>
+                <FileUploadCardCompactDescription>
+                  <FileUploadCardMeta>{size}</FileUploadCardMeta>
+                  <FileUploadCardDot />
+                  <FileUploadCardCompactStatus status='failed'>Failed</FileUploadCardCompactStatus>
+                </FileUploadCardCompactDescription>
+              </FileUploadCardCompactBody>
+              {onRetry && <FileUploadCardRetryLink onClick={onRetry} />}
+            </FileUploadCardCompactErrorBody>
+            {onRemove && <FileUploadCardDeleteButton onClick={onRemove} />}
+          </FileUploadCardCompactContent>
+        </FileUploadCardCompactRoot>
+      );
+    }
+
+    return (
+      <FileUploadCardCompactRoot className={className}>
+        <FileUploadCardCompactContent>
+          <FileFormatIcon.Root format={format} color={color} size='medium' />
+          <FileUploadCardCompactBody>
+            <FileUploadCardName>{file.name}</FileUploadCardName>
+            <FileUploadCardCompactDescription>
+              <FileUploadCardMeta>
+                {isActive ? `${formatFileSize(Math.round(file.size * file.progress / 100))} of ${size}` : size}
+              </FileUploadCardMeta>
+              <FileUploadCardDot />
+              <FileUploadCardCompactStatus status={file.status === 'completed' ? 'completed' : 'uploading'}>
+                {file.status === 'completed' ? 'Completed' : 'Uploading...'}
+              </FileUploadCardCompactStatus>
+            </FileUploadCardCompactDescription>
+          </FileUploadCardCompactBody>
+          {isActive && onClose && <FileUploadCardCloseButton onClick={onClose} />}
+          {file.status === 'completed' && onRemove && <FileUploadCardDeleteButton onClick={onRemove} />}
+        </FileUploadCardCompactContent>
+        {isActive && <FileUploadCardProgress value={file.progress} />}
+      </FileUploadCardCompactRoot>
+    );
+  }
+
+  // ─── Default variant ────────────────────────────────────────────────────
+
+  if (isActive) {
+    return (
+      <FileUploadCardRoot className={className}>
+        <FileUploadCardThumbnail>
+          <FileFormatIcon.Root format={format} color={color} size='medium' />
+        </FileUploadCardThumbnail>
+        <FileUploadCardContent>
+          <FileUploadCardUploadBody>
+            <FileUploadCardInfoGroup>
+              <FileUploadCardName>{file.name}</FileUploadCardName>
+              <FileUploadCardStatus status='uploading'>Uploading...</FileUploadCardStatus>
+            </FileUploadCardInfoGroup>
+            <FileUploadCardProgress value={file.progress} />
+          </FileUploadCardUploadBody>
+          <FileUploadCardActions>
+            {onClose && <FileUploadCardCloseButton onClick={onClose} />}
+          </FileUploadCardActions>
+        </FileUploadCardContent>
+      </FileUploadCardRoot>
+    );
+  }
+
+  if (file.status === 'failed') {
+    return (
+      <FileUploadCardRoot className={className}>
+        <FileUploadCardThumbnail>
+          <FileFormatIcon.Root format={format} color={color} size='medium' />
+        </FileUploadCardThumbnail>
+        <FileUploadCardContent>
+          <FileUploadCardUploadBody>
+            <FileUploadCardInfoGroup>
+              <FileUploadCardName>{file.name}</FileUploadCardName>
+              <FileUploadCardStatus status='failed'>Failed</FileUploadCardStatus>
+            </FileUploadCardInfoGroup>
+            {onRetry && <FileUploadCardRetryLink onClick={onRetry} />}
+          </FileUploadCardUploadBody>
+          <FileUploadCardActions>
+            {onRemove && <FileUploadCardRemoveButton onClick={onRemove} />}
+          </FileUploadCardActions>
+        </FileUploadCardContent>
+      </FileUploadCardRoot>
+    );
+  }
+
+  // Completed
+  const thumbnailSrc = file.preview ?? file.url;
+
+  return (
+    <FileUploadCardRoot className={className}>
+      <FileUploadCardThumbnail className={isImage && thumbnailSrc ? 'bg-transparent' : undefined}>
+        {isImage && thumbnailSrc ? (
+          <FileUploadCardImage src={thumbnailSrc} alt={file.name} />
+        ) : (
+          <FileFormatIcon.Root format={format} color={color} size='medium' />
+        )}
+      </FileUploadCardThumbnail>
+      <FileUploadCardContent>
+        <FileUploadCardBody>
+          <FileUploadCardName>{file.name}</FileUploadCardName>
+          <FileUploadCardMeta>{size}</FileUploadCardMeta>
+          {isImage && <FileUploadCardHint>Image uploaded successfully</FileUploadCardHint>}
+        </FileUploadCardBody>
+        <FileUploadCardActions>
+          {onRemove && <FileUploadCardRemoveButton onClick={onRemove} />}
+        </FileUploadCardActions>
+      </FileUploadCardContent>
+    </FileUploadCardRoot>
+  );
+}
+FileUploadCardItem.displayName = 'FileUploadCardItem';
+
 export {
   FileUploadCardRoot as Root,
   FileUploadCardThumbnail as Thumbnail,
@@ -553,6 +741,7 @@ export {
   FileUploadCardDot as Dot,
   FileUploadCardCompactStatus as CompactStatus,
   FileUploadCardDeleteButton as DeleteButton,
+  FileUploadCardItem as Item,
   fileUploadCardVariants,
   compactRootVariants,
 };

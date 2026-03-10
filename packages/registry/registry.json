@@ -382,6 +382,12 @@
       "description": "A file upload component with support for drag and drop, multiple files, and S3/GCS integration."
     },
     {
+      "name": "use-file-upload",
+      "type": "registry:hook",
+      "title": "useFileUpload",
+      "description": "Hook for managing file uploads with presigned URLs, progress tracking, and file state."
+    },
+    {
       "name": "use-tab-observer",
       "type": "registry:hook",
       "title": "useTabObserver",

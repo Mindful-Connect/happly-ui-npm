@@ -1,6 +1,6 @@
 import * as FileFormatIcon from './file-format-icon';
 
-export default { title: 'UI/File Format Icon', component: FileFormatIcon.Root };
+export default { title: 'Form/File Upload/File Format Icon', component: FileFormatIcon.Root };
 
 export const Default = {
   render: () => <FileFormatIcon.Root format='PDF' color='red' />,

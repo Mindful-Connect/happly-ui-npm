@@ -179,6 +179,24 @@
               }
             ],
             "collapsed": false
+          },
+          {
+            "title": "File Upload",
+            "links": [
+              {
+                "title": "File Format Icon",
+                "href": "/docs/components/file-format-icon"
+              },
+              {
+                "title": "File Upload",
+                "href": "/docs/components/file-upload"
+              },
+              {
+                "title": "File Upload Card",
+                "href": "/docs/components/file-upload-card"
+              }
+            ],
+            "collapsed": false
           }
         ],
         "collapsed": false
@@ -256,18 +274,6 @@
         "collapsed": false
       },
       {
-        "title": "File Format Icon",
-        "href": "/docs/components/file-format-icon"
-      },
-      {
-        "title": "File Upload",
-        "href": "/docs/components/file-upload"
-      },
-      {
-        "title": "File Upload Card",
-        "href": "/docs/components/file-upload-card"
-      },
-      {
         "title": "Form Field",
         "href": "/docs/components/form-field"
       },
@@ -288,6 +294,19 @@
           }
         ],
         "collapsed": true
+      }
+    ]
+  },
+  {
+    "title": "Hooks",
+    "links": [
+      {
+        "title": "useFileUpload",
+        "href": "/docs/hooks/use-file-upload"
+      },
+      {
+        "title": "useTabObserver",
+        "href": "/docs/hooks/use-tab-observer"
       }
     ]
   }

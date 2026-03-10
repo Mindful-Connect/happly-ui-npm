@@ -1,7 +1,7 @@
 import * as FileFormatIcon from './file-format-icon';
 import * as FileUploadCard from './file-upload-card';
 
-export default { title: 'UI/File Upload Card', component: FileUploadCard.Root };
+export default { title: 'Form/File Upload/File Upload Card', component: FileUploadCard.Root };
 
 export const Uploading = {
   render: () => (
@@ -189,5 +189,130 @@ export const CompactFailed = {
         <FileUploadCard.DeleteButton />
       </FileUploadCard.CompactContent>
     </FileUploadCard.CompactRoot>
+  ),
+};
+
+// ─── Item Preset Stories ──────────────────────────────────────────────────
+
+export const ItemUploading = {
+  render: () => (
+    <FileUploadCard.Item
+      file={{
+        id: '1',
+        name: 'DataAnalysis.pdf',
+        size: 2621440,
+        type: 'application/pdf',
+        progress: 35,
+        status: 'uploading',
+      }}
+      onClose={() => {}}
+    />
+  ),
+};
+
+export const ItemFailed = {
+  render: () => (
+    <FileUploadCard.Item
+      file={{
+        id: '2',
+        name: 'DataAnalysis.pdf',
+        size: 2621440,
+        type: 'application/pdf',
+        progress: 0,
+        status: 'failed',
+        error: 'Network error',
+      }}
+      onRemove={() => {}}
+      onRetry={() => {}}
+    />
+  ),
+};
+
+export const ItemCompletedDocument = {
+  render: () => (
+    <FileUploadCard.Item
+      file={{
+        id: '3',
+        name: 'DataAnalysis.pdf',
+        size: 2621440,
+        type: 'application/pdf',
+        progress: 100,
+        status: 'completed',
+      }}
+      onRemove={() => {}}
+    />
+  ),
+};
+
+export const ItemCompletedImage = {
+  render: () => (
+    <FileUploadCard.Item
+      file={{
+        id: '4',
+        name: 'Team_Photo_2025.jpg',
+        size: 2621440,
+        type: 'image/jpeg',
+        progress: 100,
+        status: 'completed',
+        preview: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=352&h=208&fit=crop',
+      }}
+      onRemove={() => {}}
+    />
+  ),
+};
+
+export const ItemCompactUploading = {
+  render: () => (
+    <FileUploadCard.Item
+      variant='compact'
+      file={{
+        id: '5',
+        name: 'my-cv.pdf',
+        size: 122880,
+        type: 'application/pdf',
+        progress: 10,
+        status: 'uploading',
+      }}
+      onClose={() => {}}
+      className='w-[400px]'
+    />
+  ),
+};
+
+export const ItemCompactCompleted = {
+  render: () => (
+    <FileUploadCard.Item
+      variant='compact'
+      file={{
+        id: '6',
+        name: 'my-cv.pdf',
+        size: 122880,
+        type: 'application/pdf',
+        progress: 100,
+        status: 'completed',
+      }}
+      onRemove={() => {}}
+      className='w-[400px]'
+    />
+  ),
+};
+
+export const ItemCompactFailed = {
+  render: () => (
+    <FileUploadCard.Item
+      variant='compact'
+      file={{
+        id: '7',
+        name: 'my-cv.pdf',
+        size: 122880,
+        type: 'application/pdf',
+        progress: 0,
+        status: 'failed',
+        error: 'Upload failed',
+      }}
+      onRemove={() => {}}
+      onRetry={() => {}}
+      className='w-[400px]'
+    />
   ),
 };

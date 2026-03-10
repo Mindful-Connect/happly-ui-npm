@@ -1,6 +1,6 @@
 import * as FileUpload from './file-upload';
 
-export default { title: 'UI/File Upload', component: FileUpload.Root };
+export default { title: 'Form/File Upload/File Upload', component: FileUpload.Root };
 
 export const Document = {
   render: () => (
@@ -42,5 +42,17 @@ export const CustomOverrides = {
       inputProps={{ accept: 'image/*' }}
       className='min-w-[480px]'
     />
+  ),
+};
+
+export const Dragging = {
+  render: () => (
+    <FileUpload.Root dragging className='min-w-[480px]'>
+      <FileUpload.Content>
+        <FileUpload.Title>Drop your file here</FileUpload.Title>
+        <FileUpload.Description>Release to upload</FileUpload.Description>
+      </FileUpload.Content>
+      <FileUpload.Button>Browse File</FileUpload.Button>
+    </FileUpload.Root>
   ),
 };

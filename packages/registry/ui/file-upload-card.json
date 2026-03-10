@@ -4,12 +4,12 @@
   "type": "registry:ui",
   "title": "File Upload Card",
   "description": "A card component for displaying uploaded file state with thumbnail, progress, and actions.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "dependencies": ["@remixicon/react"],
-  "registryDependencies": ["tv", "happly-ui-utils", "button"],
+  "registryDependencies": ["tv", "happly-ui-utils", "button", "file-format-icon"],
   "docs": {
-    "lead": "A compound card component for displaying uploaded files with thumbnails, upload progress, error states, and remove actions. Supports document, image, video, and audio file types.",
-    "usage": "import * as FileUploadCard from \"@/components/ui/file-upload-card\"\nimport * as FileFormatIcon from \"@/components/ui/file-format-icon\"\n\n<FileUploadCard.Root>\n  <FileUploadCard.Thumbnail>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" />\n  </FileUploadCard.Thumbnail>\n  <FileUploadCard.Content>\n    <FileUploadCard.Body>\n      <FileUploadCard.Name>File.pdf</FileUploadCard.Name>\n      <FileUploadCard.Meta>2.5 MB</FileUploadCard.Meta>\n    </FileUploadCard.Body>\n    <FileUploadCard.Actions>\n      <FileUploadCard.RemoveButton />\n    </FileUploadCard.Actions>\n  </FileUploadCard.Content>\n</FileUploadCard.Root>",
+    "lead": "A compound card component for displaying uploaded files with thumbnails, upload progress, error states, and remove actions. Supports document, image, video, and audio file types. Includes a high-level Item preset for quick rendering from upload state.",
+    "usage": "import * as FileUploadCard from \"@/components/ui/file-upload-card\"\n\n<FileUploadCard.Item\n  file={{ id: '1', name: 'file.pdf', size: 2621440, type: 'application/pdf', progress: 100, status: 'completed' }}\n  onRemove={() => {}}\n/>",
     "examples": [
       {
         "title": "Uploading",
@@ -64,9 +64,83 @@
         "description": "Compact variant with red error border, retry link, and delete button.",
         "code": "<FileUploadCard.CompactRoot error>\n  <FileUploadCard.CompactContent>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" size=\"medium\" />\n    <FileUploadCard.CompactErrorBody>\n      <FileUploadCard.CompactBody>\n        <FileUploadCard.Name>my-cv.pdf</FileUploadCard.Name>\n        <FileUploadCard.CompactDescription>\n          <FileUploadCard.Meta>0 KB of 120 KB</FileUploadCard.Meta>\n          <FileUploadCard.Dot />\n          <FileUploadCard.CompactStatus status=\"failed\">Failed</FileUploadCard.CompactStatus>\n        </FileUploadCard.CompactDescription>\n      </FileUploadCard.CompactBody>\n      <FileUploadCard.RetryLink />\n    </FileUploadCard.CompactErrorBody>\n    <FileUploadCard.DeleteButton />\n  </FileUploadCard.CompactContent>\n</FileUploadCard.CompactRoot>",
         "stories": ["CompactFailed"]
+      },
+      {
+        "title": "Item: Uploading",
+        "description": "Item preset rendering an uploading file (default variant).",
+        "code": "<FileUploadCard.Item\n  file={{ id: '1', name: 'DataAnalysis.pdf', size: 2621440, type: 'application/pdf', progress: 35, status: 'uploading' }}\n  onClose={() => {}}\n/>",
+        "stories": ["ItemUploading"]
+      },
+      {
+        "title": "Item: Failed",
+        "description": "Item preset rendering a failed upload with retry.",
+        "code": "<FileUploadCard.Item\n  file={{ id: '2', name: 'DataAnalysis.pdf', size: 2621440, type: 'application/pdf', progress: 0, status: 'failed' }}\n  onRemove={() => {}}\n  onRetry={() => {}}\n/>",
+        "stories": ["ItemFailed"]
+      },
+      {
+        "title": "Item: Completed Document",
+        "description": "Item preset rendering a completed document upload.",
+        "code": "<FileUploadCard.Item\n  file={{ id: '3', name: 'DataAnalysis.pdf', size: 2621440, type: 'application/pdf', progress: 100, status: 'completed' }}\n  onRemove={() => {}}\n/>",
+        "stories": ["ItemCompletedDocument"]
+      },
+      {
+        "title": "Item: Completed Image",
+        "description": "Item preset rendering a completed image upload with preview thumbnail.",
+        "code": "<FileUploadCard.Item\n  file={{ id: '4', name: 'photo.jpg', size: 2621440, type: 'image/jpeg', progress: 100, status: 'completed', preview: 'https://...' }}\n  onRemove={() => {}}\n/>",
+        "stories": ["ItemCompletedImage"]
+      },
+      {
+        "title": "Item: Compact Uploading",
+        "description": "Item preset in compact variant during upload.",
+        "code": "<FileUploadCard.Item\n  variant=\"compact\"\n  file={{ id: '5', name: 'my-cv.pdf', size: 122880, type: 'application/pdf', progress: 10, status: 'uploading' }}\n  onClose={() => {}}\n/>",
+        "stories": ["ItemCompactUploading"]
+      },
+      {
+        "title": "Item: Compact Completed",
+        "description": "Item preset in compact variant after completion.",
+        "code": "<FileUploadCard.Item\n  variant=\"compact\"\n  file={{ id: '6', name: 'my-cv.pdf', size: 122880, type: 'application/pdf', progress: 100, status: 'completed' }}\n  onRemove={() => {}}\n/>",
+        "stories": ["ItemCompactCompleted"]
+      },
+      {
+        "title": "Item: Compact Failed",
+        "description": "Item preset in compact variant with error state.",
+        "code": "<FileUploadCard.Item\n  variant=\"compact\"\n  file={{ id: '7', name: 'my-cv.pdf', size: 122880, type: 'application/pdf', progress: 0, status: 'failed' }}\n  onRemove={() => {}}\n  onRetry={() => {}}\n/>",
+        "stories": ["ItemCompactFailed"]
       }
     ],
     "api": [
+      {
+        "name": "FileUploadCard.Item",
+        "description": "A high-level preset that renders the correct card layout based on file status and variant. Reduces boilerplate by composing the compound sub-components internally.",
+        "props": [
+          {
+            "name": "file",
+            "type": "{ id: string; name: string; size: number; type: string; progress: number; status: 'pending' | 'uploading' | 'completed' | 'failed'; url?: string; preview?: string; error?: string }",
+            "description": "The file state object. Compatible with useFileUpload hook's UploadFile type."
+          },
+          {
+            "name": "variant",
+            "type": "'default' | 'compact'",
+            "default": "'default'",
+            "description": "Card layout variant."
+          },
+          {
+            "name": "onRemove",
+            "type": "() => void",
+            "description": "Called when the remove/delete button is clicked."
+          },
+          {
+            "name": "onRetry",
+            "type": "() => void",
+            "description": "Called when the retry link is clicked (failed state only)."
+          },
+          {
+            "name": "onClose",
+            "type": "() => void",
+            "description": "Called when the close button is clicked (uploading state only)."
+          }
+        ]
+      },
       {
         "name": "FileUploadCard.Root",
         "description": "The card container with rounded border and shadow.",
@@ -74,7 +148,7 @@
       },
       {
         "name": "FileUploadCard.Thumbnail",
-        "description": "Left-side thumbnail area (176×104px, gray background).",
+        "description": "Left-side thumbnail area (176x104px, gray background).",
         "props": []
       },
       {
@@ -175,7 +249,7 @@
       },
       {
         "name": "FileUploadCard.CloseButton",
-        "description": "A subtle close (×) button for canceling uploads.",
+        "description": "A subtle close (x) button for canceling uploads.",
         "props": []
       },
       {
@@ -217,7 +291,7 @@
       },
       {
         "name": "FileUploadCard.Dot",
-        "description": "A dot separator (∙) for inline descriptions.",
+        "description": "A dot separator for inline descriptions.",
         "props": []
       },
       {

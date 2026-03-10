@@ -47,6 +47,15 @@ function main() {
     }))
     .sort((a, b) => a.title.localeCompare(b.title));
 
+  // Filter hooks and generate navigation links
+  const hookLinks = registry.items
+    .filter((item) => item.type === 'registry:hook')
+    .map((item) => ({
+      title: item.title,
+      href: `/docs/hooks/${item.name}`,
+    }))
+    .sort((a, b) => a.title.localeCompare(b.title));
+
   const ACTION_COMPONENTS = [
     'button',
     'button-group',
@@ -114,6 +123,12 @@ function main() {
     'tag-input',
   ];
 
+  const FILE_UPLOAD_COMPONENTS = [
+    'file-format-icon',
+    'file-upload',
+    'file-upload-card',
+  ];
+
   const SECTION_COMPONENTS = [
     'section',
     'section-toggle',
@@ -126,7 +141,7 @@ function main() {
     'upload-file-input',
   ];
 
-  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS, ...SECTION_COMPONENTS, ...LEGACY_COMPONENTS];
+  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS, ...FILE_UPLOAD_COMPONENTS, ...SECTION_COMPONENTS, ...LEGACY_COMPONENTS];
 
   const mainLinks = componentLinks
     .filter((item) => !GROUPED_COMPONENTS.includes(item.name))
@@ -158,6 +173,10 @@ function main() {
 
   const composedInputLinks = componentLinks
     .filter((item) => COMPOSED_INPUT_COMPONENTS.includes(item.name))
+    .map(({ name, ...rest }) => rest);
+
+  const fileUploadLinks = componentLinks
+    .filter((item) => FILE_UPLOAD_COMPONENTS.includes(item.name))
     .map(({ name, ...rest }) => rest);
 
   const sectionLinks = componentLinks
@@ -199,6 +218,11 @@ function main() {
               links: composedInputLinks,
               collapsed: false,
             },
+            {
+              title: 'File Upload',
+              links: fileUploadLinks,
+              collapsed: false,
+            },
           ],
           collapsed: false,
         },
@@ -230,12 +254,20 @@ function main() {
         },
       ],
     },
+    ...(hookLinks.length > 0
+      ? [
+          {
+            title: 'Hooks',
+            links: hookLinks,
+          },
+        ]
+      : []),
   ];
 
   // Write to JSON file
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(navigation, null, 2));
   console.log(
-    `✓ Generated navigation data with ${componentLinks.length} components`
+    `✓ Generated navigation data with ${componentLinks.length} components and ${hookLinks.length} hooks`
   );
   console.log(`  Output: ${OUTPUT_PATH}`);
 }

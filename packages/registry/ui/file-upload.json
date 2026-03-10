@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "File Upload",
   "description": "A dropzone-style file upload area with type presets for document, image, video, audio, and attachment uploads.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "dependencies": ["@radix-ui/react-slot"],
   "registryDependencies": ["happly-ui-utils", "polymorphic"],
   "docs": {
@@ -46,6 +46,12 @@
         "description": "Override the preset title, description, or button text.",
         "code": "<FileUpload.Dropzone\n  type=\"image\"\n  title=\"Upload your banner image\"\n  description=\"Recommended size: 1200 × 675 px\"\n  buttonText=\"Choose Image\"\n  inputProps={{ accept: 'image/*' }}\n/>",
         "stories": ["CustomOverrides"]
+      },
+      {
+        "title": "Dragging",
+        "description": "Visual feedback when a file is dragged over the dropzone.",
+        "code": "<FileUpload.Root dragging>\n  <FileUpload.Content>\n    <FileUpload.Title>Drop your file here</FileUpload.Title>\n    <FileUpload.Description>Release to upload</FileUpload.Description>\n  </FileUpload.Content>\n  <FileUpload.Button>Browse File</FileUpload.Button>\n</FileUpload.Root>",
+        "stories": ["Dragging"]
       }
     ],
     "api": [
@@ -89,6 +95,12 @@
             "type": "boolean",
             "default": "false",
             "description": "Merge props onto a child element instead of rendering a <label>."
+          },
+          {
+            "name": "dragging",
+            "type": "boolean",
+            "default": "false",
+            "description": "When true, applies a highlighted border and background to indicate drag-over state."
           }
         ]
       },

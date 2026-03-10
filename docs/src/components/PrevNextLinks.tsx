@@ -53,7 +53,9 @@ function PageLink({
 export function PrevNextLinks() {
   let pathname = usePathname();
   let allLinks = navigation.flatMap((section) =>
-    section.links.flatMap((link) => (link.links ? link.links : link))
+    section.links.flatMap((link) =>
+      'href' in link ? link : link.links ? link.links.flatMap((l: any) => ('href' in l ? l : l.links ? l.links : [])) : []
+    )
   );
   let linkIndex = allLinks.findIndex((link) => link.href === pathname);
   let previousPage = linkIndex > -1 ? allLinks[linkIndex - 1] : null;
