@@ -14,7 +14,7 @@ import * as Button from '@/components/ui/button';
 // ─── Variants ────────────────────────────────────────────────────────────────
 
 const fileUploadCardVariants = tv({
-  base: 'flex w-full items-center overflow-clip rounded-xl border border-stroke-soft-200 bg-bg-white-0 shadow-regular-xs',
+  base: 'flex w-full flex-col items-stretch overflow-clip rounded-xl border border-stroke-soft-200 bg-bg-white-0 shadow-regular-xs @sm:flex-row @sm:items-center',
 });
 
 // ─── Root ────────────────────────────────────────────────────────────────────
@@ -25,7 +25,9 @@ type FileUploadCardRootProps = React.HTMLAttributes<HTMLDivElement> &
 const FileUploadCardRoot = React.forwardRef<HTMLDivElement, FileUploadCardRootProps>(
   ({ className, ...rest }, forwardedRef) => {
     return (
-      <div ref={forwardedRef} className={cn(fileUploadCardVariants(), className)} {...rest} />
+      <div className='@container w-full'>
+        <div ref={forwardedRef} className={cn(fileUploadCardVariants(), className)} {...rest} />
+      </div>
     );
   },
 );
@@ -41,7 +43,7 @@ const FileUploadCardThumbnail = React.forwardRef<
     <div
       ref={forwardedRef}
       className={cn(
-        'flex h-[104px] w-44 shrink-0 items-center justify-center overflow-clip bg-bg-weak-50',
+        'flex h-[104px] w-full shrink-0 items-center justify-center overflow-clip bg-bg-weak-50 @sm:w-44',
         className,
       )}
       {...rest}
@@ -117,7 +119,7 @@ const FileUploadCardContent = React.forwardRef<
     <div
       ref={forwardedRef}
       className={cn(
-        'flex flex-1 items-center gap-4 self-stretch pl-5 pr-6 py-4',
+        'flex min-w-0 flex-1 items-center gap-4 self-stretch pl-5 pr-6 py-4',
         className,
       )}
       {...rest}
