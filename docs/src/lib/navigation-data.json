@@ -260,6 +260,16 @@
         "collapsed": false
       },
       {
+        "title": "Providers",
+        "links": [
+          {
+            "title": "Theme Provider",
+            "href": "/docs/components/theme-provider"
+          }
+        ],
+        "collapsed": false
+      },
+      {
         "title": "Sections",
         "links": [
           {

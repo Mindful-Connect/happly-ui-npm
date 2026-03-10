@@ -1,0 +1,65 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "theme-provider",
+  "type": "registry:ui",
+  "title": "Theme Provider",
+  "description": "Generates a primary color palette from a single hex color and applies it as CSS custom properties.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": [],
+  "docs": {
+    "lead": "Dynamically override HapplyUI's primary color palette at runtime by providing a single base hex color. Uses OKLCH color space for perceptually uniform scale generation.",
+    "usage": "import * as ThemeProvider from \"@/components/ui/theme-provider\"\n\n<ThemeProvider.Root primaryColor=\"#7d52f4\">\n  {children}\n</ThemeProvider.Root>",
+    "examples": [
+      {
+        "title": "Scoped (default)",
+        "description": "Wraps children in a div with CSS custom properties. Each provider can have a different primary color.",
+        "code": "<ThemeProvider.Root primaryColor=\"#2563eb\">\n  <Button.Root variant=\"primary\">Blue theme</Button.Root>\n</ThemeProvider.Root>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Global",
+        "description": "Applies the generated palette to :root, overriding the default theme globally.",
+        "code": "<ThemeProvider.Root primaryColor=\"#2563eb\" scope=\"global\">\n  <App />\n</ThemeProvider.Root>",
+        "stories": ["Global"]
+      },
+      {
+        "title": "Multiple themes",
+        "description": "Use scoped providers side by side to show different brand colors.",
+        "code": "<div className=\"flex gap-4\">\n  <ThemeProvider.Root primaryColor=\"#e11d48\">\n    <Button.Root variant=\"primary\">Rose</Button.Root>\n  </ThemeProvider.Root>\n  <ThemeProvider.Root primaryColor=\"#2563eb\">\n    <Button.Root variant=\"primary\">Blue</Button.Root>\n  </ThemeProvider.Root>\n</div>",
+        "stories": ["MultipleThemes"]
+      }
+    ],
+    "api": [
+      {
+        "name": "ThemeProvider.Root",
+        "description": "Generates a full primary color scale from a hex color and injects CSS custom properties.",
+        "props": [
+          {
+            "name": "primaryColor",
+            "type": "string",
+            "description": "Base hex color (e.g. '#7d52f4'). Used to generate the full 50–950 scale."
+          },
+          {
+            "name": "scope",
+            "type": "'global' | 'scoped'",
+            "default": "'scoped'",
+            "description": "Whether to apply vars to a wrapper div (scoped) or to :root (global)."
+          },
+          {
+            "name": "darkMode",
+            "type": "'media' | 'class' | 'both'",
+            "default": "'media'",
+            "description": "Strategy for detecting dark mode. 'media' uses prefers-color-scheme, 'class' watches for a .dark class on <html>."
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/theme-provider.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

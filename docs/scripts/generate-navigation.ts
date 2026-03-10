@@ -129,6 +129,10 @@ function main() {
     'file-upload-card',
   ];
 
+  const PROVIDER_COMPONENTS = [
+    'theme-provider',
+  ];
+
   const SECTION_COMPONENTS = [
     'section',
     'section-toggle',
@@ -141,7 +145,7 @@ function main() {
     'upload-file-input',
   ];
 
-  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS, ...FILE_UPLOAD_COMPONENTS, ...SECTION_COMPONENTS, ...LEGACY_COMPONENTS];
+  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS, ...FILE_UPLOAD_COMPONENTS, ...PROVIDER_COMPONENTS, ...SECTION_COMPONENTS, ...LEGACY_COMPONENTS];
 
   const mainLinks = componentLinks
     .filter((item) => !GROUPED_COMPONENTS.includes(item.name))
@@ -177,6 +181,10 @@ function main() {
 
   const fileUploadLinks = componentLinks
     .filter((item) => FILE_UPLOAD_COMPONENTS.includes(item.name))
+    .map(({ name, ...rest }) => rest);
+
+  const providerLinks = componentLinks
+    .filter((item) => PROVIDER_COMPONENTS.includes(item.name))
     .map(({ name, ...rest }) => rest);
 
   const sectionLinks = componentLinks
@@ -239,6 +247,11 @@ function main() {
         {
           title: 'Overlays',
           links: overlayLinks,
+          collapsed: false,
+        },
+        {
+          title: 'Providers',
+          links: providerLinks,
           collapsed: false,
         },
         {

@@ -22,7 +22,8 @@ function isLocalRegistry(registry: string): boolean {
   return (
     registry.startsWith('/') ||
     registry.startsWith('./') ||
-    registry.startsWith('file://')
+    registry.startsWith('file://') ||
+    /^[a-zA-Z]:[\\/]/.test(registry) // Windows absolute path (e.g. C:\... or C:/...)
   );
 }
 

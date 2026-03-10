@@ -364,6 +364,12 @@
       "description": "A textarea component with character counter, resize handle, error state, and simple mode. Uses namespace exports: Textarea.Root, Textarea.CharCounter."
     },
     {
+      "name": "theme-provider",
+      "type": "registry:ui",
+      "title": "Theme Provider",
+      "description": "Generates a primary color palette from a single hex color and applies it as CSS custom properties."
+    },
+    {
       "name": "tooltip",
       "type": "registry:ui",
       "title": "Tooltip",
