@@ -38,6 +38,7 @@ interface UseFileUploadOptions {
 interface UseFileUploadReturn {
   files: UploadFile[];
   isUploading: boolean;
+  isDraggingOver: boolean;
   addFiles: (files: File[]) => void;
   removeFile: (id: string) => void;
   retryFile: (id: string) => void;
@@ -47,6 +48,7 @@ interface UseFileUploadReturn {
   getRootProps: () => {
     onDrop: (e: React.DragEvent) => void;
     onDragOver: (e: React.DragEvent) => void;
+    onDragEnter: (e: React.DragEvent) => void;
     onDragLeave: (e: React.DragEvent) => void;
   };
 }
@@ -80,6 +82,8 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
   } = options;
 
   const [files, setFiles] = React.useState<UploadFile[]>([]);
+  const [isDraggingOver, setIsDraggingOver] = React.useState(false);
+  const dragCounterRef = React.useRef(0);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const rawFilesRef = React.useRef<Map<string, File>>(new Map());
 
@@ -406,6 +410,8 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
     () => ({
       onDrop: (e: React.DragEvent) => {
         e.preventDefault();
+        dragCounterRef.current = 0;
+        setIsDraggingOver(false);
         if (e.dataTransfer.files) {
           addFiles(Array.from(e.dataTransfer.files));
         }
@@ -413,8 +419,19 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
       onDragOver: (e: React.DragEvent) => {
         e.preventDefault();
       },
+      onDragEnter: (e: React.DragEvent) => {
+        e.preventDefault();
+        dragCounterRef.current++;
+        if (dragCounterRef.current === 1) {
+          setIsDraggingOver(true);
+        }
+      },
       onDragLeave: (e: React.DragEvent) => {
         e.preventDefault();
+        dragCounterRef.current--;
+        if (dragCounterRef.current === 0) {
+          setIsDraggingOver(false);
+        }
       },
     }),
     [addFiles],
@@ -425,6 +442,7 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
   return {
     files,
     isUploading,
+    isDraggingOver,
     addFiles,
     removeFile,
     retryFile,

@@ -221,8 +221,53 @@ const FileUploadRoot = React.forwardRef<
     asChild?: boolean;
     dragging?: boolean;
   }
->(({ className, asChild, dragging, ...rest }, forwardedRef) => {
+>(({ className, asChild, dragging, onDragOver, onDragLeave, onDrop, ...rest }, forwardedRef) => {
   const Component = asChild ? Slot : 'label';
+  const [internalDragging, setInternalDragging] = React.useState(false);
+  const dragCounter = React.useRef(0);
+
+  const isDragging = dragging ?? internalDragging;
+
+  const handleDragOver = React.useCallback(
+    (e: React.DragEvent<HTMLLabelElement>) => {
+      e.preventDefault();
+      onDragOver?.(e);
+    },
+    [onDragOver],
+  );
+
+  const handleDragEnter = React.useCallback(
+    (e: React.DragEvent<HTMLLabelElement>) => {
+      e.preventDefault();
+      dragCounter.current++;
+      if (dragCounter.current === 1) {
+        setInternalDragging(true);
+      }
+    },
+    [],
+  );
+
+  const handleDragLeave = React.useCallback(
+    (e: React.DragEvent<HTMLLabelElement>) => {
+      e.preventDefault();
+      dragCounter.current--;
+      if (dragCounter.current === 0) {
+        setInternalDragging(false);
+      }
+      onDragLeave?.(e);
+    },
+    [onDragLeave],
+  );
+
+  const handleDrop = React.useCallback(
+    (e: React.DragEvent<HTMLLabelElement>) => {
+      e.preventDefault();
+      dragCounter.current = 0;
+      setInternalDragging(false);
+      onDrop?.(e);
+    },
+    [onDrop],
+  );
 
   return (
     <Component
@@ -231,9 +276,13 @@ const FileUploadRoot = React.forwardRef<
         'flex w-full cursor-pointer flex-col items-center gap-5 rounded-xl border border-dashed border-stroke-sub-300 bg-bg-white-0 p-8 text-center',
         'transition duration-200 ease-out',
         'hover:bg-bg-weak-50',
-        dragging && 'border-primary-base bg-primary-alpha-10',
+        isDragging && 'border-primary-base bg-primary-alpha-10',
         className,
       )}
+      onDragOver={handleDragOver}
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
       {...rest}
     />
   );

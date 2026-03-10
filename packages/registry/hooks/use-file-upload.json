@@ -110,6 +110,11 @@
             "description": "True if any file is currently uploading."
           },
           {
+            "name": "isDraggingOver",
+            "type": "boolean",
+            "description": "True when a file is being dragged over the dropzone (via getRootProps)."
+          },
+          {
             "name": "addFiles",
             "type": "(files: File[]) => void",
             "description": "Add native File objects to the upload queue."
@@ -141,8 +146,8 @@
           },
           {
             "name": "getRootProps",
-            "type": "() => { onDrop, onDragOver, onDragLeave }",
-            "description": "Returns drag event handlers to spread on a dropzone container."
+            "type": "() => { onDrop, onDragOver, onDragEnter, onDragLeave }",
+            "description": "Returns drag event handlers to spread on a dropzone container. Tracks isDraggingOver state internally."
           }
         ]
       },
