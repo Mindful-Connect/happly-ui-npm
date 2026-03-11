@@ -79,7 +79,7 @@
       "name": "combo-box",
       "type": "registry:ui",
       "title": "Combo Box",
-      "description": "A searchable multi-select combo box with inline search input and tag display for selected items."
+      "description": "A searchable multi-select combo box with compound components for full composability."
     },
     {
       "name": "command-menu",

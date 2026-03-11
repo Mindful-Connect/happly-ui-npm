@@ -11,7 +11,7 @@
   "dependencies": [
     "@remixicon/react"
   ],
-  "registryDependencies": ["happly-ui-utils", "tv", "dropdown", "tag", "input"],
+  "registryDependencies": ["happly-ui-utils", "button", "dropdown", "hint", "input", "select", "tag"],
   "docs": {
     "lead": "A dropdown-based social media URL picker with tag chips and inline URL editing. Supports Instagram, X (Twitter), LinkedIn, Facebook, YouTube, TikTok, Zoom, and Calendar.",
     "usage": "import SocialsInput from \"@/components/ui/socials-input\"\n\n<SocialsInput\n  name=\"socials\"\n  formValue={values}\n  setFormValue={setValues}\n/>",

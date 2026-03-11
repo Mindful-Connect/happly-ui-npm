@@ -9,9 +9,11 @@ import {
 } from '@remixicon/react';
 
 import { Button } from './button';
+import * as Checkbox from './checkbox';
 import * as ComboBox from './combo-box';
 import * as FormField from './form-field';
 import * as Label from './label';
+import * as Tag from './tag';
 
 export default { title: 'Form/Composed Inputs/Combo Box' };
 
@@ -43,7 +45,7 @@ export const Playground = {
 
     return (
       <div className='w-[300px]'>
-        <ComboBox.Root
+        <ComboBox.Composed
           options={PLAYGROUND_OPTIONS}
           value={value}
           onValueChange={setValue}
@@ -88,7 +90,7 @@ export const Default = {
             <Label.Asterisk />
             <Label.Sub>(Optional)</Label.Sub>
           </Label.Root>
-          <ComboBox.Root
+          <ComboBox.Composed
             options={SECTOR_OPTIONS}
             value={value}
             onValueChange={setValue}
@@ -111,7 +113,7 @@ export const WithPreselectedValues = {
       <div className='w-[300px]'>
         <FormField.Root>
           <Label.Root>Tags</Label.Root>
-          <ComboBox.Root
+          <ComboBox.Composed
             options={TAG_OPTIONS}
             value={value}
             onValueChange={setValue}
@@ -127,7 +129,7 @@ export const Uncontrolled = {
     <div className='w-[300px]'>
       <FormField.Root>
         <Label.Root>Sectors</Label.Root>
-        <ComboBox.Root
+        <ComboBox.Composed
           options={SECTOR_OPTIONS}
           defaultValue={['grants', 'loans']}
           name='sectors'
@@ -157,7 +159,7 @@ export const FormSubmission = {
             Tags
             <Label.Asterisk />
           </Label.Root>
-          <ComboBox.Root
+          <ComboBox.Composed
             options={TAG_OPTIONS}
             value={value}
             onValueChange={setValue}
@@ -183,7 +185,7 @@ export const Sizes = {
         <div className='w-[300px]'>
           <FormField.Root>
             <Label.Root>Medium (default)</Label.Root>
-            <ComboBox.Root
+            <ComboBox.Composed
               options={TAG_OPTIONS}
               value={medium}
               onValueChange={setMedium}
@@ -193,7 +195,7 @@ export const Sizes = {
         <div className='w-[300px]'>
           <FormField.Root>
             <Label.Root>Small</Label.Root>
-            <ComboBox.Root
+            <ComboBox.Composed
               options={TAG_OPTIONS}
               value={small}
               onValueChange={setSmall}
@@ -204,7 +206,7 @@ export const Sizes = {
         <div className='w-[300px]'>
           <FormField.Root>
             <Label.Root>XSmall</Label.Root>
-            <ComboBox.Root
+            <ComboBox.Composed
               options={TAG_OPTIONS}
               value={xsmall}
               onValueChange={setXsmall}
@@ -237,7 +239,7 @@ export const SelectionConstraints = {
               Max 3
               <Label.Sub>(select up to 3)</Label.Sub>
             </Label.Root>
-            <ComboBox.Root
+            <ComboBox.Composed
               options={TAG_OPTIONS}
               value={maxVal}
               onValueChange={setMaxVal}
@@ -251,7 +253,7 @@ export const SelectionConstraints = {
               Min 1
               <Label.Asterisk />
             </Label.Root>
-            <ComboBox.Root
+            <ComboBox.Composed
               options={SECTOR_OPTIONS}
               value={minVal}
               onValueChange={setMinVal}
@@ -265,7 +267,7 @@ export const SelectionConstraints = {
               Min 1, Max 3
               <Label.Sub>(1–3 required)</Label.Sub>
             </Label.Root>
-            <ComboBox.Root
+            <ComboBox.Composed
               options={SECTOR_OPTIONS}
               value={rangeVal}
               onValueChange={setRangeVal}
@@ -292,7 +294,7 @@ export const TagVariants = {
         <div className='w-[300px]'>
           <FormField.Root>
             <Label.Root>Gray (default)</Label.Root>
-            <ComboBox.Root
+            <ComboBox.Composed
               options={TAG_OPTIONS}
               value={gray}
               onValueChange={setGray}
@@ -303,7 +305,7 @@ export const TagVariants = {
         <div className='w-[300px]'>
           <FormField.Root>
             <Label.Root>Stroke</Label.Root>
-            <ComboBox.Root
+            <ComboBox.Composed
               options={TAG_OPTIONS}
               value={stroke}
               onValueChange={setStroke}
@@ -314,7 +316,7 @@ export const TagVariants = {
         <div className='w-[300px]'>
           <FormField.Root>
             <Label.Root>Select All Label</Label.Root>
-            <ComboBox.Root
+            <ComboBox.Composed
               options={TAG_OPTIONS}
               value={all}
               onValueChange={setAll}
@@ -339,7 +341,7 @@ export const States = {
               Error
               <Label.Asterisk />
             </Label.Root>
-            <ComboBox.Root
+            <ComboBox.Composed
               options={SECTOR_OPTIONS}
               value={errorVal}
               onValueChange={setErrorVal}
@@ -350,7 +352,7 @@ export const States = {
         <div className='w-[300px]'>
           <FormField.Root>
             <Label.Root disabled>Disabled</Label.Root>
-            <ComboBox.Root
+            <ComboBox.Composed
               options={SECTOR_OPTIONS}
               value={['grants', 'vc-funding']}
               onValueChange={() => {}}
@@ -374,7 +376,7 @@ export const Customization = {
         <div className='w-[300px]'>
           <FormField.Root>
             <Label.Root>Custom Icon</Label.Root>
-            <ComboBox.Root
+            <ComboBox.Composed
               options={[
                 { value: 'toronto', label: 'Toronto' },
                 { value: 'vancouver', label: 'Vancouver' },
@@ -392,7 +394,7 @@ export const Customization = {
         <div className='w-[300px]'>
           <FormField.Root>
             <Label.Root>Custom Placeholder</Label.Root>
-            <ComboBox.Root
+            <ComboBox.Composed
               options={[
                 { value: 'react', label: 'React' },
                 { value: 'typescript', label: 'TypeScript' },
@@ -409,7 +411,7 @@ export const Customization = {
         <div className='w-[300px]'>
           <FormField.Root>
             <Label.Root>Custom Empty Message</Label.Root>
-            <ComboBox.Root
+            <ComboBox.Composed
               options={TAG_OPTIONS}
               value={tags}
               onValueChange={setTags}
@@ -445,7 +447,7 @@ export const WithIcons = {
         <div className='w-[300px]'>
           <FormField.Root>
             <Label.Root>Payment Types</Label.Root>
-            <ComboBox.Root
+            <ComboBox.Composed
               options={ICON_OPTIONS}
               value={icons}
               onValueChange={setIcons}
@@ -455,7 +457,7 @@ export const WithIcons = {
         <div className='w-[300px]'>
           <FormField.Root>
             <Label.Root>Countries</Label.Root>
-            <ComboBox.Root
+            <ComboBox.Composed
               options={FLAG_OPTIONS}
               value={flags}
               onValueChange={setFlags}
@@ -465,5 +467,155 @@ export const WithIcons = {
         </div>
       </div>
     );
+  },
+};
+
+const TEAM_MEMBERS = [
+  {
+    value: 'alice',
+    label: 'Alice Johnson',
+    icon: 'https://i.pravatar.cc/40?u=alice',
+  },
+  {
+    value: 'bob',
+    label: 'Bob Smith',
+    icon: 'https://i.pravatar.cc/40?u=bob',
+  },
+  {
+    value: 'carol',
+    label: 'Carol Williams',
+    icon: 'https://i.pravatar.cc/40?u=carol',
+  },
+  {
+    value: 'dave',
+    label: 'Dave Brown',
+    icon: 'https://i.pravatar.cc/40?u=dave',
+  },
+  {
+    value: 'eve',
+    label: 'Eve Davis',
+    icon: 'https://i.pravatar.cc/40?u=eve',
+  },
+];
+
+export const CompoundCustomItems = {
+  render: () => {
+    function CompoundDemo() {
+      const [value, setValue] = React.useState<string[]>(['alice']);
+
+      return (
+        <div className='w-[320px]'>
+          <FormField.Root>
+            <Label.Root>Team Members</Label.Root>
+            <ComboBox.Root
+              options={TEAM_MEMBERS}
+              value={value}
+              onValueChange={setValue}
+            >
+              <ComboBox.SearchTrigger placeholder='Search team members...' />
+              <ComboBox.Content>
+                <CompoundItems />
+              </ComboBox.Content>
+              <ComboBox.Tags variant='stroke' />
+            </ComboBox.Root>
+          </FormField.Root>
+        </div>
+      );
+    }
+
+    function CompoundItems() {
+      const ctx = ComboBox.useComboBoxContext();
+
+      if (ctx.filteredOptions.length === 0) {
+        return <ComboBox.Empty>No members found.</ComboBox.Empty>;
+      }
+
+      return (
+        <div className='flex flex-col gap-1'>
+          {ctx.filteredOptions.map((option) => {
+            const selected = ctx.isSelected(option.value);
+            return (
+              <ComboBox.Item
+                key={option.value}
+                value={option.value}
+                showIndicator={false}
+              >
+                <Checkbox.Root
+                  checked={selected}
+                  tabIndex={-1}
+                  className='pointer-events-none'
+                />
+                {option.icon && (
+                  <div
+                    className='size-6 shrink-0 rounded-full bg-cover bg-center bg-no-repeat'
+                    style={{ backgroundImage: `url(${option.icon})` }}
+                  />
+                )}
+                <span className='line-clamp-1'>{option.label}</span>
+              </ComboBox.Item>
+            );
+          })}
+        </div>
+      );
+    }
+
+    return <CompoundDemo />;
+  },
+};
+
+export const CompoundCustomTags = {
+  render: () => {
+    function CustomTagsDemo() {
+      const [value, setValue] = React.useState<string[]>([
+        'alice',
+        'bob',
+      ]);
+
+      return (
+        <div className='w-[320px]'>
+          <FormField.Root>
+            <Label.Root>Assignees</Label.Root>
+            <ComboBox.Root
+              options={TEAM_MEMBERS}
+              value={value}
+              onValueChange={setValue}
+            >
+              <ComboBox.SearchTrigger placeholder='Add assignee...' />
+              <ComboBox.Content />
+              <CustomTags />
+            </ComboBox.Root>
+          </FormField.Root>
+        </div>
+      );
+    }
+
+    function CustomTags() {
+      const ctx = ComboBox.useComboBoxContext();
+
+      if (ctx.value.length === 0) return null;
+
+      const selected = ctx.value
+        .map((v) => ctx.options.find((o) => o.value === v))
+        .filter(Boolean) as ComboBox.ComboBoxOption[];
+
+      return (
+        <div className='flex flex-wrap gap-1.5'>
+          {selected.map((opt) => (
+            <Tag.Root key={opt.value} variant='stroke'>
+              {opt.icon && (
+                <Tag.Icon
+                  className='rounded-full bg-cover bg-center bg-no-repeat'
+                  style={{ backgroundImage: `url(${opt.icon})` }}
+                />
+              )}
+              <span>{opt.label.split(' ')[0]}</span>
+              <Tag.DismissButton onClick={() => ctx.remove(opt.value)} />
+            </Tag.Root>
+          ))}
+        </div>
+      );
+    }
+
+    return <CustomTagsDemo />;
   },
 };

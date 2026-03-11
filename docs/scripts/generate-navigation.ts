@@ -120,6 +120,7 @@ function main() {
     'combo-box',
     'currency-input',
     'password-input',
+    'socials-input',
     'tag-input',
   ];
 
@@ -141,7 +142,6 @@ function main() {
   const LEGACY_COMPONENTS = [
     'location-input',
     'phone-input',
-    'socials-input',
     'upload-file-input',
   ];
 

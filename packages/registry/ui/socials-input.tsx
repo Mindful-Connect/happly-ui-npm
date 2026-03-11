@@ -14,11 +14,13 @@ import {
   RiYoutubeFill,
 } from '@remixicon/react';
 
+import * as Button from '@/components/ui/button';
 import * as Dropdown from '@/components/ui/dropdown';
+import * as Hint from '@/components/ui/hint';
 import * as Input from '@/components/ui/input';
+import { selectVariants } from '@/components/ui/select';
 import * as Tag from '@/components/ui/tag';
 import { cn } from '@/lib/happly-ui-utils';
-import { tv } from '@/lib/tv';
 
 // ─── Types ───────────────────────────────────────────────────────────
 
@@ -225,31 +227,9 @@ const DEFAULT_LABELS: SocialsInputLabels = {
 
 // ─── Styles ─────────────────────────────────────────────────────────
 
-const triggerStyles = tv({
-  base: [
-    'flex w-full items-center gap-2 rounded-10 bg-bg-white-0 py-2.5 pl-3 pr-2.5 text-paragraph-sm text-text-sub-600 shadow-regular-xs outline-none',
-    'ring-1 ring-inset',
-    'transition duration-200 ease-out',
-    'disabled:pointer-events-none disabled:opacity-50',
-  ],
-  variants: {
-    hasError: {
-      true: [
-        'ring-error-base',
-        'hover:ring-error-base',
-        'focus-visible:shadow-button-error-focus focus-visible:ring-error-base',
-      ],
-      false: [
-        'ring-stroke-soft-200',
-        'hover:shadow-none hover:ring-stroke-strong-950',
-        'focus-visible:shadow-button-important-focus focus-visible:ring-stroke-strong-950',
-      ],
-    },
-  },
-  defaultVariants: {
-    hasError: false,
-  },
-});
+function getTriggerStyles(hasError: boolean) {
+  return selectVariants({ variant: 'default', size: 'medium', hasError });
+}
 
 // ─── Validation ──────────────────────────────────────────────────────
 
@@ -492,13 +472,14 @@ export default function SocialsInput({
             ref={triggerRef}
             type='button'
             disabled={readOnly || remainingOptions.length === 0}
-            className={triggerStyles({ hasError })}
+            data-placeholder
+            className={getTriggerStyles(hasError).triggerRoot()}
           >
-            <RiLinkM className='size-5 shrink-0' />
+            <RiLinkM className={getTriggerStyles(hasError).triggerIcon()} />
             <span className='flex-1 text-left'>{labels.placeholder}</span>
             <RiArrowDownSLine
               className={cn(
-                'size-5 shrink-0 transition-transform duration-200',
+                getTriggerStyles(hasError).triggerArrow(),
                 dropdownOpen && 'rotate-180',
               )}
             />
@@ -572,20 +553,22 @@ export default function SocialsInput({
               </Input.Wrapper>
             </Input.Root>
 
-            <button
-              type='button'
+            <Button.Root
+              variant='error'
+              mode='lighter'
+              size='medium'
               onMouseDown={(e) => e.preventDefault()}
               onClick={handleCancelEdit}
-              className='flex size-10 shrink-0 items-center justify-center rounded-10 bg-error-lighter text-error-base ring-1 ring-inset ring-error-lighter transition duration-200 ease-out hover:bg-red-200 hover:ring-red-200'
+              className='shrink-0 px-0 w-10'
             >
-              <RiCloseLine className='size-5' />
-            </button>
+              <Button.Icon as={RiCloseLine} />
+            </Button.Root>
           </div>
 
           {errors[`${name}.${editingKey}`] && (
-            <p className='text-paragraph-sm text-error-base'>
+            <Hint.Root hasError>
               {errors[`${name}.${editingKey}`]}
-            </p>
+            </Hint.Root>
           )}
         </div>
       )}

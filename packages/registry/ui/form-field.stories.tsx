@@ -91,7 +91,7 @@ export const Demo = {
             Tags
             <Label.Asterisk />
           </Label.Root>
-          <ComboBox.Root
+          <ComboBox.Composed
             options={TAG_OPTIONS}
             value={tags}
             onValueChange={setTags}
