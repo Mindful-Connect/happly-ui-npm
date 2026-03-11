@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { RiCheckLine, RiSearchLine } from '@remixicon/react';
+import { RiArrowDownSLine, RiCheckLine, RiSearchLine } from '@remixicon/react';
 import * as ScrollAreaPrimitives from '@radix-ui/react-scroll-area';
 import { RemoveScroll } from 'react-remove-scroll';
 
@@ -40,11 +40,14 @@ type ComboBoxContextValue = {
   min: number;
   size: 'medium' | 'small' | 'xsmall';
   hasError: boolean;
-  anchorRef: React.RefObject<HTMLDivElement | null>;
   anchorWidth: number;
 };
 
 const ComboBoxContext = React.createContext<ComboBoxContextValue | null>(null);
+
+// Separate context for the anchor ref to avoid ESLint react-hooks/refs
+// false positives on the main context (which would flag all ctx.* accesses).
+const AnchorRefContext = React.createContext<React.RefObject<HTMLDivElement | null> | null>(null);
 
 function useComboBoxContext() {
   const ctx = React.useContext(ComboBoxContext);
@@ -52,6 +55,14 @@ function useComboBoxContext() {
     throw new Error('ComboBox compound components must be used within ComboBox.Root');
   }
   return ctx;
+}
+
+function useAnchorRef() {
+  const ref = React.useContext(AnchorRefContext);
+  if (!ref) {
+    throw new Error('ComboBox compound components must be used within ComboBox.Root');
+  }
+  return ref;
 }
 
 // ─── Root ───────────────────────────────────────────────────
@@ -189,7 +200,6 @@ function ComboBoxRoot({
       min,
       size,
       hasError,
-      anchorRef,
       anchorWidth,
     }),
     [
@@ -216,19 +226,21 @@ function ComboBoxRoot({
   );
 
   return (
-    <ComboBoxContext.Provider value={ctx}>
-      <div className={cn('flex flex-col gap-2', className)}>
-        <Popover.Root open={open} onOpenChange={handleOpenChange}>
-          {children}
-        </Popover.Root>
+    <AnchorRefContext.Provider value={anchorRef}>
+      <ComboBoxContext.Provider value={ctx}>
+        <div className={cn('flex flex-col gap-2', className)}>
+          <Popover.Root open={open} onOpenChange={handleOpenChange}>
+            {children}
+          </Popover.Root>
 
-        {/* Hidden inputs for form submission */}
-        {name &&
-          value.map((v) => (
-            <input key={v} type='hidden' name={name} value={v} />
-          ))}
-      </div>
-    </ComboBoxContext.Provider>
+          {/* Hidden inputs for form submission */}
+          {name &&
+            value.map((v) => (
+              <input key={v} type='hidden' name={name} value={v} />
+            ))}
+        </div>
+      </ComboBoxContext.Provider>
+    </AnchorRefContext.Provider>
   );
 }
 ComboBoxRoot.displayName = 'ComboBoxRoot';
@@ -237,7 +249,9 @@ ComboBoxRoot.displayName = 'ComboBoxRoot';
 
 type ComboBoxSearchTriggerProps = {
   /** Leading icon component (defaults to RiSearchLine) */
-  icon?: React.ElementType;
+  leadingIcon?: React.ElementType;
+  /** Trailing icon component (defaults to RiArrowDownSLine) */
+  trailingIcon?: React.ElementType;
   /** Search input placeholder */
   placeholder?: string;
   className?: string;
@@ -248,21 +262,22 @@ const ComboBoxSearchTrigger = React.forwardRef<
   ComboBoxSearchTriggerProps
 >(
   (
-    { icon: Icon = RiSearchLine, placeholder = 'Choose or search...', className },
+    { leadingIcon = RiSearchLine, trailingIcon = RiArrowDownSLine, placeholder = 'Choose or search...', className },
     forwardedRef,
   ) => {
     const ctx = useComboBoxContext();
+    const anchorRef = useAnchorRef();
 
     return (
       <Popover.Anchor asChild>
-        <div ref={ctx.anchorRef}>
+        <div ref={anchorRef}>
           <Input.Root
             size={ctx.size}
             hasError={ctx.hasError}
             className={className}
           >
             <Input.Wrapper>
-              <Input.Icon as={Icon} />
+              <Input.Icon as={leadingIcon} />
               <Input.Input
                 ref={forwardedRef}
                 role='combobox'
@@ -273,6 +288,13 @@ const ComboBoxSearchTrigger = React.forwardRef<
                 onFocus={() => !ctx.disabled && ctx.handleOpenChange(true)}
                 placeholder={placeholder}
                 disabled={ctx.disabled}
+              />
+              <Input.Icon
+                as={trailingIcon}
+                className={cn(
+                  'transition duration-200 ease-out',
+                  ctx.open && 'rotate-180',
+                )}
               />
             </Input.Wrapper>
           </Input.Root>
@@ -298,6 +320,7 @@ function ComboBoxContent({
   children,
 }: ComboBoxContentProps) {
   const ctx = useComboBoxContext();
+  const anchorRef = useAnchorRef();
 
   return (
     <Popover.Content
@@ -307,7 +330,7 @@ function ComboBoxContent({
       showArrow={false}
       onOpenAutoFocus={(e) => e.preventDefault()}
       onInteractOutside={(e) => {
-        if (ctx.anchorRef.current?.contains(e.target as Node)) {
+        if (anchorRef.current?.contains(e.target as Node)) {
           e.preventDefault();
         }
       }}
@@ -578,7 +601,7 @@ const ComboBoxComposed = React.forwardRef<HTMLInputElement, ComboBoxComposedProp
       <ComboBoxRoot {...rootProps}>
         <ComboBoxSearchTrigger
           ref={forwardedRef}
-          icon={icon}
+          leadingIcon={icon}
           placeholder={placeholder}
         />
         <ComboBoxContent emptyMessage={emptyMessage} />

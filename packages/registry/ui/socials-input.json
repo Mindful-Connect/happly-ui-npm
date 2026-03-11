@@ -3,17 +3,17 @@
   "name": "socials-input",
   "type": "registry:ui",
   "title": "Socials Input",
-  "description": "A dropdown-based social media URL picker with tag chips and inline URL editing.",
-  "version": "2.0.0",
+  "description": "A searchable social media URL picker with tag chips and inline URL editing.",
+  "version": "3.0.0",
   "migration": {
-    "guide": "Complete redesign. The `t` translation function has been replaced with a simpler `labels` prop. Now uses Dropdown, Tag, Input, and Button registry components instead of raw Headless UI. Social values display as dismissible tag chips instead of individual input rows. Icons switched from react-icons to @remixicon/react."
+    "guide": "v3 replaces the Dropdown trigger with ComboBox compound components, adding search/filter for social platforms. Removed dependencies on dropdown and select — now uses combo-box instead. The cn utility is no longer imported. All other props and behavior remain the same."
   },
   "dependencies": [
     "@remixicon/react"
   ],
-  "registryDependencies": ["happly-ui-utils", "button", "dropdown", "hint", "input", "select", "tag"],
+  "registryDependencies": ["button", "combo-box", "hint", "input", "tag"],
   "docs": {
-    "lead": "A dropdown-based social media URL picker with tag chips and inline URL editing. Supports Instagram, X (Twitter), LinkedIn, Facebook, YouTube, TikTok, Zoom, and Calendar.",
+    "lead": "A searchable social media URL picker with tag chips and inline URL editing. Supports Instagram, X (Twitter), LinkedIn, Facebook, YouTube, TikTok, Zoom, and Calendar. Uses ComboBox for platform selection with search filtering.",
     "usage": "import SocialsInput from \"@/components/ui/socials-input\"\n\n<SocialsInput\n  name=\"socials\"\n  formValue={values}\n  setFormValue={setValues}\n/>",
     "examples": [
       {

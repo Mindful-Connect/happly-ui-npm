@@ -1,6 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import {
-  RiArrowDownSLine,
   RiCalendarTodoLine,
   RiCheckLine,
   RiCloseLine,
@@ -15,12 +14,10 @@ import {
 } from '@remixicon/react';
 
 import * as Button from '@/components/ui/button';
-import * as Dropdown from '@/components/ui/dropdown';
+import * as ComboBox from '@/components/ui/combo-box';
 import * as Hint from '@/components/ui/hint';
 import * as Input from '@/components/ui/input';
-import { selectVariants } from '@/components/ui/select';
 import * as Tag from '@/components/ui/tag';
-import { cn } from '@/lib/happly-ui-utils';
 
 // ─── Types ───────────────────────────────────────────────────────────
 
@@ -225,12 +222,6 @@ const DEFAULT_LABELS: SocialsInputLabels = {
   errorZoomUrl: 'Please enter a valid Zoom URL',
 };
 
-// ─── Styles ─────────────────────────────────────────────────────────
-
-function getTriggerStyles(hasError: boolean) {
-  return selectVariants({ variant: 'default', size: 'medium', hasError });
-}
-
 // ─── Validation ──────────────────────────────────────────────────────
 
 const URL_REGEX =
@@ -246,6 +237,28 @@ function getErrorMessage(key: SocialKey, labels: SocialsInputLabels) {
   return labels.errorUrl;
 }
 
+// ─── Picker Items ────────────────────────────────────────────────────
+
+function SocialPickerItems() {
+  const ctx = ComboBox.useComboBoxContext();
+
+  if (ctx.filteredOptions.length === 0) {
+    return <ComboBox.Empty>No matching platforms.</ComboBox.Empty>;
+  }
+
+  return (
+    <div className='flex flex-col gap-1'>
+      {ctx.filteredOptions.map((option) => (
+        <ComboBox.Item
+          key={option.value}
+          value={option.value}
+          showIndicator={false}
+        />
+      ))}
+    </div>
+  );
+}
+
 // ─── Component ───────────────────────────────────────────────────────
 
 export default function SocialsInput({
@@ -259,12 +272,9 @@ export default function SocialsInput({
 }: SocialsInputProps) {
   const labels = { ...DEFAULT_LABELS, ...labelsProp };
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [editingKey, setEditingKey] = useState<SocialKey | null>(null);
   const [editValue, setEditValue] = useState('');
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
-  const triggerRef = useRef<HTMLButtonElement>(null);
-  const [triggerWidth, setTriggerWidth] = useState(0);
 
   // Error state: external prop or any internal validation error
   const hasInternalError = Object.values(errors).some(Boolean);
@@ -285,7 +295,7 @@ export default function SocialsInput({
     (key) => key in SOCIAL_CONFIGS,
   );
 
-  // Socials not yet added
+  // Socials not yet added — these are the ComboBox options
   const remainingOptions = socials.filter(
     (s) => !addedKeys.includes(s.key),
   );
@@ -295,14 +305,14 @@ export default function SocialsInput({
     (key) => formValue[key] && SOCIAL_CONFIGS[key],
   );
 
-  // ─── Handlers ────────────────────────────────────────────────────
+  // ComboBox options — only platforms not yet added
+  const comboBoxOptions = remainingOptions.map((s) => ({
+    value: s.key,
+    label: s.label,
+    icon: s.icon,
+  }));
 
-  function handleDropdownOpenChange(open: boolean) {
-    if (open && triggerRef.current) {
-      setTriggerWidth(triggerRef.current.offsetWidth);
-    }
-    setDropdownOpen(open);
-  }
+  // ─── Handlers ────────────────────────────────────────────────────
 
   function processAndSave(key: SocialKey, rawInput: string): boolean {
     const config = SOCIAL_CONFIGS[key];
@@ -388,6 +398,15 @@ export default function SocialsInput({
     setEditValue('');
   }
 
+  function handleComboBoxValueChange(values: string[]) {
+    const newKey = values.find(
+      (v) => !addedKeys.includes(v as SocialKey),
+    ) as SocialKey | undefined;
+    if (newKey) {
+      handleSelectSocial(newKey);
+    }
+  }
+
   function handleConfirmEdit() {
     if (!editingKey) return;
 
@@ -465,42 +484,22 @@ export default function SocialsInput({
 
   return (
     <div className='flex flex-col gap-3'>
-      {/* Dropdown Selector */}
-      <Dropdown.Root onOpenChange={handleDropdownOpenChange}>
-        <Dropdown.Trigger asChild>
-          <button
-            ref={triggerRef}
-            type='button'
-            disabled={readOnly || remainingOptions.length === 0}
-            data-placeholder
-            className={getTriggerStyles(hasError).triggerRoot()}
-          >
-            <RiLinkM className={getTriggerStyles(hasError).triggerIcon()} />
-            <span className='flex-1 text-left'>{labels.placeholder}</span>
-            <RiArrowDownSLine
-              className={cn(
-                getTriggerStyles(hasError).triggerArrow(),
-                dropdownOpen && 'rotate-180',
-              )}
-            />
-          </button>
-        </Dropdown.Trigger>
-
-        <Dropdown.Content
-          align='start'
-          style={{ width: triggerWidth || undefined }}
-        >
-          {remainingOptions.map((social) => (
-            <Dropdown.Item
-              key={social.key}
-              onSelect={() => handleSelectSocial(social.key)}
-            >
-              <Dropdown.ItemIcon as={social.icon} />
-              {social.label}
-            </Dropdown.Item>
-          ))}
-        </Dropdown.Content>
-      </Dropdown.Root>
+      {/* Social Platform Picker */}
+      <ComboBox.Root
+        options={comboBoxOptions}
+        value={[]}
+        onValueChange={handleComboBoxValueChange}
+        disabled={readOnly || remainingOptions.length === 0}
+        hasError={hasError}
+      >
+        <ComboBox.SearchTrigger
+          leadingIcon={RiLinkM}
+          placeholder={labels.placeholder}
+        />
+        <ComboBox.Content>
+          <SocialPickerItems />
+        </ComboBox.Content>
+      </ComboBox.Root>
 
       {/* Tags */}
       {savedEntries.length > 0 && (
