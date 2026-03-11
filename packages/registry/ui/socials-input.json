@@ -3,24 +3,60 @@
   "name": "socials-input",
   "type": "registry:ui",
   "title": "Socials Input",
-  "description": "A dynamic input list for social media URLs with validation and icons.",
+  "description": "A dropdown-based social media URL picker with tag chips and inline URL editing.",
+  "version": "2.0.0",
+  "migration": {
+    "guide": "Complete redesign. The `t` translation function has been replaced with a simpler `labels` prop. Now uses Dropdown, Tag, Input, and Button registry components instead of raw Headless UI. Social values display as dismissible tag chips instead of individual input rows. Icons switched from react-icons to @remixicon/react."
+  },
   "dependencies": [
-    "zod",
-    "@headlessui/react",
-    "react-icons",
-    "clsx",
-    "tailwind-merge"
+    "@remixicon/react"
   ],
-  "registryDependencies": ["input", "happly-ui-utils"],
+  "registryDependencies": ["happly-ui-utils", "tv", "dropdown", "tag", "input"],
   "docs": {
-    "lead": "A dynamic input list for social media URLs with validation and icons.",
+    "lead": "A dropdown-based social media URL picker with tag chips and inline URL editing. Supports Instagram, X (Twitter), LinkedIn, Facebook, YouTube, TikTok, Zoom, and Calendar.",
     "usage": "import SocialsInput from \"@/components/ui/socials-input\"\n\n<SocialsInput\n  name=\"socials\"\n  formValue={values}\n  setFormValue={setValues}\n/>",
     "examples": [
       {
         "title": "Default",
-        "description": "Default usage with English labels.",
+        "description": "Default usage with the 6 main social platforms.",
         "code": "<SocialsInput\n  name=\"socials\"\n  formValue={values}\n  setFormValue={setValues}\n/>",
         "stories": ["Default"]
+      },
+      {
+        "title": "With Existing Values",
+        "description": "Pre-populated with saved social URLs displayed as tags.",
+        "code": "<SocialsInput\n  name=\"socials\"\n  formValue={{\n    instagram: 'https://instagram.com/happly_app',\n    linkedin: 'https://linkedin.com/in/ahmaad-ansari',\n  }}\n  setFormValue={setValues}\n/>",
+        "stories": ["WithExistingValues"]
+      },
+      {
+        "title": "All Socials",
+        "description": "Pass null to show all available platforms including Zoom and Calendar.",
+        "code": "<SocialsInput\n  name=\"socials\"\n  availableSocials={null}\n  formValue={values}\n  setFormValue={setValues}\n/>",
+        "stories": ["AllSocials"]
+      },
+      {
+        "title": "With Form Field",
+        "description": "Composed with FormField and Label for a complete form layout with asterisk, optional hint, and info tooltip.",
+        "code": "<FormField.Root>\n  <Label.Root>\n    Add your social media\n    <Label.Asterisk />\n    <Label.Sub>(Optional)</Label.Sub>\n    <Label.Info>Add your social media links so others can find you.</Label.Info>\n  </Label.Root>\n  <SocialsInput\n    name=\"socials\"\n    formValue={values}\n    setFormValue={setValues}\n  />\n</FormField.Root>",
+        "stories": ["WithFormField"]
+      },
+      {
+        "title": "Error State",
+        "description": "Error state with hasError prop and Hint component for form-level validation messages.",
+        "code": "<FormField.Root>\n  <Label.Root>\n    Add your social media\n    <Label.Asterisk />\n  </Label.Root>\n  <SocialsInput\n    name=\"socials\"\n    hasError\n    formValue={values}\n    setFormValue={setValues}\n  />\n  <Hint.Root hasError>\n    Please add at least one social media link.\n  </Hint.Root>\n</FormField.Root>",
+        "stories": ["ErrorState"]
+      },
+      {
+        "title": "Read Only",
+        "description": "Read-only mode disables the dropdown and hides dismiss buttons on tags.",
+        "code": "<SocialsInput\n  name=\"socials\"\n  readOnly\n  formValue={values}\n  setFormValue={setValues}\n/>",
+        "stories": ["ReadOnly"]
+      },
+      {
+        "title": "Custom Labels",
+        "description": "Override labels for internationalization.",
+        "code": "<SocialsInput\n  name=\"socials\"\n  formValue={values}\n  setFormValue={setValues}\n  labels={{\n    placeholder: 'Ajouter un réseau social...',\n    errorUrl: 'Veuillez saisir une URL valide',\n  }}\n/>",
+        "stories": ["CustomLabels"]
       }
     ],
     "api": [
@@ -29,20 +65,43 @@
         "description": "The main component.",
         "props": [
           {
+            "name": "name",
+            "type": "string",
+            "description": "Field name for form integration and error key namespacing."
+          },
+          {
+            "name": "readOnly",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disables the dropdown and hides dismiss buttons."
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "External error state. Applies error ring to the dropdown trigger. Also activates automatically on internal validation errors."
+          },
+          {
+            "name": "availableSocials",
+            "type": "SocialKey[] | null",
+            "default": "['instagram', 'x-twitter', 'linkedin', 'facebook', 'youtube', 'tiktok']",
+            "description": "Social platforms to show in the dropdown. Pass null for all platforms including Zoom and Calendar."
+          },
+          {
             "name": "formValue",
             "type": "Record<string, string>",
             "default": "{}",
-            "description": "The current state of social inputs."
+            "description": "Current form values as a record of social key to URL."
           },
           {
             "name": "setFormValue",
             "type": "(value: Record<string, string>) => void",
-            "description": "State setter."
+            "description": "State setter for the form values."
           },
           {
             "name": "labels",
             "type": "Partial<SocialsInputLabels>",
-            "description": "Optional labels for translation."
+            "description": "Override labels for i18n. Keys: placeholder, errorUrl, errorCalendarUrl, errorZoomUrl."
           }
         ]
       }

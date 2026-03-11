@@ -325,7 +325,7 @@
       "name": "socials-input",
       "type": "registry:ui",
       "title": "Socials Input",
-      "description": "A dynamic input list for social media URLs with validation and icons."
+      "description": "A dropdown-based social media URL picker with tag chips and inline URL editing."
     },
     {
       "name": "status-badge",
