@@ -105,6 +105,7 @@ function main() {
     'color-picker',
     'datepicker',
     'digit-input',
+    'form-field',
     'hint',
     'input',
     'label',

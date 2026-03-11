@@ -123,6 +123,10 @@
             "href": "/docs/components/digit-input"
           },
           {
+            "title": "Form Field",
+            "href": "/docs/components/form-field"
+          },
+          {
             "title": "Hint",
             "href": "/docs/components/hint"
           },
@@ -286,10 +290,6 @@
           }
         ],
         "collapsed": false
-      },
-      {
-        "title": "Form Field",
-        "href": "/docs/components/form-field"
       },
       {
         "title": "Needs Refactor",
