@@ -18,39 +18,15 @@
     "usage": "import * as LinkButton from \"@/components/ui/link-button\"\n\n<LinkButton.Root variant=\"gray\">\n  Link Button\n</LinkButton.Root>",
     "examples": [
       {
-        "title": "Gray",
-        "description": "The gray variant with subdued text color.",
-        "code": "<LinkButton.Root variant=\"gray\">Link Button</LinkButton.Root>",
-        "stories": ["Gray"]
-      },
-      {
-        "title": "Black",
-        "description": "The black variant with strong text color.",
-        "code": "<LinkButton.Root variant=\"black\">Link Button</LinkButton.Root>",
-        "stories": ["Black"]
-      },
-      {
-        "title": "Primary",
-        "description": "The primary variant using the brand color.",
-        "code": "<LinkButton.Root variant=\"primary\">Link Button</LinkButton.Root>",
-        "stories": ["Primary"]
-      },
-      {
-        "title": "Error",
-        "description": "The error variant for destructive link actions.",
-        "code": "<LinkButton.Root variant=\"error\">Link Button</LinkButton.Root>",
-        "stories": ["Error"]
-      },
-      {
-        "title": "Modifiable",
-        "description": "The modifiable variant provides no default styling, allowing full customization via className.",
-        "code": "<LinkButton.Root variant=\"modifiable\" className=\"text-success-base\">\n  Link Button\n</LinkButton.Root>",
-        "stories": ["Modifiable"]
+        "title": "Variants",
+        "description": "Available variants: gray (default), black, primary, error, and modifiable (no default styling, fully customizable via className).",
+        "code": "<LinkButton.Root variant=\"gray\">Gray</LinkButton.Root>\n<LinkButton.Root variant=\"black\">Black</LinkButton.Root>\n<LinkButton.Root variant=\"primary\">Primary</LinkButton.Root>\n<LinkButton.Root variant=\"error\">Error</LinkButton.Root>\n<LinkButton.Root variant=\"modifiable\" className=\"text-success-base\">Modifiable</LinkButton.Root>",
+        "stories": ["Variants"]
       },
       {
         "title": "Sizes",
         "description": "Link buttons come in medium (default) and small sizes.",
-        "code": "<LinkButton.Root>Link Button</LinkButton.Root>\n<LinkButton.Root size=\"small\">Link Button</LinkButton.Root>",
+        "code": "<LinkButton.Root>Medium (default)</LinkButton.Root>\n<LinkButton.Root size=\"small\">Small</LinkButton.Root>",
         "stories": ["Sizes"]
       },
       {

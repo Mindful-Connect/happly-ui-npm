@@ -18,28 +18,10 @@
     "usage": "import * as CompactButton from \"@/components/ui/compact-button\"\n\n<CompactButton.Root variant=\"stroke\">\n  <CompactButton.Icon as={RiAddLine} />\n</CompactButton.Root>",
     "examples": [
       {
-        "title": "Stroke",
-        "description": "The stroke variant with a border outline and shadow.",
-        "code": "<CompactButton.Root variant=\"stroke\">\n  <CompactButton.Icon as={RiAddLine} />\n</CompactButton.Root>",
-        "stories": ["Stroke"]
-      },
-      {
-        "title": "Ghost",
-        "description": "The ghost variant with a transparent background.",
-        "code": "<CompactButton.Root variant=\"ghost\">\n  <CompactButton.Icon as={RiAddLine} />\n</CompactButton.Root>",
-        "stories": ["Ghost"]
-      },
-      {
-        "title": "White",
-        "description": "The white variant with a solid white background and shadow.",
-        "code": "<CompactButton.Root variant=\"white\">\n  <CompactButton.Icon as={RiAddLine} />\n</CompactButton.Root>",
-        "stories": ["White"]
-      },
-      {
-        "title": "Modifiable",
-        "description": "The modifiable variant provides no default styling, allowing full customization via className.",
-        "code": "<CompactButton.Root variant=\"modifiable\" className=\"text-error-base hover:bg-error-lighter\">\n  <CompactButton.Icon as={RiAddLine} />\n</CompactButton.Root>",
-        "stories": ["Modifiable"]
+        "title": "Variants",
+        "description": "All visual variants: stroke (default with border and shadow), ghost (transparent background), white (solid white with shadow), and modifiable (no default styling, fully customizable via className).",
+        "code": "<CompactButton.Root variant=\"stroke\">\n  <CompactButton.Icon as={RiAddLine} />\n</CompactButton.Root>\n<CompactButton.Root variant=\"ghost\">\n  <CompactButton.Icon as={RiAddLine} />\n</CompactButton.Root>\n<CompactButton.Root variant=\"white\">\n  <CompactButton.Icon as={RiAddLine} />\n</CompactButton.Root>\n<CompactButton.Root variant=\"modifiable\" className=\"text-error-base hover:bg-error-lighter\">\n  <CompactButton.Icon as={RiAddLine} />\n</CompactButton.Root>",
+        "stories": ["Variants"]
       },
       {
         "title": "Sizes",

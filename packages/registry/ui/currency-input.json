@@ -25,6 +25,24 @@
         "description": "Fully controlled currency input.",
         "code": "<CurrencyInput.Root\n  value={amount}\n  onValueChange={setAmount}\n  currency={currency}\n  onCurrencyChange={setCurrency}\n/>",
         "stories": ["Controlled"]
+      },
+      {
+        "title": "Sizes",
+        "description": "All three input sizes: medium (default), small, and xsmall.",
+        "code": "<CurrencyInput.Root size=\"medium\" />\n<CurrencyInput.Root size=\"small\" />\n<CurrencyInput.Root size=\"xsmall\" />",
+        "stories": ["Sizes"]
+      },
+      {
+        "title": "Error State",
+        "description": "Currency input in error state.",
+        "code": "<CurrencyInput.Root hasError />",
+        "stories": ["ErrorState"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Currency input in disabled state.",
+        "code": "<CurrencyInput.Root disabled />",
+        "stories": ["Disabled"]
       }
     ],
     "api": [

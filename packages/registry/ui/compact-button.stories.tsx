@@ -23,38 +23,28 @@ export const Playground = {
   ),
 };
 
-export const Stroke = {
+export const Variants = {
   render: () => (
-    <CompactButton.Root variant='stroke'>
-      <CompactButton.Icon as={RiAddLine} />
-    </CompactButton.Root>
-  ),
-};
+    <div className='flex items-center gap-4'>
+      <CompactButton.Root variant='stroke'>
+        <CompactButton.Icon as={RiAddLine} />
+      </CompactButton.Root>
 
-export const Ghost = {
-  render: () => (
-    <CompactButton.Root variant='ghost'>
-      <CompactButton.Icon as={RiAddLine} />
-    </CompactButton.Root>
-  ),
-};
+      <CompactButton.Root variant='ghost'>
+        <CompactButton.Icon as={RiAddLine} />
+      </CompactButton.Root>
 
-export const White = {
-  render: () => (
-    <CompactButton.Root variant='white'>
-      <CompactButton.Icon as={RiAddLine} />
-    </CompactButton.Root>
-  ),
-};
+      <CompactButton.Root variant='white'>
+        <CompactButton.Icon as={RiAddLine} />
+      </CompactButton.Root>
 
-export const Modifiable = {
-  render: () => (
-    <CompactButton.Root
-      variant='modifiable'
-      className='text-error-base hover:bg-error-lighter'
-    >
-      <CompactButton.Icon as={RiAddLine} />
-    </CompactButton.Root>
+      <CompactButton.Root
+        variant='modifiable'
+        className='text-error-base hover:bg-error-lighter'
+      >
+        <CompactButton.Icon as={RiAddLine} />
+      </CompactButton.Root>
+    </div>
   ),
 };
 

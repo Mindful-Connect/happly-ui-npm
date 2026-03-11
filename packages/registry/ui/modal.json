@@ -3,7 +3,7 @@
   "name": "modal",
   "type": "registry:ui",
   "title": "Modal",
-  "description": "A modal dialog component built on Radix UI Dialog with overlay, header, body, and footer sections. Uses namespace exports: Modal.Root, Modal.Trigger, Modal.Content, Modal.Header, Modal.Body, Modal.Footer, Modal.Close.",
+  "description": "A modal dialog component built on Radix UI Dialog with overlay, header, body, and footer sections. Uses namespace exports: Modal.Root, Modal.Trigger, Modal.Content, Modal.Header, Modal.Title, Modal.Description, Modal.Body, Modal.Footer, Modal.Close, Modal.Portal, Modal.Overlay.",
   "version": "1.0.0",
   "dependencies": [
     "@radix-ui/react-dialog",
@@ -74,6 +74,12 @@
             "name": "overlayClassName",
             "type": "string",
             "description": "Additional classes for the overlay backdrop"
+          },
+          {
+            "name": "ariaTitle",
+            "type": "string",
+            "default": "'Dialog'",
+            "description": "Visually hidden accessible title for screen readers"
           }
         ]
       },
@@ -119,6 +125,26 @@
             "description": "Render as child element using Radix Slot"
           }
         ]
+      },
+      {
+        "name": "Modal.Title",
+        "description": "Styled dialog title built on Radix Dialog.Title.",
+        "props": []
+      },
+      {
+        "name": "Modal.Description",
+        "description": "Styled dialog description built on Radix Dialog.Description.",
+        "props": []
+      },
+      {
+        "name": "Modal.Portal",
+        "description": "Portal container for rendering modal outside the DOM hierarchy. Passes through Radix Dialog.Portal props.",
+        "props": []
+      },
+      {
+        "name": "Modal.Overlay",
+        "description": "Backdrop overlay with blur effect and fade animation.",
+        "props": []
       }
     ]
   },

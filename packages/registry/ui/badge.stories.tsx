@@ -1,5 +1,6 @@
+import { RiFlashlightFill } from '@remixicon/react';
+
 import * as Badge from './badge';
-import { RiFlashlightFill } from 'react-icons/ri';
 
 export default { title: 'Displaying Data/Badge', component: Badge };
 

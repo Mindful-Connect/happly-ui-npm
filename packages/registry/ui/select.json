@@ -144,8 +144,8 @@
         "props": [
           {
             "name": "placeholder",
-            "type": "string",
-            "description": "Placeholder text when no value is selected"
+            "type": "ReactNode",
+            "description": "Placeholder content when no value is selected (can be text or JSX)"
           }
         ]
       },
@@ -167,7 +167,7 @@
       },
       {
         "name": "Select.ItemIcon",
-        "description": "Icon displayed in a select item.",
+        "description": "Icon displayed in a select item. Polymorphic — use `as` to render a custom component.",
         "props": [
           {
             "name": "as",
@@ -175,6 +175,32 @@
             "description": "The icon component to render"
           }
         ]
+      },
+      {
+        "name": "Select.TriggerIcon",
+        "description": "Icon displayed inside the trigger. Polymorphic — use `as` to render a custom component.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "description": "The icon component to render"
+          }
+        ]
+      },
+      {
+        "name": "Select.Group",
+        "description": "Groups related items together. Wraps Radix Select.Group.",
+        "props": []
+      },
+      {
+        "name": "Select.GroupLabel",
+        "description": "Label for a group of items. Wraps Radix Select.Label.",
+        "props": []
+      },
+      {
+        "name": "Select.Separator",
+        "description": "Visual separator between items or groups. Wraps Radix Select.Separator.",
+        "props": []
       }
     ]
   },

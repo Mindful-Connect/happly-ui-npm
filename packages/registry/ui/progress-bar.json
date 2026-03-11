@@ -23,7 +23,7 @@
       {
         "title": "With Label",
         "description": "A progress bar with an inline percentage label.",
-        "code": "<div className=\"flex items-center gap-2\">\n  <ProgressBar.Root value={55} />\n  <span className=\"text-paragraph-xs text-text-sub-600\">80%</span>\n</div>",
+        "code": "<div className=\"flex items-center gap-2\">\n  <ProgressBar.Root value={55} />\n  <span className=\"text-paragraph-xs text-text-sub-600\">55%</span>\n</div>",
         "stories": ["WithLabel"]
       },
       {

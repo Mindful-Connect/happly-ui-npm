@@ -23,40 +23,25 @@ export const Playground = {
   ),
 };
 
-export const Gray = {
-  render: () => <LinkButton.Root variant='gray'>Link Button</LinkButton.Root>,
-};
-
-export const Black = {
-  render: () => <LinkButton.Root variant='black'>Link Button</LinkButton.Root>,
-};
-
-export const Primary = {
+export const Variants = {
   render: () => (
-    <LinkButton.Root variant='primary'>Link Button</LinkButton.Root>
-  ),
-};
-
-export const Error = {
-  render: () => (
-    <LinkButton.Root variant='error'>Link Button</LinkButton.Root>
-  ),
-};
-
-export const Modifiable = {
-  render: () => (
-    <LinkButton.Root variant='modifiable' className='text-success-base'>
-      Link Button
-    </LinkButton.Root>
+    <div className='flex flex-col items-center gap-4'>
+      <LinkButton.Root variant='gray'>Gray</LinkButton.Root>
+      <LinkButton.Root variant='black'>Black</LinkButton.Root>
+      <LinkButton.Root variant='primary'>Primary</LinkButton.Root>
+      <LinkButton.Root variant='error'>Error</LinkButton.Root>
+      <LinkButton.Root variant='modifiable' className='text-success-base'>
+        Modifiable
+      </LinkButton.Root>
+    </div>
   ),
 };
 
 export const Sizes = {
   render: () => (
     <div className='flex flex-col items-center gap-4'>
-      <LinkButton.Root>Link Button</LinkButton.Root>
-
-      <LinkButton.Root size='small'>Link Button</LinkButton.Root>
+      <LinkButton.Root>Medium (default)</LinkButton.Root>
+      <LinkButton.Root size='small'>Small</LinkButton.Root>
     </div>
   ),
 };

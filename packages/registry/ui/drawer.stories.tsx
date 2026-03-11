@@ -94,6 +94,39 @@ function CustomVerifiedIconSVG(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
+export const Basic = {
+  render: () => (
+    <Drawer.Root>
+      <Drawer.Trigger asChild>
+        <Button.Root variant='neutral' mode='stroke'>
+          Open Drawer
+        </Button.Root>
+      </Drawer.Trigger>
+      <Drawer.Content>
+        <Drawer.Header>
+          <Drawer.Title>Drawer Title</Drawer.Title>
+        </Drawer.Header>
+        <Drawer.Body>
+          <div className='flex h-full items-center justify-center text-center text-paragraph-sm text-text-sub-600'>
+            Drawer Body Content
+          </div>
+        </Drawer.Body>
+
+        <Drawer.Footer className='border-t'>
+          <Button.Root
+            variant='neutral'
+            mode='stroke'
+            size='medium'
+            className='w-full'
+          >
+            Footer Button
+          </Button.Root>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+  ),
+};
+
 export const Demo = {
   render: () => (
     <Drawer.Root>
@@ -225,39 +258,6 @@ export const Demo = {
           >
             <Button.Icon as={RiHistoryLine} />
             See All Transactions
-          </Button.Root>
-        </Drawer.Footer>
-      </Drawer.Content>
-    </Drawer.Root>
-  ),
-};
-
-export const Basic = {
-  render: () => (
-    <Drawer.Root>
-      <Drawer.Trigger asChild>
-        <Button.Root variant='neutral' mode='stroke'>
-          Open Drawer
-        </Button.Root>
-      </Drawer.Trigger>
-      <Drawer.Content>
-        <Drawer.Header>
-          <Drawer.Title>Drawer Title</Drawer.Title>
-        </Drawer.Header>
-        <Drawer.Body>
-          <div className='flex h-full items-center justify-center text-center text-paragraph-sm text-text-sub-600'>
-            Drawer Body Content
-          </div>
-        </Drawer.Body>
-
-        <Drawer.Footer className='border-t'>
-          <Button.Root
-            variant='neutral'
-            mode='stroke'
-            size='medium'
-            className='w-full'
-          >
-            Footer Button
           </Button.Root>
         </Drawer.Footer>
       </Drawer.Content>

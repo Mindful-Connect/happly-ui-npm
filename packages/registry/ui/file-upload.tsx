@@ -320,6 +320,7 @@ function FileUploadIcon<T extends React.ElementType>({
 
   return <Component className={cn('size-6 text-text-sub-600', className)} {...rest} />;
 }
+FileUploadIcon.displayName = 'FileUploadIcon';
 
 const FileUploadTitle = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...rest }, forwardedRef) => {

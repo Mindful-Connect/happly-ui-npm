@@ -16,10 +16,10 @@
     "usage": "import * as AvatarGroupCompact from \"@/components/ui/avatar-group-compact\"\nimport * as Avatar from \"@/components/ui/avatar\"\n\n<AvatarGroupCompact.Root>\n  <AvatarGroupCompact.Stack>\n    <Avatar.Root>\n      <Avatar.Image src=\"/path/to/image.png\" />\n    </Avatar.Root>\n  </AvatarGroupCompact.Stack>\n  <AvatarGroupCompact.Overflow>+3</AvatarGroupCompact.Overflow>\n</AvatarGroupCompact.Root>",
     "examples": [
       {
-        "title": "Default",
-        "description": "The stroke variant with a ring border around the container.",
-        "code": "<AvatarGroupCompact.Root variant=\"stroke\">\n  <AvatarGroupCompact.Stack>\n    <Avatar.Root>\n      <Avatar.Image src=\"/path/to/image.png\" />\n    </Avatar.Root>\n  </AvatarGroupCompact.Stack>\n  <AvatarGroupCompact.Overflow>+9</AvatarGroupCompact.Overflow>\n</AvatarGroupCompact.Root>",
-        "stories": ["Default"]
+        "title": "Variants",
+        "description": "The default variant with shadow and the stroke variant with a ring border around the container.",
+        "code": "<AvatarGroupCompact.Root>\n  <AvatarGroupCompact.Stack>\n    <Avatar.Root>\n      <Avatar.Image src=\"/path/to/image.png\" />\n    </Avatar.Root>\n  </AvatarGroupCompact.Stack>\n  <AvatarGroupCompact.Overflow>+9</AvatarGroupCompact.Overflow>\n</AvatarGroupCompact.Root>\n\n<AvatarGroupCompact.Root variant=\"stroke\">\n  ...\n</AvatarGroupCompact.Root>",
+        "stories": ["Variants"]
       },
       {
         "title": "Size",

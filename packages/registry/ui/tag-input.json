@@ -28,6 +28,18 @@
         "description": "Tag input limited to a maximum number of tags.",
         "code": "<TagInput.Root defaultValue={['Tag 1']} maxTags={3} placeholder='Max 3 tags...' />",
         "stories": ["MaxTags"]
+      },
+      {
+        "title": "Gray Variant",
+        "description": "Tag input with gray tag variant.",
+        "code": "<TagInput.Root defaultValue={['Design', 'Dev', 'QA']} tagVariant='gray' />",
+        "stories": ["GrayVariant"]
+      },
+      {
+        "title": "Sizes",
+        "description": "Tag input in medium, small, and xsmall sizes.",
+        "code": "<TagInput.Root size='medium' defaultValue={['Medium']} />\n<TagInput.Root size='small' defaultValue={['Small']} />\n<TagInput.Root size='xsmall' defaultValue={['XSmall']} />",
+        "stories": ["Sizes"]
       }
     ],
     "api": [
@@ -72,7 +84,7 @@
           {
             "name": "tagVariant",
             "type": "'stroke' | 'gray'",
-            "default": "'stroke'",
+            "default": "'gray'",
             "description": "Tag appearance"
           },
           {

@@ -9,7 +9,7 @@
   "registryDependencies": ["tv"],
   "docs": {
     "lead": "A tooltip component with dark/light variants, multiple sizes, positioned arrow, and rich HTML content support.",
-    "usage": "import * as Tooltip from \"@/components/ui/tooltip\"\n\n<Tooltip.Root>\n  <Tooltip.Trigger>Hover me</Tooltip.Trigger>\n  <Tooltip.Content>Tooltip content.</Tooltip.Content>\n</Tooltip.Root>",
+    "usage": "import * as Tooltip from \"@/components/ui/tooltip\"\n\n<Tooltip.Provider>\n  <Tooltip.Root>\n    <Tooltip.Trigger>Hover me</Tooltip.Trigger>\n    <Tooltip.Content>Tooltip content.</Tooltip.Content>\n  </Tooltip.Root>\n</Tooltip.Provider>",
     "examples": [
       {
         "title": "Light",

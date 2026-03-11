@@ -6,7 +6,7 @@
   "description": "A two-column section layout with a title/description header on the left and content area on the right. Uses namespace exports: Section.Root, Section.Header, Section.Title, Section.Description, Section.Content, Section.Section (composed).",
   "version": "1.0.0",
   "dependencies": [],
-  "registryDependencies": ["utils"],
+  "registryDependencies": ["happly-ui-utils"],
   "docs": {
     "lead": "A two-column section layout for organizing form fields and content with a descriptive header.",
     "usage": "import * as Section from \"@/components/ui/section\"\n\n// Composed (recommended)\n<Section.Section title=\"Title\" description=\"Description\">\n  {children}\n</Section.Section>\n\n// Namespace\n<Section.Root>\n  <Section.Header>\n    <Section.Title>Title</Section.Title>\n    <Section.Description>Description</Section.Description>\n  </Section.Header>\n  <Section.Content>\n    {children}\n  </Section.Content>\n</Section.Root>",

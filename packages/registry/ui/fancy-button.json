@@ -18,28 +18,10 @@
     "usage": "import * as FancyButton from \"@/components/ui/fancy-button\"\n\n<FancyButton.Root variant=\"neutral\">\n  <FancyButton.Icon as={ArrowIcon} />\n  Button\n</FancyButton.Root>",
     "examples": [
       {
-        "title": "Neutral",
-        "description": "The neutral variant with a dark background and gradient overlay.",
-        "code": "<FancyButton.Root variant=\"neutral\">Button</FancyButton.Root>",
-        "stories": ["Neutral"]
-      },
-      {
-        "title": "Primary",
-        "description": "The primary variant using the brand color with gradient overlay.",
-        "code": "<FancyButton.Root variant=\"primary\">Button</FancyButton.Root>",
-        "stories": ["Primary"]
-      },
-      {
-        "title": "Error",
-        "description": "The error variant for destructive actions with gradient overlay.",
-        "code": "<FancyButton.Root variant=\"error\">Button</FancyButton.Root>",
-        "stories": ["Error"]
-      },
-      {
-        "title": "Basic",
-        "description": "The basic variant with a white background and stroke shadow, no gradient overlay.",
-        "code": "<FancyButton.Root variant=\"basic\">Button</FancyButton.Root>",
-        "stories": ["Basic"]
+        "title": "Variants",
+        "description": "All four visual variants: neutral (dark + gradient), primary (brand color), error (destructive), and basic (white + stroke).",
+        "code": "<FancyButton.Root variant=\"neutral\">Neutral</FancyButton.Root>\n<FancyButton.Root variant=\"primary\">Primary</FancyButton.Root>\n<FancyButton.Root variant=\"error\">Error</FancyButton.Root>\n<FancyButton.Root variant=\"basic\">Basic</FancyButton.Root>",
+        "stories": ["Variants"]
       },
       {
         "title": "With Icon",

@@ -4,6 +4,10 @@
   "type": "registry:ui",
   "title": "Button",
   "description": "A compound button component with variants, modes, sizes, and polymorphic icon support. Uses namespace exports: Button.Root, Button.Icon.",
+  "version": "2.0.0",
+  "migration": {
+    "guide": "Button v2 is a full rewrite using tv (tailwind-variants) and compound components. Replace `<Button variant=\"primary\">` with `<Button.Root variant=\"primary\">`. Icons now use `<Button.Icon as={Icon} />` instead of the `icon` prop. A new `mode` prop replaces the old style variants. The `cva` and `happly-ui-utils` dependencies are no longer needed."
+  },
   "dependencies": [
     "@radix-ui/react-slot"
   ],

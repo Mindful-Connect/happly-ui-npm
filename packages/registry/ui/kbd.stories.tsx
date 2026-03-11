@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import * as Kbd from './kbd';
 
 export default { title: 'Displaying Data/Kbd', component: Kbd.Root };

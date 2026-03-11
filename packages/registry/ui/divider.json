@@ -5,6 +5,7 @@
   "title": "Divider",
   "description": "A versatile divider component for creating visual separation between content elements. Supports multiple variants including line, text, and content dividers.",
   "dependencies": ["tailwind-variants"],
+  "version": "2.0.0",
   "registryDependencies": ["tv"],
   "docs": {
     "lead": "A versatile divider component for creating visual separation between content elements.",
@@ -43,7 +44,7 @@
       {
         "title": "Content",
         "description": "A divider with centered content elements like icons or buttons.",
-        "code": "<Divider.Root variant=\"content\">\n  <Button.Root variant=\"neutral\" mode=\"stroke\" size=\"xsmall\" iconOnly>\n    <Button.Icon as={RiAddLine} />\n  </Button.Root>\n</Divider.Root>",
+        "code": "<Divider.Root variant=\"content\">\n  <Button.Root variant=\"neutral\" mode=\"stroke\" size=\"xsmall\">\n    <Button.Icon as={RiAddLine} />\n  </Button.Root>\n</Divider.Root>",
         "stories": ["Content"]
       }
     ],

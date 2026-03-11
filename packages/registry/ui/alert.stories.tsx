@@ -276,196 +276,64 @@ export const Stroke = {
   ),
 };
 
-export const XSmall = {
+export const Sizes = {
   render: () => (
-    <div className='w-full max-w-96 space-y-6'>
-      <Alert.Root variant='filled' status='error' size='xsmall'>
-        <Alert.Icon as={RiErrorWarningFill} />
-        Insert your alert title here!
-        <LinkButton.Root variant='modifiable' size='small' underline>
-          Upgrade
-        </LinkButton.Root>
-        <button type='button'>
-          <Alert.CloseIcon />
-        </button>
-      </Alert.Root>
+    <div className='w-full max-w-96 space-y-8'>
+      {/* XSmall */}
+      <div className='space-y-3'>
+        <div className='text-label-xs text-text-sub-600'>XSmall</div>
+        <Alert.Root variant='filled' status='error' size='xsmall'>
+          <Alert.Icon as={RiErrorWarningFill} />
+          Insert your alert title here!
+          <LinkButton.Root variant='modifiable' size='small' underline>
+            Upgrade
+          </LinkButton.Root>
+          <button type='button'>
+            <Alert.CloseIcon />
+          </button>
+        </Alert.Root>
+      </div>
 
-      <Alert.Root variant='light' status='warning' size='xsmall'>
-        <Alert.Icon as={RiAlertFill} />
-        Insert your alert title here!
-        <LinkButton.Root variant='modifiable' size='small' underline>
-          Upgrade
-        </LinkButton.Root>
-        <button type='button'>
-          <Alert.CloseIcon />
-        </button>
-      </Alert.Root>
+      {/* Small (default) */}
+      <div className='space-y-3'>
+        <div className='text-label-xs text-text-sub-600'>Small (default)</div>
+        <Alert.Root variant='light' status='warning' size='small'>
+          <Alert.Icon as={RiAlertFill} />
+          Insert your alert title here!
+          <LinkButton.Root variant='modifiable' size='small' underline>
+            Upgrade
+          </LinkButton.Root>
+          <button type='button'>
+            <Alert.CloseIcon />
+          </button>
+        </Alert.Root>
+      </div>
 
-      <Alert.Root variant='lighter' status='success' size='xsmall'>
-        <Alert.Icon as={RiCheckboxCircleFill} />
-        Insert your alert title here!
-        <LinkButton.Root variant='modifiable' size='small' underline>
-          Upgrade
-        </LinkButton.Root>
-        <button type='button'>
-          <Alert.CloseIcon />
-        </button>
-      </Alert.Root>
-
-      <Alert.Root variant='stroke' status='information' size='xsmall'>
-        <Alert.Icon as={RiInformationFill} />
-        Insert your alert title here!
-        <LinkButton.Root variant='modifiable' size='small' underline>
-          Upgrade
-        </LinkButton.Root>
-        <button type='button'>
-          <Alert.CloseIcon />
-        </button>
-      </Alert.Root>
-    </div>
-  ),
-};
-
-export const Small = {
-  render: () => (
-    <div className='w-full max-w-96 space-y-6'>
-      <Alert.Root variant='filled' status='error' size='small'>
-        <Alert.Icon as={RiErrorWarningFill} />
-        Insert your alert title here!
-        <LinkButton.Root variant='modifiable' size='small' underline>
-          Upgrade
-        </LinkButton.Root>
-        <button type='button'>
-          <Alert.CloseIcon />
-        </button>
-      </Alert.Root>
-
-      <Alert.Root variant='light' status='warning' size='small'>
-        <Alert.Icon as={RiAlertFill} />
-        Insert your alert title here!
-        <LinkButton.Root variant='modifiable' size='small' underline>
-          Upgrade
-        </LinkButton.Root>
-        <button type='button'>
-          <Alert.CloseIcon />
-        </button>
-      </Alert.Root>
-
-      <Alert.Root variant='lighter' status='success' size='small'>
-        <Alert.Icon as={RiCheckboxCircleFill} />
-        Insert your alert title here!
-        <LinkButton.Root variant='modifiable' size='small' underline>
-          Upgrade
-        </LinkButton.Root>
-        <button type='button'>
-          <Alert.CloseIcon />
-        </button>
-      </Alert.Root>
-
-      <Alert.Root variant='stroke' status='information' size='small'>
-        <Alert.Icon as={RiInformationFill} />
-        Insert your alert title here!
-        <LinkButton.Root variant='modifiable' size='small' underline>
-          Upgrade
-        </LinkButton.Root>
-        <button type='button'>
-          <Alert.CloseIcon />
-        </button>
-      </Alert.Root>
-    </div>
-  ),
-};
-
-export const Large = {
-  render: () => (
-    <div className='w-full max-w-96 space-y-6'>
-      <Alert.Root variant='filled' status='error' size='large'>
-        <Alert.Icon as={RiErrorWarningFill} />
-        <div className='space-y-2.5'>
-          <div className='space-y-1'>
-            <div className='text-label-sm'>Insert your alert title here!</div>
-            <div>
-              Insert the alert description here. It would look better as two
-              lines of text.
+      {/* Large */}
+      <div className='space-y-3'>
+        <div className='text-label-xs text-text-sub-600'>Large</div>
+        <Alert.Root variant='lighter' status='success' size='large'>
+          <Alert.Icon as={RiCheckboxCircleFill} />
+          <div className='space-y-2.5'>
+            <div className='space-y-1'>
+              <div className='text-label-sm'>Insert your alert title here!</div>
+              <div>
+                Insert the alert description here. It would look better as two
+                lines of text.
+              </div>
+            </div>
+            <div className='flex items-center gap-2'>
+              <LinkButton.Root variant='modifiable' size='medium' underline>
+                Upgrade
+              </LinkButton.Root>
+              <span>&#8729;</span>
+              <LinkButton.Root variant='modifiable' size='medium'>
+                Learn More
+              </LinkButton.Root>
             </div>
           </div>
-          <div className='flex items-center gap-2'>
-            <LinkButton.Root variant='modifiable' size='medium' underline>
-              Upgrade
-            </LinkButton.Root>
-            <span>&#8729;</span>
-            <LinkButton.Root variant='modifiable' size='medium'>
-              Learn More
-            </LinkButton.Root>
-          </div>
-        </div>
-      </Alert.Root>
-
-      <Alert.Root variant='light' status='warning' size='large'>
-        <Alert.Icon as={RiAlertFill} />
-        <div className='space-y-2.5'>
-          <div className='space-y-1'>
-            <div className='text-label-sm'>Insert your alert title here!</div>
-            <div>
-              Insert the alert description here. It would look better as two
-              lines of text.
-            </div>
-          </div>
-          <div className='flex items-center gap-2'>
-            <LinkButton.Root variant='modifiable' size='medium' underline>
-              Upgrade
-            </LinkButton.Root>
-            <span>&#8729;</span>
-            <LinkButton.Root variant='modifiable' size='medium'>
-              Learn More
-            </LinkButton.Root>
-          </div>
-        </div>
-      </Alert.Root>
-
-      <Alert.Root variant='lighter' status='success' size='large'>
-        <Alert.Icon as={RiCheckboxCircleFill} />
-        <div className='space-y-2.5'>
-          <div className='space-y-1'>
-            <div className='text-label-sm'>Insert your alert title here!</div>
-            <div>
-              Insert the alert description here. It would look better as two
-              lines of text.
-            </div>
-          </div>
-          <div className='flex items-center gap-2'>
-            <LinkButton.Root variant='modifiable' size='medium' underline>
-              Upgrade
-            </LinkButton.Root>
-            <span>&#8729;</span>
-            <LinkButton.Root variant='modifiable' size='medium'>
-              Learn More
-            </LinkButton.Root>
-          </div>
-        </div>
-      </Alert.Root>
-
-      <Alert.Root variant='stroke' status='information' size='large'>
-        <Alert.Icon as={RiInformationFill} />
-        <div className='space-y-2.5'>
-          <div className='space-y-1'>
-            <div className='text-label-sm'>Insert your alert title here!</div>
-            <div>
-              Insert the alert description here. It would look better as two
-              lines of text.
-            </div>
-          </div>
-          <div className='flex items-center gap-2'>
-            <LinkButton.Root variant='modifiable' size='medium' underline>
-              Upgrade
-            </LinkButton.Root>
-            <span>&#8729;</span>
-            <LinkButton.Root variant='modifiable' size='medium'>
-              Learn More
-            </LinkButton.Root>
-          </div>
-        </div>
-      </Alert.Root>
+        </Alert.Root>
+      </div>
     </div>
   ),
 };

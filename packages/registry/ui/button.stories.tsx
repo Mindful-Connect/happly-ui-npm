@@ -1,5 +1,6 @@
+import { RiArrowLeftSLine, RiArrowRightSLine, RiFileCopyLine } from '@remixicon/react';
+
 import * as Button from './button';
-import { RiArrowLeftSLine, RiArrowRightSLine, RiFileCopyLine } from 'react-icons/ri';
 
 export default { title: 'Actions/Button', component: Button.Root };
 

@@ -160,10 +160,16 @@
         "description": "Search input trigger with leading icon. Uses inputVariants for styling.",
         "props": [
           {
-            "name": "icon",
+            "name": "leadingIcon",
             "type": "React.ElementType",
             "default": "RiSearchLine",
             "description": "Leading icon component."
+          },
+          {
+            "name": "trailingIcon",
+            "type": "React.ElementType",
+            "default": "RiArrowDownSLine",
+            "description": "Trailing icon component."
           },
           {
             "name": "placeholder",

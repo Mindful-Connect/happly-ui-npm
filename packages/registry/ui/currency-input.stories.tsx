@@ -77,3 +77,11 @@ export const ErrorState = {
     </div>
   ),
 };
+
+export const Disabled = {
+  render: () => (
+    <div className='w-full max-w-[300px]'>
+      <CurrencyInput.Root disabled />
+    </div>
+  ),
+};

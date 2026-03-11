@@ -16,7 +16,7 @@ export const Playground = {
   render: (args: any) => <ProgressCircle.Root {...args}>{args.value}%</ProgressCircle.Root>,
 };
 
-export const Default = {
+export const Sizes = {
   render: () => (
     <div className='flex flex-col items-center gap-6'>
       <div className='flex gap-6'>

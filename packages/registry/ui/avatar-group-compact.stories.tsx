@@ -33,22 +33,39 @@ export const Playground = {
   ),
 };
 
-export const Default = {
+export const Variants = {
   render: () => (
-    <AvatarGroupCompact.Root variant='stroke'>
-      <AvatarGroupCompact.Stack>
-        <Avatar.Root>
-          <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        </Avatar.Root>
-        <Avatar.Root>
-          <Avatar.Image src='https://i.pravatar.cc/160?img=1' />
-        </Avatar.Root>
-        <Avatar.Root>
-          <Avatar.Image src='https://i.pravatar.cc/160?img=9' />
-        </Avatar.Root>
-      </AvatarGroupCompact.Stack>
-      <AvatarGroupCompact.Overflow>+9</AvatarGroupCompact.Overflow>
-    </AvatarGroupCompact.Root>
+    <div className='flex flex-col items-center gap-6'>
+      <AvatarGroupCompact.Root>
+        <AvatarGroupCompact.Stack>
+          <Avatar.Root>
+            <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
+          </Avatar.Root>
+          <Avatar.Root>
+            <Avatar.Image src='https://i.pravatar.cc/160?img=1' />
+          </Avatar.Root>
+          <Avatar.Root>
+            <Avatar.Image src='https://i.pravatar.cc/160?img=9' />
+          </Avatar.Root>
+        </AvatarGroupCompact.Stack>
+        <AvatarGroupCompact.Overflow>+9</AvatarGroupCompact.Overflow>
+      </AvatarGroupCompact.Root>
+
+      <AvatarGroupCompact.Root variant='stroke'>
+        <AvatarGroupCompact.Stack>
+          <Avatar.Root>
+            <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
+          </Avatar.Root>
+          <Avatar.Root>
+            <Avatar.Image src='https://i.pravatar.cc/160?img=1' />
+          </Avatar.Root>
+          <Avatar.Root>
+            <Avatar.Image src='https://i.pravatar.cc/160?img=9' />
+          </Avatar.Root>
+        </AvatarGroupCompact.Stack>
+        <AvatarGroupCompact.Overflow>+9</AvatarGroupCompact.Overflow>
+      </AvatarGroupCompact.Root>
+    </div>
   ),
 };
 

@@ -6,7 +6,7 @@
   "description": "A collapsible section with a title, description, and switch toggle that reveals content when enabled. Uses namespace exports: SectionToggle.Root, SectionToggle.Header, SectionToggle.TextGroup, SectionToggle.Title, SectionToggle.Description, SectionToggle.Content, SectionToggle.SectionToggle (composed).",
   "version": "1.0.0",
   "dependencies": ["framer-motion"],
-  "registryDependencies": ["utils", "switch"],
+  "registryDependencies": ["happly-ui-utils", "switch"],
   "docs": {
     "lead": "A toggleable section that expands to reveal content when a switch is activated.",
     "usage": "import * as SectionToggle from \"@/components/ui/section-toggle\"\n\n// Composed (recommended)\n<SectionToggle.SectionToggle\n  title=\"Title\"\n  description=\"Description\"\n  open={open}\n  onOpenChange={setOpen}\n>\n  {children}\n</SectionToggle.SectionToggle>\n\n// Namespace\n<SectionToggle.Root open={open}>\n  <SectionToggle.Header open={open}>\n    <SectionToggle.TextGroup>\n      <SectionToggle.Title>Title</SectionToggle.Title>\n      <SectionToggle.Description>Description</SectionToggle.Description>\n    </SectionToggle.TextGroup>\n    <Switch.Root variant=\"neutral\" checked={open} onCheckedChange={setOpen} />\n  </SectionToggle.Header>\n  <SectionToggle.Content open={open}>{children}</SectionToggle.Content>\n</SectionToggle.Root>",

@@ -55,7 +55,10 @@ const fileFormatIconVariants = tv({
 });
 
 type FileFormatIconProps = React.SVGProps<SVGSVGElement> &
-  VariantProps<typeof fileFormatIconVariants>;
+  VariantProps<typeof fileFormatIconVariants> & {
+    /** The file format text to display in the badge (e.g., 'PDF', 'DOC'). */
+    format?: string;
+  };
 
 const FileFormatIconRoot = React.forwardRef<SVGSVGElement, FileFormatIconProps>(
   ({ format, className, color, size, ...rest }, forwardedRef) => {

@@ -38,7 +38,7 @@ export const WithLabel = {
     <div className='w-96'>
       <div className='flex items-center gap-2'>
         <ProgressBar.Root value={55} />
-        <span className='text-paragraph-xs text-text-sub-600'>80%</span>
+        <span className='text-paragraph-xs text-text-sub-600'>55%</span>
       </div>
     </div>
   ),
@@ -52,7 +52,7 @@ export const DataStorage = {
           <span className='text-label-sm text-text-strong-950'>
             Data Storage
           </span>
-          <span className='text-paragraph-xs text-text-sub-600'>80%</span>
+          <span className='text-paragraph-xs text-text-sub-600'>55%</span>
         </div>
         <ProgressBar.Root value={55} />
         <div className='text-paragraph-xs text-text-sub-600'>

@@ -18,7 +18,7 @@
         "title": "Sizes",
         "description": "Progress circles in all sizes (80, 72, 64, 56, 48) with percentage labels. Smaller sizes omit text.",
         "code": "<ProgressCircle.Root value={50}>50%</ProgressCircle.Root>\n<ProgressCircle.Root size=\"56\" value={75}>75%</ProgressCircle.Root>\n<ProgressCircle.Root size=\"48\" value={100} />",
-        "stories": ["Default"]
+        "stories": ["Sizes"]
       }
     ],
     "api": [

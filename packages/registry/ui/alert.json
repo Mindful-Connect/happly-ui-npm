@@ -45,22 +45,10 @@
         "stories": ["Stroke"]
       },
       {
-        "title": "XSmall",
-        "description": "Extra small size alerts across different variants and statuses.",
-        "code": "<Alert.Root variant=\"filled\" status=\"error\" size=\"xsmall\">\n  <Alert.Icon as={RiErrorWarningFill} />\n  Alert title\n</Alert.Root>",
-        "stories": ["XSmall"]
-      },
-      {
-        "title": "Small",
-        "description": "Small (default) size alerts across different variants and statuses.",
-        "code": "<Alert.Root variant=\"filled\" status=\"error\" size=\"small\">\n  <Alert.Icon as={RiErrorWarningFill} />\n  Alert title\n</Alert.Root>",
-        "stories": ["Small"]
-      },
-      {
-        "title": "Large",
-        "description": "Large alerts with title, description, and action links.",
-        "code": "<Alert.Root variant=\"filled\" status=\"error\" size=\"large\">\n  <Alert.Icon as={RiErrorWarningFill} />\n  <div>\n    <div className=\"text-label-sm\">Title</div>\n    <div>Description</div>\n  </div>\n</Alert.Root>",
-        "stories": ["Large"]
+        "title": "Sizes",
+        "description": "Alerts come in three sizes: xsmall, small (default), and large. The large size supports title, description, and action links.",
+        "code": "<Alert.Root variant=\"filled\" status=\"error\" size=\"xsmall\">\n  <Alert.Icon as={RiErrorWarningFill} />\n  Alert title\n</Alert.Root>\n\n<Alert.Root variant=\"light\" status=\"warning\" size=\"small\">\n  <Alert.Icon as={RiAlertFill} />\n  Alert title\n</Alert.Root>\n\n<Alert.Root variant=\"lighter\" status=\"success\" size=\"large\">\n  <Alert.Icon as={RiCheckboxCircleFill} />\n  <div>\n    <div className=\"text-label-sm\">Title</div>\n    <div>Description</div>\n  </div>\n</Alert.Root>",
+        "stories": ["Sizes"]
       }
     ],
     "api": [

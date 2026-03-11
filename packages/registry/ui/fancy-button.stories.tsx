@@ -21,20 +21,15 @@ export const Playground = {
   ),
 };
 
-export const Neutral = {
-  render: () => <FancyButton.Root variant='neutral'>Button</FancyButton.Root>,
-};
-
-export const Primary = {
-  render: () => <FancyButton.Root variant='primary'>Button</FancyButton.Root>,
-};
-
-export const Error = {
-  render: () => <FancyButton.Root variant='error'>Button</FancyButton.Root>,
-};
-
-export const Basic = {
-  render: () => <FancyButton.Root variant='basic'>Button</FancyButton.Root>,
+export const Variants = {
+  render: () => (
+    <div className='flex flex-wrap items-center gap-4'>
+      <FancyButton.Root variant='neutral'>Neutral</FancyButton.Root>
+      <FancyButton.Root variant='primary'>Primary</FancyButton.Root>
+      <FancyButton.Root variant='error'>Error</FancyButton.Root>
+      <FancyButton.Root variant='basic'>Basic</FancyButton.Root>
+    </div>
+  ),
 };
 
 export const WithIcon = {

@@ -28,33 +28,6 @@ export const Playground = {
   ),
 };
 
-export const Disabled = {
-  render: () => (
-    <div className='flex items-center gap-6'>
-      <div className='flex flex-col gap-6'>
-        <StatusBadge.Root status='disabled'>
-          <StatusBadge.Icon as={RiForbidFill} />
-          Badge
-        </StatusBadge.Root>
-        <StatusBadge.Root status='disabled' variant='light'>
-          <StatusBadge.Icon as={RiForbidFill} />
-          Badge
-        </StatusBadge.Root>
-      </div>
-      <div className='flex flex-col gap-6'>
-        <StatusBadge.Root status='disabled'>
-          <StatusBadge.Dot />
-          Badge
-        </StatusBadge.Root>
-        <StatusBadge.Root status='disabled' variant='light'>
-          <StatusBadge.Dot />
-          Badge
-        </StatusBadge.Root>
-      </div>
-    </div>
-  ),
-};
-
 export const Completed = {
   render: () => (
     <div className='flex items-center gap-6'>
@@ -74,6 +47,33 @@ export const Completed = {
           Badge
         </StatusBadge.Root>
         <StatusBadge.Root status='completed' variant='light'>
+          <StatusBadge.Dot />
+          Badge
+        </StatusBadge.Root>
+      </div>
+    </div>
+  ),
+};
+
+export const Pending = {
+  render: () => (
+    <div className='flex items-center gap-6'>
+      <div className='flex flex-col gap-6'>
+        <StatusBadge.Root status='pending'>
+          <StatusBadge.Icon as={RiAlertFill} />
+          Badge
+        </StatusBadge.Root>
+        <StatusBadge.Root status='pending' variant='light'>
+          <StatusBadge.Icon as={RiAlertFill} />
+          Badge
+        </StatusBadge.Root>
+      </div>
+      <div className='flex flex-col gap-6'>
+        <StatusBadge.Root status='pending'>
+          <StatusBadge.Dot />
+          Badge
+        </StatusBadge.Root>
+        <StatusBadge.Root status='pending' variant='light'>
           <StatusBadge.Dot />
           Badge
         </StatusBadge.Root>
@@ -109,25 +109,25 @@ export const Failed = {
   ),
 };
 
-export const Pending = {
+export const Disabled = {
   render: () => (
     <div className='flex items-center gap-6'>
       <div className='flex flex-col gap-6'>
-        <StatusBadge.Root status='pending'>
-          <StatusBadge.Icon as={RiAlertFill} />
+        <StatusBadge.Root status='disabled'>
+          <StatusBadge.Icon as={RiForbidFill} />
           Badge
         </StatusBadge.Root>
-        <StatusBadge.Root status='pending' variant='light'>
-          <StatusBadge.Icon as={RiAlertFill} />
+        <StatusBadge.Root status='disabled' variant='light'>
+          <StatusBadge.Icon as={RiForbidFill} />
           Badge
         </StatusBadge.Root>
       </div>
       <div className='flex flex-col gap-6'>
-        <StatusBadge.Root status='pending'>
+        <StatusBadge.Root status='disabled'>
           <StatusBadge.Dot />
           Badge
         </StatusBadge.Root>
-        <StatusBadge.Root status='pending' variant='light'>
+        <StatusBadge.Root status='disabled' variant='light'>
           <StatusBadge.Dot />
           Badge
         </StatusBadge.Root>
