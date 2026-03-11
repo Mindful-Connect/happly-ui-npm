@@ -57,7 +57,6 @@ import { default as tagMeta, Playground as tag_Playground, Stroke as tag_Stroke,
 import { default as textareaMeta, Playground as textarea_Playground, Demo as textarea_Demo, InteractiveCounter as textarea_InteractiveCounter, HasError as textarea_HasError, WithLabelAndHint as textarea_WithLabelAndHint, Disabled as textarea_Disabled, Simple as textarea_Simple, SimpleResize as textarea_SimpleResize } from '@/components/ui/textarea.stories';
 import { default as themeProviderMeta, Default as themeProvider_Default, Global as themeProvider_Global, MultipleThemes as themeProvider_MultipleThemes } from '@/components/ui/theme-provider.stories';
 import { default as tooltipMeta, Playground as tooltip_Playground, Light as tooltip_Light, Size as tooltip_Size, Position as tooltip_Position, HTMLContent as tooltip_HTMLContent } from '@/components/ui/tooltip.stories';
-import { default as uploadFileInputMeta, Playground as uploadFileInput_Playground, Showcase as uploadFileInput_Showcase } from '@/components/ui/upload-file-input.stories';
 
 export const storyRegistry: Record<string, {
   meta: any;
@@ -668,13 +667,6 @@ export const storyRegistry: Record<string, {
     'Size': tooltip_Size,
     'Position': tooltip_Position,
     'HTMLContent': tooltip_HTMLContent
-    }
-  },
-  'upload-file-input': {
-    meta: uploadFileInputMeta,
-    stories: {
-    'Playground': uploadFileInput_Playground,
-    'Showcase': uploadFileInput_Showcase
     }
   }
 };

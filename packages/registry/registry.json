@@ -382,12 +382,6 @@
       "description": "Tailwind Variants wrapper with cn() for class merging."
     },
     {
-      "name": "upload-file-input",
-      "type": "registry:ui",
-      "title": "Upload File Input",
-      "description": "A file upload component with support for drag and drop, multiple files, and S3/GCS integration."
-    },
-    {
       "name": "use-file-upload",
       "type": "registry:hook",
       "title": "useFileUpload",

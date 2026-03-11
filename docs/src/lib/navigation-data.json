@@ -297,10 +297,6 @@
           {
             "title": "Socials Input",
             "href": "/docs/components/socials-input"
-          },
-          {
-            "title": "Upload File Input",
-            "href": "/docs/components/upload-file-input"
           }
         ],
         "collapsed": true
