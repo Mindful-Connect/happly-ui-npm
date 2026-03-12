@@ -20,8 +20,8 @@
     "examples": [
       {
         "title": "Color",
-        "description": "Avatar backgrounds in different colors: gray (default), yellow, blue, sky, purple, and red.",
-        "code": "<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n</Avatar.Root>\n\n<Avatar.Root color=\"yellow\">\n  <Avatar.Image src=\"/path/to/image.png\" />\n</Avatar.Root>",
+        "description": "Avatar backgrounds in different colors: gray (default), yellow, blue, sky, purple, red, and primary.",
+        "code": "<Avatar.Root>EW</Avatar.Root>\n<Avatar.Root color=\"yellow\">EW</Avatar.Root>\n<Avatar.Root color=\"primary\">EW</Avatar.Root>",
         "stories": ["Color"]
       },
       {
@@ -67,6 +67,12 @@
         "stories": ["IndicatorCustomSVG"]
       },
       {
+        "title": "Square Rounded",
+        "description": "Override the default circular shape by passing a rounded className to both Avatar.Root and Avatar.Image. Use rounded-lg for larger sizes and rounded-md for smaller ones.",
+        "code": "<Avatar.Root className=\"rounded-lg\">\n  <Avatar.Image src=\"/path/to/image.png\" />\n</Avatar.Root>",
+        "stories": ["SquareRounded"]
+      },
+      {
         "title": "As Link",
         "description": "Use the asChild prop with Radix Slot to render the avatar as a link or other element.",
         "code": "<Avatar.Root asChild>\n  <a href=\"#\">\n    <Avatar.Image src=\"/path/to/image.png\" />\n  </a>\n</Avatar.Root>",
@@ -86,7 +92,7 @@
           },
           {
             "name": "color",
-            "type": "'gray' | 'yellow' | 'blue' | 'sky' | 'purple' | 'red'",
+            "type": "'gray' | 'yellow' | 'blue' | 'sky' | 'purple' | 'red' | 'primary'",
             "default": "'gray'",
             "description": "The background color"
           },

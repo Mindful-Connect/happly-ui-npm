@@ -10,7 +10,7 @@ export const Playground = {
   },
   argTypes: {
     size: { control: 'select', options: ['80', '72', '64', '56', '48', '40', '32', '24', '20'] },
-    color: { control: 'select', options: ['gray', 'yellow', 'blue', 'sky', 'purple', 'red'] },
+    color: { control: 'select', options: ['gray', 'yellow', 'blue', 'sky', 'purple', 'red', 'primary'] },
     placeholderType: { control: 'select', options: ['user', 'company'] },
   },
   render: (args: any) => (
@@ -23,29 +23,13 @@ export const Playground = {
 export const Color = {
   render: () => (
     <div className='flex w-full max-w-96 flex-wrap justify-center gap-6'>
-      <Avatar.Root>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=1' />
-      </Avatar.Root>
-
-      <Avatar.Root color='yellow'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-      </Avatar.Root>
-
-      <Avatar.Root color='blue'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=3' />
-      </Avatar.Root>
-
-      <Avatar.Root color='sky'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=7' />
-      </Avatar.Root>
-
-      <Avatar.Root color='purple'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=9' />
-      </Avatar.Root>
-
-      <Avatar.Root color='red'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=12' />
-      </Avatar.Root>
+      <Avatar.Root>EW</Avatar.Root>
+      <Avatar.Root color='yellow'>EW</Avatar.Root>
+      <Avatar.Root color='blue'>EW</Avatar.Root>
+      <Avatar.Root color='sky'>EW</Avatar.Root>
+      <Avatar.Root color='purple'>EW</Avatar.Root>
+      <Avatar.Root color='red'>EW</Avatar.Root>
+      <Avatar.Root color='primary'>EW</Avatar.Root>
     </div>
   ),
 };
@@ -228,63 +212,63 @@ export const BrandLogo = {
       <Avatar.Root>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator position='bottom'>
-          <Avatar.BrandLogo src='https://logo.clearbit.com/google.com' />
+          <Avatar.BrandLogo src='https://i.pravatar.cc/48?img=3' />
         </Avatar.Indicator>
       </Avatar.Root>
 
       <Avatar.Root size='72'>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator position='bottom'>
-          <Avatar.BrandLogo src='https://logo.clearbit.com/google.com' />
+          <Avatar.BrandLogo src='https://i.pravatar.cc/48?img=3' />
         </Avatar.Indicator>
       </Avatar.Root>
 
       <Avatar.Root size='64'>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator position='bottom'>
-          <Avatar.BrandLogo src='https://logo.clearbit.com/google.com' />
+          <Avatar.BrandLogo src='https://i.pravatar.cc/48?img=3' />
         </Avatar.Indicator>
       </Avatar.Root>
 
       <Avatar.Root size='56'>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator position='bottom'>
-          <Avatar.BrandLogo src='https://logo.clearbit.com/google.com' />
+          <Avatar.BrandLogo src='https://i.pravatar.cc/48?img=3' />
         </Avatar.Indicator>
       </Avatar.Root>
 
       <Avatar.Root size='48'>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator position='bottom'>
-          <Avatar.BrandLogo src='https://logo.clearbit.com/google.com' />
+          <Avatar.BrandLogo src='https://i.pravatar.cc/48?img=3' />
         </Avatar.Indicator>
       </Avatar.Root>
 
       <Avatar.Root size='40'>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator position='bottom'>
-          <Avatar.BrandLogo src='https://logo.clearbit.com/google.com' />
+          <Avatar.BrandLogo src='https://i.pravatar.cc/48?img=3' />
         </Avatar.Indicator>
       </Avatar.Root>
 
       <Avatar.Root size='32'>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator position='bottom'>
-          <Avatar.BrandLogo src='https://logo.clearbit.com/google.com' />
+          <Avatar.BrandLogo src='https://i.pravatar.cc/48?img=3' />
         </Avatar.Indicator>
       </Avatar.Root>
 
       <Avatar.Root size='24'>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator position='bottom'>
-          <Avatar.BrandLogo src='https://logo.clearbit.com/google.com' />
+          <Avatar.BrandLogo src='https://i.pravatar.cc/48?img=3' />
         </Avatar.Indicator>
       </Avatar.Root>
 
       <Avatar.Root size='20'>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator position='bottom'>
-          <Avatar.BrandLogo src='https://logo.clearbit.com/google.com' />
+          <Avatar.BrandLogo src='https://i.pravatar.cc/48?img=3' />
         </Avatar.Indicator>
       </Avatar.Root>
     </div>
@@ -380,6 +364,40 @@ export const IndicatorCustomSVG = {
           <CustomVerifiedIconSVG />
         </Avatar.Indicator>
       </Avatar.Root>
+    </div>
+  ),
+};
+
+export const SquareRounded = {
+  render: () => (
+    <div className='flex w-full max-w-96 flex-wrap items-center justify-center gap-6'>
+      <Avatar.Root className='rounded-lg'>
+        <Avatar.Image src='https://i.pravatar.cc/160?img=1' />
+      </Avatar.Root>
+
+      <Avatar.Root size='64' className='rounded-lg'>
+        <Avatar.Image src='https://i.pravatar.cc/160?img=1' />
+      </Avatar.Root>
+
+      <Avatar.Root size='48' className='rounded-lg'>
+        <Avatar.Image src='https://i.pravatar.cc/160?img=1' />
+      </Avatar.Root>
+
+      <Avatar.Root size='32' className='rounded-md'>
+        <Avatar.Image src='https://i.pravatar.cc/160?img=1' />
+      </Avatar.Root>
+
+      <Avatar.Root size='24' className='rounded-md'>
+        <Avatar.Image src='https://i.pravatar.cc/160?img=1' />
+      </Avatar.Root>
+
+      <Avatar.Root color='yellow' className='rounded-lg'>
+        EW
+      </Avatar.Root>
+
+      <Avatar.Root className='rounded-lg' placeholderType='company' />
+
+      <Avatar.Root className='rounded-lg' />
     </div>
   ),
 };

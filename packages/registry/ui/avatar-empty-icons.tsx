@@ -18,7 +18,7 @@ export function IconEmptyUser(props: React.SVGProps<SVGSVGElement>) {
       </g>
       <defs>
         <clipPath id={clipPathId}>
-          <rect width={80} height={80} fill='#fff' rx={40} />
+          <rect width={80} height={80} fill='#fff' />
         </clipPath>
       </defs>
     </svg>
@@ -40,7 +40,7 @@ export function IconEmptyCompany(props: React.SVGProps<SVGSVGElement>) {
       {...props}
     >
       <g clipPath={`url(#${clipPathId})`}>
-        <rect width={56} height={56} className='fill-bg-soft-200' rx={28} />
+        <rect width={56} height={56} className='fill-bg-soft-200' />
         <path className='fill-bg-soft-200' d='M0 0h56v56H0z' />
         <g filter={`url(#${filterId1})`} opacity={0.48}>
           <path
@@ -120,7 +120,7 @@ export function IconEmptyCompany(props: React.SVGProps<SVGSVGElement>) {
           <feBlend in2='shape' result='effect2_innerShadow_36237_4888' />
         </filter>
         <clipPath id={clipPathId}>
-          <rect width={56} height={56} fill='#fff' rx={28} />
+          <rect width={56} height={56} fill='#fff' />
         </clipPath>
       </defs>
     </svg>

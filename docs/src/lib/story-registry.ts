@@ -4,7 +4,7 @@
 import { default as alertMeta, Playground as alert_Playground, Filled as alert_Filled, Light as alert_Light, Lighter as alert_Lighter, Stroke as alert_Stroke, Sizes as alert_Sizes } from '@/components/ui/alert.stories';
 import { default as avatarGroupCompactMeta, Playground as avatarGroupCompact_Playground, Variants as avatarGroupCompact_Variants, Size as avatarGroupCompact_Size } from '@/components/ui/avatar-group-compact.stories';
 import { default as avatarGroupMeta, Playground as avatarGroup_Playground, Size as avatarGroup_Size } from '@/components/ui/avatar-group.stories';
-import { default as avatarMeta, Playground as avatar_Playground, Color as avatar_Color, Size as avatar_Size, Text as avatar_Text, Placeholder as avatar_Placeholder, Status as avatar_Status, Notification as avatar_Notification, BrandLogo as avatar_BrandLogo, IndicatorCustomSVG as avatar_IndicatorCustomSVG, AsLink as avatar_AsLink } from '@/components/ui/avatar.stories';
+import { default as avatarMeta, Playground as avatar_Playground, Color as avatar_Color, Size as avatar_Size, Text as avatar_Text, Placeholder as avatar_Placeholder, Status as avatar_Status, Notification as avatar_Notification, BrandLogo as avatar_BrandLogo, IndicatorCustomSVG as avatar_IndicatorCustomSVG, SquareRounded as avatar_SquareRounded, AsLink as avatar_AsLink } from '@/components/ui/avatar.stories';
 import { default as badgeMeta, Playground as badge_Playground, BadgeFilled as badge_BadgeFilled, BadgeLight as badge_BadgeLight, BadgeLighter as badge_BadgeLighter, BadgeStroke as badge_BadgeStroke, BadgeColors as badge_BadgeColors, Size as badge_Size, Square as badge_Square, WithIcon as badge_WithIcon, WithDot as badge_WithDot, Disabled as badge_Disabled, AsChild as badge_AsChild } from '@/components/ui/badge.stories';
 import { default as bannerMeta, Playground as banner_Playground, Error as banner_Error, Warning as banner_Warning, Success as banner_Success, Information as banner_Information, Feature as banner_Feature, Primary as banner_Primary } from '@/components/ui/banner.stories';
 import { default as buttonGroupMeta, Playground as buttonGroup_Playground, Default as buttonGroup_Default, Sizes as buttonGroup_Sizes } from '@/components/ui/button-group.stories';
@@ -100,6 +100,7 @@ export const storyRegistry: Record<string, {
     'Notification': avatar_Notification,
     'BrandLogo': avatar_BrandLogo,
     'IndicatorCustomSVG': avatar_IndicatorCustomSVG,
+    'SquareRounded': avatar_SquareRounded,
     'AsLink': avatar_AsLink
     }
   },

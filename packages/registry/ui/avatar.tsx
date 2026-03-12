@@ -23,8 +23,9 @@ export const avatarVariants = tv({
     root: [
       'relative flex shrink-0 items-center justify-center rounded-full',
       'select-none text-center uppercase',
+      'ring-1 ring-stroke-soft-200',
     ],
-    image: 'size-full rounded-full object-cover',
+    image: 'size-full overflow-hidden rounded-[inherit] object-cover',
     indicator:
       'absolute flex size-8 items-center justify-center drop-shadow-[0_2px_4px_#1b1c1d0a]',
   },
@@ -76,6 +77,9 @@ export const avatarVariants = tv({
       },
       red: {
         root: 'bg-red-200 text-red-950',
+      },
+      primary: {
+        root: 'bg-primary-200 text-primary-950',
       },
     },
   },
