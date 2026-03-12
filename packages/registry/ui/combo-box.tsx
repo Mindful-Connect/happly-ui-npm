@@ -36,6 +36,7 @@ type ComboBoxContextValue = {
   setOpen: (open: boolean) => void;
   handleOpenChange: (open: boolean) => void;
   disabled: boolean;
+  preview: boolean;
   max: number;
   min: number;
   size: 'medium' | 'small' | 'xsmall';
@@ -88,6 +89,8 @@ type ComboBoxRootProps = {
   hasError?: boolean;
   /** Input size */
   size?: 'medium' | 'small' | 'xsmall';
+  /** Preview mode — renders the option list inline in the DOM and hides tags */
+  preview?: boolean;
   /** Callback when popover open state changes */
   onOpenChange?: (open: boolean) => void;
   /** Additional className for the outer wrapper */
@@ -106,6 +109,7 @@ function ComboBoxRoot({
   disabled = false,
   hasError = false,
   size = 'medium',
+  preview = false,
   onOpenChange: onOpenChangeProp,
   className,
   children,
@@ -124,7 +128,7 @@ function ComboBoxRoot({
     [valueProp, onValueChange, options],
   );
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(preview);
   const [search, setSearch] = React.useState('');
   const [anchorWidth, setAnchorWidth] = React.useState(0);
   const anchorRef = React.useRef<HTMLDivElement>(null);
@@ -196,6 +200,7 @@ function ComboBoxRoot({
       setOpen,
       handleOpenChange,
       disabled,
+      preview,
       max,
       min,
       size,
@@ -217,6 +222,7 @@ function ComboBoxRoot({
       setOpen,
       handleOpenChange,
       disabled,
+      preview,
       max,
       min,
       size,
@@ -229,9 +235,13 @@ function ComboBoxRoot({
     <AnchorRefContext.Provider value={anchorRef}>
       <ComboBoxContext.Provider value={ctx}>
         <div className={cn('flex flex-col gap-2', className)}>
-          <Popover.Root open={open} onOpenChange={handleOpenChange}>
-            {children}
-          </Popover.Root>
+          {preview ? (
+            children
+          ) : (
+            <Popover.Root open={open} onOpenChange={handleOpenChange}>
+              {children}
+            </Popover.Root>
+          )}
 
           {/* Hidden inputs for form submission */}
           {name &&
@@ -268,27 +278,27 @@ const ComboBoxSearchTrigger = React.forwardRef<
     const ctx = useComboBoxContext();
     const anchorRef = useAnchorRef();
 
-    return (
-      <Popover.Anchor asChild>
-        <div ref={anchorRef}>
-          <Input.Root
-            size={ctx.size}
-            hasError={ctx.hasError}
-            className={className}
-          >
-            <Input.Wrapper>
-              <Input.Icon as={leadingIcon} />
-              <Input.Input
-                ref={forwardedRef}
-                role='combobox'
-                aria-expanded={ctx.open}
-                aria-haspopup='listbox'
-                value={ctx.search}
-                onChange={(e) => ctx.setSearch(e.target.value)}
-                onFocus={() => !ctx.disabled && ctx.handleOpenChange(true)}
-                placeholder={placeholder}
-                disabled={ctx.disabled}
-              />
+    const input = (
+      <div ref={anchorRef}>
+        <Input.Root
+          size={ctx.size}
+          hasError={ctx.hasError}
+          className={className}
+        >
+          <Input.Wrapper>
+            <Input.Icon as={leadingIcon} />
+            <Input.Input
+              ref={forwardedRef}
+              role='combobox'
+              aria-expanded={ctx.open}
+              aria-haspopup='listbox'
+              value={ctx.search}
+              onChange={(e) => ctx.setSearch(e.target.value)}
+              onFocus={() => !ctx.disabled && !ctx.preview && ctx.handleOpenChange(true)}
+              placeholder={placeholder}
+              disabled={ctx.disabled}
+            />
+            {!ctx.preview && (
               <Input.Icon
                 as={trailingIcon}
                 className={cn(
@@ -296,9 +306,17 @@ const ComboBoxSearchTrigger = React.forwardRef<
                   ctx.open && 'rotate-180',
                 )}
               />
-            </Input.Wrapper>
-          </Input.Root>
-        </div>
+            )}
+          </Input.Wrapper>
+        </Input.Root>
+      </div>
+    );
+
+    if (ctx.preview) return input;
+
+    return (
+      <Popover.Anchor asChild>
+        {input}
       </Popover.Anchor>
     );
   },
@@ -322,6 +340,47 @@ function ComboBoxContent({
   const ctx = useComboBoxContext();
   const anchorRef = useAnchorRef();
 
+  const items = children ?? (
+    ctx.filteredOptions.length === 0 ? (
+      <ComboBoxEmpty>{emptyMessage}</ComboBoxEmpty>
+    ) : (
+      <div className='flex flex-col gap-1'>
+        {ctx.filteredOptions.map((option) => (
+          <ComboBoxItem key={option.value} value={option.value} />
+        ))}
+      </div>
+    )
+  );
+
+  const scrollArea = (
+    <ScrollAreaPrimitives.Root type='auto'>
+      <ScrollAreaPrimitives.Viewport
+        style={{ overflowY: undefined }}
+        className='max-h-(--combobox-content-max-height) w-full scroll-py-2 overflow-auto p-2'
+        role='listbox'
+        aria-multiselectable='true'
+      >
+        {items}
+      </ScrollAreaPrimitives.Viewport>
+      <ScrollAreaPrimitives.Scrollbar orientation='vertical'>
+        <ScrollAreaPrimitives.Thumb className='bg-bg-soft-200 !w-1 rounded' />
+      </ScrollAreaPrimitives.Scrollbar>
+    </ScrollAreaPrimitives.Root>
+  );
+
+  if (ctx.preview) {
+    return (
+      <div
+        className={cn(
+          'border-stroke-soft-200 [--combobox-content-max-height:196px] overflow-hidden rounded-xl border',
+          className,
+        )}
+      >
+        {scrollArea}
+      </div>
+    );
+  }
+
   return (
     <Popover.Content
       align='start'
@@ -335,32 +394,10 @@ function ComboBoxContent({
         }
       }}
       style={{ width: ctx.anchorWidth || undefined }}
-      className={cn('overflow-hidden p-0', className)}
+      className={cn('[--combobox-content-max-height:196px] overflow-hidden p-0', className)}
     >
       <RemoveScroll allowPinchZoom>
-        <ScrollAreaPrimitives.Root type='auto'>
-          <ScrollAreaPrimitives.Viewport
-            style={{ overflowY: undefined }}
-            className='max-h-[196px] w-full scroll-py-2 overflow-auto p-2'
-            role='listbox'
-            aria-multiselectable='true'
-          >
-            {children ?? (
-              ctx.filteredOptions.length === 0 ? (
-                <ComboBoxEmpty>{emptyMessage}</ComboBoxEmpty>
-              ) : (
-                <div className='flex flex-col gap-1'>
-                  {ctx.filteredOptions.map((option) => (
-                    <ComboBoxItem key={option.value} value={option.value} />
-                  ))}
-                </div>
-              )
-            )}
-          </ScrollAreaPrimitives.Viewport>
-          <ScrollAreaPrimitives.Scrollbar orientation='vertical'>
-            <ScrollAreaPrimitives.Thumb className='bg-bg-soft-200 !w-1 rounded' />
-          </ScrollAreaPrimitives.Scrollbar>
-        </ScrollAreaPrimitives.Root>
+        {scrollArea}
       </RemoveScroll>
     </Popover.Content>
   );
@@ -526,7 +563,7 @@ function ComboBoxTags({
 }: ComboBoxTagsProps) {
   const ctx = useComboBoxContext();
 
-  if (ctx.value.length === 0) return null;
+  if (ctx.preview || ctx.value.length === 0) return null;
 
   const selectedOptions = ctx.value.map(
     (v) => ctx.options.find((o) => o.value === v) ?? { value: v, label: v },

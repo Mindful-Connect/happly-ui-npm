@@ -85,6 +85,18 @@
         "description": "Omit ComboBox.Tags and render your own tag display using useComboBoxContext().",
         "code": "<ComboBox.Root options={users} value={selected} onValueChange={setSelected}>\n  <ComboBox.SearchTrigger />\n  <ComboBox.Content />\n  <CustomTags />\n</ComboBox.Root>",
         "stories": ["CompoundCustomTags"]
+      },
+      {
+        "title": "Preview",
+        "description": "Preview mode renders the option list inline in the DOM and hides tags.",
+        "code": "<ComboBox.Composed\n  options={options}\n  value={value}\n  onValueChange={setValue}\n  preview\n/>",
+        "stories": ["Preview"]
+      },
+      {
+        "title": "Custom Max Height",
+        "description": "Override the dropdown height via the --combobox-content-max-height CSS variable on Content.",
+        "code": "<ComboBox.Root options={options} value={value} onValueChange={setValue}>\n  <ComboBox.SearchTrigger />\n  <ComboBox.Content className=\"[--combobox-content-max-height:350px]\" />\n  <ComboBox.Tags />\n</ComboBox.Root>",
+        "stories": ["CustomMaxHeight"]
       }
     ],
     "api": [
@@ -147,6 +159,12 @@
             "type": "'medium' | 'small' | 'xsmall'",
             "default": "'medium'",
             "description": "Input size."
+          },
+          {
+            "name": "preview",
+            "type": "boolean",
+            "default": "false",
+            "description": "Preview mode — renders the option list inline in the DOM and hides tags."
           },
           {
             "name": "onOpenChange",

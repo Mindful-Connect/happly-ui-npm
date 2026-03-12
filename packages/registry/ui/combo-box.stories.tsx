@@ -598,3 +598,50 @@ function CompoundCustomTagsRender() {
 export const CompoundCustomTags = {
   render: () => <CompoundCustomTagsRender />,
 };
+
+function PreviewRender() {
+  const [value, setValue] = React.useState<string[]>(['grants']);
+
+  return (
+    <div className='w-[300px]'>
+      <FormField.Root label='Preview Mode'>
+        <ComboBox.Composed
+          options={SECTOR_OPTIONS}
+          value={value}
+          onValueChange={setValue}
+          preview
+        />
+      </FormField.Root>
+    </div>
+  );
+}
+
+export const Preview = {
+  render: () => <PreviewRender />,
+};
+
+function CustomMaxHeightRender() {
+  const [value, setValue] = React.useState<string[]>([]);
+
+  return (
+    <div className='flex flex-col gap-6'>
+      <div className='w-[300px]'>
+        <FormField.Root label='Taller Dropdown (350px)'>
+          <ComboBox.Root
+            options={SECTOR_OPTIONS}
+            value={value}
+            onValueChange={setValue}
+          >
+            <ComboBox.SearchTrigger />
+            <ComboBox.Content className='[--combobox-content-max-height:350px]' />
+            <ComboBox.Tags />
+          </ComboBox.Root>
+        </FormField.Root>
+      </div>
+    </div>
+  );
+}
+
+export const CustomMaxHeight = {
+  render: () => <CustomMaxHeightRender />,
+};
