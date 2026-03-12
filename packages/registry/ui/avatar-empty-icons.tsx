@@ -27,8 +27,8 @@ export function IconEmptyUser(props: React.SVGProps<SVGSVGElement>) {
 
 export function IconEmptyCompany(props: React.SVGProps<SVGSVGElement>) {
   const clipPathId = React.useId();
-  const filterId1 = React.useId();
-  const filterId2 = React.useId();
+  const maskId1 = React.useId();
+  const maskId2 = React.useId();
 
   return (
     <svg
@@ -39,90 +39,60 @@ export function IconEmptyCompany(props: React.SVGProps<SVGSVGElement>) {
       viewBox='0 0 56 56'
       {...props}
     >
-      <g clipPath={`url(#${clipPathId})`}>
-        <rect width={56} height={56} className='fill-bg-soft-200' />
-        <path className='fill-bg-soft-200' d='M0 0h56v56H0z' />
-        <g filter={`url(#${filterId1})`} opacity={0.48}>
+      <defs>
+        <clipPath id={clipPathId}>
+          <rect width={56} height={56} fill='#fff' />
+        </clipPath>
+        {/* Back building mask: building white, windows + front building area black (holes) */}
+        <mask id={maskId1}>
           <path
             fill='#fff'
             d='M7 24.9a2.8 2.8 0 012.8-2.8h21a2.8 2.8 0 012.8 2.8v49a2.8 2.8 0 01-2.8 2.8h-21A2.8 2.8 0 017 73.9v-49z'
           />
-        </g>
-        <path
-          className='fill-bg-soft-200'
-          d='M12.6 28.7a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7v4.2a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2zm0 9.8a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7v4.2a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2zm0 9.8a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7v4.2a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2z'
-        />
-        <g filter={`url(#${filterId2})`}>
           <path
-            fill='#fff'
-            fillOpacity={0.8}
+            fill='#000'
+            d='M12.6 28.7a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7v4.2a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2zm0 9.8a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7v4.2a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2zm0 9.8a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7v4.2a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2z'
+          />
+          {/* Cut out front building area so it doesn't bleed through front windows */}
+          <path
+            fill='#000'
             d='M21 14a2.8 2.8 0 012.8-2.8h21a2.8 2.8 0 012.8 2.8v49a2.8 2.8 0 01-2.8 2.8h-21A2.8 2.8 0 0121 63V14z'
           />
-        </g>
-        <path
-          className='fill-bg-soft-200'
-          d='M26.6 17.8a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7V22a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2zm0 9.8a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7v4.2a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2zm0 9.8a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7v4.2a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2zm0 9.8a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7v4.2a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2zm9.8-29.4a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7V22a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2zm0 9.8a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7v4.2a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2zm0 9.8a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7v4.2a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2zm0 9.8a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7v4.2a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2z'
+        </mask>
+        {/* Front building mask: building shape white (visible), windows black (holes) */}
+        <mask id={maskId2}>
+          <path
+            fill='#fff'
+            d='M21 14a2.8 2.8 0 012.8-2.8h21a2.8 2.8 0 012.8 2.8v49a2.8 2.8 0 01-2.8 2.8h-21A2.8 2.8 0 0121 63V14z'
+          />
+          <path
+            fill='#000'
+            d='M26.6 17.8a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7V22a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2zm0 9.8a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7v4.2a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2zm0 9.8a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7v4.2a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2zm0 9.8a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7v4.2a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2zm9.8-29.4a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7V22a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2zm0 9.8a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7v4.2a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2zm0 9.8a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7v4.2a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2zm0 9.8a.7.7 0 01.7-.7h4.2a.7.7 0 01.7.7v4.2a.7.7 0 01-.7.7h-4.2a.7.7 0 01-.7-.7v-4.2z'
+          />
+        </mask>
+      </defs>
+      <g clipPath={`url(#${clipPathId})`}>
+        {/* Back building with window cutouts */}
+        <rect
+          mask={`url(#${maskId1})`}
+          x={7}
+          y={22.1}
+          width={26.6}
+          height={54.6}
+          fill='#fff'
+          fillOpacity={0.48}
+        />
+        {/* Front building with window cutouts */}
+        <rect
+          mask={`url(#${maskId2})`}
+          x={21}
+          y={11.2}
+          width={26.6}
+          height={54.6}
+          fill='#fff'
+          fillOpacity={0.8}
         />
       </g>
-      <defs>
-        <filter
-          id={filterId1}
-          width={34.6}
-          height={62.6}
-          x={3}
-          y={18.1}
-          colorInterpolationFilters='sRGB'
-          filterUnits='userSpaceOnUse'
-        >
-          <feFlood floodOpacity={0} result='BackgroundImageFix' />
-          <feGaussianBlur in='BackgroundImageFix' stdDeviation={2} />
-          <feComposite
-            in2='SourceAlpha'
-            operator='in'
-            result='effect1_backgroundBlur_36237_4888'
-          />
-          <feBlend
-            in='SourceGraphic'
-            in2='effect1_backgroundBlur_36237_4888'
-            result='shape'
-          />
-        </filter>
-        <filter
-          id={filterId2}
-          width={42.6}
-          height={70.6}
-          x={13}
-          y={3.2}
-          colorInterpolationFilters='sRGB'
-          filterUnits='userSpaceOnUse'
-        >
-          <feFlood floodOpacity={0} result='BackgroundImageFix' />
-          <feGaussianBlur in='BackgroundImageFix' stdDeviation={4} />
-          <feComposite
-            in2='SourceAlpha'
-            operator='in'
-            result='effect1_backgroundBlur_36237_4888'
-          />
-          <feBlend
-            in='SourceGraphic'
-            in2='effect1_backgroundBlur_36237_4888'
-            result='shape'
-          />
-          <feColorMatrix
-            in='SourceAlpha'
-            result='hardAlpha'
-            values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
-          />
-          <feOffset dy={4} />
-          <feGaussianBlur stdDeviation={2} />
-          <feComposite in2='hardAlpha' k2={-1} k3={1} operator='arithmetic' />
-          <feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.25 0' />
-          <feBlend in2='shape' result='effect2_innerShadow_36237_4888' />
-        </filter>
-        <clipPath id={clipPathId}>
-          <rect width={56} height={56} fill='#fff' />
-        </clipPath>
-      </defs>
     </svg>
   );
 }
