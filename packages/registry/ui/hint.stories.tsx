@@ -51,3 +51,19 @@ export const HasError = {
     </Hint.Root>
   ),
 };
+
+export const Composed = {
+  render: () => (
+    <div className='flex flex-col gap-4'>
+      <Hint.Composed>This is a hint with default icon.</Hint.Composed>
+
+      <Hint.Composed icon={RiInformationFill}>
+        This is a hint with custom icon.
+      </Hint.Composed>
+
+      <Hint.Composed hasError>This hint has an error.</Hint.Composed>
+
+      <Hint.Composed disabled>This hint is disabled.</Hint.Composed>
+    </div>
+  ),
+};

@@ -63,5 +63,9 @@
     "zod": "^3.25.56"
   },
   "module": "index.ts",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "react-hook-form": "^7.71.2"
+  }
 }

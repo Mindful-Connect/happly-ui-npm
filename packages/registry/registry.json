@@ -169,7 +169,7 @@
       "name": "form-field",
       "type": "registry:ui",
       "title": "Form Field",
-      "description": "A layout wrapper that provides consistent spacing between label, input, and hint elements."
+      "description": "A smart form field wrapper with built-in label, hint, and error support. Props-driven or compound mode. Uses namespace exports: FormField.Root, FormField.Label, FormField.Hint, FormField.Error."
     },
     {
       "name": "happly-ui-utils",
@@ -181,7 +181,7 @@
       "name": "hint",
       "type": "registry:ui",
       "title": "Hint",
-      "description": "A hint text component for form fields with icon, error, and disabled states. Uses namespace exports: Hint.Root, Hint.Icon."
+      "description": "A hint text component for form fields with icon, error, disabled states, and composed mode. Uses namespace exports: Hint.Root, Hint.Icon, Hint.DefaultIcon, Hint.Composed."
     },
     {
       "name": "input",
@@ -205,7 +205,7 @@
       "name": "label",
       "type": "registry:ui",
       "title": "Label",
-      "description": "A label component with asterisk indicator, sub-text, and info icon. Uses namespace exports: Label.Root, Label.Asterisk, Label.Sub, Label.InfoIcon."
+      "description": "A label component with asterisk indicator, sub-text, info icon, and composed mode. Uses namespace exports: Label.Root, Label.Asterisk, Label.Sub, Label.InfoIcon, Label.Info, Label.Composed."
     },
     {
       "name": "level-bar",
@@ -235,7 +235,7 @@
       "name": "modal",
       "type": "registry:ui",
       "title": "Modal",
-      "description": "A modal dialog component built on Radix UI Dialog with overlay, header, body, and footer sections. Uses namespace exports: Modal.Root, Modal.Trigger, Modal.Content, Modal.Header, Modal.Body, Modal.Footer, Modal.Close."
+      "description": "A modal dialog component built on Radix UI Dialog with overlay, header, body, and footer sections. Uses namespace exports: Modal.Root, Modal.Trigger, Modal.Content, Modal.Header, Modal.Title, Modal.Description, Modal.Body, Modal.Footer, Modal.Close, Modal.Portal, Modal.Overlay."
     },
     {
       "name": "pagination",

@@ -3,10 +3,10 @@
   "name": "label",
   "type": "registry:ui",
   "title": "Label",
-  "description": "A label component with asterisk indicator, sub-text, and info icon. Uses namespace exports: Label.Root, Label.Asterisk, Label.Sub, Label.InfoIcon.",
-  "version": "3.0.0",
+  "description": "A label component with asterisk indicator, sub-text, info icon, and composed mode. Uses namespace exports: Label.Root, Label.Asterisk, Label.Sub, Label.InfoIcon, Label.Info, Label.Composed.",
+  "version": "4.0.0",
   "migration": {
-    "guide": "v3 adds `Label.InfoIcon` — a built-in info circle SVG icon with default `size-5 text-text-disabled-300` styling. Override size/color via className. No breaking changes from v2."
+    "guide": "v4 adds `Label.Composed` — a props-driven wrapper that renders Root, Asterisk, Sub, and Info via props (required, sub, info). No breaking changes from v3."
   },
   "dependencies": [
     "@radix-ui/react-label"
@@ -16,14 +16,20 @@
     "tooltip"
   ],
   "docs": {
-    "lead": "A label component with required asterisk indicator and optional sub-text for form inputs.",
-    "usage": "import * as Label from \"@/components/ui/label\"\n\n<Label.Root>\n  Field Name\n  <Label.Asterisk />\n  <Label.Sub>(Optional)</Label.Sub>\n  <Label.Info>Helpful tooltip text</Label.Info>\n</Label.Root>",
+    "lead": "A label component with required asterisk indicator, optional sub-text, info tooltip, and a composed shorthand for common usage.",
+    "usage": "import * as Label from \"@/components/ui/label\"\n\n<Label.Composed required sub=\"(Optional)\" info=\"Helpful tooltip\">\n  Field Name\n</Label.Composed>",
     "examples": [
       {
         "title": "Demo",
         "description": "Label with asterisk, sub-text, and info icon.",
         "code": "<Label.Root>\n  Last Name\n  <Label.Asterisk />\n  <Label.Sub>(Optional)</Label.Sub>\n  <Label.InfoIcon />\n</Label.Root>",
         "stories": ["Demo"]
+      },
+      {
+        "title": "Composed",
+        "description": "Props-driven label with required, sub, and info.",
+        "code": "<Label.Composed required sub=\"(Optional)\" info=\"We will use this email to send you updates.\">\n  Email\n</Label.Composed>",
+        "stories": ["Composed"]
       }
     ],
     "api": [
@@ -67,6 +73,34 @@
             "name": "iconClassName",
             "type": "string",
             "description": "Override the default icon className"
+          }
+        ]
+      },
+      {
+        "name": "Label.Composed",
+        "description": "Props-driven label that renders Root, Asterisk, Sub, and Info based on props.",
+        "props": [
+          {
+            "name": "required",
+            "type": "boolean",
+            "default": "false",
+            "description": "Show asterisk indicator"
+          },
+          {
+            "name": "sub",
+            "type": "React.ReactNode",
+            "description": "Sub-text rendered after the label"
+          },
+          {
+            "name": "info",
+            "type": "React.ReactNode",
+            "description": "Info tooltip content"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disable the label"
           }
         ]
       }

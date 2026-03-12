@@ -3,8 +3,11 @@
   "name": "hint",
   "type": "registry:ui",
   "title": "Hint",
-  "description": "A hint text component for form fields with icon, error, and disabled states. Uses namespace exports: Hint.Root, Hint.Icon.",
-  "version": "1.0.0",
+  "description": "A hint text component for form fields with icon, error, disabled states, and composed mode. Uses namespace exports: Hint.Root, Hint.Icon, Hint.DefaultIcon, Hint.Composed.",
+  "version": "2.0.0",
+  "migration": {
+    "guide": "v2 adds `Hint.Composed` — a props-driven wrapper with a built-in default info icon. Also adds `Hint.DefaultIcon` (inline SVG). No breaking changes from v1."
+  },
   "dependencies": [],
   "registryDependencies": [
     "happly-ui-utils",
@@ -13,8 +16,8 @@
     "tv"
   ],
   "docs": {
-    "lead": "A hint text component for form fields with icon support and error/disabled states.",
-    "usage": "import * as Hint from \"@/components/ui/hint\"\n\n<Hint.Root>\n  <Hint.Icon as={RiInformationFill} />\n  This is a hint text.\n</Hint.Root>",
+    "lead": "A hint text component for form fields with icon support, error/disabled states, and a composed shorthand with built-in default icon.",
+    "usage": "import * as Hint from \"@/components/ui/hint\"\n\n<Hint.Composed>This is a hint text.</Hint.Composed>",
     "examples": [
       {
         "title": "Demo",
@@ -33,6 +36,12 @@
         "description": "Hint in error state.",
         "code": "<Hint.Root hasError>\n  <Hint.Icon as={RiInformationFill} />\n  This is a hint text to help user.\n</Hint.Root>",
         "stories": ["HasError"]
+      },
+      {
+        "title": "Composed",
+        "description": "Props-driven hint with default icon, error, and disabled states.",
+        "code": "<Hint.Composed>This is a hint with default icon.</Hint.Composed>\n<Hint.Composed hasError>This hint has an error.</Hint.Composed>",
+        "stories": ["Composed"]
       }
     ],
     "api": [
@@ -62,6 +71,34 @@
             "name": "as",
             "type": "React.ElementType",
             "description": "The icon component to render"
+          }
+        ]
+      },
+      {
+        "name": "Hint.DefaultIcon",
+        "description": "Built-in info circle SVG icon used as the default in Hint.Composed.",
+        "props": []
+      },
+      {
+        "name": "Hint.Composed",
+        "description": "Props-driven hint with a built-in default info icon. Pass custom icon via the icon prop.",
+        "props": [
+          {
+            "name": "icon",
+            "type": "React.ElementType",
+            "description": "Custom icon component. Defaults to built-in info circle."
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Show error styling"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Show disabled styling"
           }
         ]
       }

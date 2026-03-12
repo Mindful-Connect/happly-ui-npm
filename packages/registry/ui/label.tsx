@@ -52,8 +52,11 @@ function LabelAsterisk({
 function LabelSub({
   children,
   className,
+  parens,
   ...rest
-}: React.HTMLAttributes<HTMLSpanElement>) {
+}: React.HTMLAttributes<HTMLSpanElement> & {
+  parens?: boolean;
+}) {
   return (
     <span
       className={cn(
@@ -64,7 +67,7 @@ function LabelSub({
       )}
       {...rest}
     >
-      {children}
+      {parens ? `(${children})` : children}
     </span>
   );
 }
@@ -112,10 +115,41 @@ function LabelInfo({
   );
 }
 
+type LabelComposedProps = React.ComponentPropsWithoutRef<
+  typeof LabelPrimitives.Root
+> & {
+  required?: boolean;
+  sub?: React.ReactNode;
+  subParens?: boolean;
+  info?: React.ReactNode;
+  disabled?: boolean;
+};
+
+const LabelComposed = React.forwardRef<
+  React.ComponentRef<typeof LabelPrimitives.Root>,
+  LabelComposedProps
+>(
+  (
+    { children, required, sub, subParens, info, disabled, ...rest },
+    forwardedRef,
+  ) => {
+    return (
+      <LabelRoot ref={forwardedRef} disabled={disabled} {...rest}>
+        {children}
+        {required && <LabelAsterisk />}
+        {sub && <LabelSub parens={subParens}>{sub}</LabelSub>}
+        {info && <LabelInfo>{info}</LabelInfo>}
+      </LabelRoot>
+    );
+  },
+);
+LabelComposed.displayName = 'LabelComposed';
+
 export {
   LabelRoot as Root,
   LabelAsterisk as Asterisk,
   LabelSub as Sub,
   LabelInfoIcon as InfoIcon,
   LabelInfo as Info,
+  LabelComposed as Composed,
 };
