@@ -107,13 +107,18 @@ export const Square = {
   render: () => <SquareRender />,
 };
 
-export const WithFormField = {
-  render: () => (
+function WithFormFieldRender() {
+  const [value, setValue] = React.useState('');
+  return (
     <FormField.Root
       label='Verification Code'
       hint='Enter the 5-digit code sent to your email.'
     >
-      <DigitInput.Root numDigits={5} />
+      <DigitInput.Root numInputs={5} value={value} onChange={setValue} />
     </FormField.Root>
-  ),
+  );
+}
+
+export const WithFormField = {
+  render: () => <WithFormFieldRender />,
 };

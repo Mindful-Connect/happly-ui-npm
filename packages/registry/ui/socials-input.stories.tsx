@@ -104,8 +104,9 @@ export const ReadOnly = {
   },
 };
 
-export const WithFormField = {
-  render: () => (
+function WithFormFieldRender() {
+  const [formValue, setFormValue] = useState<Partial<Record<SocialKey, string>>>({});
+  return (
     <div className='w-[400px]'>
       <FormField.Root
         label='Social Media'
@@ -114,24 +115,33 @@ export const WithFormField = {
         labelInfo='Add your social media profiles.'
         hint='Add at least one social media profile.'
       >
-        <SocialsInput name='socials' />
+        <SocialsInput name='socials' formValue={formValue} setFormValue={setFormValue} />
       </FormField.Root>
     </div>
-  ),
+  );
+}
+
+export const WithFormField = {
+  render: () => <WithFormFieldRender />,
 };
 
-export const ErrorState = {
-  render: () => (
+function ErrorStateRender() {
+  const [formValue, setFormValue] = useState<Partial<Record<SocialKey, string>>>({});
+  return (
     <div className='w-[400px]'>
       <FormField.Root
         label='Social Media'
         required
         error='Please add at least one social media profile.'
       >
-        <SocialsInput name='socials-error' />
+        <SocialsInput name='socials-error' formValue={formValue} setFormValue={setFormValue} />
       </FormField.Root>
     </div>
-  ),
+  );
+}
+
+export const ErrorState = {
+  render: () => <ErrorStateRender />,
 };
 
 export const CustomLabels = {
