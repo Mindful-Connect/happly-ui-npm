@@ -24,6 +24,25 @@ const PLAYGROUND_OPTIONS = [
   { value: 'option-5', label: 'Option 5' },
 ];
 
+function PlaygroundRender(args: any) {
+  const [value, setValue] = React.useState<string[]>([]);
+
+  return (
+    <div className='w-[300px]'>
+      <ComboBox.Composed
+        options={PLAYGROUND_OPTIONS}
+        value={value}
+        onValueChange={setValue}
+        size={args.size}
+        hasError={args.hasError}
+        disabled={args.disabled}
+        placeholder={args.placeholder}
+        tagVariant={args.tagVariant}
+      />
+    </div>
+  );
+}
+
 export const Playground = {
   args: {
     size: 'medium',
@@ -39,24 +58,7 @@ export const Playground = {
     placeholder: { control: 'text' },
     tagVariant: { control: 'select', options: ['stroke', 'gray'] },
   },
-  render: (args: any) => {
-    const [value, setValue] = React.useState<string[]>([]);
-
-    return (
-      <div className='w-[300px]'>
-        <ComboBox.Composed
-          options={PLAYGROUND_OPTIONS}
-          value={value}
-          onValueChange={setValue}
-          size={args.size}
-          hasError={args.hasError}
-          disabled={args.disabled}
-          placeholder={args.placeholder}
-          tagVariant={args.tagVariant}
-        />
-      </div>
-    );
-  },
+  render: (args: any) => <PlaygroundRender {...args} />,
 };
 
 const SECTOR_OPTIONS = [
@@ -77,49 +79,53 @@ const TAG_OPTIONS = [
   { value: 'healthtech', label: 'Healthtech' },
 ];
 
-export const Default = {
-  render: () => {
-    const [value, setValue] = React.useState<string[]>([]);
+function DefaultRender() {
+  const [value, setValue] = React.useState<string[]>([]);
 
-    return (
-      <div className='w-[300px]'>
-        <FormField.Root
-          label='Searchable Combo Box'
-          required
-          labelSub='Optional'
-          labelSubParens
-        >
-          <ComboBox.Composed
-            options={SECTOR_OPTIONS}
-            value={value}
-            onValueChange={setValue}
-          />
-        </FormField.Root>
-      </div>
-    );
-  },
+  return (
+    <div className='w-[300px]'>
+      <FormField.Root
+        label='Searchable Combo Box'
+        required
+        labelSub='Optional'
+        labelSubParens
+      >
+        <ComboBox.Composed
+          options={SECTOR_OPTIONS}
+          value={value}
+          onValueChange={setValue}
+        />
+      </FormField.Root>
+    </div>
+  );
+}
+
+export const Default = {
+  render: () => <DefaultRender />,
 };
 
-export const WithPreselectedValues = {
-  render: () => {
-    const [value, setValue] = React.useState<string[]>([
-      'ai',
-      'product',
-      'saas',
-    ]);
+function WithPreselectedValuesRender() {
+  const [value, setValue] = React.useState<string[]>([
+    'ai',
+    'product',
+    'saas',
+  ]);
 
-    return (
-      <div className='w-[300px]'>
-        <FormField.Root label='Tags'>
-          <ComboBox.Composed
-            options={TAG_OPTIONS}
-            value={value}
-            onValueChange={setValue}
-          />
-        </FormField.Root>
-      </div>
-    );
-  },
+  return (
+    <div className='w-[300px]'>
+      <FormField.Root label='Tags'>
+        <ComboBox.Composed
+          options={TAG_OPTIONS}
+          value={value}
+          onValueChange={setValue}
+        />
+      </FormField.Root>
+    </div>
+  );
+}
+
+export const WithPreselectedValues = {
+  render: () => <WithPreselectedValuesRender />,
 };
 
 export const Uncontrolled = {
@@ -136,259 +142,271 @@ export const Uncontrolled = {
   ),
 };
 
-export const FormSubmission = {
-  render: () => {
-    const [value, setValue] = React.useState<string[]>(['ai', 'saas']);
+function FormSubmissionRender() {
+  const [value, setValue] = React.useState<string[]>(['ai', 'saas']);
 
-    return (
-      <form
-        className='w-[300px]'
-        onSubmit={(e) => {
-          e.preventDefault();
-          const formData = new FormData(e.currentTarget);
-          alert(
-            `Form submitted with tags: ${formData.getAll('tags').join(', ')}`,
-          );
-        }}
-      >
-        <FormField.Root label='Tags' required>
+  return (
+    <form
+      className='w-[300px]'
+      onSubmit={(e) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        alert(
+          `Form submitted with tags: ${formData.getAll('tags').join(', ')}`,
+        );
+      }}
+    >
+      <FormField.Root label='Tags' required>
+        <ComboBox.Composed
+          options={TAG_OPTIONS}
+          value={value}
+          onValueChange={setValue}
+          name='tags'
+        />
+      </FormField.Root>
+      <Button type='submit' className='mt-4 w-full'>
+        Submit
+      </Button>
+    </form>
+  );
+}
+
+export const FormSubmission = {
+  render: () => <FormSubmissionRender />,
+};
+
+function SizesRender() {
+  const [medium, setMedium] = React.useState<string[]>(['ai']);
+  const [small, setSmall] = React.useState<string[]>(['ai', 'product']);
+  const [xsmall, setXsmall] = React.useState<string[]>(['ai']);
+
+  return (
+    <div className='flex flex-col gap-6'>
+      <div className='w-[300px]'>
+        <FormField.Root label='Medium (default)'>
           <ComboBox.Composed
             options={TAG_OPTIONS}
-            value={value}
-            onValueChange={setValue}
-            name='tags'
+            value={medium}
+            onValueChange={setMedium}
           />
         </FormField.Root>
-        <Button type='submit' className='mt-4 w-full'>
-          Submit
-        </Button>
-      </form>
-    );
-  },
-};
+      </div>
+      <div className='w-[300px]'>
+        <FormField.Root label='Small'>
+          <ComboBox.Composed
+            options={TAG_OPTIONS}
+            value={small}
+            onValueChange={setSmall}
+            size='small'
+          />
+        </FormField.Root>
+      </div>
+      <div className='w-[300px]'>
+        <FormField.Root label='XSmall'>
+          <ComboBox.Composed
+            options={TAG_OPTIONS}
+            value={xsmall}
+            onValueChange={setXsmall}
+            size='xsmall'
+          />
+        </FormField.Root>
+      </div>
+    </div>
+  );
+}
 
 export const Sizes = {
-  render: () => {
-    const [medium, setMedium] = React.useState<string[]>(['ai']);
-    const [small, setSmall] = React.useState<string[]>(['ai', 'product']);
-    const [xsmall, setXsmall] = React.useState<string[]>(['ai']);
-
-    return (
-      <div className='flex flex-col gap-6'>
-        <div className='w-[300px]'>
-          <FormField.Root label='Medium (default)'>
-            <ComboBox.Composed
-              options={TAG_OPTIONS}
-              value={medium}
-              onValueChange={setMedium}
-            />
-          </FormField.Root>
-        </div>
-        <div className='w-[300px]'>
-          <FormField.Root label='Small'>
-            <ComboBox.Composed
-              options={TAG_OPTIONS}
-              value={small}
-              onValueChange={setSmall}
-              size='small'
-            />
-          </FormField.Root>
-        </div>
-        <div className='w-[300px]'>
-          <FormField.Root label='XSmall'>
-            <ComboBox.Composed
-              options={TAG_OPTIONS}
-              value={xsmall}
-              onValueChange={setXsmall}
-              size='xsmall'
-            />
-          </FormField.Root>
-        </div>
-      </div>
-    );
-  },
+  render: () => <SizesRender />,
 };
+
+function SelectionConstraintsRender() {
+  const [maxVal, setMaxVal] = React.useState<string[]>(['ai']);
+  const [minVal, setMinVal] = React.useState<string[]>([
+    'grants',
+    'vc-funding',
+  ]);
+  const [rangeVal, setRangeVal] = React.useState<string[]>([
+    'grants',
+    'vc-funding',
+  ]);
+
+  return (
+    <div className='flex flex-col gap-6'>
+      <div className='w-[300px]'>
+        <FormField.Root label='Max 3' labelSub='select up to 3' labelSubParens>
+          <ComboBox.Composed
+            options={TAG_OPTIONS}
+            value={maxVal}
+            onValueChange={setMaxVal}
+            max={3}
+          />
+        </FormField.Root>
+      </div>
+      <div className='w-[300px]'>
+        <FormField.Root label='Min 1' required>
+          <ComboBox.Composed
+            options={SECTOR_OPTIONS}
+            value={minVal}
+            onValueChange={setMinVal}
+            min={1}
+          />
+        </FormField.Root>
+      </div>
+      <div className='w-[300px]'>
+        <FormField.Root label='Min 1, Max 3' labelSub='1–3 required' labelSubParens>
+          <ComboBox.Composed
+            options={SECTOR_OPTIONS}
+            value={rangeVal}
+            onValueChange={setRangeVal}
+            min={1}
+            max={3}
+          />
+        </FormField.Root>
+      </div>
+    </div>
+  );
+}
 
 export const SelectionConstraints = {
-  render: () => {
-    const [maxVal, setMaxVal] = React.useState<string[]>(['ai']);
-    const [minVal, setMinVal] = React.useState<string[]>([
-      'grants',
-      'vc-funding',
-    ]);
-    const [rangeVal, setRangeVal] = React.useState<string[]>([
-      'grants',
-      'vc-funding',
-    ]);
-
-    return (
-      <div className='flex flex-col gap-6'>
-        <div className='w-[300px]'>
-          <FormField.Root label='Max 3' labelSub='select up to 3' labelSubParens>
-            <ComboBox.Composed
-              options={TAG_OPTIONS}
-              value={maxVal}
-              onValueChange={setMaxVal}
-              max={3}
-            />
-          </FormField.Root>
-        </div>
-        <div className='w-[300px]'>
-          <FormField.Root label='Min 1' required>
-            <ComboBox.Composed
-              options={SECTOR_OPTIONS}
-              value={minVal}
-              onValueChange={setMinVal}
-              min={1}
-            />
-          </FormField.Root>
-        </div>
-        <div className='w-[300px]'>
-          <FormField.Root label='Min 1, Max 3' labelSub='1–3 required' labelSubParens>
-            <ComboBox.Composed
-              options={SECTOR_OPTIONS}
-              value={rangeVal}
-              onValueChange={setRangeVal}
-              min={1}
-              max={3}
-            />
-          </FormField.Root>
-        </div>
-      </div>
-    );
-  },
+  render: () => <SelectionConstraintsRender />,
 };
+
+function TagVariantsRender() {
+  const [gray, setGray] = React.useState<string[]>(['ai', 'saas']);
+  const [stroke, setStroke] = React.useState<string[]>(['ai', 'saas']);
+  const [all, setAll] = React.useState<string[]>(
+    TAG_OPTIONS.map((o) => o.value),
+  );
+
+  return (
+    <div className='flex flex-col gap-6'>
+      <div className='w-[300px]'>
+        <FormField.Root label='Gray (default)'>
+          <ComboBox.Composed
+            options={TAG_OPTIONS}
+            value={gray}
+            onValueChange={setGray}
+            tagVariant='gray'
+          />
+        </FormField.Root>
+      </div>
+      <div className='w-[300px]'>
+        <FormField.Root label='Stroke'>
+          <ComboBox.Composed
+            options={TAG_OPTIONS}
+            value={stroke}
+            onValueChange={setStroke}
+            tagVariant='stroke'
+          />
+        </FormField.Root>
+      </div>
+      <div className='w-[300px]'>
+        <FormField.Root label='Select All Label'>
+          <ComboBox.Composed
+            options={TAG_OPTIONS}
+            value={all}
+            onValueChange={setAll}
+            selectAllLabel='All tags'
+          />
+        </FormField.Root>
+      </div>
+    </div>
+  );
+}
 
 export const TagVariants = {
-  render: () => {
-    const [gray, setGray] = React.useState<string[]>(['ai', 'saas']);
-    const [stroke, setStroke] = React.useState<string[]>(['ai', 'saas']);
-    const [all, setAll] = React.useState<string[]>(
-      TAG_OPTIONS.map((o) => o.value),
-    );
-
-    return (
-      <div className='flex flex-col gap-6'>
-        <div className='w-[300px]'>
-          <FormField.Root label='Gray (default)'>
-            <ComboBox.Composed
-              options={TAG_OPTIONS}
-              value={gray}
-              onValueChange={setGray}
-              tagVariant='gray'
-            />
-          </FormField.Root>
-        </div>
-        <div className='w-[300px]'>
-          <FormField.Root label='Stroke'>
-            <ComboBox.Composed
-              options={TAG_OPTIONS}
-              value={stroke}
-              onValueChange={setStroke}
-              tagVariant='stroke'
-            />
-          </FormField.Root>
-        </div>
-        <div className='w-[300px]'>
-          <FormField.Root label='Select All Label'>
-            <ComboBox.Composed
-              options={TAG_OPTIONS}
-              value={all}
-              onValueChange={setAll}
-              selectAllLabel='All tags'
-            />
-          </FormField.Root>
-        </div>
-      </div>
-    );
-  },
+  render: () => <TagVariantsRender />,
 };
+
+function StatesRender() {
+  const [errorVal, setErrorVal] = React.useState<string[]>([]);
+
+  return (
+    <div className='flex flex-col gap-6'>
+      <div className='w-[300px]'>
+        <FormField.Root label='Error' required>
+          <ComboBox.Composed
+            options={SECTOR_OPTIONS}
+            value={errorVal}
+            onValueChange={setErrorVal}
+            hasError
+          />
+        </FormField.Root>
+      </div>
+      <div className='w-[300px]'>
+        <FormField.Root label='Disabled' disabled>
+          <ComboBox.Composed
+            options={SECTOR_OPTIONS}
+            value={['grants', 'vc-funding']}
+            onValueChange={() => {}}
+            disabled
+          />
+        </FormField.Root>
+      </div>
+    </div>
+  );
+}
 
 export const States = {
-  render: () => {
-    const [errorVal, setErrorVal] = React.useState<string[]>([]);
-
-    return (
-      <div className='flex flex-col gap-6'>
-        <div className='w-[300px]'>
-          <FormField.Root label='Error' required>
-            <ComboBox.Composed
-              options={SECTOR_OPTIONS}
-              value={errorVal}
-              onValueChange={setErrorVal}
-              hasError
-            />
-          </FormField.Root>
-        </div>
-        <div className='w-[300px]'>
-          <FormField.Root label='Disabled' disabled>
-            <ComboBox.Composed
-              options={SECTOR_OPTIONS}
-              value={['grants', 'vc-funding']}
-              onValueChange={() => {}}
-              disabled
-            />
-          </FormField.Root>
-        </div>
-      </div>
-    );
-  },
+  render: () => <StatesRender />,
 };
 
-export const Customization = {
-  render: () => {
-    const [cities, setCities] = React.useState<string[]>([]);
-    const [skills, setSkills] = React.useState<string[]>([]);
-    const [tags, setTags] = React.useState<string[]>([]);
+function CustomizationRender() {
+  const [cities, setCities] = React.useState<string[]>([]);
+  const [skills, setSkills] = React.useState<string[]>([]);
+  const [tags, setTags] = React.useState<string[]>([]);
 
-    return (
-      <div className='flex flex-col gap-6'>
-        <div className='w-[300px]'>
-          <FormField.Root label='Custom Icon'>
-            <ComboBox.Composed
-              options={[
-                { value: 'toronto', label: 'Toronto' },
-                { value: 'vancouver', label: 'Vancouver' },
-                { value: 'montreal', label: 'Montreal' },
-                { value: 'calgary', label: 'Calgary' },
-                { value: 'ottawa', label: 'Ottawa' },
-              ]}
-              value={cities}
-              onValueChange={setCities}
-              icon={RiMapPinLine}
-              placeholder='Search cities...'
-            />
-          </FormField.Root>
-        </div>
-        <div className='w-[300px]'>
-          <FormField.Root label='Custom Placeholder'>
-            <ComboBox.Composed
-              options={[
-                { value: 'react', label: 'React' },
-                { value: 'typescript', label: 'TypeScript' },
-                { value: 'node', label: 'Node.js' },
-                { value: 'python', label: 'Python' },
-                { value: 'go', label: 'Go' },
-              ]}
-              value={skills}
-              onValueChange={setSkills}
-              placeholder='Type to filter skills...'
-            />
-          </FormField.Root>
-        </div>
-        <div className='w-[300px]'>
-          <FormField.Root label='Custom Empty Message'>
-            <ComboBox.Composed
-              options={TAG_OPTIONS}
-              value={tags}
-              onValueChange={setTags}
-              emptyMessage='No matching tags. Try a different search.'
-            />
-          </FormField.Root>
-        </div>
+  return (
+    <div className='flex flex-col gap-6'>
+      <div className='w-[300px]'>
+        <FormField.Root label='Custom Icon'>
+          <ComboBox.Composed
+            options={[
+              { value: 'toronto', label: 'Toronto' },
+              { value: 'vancouver', label: 'Vancouver' },
+              { value: 'montreal', label: 'Montreal' },
+              { value: 'calgary', label: 'Calgary' },
+              { value: 'ottawa', label: 'Ottawa' },
+            ]}
+            value={cities}
+            onValueChange={setCities}
+            icon={RiMapPinLine}
+            placeholder='Search cities...'
+          />
+        </FormField.Root>
       </div>
-    );
-  },
+      <div className='w-[300px]'>
+        <FormField.Root label='Custom Placeholder'>
+          <ComboBox.Composed
+            options={[
+              { value: 'react', label: 'React' },
+              { value: 'typescript', label: 'TypeScript' },
+              { value: 'node', label: 'Node.js' },
+              { value: 'python', label: 'Python' },
+              { value: 'go', label: 'Go' },
+            ]}
+            value={skills}
+            onValueChange={setSkills}
+            placeholder='Type to filter skills...'
+          />
+        </FormField.Root>
+      </div>
+      <div className='w-[300px]'>
+        <FormField.Root label='Custom Empty Message'>
+          <ComboBox.Composed
+            options={TAG_OPTIONS}
+            value={tags}
+            onValueChange={setTags}
+            emptyMessage='No matching tags. Try a different search.'
+          />
+        </FormField.Root>
+      </div>
+    </div>
+  );
+}
+
+export const Customization = {
+  render: () => <CustomizationRender />,
 };
 
 const ICON_OPTIONS = [
@@ -404,35 +422,37 @@ const FLAG_OPTIONS = [
   { value: 'tr', label: 'Turkey', icon: 'https://mindful-connect.github.io/circle-flags/flags/tr.svg' },
 ];
 
-export const WithIcons = {
-  render: () => {
-    const [icons, setIcons] = React.useState<string[]>(['utility']);
-    const [flags, setFlags] = React.useState<string[]>(['us', 'de']);
+function WithIconsRender() {
+  const [icons, setIcons] = React.useState<string[]>(['utility']);
+  const [flags, setFlags] = React.useState<string[]>(['us', 'de']);
 
-    return (
-      <div className='flex flex-col gap-6'>
-        <div className='w-[300px]'>
-          <FormField.Root label='Payment Types'>
-            <ComboBox.Composed
-              options={ICON_OPTIONS}
-              value={icons}
-              onValueChange={setIcons}
-            />
-          </FormField.Root>
-        </div>
-        <div className='w-[300px]'>
-          <FormField.Root label='Countries'>
-            <ComboBox.Composed
-              options={FLAG_OPTIONS}
-              value={flags}
-              onValueChange={setFlags}
-              placeholder='Search countries...'
-            />
-          </FormField.Root>
-        </div>
+  return (
+    <div className='flex flex-col gap-6'>
+      <div className='w-[300px]'>
+        <FormField.Root label='Payment Types'>
+          <ComboBox.Composed
+            options={ICON_OPTIONS}
+            value={icons}
+            onValueChange={setIcons}
+          />
+        </FormField.Root>
       </div>
-    );
-  },
+      <div className='w-[300px]'>
+        <FormField.Root label='Countries'>
+          <ComboBox.Composed
+            options={FLAG_OPTIONS}
+            value={flags}
+            onValueChange={setFlags}
+            placeholder='Search countries...'
+          />
+        </FormField.Root>
+      </div>
+    </div>
+  );
+}
+
+export const WithIcons = {
+  render: () => <WithIconsRender />,
 };
 
 const TEAM_MEMBERS = [
@@ -463,122 +483,118 @@ const TEAM_MEMBERS = [
   },
 ];
 
+function CompoundCustomItemsItems() {
+  const ctx = ComboBox.useComboBoxContext();
+
+  if (ctx.filteredOptions.length === 0) {
+    return <ComboBox.Empty>No members found.</ComboBox.Empty>;
+  }
+
+  return (
+    <div className='flex flex-col gap-1'>
+      {ctx.filteredOptions.map((option) => {
+        const selected = ctx.isSelected(option.value);
+        return (
+          <ComboBox.Item
+            key={option.value}
+            value={option.value}
+            showIndicator={false}
+          >
+            <Checkbox.Root
+              checked={selected}
+              tabIndex={-1}
+              className='pointer-events-none'
+            />
+            {option.icon && (
+              <div
+                className='size-6 shrink-0 rounded-full bg-cover bg-center bg-no-repeat'
+                style={{ backgroundImage: `url(${option.icon})` }}
+              />
+            )}
+            <span className='line-clamp-1'>{option.label}</span>
+          </ComboBox.Item>
+        );
+      })}
+    </div>
+  );
+}
+
+function CompoundCustomItemsRender() {
+  const [value, setValue] = React.useState<string[]>(['alice']);
+
+  return (
+    <div className='w-[320px]'>
+      <FormField.Root label='Team Members'>
+        <ComboBox.Root
+          options={TEAM_MEMBERS}
+          value={value}
+          onValueChange={setValue}
+        >
+          <ComboBox.SearchTrigger placeholder='Search team members...' />
+          <ComboBox.Content>
+            <CompoundCustomItemsItems />
+          </ComboBox.Content>
+          <ComboBox.Tags variant='stroke' />
+        </ComboBox.Root>
+      </FormField.Root>
+    </div>
+  );
+}
+
 export const CompoundCustomItems = {
-  render: () => {
-    function CompoundDemo() {
-      const [value, setValue] = React.useState<string[]>(['alice']);
-
-      return (
-        <div className='w-[320px]'>
-          <FormField.Root label='Team Members'>
-            <ComboBox.Root
-              options={TEAM_MEMBERS}
-              value={value}
-              onValueChange={setValue}
-            >
-              <ComboBox.SearchTrigger placeholder='Search team members...' />
-              <ComboBox.Content>
-                <CompoundItems />
-              </ComboBox.Content>
-              <ComboBox.Tags variant='stroke' />
-            </ComboBox.Root>
-          </FormField.Root>
-        </div>
-      );
-    }
-
-    function CompoundItems() {
-      const ctx = ComboBox.useComboBoxContext();
-
-      if (ctx.filteredOptions.length === 0) {
-        return <ComboBox.Empty>No members found.</ComboBox.Empty>;
-      }
-
-      return (
-        <div className='flex flex-col gap-1'>
-          {ctx.filteredOptions.map((option) => {
-            const selected = ctx.isSelected(option.value);
-            return (
-              <ComboBox.Item
-                key={option.value}
-                value={option.value}
-                showIndicator={false}
-              >
-                <Checkbox.Root
-                  checked={selected}
-                  tabIndex={-1}
-                  className='pointer-events-none'
-                />
-                {option.icon && (
-                  <div
-                    className='size-6 shrink-0 rounded-full bg-cover bg-center bg-no-repeat'
-                    style={{ backgroundImage: `url(${option.icon})` }}
-                  />
-                )}
-                <span className='line-clamp-1'>{option.label}</span>
-              </ComboBox.Item>
-            );
-          })}
-        </div>
-      );
-    }
-
-    return <CompoundDemo />;
-  },
+  render: () => <CompoundCustomItemsRender />,
 };
 
+function CompoundCustomTagsTags() {
+  const ctx = ComboBox.useComboBoxContext();
+
+  if (ctx.value.length === 0) return null;
+
+  const selected = ctx.value
+    .map((v) => ctx.options.find((o) => o.value === v))
+    .filter(Boolean) as ComboBox.ComboBoxOption[];
+
+  return (
+    <div className='flex flex-wrap gap-1.5'>
+      {selected.map((opt) => (
+        <Tag.Root key={opt.value} variant='stroke'>
+          {opt.icon && (
+            <Tag.Icon
+              className='rounded-full bg-cover bg-center bg-no-repeat'
+              style={{ backgroundImage: `url(${opt.icon})` }}
+            />
+          )}
+          <span>{opt.label.split(' ')[0]}</span>
+          <Tag.DismissButton onClick={() => ctx.remove(opt.value)} />
+        </Tag.Root>
+      ))}
+    </div>
+  );
+}
+
+function CompoundCustomTagsRender() {
+  const [value, setValue] = React.useState<string[]>([
+    'alice',
+    'bob',
+  ]);
+
+  return (
+    <div className='w-[320px]'>
+      <FormField.Root label='Assignees'>
+        <ComboBox.Root
+          options={TEAM_MEMBERS}
+          value={value}
+          onValueChange={setValue}
+        >
+          <ComboBox.SearchTrigger placeholder='Add assignee...' />
+          <ComboBox.Content />
+          <CompoundCustomTagsTags />
+        </ComboBox.Root>
+      </FormField.Root>
+    </div>
+  );
+}
+
 export const CompoundCustomTags = {
-  render: () => {
-    function CustomTagsDemo() {
-      const [value, setValue] = React.useState<string[]>([
-        'alice',
-        'bob',
-      ]);
-
-      return (
-        <div className='w-[320px]'>
-          <FormField.Root label='Assignees'>
-            <ComboBox.Root
-              options={TEAM_MEMBERS}
-              value={value}
-              onValueChange={setValue}
-            >
-              <ComboBox.SearchTrigger placeholder='Add assignee...' />
-              <ComboBox.Content />
-              <CustomTags />
-            </ComboBox.Root>
-          </FormField.Root>
-        </div>
-      );
-    }
-
-    function CustomTags() {
-      const ctx = ComboBox.useComboBoxContext();
-
-      if (ctx.value.length === 0) return null;
-
-      const selected = ctx.value
-        .map((v) => ctx.options.find((o) => o.value === v))
-        .filter(Boolean) as ComboBox.ComboBoxOption[];
-
-      return (
-        <div className='flex flex-wrap gap-1.5'>
-          {selected.map((opt) => (
-            <Tag.Root key={opt.value} variant='stroke'>
-              {opt.icon && (
-                <Tag.Icon
-                  className='rounded-full bg-cover bg-center bg-no-repeat'
-                  style={{ backgroundImage: `url(${opt.icon})` }}
-                />
-              )}
-              <span>{opt.label.split(' ')[0]}</span>
-              <Tag.DismissButton onClick={() => ctx.remove(opt.value)} />
-            </Tag.Root>
-          ))}
-        </div>
-      );
-    }
-
-    return <CustomTagsDemo />;
-  },
+  render: () => <CompoundCustomTagsRender />,
 };

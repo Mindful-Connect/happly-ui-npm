@@ -20,6 +20,22 @@ export default {
   component: SectionToggle.Root,
 };
 
+function PlaygroundRender(args: any) {
+  const [open, setOpen] = useState(args.defaultOpen);
+
+  return (
+    <SectionToggle.SectionToggle
+      className='w-full max-w-[682px]'
+      title={args.title}
+      description={args.description}
+      open={open}
+      onOpenChange={setOpen}
+    >
+      {CONTENT}
+    </SectionToggle.SectionToggle>
+  );
+}
+
 export const Playground = {
   args: {
     title: 'Toggle Section Title',
@@ -31,91 +47,83 @@ export const Playground = {
     description: { control: 'text' },
     defaultOpen: { control: 'boolean' },
   },
-  render: (args: any) => {
-    const [open, setOpen] = useState(args.defaultOpen);
-
-    return (
-      <SectionToggle.SectionToggle
-        className='w-full max-w-[682px]'
-        title={args.title}
-        description={args.description}
-        open={open}
-        onOpenChange={setOpen}
-      >
-        {CONTENT}
-      </SectionToggle.SectionToggle>
-    );
-  },
+  render: (args: any) => <PlaygroundRender {...args} />,
 };
+
+function DefaultRender() {
+  const [open, setOpen] = useState(true);
+
+  return (
+    <SectionToggle.Root open={open} className='w-full max-w-[682px]'>
+      <SectionToggle.Header open={open}>
+        <SectionToggle.TextGroup>
+          <SectionToggle.Title>
+            Do you want to set a closing date for offers?
+          </SectionToggle.Title>
+          <SectionToggle.Description>
+            Set the end dates for when Offer will be accepted for the program.
+          </SectionToggle.Description>
+        </SectionToggle.TextGroup>
+        <Switch.Root
+          variant='neutral'
+          checked={open}
+          onCheckedChange={setOpen}
+        />
+      </SectionToggle.Header>
+      <SectionToggle.Content open={open}>{CONTENT}</SectionToggle.Content>
+    </SectionToggle.Root>
+  );
+}
 
 export const Default = {
-  render: () => {
-    const [open, setOpen] = useState(true);
-
-    return (
-      <SectionToggle.Root open={open} className='w-full max-w-[682px]'>
-        <SectionToggle.Header open={open}>
-          <SectionToggle.TextGroup>
-            <SectionToggle.Title>
-              Do you want to set a closing date for offers?
-            </SectionToggle.Title>
-            <SectionToggle.Description>
-              Set the end dates for when Offer will be accepted for the program.
-            </SectionToggle.Description>
-          </SectionToggle.TextGroup>
-          <Switch.Root
-            variant='neutral'
-            checked={open}
-            onCheckedChange={setOpen}
-          />
-        </SectionToggle.Header>
-        <SectionToggle.Content open={open}>{CONTENT}</SectionToggle.Content>
-      </SectionToggle.Root>
-    );
-  },
+  render: () => <DefaultRender />,
 };
+
+function CollapsedRender() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <SectionToggle.Root open={open} className='w-full max-w-[682px]'>
+      <SectionToggle.Header open={open}>
+        <SectionToggle.TextGroup>
+          <SectionToggle.Title>
+            Do you want to set a closing date for offers?
+          </SectionToggle.Title>
+          <SectionToggle.Description>
+            Set the end dates for when Offer will be accepted for the program.
+          </SectionToggle.Description>
+        </SectionToggle.TextGroup>
+        <Switch.Root
+          variant='neutral'
+          checked={open}
+          onCheckedChange={setOpen}
+        />
+      </SectionToggle.Header>
+      <SectionToggle.Content open={open}>{CONTENT}</SectionToggle.Content>
+    </SectionToggle.Root>
+  );
+}
 
 export const Collapsed = {
-  render: () => {
-    const [open, setOpen] = useState(false);
-
-    return (
-      <SectionToggle.Root open={open} className='w-full max-w-[682px]'>
-        <SectionToggle.Header open={open}>
-          <SectionToggle.TextGroup>
-            <SectionToggle.Title>
-              Do you want to set a closing date for offers?
-            </SectionToggle.Title>
-            <SectionToggle.Description>
-              Set the end dates for when Offer will be accepted for the program.
-            </SectionToggle.Description>
-          </SectionToggle.TextGroup>
-          <Switch.Root
-            variant='neutral'
-            checked={open}
-            onCheckedChange={setOpen}
-          />
-        </SectionToggle.Header>
-        <SectionToggle.Content open={open}>{CONTENT}</SectionToggle.Content>
-      </SectionToggle.Root>
-    );
-  },
+  render: () => <CollapsedRender />,
 };
 
-export const Composed = {
-  render: () => {
-    const [open, setOpen] = useState(true);
+function ComposedRender() {
+  const [open, setOpen] = useState(true);
 
-    return (
-      <SectionToggle.SectionToggle
-        className='w-full max-w-[682px]'
-        title='Do you want to set a closing date for offers?'
-        description='Set the end dates for when Offer will be accepted for the program.'
-        open={open}
-        onOpenChange={setOpen}
-      >
-        {CONTENT}
-      </SectionToggle.SectionToggle>
-    );
-  },
+  return (
+    <SectionToggle.SectionToggle
+      className='w-full max-w-[682px]'
+      title='Do you want to set a closing date for offers?'
+      description='Set the end dates for when Offer will be accepted for the program.'
+      open={open}
+      onOpenChange={setOpen}
+    >
+      {CONTENT}
+    </SectionToggle.SectionToggle>
+  );
+}
+
+export const Composed = {
+  render: () => <ComposedRender />,
 };

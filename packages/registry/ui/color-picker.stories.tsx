@@ -19,6 +19,38 @@ import * as Select from './select';
 
 export default { title: 'Form/Color Picker', component: ColorPicker.Root };
 
+function PlaygroundRender(args: any) {
+  const [color, setColor] = React.useState(
+    parseColor(args.defaultColor),
+  );
+
+  return (
+    <div className='flex w-[272px] flex-col gap-3 rounded-2xl bg-bg-white-0 p-4 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200'>
+      <ColorPicker.Root value={color} onChange={setColor}>
+        <ColorPicker.Area
+          colorSpace='hsl'
+          xChannel='saturation'
+          yChannel='lightness'
+        >
+          <ColorPicker.Thumb className='ring-static-white' />
+        </ColorPicker.Area>
+
+        <ColorPicker.Slider colorSpace='hsl' channel='hue'>
+          <ColorPicker.SliderTrack>
+            <ColorPicker.Thumb className='top-1/2' />
+          </ColorPicker.SliderTrack>
+        </ColorPicker.Slider>
+
+        <ColorPicker.Slider colorSpace='hsl' channel='alpha'>
+          <ColorPicker.SliderTrack>
+            <ColorPicker.Thumb className='top-1/2' />
+          </ColorPicker.SliderTrack>
+        </ColorPicker.Slider>
+      </ColorPicker.Root>
+    </div>
+  );
+}
+
 export const Playground = {
   args: {
     defaultColor: 'hsl(228, 100%, 60%)',
@@ -26,37 +58,7 @@ export const Playground = {
   argTypes: {
     defaultColor: { control: 'text' },
   },
-  render: (args: any) => {
-    const [color, setColor] = React.useState(
-      parseColor(args.defaultColor),
-    );
-
-    return (
-      <div className='flex w-[272px] flex-col gap-3 rounded-2xl bg-bg-white-0 p-4 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200'>
-        <ColorPicker.Root value={color} onChange={setColor}>
-          <ColorPicker.Area
-            colorSpace='hsl'
-            xChannel='saturation'
-            yChannel='lightness'
-          >
-            <ColorPicker.Thumb className='ring-static-white' />
-          </ColorPicker.Area>
-
-          <ColorPicker.Slider colorSpace='hsl' channel='hue'>
-            <ColorPicker.SliderTrack>
-              <ColorPicker.Thumb className='top-1/2' />
-            </ColorPicker.SliderTrack>
-          </ColorPicker.Slider>
-
-          <ColorPicker.Slider colorSpace='hsl' channel='alpha'>
-            <ColorPicker.SliderTrack>
-              <ColorPicker.Thumb className='top-1/2' />
-            </ColorPicker.SliderTrack>
-          </ColorPicker.Slider>
-        </ColorPicker.Root>
-      </div>
-    );
-  },
+  render: (args: any) => <PlaygroundRender {...args} />,
 };
 
 function EyeDropperButton() {
@@ -211,44 +213,48 @@ function ColorPickerPanel() {
   );
 }
 
-export const Demo = {
-  render: () => {
-    const [color, setColor] = React.useState(
-      parseColor('hsl(228, 100%, 60%)'),
-    );
+function DemoRender() {
+  const [color, setColor] = React.useState(
+    parseColor('hsl(228, 100%, 60%)'),
+  );
 
-    return (
-      <div className='flex w-[272px] flex-col gap-3 rounded-2xl bg-bg-white-0 p-4 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200'>
-        <ColorPicker.Root value={color} onChange={setColor}>
-          <ColorPickerPanel />
-        </ColorPicker.Root>
-      </div>
-    );
-  },
+  return (
+    <div className='flex w-[272px] flex-col gap-3 rounded-2xl bg-bg-white-0 p-4 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200'>
+      <ColorPicker.Root value={color} onChange={setColor}>
+        <ColorPickerPanel />
+      </ColorPicker.Root>
+    </div>
+  );
+}
+
+export const Demo = {
+  render: () => <DemoRender />,
 };
 
-export const PopoverDemo = {
-  render: () => {
-    const [color, setColor] = React.useState(
-      parseColor('hsl(228, 100%, 60%)'),
-    );
+function PopoverDemoRender() {
+  const [color, setColor] = React.useState(
+    parseColor('hsl(228, 100%, 60%)'),
+  );
 
-    return (
-      <ColorPicker.Root value={color} onChange={setColor}>
-        <Popover.Root>
-          <Popover.Trigger asChild>
-            <Button.Root variant='neutral' mode='stroke'>
-              <Button.Icon as={ColorPicker.Swatch} className='rounded' />
-              Pick Color
-            </Button.Root>
-          </Popover.Trigger>
-          <Popover.Content className='flex w-[272px] flex-col gap-3 rounded-2xl bg-bg-white-0 p-4 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200'>
-            <ColorPickerPanel />
-          </Popover.Content>
-        </Popover.Root>
-      </ColorPicker.Root>
-    );
-  },
+  return (
+    <ColorPicker.Root value={color} onChange={setColor}>
+      <Popover.Root>
+        <Popover.Trigger asChild>
+          <Button.Root variant='neutral' mode='stroke'>
+            <Button.Icon as={ColorPicker.Swatch} className='rounded' />
+            Pick Color
+          </Button.Root>
+        </Popover.Trigger>
+        <Popover.Content className='flex w-[272px] flex-col gap-3 rounded-2xl bg-bg-white-0 p-4 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200'>
+          <ColorPickerPanel />
+        </Popover.Content>
+      </Popover.Root>
+    </ColorPicker.Root>
+  );
+}
+
+export const PopoverDemo = {
+  render: () => <PopoverDemoRender />,
 };
 
 function WithFormFieldRender() {

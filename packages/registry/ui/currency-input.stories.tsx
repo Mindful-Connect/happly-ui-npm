@@ -40,25 +40,26 @@ export const Default = {
   ),
 };
 
-export const Controlled = {
-  render: () => {
-    const [amount, setAmount] = React.useState('');
-    const [currency, setCurrency] = React.useState('USD');
+function ControlledRender() {
+  const [amount, setAmount] = React.useState('');
+  const [currency, setCurrency] = React.useState('USD');
 
-    return (
-      <div className='w-full max-w-[300px]'>
-        <CurrencyInput.Root
-          value={amount}
-          onValueChange={setAmount}
-          currency={currency}
-          onCurrencyChange={setCurrency}
-        />
-        <p className='mt-2 text-paragraph-xs text-text-sub-600'>
-          Amount: {amount || '—'} | Currency: {currency}
-        </p>
-      </div>
-    );
-  },
+  return (
+    <div className='w-full max-w-[300px]'>
+      <CurrencyInput.Root
+        value={amount}
+        onValueChange={setAmount}
+        currency={currency}
+        onCurrencyChange={setCurrency}
+      />
+      <p className='mt-2 text-paragraph-xs text-text-sub-600'>
+        Amount: {amount || '—'} | Currency: {currency}
+      </p>
+    </div>
+  );
+}
+export const Controlled = {
+  render: () => <ControlledRender />,
 };
 
 export const Sizes = {

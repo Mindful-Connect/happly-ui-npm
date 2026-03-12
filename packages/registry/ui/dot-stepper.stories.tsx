@@ -7,6 +7,22 @@ import * as DotStepper from './dot-stepper';
 
 export default { title: 'Navigation/Dot Stepper', component: DotStepper.Root };
 
+function PlaygroundRender(args: any) {
+  const [activeStep, setActiveStep] = React.useState(0);
+
+  return (
+    <DotStepper.Root size={args.size}>
+      {Array.from({ length: args.steps }, (_, idx) => (
+        <DotStepper.Item
+          key={idx}
+          aria-label={`Go to step ${idx}`}
+          active={activeStep === idx}
+          onClick={() => setActiveStep(idx)}
+        />
+      ))}
+    </DotStepper.Root>
+  );
+}
 export const Playground = {
   args: {
     size: 'small',
@@ -21,12 +37,16 @@ export const Playground = {
       control: { type: 'range', min: 2, max: 8, step: 1 },
     },
   },
-  render: (args: any) => {
-    const [activeStep, setActiveStep] = React.useState(0);
+  render: (args: any) => <PlaygroundRender {...args} />,
+};
 
-    return (
-      <DotStepper.Root size={args.size}>
-        {Array.from({ length: args.steps }, (_, idx) => (
+function DemoRender() {
+  const [activeStep, setActiveStep] = React.useState(0);
+
+  return (
+    <div className='flex flex-col items-center gap-6'>
+      <DotStepper.Root size='small'>
+        {Array.from({ length: 4 }, (_, i) => i).map((_, idx) => (
           <DotStepper.Item
             key={idx}
             aria-label={`Go to step ${idx}`}
@@ -35,40 +55,22 @@ export const Playground = {
           />
         ))}
       </DotStepper.Root>
-    );
-  },
-};
 
+      <DotStepper.Root size='xsmall'>
+        {Array.from({ length: 4 }, (_, i) => i).map((_, idx) => (
+          <DotStepper.Item
+            key={idx}
+            aria-label={`Go to step ${idx}`}
+            active={activeStep === idx}
+            onClick={() => setActiveStep(idx)}
+          />
+        ))}
+      </DotStepper.Root>
+    </div>
+  );
+}
 export const Demo = {
-  render: () => {
-    const [activeStep, setActiveStep] = React.useState(0);
-
-    return (
-      <div className='flex flex-col items-center gap-6'>
-        <DotStepper.Root size='small'>
-          {Array.from({ length: 4 }, (_, i) => i).map((_, idx) => (
-            <DotStepper.Item
-              key={idx}
-              aria-label={`Go to step ${idx}`}
-              active={activeStep === idx}
-              onClick={() => setActiveStep(idx)}
-            />
-          ))}
-        </DotStepper.Root>
-
-        <DotStepper.Root size='xsmall'>
-          {Array.from({ length: 4 }, (_, i) => i).map((_, idx) => (
-            <DotStepper.Item
-              key={idx}
-              aria-label={`Go to step ${idx}`}
-              active={activeStep === idx}
-              onClick={() => setActiveStep(idx)}
-            />
-          ))}
-        </DotStepper.Root>
-      </div>
-    );
-  },
+  render: () => <DemoRender />,
 };
 
 const STEPS = [
@@ -78,39 +80,40 @@ const STEPS = [
   { id: '3', label: 'Step 4', content: 'content 4' },
 ];
 
-export const WithRadixTabs = {
-  render: () => {
-    const [activeStep, setActiveStep] = React.useState(STEPS[0].id);
+function WithRadixTabsRender() {
+  const [activeStep, setActiveStep] = React.useState(STEPS[0].id);
 
-    return (
-      <TabsPrimitives.Root value={activeStep} onValueChange={setActiveStep}>
-        <DotStepper.Root asChild>
-          <TabsPrimitives.List>
-            {STEPS.map((step) => (
-              <DotStepper.Item
-                key={step.id}
-                aria-label={`Go to ${step.label}`}
-                active={activeStep === step.id}
-                asChild
-              >
-                <TabsPrimitives.Trigger value={step.id} />
-              </DotStepper.Item>
-            ))}
-          </TabsPrimitives.List>
-        </DotStepper.Root>
-
-        <div className='mt-4'>
+  return (
+    <TabsPrimitives.Root value={activeStep} onValueChange={setActiveStep}>
+      <DotStepper.Root asChild>
+        <TabsPrimitives.List>
           {STEPS.map((step) => (
-            <TabsPrimitives.Content
+            <DotStepper.Item
               key={step.id}
-              value={step.id}
-              className='text-paragraph-sm text-text-sub-600'
+              aria-label={`Go to ${step.label}`}
+              active={activeStep === step.id}
+              asChild
             >
-              {step.content}
-            </TabsPrimitives.Content>
+              <TabsPrimitives.Trigger value={step.id} />
+            </DotStepper.Item>
           ))}
-        </div>
-      </TabsPrimitives.Root>
-    );
-  },
+        </TabsPrimitives.List>
+      </DotStepper.Root>
+
+      <div className='mt-4'>
+        {STEPS.map((step) => (
+          <TabsPrimitives.Content
+            key={step.id}
+            value={step.id}
+            className='text-paragraph-sm text-text-sub-600'
+          >
+            {step.content}
+          </TabsPrimitives.Content>
+        ))}
+      </div>
+    </TabsPrimitives.Root>
+  );
+}
+export const WithRadixTabs = {
+  render: () => <WithRadixTabsRender />,
 };

@@ -5,6 +5,20 @@ import { LocationInput, type LocationRequest } from './location-input';
 
 export default { title: 'Needs Refactor/Location Input', component: LocationInput };
 
+function PlaygroundRender(args: any) {
+  const [location, setLocation] = useState<LocationRequest>(null);
+
+  return (
+    <div style={{ maxWidth: '672px', width: '100%' }}>
+      <LocationInput
+        location={location}
+        setLocation={setLocation}
+        placeholder={args.placeholder}
+      />
+    </div>
+  );
+}
+
 export const Playground = {
   args: {
     placeholder: 'Select a location...',
@@ -12,29 +26,19 @@ export const Playground = {
   argTypes: {
     placeholder: { control: 'text' },
   },
-  render: (args: any) => {
-    const [location, setLocation] = useState<LocationRequest>(null);
-
-    return (
-      <div style={{ maxWidth: '672px', width: '100%' }}>
-        <LocationInput
-          location={location}
-          setLocation={setLocation}
-          placeholder={args.placeholder}
-        />
-      </div>
-    );
-  },
+  render: (args: any) => <PlaygroundRender {...args} />,
 };
 
-export const Default = {
-  render: () => {
-    const [location, setLocation] = useState<LocationRequest>(null);
+function DefaultRender() {
+  const [location, setLocation] = useState<LocationRequest>(null);
 
-    return (
-      <div style={{ maxWidth: '672px', width: '100%' }}>
-        <LocationInput location={location} setLocation={setLocation} />
-      </div>
-    );
-  },
+  return (
+    <div style={{ maxWidth: '672px', width: '100%' }}>
+      <LocationInput location={location} setLocation={setLocation} />
+    </div>
+  );
+}
+
+export const Default = {
+  render: () => <DefaultRender />,
 };

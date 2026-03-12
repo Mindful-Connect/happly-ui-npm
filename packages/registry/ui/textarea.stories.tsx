@@ -41,22 +41,24 @@ export const Demo = {
   ),
 };
 
-export const InteractiveCounter = {
-  render: () => {
-    const [value, setValue] = React.useState('');
+function InteractiveCounterRender() {
+  const [value, setValue] = React.useState('');
 
-    return (
-      <div className='w-full min-w-[480px]'>
-        <Textarea.Root
-          placeholder='Jot down your thoughts...'
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        >
-          <Textarea.CharCounter current={value.length} max={200} />
-        </Textarea.Root>
-      </div>
-    );
-  },
+  return (
+    <div className='w-full min-w-[480px]'>
+      <Textarea.Root
+        placeholder='Jot down your thoughts...'
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      >
+        <Textarea.CharCounter current={value.length} max={200} />
+      </Textarea.Root>
+    </div>
+  );
+}
+
+export const InteractiveCounter = {
+  render: () => <InteractiveCounterRender />,
 };
 
 export const HasError = {

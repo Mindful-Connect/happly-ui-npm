@@ -7,6 +7,21 @@ import * as FormField from './form-field';
 
 export default { title: 'Form/Digit Input', component: DigitInput.Root };
 
+function PlaygroundRender(args: any) {
+  const [value, setValue] = React.useState('');
+
+  return (
+    <div className='w-full min-w-[320px] max-w-96'>
+      <DigitInput.Root
+        numInputs={args.numInputs}
+        disabled={args.disabled}
+        hasError={args.hasError}
+        onChange={(v: string) => setValue(v)}
+        value={value}
+      />
+    </div>
+  );
+}
 export const Playground = {
   args: {
     numInputs: 4,
@@ -18,88 +33,78 @@ export const Playground = {
     disabled: { control: 'boolean' },
     hasError: { control: 'boolean' },
   },
-  render: (args: any) => {
-    const [value, setValue] = React.useState('');
-
-    return (
-      <div className='w-full min-w-[320px] max-w-96'>
-        <DigitInput.Root
-          numInputs={args.numInputs}
-          disabled={args.disabled}
-          hasError={args.hasError}
-          onChange={(v: string) => setValue(v)}
-          value={value}
-        />
-      </div>
-    );
-  },
+  render: (args: any) => <PlaygroundRender {...args} />,
 };
 
+function DemoRender() {
+  const [value, setValue] = React.useState('');
+
+  return (
+    <div className='w-full min-w-[320px] max-w-96'>
+      <DigitInput.Root
+        numInputs={4}
+        onChange={(v) => setValue(v)}
+        value={value}
+      />
+    </div>
+  );
+}
 export const Demo = {
-  render: () => {
-    const [value, setValue] = React.useState('');
-
-    return (
-      <div className='w-full min-w-[320px] max-w-96'>
-        <DigitInput.Root
-          numInputs={4}
-          onChange={(v) => setValue(v)}
-          value={value}
-        />
-      </div>
-    );
-  },
+  render: () => <DemoRender />,
 };
 
+function HasErrorRender() {
+  const [value, setValue] = React.useState('');
+
+  return (
+    <div className='w-full min-w-[320px] max-w-96'>
+      <DigitInput.Root
+        hasError
+        numInputs={4}
+        onChange={(v) => setValue(v)}
+        value={value}
+      />
+    </div>
+  );
+}
 export const HasError = {
-  render: () => {
-    const [value, setValue] = React.useState('');
-
-    return (
-      <div className='w-full min-w-[320px] max-w-96'>
-        <DigitInput.Root
-          hasError
-          numInputs={4}
-          onChange={(v) => setValue(v)}
-          value={value}
-        />
-      </div>
-    );
-  },
+  render: () => <HasErrorRender />,
 };
 
+function DisabledRender() {
+  const [value, setValue] = React.useState('');
+
+  return (
+    <div className='w-full min-w-[320px] max-w-96'>
+      <DigitInput.Root
+        disabled
+        numInputs={4}
+        onChange={(v) => setValue(v)}
+        value={value}
+      />
+    </div>
+  );
+}
 export const Disabled = {
-  render: () => {
-    const [value, setValue] = React.useState('');
-
-    return (
-      <div className='w-full min-w-[320px] max-w-96'>
-        <DigitInput.Root
-          disabled
-          numInputs={4}
-          onChange={(v) => setValue(v)}
-          value={value}
-        />
-      </div>
-    );
-  },
+  render: () => <DisabledRender />,
 };
 
-export const Square = {
-  render: () => {
-    const [value, setValue] = React.useState('');
+function SquareRender() {
+  const [value, setValue] = React.useState('');
 
-    return (
-      <div className='w-full min-w-[320px] max-w-96'>
-        <DigitInput.Root
-          numInputs={4}
-          onChange={(v) => setValue(v)}
-          value={value}
-          className='justify-center [&>input]:aspect-square [&>input]:w-auto'
-        />
-      </div>
-    );
-  },
+  return (
+    <div className='w-full min-w-[320px] max-w-96'>
+      <DigitInput.Root
+        numInputs={4}
+        onChange={(v) => setValue(v)}
+        value={value}
+        className='justify-center [&>input]:aspect-square [&>input]:w-auto'
+      />
+    </div>
+  );
+}
+export const Square = {
+  render: () => <SquareRender />,
 };
 
 export const WithFormField = {

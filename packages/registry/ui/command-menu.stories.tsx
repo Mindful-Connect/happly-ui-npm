@@ -35,68 +35,69 @@ export const Playground = {
       options: ['small', 'medium'],
     },
   },
-  render: (args: any) => {
-    const [open, setOpen] = React.useState(false);
-
-    return (
-      <>
-        <Button.Root
-          variant='neutral'
-          mode='stroke'
-          onClick={() => setOpen(true)}
-        >
-          Open Command Menu
-        </Button.Root>
-        <CommandMenu.Dialog open={open} onOpenChange={setOpen}>
-          <div className='group/cmd-input flex h-12 w-full items-center gap-2 bg-bg-white-0 px-5'>
-            <RiSearch2Line className='size-5 shrink-0 text-text-soft-400 transition duration-200 ease-out group-focus-within/cmd-input:text-primary-base' />
-            <CommandMenu.Input placeholder={args.placeholder} />
-            <CompactButton.Root
-              size='medium'
-              variant='ghost'
-              onClick={() => setOpen(false)}
-            >
-              <CompactButton.Icon as={RiCloseLine} />
-            </CompactButton.Root>
-          </div>
-          <CommandMenu.List>
-            <CommandMenu.Group heading='Results'>
-              <CommandMenu.Item size={args.itemSize}>
-                <CommandMenu.ItemIcon as={RiSparklingLine} />
-                First item
-              </CommandMenu.Item>
-              <CommandMenu.Item size={args.itemSize}>
-                <CommandMenu.ItemIcon as={RiHistoryLine} />
-                Second item
-              </CommandMenu.Item>
-              <CommandMenu.Item size={args.itemSize}>
-                <CommandMenu.ItemIcon as={RiBankCardLine} />
-                Third item
-              </CommandMenu.Item>
-            </CommandMenu.Group>
-          </CommandMenu.List>
-        </CommandMenu.Dialog>
-      </>
-    );
-  },
+  render: (args: any) => <PlaygroundRender {...args} />,
 };
 
-export const Demo = {
-  render: () => {
-    const [open, setOpen] = React.useState(false);
+function PlaygroundRender(args: any) {
+  const [open, setOpen] = React.useState(false);
 
-    return (
-      <>
-        <Button.Root
-          variant='neutral'
-          mode='stroke'
-          onClick={() => setOpen(true)}
-        >
-          Open Command Menu
-        </Button.Root>
-        <CommandMenu.Dialog open={open} onOpenChange={setOpen}>
-          {/* Input wrapper */}
-          <div className='group/cmd-input flex h-12 w-full items-center gap-2 bg-bg-white-0 px-5'>
+  return (
+    <>
+      <Button.Root
+        variant='neutral'
+        mode='stroke'
+        onClick={() => setOpen(true)}
+      >
+        Open Command Menu
+      </Button.Root>
+      <CommandMenu.Dialog open={open} onOpenChange={setOpen}>
+        <div className='group/cmd-input flex h-12 w-full items-center gap-2 bg-bg-white-0 px-5'>
+          <RiSearch2Line className='size-5 shrink-0 text-text-soft-400 transition duration-200 ease-out group-focus-within/cmd-input:text-primary-base' />
+          <CommandMenu.Input placeholder={args.placeholder} />
+          <CompactButton.Root
+            size='medium'
+            variant='ghost'
+            onClick={() => setOpen(false)}
+          >
+            <CompactButton.Icon as={RiCloseLine} />
+          </CompactButton.Root>
+        </div>
+        <CommandMenu.List>
+          <CommandMenu.Group heading='Results'>
+            <CommandMenu.Item size={args.itemSize}>
+              <CommandMenu.ItemIcon as={RiSparklingLine} />
+              First item
+            </CommandMenu.Item>
+            <CommandMenu.Item size={args.itemSize}>
+              <CommandMenu.ItemIcon as={RiHistoryLine} />
+              Second item
+            </CommandMenu.Item>
+            <CommandMenu.Item size={args.itemSize}>
+              <CommandMenu.ItemIcon as={RiBankCardLine} />
+              Third item
+            </CommandMenu.Item>
+          </CommandMenu.Group>
+        </CommandMenu.List>
+      </CommandMenu.Dialog>
+    </>
+  );
+}
+
+function DemoRender() {
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <>
+      <Button.Root
+        variant='neutral'
+        mode='stroke'
+        onClick={() => setOpen(true)}
+      >
+        Open Command Menu
+      </Button.Root>
+      <CommandMenu.Dialog open={open} onOpenChange={setOpen}>
+        {/* Input wrapper */}
+        <div className='group/cmd-input flex h-12 w-full items-center gap-2 bg-bg-white-0 px-5'>
             <RiSearch2Line className='size-5 shrink-0 text-text-soft-400 transition duration-200 ease-out group-focus-within/cmd-input:text-primary-base' />
             <CommandMenu.Input placeholder='Search or jump to' />
             <Kbd.Root>
@@ -237,5 +238,8 @@ export const Demo = {
         </CommandMenu.Dialog>
       </>
     );
-  },
+}
+
+export const Demo = {
+  render: () => <DemoRender />,
 };

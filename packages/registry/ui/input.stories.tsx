@@ -206,44 +206,46 @@ export const WithKbd = {
   ),
 };
 
+function PasswordRender() {
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  return (
+    <div className='flex w-full max-w-[300px] flex-col gap-6'>
+      <FormField.Root>
+        <Label.Root htmlFor='password1'>Password</Label.Root>
+
+        <Input.Root>
+          <Input.Wrapper>
+            <Input.Icon as={RiLock2Line} />
+            <Input.Input
+              id='password1'
+              type={showPassword ? 'text' : 'password'}
+              placeholder='••••••••••'
+            />
+            <button
+              type='button'
+              onClick={() => setShowPassword((s) => !s)}
+            >
+              {showPassword ? (
+                <RiEyeOffLine className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+              ) : (
+                <RiEyeLine className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+              )}
+            </button>
+          </Input.Wrapper>
+        </Input.Root>
+
+        <Hint.Root>
+          <Hint.Icon as={RiInformationFill} />
+          This is a hint text to help user.
+        </Hint.Root>
+      </FormField.Root>
+    </div>
+  );
+}
+
 export const Password = {
-  render: () => {
-    const [showPassword, setShowPassword] = React.useState(false);
-
-    return (
-      <div className='flex w-full max-w-[300px] flex-col gap-6'>
-        <FormField.Root>
-          <Label.Root htmlFor='password1'>Password</Label.Root>
-
-          <Input.Root>
-            <Input.Wrapper>
-              <Input.Icon as={RiLock2Line} />
-              <Input.Input
-                id='password1'
-                type={showPassword ? 'text' : 'password'}
-                placeholder='••••••••••'
-              />
-              <button
-                type='button'
-                onClick={() => setShowPassword((s) => !s)}
-              >
-                {showPassword ? (
-                  <RiEyeOffLine className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
-                ) : (
-                  <RiEyeLine className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
-                )}
-              </button>
-            </Input.Wrapper>
-          </Input.Root>
-
-          <Hint.Root>
-            <Hint.Icon as={RiInformationFill} />
-            This is a hint text to help user.
-          </Hint.Root>
-        </FormField.Root>
-      </div>
-    );
-  },
+  render: () => <PasswordRender />,
 };
 
 const defaultLevelColors: Record<number, string> = {
@@ -314,97 +316,99 @@ function LevelBarItem({
   );
 }
 
-export const PasswordWithLevel = {
-  render: () => {
-    const [showPassword, setShowPassword] = React.useState(false);
-    const [newPassword, setNewPassword] = React.useState('');
+function PasswordWithLevelRender() {
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [newPassword, setNewPassword] = React.useState('');
 
-    const [criteria, setCriteria] = React.useState({
-      length: false,
-      uppercase: false,
-      number: false,
+  const [criteria, setCriteria] = React.useState({
+    length: false,
+    uppercase: false,
+    number: false,
+  });
+
+  const handleNewPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const value = e.target.value;
+    setNewPassword(value);
+    setCriteria({
+      length: value.length >= 8,
+      uppercase: /[A-Z]/.test(value),
+      number: /[0-9]/.test(value),
     });
+  };
 
-    const handleNewPasswordChange = (
-      e: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-      const value = e.target.value;
-      setNewPassword(value);
-      setCriteria({
-        length: value.length >= 8,
-        uppercase: /[A-Z]/.test(value),
-        number: /[0-9]/.test(value),
-      });
-    };
+  const countTrueCriteria = (c: Record<string, boolean>): number => {
+    return Object.values(c).filter((v) => v).length;
+  };
 
-    const countTrueCriteria = (c: Record<string, boolean>): number => {
-      return Object.values(c).filter((v) => v).length;
-    };
+  const trueCriteriaCount = countTrueCriteria(criteria);
 
-    const trueCriteriaCount = countTrueCriteria(criteria);
+  return (
+    <div className='flex w-full max-w-[300px] flex-col gap-6'>
+      <FormField.Root>
+        <Label.Root htmlFor='password-with-level'>New Password</Label.Root>
 
-    return (
-      <div className='flex w-full max-w-[300px] flex-col gap-6'>
-        <FormField.Root>
-          <Label.Root htmlFor='password-with-level'>New Password</Label.Root>
-
-          <Input.Root>
-            <Input.Wrapper>
-              <Input.Icon as={RiLock2Line} />
-              <Input.Input
-                id='password-with-level'
-                type={showPassword ? 'text' : 'password'}
-                placeholder='••••••••••'
-                value={newPassword}
-                onChange={handleNewPasswordChange}
-              />
-              <button
-                type='button'
-                onClick={() => setShowPassword((s) => !s)}
-              >
-                {showPassword ? (
-                  <RiEyeOffLine className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
-                ) : (
-                  <RiEyeLine className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
-                )}
-              </button>
-            </Input.Wrapper>
-          </Input.Root>
-
-          <div className='flex flex-col gap-2 pt-1.5'>
-            <LevelBar levels={3} level={trueCriteriaCount} />
-            <div className='text-paragraph-xs text-text-sub-600'>
-              Must contain at least;
-            </div>
-            <div className='flex items-center gap-1.5 text-paragraph-xs text-text-sub-600'>
-              {criteria.uppercase ? (
-                <RiCheckboxCircleFill className='size-4 shrink-0 text-success-base' />
+        <Input.Root>
+          <Input.Wrapper>
+            <Input.Icon as={RiLock2Line} />
+            <Input.Input
+              id='password-with-level'
+              type={showPassword ? 'text' : 'password'}
+              placeholder='••••••••••'
+              value={newPassword}
+              onChange={handleNewPasswordChange}
+            />
+            <button
+              type='button'
+              onClick={() => setShowPassword((s) => !s)}
+            >
+              {showPassword ? (
+                <RiEyeOffLine className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
               ) : (
-                <RiCloseCircleFill className='size-4 shrink-0 text-text-soft-400' />
+                <RiEyeLine className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
               )}
-              At least 1 uppercase
-            </div>
-            <div className='flex items-center gap-1.5 text-paragraph-xs text-text-sub-600'>
-              {criteria.number ? (
-                <RiCheckboxCircleFill className='size-4 shrink-0 text-success-base' />
-              ) : (
-                <RiCloseCircleFill className='size-4 shrink-0 text-text-soft-400' />
-              )}
-              At least 1 number
-            </div>
-            <div className='flex items-center gap-1.5 text-paragraph-xs text-text-sub-600'>
-              {criteria.length ? (
-                <RiCheckboxCircleFill className='size-4 shrink-0 text-success-base' />
-              ) : (
-                <RiCloseCircleFill className='size-4 shrink-0 text-text-soft-400' />
-              )}
-              At least 8 characters
-            </div>
+            </button>
+          </Input.Wrapper>
+        </Input.Root>
+
+        <div className='flex flex-col gap-2 pt-1.5'>
+          <LevelBar levels={3} level={trueCriteriaCount} />
+          <div className='text-paragraph-xs text-text-sub-600'>
+            Must contain at least;
           </div>
-        </FormField.Root>
-      </div>
-    );
-  },
+          <div className='flex items-center gap-1.5 text-paragraph-xs text-text-sub-600'>
+            {criteria.uppercase ? (
+              <RiCheckboxCircleFill className='size-4 shrink-0 text-success-base' />
+            ) : (
+              <RiCloseCircleFill className='size-4 shrink-0 text-text-soft-400' />
+            )}
+            At least 1 uppercase
+          </div>
+          <div className='flex items-center gap-1.5 text-paragraph-xs text-text-sub-600'>
+            {criteria.number ? (
+              <RiCheckboxCircleFill className='size-4 shrink-0 text-success-base' />
+            ) : (
+              <RiCloseCircleFill className='size-4 shrink-0 text-text-soft-400' />
+            )}
+            At least 1 number
+          </div>
+          <div className='flex items-center gap-1.5 text-paragraph-xs text-text-sub-600'>
+            {criteria.length ? (
+              <RiCheckboxCircleFill className='size-4 shrink-0 text-success-base' />
+            ) : (
+              <RiCloseCircleFill className='size-4 shrink-0 text-text-soft-400' />
+            )}
+            At least 8 characters
+          </div>
+        </div>
+      </FormField.Root>
+    </div>
+  );
+}
+
+export const PasswordWithLevel = {
+  render: () => <PasswordWithLevelRender />,
 };
 
 export const Disabled = {
@@ -464,51 +468,53 @@ export const WithButton = {
   ),
 };
 
+function WithTagsRender() {
+  const [tags, setTags] = React.useState(['Berlin', 'London', 'Paris']);
+  const [inputValue, setInputValue] = React.useState('');
+
+  const addTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && inputValue.trim()) {
+      setTags([...tags, inputValue.trim()]);
+      setInputValue('');
+    }
+  };
+
+  const removeTag = (tag: string) => {
+    setTags(tags.filter((t) => t !== tag));
+  };
+
+  return (
+    <div className='flex w-full max-w-[300px] flex-col gap-6'>
+      <FormField.Root>
+        <Label.Root htmlFor='tags'>Tag Input</Label.Root>
+
+        <Input.Root>
+          <Input.Wrapper>
+            <Input.Input
+              id='tags'
+              placeholder='Add tags...'
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={addTag}
+            />
+          </Input.Wrapper>
+        </Input.Root>
+
+        <div className='mt-2 flex flex-wrap gap-2'>
+          {tags.map((tag) => (
+            <Tag.Root key={tag}>
+              {tag}
+              <Tag.DismissButton onClick={() => removeTag(tag)} />
+            </Tag.Root>
+          ))}
+        </div>
+      </FormField.Root>
+    </div>
+  );
+}
+
 export const WithTags = {
-  render: () => {
-    const [tags, setTags] = React.useState(['Berlin', 'London', 'Paris']);
-    const [inputValue, setInputValue] = React.useState('');
-
-    const addTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter' && inputValue.trim()) {
-        setTags([...tags, inputValue.trim()]);
-        setInputValue('');
-      }
-    };
-
-    const removeTag = (tag: string) => {
-      setTags(tags.filter((t) => t !== tag));
-    };
-
-    return (
-      <div className='flex w-full max-w-[300px] flex-col gap-6'>
-        <FormField.Root>
-          <Label.Root htmlFor='tags'>Tag Input</Label.Root>
-
-          <Input.Root>
-            <Input.Wrapper>
-              <Input.Input
-                id='tags'
-                placeholder='Add tags...'
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={addTag}
-              />
-            </Input.Wrapper>
-          </Input.Root>
-
-          <div className='mt-2 flex flex-wrap gap-2'>
-            {tags.map((tag) => (
-              <Tag.Root key={tag}>
-                {tag}
-                <Tag.DismissButton onClick={() => removeTag(tag)} />
-              </Tag.Root>
-            ))}
-          </div>
-        </FormField.Root>
-      </div>
-    );
-  },
+  render: () => <WithTagsRender />,
 };
 
 export const DateFieldStory = {
@@ -540,46 +546,48 @@ export const DateFieldStory = {
   },
 };
 
+function PaymentInputRender() {
+  const { getCardNumberProps, meta } = usePaymentInputs();
+  const { cardType } = meta;
+
+  const cardIcon = React.useMemo(() => {
+    if (cardType?.displayName === 'Visa') {
+      return '/images/payment-methods/visa.svg';
+    }
+    if (cardType?.displayName === 'Mastercard') {
+      return '/images/payment-methods/mastercard.svg';
+    }
+    if (cardType?.displayName === 'American Express') {
+      return '/images/payment-methods/amex.svg';
+    }
+    return '/images/payment-methods/placeholder.svg';
+  }, [cardType?.displayName]);
+
+  return (
+    <div className='w-full max-w-[300px]'>
+      <FormField.Root>
+        <Label.Root htmlFor='card-number'>
+          Card Number <Label.Asterisk />
+        </Label.Root>
+
+        <Input.Root>
+          <Input.Wrapper className='pr-2'>
+            <Input.Icon as={RiBankCardLine} />
+            <Input.Input
+              {...getCardNumberProps()}
+              id='card-number'
+              placeholder='0000 0000 0000 0000'
+            />
+            <img src={cardIcon} alt='' className='h-6 w-8 shrink-0' />
+          </Input.Wrapper>
+        </Input.Root>
+      </FormField.Root>
+    </div>
+  );
+}
+
 export const PaymentInput = {
-  render: () => {
-    const { getCardNumberProps, meta } = usePaymentInputs();
-    const { cardType } = meta;
-
-    const cardIcon = React.useMemo(() => {
-      if (cardType?.displayName === 'Visa') {
-        return '/images/payment-methods/visa.svg';
-      }
-      if (cardType?.displayName === 'Mastercard') {
-        return '/images/payment-methods/mastercard.svg';
-      }
-      if (cardType?.displayName === 'American Express') {
-        return '/images/payment-methods/amex.svg';
-      }
-      return '/images/payment-methods/placeholder.svg';
-    }, [cardType?.displayName]);
-
-    return (
-      <div className='w-full max-w-[300px]'>
-        <FormField.Root>
-          <Label.Root htmlFor='card-number'>
-            Card Number <Label.Asterisk />
-          </Label.Root>
-
-          <Input.Root>
-            <Input.Wrapper className='pr-2'>
-              <Input.Icon as={RiBankCardLine} />
-              <Input.Input
-                {...getCardNumberProps()}
-                id='card-number'
-                placeholder='0000 0000 0000 0000'
-              />
-              <img src={cardIcon} alt='' className='h-6 w-8 shrink-0' />
-            </Input.Wrapper>
-          </Input.Root>
-        </FormField.Root>
-      </div>
-    );
-  },
+  render: () => <PaymentInputRender />,
 };
 
 const currencies = [
@@ -693,35 +701,37 @@ export const CounterInput = {
   },
 };
 
+function CompositionRender() {
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  return (
+    <div className='flex w-full max-w-[300px] flex-col gap-6'>
+      <FormField.Root>
+        <Label.Root htmlFor='password2'>Password</Label.Root>
+
+        <Input.Composed
+          leadingIcon={RiLock2Line}
+          id='password2'
+          type={showPassword ? 'text' : 'password'}
+          placeholder='••••••••••'
+          inlineTrailingNode={
+            <button
+              type='button'
+              onClick={() => setShowPassword((s) => !s)}
+            >
+              {showPassword ? (
+                <RiEyeOffLine className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+              ) : (
+                <RiEyeLine className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+              )}
+            </button>
+          }
+        />
+      </FormField.Root>
+    </div>
+  );
+}
+
 export const Composition = {
-  render: () => {
-    const [showPassword, setShowPassword] = React.useState(false);
-
-    return (
-      <div className='flex w-full max-w-[300px] flex-col gap-6'>
-        <FormField.Root>
-          <Label.Root htmlFor='password2'>Password</Label.Root>
-
-          <Input.Composed
-            leadingIcon={RiLock2Line}
-            id='password2'
-            type={showPassword ? 'text' : 'password'}
-            placeholder='••••••••••'
-            inlineTrailingNode={
-              <button
-                type='button'
-                onClick={() => setShowPassword((s) => !s)}
-              >
-                {showPassword ? (
-                  <RiEyeOffLine className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
-                ) : (
-                  <RiEyeLine className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
-                )}
-              </button>
-            }
-          />
-        </FormField.Root>
-      </div>
-    );
-  },
+  render: () => <CompositionRender />,
 };

@@ -44,19 +44,21 @@ export const Default = {
   ),
 };
 
-export const Controlled = {
-  render: () => {
-    const [tags, setTags] = React.useState(['React', 'TypeScript']);
+function ControlledRender() {
+  const [tags, setTags] = React.useState(['React', 'TypeScript']);
 
-    return (
-      <div className='w-full max-w-[300px]'>
-        <TagInput.Root value={tags} onValueChange={setTags} />
-        <p className='mt-2 text-paragraph-xs text-text-sub-600'>
-          Tags: {tags.join(', ')}
-        </p>
-      </div>
-    );
-  },
+  return (
+    <div className='w-full max-w-[300px]'>
+      <TagInput.Root value={tags} onValueChange={setTags} />
+      <p className='mt-2 text-paragraph-xs text-text-sub-600'>
+        Tags: {tags.join(', ')}
+      </p>
+    </div>
+  );
+}
+
+export const Controlled = {
+  render: () => <ControlledRender />,
 };
 
 export const MaxTags = {

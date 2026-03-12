@@ -44,27 +44,29 @@ export const Default = {
   ),
 };
 
+function WithStrengthRender() {
+  const [value, setValue] = React.useState('');
+
+  const criteria: PasswordCriterion[] = [
+    { key: 'uppercase', label: 'At least 1 uppercase', met: /[A-Z]/.test(value) },
+    { key: 'number', label: 'At least 1 number', met: /[0-9]/.test(value) },
+    { key: 'length', label: 'At least 8 characters', met: value.length >= 8 },
+  ];
+
+  return (
+    <div className='w-full max-w-[300px]'>
+      <PasswordInput.Root
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        showStrength
+        criteria={criteria}
+      />
+    </div>
+  );
+}
+
 export const WithStrength = {
-  render: () => {
-    const [value, setValue] = React.useState('');
-
-    const criteria: PasswordCriterion[] = [
-      { key: 'uppercase', label: 'At least 1 uppercase', met: /[A-Z]/.test(value) },
-      { key: 'number', label: 'At least 1 number', met: /[0-9]/.test(value) },
-      { key: 'length', label: 'At least 8 characters', met: value.length >= 8 },
-    ];
-
-    return (
-      <div className='w-full max-w-[300px]'>
-        <PasswordInput.Root
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          showStrength
-          criteria={criteria}
-        />
-      </div>
-    );
-  },
+  render: () => <WithStrengthRender />,
 };
 
 export const Sizes = {
