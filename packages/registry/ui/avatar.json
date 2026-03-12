@@ -61,14 +61,14 @@
         "stories": ["BrandLogo"]
       },
       {
-        "title": "Custom SVG Indicator",
-        "description": "Pass any custom SVG or component as children to Avatar.Indicator for custom badges like verified icons.",
-        "code": "<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n  <Avatar.Indicator position=\"top\">\n    <CustomVerifiedIcon />\n  </Avatar.Indicator>\n</Avatar.Root>",
+        "title": "Verified Badge",
+        "description": "Use the built-in Avatar.VerifiedIcon inside Avatar.Indicator for a verified badge overlay.",
+        "code": "<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n  <Avatar.Indicator position=\"top\">\n    <Avatar.VerifiedIcon />\n  </Avatar.Indicator>\n</Avatar.Root>",
         "stories": ["IndicatorCustomSVG"]
       },
       {
         "title": "Square Rounded",
-        "description": "Override the default circular shape by passing a rounded className to both Avatar.Root and Avatar.Image. Use rounded-lg for larger sizes and rounded-md for smaller ones.",
+        "description": "Override the default circular shape by passing a rounded className to Avatar.Root. The image inherits the rounding automatically. Use rounded-lg for larger sizes and rounded-md for smaller ones.",
         "code": "<Avatar.Root className=\"rounded-lg\">\n  <Avatar.Image src=\"/path/to/image.png\" />\n</Avatar.Root>",
         "stories": ["SquareRounded"]
       },
@@ -171,6 +171,11 @@
       {
         "name": "Avatar.Notification",
         "description": "A small red notification dot.",
+        "props": []
+      },
+      {
+        "name": "Avatar.VerifiedIcon",
+        "description": "A blue verified badge SVG icon for use inside Avatar.Indicator.",
         "props": []
       }
     ]
