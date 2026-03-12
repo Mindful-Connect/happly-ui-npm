@@ -1,11 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { RiInformationFill } from '@remixicon/react';
-
 import * as FormField from './form-field';
-import * as Hint from './hint';
-import * as Label from './label';
 import * as Textarea from './textarea';
 
 export default { title: 'Form/Textarea', component: Textarea.Root };
@@ -76,22 +72,17 @@ export const HasError = {
 export const WithLabelAndHint = {
   render: () => (
     <div className='w-full min-w-[480px]'>
-      <FormField.Root>
-        <Label.Root htmlFor='message'>
-          Enter Your Message
-          <Label.Asterisk />
-          <Label.Sub>(Optional)</Label.Sub>
-          <Label.InfoIcon />
-        </Label.Root>
-
+      <FormField.Root
+        label='Enter Your Message'
+        htmlFor='message'
+        required
+        labelSub='Optional'
+        labelSubParens
+        hint='This is a hint text to help user.'
+      >
         <Textarea.Root id='message' placeholder='Jot down your thoughts...'>
           <Textarea.CharCounter current={78} max={200} />
         </Textarea.Root>
-
-        <Hint.Root>
-          <Hint.Icon as={RiInformationFill} />
-          This is a hint text to help user.
-        </Hint.Root>
       </FormField.Root>
     </div>
   ),

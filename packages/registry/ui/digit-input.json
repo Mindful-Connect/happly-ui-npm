@@ -38,6 +38,12 @@
         "description": "Square-shaped digit input slots.",
         "code": "<DigitInput.Root numInputs={4} onChange={setValue} value={value} className=\"justify-center [&>input]:aspect-square [&>input]:w-auto\" />",
         "stories": ["Square"]
+      },
+      {
+        "title": "With Form Field",
+        "description": "Digit input composed with FormField for consistent label and hint.",
+        "code": "<FormField.Root\n  label=\"Verification Code\"\n  hint=\"Enter the 5-digit code sent to your email.\"\n>\n  <DigitInput.Root numDigits={5} />\n</FormField.Root>",
+        "stories": ["WithFormField"]
       }
     ],
     "api": [

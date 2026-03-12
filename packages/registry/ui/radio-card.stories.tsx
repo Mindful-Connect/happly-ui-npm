@@ -11,6 +11,7 @@ import {
 } from '@remixicon/react';
 
 import * as Badge from './badge';
+import * as FormField from './form-field';
 import * as KeyIcon from './key-icon';
 import * as RadioCard from './radio-card';
 
@@ -448,6 +449,50 @@ export const PrimaryVariant = {
             <RadioCard.Indicator />
           </RadioCard.Item>
         </RadioCard.Root>
+      </div>
+    );
+  },
+};
+
+export const WithFormField = {
+  render: () => {
+    const [value, setValue] = React.useState('personal');
+
+    return (
+      <div className='w-[480px]'>
+        <FormField.Root label='Select Plan' required hint='Choose the plan that works for you.'>
+          <RadioCard.Root value={value} onValueChange={setValue}>
+            <RadioCard.Item value='personal'>
+              <RadioCard.Content>
+                <RadioCard.Title>Personal</RadioCard.Title>
+                <RadioCard.Description>
+                  For individual use
+                </RadioCard.Description>
+              </RadioCard.Content>
+              <RadioCard.Indicator />
+            </RadioCard.Item>
+
+            <RadioCard.Item value='team'>
+              <RadioCard.Content>
+                <RadioCard.Title>Team</RadioCard.Title>
+                <RadioCard.Description>
+                  For small teams
+                </RadioCard.Description>
+              </RadioCard.Content>
+              <RadioCard.Indicator />
+            </RadioCard.Item>
+
+            <RadioCard.Item value='enterprise'>
+              <RadioCard.Content>
+                <RadioCard.Title>Enterprise</RadioCard.Title>
+                <RadioCard.Description>
+                  For large organizations
+                </RadioCard.Description>
+              </RadioCard.Content>
+              <RadioCard.Indicator />
+            </RadioCard.Item>
+          </RadioCard.Root>
+        </FormField.Root>
       </div>
     );
   },

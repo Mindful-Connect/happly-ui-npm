@@ -44,6 +44,12 @@
         "description": "Checkboxes with labels, sublabels, badges, descriptions, and link buttons.",
         "code": "<div className=\"flex items-center gap-2\">\n  <Checkbox.Root id=\"c1\" />\n  <Label.Root htmlFor=\"c1\">\n    Label\n    <Label.Sub>(Sublabel)</Label.Sub>\n    <Badge.Root>NEW</Badge.Root>\n  </Label.Root>\n</div>",
         "stories": ["WithLabelExtended"]
+      },
+      {
+        "title": "With Form Field",
+        "description": "Checkbox group composed with FormField for consistent label and hint.",
+        "code": "<FormField.Root label=\"Notifications\" hint=\"Choose how you want to be notified.\">\n  <div className=\"flex flex-col gap-3\">\n    <div className=\"flex items-center gap-2\">\n      <Checkbox.Root id=\"email\" defaultChecked />\n      <Label.Root htmlFor=\"email\" className=\"text-paragraph-sm\">\n        Email notifications\n      </Label.Root>\n    </div>\n    <div className=\"flex items-center gap-2\">\n      <Checkbox.Root id=\"sms\" />\n      <Label.Root htmlFor=\"sms\" className=\"text-paragraph-sm\">\n        SMS notifications\n      </Label.Root>\n    </div>\n    <div className=\"flex items-center gap-2\">\n      <Checkbox.Root id=\"push\" />\n      <Label.Root htmlFor=\"push\" className=\"text-paragraph-sm\">\n        Push notifications\n      </Label.Root>\n    </div>\n  </div>\n</FormField.Root>",
+        "stories": ["WithFormField"]
       }
     ],
     "api": [

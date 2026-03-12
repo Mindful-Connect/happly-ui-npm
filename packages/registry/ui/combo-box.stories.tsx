@@ -12,7 +12,6 @@ import { Button } from './button';
 import * as Checkbox from './checkbox';
 import * as ComboBox from './combo-box';
 import * as FormField from './form-field';
-import * as Label from './label';
 import * as Tag from './tag';
 
 export default { title: 'Form/Composed Inputs/Combo Box' };
@@ -84,12 +83,12 @@ export const Default = {
 
     return (
       <div className='w-[300px]'>
-        <FormField.Root>
-          <Label.Root>
-            Searchable Combo Box
-            <Label.Asterisk />
-            <Label.Sub>(Optional)</Label.Sub>
-          </Label.Root>
+        <FormField.Root
+          label='Searchable Combo Box'
+          required
+          labelSub='Optional'
+          labelSubParens
+        >
           <ComboBox.Composed
             options={SECTOR_OPTIONS}
             value={value}
@@ -111,8 +110,7 @@ export const WithPreselectedValues = {
 
     return (
       <div className='w-[300px]'>
-        <FormField.Root>
-          <Label.Root>Tags</Label.Root>
+        <FormField.Root label='Tags'>
           <ComboBox.Composed
             options={TAG_OPTIONS}
             value={value}
@@ -127,8 +125,7 @@ export const WithPreselectedValues = {
 export const Uncontrolled = {
   render: () => (
     <div className='w-[300px]'>
-      <FormField.Root>
-        <Label.Root>Sectors</Label.Root>
+      <FormField.Root label='Sectors'>
         <ComboBox.Composed
           options={SECTOR_OPTIONS}
           defaultValue={['grants', 'loans']}
@@ -154,11 +151,7 @@ export const FormSubmission = {
           );
         }}
       >
-        <FormField.Root>
-          <Label.Root>
-            Tags
-            <Label.Asterisk />
-          </Label.Root>
+        <FormField.Root label='Tags' required>
           <ComboBox.Composed
             options={TAG_OPTIONS}
             value={value}
@@ -183,8 +176,7 @@ export const Sizes = {
     return (
       <div className='flex flex-col gap-6'>
         <div className='w-[300px]'>
-          <FormField.Root>
-            <Label.Root>Medium (default)</Label.Root>
+          <FormField.Root label='Medium (default)'>
             <ComboBox.Composed
               options={TAG_OPTIONS}
               value={medium}
@@ -193,8 +185,7 @@ export const Sizes = {
           </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <FormField.Root>
-            <Label.Root>Small</Label.Root>
+          <FormField.Root label='Small'>
             <ComboBox.Composed
               options={TAG_OPTIONS}
               value={small}
@@ -204,8 +195,7 @@ export const Sizes = {
           </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <FormField.Root>
-            <Label.Root>XSmall</Label.Root>
+          <FormField.Root label='XSmall'>
             <ComboBox.Composed
               options={TAG_OPTIONS}
               value={xsmall}
@@ -234,11 +224,7 @@ export const SelectionConstraints = {
     return (
       <div className='flex flex-col gap-6'>
         <div className='w-[300px]'>
-          <FormField.Root>
-            <Label.Root>
-              Max 3
-              <Label.Sub>(select up to 3)</Label.Sub>
-            </Label.Root>
+          <FormField.Root label='Max 3' labelSub='select up to 3' labelSubParens>
             <ComboBox.Composed
               options={TAG_OPTIONS}
               value={maxVal}
@@ -248,11 +234,7 @@ export const SelectionConstraints = {
           </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <FormField.Root>
-            <Label.Root>
-              Min 1
-              <Label.Asterisk />
-            </Label.Root>
+          <FormField.Root label='Min 1' required>
             <ComboBox.Composed
               options={SECTOR_OPTIONS}
               value={minVal}
@@ -262,11 +244,7 @@ export const SelectionConstraints = {
           </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <FormField.Root>
-            <Label.Root>
-              Min 1, Max 3
-              <Label.Sub>(1–3 required)</Label.Sub>
-            </Label.Root>
+          <FormField.Root label='Min 1, Max 3' labelSub='1–3 required' labelSubParens>
             <ComboBox.Composed
               options={SECTOR_OPTIONS}
               value={rangeVal}
@@ -292,8 +270,7 @@ export const TagVariants = {
     return (
       <div className='flex flex-col gap-6'>
         <div className='w-[300px]'>
-          <FormField.Root>
-            <Label.Root>Gray (default)</Label.Root>
+          <FormField.Root label='Gray (default)'>
             <ComboBox.Composed
               options={TAG_OPTIONS}
               value={gray}
@@ -303,8 +280,7 @@ export const TagVariants = {
           </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <FormField.Root>
-            <Label.Root>Stroke</Label.Root>
+          <FormField.Root label='Stroke'>
             <ComboBox.Composed
               options={TAG_OPTIONS}
               value={stroke}
@@ -314,8 +290,7 @@ export const TagVariants = {
           </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <FormField.Root>
-            <Label.Root>Select All Label</Label.Root>
+          <FormField.Root label='Select All Label'>
             <ComboBox.Composed
               options={TAG_OPTIONS}
               value={all}
@@ -336,11 +311,7 @@ export const States = {
     return (
       <div className='flex flex-col gap-6'>
         <div className='w-[300px]'>
-          <FormField.Root>
-            <Label.Root>
-              Error
-              <Label.Asterisk />
-            </Label.Root>
+          <FormField.Root label='Error' required>
             <ComboBox.Composed
               options={SECTOR_OPTIONS}
               value={errorVal}
@@ -350,8 +321,7 @@ export const States = {
           </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <FormField.Root>
-            <Label.Root disabled>Disabled</Label.Root>
+          <FormField.Root label='Disabled' disabled>
             <ComboBox.Composed
               options={SECTOR_OPTIONS}
               value={['grants', 'vc-funding']}
@@ -374,8 +344,7 @@ export const Customization = {
     return (
       <div className='flex flex-col gap-6'>
         <div className='w-[300px]'>
-          <FormField.Root>
-            <Label.Root>Custom Icon</Label.Root>
+          <FormField.Root label='Custom Icon'>
             <ComboBox.Composed
               options={[
                 { value: 'toronto', label: 'Toronto' },
@@ -392,8 +361,7 @@ export const Customization = {
           </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <FormField.Root>
-            <Label.Root>Custom Placeholder</Label.Root>
+          <FormField.Root label='Custom Placeholder'>
             <ComboBox.Composed
               options={[
                 { value: 'react', label: 'React' },
@@ -409,8 +377,7 @@ export const Customization = {
           </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <FormField.Root>
-            <Label.Root>Custom Empty Message</Label.Root>
+          <FormField.Root label='Custom Empty Message'>
             <ComboBox.Composed
               options={TAG_OPTIONS}
               value={tags}
@@ -445,8 +412,7 @@ export const WithIcons = {
     return (
       <div className='flex flex-col gap-6'>
         <div className='w-[300px]'>
-          <FormField.Root>
-            <Label.Root>Payment Types</Label.Root>
+          <FormField.Root label='Payment Types'>
             <ComboBox.Composed
               options={ICON_OPTIONS}
               value={icons}
@@ -455,8 +421,7 @@ export const WithIcons = {
           </FormField.Root>
         </div>
         <div className='w-[300px]'>
-          <FormField.Root>
-            <Label.Root>Countries</Label.Root>
+          <FormField.Root label='Countries'>
             <ComboBox.Composed
               options={FLAG_OPTIONS}
               value={flags}
@@ -505,8 +470,7 @@ export const CompoundCustomItems = {
 
       return (
         <div className='w-[320px]'>
-          <FormField.Root>
-            <Label.Root>Team Members</Label.Root>
+          <FormField.Root label='Team Members'>
             <ComboBox.Root
               options={TEAM_MEMBERS}
               value={value}
@@ -573,8 +537,7 @@ export const CompoundCustomTags = {
 
       return (
         <div className='w-[320px]'>
-          <FormField.Root>
-            <Label.Root>Assignees</Label.Root>
+          <FormField.Root label='Assignees'>
             <ComboBox.Root
               options={TEAM_MEMBERS}
               value={value}

@@ -151,30 +151,22 @@ export const WithInlineAffix = {
 
 export const LabelAndHint = {
   render: () => (
-    <div className='flex w-full max-w-[300px] flex-col gap-6'>
-      <FormField.Root>
-        <Label.Root htmlFor='email'>
-          Email Address
-          <Label.Asterisk />
-          <Label.Sub>(Optional)</Label.Sub>
-          <Label.InfoIcon />
-        </Label.Root>
-
+    <div className='w-full min-w-[300px] max-w-[300px]'>
+      <FormField.Root
+        label='Email Address'
+        htmlFor='email'
+        hint='This is a hint text to help user.'
+      >
         <Input.Root>
           <Input.Wrapper>
             <Input.Icon as={RiMailLine} />
             <Input.Input
               id='email'
               type='email'
-              placeholder='hello@alignui.com'
+              placeholder='hello@example.com'
             />
           </Input.Wrapper>
         </Input.Root>
-
-        <Hint.Root>
-          <Hint.Icon as={RiInformationFill} />
-          This is a hint text to help user.
-        </Hint.Root>
       </FormField.Root>
     </div>
   ),

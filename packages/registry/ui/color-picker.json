@@ -26,6 +26,12 @@
         "description": "Color picker inside a popover triggered by a button.",
         "code": "<ColorPicker.Root value={color} onChange={setColor}>\n  <Popover.Root>\n    <Popover.Trigger asChild>\n      <Button.Root variant=\"neutral\" mode=\"stroke\">\n        <Button.Icon as={ColorPicker.Swatch} />\n        Pick Color\n      </Button.Root>\n    </Popover.Trigger>\n    <Popover.Content>...</Popover.Content>\n  </Popover.Root>\n</ColorPicker.Root>",
         "stories": ["PopoverDemo"]
+      },
+      {
+        "title": "With Form Field",
+        "description": "Color picker composed with FormField for consistent label and hint.",
+        "code": "<FormField.Root label=\"Brand Color\" hint=\"Choose your brand primary color.\">\n  <ColorPicker.Root value={color} onChange={setColor}>\n    <ColorPicker.Area colorSpace=\"hsl\" xChannel=\"saturation\" yChannel=\"lightness\">\n      <ColorPicker.Thumb />\n    </ColorPicker.Area>\n    <ColorPicker.Slider colorSpace=\"hsl\" channel=\"hue\">\n      <ColorPicker.SliderTrack>\n        <ColorPicker.Thumb />\n      </ColorPicker.SliderTrack>\n    </ColorPicker.Slider>\n  </ColorPicker.Root>\n</FormField.Root>",
+        "stories": ["WithFormField"]
       }
     ],
     "api": [

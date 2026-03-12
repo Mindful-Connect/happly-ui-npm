@@ -4,6 +4,7 @@ import * as React from 'react';
 import * as LabelPrimitives from '@radix-ui/react-label';
 
 import * as Badge from './badge';
+import * as FormField from './form-field';
 import * as Label from './label';
 import * as LinkButton from './link-button';
 import * as Radio from './radio';
@@ -214,4 +215,31 @@ export const WithLabelExtended = {
       </Radio.Group>
     );
   },
+};
+
+export const WithFormField = {
+  render: () => (
+    <FormField.Root label='Report Reason' required hint='Select the reason for your report.'>
+      <Radio.Group defaultValue='spam' className='flex flex-col gap-3'>
+        <div className='flex items-center gap-2'>
+          <Radio.Item value='spam' id='report-spam' />
+          <Label.Root htmlFor='report-spam' className='text-paragraph-sm'>
+            Spam
+          </Label.Root>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Radio.Item value='harassment' id='report-harassment' />
+          <Label.Root htmlFor='report-harassment' className='text-paragraph-sm'>
+            Harassment
+          </Label.Root>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Radio.Item value='violation' id='report-violation' />
+          <Label.Root htmlFor='report-violation' className='text-paragraph-sm'>
+            Violation of Rules
+          </Label.Root>
+        </div>
+      </Radio.Group>
+    </FormField.Root>
+  ),
 };

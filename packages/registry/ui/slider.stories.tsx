@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 
+import * as FormField from './form-field';
 import * as Slider from './slider';
 import * as Tooltip from './tooltip';
 
@@ -131,4 +132,16 @@ export const WithTooltip = {
       </Tooltip.Provider>
     );
   },
+};
+
+export const WithFormField = {
+  render: () => (
+    <div className='w-full min-w-[320px] max-w-xs'>
+      <FormField.Root label='Volume' hint='Adjust the playback volume.'>
+        <Slider.Root defaultValue={[50]} max={100} step={1}>
+          <Slider.Thumb />
+        </Slider.Root>
+      </FormField.Root>
+    </div>
+  ),
 };

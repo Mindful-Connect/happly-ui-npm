@@ -44,6 +44,12 @@
         "description": "Date range selection in a popover.",
         "code": "<Datepicker.Calendar mode=\"range\" selected={range} onSelect={setRange} />",
         "stories": ["RangeDemo"]
+      },
+      {
+        "title": "With Form Field",
+        "description": "Datepicker composed with FormField for consistent label and hint.",
+        "code": "<FormField.Root\n  label=\"Date of Birth\"\n  required\n  hint=\"Select your date of birth.\"\n>\n  <Datepicker.Calendar mode=\"single\" selected={date} onSelect={setDate} />\n</FormField.Root>",
+        "stories": ["WithFormField"]
       }
     ],
     "api": [

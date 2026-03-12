@@ -37,7 +37,7 @@
       {
         "title": "With Label and Hint",
         "description": "Textarea composed with Label and Hint components.",
-        "code": "<FormField.Root>\n  <Label.Root htmlFor=\"message\">\n    Enter Your Message\n    <Label.Asterisk />\n  </Label.Root>\n  <Textarea.Root id=\"message\" placeholder=\"...\">\n    <Textarea.CharCounter current={78} max={200} />\n  </Textarea.Root>\n  <Hint.Root>\n    <Hint.Icon as={RiInformationFill} />\n    This is a hint text.\n  </Hint.Root>\n</FormField.Root>",
+        "code": "<FormField.Root\n  label=\"Enter Your Message\"\n  htmlFor=\"message\"\n  required\n  labelSub=\"Optional\"\n  labelSubParens\n  hint=\"This is a hint text to help user.\"\n>\n  <Textarea.Root id=\"message\" placeholder=\"Jot down your thoughts...\">\n    <Textarea.CharCounter current={78} max={200} />\n  </Textarea.Root>\n</FormField.Root>",
         "stories": ["WithLabelAndHint"]
       },
       {

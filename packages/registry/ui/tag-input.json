@@ -40,6 +40,12 @@
         "description": "Tag input in medium, small, and xsmall sizes.",
         "code": "<TagInput.Root size='medium' defaultValue={['Medium']} />\n<TagInput.Root size='small' defaultValue={['Small']} />\n<TagInput.Root size='xsmall' defaultValue={['XSmall']} />",
         "stories": ["Sizes"]
+      },
+      {
+        "title": "With Form Field",
+        "description": "Tag input composed with FormField for consistent label and hint.",
+        "code": "<FormField.Root\n  label=\"Tags\"\n  required\n  hint=\"Press Enter to add a tag.\"\n>\n  <TagInput.Root />\n</FormField.Root>",
+        "stories": ["WithFormField"]
       }
     ],
     "api": [

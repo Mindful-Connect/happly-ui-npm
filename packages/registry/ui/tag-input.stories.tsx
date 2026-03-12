@@ -3,6 +3,7 @@
 import * as React from 'react';
 
 import * as TagInput from './tag-input';
+import * as FormField from './form-field';
 
 export default { title: 'Form/Composed Inputs/Tag Input' };
 
@@ -87,6 +88,20 @@ export const Sizes = {
       <TagInput.Root size='medium' defaultValue={['Medium']} />
       <TagInput.Root size='small' defaultValue={['Small']} />
       <TagInput.Root size='xsmall' defaultValue={['XSmall']} />
+    </div>
+  ),
+};
+
+export const WithFormField = {
+  render: () => (
+    <div className='w-full min-w-[300px] max-w-[300px]'>
+      <FormField.Root
+        label='Tags'
+        required
+        hint='Press Enter to add a tag.'
+      >
+        <TagInput.Root />
+      </FormField.Root>
     </div>
   ),
 };

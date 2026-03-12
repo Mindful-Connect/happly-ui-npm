@@ -4,6 +4,7 @@ import * as React from 'react';
 import * as LabelPrimitives from '@radix-ui/react-label';
 
 import * as Badge from './badge';
+import * as FormField from './form-field';
 import * as Label from './label';
 import * as LinkButton from './link-button';
 import * as Switch from './switch';
@@ -293,4 +294,31 @@ export const WithLabelExtended = {
       </div>
     );
   },
+};
+
+function WithFormFieldRender() {
+  const uniqueId = React.useId();
+
+  return (
+    <FormField.Root label='Settings' hint='Manage your account preferences.'>
+      <div className='flex flex-col gap-3'>
+        <div className='flex items-center gap-2'>
+          <Switch.Root id={`${uniqueId}-s1`} defaultChecked />
+          <Label.Root htmlFor={`${uniqueId}-s1`} className='text-paragraph-sm'>
+            SMS Verification
+          </Label.Root>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Switch.Root id={`${uniqueId}-s2`} />
+          <Label.Root htmlFor={`${uniqueId}-s2`} className='text-paragraph-sm'>
+            Authenticator App
+          </Label.Root>
+        </div>
+      </div>
+    </FormField.Root>
+  );
+}
+
+export const WithFormField = {
+  render: () => <WithFormFieldRender />,
 };

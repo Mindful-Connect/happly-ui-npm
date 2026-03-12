@@ -5,6 +5,7 @@ import * as LabelPrimitives from '@radix-ui/react-label';
 
 import * as Badge from './badge';
 import * as Checkbox from './checkbox';
+import * as FormField from './form-field';
 import * as Label from './label';
 import * as LinkButton from './link-button';
 
@@ -280,4 +281,37 @@ export const WithLabelExtended = {
       </div>
     );
   },
+};
+
+function WithFormFieldRender() {
+  const uniqueId = React.useId();
+
+  return (
+    <FormField.Root label='Notifications' hint='Choose how you want to be notified.'>
+      <div className='flex flex-col gap-3'>
+        <div className='flex items-center gap-2'>
+          <Checkbox.Root id={`${uniqueId}-email`} defaultChecked />
+          <Label.Root htmlFor={`${uniqueId}-email`} className='text-paragraph-sm'>
+            Email notifications
+          </Label.Root>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Checkbox.Root id={`${uniqueId}-sms`} />
+          <Label.Root htmlFor={`${uniqueId}-sms`} className='text-paragraph-sm'>
+            SMS notifications
+          </Label.Root>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Checkbox.Root id={`${uniqueId}-push`} />
+          <Label.Root htmlFor={`${uniqueId}-push`} className='text-paragraph-sm'>
+            Push notifications
+          </Label.Root>
+        </div>
+      </div>
+    </FormField.Root>
+  );
+}
+
+export const WithFormField = {
+  render: () => <WithFormFieldRender />,
 };

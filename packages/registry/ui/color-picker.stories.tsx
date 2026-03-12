@@ -11,6 +11,7 @@ import type { ColorSpace } from 'react-aria-components';
 
 import * as Button from './button';
 import * as ColorPicker from './color-picker';
+import * as FormField from './form-field';
 import * as Divider from './divider';
 import * as Input from './input';
 import * as Popover from './popover';
@@ -248,4 +249,36 @@ export const PopoverDemo = {
       </ColorPicker.Root>
     );
   },
+};
+
+function WithFormFieldRender() {
+  const [color, setColor] = React.useState(
+    parseColor('hsl(228, 100%, 60%)'),
+  );
+
+  return (
+    <FormField.Root label='Brand Color' hint='Choose your brand primary color.'>
+      <div className='flex w-[272px] flex-col gap-3 rounded-2xl bg-bg-white-0 p-4 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200'>
+        <ColorPicker.Root value={color} onChange={setColor}>
+          <ColorPicker.Area
+            colorSpace='hsl'
+            xChannel='saturation'
+            yChannel='lightness'
+          >
+            <ColorPicker.Thumb className='ring-static-white' />
+          </ColorPicker.Area>
+
+          <ColorPicker.Slider colorSpace='hsl' channel='hue'>
+            <ColorPicker.SliderTrack>
+              <ColorPicker.Thumb className='top-1/2' />
+            </ColorPicker.SliderTrack>
+          </ColorPicker.Slider>
+        </ColorPicker.Root>
+      </div>
+    </FormField.Root>
+  );
+}
+
+export const WithFormField = {
+  render: () => <WithFormFieldRender />,
 };

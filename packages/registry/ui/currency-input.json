@@ -43,6 +43,12 @@
         "description": "Currency input in disabled state.",
         "code": "<CurrencyInput.Root disabled />",
         "stories": ["Disabled"]
+      },
+      {
+        "title": "With Form Field",
+        "description": "Currency input composed with FormField for consistent label and hint.",
+        "code": "<FormField.Root\n  label=\"Amount\"\n  htmlFor=\"amount\"\n  required\n  hint=\"Enter the transaction amount.\"\n>\n  <CurrencyInput.Root id=\"amount\" />\n</FormField.Root>",
+        "stories": ["WithFormField"]
       }
     ],
     "api": [

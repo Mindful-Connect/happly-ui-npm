@@ -6,6 +6,7 @@ import { type DateRange } from 'react-day-picker';
 
 import * as Button from './button';
 import * as Datepicker from './datepicker';
+import * as FormField from './form-field';
 import * as Popover from './popover';
 
 export default { title: 'Form/Datepicker', component: Datepicker.Calendar };
@@ -165,6 +166,22 @@ export const RangeDemo = {
           />
         </Popover.Content>
       </Popover.Root>
+    );
+  },
+};
+
+export const WithFormField = {
+  render: () => {
+    const [date, setDate] = React.useState<Date | undefined>(undefined);
+
+    return (
+      <FormField.Root
+        label='Date of Birth'
+        required
+        hint='Select your date of birth.'
+      >
+        <Datepicker.Calendar mode='single' selected={date} onSelect={setDate} />
+      </FormField.Root>
     );
   },
 };

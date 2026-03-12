@@ -3,6 +3,7 @@
 import * as React from 'react';
 
 import * as CurrencyInput from './currency-input';
+import * as FormField from './form-field';
 
 export default { title: 'Form/Composed Inputs/Currency Input' };
 
@@ -82,6 +83,21 @@ export const Disabled = {
   render: () => (
     <div className='w-full max-w-[300px]'>
       <CurrencyInput.Root disabled />
+    </div>
+  ),
+};
+
+export const WithFormField = {
+  render: () => (
+    <div className='w-full min-w-[300px] max-w-[300px]'>
+      <FormField.Root
+        label='Amount'
+        htmlFor='amount'
+        required
+        hint='Enter the transaction amount.'
+      >
+        <CurrencyInput.Root id='amount' />
+      </FormField.Root>
     </div>
   ),
 };

@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import * as PasswordInput from './password-input';
 import type { PasswordCriterion } from './password-input';
+import * as FormField from './form-field';
 
 export default { title: 'Form/Composed Inputs/Password Input' };
 
@@ -80,6 +81,21 @@ export const ErrorState = {
   render: () => (
     <div className='w-full max-w-[300px]'>
       <PasswordInput.Root hasError placeholder='Error state' />
+    </div>
+  ),
+};
+
+export const WithFormField = {
+  render: () => (
+    <div className='w-full min-w-[300px] max-w-[300px]'>
+      <FormField.Root
+        label='Password'
+        htmlFor='password'
+        required
+        hint='Minimum 8 characters.'
+      >
+        <PasswordInput.Root id='password' />
+      </FormField.Root>
     </div>
   ),
 };

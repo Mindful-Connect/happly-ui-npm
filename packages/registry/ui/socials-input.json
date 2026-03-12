@@ -36,14 +36,14 @@
       },
       {
         "title": "With Form Field",
-        "description": "Composed with FormField and Label for a complete form layout with asterisk, optional hint, and info tooltip.",
-        "code": "<FormField.Root>\n  <Label.Root>\n    Add your social media\n    <Label.Asterisk />\n    <Label.Sub>(Optional)</Label.Sub>\n    <Label.Info>Add your social media links so others can find you.</Label.Info>\n  </Label.Root>\n  <SocialsInput\n    name=\"socials\"\n    formValue={values}\n    setFormValue={setValues}\n  />\n</FormField.Root>",
+        "description": "Composed with FormField using props-driven label, hint, and info.",
+        "code": "<FormField.Root\n  label=\"Social Media\"\n  labelSub=\"Optional\"\n  labelSubParens\n  labelInfo=\"Add your social media profiles.\"\n  hint=\"Add at least one social media profile.\"\n>\n  <SocialsInput name=\"socials\" />\n</FormField.Root>",
         "stories": ["WithFormField"]
       },
       {
         "title": "Error State",
-        "description": "Error state with hasError prop and Hint component for form-level validation messages.",
-        "code": "<FormField.Root>\n  <Label.Root>\n    Add your social media\n    <Label.Asterisk />\n  </Label.Root>\n  <SocialsInput\n    name=\"socials\"\n    hasError\n    formValue={values}\n    setFormValue={setValues}\n  />\n  <Hint.Root hasError>\n    Please add at least one social media link.\n  </Hint.Root>\n</FormField.Root>",
+        "description": "Error state using FormField error prop for form-level validation messages.",
+        "code": "<FormField.Root\n  label=\"Social Media\"\n  required\n  error=\"Please add at least one social media profile.\"\n>\n  <SocialsInput name=\"socials-error\" />\n</FormField.Root>",
         "stories": ["ErrorState"]
       },
       {

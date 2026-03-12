@@ -38,6 +38,12 @@
         "description": "Range slider with tooltip values on each thumb.",
         "code": "<Slider.Root defaultValue={[300, 450]} min={0} max={600} onValueChange={setValue}>\n  <Tooltip.Root open>\n    <Tooltip.Trigger asChild>\n      <Slider.Thumb />\n    </Tooltip.Trigger>\n    <Tooltip.Content size=\"xsmall\" side=\"top\">\n      {formatCurrency(value[0])}\n    </Tooltip.Content>\n  </Tooltip.Root>\n</Slider.Root>",
         "stories": ["WithTooltip"]
+      },
+      {
+        "title": "With Form Field",
+        "description": "Slider composed with FormField for consistent label and hint.",
+        "code": "<FormField.Root label=\"Volume\" hint=\"Adjust the playback volume.\">\n  <Slider.Root defaultValue={[50]} max={100} step={1}>\n    <Slider.Thumb />\n  </Slider.Root>\n</FormField.Root>",
+        "stories": ["WithFormField"]
       }
     ],
     "api": [

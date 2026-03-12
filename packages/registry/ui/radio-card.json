@@ -70,6 +70,12 @@
         "description": "Primary colored radio indicator.",
         "code": "<RadioCard.Root variant=\"primary\" value={value} onValueChange={setValue}>\n  ...\n</RadioCard.Root>",
         "stories": ["PrimaryVariant"]
+      },
+      {
+        "title": "With Form Field",
+        "description": "Radio cards composed with FormField for consistent label and hint.",
+        "code": "<FormField.Root label=\"Select Plan\" required hint=\"Choose the plan that works for you.\">\n  <RadioCard.Root value={value} onValueChange={setValue}>\n    <RadioCard.Item value=\"personal\">\n      <RadioCard.Content>\n        <RadioCard.Title>Personal</RadioCard.Title>\n        <RadioCard.Description>For individual use</RadioCard.Description>\n      </RadioCard.Content>\n      <RadioCard.Indicator />\n    </RadioCard.Item>\n  </RadioCard.Root>\n</FormField.Root>",
+        "stories": ["WithFormField"]
       }
     ],
     "api": [

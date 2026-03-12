@@ -3,6 +3,7 @@
 import * as React from 'react';
 
 import * as DigitInput from './digit-input';
+import * as FormField from './form-field';
 
 export default { title: 'Form/Digit Input', component: DigitInput.Root };
 
@@ -99,4 +100,15 @@ export const Square = {
       </div>
     );
   },
+};
+
+export const WithFormField = {
+  render: () => (
+    <FormField.Root
+      label='Verification Code'
+      hint='Enter the 5-digit code sent to your email.'
+    >
+      <DigitInput.Root numDigits={5} />
+    </FormField.Root>
+  ),
 };

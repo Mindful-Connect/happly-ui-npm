@@ -9,14 +9,14 @@ import { default as badgeMeta, Playground as badge_Playground, BadgeFilled as ba
 import { default as bannerMeta, Playground as banner_Playground, Error as banner_Error, Warning as banner_Warning, Success as banner_Success, Information as banner_Information, Feature as banner_Feature, Primary as banner_Primary } from '@/components/ui/banner.stories';
 import { default as buttonGroupMeta, Playground as buttonGroup_Playground, Default as buttonGroup_Default, Sizes as buttonGroup_Sizes } from '@/components/ui/button-group.stories';
 import { default as buttonMeta, Playground as button_Playground, PrimaryVariant as button_PrimaryVariant, NeutralVariant as button_NeutralVariant, SuccessVariant as button_SuccessVariant, WarningVariant as button_WarningVariant, ErrorVariant as button_ErrorVariant, Sizes as button_Sizes, Disabled as button_Disabled, WithIcon as button_WithIcon, FullWidth as button_FullWidth, AsChild as button_AsChild, Composition as button_Composition } from '@/components/ui/button.stories';
-import { default as checkboxMeta, Playground as checkbox_Playground, Demo as checkbox_Demo, Variants as checkbox_Variants, Disabled as checkbox_Disabled, WithLabel as checkbox_WithLabel, WithLabelExtended as checkbox_WithLabelExtended } from '@/components/ui/checkbox.stories';
-import { default as colorPickerMeta, Playground as colorPicker_Playground, Demo as colorPicker_Demo, PopoverDemo as colorPicker_PopoverDemo } from '@/components/ui/color-picker.stories';
+import { default as checkboxMeta, Playground as checkbox_Playground, Demo as checkbox_Demo, Variants as checkbox_Variants, Disabled as checkbox_Disabled, WithLabel as checkbox_WithLabel, WithLabelExtended as checkbox_WithLabelExtended, WithFormField as checkbox_WithFormField } from '@/components/ui/checkbox.stories';
+import { default as colorPickerMeta, Playground as colorPicker_Playground, Demo as colorPicker_Demo, PopoverDemo as colorPicker_PopoverDemo, WithFormField as colorPicker_WithFormField } from '@/components/ui/color-picker.stories';
 import { default as comboBoxMeta, Playground as comboBox_Playground, Default as comboBox_Default, WithPreselectedValues as comboBox_WithPreselectedValues, Uncontrolled as comboBox_Uncontrolled, FormSubmission as comboBox_FormSubmission, Sizes as comboBox_Sizes, SelectionConstraints as comboBox_SelectionConstraints, TagVariants as comboBox_TagVariants, States as comboBox_States, Customization as comboBox_Customization, WithIcons as comboBox_WithIcons, CompoundCustomItems as comboBox_CompoundCustomItems, CompoundCustomTags as comboBox_CompoundCustomTags } from '@/components/ui/combo-box.stories';
 import { default as commandMenuMeta, Playground as commandMenu_Playground, Demo as commandMenu_Demo } from '@/components/ui/command-menu.stories';
 import { default as compactButtonMeta, Playground as compactButton_Playground, Variants as compactButton_Variants, Sizes as compactButton_Sizes, FullRadius as compactButton_FullRadius, Disabled as compactButton_Disabled, AsChild as compactButton_AsChild } from '@/components/ui/compact-button.stories';
-import { default as currencyInputMeta, Playground as currencyInput_Playground, Default as currencyInput_Default, Controlled as currencyInput_Controlled, Sizes as currencyInput_Sizes, ErrorState as currencyInput_ErrorState, Disabled as currencyInput_Disabled } from '@/components/ui/currency-input.stories';
-import { default as datepickerMeta, Playground as datepicker_Playground, Demo as datepicker_Demo, PopoverDemo as datepicker_PopoverDemo, ApprovalDemo as datepicker_ApprovalDemo, RangeDemo as datepicker_RangeDemo } from '@/components/ui/datepicker.stories';
-import { default as digitInputMeta, Playground as digitInput_Playground, Demo as digitInput_Demo, HasError as digitInput_HasError, Disabled as digitInput_Disabled, Square as digitInput_Square } from '@/components/ui/digit-input.stories';
+import { default as currencyInputMeta, Playground as currencyInput_Playground, Default as currencyInput_Default, Controlled as currencyInput_Controlled, Sizes as currencyInput_Sizes, ErrorState as currencyInput_ErrorState, Disabled as currencyInput_Disabled, WithFormField as currencyInput_WithFormField } from '@/components/ui/currency-input.stories';
+import { default as datepickerMeta, Playground as datepicker_Playground, Demo as datepicker_Demo, PopoverDemo as datepicker_PopoverDemo, ApprovalDemo as datepicker_ApprovalDemo, RangeDemo as datepicker_RangeDemo, WithFormField as datepicker_WithFormField } from '@/components/ui/datepicker.stories';
+import { default as digitInputMeta, Playground as digitInput_Playground, Demo as digitInput_Demo, HasError as digitInput_HasError, Disabled as digitInput_Disabled, Square as digitInput_Square, WithFormField as digitInput_WithFormField } from '@/components/ui/digit-input.stories';
 import { default as dividerMeta, Playground as divider_Playground, Line as divider_Line, LineSpacing as divider_LineSpacing, LineText as divider_LineText, TextOnly as divider_TextOnly, SolidText as divider_SolidText, Content as divider_Content } from '@/components/ui/divider.stories';
 import { default as dotStepperMeta, Playground as dotStepper_Playground, Demo as dotStepper_Demo, WithRadixTabs as dotStepper_WithRadixTabs } from '@/components/ui/dot-stepper.stories';
 import { default as drawerMeta, Playground as drawer_Playground, Basic as drawer_Basic, Demo as drawer_Demo } from '@/components/ui/drawer.stories';
@@ -37,22 +37,22 @@ import { default as linkButtonMeta, Playground as linkButton_Playground, Variant
 import { default as locationInputMeta, Playground as locationInput_Playground, Default as locationInput_Default } from '@/components/ui/location-input.stories';
 import { default as modalMeta, Playground as modal_Playground, Demo as modal_Demo, WithHeader as modal_WithHeader } from '@/components/ui/modal.stories';
 import { default as paginationMeta, Playground as pagination_Playground, Demo as pagination_Demo, Rounded as pagination_Rounded, Group as pagination_Group, AsLink as pagination_AsLink } from '@/components/ui/pagination.stories';
-import { default as passwordInputMeta, Playground as passwordInput_Playground, Default as passwordInput_Default, WithStrength as passwordInput_WithStrength, Sizes as passwordInput_Sizes, ErrorState as passwordInput_ErrorState } from '@/components/ui/password-input.stories';
+import { default as passwordInputMeta, Playground as passwordInput_Playground, Default as passwordInput_Default, WithStrength as passwordInput_WithStrength, Sizes as passwordInput_Sizes, ErrorState as passwordInput_ErrorState, WithFormField as passwordInput_WithFormField } from '@/components/ui/password-input.stories';
 import { default as phoneInputMeta, Playground as phoneInput_Playground, Default as phoneInput_Default } from '@/components/ui/phone-input.stories';
 import { default as popoverMeta, Playground as popover_Playground, Demo as popover_Demo, Position as popover_Position } from '@/components/ui/popover.stories';
 import { default as progressBarMeta, Playground as progressBar_Playground, Color as progressBar_Color, WithLabel as progressBar_WithLabel, DataStorage as progressBar_DataStorage } from '@/components/ui/progress-bar.stories';
 import { default as progressCircleMeta, Playground as progressCircle_Playground, Sizes as progressCircle_Sizes } from '@/components/ui/progress-circle.stories';
-import { default as radioCardMeta, Playground as radioCard_Playground, Default as radioCard_Default, WithKeyIcons as radioCard_WithKeyIcons, WithSimpleIcons as radioCard_WithSimpleIcons, WithBadges as radioCard_WithBadges, InlineDescription as radioCard_InlineDescription, AllowDeselect as radioCard_AllowDeselect, Disabled as radioCard_Disabled, ErrorState as radioCard_ErrorState, Composed as radioCard_Composed, PrimaryVariant as radioCard_PrimaryVariant } from '@/components/ui/radio-card.stories';
-import { default as radioMeta, Playground as radio_Playground, Demo as radio_Demo, Variants as radio_Variants, Disabled as radio_Disabled, WithLabel as radio_WithLabel, WithLabelExtended as radio_WithLabelExtended } from '@/components/ui/radio.stories';
+import { default as radioCardMeta, Playground as radioCard_Playground, Default as radioCard_Default, WithKeyIcons as radioCard_WithKeyIcons, WithSimpleIcons as radioCard_WithSimpleIcons, WithBadges as radioCard_WithBadges, InlineDescription as radioCard_InlineDescription, AllowDeselect as radioCard_AllowDeselect, Disabled as radioCard_Disabled, ErrorState as radioCard_ErrorState, Composed as radioCard_Composed, PrimaryVariant as radioCard_PrimaryVariant, WithFormField as radioCard_WithFormField } from '@/components/ui/radio-card.stories';
+import { default as radioMeta, Playground as radio_Playground, Demo as radio_Demo, Variants as radio_Variants, Disabled as radio_Disabled, WithLabel as radio_WithLabel, WithLabelExtended as radio_WithLabelExtended, WithFormField as radio_WithFormField } from '@/components/ui/radio.stories';
 import { default as sectionToggleMeta, Playground as sectionToggle_Playground, Default as sectionToggle_Default, Collapsed as sectionToggle_Collapsed, Composed as sectionToggle_Composed } from '@/components/ui/section-toggle.stories';
 import { default as sectionMeta, Playground as section_Playground, Default as section_Default, WithCustomHeaderWidth as section_WithCustomHeaderWidth, Composed as section_Composed } from '@/components/ui/section.stories';
 import { default as selectMeta, Playground as select_Playground, Demo as select_Demo, WithLabelHint as select_WithLabelHint, WithIcons as select_WithIcons, Sizes as select_Sizes, WithCountryFlags as select_WithCountryFlags, WithUsers as select_WithUsers, Disabled as select_Disabled, Compact as select_Compact, CompactCountry as select_CompactCountry, CompactSizes as select_CompactSizes, InlineCountry as select_InlineCountry, InputWithInlineSelect as select_InputWithInlineSelect, WithInput as select_WithInput, WithInputSizes as select_WithInputSizes } from '@/components/ui/select.stories';
-import { default as sliderMeta, Playground as slider_Playground, Demo as slider_Demo, Variants as slider_Variants, Range as slider_Range, WithTooltip as slider_WithTooltip } from '@/components/ui/slider.stories';
+import { default as sliderMeta, Playground as slider_Playground, Demo as slider_Demo, Variants as slider_Variants, Range as slider_Range, WithTooltip as slider_WithTooltip, WithFormField as slider_WithFormField } from '@/components/ui/slider.stories';
 import { default as socialsInputMeta, Default as socialsInput_Default, WithExistingValues as socialsInput_WithExistingValues, AllSocials as socialsInput_AllSocials, CustomSocials as socialsInput_CustomSocials, ReadOnly as socialsInput_ReadOnly, WithFormField as socialsInput_WithFormField, ErrorState as socialsInput_ErrorState, CustomLabels as socialsInput_CustomLabels } from '@/components/ui/socials-input.stories';
 import { default as statusBadgeMeta, Playground as statusBadge_Playground, Completed as statusBadge_Completed, Pending as statusBadge_Pending, Failed as statusBadge_Failed, Disabled as statusBadge_Disabled, AsChild as statusBadge_AsChild } from '@/components/ui/status-badge.stories';
-import { default as switchMeta, Playground as switch_Playground, Demo as switch_Demo, Variants as switch_Variants, Disabled as switch_Disabled, WithLabel as switch_WithLabel, WithLabelExtended as switch_WithLabelExtended } from '@/components/ui/switch.stories';
+import { default as switchMeta, Playground as switch_Playground, Demo as switch_Demo, Variants as switch_Variants, Disabled as switch_Disabled, WithLabel as switch_WithLabel, WithLabelExtended as switch_WithLabelExtended, WithFormField as switch_WithFormField } from '@/components/ui/switch.stories';
 import { default as tableMeta, Default as table_Default } from '@/components/ui/table.stories';
-import { default as tagInputMeta, Playground as tagInput_Playground, Default as tagInput_Default, Controlled as tagInput_Controlled, MaxTags as tagInput_MaxTags, GrayVariant as tagInput_GrayVariant, Sizes as tagInput_Sizes } from '@/components/ui/tag-input.stories';
+import { default as tagInputMeta, Playground as tagInput_Playground, Default as tagInput_Default, Controlled as tagInput_Controlled, MaxTags as tagInput_MaxTags, GrayVariant as tagInput_GrayVariant, Sizes as tagInput_Sizes, WithFormField as tagInput_WithFormField } from '@/components/ui/tag-input.stories';
 import { default as tagMeta, Playground as tag_Playground, Stroke as tag_Stroke, Gray as tag_Gray, Rounded as tag_Rounded, Disabled as tag_Disabled, WithImage as tag_WithImage, WithAvatar as tag_WithAvatar, Dismissable as tag_Dismissable } from '@/components/ui/tag.stories';
 import { default as textareaMeta, Playground as textarea_Playground, Demo as textarea_Demo, InteractiveCounter as textarea_InteractiveCounter, HasError as textarea_HasError, WithLabelAndHint as textarea_WithLabelAndHint, Disabled as textarea_Disabled, Simple as textarea_Simple, SimpleResize as textarea_SimpleResize } from '@/components/ui/textarea.stories';
 import { default as themeProviderMeta, Default as themeProvider_Default, Global as themeProvider_Global, MultipleThemes as themeProvider_MultipleThemes } from '@/components/ui/theme-provider.stories';
@@ -165,7 +165,8 @@ export const storyRegistry: Record<string, {
     'Variants': checkbox_Variants,
     'Disabled': checkbox_Disabled,
     'WithLabel': checkbox_WithLabel,
-    'WithLabelExtended': checkbox_WithLabelExtended
+    'WithLabelExtended': checkbox_WithLabelExtended,
+    'WithFormField': checkbox_WithFormField
     }
   },
   'color-picker': {
@@ -173,7 +174,8 @@ export const storyRegistry: Record<string, {
     stories: {
     'Playground': colorPicker_Playground,
     'Demo': colorPicker_Demo,
-    'PopoverDemo': colorPicker_PopoverDemo
+    'PopoverDemo': colorPicker_PopoverDemo,
+    'WithFormField': colorPicker_WithFormField
     }
   },
   'combo-box': {
@@ -220,7 +222,8 @@ export const storyRegistry: Record<string, {
     'Controlled': currencyInput_Controlled,
     'Sizes': currencyInput_Sizes,
     'ErrorState': currencyInput_ErrorState,
-    'Disabled': currencyInput_Disabled
+    'Disabled': currencyInput_Disabled,
+    'WithFormField': currencyInput_WithFormField
     }
   },
   'datepicker': {
@@ -230,7 +233,8 @@ export const storyRegistry: Record<string, {
     'Demo': datepicker_Demo,
     'PopoverDemo': datepicker_PopoverDemo,
     'ApprovalDemo': datepicker_ApprovalDemo,
-    'RangeDemo': datepicker_RangeDemo
+    'RangeDemo': datepicker_RangeDemo,
+    'WithFormField': datepicker_WithFormField
     }
   },
   'digit-input': {
@@ -240,7 +244,8 @@ export const storyRegistry: Record<string, {
     'Demo': digitInput_Demo,
     'HasError': digitInput_HasError,
     'Disabled': digitInput_Disabled,
-    'Square': digitInput_Square
+    'Square': digitInput_Square,
+    'WithFormField': digitInput_WithFormField
     }
   },
   'divider': {
@@ -467,7 +472,8 @@ export const storyRegistry: Record<string, {
     'Default': passwordInput_Default,
     'WithStrength': passwordInput_WithStrength,
     'Sizes': passwordInput_Sizes,
-    'ErrorState': passwordInput_ErrorState
+    'ErrorState': passwordInput_ErrorState,
+    'WithFormField': passwordInput_WithFormField
     }
   },
   'phone-input': {
@@ -514,7 +520,8 @@ export const storyRegistry: Record<string, {
     'Disabled': radioCard_Disabled,
     'ErrorState': radioCard_ErrorState,
     'Composed': radioCard_Composed,
-    'PrimaryVariant': radioCard_PrimaryVariant
+    'PrimaryVariant': radioCard_PrimaryVariant,
+    'WithFormField': radioCard_WithFormField
     }
   },
   'radio': {
@@ -525,7 +532,8 @@ export const storyRegistry: Record<string, {
     'Variants': radio_Variants,
     'Disabled': radio_Disabled,
     'WithLabel': radio_WithLabel,
-    'WithLabelExtended': radio_WithLabelExtended
+    'WithLabelExtended': radio_WithLabelExtended,
+    'WithFormField': radio_WithFormField
     }
   },
   'section-toggle': {
@@ -573,7 +581,8 @@ export const storyRegistry: Record<string, {
     'Demo': slider_Demo,
     'Variants': slider_Variants,
     'Range': slider_Range,
-    'WithTooltip': slider_WithTooltip
+    'WithTooltip': slider_WithTooltip,
+    'WithFormField': slider_WithFormField
     }
   },
   'socials-input': {
@@ -608,7 +617,8 @@ export const storyRegistry: Record<string, {
     'Variants': switch_Variants,
     'Disabled': switch_Disabled,
     'WithLabel': switch_WithLabel,
-    'WithLabelExtended': switch_WithLabelExtended
+    'WithLabelExtended': switch_WithLabelExtended,
+    'WithFormField': switch_WithFormField
     }
   },
   'table': {
@@ -625,7 +635,8 @@ export const storyRegistry: Record<string, {
     'Controlled': tagInput_Controlled,
     'MaxTags': tagInput_MaxTags,
     'GrayVariant': tagInput_GrayVariant,
-    'Sizes': tagInput_Sizes
+    'Sizes': tagInput_Sizes,
+    'WithFormField': tagInput_WithFormField
     }
   },
   'tag': {

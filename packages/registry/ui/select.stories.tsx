@@ -8,16 +8,13 @@ import {
   RiGlobalLine,
   RiHandCoinLine,
   RiHome4Line,
-  RiInformationFill,
   RiSmartphoneLine,
   RiUser6Line,
 } from '@remixicon/react';
 
 import * as Avatar from './avatar';
 import * as FormField from './form-field';
-import * as Hint from './hint';
 import * as Input from './input';
-import * as Label from './label';
 import * as Select from './select';
 
 export default { title: 'Form/Select', component: Select.Root };
@@ -138,8 +135,11 @@ export const Demo = {
 export const WithLabelHint = {
   render: () => (
     <div className='w-full min-w-[300px] max-w-[300px]'>
-      <FormField.Root>
-        <Label.Root htmlFor='fruit'>Fruit</Label.Root>
+      <FormField.Root
+        label='Fruit'
+        htmlFor='fruit'
+        hint='This is a hint text to help user.'
+      >
         <Select.Root>
           <Select.Trigger id='fruit'>
             <Select.Value placeholder='Select your favorite fruit...' />
@@ -152,10 +152,6 @@ export const WithLabelHint = {
             ))}
           </Select.Content>
         </Select.Root>
-        <Hint.Root>
-          <Hint.Icon as={RiInformationFill} />
-          This is a hint text to help user.
-        </Hint.Root>
       </FormField.Root>
     </div>
   ),
