@@ -181,7 +181,7 @@
       "name": "hint",
       "type": "registry:ui",
       "title": "Hint",
-      "description": "A hint text component for form fields with icon, error, disabled states, and composed mode. Uses namespace exports: Hint.Root, Hint.Icon, Hint.DefaultIcon, Hint.Composed."
+      "description": "A hint text component for form fields with icon, error, disabled states, and composed mode. Uses namespace exports: Hint.Root, Hint.Icon, Hint.Composed."
     },
     {
       "name": "input",

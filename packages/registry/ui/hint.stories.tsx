@@ -1,6 +1,6 @@
 'use client';
 
-import { RiInformationFill } from '@remixicon/react';
+import { RiAlertFill } from '@remixicon/react';
 
 import * as Hint from './hint';
 
@@ -19,7 +19,7 @@ export const Playground = {
   },
   render: (args: any) => (
     <Hint.Root disabled={args.disabled} hasError={args.hasError}>
-      <Hint.Icon as={RiInformationFill} />
+      <Hint.Icon />
       {args.children}
     </Hint.Root>
   ),
@@ -28,7 +28,7 @@ export const Playground = {
 export const Demo = {
   render: () => (
     <Hint.Root>
-      <Hint.Icon as={RiInformationFill} />
+      <Hint.Icon />
       This is a hint text to help user.
     </Hint.Root>
   ),
@@ -37,7 +37,7 @@ export const Demo = {
 export const Disabled = {
   render: () => (
     <Hint.Root disabled>
-      <Hint.Icon as={RiInformationFill} />
+      <Hint.Icon />
       This is a hint text to help user.
     </Hint.Root>
   ),
@@ -46,8 +46,17 @@ export const Disabled = {
 export const HasError = {
   render: () => (
     <Hint.Root hasError>
-      <Hint.Icon as={RiInformationFill} />
+      <Hint.Icon />
       This is a hint text to help user.
+    </Hint.Root>
+  ),
+};
+
+export const CustomIcon = {
+  render: () => (
+    <Hint.Root>
+      <Hint.Icon as={RiAlertFill} />
+      This hint uses a custom icon.
     </Hint.Root>
   ),
 };
@@ -57,7 +66,7 @@ export const Composed = {
     <div className='flex flex-col gap-4'>
       <Hint.Composed>This is a hint with default icon.</Hint.Composed>
 
-      <Hint.Composed icon={RiInformationFill}>
+      <Hint.Composed icon={RiAlertFill}>
         This is a hint with custom icon.
       </Hint.Composed>
 

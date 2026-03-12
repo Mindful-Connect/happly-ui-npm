@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { RiInformationFill } from '@remixicon/react';
 
 import type { PolymorphicComponentProps } from '@/lib/polymorphic';
 import { recursiveCloneChildren } from '@/lib/recursive-clone-children';
@@ -65,36 +66,19 @@ function HintRoot({
 }
 HintRoot.displayName = HINT_ROOT_NAME;
 
-function HintIcon<T extends React.ElementType>({
+function HintIcon<T extends React.ElementType = typeof RiInformationFill>({
   as,
   className,
   hasError,
   disabled,
   ...rest
 }: PolymorphicComponentProps<T, HintSharedProps>) {
-  const Component = as || 'div';
+  const Component = as || RiInformationFill;
   const { icon } = hintVariants({ hasError, disabled });
 
   return <Component className={icon({ class: className })} {...rest} />;
 }
 HintIcon.displayName = HINT_ICON_NAME;
-
-function HintDefaultIcon({
-  className,
-  ...rest
-}: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      viewBox='0 0 24 24'
-      fill='currentColor'
-      xmlns='http://www.w3.org/2000/svg'
-      className={className}
-      {...rest}
-    >
-      <path d='M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 7V9H13V7H11ZM11 11V17H13V11H11Z' />
-    </svg>
-  );
-}
 
 type HintComposedProps = VariantProps<typeof hintVariants> &
   Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
@@ -111,7 +95,7 @@ function HintComposed({
 }: HintComposedProps) {
   return (
     <HintRoot hasError={hasError} disabled={disabled} {...rest}>
-      <HintIcon as={icon || HintDefaultIcon} />
+      <HintIcon as={icon} />
       {children}
     </HintRoot>
   );
@@ -121,6 +105,5 @@ HintComposed.displayName = 'HintComposed';
 export {
   HintRoot as Root,
   HintIcon as Icon,
-  HintDefaultIcon as DefaultIcon,
   HintComposed as Composed,
 };
