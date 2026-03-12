@@ -14,7 +14,7 @@ const STATUS_BADGE_DOT_NAME = 'StatusBadgeDot';
 export const statusBadgeVariants = tv({
   slots: {
     root: [
-      'inline-flex h-6 items-center justify-center gap-2 whitespace-nowrap rounded-md px-2 text-label-xs',
+      'inline-flex h-6 items-center justify-center gap-2 whitespace-nowrap px-2 text-label-xs',
       'has-[>.dot]:gap-1.5',
     ],
     icon: '-mx-1 size-4',
@@ -31,6 +31,14 @@ export const statusBadgeVariants = tv({
         root: 'bg-bg-white-0 text-text-sub-600 ring-1 ring-inset ring-stroke-soft-200',
       },
       light: {},
+    },
+    rounded: {
+      true: {
+        root: 'rounded-full',
+      },
+      false: {
+        root: 'rounded-md',
+      },
     },
     status: {
       completed: {
@@ -84,6 +92,7 @@ export const statusBadgeVariants = tv({
   defaultVariants: {
     status: 'disabled',
     variant: 'stroke',
+    rounded: true,
   },
 });
 
@@ -96,12 +105,12 @@ type StatusBadgeRootProps = React.HTMLAttributes<HTMLDivElement> &
 
 const StatusBadgeRoot = React.forwardRef<HTMLDivElement, StatusBadgeRootProps>(
   (
-    { asChild, children, variant, status, className, ...rest },
+    { asChild, children, variant, status, rounded, className, ...rest },
     forwardedRef,
   ) => {
     const uniqueId = React.useId();
     const Component = asChild ? Slot : 'div';
-    const { root } = statusBadgeVariants({ variant, status });
+    const { root } = statusBadgeVariants({ variant, status, rounded });
 
     const sharedProps: StatusBadgeSharedProps = {
       variant,
