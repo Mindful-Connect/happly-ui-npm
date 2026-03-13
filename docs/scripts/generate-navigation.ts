@@ -142,7 +142,11 @@ function main() {
     'section-toggle',
   ];
 
-  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS, ...FILE_UPLOAD_COMPONENTS, ...PROVIDER_COMPONENTS, ...SECTION_COMPONENTS];
+  const CARD_COMPONENTS = [
+    'promotional-card',
+  ];
+
+  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS, ...FILE_UPLOAD_COMPONENTS, ...PROVIDER_COMPONENTS, ...SECTION_COMPONENTS, ...CARD_COMPONENTS];
 
   const mainLinks = componentLinks
     .filter((item) => !GROUPED_COMPONENTS.includes(item.name))
@@ -186,6 +190,10 @@ function main() {
 
   const sectionLinks = componentLinks
     .filter((item) => SECTION_COMPONENTS.includes(item.name))
+    .map(({ name, ...rest }) => rest);
+
+  const cardLinks = componentLinks
+    .filter((item) => CARD_COMPONENTS.includes(item.name))
     .map(({ name, ...rest }) => rest);
 
   // Build full navigation structure
@@ -245,6 +253,11 @@ function main() {
         {
           title: 'Providers',
           links: providerLinks,
+          collapsed: false,
+        },
+        {
+          title: 'Cards',
+          links: cardLinks,
           collapsed: false,
         },
         {

@@ -280,6 +280,12 @@
       "description": "A circular progress indicator with SVG ring, multiple sizes, customizable color, and optional centered text content. Uses namespace exports: ProgressCircle.Root."
     },
     {
+      "name": "promotional-card",
+      "type": "registry:ui",
+      "title": "Promotional Card",
+      "description": "A compact card for promotional content with icon, decorative background, title, description, and optional link. Uses namespace exports: PromotionalCard.Root, PromotionalCard.Icon, PromotionalCard.Decoration, PromotionalCard.Content, PromotionalCard.Title, PromotionalCard.Description, PromotionalCard.Link, PromotionalCard.Composed."
+    },
+    {
       "name": "radio",
       "type": "registry:ui",
       "title": "Radio",

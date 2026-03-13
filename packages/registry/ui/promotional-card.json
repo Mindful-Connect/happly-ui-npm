@@ -1,0 +1,169 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "promotional-card",
+  "type": "registry:ui",
+  "title": "Promotional Card",
+  "description": "A compact card for promotional content with icon, decorative background, title, description, and optional link. Uses namespace exports: PromotionalCard.Root, PromotionalCard.Icon, PromotionalCard.Decoration, PromotionalCard.Content, PromotionalCard.Title, PromotionalCard.Description, PromotionalCard.Link, PromotionalCard.Composed.",
+  "version": "1.0.0",
+  "dependencies": [
+    "@radix-ui/react-slot"
+  ],
+  "registryDependencies": [
+    "tv",
+    "polymorphic",
+    "recursive-clone-children"
+  ],
+  "docs": {
+    "lead": "A compact card for promotional content with an icon, decorative background element, title, description, and optional link. Supports stroke and filled variants.",
+    "usage": "import * as PromotionalCard from \"@/components/ui/promotional-card\"\n\n<PromotionalCard.Root>\n  <PromotionalCard.Icon as={RiFilter3Line} />\n  <PromotionalCard.Decoration as={RiFilter3Line} />\n  <PromotionalCard.Content>\n    <PromotionalCard.Title>Let me filter</PromotionalCard.Title>\n    <PromotionalCard.Description>Apply filter based on what you exactly need</PromotionalCard.Description>\n  </PromotionalCard.Content>\n</PromotionalCard.Root>",
+    "examples": [
+      {
+        "title": "Stroke",
+        "description": "The default stroke variant with white background, border, and subtle shadow. The decoration icon is nearly invisible for a clean look.",
+        "code": "<PromotionalCard.Root variant=\"stroke\">\n  <PromotionalCard.Icon as={RiFilter3Line} />\n  <PromotionalCard.Decoration as={RiFilter3Line} />\n  <PromotionalCard.Content>\n    <PromotionalCard.Title>Let me filter</PromotionalCard.Title>\n    <PromotionalCard.Description>Apply filter based on what you exactly need</PromotionalCard.Description>\n  </PromotionalCard.Content>\n</PromotionalCard.Root>",
+        "stories": ["Stroke"]
+      },
+      {
+        "title": "Filled",
+        "description": "Filled variant with a gray background, commonly used for brand promotions.",
+        "code": "<PromotionalCard.Root variant=\"filled\">\n  <PromotionalCard.Icon as={RiSpotifyFill} />\n  <PromotionalCard.Decoration as={RiSpotifyFill} />\n  <PromotionalCard.Content>\n    <PromotionalCard.Title>50% discount on Spotify</PromotionalCard.Title>\n    <div className=\"flex items-center gap-1\">\n      <PromotionalCard.Description>For only $4.99 per month!</PromotionalCard.Description>\n      <PromotionalCard.Link href=\"#\">Learn More</PromotionalCard.Link>\n    </div>\n  </PromotionalCard.Content>\n</PromotionalCard.Root>",
+        "stories": ["Filled"]
+      },
+      {
+        "title": "Clickable",
+        "description": "Cards rendered as links using asChild with clickable cursor styling.",
+        "code": "<PromotionalCard.Root asChild clickable variant=\"stroke\">\n  <a href=\"#\">\n    <PromotionalCard.Icon as={RiFilter3Line} />\n    <PromotionalCard.Decoration as={RiFilter3Line} />\n    <PromotionalCard.Content>\n      <PromotionalCard.Title>Let me filter</PromotionalCard.Title>\n      <PromotionalCard.Description>Apply filter based on what you exactly need</PromotionalCard.Description>\n    </PromotionalCard.Content>\n  </a>\n</PromotionalCard.Root>",
+        "stories": ["Clickable"]
+      },
+      {
+        "title": "Composed",
+        "description": "Shorthand composed version that accepts all content as props.",
+        "code": "<PromotionalCard.Composed\n  variant=\"filled\"\n  icon={RiSpotifyFill}\n  title=\"50% discount on Spotify\"\n  description=\"For only $4.99 per month!\"\n  linkText=\"Learn More\"\n  linkHref=\"#\"\n/>",
+        "stories": ["Composed"]
+      },
+      {
+        "title": "Grid",
+        "description": "Multiple promotional cards in a grid layout.",
+        "code": "<div className=\"grid grid-cols-3 gap-4\">\n  <PromotionalCard.Composed variant=\"filled\" ... />\n</div>",
+        "stories": ["Grid"]
+      }
+    ],
+    "api": [
+      {
+        "name": "PromotionalCard.Root",
+        "description": "The main card container with overflow clipping.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'stroke' | 'filled'",
+            "default": "'stroke'",
+            "description": "The visual style of the card"
+          },
+          {
+            "name": "clickable",
+            "type": "boolean",
+            "description": "Adds cursor-pointer styling"
+          },
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Renders as child element using Radix Slot, useful for wrapping in links or buttons"
+          }
+        ]
+      },
+      {
+        "name": "PromotionalCard.Icon",
+        "description": "Small icon positioned at the top-left of the card. Polymorphic.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "default": "'div'",
+            "description": "The element or component to render as"
+          }
+        ]
+      },
+      {
+        "name": "PromotionalCard.Decoration",
+        "description": "Large decorative icon at the top-right, partially clipped. Polymorphic. Opacity varies by variant.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "default": "'div'",
+            "description": "The element or component to render as"
+          }
+        ]
+      },
+      {
+        "name": "PromotionalCard.Content",
+        "description": "Container for title and description row, positioned at the bottom of the card.",
+        "props": []
+      },
+      {
+        "name": "PromotionalCard.Title",
+        "description": "The promotional title text.",
+        "props": []
+      },
+      {
+        "name": "PromotionalCard.Description",
+        "description": "The description text.",
+        "props": []
+      },
+      {
+        "name": "PromotionalCard.Link",
+        "description": "Optional underlined link, placed as a sibling next to Description.",
+        "props": [
+          {
+            "name": "href",
+            "type": "string",
+            "description": "The link URL"
+          }
+        ]
+      },
+      {
+        "name": "PromotionalCard.Composed",
+        "description": "Shorthand version that composes all subcomponents via props. Accepts all Root props.",
+        "props": [
+          {
+            "name": "icon",
+            "type": "React.ElementType",
+            "description": "The icon component for the top-left"
+          },
+          {
+            "name": "decorationIcon",
+            "type": "React.ElementType",
+            "description": "Override for the decorative background icon. Falls back to icon"
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "description": "The promotional title text"
+          },
+          {
+            "name": "description",
+            "type": "string",
+            "description": "The description text"
+          },
+          {
+            "name": "linkText",
+            "type": "string",
+            "description": "Optional link text"
+          },
+          {
+            "name": "linkHref",
+            "type": "string",
+            "description": "Optional link URL"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/promotional-card.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

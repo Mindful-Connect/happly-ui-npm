@@ -42,6 +42,7 @@ import { default as phoneInputMeta, Playground as phoneInput_Playground, Default
 import { default as popoverMeta, Playground as popover_Playground, Demo as popover_Demo, Position as popover_Position } from '@/components/ui/popover.stories';
 import { default as progressBarMeta, Playground as progressBar_Playground, Color as progressBar_Color, WithLabel as progressBar_WithLabel, DataStorage as progressBar_DataStorage } from '@/components/ui/progress-bar.stories';
 import { default as progressCircleMeta, Playground as progressCircle_Playground, Sizes as progressCircle_Sizes } from '@/components/ui/progress-circle.stories';
+import { default as promotionalCardMeta, Stroke as promotionalCard_Stroke, Filled as promotionalCard_Filled, Clickable as promotionalCard_Clickable, Composed as promotionalCard_Composed, Grid as promotionalCard_Grid } from '@/components/ui/promotional-card.stories';
 import { default as radioCardMeta, Playground as radioCard_Playground, Default as radioCard_Default, WithKeyIcons as radioCard_WithKeyIcons, WithSimpleIcons as radioCard_WithSimpleIcons, WithBadges as radioCard_WithBadges, InlineDescription as radioCard_InlineDescription, AllowDeselect as radioCard_AllowDeselect, Disabled as radioCard_Disabled, ErrorState as radioCard_ErrorState, Composed as radioCard_Composed, PrimaryVariant as radioCard_PrimaryVariant, WithFormField as radioCard_WithFormField } from '@/components/ui/radio-card.stories';
 import { default as radioMeta, Playground as radio_Playground, Demo as radio_Demo, Variants as radio_Variants, Disabled as radio_Disabled, WithLabel as radio_WithLabel, WithLabelExtended as radio_WithLabelExtended, WithFormField as radio_WithFormField } from '@/components/ui/radio.stories';
 import { default as sectionToggleMeta, Playground as sectionToggle_Playground, Default as sectionToggle_Default, Collapsed as sectionToggle_Collapsed, Composed as sectionToggle_Composed } from '@/components/ui/section-toggle.stories';
@@ -516,6 +517,16 @@ export const storyRegistry: Record<string, {
     stories: {
     'Playground': progressCircle_Playground,
     'Sizes': progressCircle_Sizes
+    }
+  },
+  'promotional-card': {
+    meta: promotionalCardMeta,
+    stories: {
+    'Stroke': promotionalCard_Stroke,
+    'Filled': promotionalCard_Filled,
+    'Clickable': promotionalCard_Clickable,
+    'Composed': promotionalCard_Composed,
+    'Grid': promotionalCard_Grid
     }
   },
   'radio-card': {

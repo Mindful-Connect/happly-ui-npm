@@ -290,6 +290,16 @@
         "collapsed": false
       },
       {
+        "title": "Cards",
+        "links": [
+          {
+            "title": "Promotional Card",
+            "href": "/docs/components/promotional-card"
+          }
+        ],
+        "collapsed": false
+      },
+      {
         "title": "Sections",
         "links": [
           {
