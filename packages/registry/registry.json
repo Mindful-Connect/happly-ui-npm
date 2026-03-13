@@ -4,6 +4,12 @@
   "homepage": "https://happly.cloud/ui",
   "items": [
     {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "A collapsible accordion component with filled and stroke variants. Includes a composed Accordion.Group for quick usage. Built on Radix Accordion with namespace exports."
+    },
+    {
       "name": "alert",
       "type": "registry:ui",
       "title": "Alert",

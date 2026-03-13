@@ -87,6 +87,8 @@ function main() {
   ];
 
   const LAYOUT_COMPONENTS = [
+    'accordion',
+    'segmented-control',
     'tab-menu-horizontal',
   ];
 

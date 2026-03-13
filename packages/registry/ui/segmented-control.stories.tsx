@@ -3,7 +3,7 @@ import { RiEqualizer3Fill, RiMoonLine, RiSunLine } from '@remixicon/react';
 import * as SegmentedControl from './segmented-control';
 
 export default {
-  title: 'UI/Segmented Control',
+  title: 'Layout/Segmented Control',
   component: SegmentedControl.Root,
 };
 
