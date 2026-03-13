@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react';
+import { motion } from 'framer-motion';
 import { DayPicker } from 'react-day-picker';
 
 import { compactButtonVariants } from '@/components/ui/compact-button';
@@ -211,11 +212,11 @@ function Calendar({
   };
 
   const contentRef = React.useRef<HTMLDivElement>(null);
-  const [animatedHeight, setAnimatedHeight] = React.useState<
-    number | undefined
-  >(undefined);
+  const [animatedHeight, setAnimatedHeight] = React.useState<number | 'auto'>(
+    'auto',
+  );
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (!contentRef.current) return;
     const el = contentRef.current;
     setAnimatedHeight(el.scrollHeight);
@@ -228,9 +229,10 @@ function Calendar({
   }, [view]);
 
   return (
-    <div
-      className='overflow-hidden transition-[height] duration-200 ease-out'
-      style={{ height: animatedHeight ? `${animatedHeight}px` : 'auto' }}
+    <motion.div
+      animate={{ height: animatedHeight }}
+      transition={{ duration: 0.2, ease: 'easeInOut' }}
+      className='overflow-hidden'
     >
       <div ref={contentRef}>
         {view === 'years' && (
@@ -370,7 +372,7 @@ function Calendar({
           />
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
