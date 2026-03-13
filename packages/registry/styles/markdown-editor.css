@@ -1,0 +1,68 @@
+/* Markdown Editor — TipTap content styles */
+
+/* Placeholder */
+.markdown-editor-content .tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: var(--color-text-soft-400);
+}
+
+/* Task list */
+.markdown-editor-content .tiptap ul[data-type='taskList'] {
+  list-style: none;
+  padding-left: 0;
+}
+
+.markdown-editor-content .tiptap ul[data-type='taskList'] li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.markdown-editor-content .tiptap ul[data-type='taskList'] li label {
+  display: flex;
+  align-items: center;
+  margin-top: 0.125rem;
+}
+
+.markdown-editor-content .tiptap ul[data-type='taskList'] li label input[type='checkbox'] {
+  accent-color: var(--color-primary-base);
+  cursor: pointer;
+}
+
+/* Ordered list */
+.markdown-editor-content .tiptap ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+}
+
+/* Unordered list */
+.markdown-editor-content .tiptap ul:not([data-type='taskList']) {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+}
+
+/* Inline formatting */
+.markdown-editor-content .tiptap a {
+  color: var(--color-primary-base);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.markdown-editor-content .tiptap strong {
+  font-weight: 600;
+}
+
+.markdown-editor-content .tiptap em {
+  font-style: italic;
+}
+
+.markdown-editor-content .tiptap s {
+  text-decoration: line-through;
+}
+
+.markdown-editor-content .tiptap u {
+  text-decoration: underline;
+}

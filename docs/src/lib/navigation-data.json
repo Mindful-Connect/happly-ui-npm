@@ -334,6 +334,10 @@
           }
         ],
         "collapsed": false
+      },
+      {
+        "title": "Markdown Editor",
+        "href": "/docs/components/markdown-editor"
       }
     ]
   },

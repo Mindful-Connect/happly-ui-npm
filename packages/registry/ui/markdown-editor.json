@@ -1,0 +1,316 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "markdown-editor",
+  "type": "registry:ui",
+  "title": "Markdown Editor",
+  "description": "A live rich text editor with formatting toolbar and built-in switch toggle. Edit and preview in one view. Compound or composed mode. Works with FormField.",
+  "version": "1.0.0",
+  "dependencies": [
+    "@remixicon/react",
+    "@tiptap/react",
+    "@tiptap/starter-kit",
+    "@tiptap/extension-underline",
+    "@tiptap/extension-link",
+    "@tiptap/extension-task-list",
+    "@tiptap/extension-task-item",
+    "@tiptap/extension-placeholder"
+  ],
+  "registryDependencies": ["switch-toggle", "utils"],
+  "docs": {
+    "lead": "A live rich text editor powered by TipTap. Format text with the toolbar and see results instantly — no separate preview mode needed. Includes a built-in switch toggle for multilingual content.",
+    "usage": "import * as MarkdownEditor from \"@/components/ui/markdown-editor\"\n\n<MarkdownEditor.Composed\n  placeholder=\"Start writing...\"\n  onChange={(html) => console.log(html)}\n/>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Basic rich text editor with formatting toolbar.",
+        "code": "<MarkdownEditor.Composed\n  placeholder=\"Describe your ideal successor...\"\n/>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "With Toggle",
+        "description": "Editor with built-in SwitchToggle for language switching.",
+        "code": "<MarkdownEditor.Composed\n  placeholder=\"Write here...\"\n  toggleItems={[\n    { value: 'english', label: 'English' },\n    { value: 'french', label: 'French' },\n  ]}\n  defaultToggleValue=\"english\"\n/>",
+        "stories": ["WithToggle"]
+      },
+      {
+        "title": "Controlled Toggle",
+        "description": "Controlled toggle with per-language content stored separately.",
+        "code": "const [lang, setLang] = useState('english');\nconst [values, setValues] = useState({ english: '', french: '' });\n\n<MarkdownEditor.Composed\n  toggleItems={items}\n  toggleValue={lang}\n  onToggleChange={setLang}\n  value={values[lang]}\n  onChange={(html) => setValues(prev => ({ ...prev, [lang]: html }))}\n/>",
+        "stories": ["ControlledToggle"]
+      },
+      {
+        "title": "Compound",
+        "description": "Full compound mode using useMarkdownEditorState hook with custom layout.",
+        "code": "const editor = MarkdownEditor.useMarkdownEditorState({\n  placeholder: 'Write...',\n});\n\n<MarkdownEditor.Root editor={editor}>\n  <MarkdownEditor.Toolbar>\n    <MarkdownEditor.DefaultToolbar />\n    <MarkdownEditor.Toggle items={items} defaultValue=\"english\" />\n  </MarkdownEditor.Toolbar>\n  <MarkdownEditor.Content />\n</MarkdownEditor.Root>",
+        "stories": ["Compound"]
+      },
+      {
+        "title": "With FormField",
+        "description": "Inside a FormField with label, required indicator, and hint.",
+        "code": "<FormField.Root label=\"Description\" required hint=\"Describe in detail.\">\n  <MarkdownEditor.Composed toggleItems={items} defaultToggleValue=\"english\" />\n</FormField.Root>",
+        "stories": ["WithFormField"]
+      },
+      {
+        "title": "With Error",
+        "description": "Error state inside a FormField.",
+        "code": "<FormField.Root label=\"Description\" error=\"Required.\">\n  <MarkdownEditor.Composed hasError />\n</FormField.Root>",
+        "stories": ["WithError"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Disabled editor with muted toolbar and content.",
+        "code": "<FormField.Root label=\"Description\" disabled>\n  <MarkdownEditor.Composed disabled />\n</FormField.Root>",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "With Default Content",
+        "description": "Editor pre-filled with rich content including bold text and task lists.",
+        "code": "<MarkdownEditor.Composed\n  defaultValue=\"<p>This is <strong>bold</strong> text.</p>\"\n/>",
+        "stories": ["WithDefaultContent"]
+      }
+    ],
+    "api": [
+      {
+        "name": "MarkdownEditor.Root",
+        "description": "The root container. Accepts an editor instance and provides context.",
+        "props": [
+          {
+            "name": "editor",
+            "type": "Editor | null",
+            "description": "TipTap editor instance from useMarkdownEditorState."
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Error state applied to the content area."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disables toolbar and content."
+          }
+        ]
+      },
+      {
+        "name": "MarkdownEditor.Toolbar",
+        "description": "The toolbar container with role='toolbar'.",
+        "props": []
+      },
+      {
+        "name": "MarkdownEditor.DefaultToolbar",
+        "description": "Pre-built toolbar buttons (bold, italic, underline, strikethrough, checklist, ordered list, link). Reads editor from context and tracks active state automatically.",
+        "props": []
+      },
+      {
+        "name": "MarkdownEditor.ToolbarButton",
+        "description": "An individual toolbar button with hover and active states.",
+        "props": [
+          {
+            "name": "active",
+            "type": "boolean",
+            "default": "false",
+            "description": "Whether the button is active/pressed."
+          }
+        ]
+      },
+      {
+        "name": "MarkdownEditor.ToolbarGroup",
+        "description": "Groups toolbar buttons with consistent spacing.",
+        "props": []
+      },
+      {
+        "name": "MarkdownEditor.Toggle",
+        "description": "Built-in SwitchToggle.Group for the toolbar.",
+        "props": [
+          {
+            "name": "items",
+            "type": "SwitchToggleGroupItem[]",
+            "description": "Array of toggle items."
+          },
+          {
+            "name": "value",
+            "type": "string",
+            "description": "Controlled active value."
+          },
+          {
+            "name": "defaultValue",
+            "type": "string",
+            "description": "Default active value."
+          },
+          {
+            "name": "onValueChange",
+            "type": "(value: string) => void",
+            "description": "Callback on change."
+          }
+        ]
+      },
+      {
+        "name": "MarkdownEditor.Content",
+        "description": "The TipTap editor content area. Renders the EditorContent from context.",
+        "props": [
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "description": "Override error state from context."
+          },
+          {
+            "name": "height",
+            "type": "string",
+            "default": "'200px'",
+            "description": "Min-height of the editor content area. Accepts any CSS value."
+          }
+        ]
+      },
+      {
+        "name": "MarkdownEditor.Composed",
+        "description": "Props-driven composed mode. Creates the editor internally.",
+        "props": [
+          {
+            "name": "value",
+            "type": "string",
+            "description": "Controlled HTML content."
+          },
+          {
+            "name": "defaultValue",
+            "type": "string",
+            "description": "Initial HTML content (uncontrolled)."
+          },
+          {
+            "name": "onChange",
+            "type": "(html: string) => void",
+            "description": "Callback with HTML string on every change."
+          },
+          {
+            "name": "placeholder",
+            "type": "string",
+            "description": "Placeholder text."
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Error state."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disabled state."
+          },
+          {
+            "name": "toggleItems",
+            "type": "SwitchToggleGroupItem[]",
+            "description": "Items for built-in SwitchToggle. Hidden when omitted."
+          },
+          {
+            "name": "toggleValue",
+            "type": "string",
+            "description": "Controlled toggle value."
+          },
+          {
+            "name": "defaultToggleValue",
+            "type": "string",
+            "description": "Default toggle value."
+          },
+          {
+            "name": "onToggleChange",
+            "type": "(value: string) => void",
+            "description": "Callback when toggle changes."
+          },
+          {
+            "name": "containerClassName",
+            "type": "string",
+            "description": "ClassName for the root container."
+          },
+          {
+            "name": "contentClassName",
+            "type": "string",
+            "description": "ClassName for the content area."
+          },
+          {
+            "name": "height",
+            "type": "string",
+            "default": "'200px'",
+            "description": "Min-height of the editor content area."
+          }
+        ]
+      },
+      {
+        "name": "useMarkdownEditorState",
+        "description": "Hook that creates a TipTap editor instance. Use with compound mode.",
+        "props": [
+          {
+            "name": "value",
+            "type": "string",
+            "description": "Controlled HTML content."
+          },
+          {
+            "name": "defaultValue",
+            "type": "string",
+            "description": "Initial HTML content."
+          },
+          {
+            "name": "onChange",
+            "type": "(html: string) => void",
+            "description": "Callback on content change."
+          },
+          {
+            "name": "placeholder",
+            "type": "string",
+            "description": "Placeholder text."
+          },
+          {
+            "name": "editable",
+            "type": "boolean",
+            "default": "true",
+            "description": "Whether the editor is editable."
+          }
+        ]
+      },
+      {
+        "name": "executeAction",
+        "description": "Executes a formatting action on the editor. Use in compound mode for custom toolbar buttons.",
+        "props": [
+          {
+            "name": "editor",
+            "type": "Editor",
+            "description": "TipTap editor instance."
+          },
+          {
+            "name": "action",
+            "type": "FormatAction",
+            "description": "The formatting action to execute."
+          }
+        ]
+      },
+      {
+        "name": "isActionActive",
+        "description": "Checks if a formatting action is currently active at the cursor position.",
+        "props": [
+          {
+            "name": "editor",
+            "type": "Editor",
+            "description": "TipTap editor instance."
+          },
+          {
+            "name": "action",
+            "type": "FormatAction",
+            "description": "The formatting action to check."
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/markdown-editor.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "styles/markdown-editor.css",
+      "type": "registry:style"
+    }
+  ]
+}

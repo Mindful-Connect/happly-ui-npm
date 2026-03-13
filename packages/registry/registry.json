@@ -238,6 +238,12 @@
       "description": "A Google Maps address autocomplete input with Popover dropdown."
     },
     {
+      "name": "markdown-editor",
+      "type": "registry:ui",
+      "title": "Markdown Editor",
+      "description": "A live rich text editor with formatting toolbar and built-in switch toggle. Edit and preview in one view. Compound or composed mode. Works with FormField."
+    },
+    {
       "name": "memoji",
       "type": "registry:lib",
       "title": "Memoji",
