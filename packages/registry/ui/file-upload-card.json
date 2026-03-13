@@ -12,100 +12,34 @@
     "usage": "import * as FileUploadCard from \"@/components/ui/file-upload-card\"\n\n<FileUploadCard.Item\n  file={{ id: '1', name: 'file.pdf', size: 2621440, type: 'application/pdf', progress: 100, status: 'completed' }}\n  onRemove={() => {}}\n/>",
     "examples": [
       {
-        "title": "Uploading",
-        "description": "Shows upload progress with a spinner, progress bar, and close button.",
+        "title": "Upload States",
+        "description": "Uploading and failed states with progress bar, spinner, retry link, and action buttons.",
         "code": "<FileUploadCard.Root>\n  <FileUploadCard.Thumbnail>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" size=\"medium\" />\n  </FileUploadCard.Thumbnail>\n  <FileUploadCard.Content>\n    <FileUploadCard.UploadBody>\n      <FileUploadCard.InfoGroup>\n        <FileUploadCard.Name>DataAnalysis.pdf</FileUploadCard.Name>\n        <FileUploadCard.Status status=\"uploading\">Uploading...</FileUploadCard.Status>\n      </FileUploadCard.InfoGroup>\n      <FileUploadCard.Progress value={10} />\n    </FileUploadCard.UploadBody>\n    <FileUploadCard.Actions>\n      <FileUploadCard.CloseButton />\n    </FileUploadCard.Actions>\n  </FileUploadCard.Content>\n</FileUploadCard.Root>",
-        "stories": ["Uploading"]
+        "stories": ["UploadStates"]
       },
       {
-        "title": "Failed",
-        "description": "Error state with a retry link and remove button.",
-        "code": "<FileUploadCard.Root>\n  <FileUploadCard.Thumbnail>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" size=\"medium\" />\n  </FileUploadCard.Thumbnail>\n  <FileUploadCard.Content>\n    <FileUploadCard.UploadBody>\n      <FileUploadCard.InfoGroup>\n        <FileUploadCard.Name>DataAnalysis.pdf</FileUploadCard.Name>\n        <FileUploadCard.Status status=\"failed\">Failed</FileUploadCard.Status>\n      </FileUploadCard.InfoGroup>\n      <FileUploadCard.RetryLink />\n    </FileUploadCard.UploadBody>\n    <FileUploadCard.Actions>\n      <FileUploadCard.RemoveButton />\n    </FileUploadCard.Actions>\n  </FileUploadCard.Content>\n</FileUploadCard.Root>",
-        "stories": ["Failed"]
-      },
-      {
-        "title": "Completed Document",
-        "description": "A successfully uploaded document with file format icon.",
+        "title": "Completed Media Types",
+        "description": "Completed cards for document, image, video, and audio file types with appropriate thumbnails.",
         "code": "<FileUploadCard.Root>\n  <FileUploadCard.Thumbnail>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" size=\"medium\" />\n  </FileUploadCard.Thumbnail>\n  <FileUploadCard.Content>\n    <FileUploadCard.Body>\n      <FileUploadCard.Name>DataAnalysis.pdf</FileUploadCard.Name>\n      <FileUploadCard.Meta>2.5 MB</FileUploadCard.Meta>\n      <FileUploadCard.Hint>Uploaded on: June 5, 2023</FileUploadCard.Hint>\n    </FileUploadCard.Body>\n    <FileUploadCard.Actions>\n      <FileUploadCard.RemoveButton />\n    </FileUploadCard.Actions>\n  </FileUploadCard.Content>\n</FileUploadCard.Root>",
-        "stories": ["CompletedDocument"]
+        "stories": ["CompletedMediaTypes"]
       },
       {
-        "title": "Completed Image",
-        "description": "An uploaded image with a photo thumbnail.",
-        "code": "<FileUploadCard.Root>\n  <FileUploadCard.Thumbnail className=\"bg-transparent\">\n    <FileUploadCard.Image src=\"https://example.com/photo.jpg\" />\n  </FileUploadCard.Thumbnail>\n  <FileUploadCard.Content>\n    <FileUploadCard.Body>\n      <FileUploadCard.Name>Team_Photo_2025.jpg</FileUploadCard.Name>\n      <FileUploadCard.Meta>2.5 MB</FileUploadCard.Meta>\n      <FileUploadCard.Hint>Use a horizontal image (16:9).</FileUploadCard.Hint>\n    </FileUploadCard.Body>\n    <FileUploadCard.Actions>\n      <FileUploadCard.RemoveButton />\n    </FileUploadCard.Actions>\n  </FileUploadCard.Content>\n</FileUploadCard.Root>",
-        "stories": ["CompletedImage"]
-      },
-      {
-        "title": "Completed Video",
-        "description": "An uploaded video with a thumbnail and play overlay.",
-        "code": "<FileUploadCard.Root>\n  <FileUploadCard.Thumbnail className=\"bg-transparent\">\n    <FileUploadCard.Video src=\"https://example.com/thumb.jpg\" />\n  </FileUploadCard.Thumbnail>\n  <FileUploadCard.Content>\n    <FileUploadCard.Body>\n      <FileUploadCard.Name>Founder_Intro_Video.mp4</FileUploadCard.Name>\n      <FileUploadCard.Meta>2.5 MB</FileUploadCard.Meta>\n    </FileUploadCard.Body>\n    <FileUploadCard.Actions>\n      <FileUploadCard.RemoveButton />\n    </FileUploadCard.Actions>\n  </FileUploadCard.Content>\n</FileUploadCard.Root>",
-        "stories": ["CompletedVideo"]
-      },
-      {
-        "title": "Completed Audio",
-        "description": "An uploaded audio file with a speaker icon thumbnail.",
-        "code": "<FileUploadCard.Root>\n  <FileUploadCard.Thumbnail>\n    <FileUploadCard.Audio />\n  </FileUploadCard.Thumbnail>\n  <FileUploadCard.Content>\n    <FileUploadCard.Body>\n      <FileUploadCard.Name>Podcast_Clip.mp3</FileUploadCard.Name>\n      <FileUploadCard.Meta>2.5 MB</FileUploadCard.Meta>\n    </FileUploadCard.Body>\n    <FileUploadCard.Actions>\n      <FileUploadCard.RemoveButton />\n    </FileUploadCard.Actions>\n  </FileUploadCard.Content>\n</FileUploadCard.Root>",
-        "stories": ["CompletedAudio"]
-      },
-      {
-        "title": "Compact: Uploading",
-        "description": "Compact variant with inline icon, description, status, and progress bar.",
+        "title": "Compact",
+        "description": "Compact variant showing uploading, completed, and failed states with inline layout.",
         "code": "<FileUploadCard.CompactRoot>\n  <FileUploadCard.CompactContent>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" size=\"medium\" />\n    <FileUploadCard.CompactBody>\n      <FileUploadCard.Name>my-cv.pdf</FileUploadCard.Name>\n      <FileUploadCard.CompactDescription>\n        <FileUploadCard.Meta>0 KB of 120 KB</FileUploadCard.Meta>\n        <FileUploadCard.Dot />\n        <FileUploadCard.CompactStatus status=\"uploading\">Uploading...</FileUploadCard.CompactStatus>\n      </FileUploadCard.CompactDescription>\n    </FileUploadCard.CompactBody>\n    <FileUploadCard.CloseButton />\n  </FileUploadCard.CompactContent>\n  <FileUploadCard.Progress value={10} />\n</FileUploadCard.CompactRoot>",
-        "stories": ["CompactUploading"]
+        "stories": ["Compact"]
       },
       {
-        "title": "Compact: Completed",
-        "description": "Compact variant showing completed state with a delete button.",
-        "code": "<FileUploadCard.CompactRoot>\n  <FileUploadCard.CompactContent>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" size=\"medium\" />\n    <FileUploadCard.CompactBody>\n      <FileUploadCard.Name>my-cv.pdf</FileUploadCard.Name>\n      <FileUploadCard.CompactDescription>\n        <FileUploadCard.Meta>0 KB of 120 KB</FileUploadCard.Meta>\n        <FileUploadCard.Dot />\n        <FileUploadCard.CompactStatus status=\"completed\">Completed</FileUploadCard.CompactStatus>\n      </FileUploadCard.CompactDescription>\n    </FileUploadCard.CompactBody>\n    <FileUploadCard.DeleteButton />\n  </FileUploadCard.CompactContent>\n</FileUploadCard.CompactRoot>",
-        "stories": ["CompactCompleted"]
-      },
-      {
-        "title": "Compact: Failed",
-        "description": "Compact variant with red error border, retry link, and delete button.",
-        "code": "<FileUploadCard.CompactRoot error>\n  <FileUploadCard.CompactContent>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" size=\"medium\" />\n    <FileUploadCard.CompactErrorBody>\n      <FileUploadCard.CompactBody>\n        <FileUploadCard.Name>my-cv.pdf</FileUploadCard.Name>\n        <FileUploadCard.CompactDescription>\n          <FileUploadCard.Meta>0 KB of 120 KB</FileUploadCard.Meta>\n          <FileUploadCard.Dot />\n          <FileUploadCard.CompactStatus status=\"failed\">Failed</FileUploadCard.CompactStatus>\n        </FileUploadCard.CompactDescription>\n      </FileUploadCard.CompactBody>\n      <FileUploadCard.RetryLink />\n    </FileUploadCard.CompactErrorBody>\n    <FileUploadCard.DeleteButton />\n  </FileUploadCard.CompactContent>\n</FileUploadCard.CompactRoot>",
-        "stories": ["CompactFailed"]
-      },
-      {
-        "title": "Item: Uploading",
-        "description": "Item preset rendering an uploading file (default variant).",
+        "title": "Item Preset",
+        "description": "High-level Item preset rendering uploading, failed, completed document, and completed image states automatically.",
         "code": "<FileUploadCard.Item\n  file={{ id: '1', name: 'DataAnalysis.pdf', size: 2621440, type: 'application/pdf', progress: 35, status: 'uploading' }}\n  onClose={() => {}}\n/>",
-        "stories": ["ItemUploading"]
+        "stories": ["Item"]
       },
       {
-        "title": "Item: Failed",
-        "description": "Item preset rendering a failed upload with retry.",
-        "code": "<FileUploadCard.Item\n  file={{ id: '2', name: 'DataAnalysis.pdf', size: 2621440, type: 'application/pdf', progress: 0, status: 'failed' }}\n  onRemove={() => {}}\n  onRetry={() => {}}\n/>",
-        "stories": ["ItemFailed"]
-      },
-      {
-        "title": "Item: Completed Document",
-        "description": "Item preset rendering a completed document upload.",
-        "code": "<FileUploadCard.Item\n  file={{ id: '3', name: 'DataAnalysis.pdf', size: 2621440, type: 'application/pdf', progress: 100, status: 'completed' }}\n  onRemove={() => {}}\n/>",
-        "stories": ["ItemCompletedDocument"]
-      },
-      {
-        "title": "Item: Completed Image",
-        "description": "Item preset rendering a completed image upload with preview thumbnail.",
-        "code": "<FileUploadCard.Item\n  file={{ id: '4', name: 'photo.jpg', size: 2621440, type: 'image/jpeg', progress: 100, status: 'completed', preview: 'https://...' }}\n  onRemove={() => {}}\n/>",
-        "stories": ["ItemCompletedImage"]
-      },
-      {
-        "title": "Item: Compact Uploading",
-        "description": "Item preset in compact variant during upload.",
+        "title": "Item Preset: Compact",
+        "description": "Item preset in compact variant showing uploading, completed, and failed states.",
         "code": "<FileUploadCard.Item\n  variant=\"compact\"\n  file={{ id: '5', name: 'my-cv.pdf', size: 122880, type: 'application/pdf', progress: 10, status: 'uploading' }}\n  onClose={() => {}}\n/>",
-        "stories": ["ItemCompactUploading"]
-      },
-      {
-        "title": "Item: Compact Completed",
-        "description": "Item preset in compact variant after completion.",
-        "code": "<FileUploadCard.Item\n  variant=\"compact\"\n  file={{ id: '6', name: 'my-cv.pdf', size: 122880, type: 'application/pdf', progress: 100, status: 'completed' }}\n  onRemove={() => {}}\n/>",
-        "stories": ["ItemCompactCompleted"]
-      },
-      {
-        "title": "Item: Compact Failed",
-        "description": "Item preset in compact variant with error state.",
-        "code": "<FileUploadCard.Item\n  variant=\"compact\"\n  file={{ id: '7', name: 'my-cv.pdf', size: 122880, type: 'application/pdf', progress: 0, status: 'failed' }}\n  onRemove={() => {}}\n  onRetry={() => {}}\n/>",
-        "stories": ["ItemCompactFailed"]
+        "stories": ["ItemCompact"]
       }
     ],
     "api": [
