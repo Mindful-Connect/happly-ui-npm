@@ -89,6 +89,10 @@
             "href": "/docs/components/progress-circle"
           },
           {
+            "title": "Skeleton",
+            "href": "/docs/components/skeleton"
+          },
+          {
             "title": "Status Badge",
             "href": "/docs/components/status-badge"
           },

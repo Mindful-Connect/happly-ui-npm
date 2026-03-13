@@ -75,6 +75,7 @@ function main() {
     'level-bar',
     'progress-bar',
     'progress-circle',
+    'skeleton',
     'status-badge',
     'table',
     'tag',

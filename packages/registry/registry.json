@@ -316,6 +316,12 @@
       "description": "A select component with multiple variants, sizes, scroll area, and item icons. Uses namespace exports: Select.Root, Select.Trigger, Select.Value, Select.Content, Select.Item, Select.ItemIcon, Select.Group, Select.GroupLabel, Select.Separator, Select.TriggerIcon."
     },
     {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "A placeholder loading animation for content that hasn't loaded yet."
+    },
+    {
       "name": "slider",
       "type": "registry:ui",
       "title": "Slider",

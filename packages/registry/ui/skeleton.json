@@ -1,0 +1,59 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "skeleton",
+  "type": "registry:ui",
+  "title": "Skeleton",
+  "description": "A placeholder loading animation for content that hasn't loaded yet.",
+  "version": "1.0.0",
+  "dependencies": ["tailwind-variants"],
+  "registryDependencies": ["tv"],
+  "docs": {
+    "lead": "A placeholder loading animation for content that hasn't loaded yet.",
+    "usage": "import * as Skeleton from \"@/components/ui/skeleton\"\n\n<Skeleton.Root className=\"h-4 w-full\" />",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Text-like skeleton lines.",
+        "code": "<Skeleton.Root className=\"h-4 w-3/4\" />\n<Skeleton.Root className=\"h-4 w-1/2\" />",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Card",
+        "description": "Skeleton layout mimicking a card with avatar, image, and text.",
+        "code": "<div className=\"flex flex-col gap-4\">\n  <div className=\"flex items-center gap-3\">\n    <Skeleton.Root variant=\"circular\" className=\"size-10\" />\n    <Skeleton.Root className=\"h-4 w-1/2\" />\n  </div>\n  <Skeleton.Root className=\"h-32 w-full\" />\n</div>",
+        "stories": ["Card"]
+      },
+      {
+        "title": "Circular",
+        "description": "Circular skeletons for avatars and icons.",
+        "code": "<Skeleton.Root variant=\"circular\" className=\"size-10\" />",
+        "stories": ["Circular"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Skeleton.Root",
+        "description": "The skeleton placeholder element.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'rounded' | 'circular'",
+            "default": "'rounded'",
+            "description": "Shape of the skeleton"
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "description": "Set width and height to match the content being loaded"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/skeleton.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}
