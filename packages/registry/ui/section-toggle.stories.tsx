@@ -55,7 +55,7 @@ function DefaultRender() {
 
   return (
     <SectionToggle.Root open={open} className='w-full max-w-[682px]'>
-      <SectionToggle.Header open={open}>
+      <SectionToggle.Header open={open} onOpenChange={setOpen}>
         <SectionToggle.TextGroup>
           <SectionToggle.Title>
             Do you want to set a closing date for offers?
@@ -84,7 +84,7 @@ function CollapsedRender() {
 
   return (
     <SectionToggle.Root open={open} className='w-full max-w-[682px]'>
-      <SectionToggle.Header open={open}>
+      <SectionToggle.Header open={open} onOpenChange={setOpen}>
         <SectionToggle.TextGroup>
           <SectionToggle.Title>
             Do you want to set a closing date for offers?

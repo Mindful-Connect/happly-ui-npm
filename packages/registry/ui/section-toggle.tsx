@@ -20,7 +20,7 @@ function SectionToggleRoot({
     <div
       className={cn(
         'overflow-hidden rounded-2xl border border-stroke-soft-200 p-2 shadow-regular-xs transition-colors duration-200',
-        open ? 'bg-bg-weak-50' : 'bg-bg-white-0',
+        open ? 'bg-bg-weak-50' : 'cursor-pointer bg-bg-white-0',
         className,
       )}
       {...rest}
@@ -33,12 +33,14 @@ SectionToggleRoot.displayName = 'SectionToggleRoot';
 
 type SectionToggleHeaderProps = React.HTMLAttributes<HTMLDivElement> & {
   open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
 function SectionToggleHeader({
   children,
   className,
   open = false,
+  onOpenChange,
   ...rest
 }: SectionToggleHeaderProps) {
   return (
@@ -48,6 +50,11 @@ function SectionToggleHeader({
         open ? 'px-2 pt-2' : 'p-2',
         className,
       )}
+      {...(!open && onOpenChange && {
+        role: 'button',
+        tabIndex: 0,
+        onClick: () => onOpenChange(true),
+      })}
       {...rest}
     >
       {children}
@@ -154,7 +161,14 @@ function SectionToggle({
 }: SectionToggleComposedProps) {
   return (
     <SectionToggleRoot open={open} className={className} {...rest}>
-      <SectionToggleHeader open={open}>
+      <SectionToggleHeader
+        open={open}
+        {...(!open && {
+          role: 'button',
+          tabIndex: 0,
+          onClick: () => onOpenChange?.(true),
+        })}
+      >
         <SectionToggleTextGroup>
           <SectionToggleTitle>{title}</SectionToggleTitle>
           {description && (
