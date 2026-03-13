@@ -913,6 +913,12 @@ export const HAPPLY_THEME_V4 = `/* HapplyUI Design Tokens — https://ui.happly.
   }
 }
 
+@property --radix-accordion-content-height {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
 @keyframes accordion-down {
   from {
     height: 0;
@@ -1346,6 +1352,12 @@ export const HAPPLY_THEME_V3 = `/* HapplyUI Design Tokens — https://ui.happly.
     --color-social-amazon: #fff;
     --color-social-zendesk: #fff;
   }
+
+@property --radix-accordion-content-height {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
 
 @keyframes accordion-down {
   from {

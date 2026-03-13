@@ -902,6 +902,12 @@
   }
 }
 
+@property --radix-accordion-content-height {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
 @keyframes accordion-down {
   from {
     height: 0;
