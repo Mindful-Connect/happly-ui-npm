@@ -236,6 +236,16 @@
         "collapsed": false
       },
       {
+        "title": "Layout",
+        "links": [
+          {
+            "title": "Tab Menu Horizontal",
+            "href": "/docs/components/tab-menu-horizontal"
+          }
+        ],
+        "collapsed": false
+      },
+      {
         "title": "Feedback",
         "links": [
           {

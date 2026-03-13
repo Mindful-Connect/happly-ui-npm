@@ -53,6 +53,7 @@ import { default as sliderMeta, Playground as slider_Playground, Demo as slider_
 import { default as socialsInputMeta, Default as socialsInput_Default, WithExistingValues as socialsInput_WithExistingValues, AllSocials as socialsInput_AllSocials, CustomSocials as socialsInput_CustomSocials, ReadOnly as socialsInput_ReadOnly, WithFormField as socialsInput_WithFormField, ErrorState as socialsInput_ErrorState, CustomLabels as socialsInput_CustomLabels } from '@/components/ui/socials-input.stories';
 import { default as statusBadgeMeta, Playground as statusBadge_Playground, Completed as statusBadge_Completed, Pending as statusBadge_Pending, Failed as statusBadge_Failed, Disabled as statusBadge_Disabled, AsChild as statusBadge_AsChild } from '@/components/ui/status-badge.stories';
 import { default as switchMeta, Playground as switch_Playground, Demo as switch_Demo, Variants as switch_Variants, Disabled as switch_Disabled, WithLabel as switch_WithLabel, WithLabelExtended as switch_WithLabelExtended, WithFormField as switch_WithFormField } from '@/components/ui/switch.stories';
+import { default as tabMenuHorizontalMeta, Default as tabMenuHorizontal_Default, Primary as tabMenuHorizontal_Primary, WithIcons as tabMenuHorizontal_WithIcons, WithCounter as tabMenuHorizontal_WithCounter, Composed as tabMenuHorizontal_Composed, Overflow as tabMenuHorizontal_Overflow, Disabled as tabMenuHorizontal_Disabled } from '@/components/ui/tab-menu-horizontal.stories';
 import { default as tableMeta, Default as table_Default } from '@/components/ui/table.stories';
 import { default as tagInputMeta, Playground as tagInput_Playground, Default as tagInput_Default, Controlled as tagInput_Controlled, MaxTags as tagInput_MaxTags, GrayVariant as tagInput_GrayVariant, Sizes as tagInput_Sizes, WithFormField as tagInput_WithFormField } from '@/components/ui/tag-input.stories';
 import { default as tagMeta, Playground as tag_Playground, Stroke as tag_Stroke, Gray as tag_Gray, Rounded as tag_Rounded, Disabled as tag_Disabled, WithImage as tag_WithImage, WithAvatar as tag_WithAvatar, Dismissable as tag_Dismissable } from '@/components/ui/tag.stories';
@@ -649,6 +650,18 @@ export const storyRegistry: Record<string, {
     'WithLabel': switch_WithLabel,
     'WithLabelExtended': switch_WithLabelExtended,
     'WithFormField': switch_WithFormField
+    }
+  },
+  'tab-menu-horizontal': {
+    meta: tabMenuHorizontalMeta,
+    stories: {
+    'Default': tabMenuHorizontal_Default,
+    'Primary': tabMenuHorizontal_Primary,
+    'WithIcons': tabMenuHorizontal_WithIcons,
+    'WithCounter': tabMenuHorizontal_WithCounter,
+    'Composed': tabMenuHorizontal_Composed,
+    'Overflow': tabMenuHorizontal_Overflow,
+    'Disabled': tabMenuHorizontal_Disabled
     }
   },
   'table': {

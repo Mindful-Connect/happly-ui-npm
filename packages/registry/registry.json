@@ -352,6 +352,12 @@
       "description": "A toggle switch component with primary and neutral variants. Uses namespace exports: Switch.Root."
     },
     {
+      "name": "tab-menu-horizontal",
+      "type": "registry:ui",
+      "title": "Tab Menu Horizontal",
+      "description": "A horizontal pill-shaped tab menu with selected/unselected states, icon and counter support. Uses namespace exports: TabMenuHorizontal.Root, TabMenuHorizontal.Item, TabMenuHorizontal.Icon, TabMenuHorizontal.Counter, TabMenuHorizontal.Composed."
+    },
+    {
       "name": "table",
       "type": "registry:ui",
       "title": "Table",
