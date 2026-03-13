@@ -322,12 +322,8 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        Chevron: ({ orientation }: { orientation?: string }) =>
-          orientation === 'left' ? (
-            <RiArrowLeftSLine className='size-5' />
-          ) : (
-            <RiArrowRightSLine className='size-5' />
-          ),
+        IconLeft: () => <RiArrowLeftSLine className='size-5' />,
+        IconRight: () => <RiArrowRightSLine className='size-5' />,
         CaptionLabel: ({ displayMonth: captionDate }: { displayMonth: Date }) => {
           const label = captionDate.toLocaleDateString('en-US', {
             month: 'long',
