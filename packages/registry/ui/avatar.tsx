@@ -145,6 +145,7 @@ export type AvatarRootProps = VariantProps<typeof avatarVariants> &
   React.HTMLAttributes<HTMLDivElement> & {
     asChild?: boolean;
     placeholderType?: 'user' | 'company';
+    placeholder?: React.ReactNode;
   };
 
 const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
@@ -156,6 +157,7 @@ const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
       color,
       className,
       placeholderType = 'user',
+      placeholder,
       ...rest
     },
     forwardedRef,
@@ -169,16 +171,20 @@ const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
       color,
     };
 
-    // use placeholder icon if no children provided
+    // use placeholder when no children provided
     if (!children) {
+      if (placeholder) {
+        return (
+          <div ref={forwardedRef} className={root({ class: className })} {...rest}>
+            {placeholder}
+          </div>
+        );
+      }
+
       return (
-        <div className={root({ class: className })} {...rest}>
+        <div ref={forwardedRef} className={root({ class: className })} {...rest}>
           <AvatarImage asChild>
-            {placeholderType === 'company' ? (
-              <IconEmptyCompany />
-            ) : (
-              <IconEmptyUser />
-            )}
+            {placeholderType === 'company' ? <IconEmptyCompany /> : <IconEmptyUser />}
           </AvatarImage>
         </div>
       );

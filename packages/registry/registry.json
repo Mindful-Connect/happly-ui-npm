@@ -238,6 +238,12 @@
       "description": "A Google Maps address autocomplete input with Popover dropdown."
     },
     {
+      "name": "logo-upload",
+      "type": "registry:ui",
+      "title": "Logo Upload",
+      "description": "A compound component for uploading logos or profile images with avatar preview, powered by useFileUpload."
+    },
+    {
       "name": "markdown-editor",
       "type": "registry:ui",
       "title": "Markdown Editor",

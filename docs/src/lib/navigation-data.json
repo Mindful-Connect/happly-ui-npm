@@ -336,6 +336,10 @@
         "collapsed": false
       },
       {
+        "title": "Logo Upload",
+        "href": "/docs/components/logo-upload"
+      },
+      {
         "title": "Markdown Editor",
         "href": "/docs/components/markdown-editor"
       }

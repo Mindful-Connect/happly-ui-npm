@@ -1,3 +1,5 @@
+import { RiBuildingLine } from '@remixicon/react';
+
 import * as Avatar from './avatar';
 
 export default { title: 'Displaying Data/Avatar', component: Avatar.Root };
@@ -374,6 +376,32 @@ export const SquareRounded = {
       <Avatar.Root className='rounded-lg' placeholderType='company' />
 
       <Avatar.Root className='rounded-lg' />
+
+      <Avatar.Root
+        className='rounded-xl bg-[#EFEBFF] ring-[1.26px] ring-[rgba(14,18,27,0.1)]'
+        placeholder={<RiBuildingLine className='size-10 text-[#B8ACF6]' />}
+      />
+    </div>
+  ),
+};
+
+export const CustomPlaceholder = {
+  render: () => (
+    <div className='flex items-center gap-6'>
+      <Avatar.Root
+        placeholder={<RiBuildingLine className='size-10' />}
+        color='primary'
+      />
+      <Avatar.Root
+        placeholder={<RiBuildingLine className='size-8' />}
+        color='primary'
+        size='64'
+      />
+      <Avatar.Root
+        placeholder={<RiBuildingLine className='size-6' />}
+        color='primary'
+        size='48'
+      />
     </div>
   ),
 };

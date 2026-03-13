@@ -67,6 +67,12 @@
         "stories": ["IndicatorCustomSVG"]
       },
       {
+        "title": "Custom Placeholder",
+        "description": "Pass a custom ReactNode via the placeholder prop to replace the default icon while keeping the avatar container styling.",
+        "code": "<Avatar.Root\n  placeholder={<RiBuildingLine className=\"size-10\" />}\n  color=\"primary\"\n/>\n<Avatar.Root\n  placeholder={<RiBuildingLine className=\"size-8\" />}\n  color=\"primary\"\n  size=\"64\"\n/>",
+        "stories": ["CustomPlaceholder"]
+      },
+      {
         "title": "Square Rounded",
         "description": "Override the default circular shape by passing a rounded className to Avatar.Root. The image inherits the rounding automatically. Use rounded-lg for larger sizes and rounded-md for smaller ones.",
         "code": "<Avatar.Root className=\"rounded-lg\">\n  <Avatar.Image src=\"/path/to/image.png\" />\n</Avatar.Root>",
@@ -101,6 +107,11 @@
             "type": "'user' | 'company'",
             "default": "'user'",
             "description": "The placeholder icon type when no children are provided"
+          },
+          {
+            "name": "placeholder",
+            "type": "ReactNode",
+            "description": "Custom placeholder content rendered when no children are provided. Overrides placeholderType."
           },
           {
             "name": "asChild",

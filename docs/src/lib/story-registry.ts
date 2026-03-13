@@ -5,7 +5,7 @@ import { default as accordionMeta, Default as accordion_Default, ArrowStart as a
 import { default as alertMeta, Playground as alert_Playground, Filled as alert_Filled, Light as alert_Light, Lighter as alert_Lighter, Stroke as alert_Stroke, Sizes as alert_Sizes } from '@/components/ui/alert.stories';
 import { default as avatarGroupCompactMeta, Playground as avatarGroupCompact_Playground, Variants as avatarGroupCompact_Variants, Size as avatarGroupCompact_Size } from '@/components/ui/avatar-group-compact.stories';
 import { default as avatarGroupMeta, Playground as avatarGroup_Playground, Size as avatarGroup_Size } from '@/components/ui/avatar-group.stories';
-import { default as avatarMeta, Playground as avatar_Playground, Color as avatar_Color, Size as avatar_Size, Text as avatar_Text, Placeholder as avatar_Placeholder, Status as avatar_Status, Notification as avatar_Notification, BrandLogo as avatar_BrandLogo, IndicatorCustomSVG as avatar_IndicatorCustomSVG, SquareRounded as avatar_SquareRounded, AsLink as avatar_AsLink } from '@/components/ui/avatar.stories';
+import { default as avatarMeta, Playground as avatar_Playground, Color as avatar_Color, Size as avatar_Size, Text as avatar_Text, Placeholder as avatar_Placeholder, Status as avatar_Status, Notification as avatar_Notification, BrandLogo as avatar_BrandLogo, IndicatorCustomSVG as avatar_IndicatorCustomSVG, SquareRounded as avatar_SquareRounded, CustomPlaceholder as avatar_CustomPlaceholder, AsLink as avatar_AsLink } from '@/components/ui/avatar.stories';
 import { default as badgeMeta, Playground as badge_Playground, BadgeFilled as badge_BadgeFilled, BadgeLight as badge_BadgeLight, BadgeLighter as badge_BadgeLighter, BadgeStroke as badge_BadgeStroke, BadgeColors as badge_BadgeColors, Size as badge_Size, Square as badge_Square, WithIcon as badge_WithIcon, WithDot as badge_WithDot, Disabled as badge_Disabled, AsChild as badge_AsChild, GroupDefault as badge_GroupDefault, Group as badge_Group, GroupExpanded as badge_GroupExpanded } from '@/components/ui/badge.stories';
 import { default as bannerMeta, Playground as banner_Playground, Error as banner_Error, Warning as banner_Warning, Success as banner_Success, Information as banner_Information, Feature as banner_Feature, Primary as banner_Primary } from '@/components/ui/banner.stories';
 import { default as buttonGroupMeta, Playground as buttonGroup_Playground, Default as buttonGroup_Default, Sizes as buttonGroup_Sizes } from '@/components/ui/button-group.stories';
@@ -37,6 +37,7 @@ import { default as labelMeta, Playground as label_Playground, Demo as label_Dem
 import { default as levelBarMeta, Playground as levelBar_Playground, Levels as levelBar_Levels, CustomSegments as levelBar_CustomSegments } from '@/components/ui/level-bar.stories';
 import { default as linkButtonMeta, Playground as linkButton_Playground, Variants as linkButton_Variants, Sizes as linkButton_Sizes, Underline as linkButton_Underline, WithIcon as linkButton_WithIcon, Disabled as linkButton_Disabled, AsChild as linkButton_AsChild } from '@/components/ui/link-button.stories';
 import { default as locationInputMeta, Playground as locationInput_Playground, Default as locationInput_Default } from '@/components/ui/location-input.stories';
+import { default as logoUploadMeta, Default as logoUpload_Default, WithLogo as logoUpload_WithLogo, Uploading as logoUpload_Uploading, Failed as logoUpload_Failed, CustomPreview as logoUpload_CustomPreview, UserAvatar as logoUpload_UserAvatar, Composed as logoUpload_Composed, ComposedWithLogo as logoUpload_ComposedWithLogo } from '@/components/ui/logo-upload.stories';
 import { default as markdownEditorMeta, Default as markdownEditor_Default, WithToggle as markdownEditor_WithToggle, ControlledToggle as markdownEditor_ControlledToggle, Compound as markdownEditor_Compound, WithFormField as markdownEditor_WithFormField, WithError as markdownEditor_WithError, Disabled as markdownEditor_Disabled, WithDefaultContent as markdownEditor_WithDefaultContent } from '@/components/ui/markdown-editor.stories';
 import { default as modalMeta, Playground as modal_Playground, Demo as modal_Demo, WithHeader as modal_WithHeader } from '@/components/ui/modal.stories';
 import { default as paginationMeta, Playground as pagination_Playground, Demo as pagination_Demo, Rounded as pagination_Rounded, Group as pagination_Group, AsLink as pagination_AsLink } from '@/components/ui/pagination.stories';
@@ -121,6 +122,7 @@ export const storyRegistry: Record<string, {
     'BrandLogo': avatar_BrandLogo,
     'IndicatorCustomSVG': avatar_IndicatorCustomSVG,
     'SquareRounded': avatar_SquareRounded,
+    'CustomPlaceholder': avatar_CustomPlaceholder,
     'AsLink': avatar_AsLink
     }
   },
@@ -474,6 +476,19 @@ export const storyRegistry: Record<string, {
     stories: {
     'Playground': locationInput_Playground,
     'Default': locationInput_Default
+    }
+  },
+  'logo-upload': {
+    meta: logoUploadMeta,
+    stories: {
+    'Default': logoUpload_Default,
+    'WithLogo': logoUpload_WithLogo,
+    'Uploading': logoUpload_Uploading,
+    'Failed': logoUpload_Failed,
+    'CustomPreview': logoUpload_CustomPreview,
+    'UserAvatar': logoUpload_UserAvatar,
+    'Composed': logoUpload_Composed,
+    'ComposedWithLogo': logoUpload_ComposedWithLogo
     }
   },
   'markdown-editor': {

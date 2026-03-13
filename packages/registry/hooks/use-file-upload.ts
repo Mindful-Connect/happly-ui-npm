@@ -44,7 +44,9 @@ interface UseFileUploadReturn {
   retryFile: (id: string) => void;
   clearFiles: () => void;
   openFilePicker: () => void;
-  getInputProps: () => React.InputHTMLAttributes<HTMLInputElement>;
+  getInputProps: () => React.InputHTMLAttributes<HTMLInputElement> & {
+    ref: React.RefObject<HTMLInputElement | null>;
+  };
   getRootProps: () => {
     onDrop: (e: React.DragEvent) => void;
     onDragOver: (e: React.DragEvent) => void;
@@ -235,11 +237,9 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
     };
 
     const onUploadError = (
-      arg1: UppyFile<UppyMeta, UppyBody> | Error | undefined,
-      arg2: UppyFile<UppyMeta, UppyBody> | Error | undefined,
+      file: UppyFile<UppyMeta, UppyBody> | undefined,
+      error: { name: string; message: string; details?: string },
     ) => {
-      const error = (arg1 instanceof Error ? arg1 : arg2) as Error;
-      const file = (arg1 instanceof Error ? arg2 : arg1) as UppyFile<UppyMeta, UppyBody> | undefined;
       if (!file) return;
 
       setFiles((prev) =>
@@ -250,18 +250,16 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
             status: 'failed',
             error: error?.message ?? 'Upload failed',
           };
-          latestPropsRef.current.onUploadError?.(updated, error);
+          latestPropsRef.current.onUploadError?.(updated, new Error(error.message));
           return updated;
         }),
       );
     };
 
     const onRestrictionFailed = (
-      arg1: UppyFile<UppyMeta, UppyBody> | Error | undefined,
-      arg2: UppyFile<UppyMeta, UppyBody> | Error | undefined,
+      file: UppyFile<UppyMeta, UppyBody> | undefined,
+      error: Error,
     ) => {
-      const error = (arg1 instanceof Error ? arg1 : arg2) as Error;
-      const file = (arg1 instanceof Error ? arg2 : arg1) as UppyFile<UppyMeta, UppyBody> | undefined;
       if (!file) return;
 
       setFiles((prev) =>
