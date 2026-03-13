@@ -8,10 +8,10 @@ import mergeRefs from 'merge-refs';
 import { useTabObserver } from '@/hooks/use-tab-observer';
 import { cn } from '@/lib/happly-ui-utils';
 
-const SegmentedControlRoot = TabsPrimitive.Root;
-SegmentedControlRoot.displayName = 'SegmentedControlRoot';
+const SwitchToggleRoot = TabsPrimitive.Root;
+SwitchToggleRoot.displayName = 'SwitchToggleRoot';
 
-const SegmentedControlList = React.forwardRef<
+const SwitchToggleList = React.forwardRef<
   React.ComponentRef<typeof TabsPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.List> & {
     floatingBgClassName?: string;
@@ -56,9 +56,9 @@ const SegmentedControlList = React.forwardRef<
     </TabsPrimitive.List>
   );
 });
-SegmentedControlList.displayName = 'SegmentedControlList';
+SwitchToggleList.displayName = 'SwitchToggleList';
 
-const SegmentedControlTrigger = React.forwardRef<
+const SwitchToggleTrigger = React.forwardRef<
   React.ComponentRef<typeof TabsPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
 >(({ className, ...rest }, forwardedRef) => {
@@ -81,19 +81,19 @@ const SegmentedControlTrigger = React.forwardRef<
     />
   );
 });
-SegmentedControlTrigger.displayName = 'SegmentedControlTrigger';
+SwitchToggleTrigger.displayName = 'SwitchToggleTrigger';
 
-const SegmentedControlContent = React.forwardRef<
+const SwitchToggleContent = React.forwardRef<
   React.ComponentRef<typeof TabsPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
 >(({ ...rest }, forwardedRef) => {
   return <TabsPrimitive.Content ref={forwardedRef} {...rest} />;
 });
-SegmentedControlContent.displayName = 'SegmentedControlContent';
+SwitchToggleContent.displayName = 'SwitchToggleContent';
 
 export {
-  SegmentedControlRoot as Root,
-  SegmentedControlList as List,
-  SegmentedControlTrigger as Trigger,
-  SegmentedControlContent as Content,
+  SwitchToggleRoot as Root,
+  SwitchToggleList as List,
+  SwitchToggleTrigger as Trigger,
+  SwitchToggleContent as Content,
 };

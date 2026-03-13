@@ -88,7 +88,7 @@ function main() {
 
   const LAYOUT_COMPONENTS = [
     'accordion',
-    'segmented-control',
+    'switch-toggle',
     'tab-menu-horizontal',
   ];
 
