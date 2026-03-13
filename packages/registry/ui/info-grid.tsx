@@ -8,7 +8,7 @@ import * as KeyIcon from '@/components/ui/key-icon';
 
 const infoGridRootVariants = tv({
   base: [
-    'flex flex-col overflow-hidden rounded-[20px]',
+    'flex w-full flex-col overflow-hidden rounded-[20px]',
     'bg-bg-white-0 ring-1 ring-inset ring-stroke-soft-200 shadow-regular-xs',
   ],
 });

@@ -27,7 +27,7 @@ export default {
 
 export const BusinessProfile = {
   render: () => (
-    <InfoGrid.Root className='max-w-[960px]'>
+    <InfoGrid.Root className='w-[960px]'>
       {/* Row 1: Full-width — Category */}
       <InfoGrid.Row>
         <InfoGrid.Cell>
@@ -101,28 +101,21 @@ export const BusinessProfile = {
           <KeyIcon.Root icon={<RiBuilding2Line />} />
           <div className='flex flex-col gap-2'>
             <p className='text-label-xs text-text-strong-950'>Industry</p>
-            <div className='flex flex-wrap items-center gap-1.5'>
-              {[
-                'Aerospace',
-                'Agriculture',
-                'Environmental Sustainability',
-                'Healthcare',
-                'Industrial',
-                'Manufacturing',
-                'Telecommunications',
-                'Research and Discovery',
-                'Med Tech',
-              ].map((tag) => (
-                <Badge.Root
-                  key={tag}
-                  size='medium'
-                  variant='lighter'
-                  color='gray'
-                >
-                  {tag}
-                </Badge.Root>
-              ))}
-            </div>
+            <Badge.Group
+              size='medium'
+              maxVisible={6}
+              items={[
+                { label: 'Aerospace' },
+                { label: 'Agriculture' },
+                { label: 'Environmental Sustainability' },
+                { label: 'Healthcare' },
+                { label: 'Industrial' },
+                { label: 'Manufacturing' },
+                { label: 'Telecommunications' },
+                { label: 'Research and Discovery' },
+                { label: 'Med Tech' },
+              ]}
+            />
           </div>
         </InfoGrid.Cell>
       </InfoGrid.Row>
@@ -132,7 +125,7 @@ export const BusinessProfile = {
 
 export const FinancialData = {
   render: () => (
-    <InfoGrid.Root className='max-w-[1080px]'>
+    <InfoGrid.Root className='w-[1080px]'>
       {/* Row 1: 3-column — Revenue metrics */}
       <InfoGrid.Row>
         <InfoGrid.Cell>
@@ -257,18 +250,24 @@ export const FinancialData = {
             <p className='text-label-xs text-text-strong-950'>
               Funding history
             </p>
-            <div className='flex flex-wrap items-center gap-2'>
-              {['Bootstrapped', 'Seed Funded', 'Series A', '+9'].map((tag) => (
-                <Badge.Root
-                  key={tag}
-                  size='medium'
-                  variant='lighter'
-                  color='gray'
-                >
-                  {tag}
-                </Badge.Root>
-              ))}
-            </div>
+            <Badge.Group
+              size='medium'
+              maxVisible={3}
+              items={[
+                { label: 'Bootstrapped' },
+                { label: 'Seed Funded' },
+                { label: 'Series A' },
+                { label: 'Series B' },
+                { label: 'Series C' },
+                { label: 'Venture Capital' },
+                { label: 'Angel Investment' },
+                { label: 'Grants' },
+                { label: 'Crowdfunding' },
+                { label: 'Private Equity' },
+                { label: 'IPO' },
+                { label: 'Debt Financing' },
+              ]}
+            />
           </div>
         </InfoGrid.Cell>
       </InfoGrid.Row>
@@ -278,7 +277,7 @@ export const FinancialData = {
 
 export const TwoColumns = {
   render: () => (
-    <InfoGrid.Root className='max-w-[640px]'>
+    <InfoGrid.Root className='w-[640px]'>
       <InfoGrid.Row>
         <InfoGrid.Cell>
           <KeyIcon.Root icon={<RiUser2Line />} />
@@ -304,7 +303,7 @@ export const TwoColumns = {
 
 export const MobileResponsive = {
   render: () => (
-    <InfoGrid.Root className='max-w-[400px]'>
+    <InfoGrid.Root className='w-[400px]'>
       <InfoGrid.Row>
         <InfoGrid.Cell>
           <KeyIcon.Root icon={<RiHeartLine />} />
@@ -338,18 +337,14 @@ export const MobileResponsive = {
           <KeyIcon.Root icon={<RiBuilding2Line />} />
           <div className='flex flex-col gap-2'>
             <p className='text-label-xs text-text-strong-950'>Industry</p>
-            <div className='flex flex-wrap items-center gap-1.5'>
-              {['Aerospace', 'Agriculture', 'Healthcare'].map((tag) => (
-                <Badge.Root
-                  key={tag}
-                  size='medium'
-                  variant='lighter'
-                  color='gray'
-                >
-                  {tag}
-                </Badge.Root>
-              ))}
-            </div>
+            <Badge.Group
+              size='medium'
+              items={[
+                { label: 'Aerospace' },
+                { label: 'Agriculture' },
+                { label: 'Healthcare' },
+              ]}
+            />
           </div>
         </InfoGrid.Cell>
       </InfoGrid.Row>
@@ -420,7 +415,7 @@ export const ComposedGroup = {
             icon: <RiBuilding4Line />,
             label: 'Business model',
             children: (
-              <Badge.Root size='small' variant='lighter' color='gray'>
+              <Badge.Root>
                 B2B
               </Badge.Root>
             ),
@@ -429,6 +424,6 @@ export const ComposedGroup = {
       },
     ];
 
-    return <InfoGrid.Group className='max-w-[960px]' rows={rows} />;
+    return <InfoGrid.Group className='w-[960px]' rows={rows} />;
   },
 };

@@ -326,7 +326,7 @@ export const badgeVariants = tv({
     //#endregion
   ],
   defaultVariants: {
-    variant: 'filled',
+    variant: 'lighter',
     size: 'small',
     color: 'gray',
   },
@@ -483,8 +483,8 @@ const BadgeGroup = React.forwardRef<HTMLDivElement, BadgeGroupProps>(
     {
       items,
       maxVisible,
-      variant = 'lighter',
-      color = 'gray',
+      variant,
+      color,
       size,
       toggleVariant = 'stroke',
       toggleColor = 'gray',
