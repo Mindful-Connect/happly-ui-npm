@@ -1,10 +1,11 @@
 import { RiBuildingLine } from '@remixicon/react';
 
 import * as Button from './button';
+import * as FormField from './form-field';
 import * as LogoUpload from './logo-upload';
 import type { UploadFile } from '../hooks/use-file-upload';
 
-export default { title: 'UI/Logo Upload', component: LogoUpload.Root };
+export default { title: 'Form/File Upload/Logo Upload', component: LogoUpload.Root };
 
 const mockCompletedFile: UploadFile = {
   id: '1',
@@ -188,6 +189,34 @@ export const Composed = {
           </>
         }
       />
+    </div>
+  ),
+};
+
+export const WithFormField = {
+  render: () => (
+    <div className="w-[480px] space-y-6">
+      <FormField.Root label="Business logo" hint="Used on your public profile and invoices.">
+        <LogoUpload.Item
+          label="Upload a logo"
+          description={
+            <>
+              <p>Supports JPEG or PNG files (max 3MB).</p>
+              <p>Use a horizontal image (16:9). Best size: 1200 × 675 px.</p>
+            </>
+          }
+        />
+      </FormField.Root>
+
+      <FormField.Root
+        label="Business logo"
+        error="Please upload a logo before continuing."
+      >
+        <LogoUpload.Item
+          label="Upload a logo"
+          description={<p>Supports JPEG or PNG files (max 3MB).</p>}
+        />
+      </FormField.Root>
     </div>
   ),
 };

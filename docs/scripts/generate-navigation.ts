@@ -138,6 +138,7 @@ function main() {
     'file-format-icon',
     'file-upload',
     'file-card',
+    'logo-upload',
   ];
 
   const PROVIDER_COMPONENTS = [

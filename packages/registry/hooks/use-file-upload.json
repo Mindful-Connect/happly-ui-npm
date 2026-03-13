@@ -18,9 +18,9 @@
         "stories": []
       },
       {
-        "title": "Inline Upload (Logo Picker)",
-        "description": "Use openFilePicker() and getInputProps() for inline upload triggers without a dropzone.",
-        "code": "import { useFileUpload } from \"@/hooks/use-file-upload\"\n\nfunction LogoPicker() {\n  const upload = useFileUpload({\n    endpoint: '/api/assets/pre-signed',\n    providerId: workspace.id,\n    assetType: 'logo',\n    acl: 'public-read',\n    maxFiles: 1,\n    allowedFileTypes: ['image/jpeg', 'image/png'],\n    onUploadSuccess: (file) => updateLogo(file.url),\n  })\n  const file = upload.files[0]\n\n  return (\n    <div>\n      <img src={file?.preview ?? placeholder} />\n      <button onClick={upload.openFilePicker}>Change</button>\n      <input {...upload.getInputProps()} />\n    </div>\n  )\n}",
+        "title": "Logo Upload",
+        "description": "Pair useFileUpload with LogoUpload.Item for a complete logo upload experience with avatar preview.",
+        "code": "import { useFileUpload } from \"@/hooks/use-file-upload\"\nimport * as LogoUpload from \"@/components/ui/logo-upload\"\n\nfunction BusinessLogoUploader() {\n  const upload = useFileUpload({\n    endpoint: '/api/assets/pre-signed',\n    providerId: workspace.id,\n    assetType: 'logo',\n    acl: 'public-read',\n    maxFiles: 1,\n    allowedFileTypes: ['image/jpeg', 'image/png'],\n    maxFileSize: 3 * 1024 * 1024,\n    onUploadSuccess: (file) => updateLogo(file.url),\n  })\n\n  return (\n    <>\n      <LogoUpload.Item\n        file={upload.files[0]}\n        label=\"Business logo\"\n        description={\n          <>\n            <p>Supports JPEG or PNG files (max 3MB).</p>\n            <p>Use a horizontal image (16:9). Best size: 1200 × 675 px.</p>\n          </>\n        }\n        onButtonClick={upload.openFilePicker}\n      />\n      <input {...upload.getInputProps()} />\n    </>\n  )\n}",
         "stories": []
       }
     ],
