@@ -300,4 +300,50 @@ export const AsChild = {
       <button type='button'>Badge</button>
     </Badge.Root>
   ),
-}
+};
+
+export const GroupDefault = {
+  render: () => (
+    <Badge.Group
+      maxVisible={3}
+      items={[
+        { label: 'React' },
+        { label: 'TypeScript' },
+        { label: 'Tailwind' },
+        { label: 'Node.js' },
+        { label: 'GraphQL' },
+        { label: 'Docker' },
+      ]}
+    />
+  ),
+};
+
+export const Group = {
+  render: () => (
+    <Badge.Group
+      maxVisible={3}
+      variant='lighter'
+      items={[
+        { label: 'React', color: 'blue' },
+        { label: 'TypeScript', color: 'purple' },
+        { label: 'Tailwind', color: 'sky' },
+        { label: 'Node.js', color: 'green' },
+        { label: 'GraphQL', color: 'pink' },
+        { label: 'Docker', color: 'orange' },
+      ]}
+    />
+  ),
+};
+
+export const GroupExpanded = {
+  render: () => (
+    <Badge.Group
+      variant='filled'
+      items={[
+        { label: 'Design', color: 'purple' },
+        { label: 'Code', color: 'blue' },
+        { label: 'Ship', color: 'green' },
+      ]}
+    />
+  ),
+};

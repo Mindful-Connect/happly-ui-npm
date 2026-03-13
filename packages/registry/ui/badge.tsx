@@ -5,6 +5,7 @@ import { Slot } from '@radix-ui/react-slot';
 
 import type { PolymorphicComponentProps } from '@/lib/polymorphic';
 import { recursiveCloneChildren } from '@/lib/recursive-clone-children';
+import { cn } from '@/lib/happly-ui-utils';
 import { tv, type VariantProps } from '@/lib/tv';
 
 const BADGE_ROOT_NAME = 'BadgeRoot';
@@ -450,4 +451,98 @@ function BadgeDot({ size, variant, color, className, ...rest }: BadgeDotProps) {
 }
 BadgeDot.displayName = BADGE_DOT_NAME;
 
-export { BadgeRoot as Root, BadgeIcon as Icon, BadgeDot as Dot };
+const BADGE_GROUP_NAME = 'BadgeGroup';
+
+type BadgeGroupItem = {
+  label: React.ReactNode;
+  variant?: BadgeSharedProps['variant'];
+  color?: BadgeSharedProps['color'];
+  size?: BadgeSharedProps['size'];
+  icon?: React.ElementType;
+  dot?: boolean;
+};
+
+type BadgeGroupProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
+  items: BadgeGroupItem[];
+  /** Maximum number of badges visible before collapsing. Shows all when omitted. */
+  maxVisible?: number;
+  /** Shared variant applied to all badges (overridden by per-item variant). Defaults to 'lighter'. */
+  variant?: BadgeSharedProps['variant'];
+  /** Shared color applied to all badges (overridden by per-item color). Defaults to 'gray'. */
+  color?: BadgeSharedProps['color'];
+  /** Shared size applied to all badges (overridden by per-item size). */
+  size?: BadgeSharedProps['size'];
+  /** Variant for the toggle badge. Defaults to 'stroke'. */
+  toggleVariant?: BadgeSharedProps['variant'];
+  /** Color for the toggle badge. Defaults to 'gray'. */
+  toggleColor?: BadgeSharedProps['color'];
+};
+
+const BadgeGroup = React.forwardRef<HTMLDivElement, BadgeGroupProps>(
+  (
+    {
+      items,
+      maxVisible,
+      variant = 'lighter',
+      color = 'gray',
+      size,
+      toggleVariant = 'stroke',
+      toggleColor = 'gray',
+      className,
+      ...rest
+    },
+    forwardedRef,
+  ) => {
+    const [expanded, setExpanded] = React.useState(false);
+    const canCollapse = maxVisible != null && items.length > maxVisible;
+    const visibleItems =
+      canCollapse && !expanded ? items.slice(0, maxVisible) : items;
+    const hiddenCount = items.length - (maxVisible ?? items.length);
+
+    return (
+      <div
+        ref={forwardedRef}
+        className={cn('flex flex-wrap gap-2', className)}
+        {...rest}
+      >
+        {visibleItems.map((item, index) => (
+          <BadgeRoot
+            key={index}
+            variant={item.variant ?? variant}
+            color={item.color ?? color}
+            size={item.size ?? size}
+          >
+            {item.dot && <BadgeDot />}
+            {item.icon && <BadgeIcon as={item.icon} />}
+            {item.label}
+          </BadgeRoot>
+        ))}
+        {canCollapse && (
+          <BadgeRoot
+            asChild
+            variant={toggleVariant}
+            color={toggleColor}
+            size={size}
+          >
+            <button
+              type="button"
+              className="cursor-pointer transition-opacity hover:opacity-70"
+              onClick={() => setExpanded((prev) => !prev)}
+            >
+              {expanded ? 'Show less' : `+${hiddenCount} more`}
+            </button>
+          </BadgeRoot>
+        )}
+      </div>
+    );
+  },
+);
+BadgeGroup.displayName = BADGE_GROUP_NAME;
+
+export {
+  BadgeRoot as Root,
+  BadgeIcon as Icon,
+  BadgeDot as Dot,
+  BadgeGroup as Group,
+};
+export type { BadgeGroupItem, BadgeGroupProps };

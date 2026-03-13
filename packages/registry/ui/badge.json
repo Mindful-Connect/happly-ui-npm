@@ -10,6 +10,7 @@
   ],
   "registryDependencies": [
     "tv",
+    "utils",
     "polymorphic",
     "recursive-clone-children"
   ],
@@ -85,6 +86,24 @@
         "description": "Use the asChild prop with Radix Slot to render as a different element.",
         "code": "<Badge.Root asChild>\n  <button type=\"button\">Badge</button>\n</Badge.Root>",
         "stories": ["AsChild"]
+      },
+      {
+        "title": "Group Default",
+        "description": "Badge.Group defaults to gray lighter badges with a stroke toggle.",
+        "code": "<Badge.Group\n  maxVisible={3}\n  items={[\n    { label: 'React' },\n    { label: 'TypeScript' },\n    { label: 'Tailwind' },\n    { label: 'Node.js' },\n    { label: 'GraphQL' },\n    { label: 'Docker' },\n  ]}\n/>",
+        "stories": ["GroupDefault"]
+      },
+      {
+        "title": "Group",
+        "description": "Use Badge.Group to render a list of badges with a collapsible show more/less toggle.",
+        "code": "<Badge.Group\n  maxVisible={3}\n  variant=\"lighter\"\n  items={[\n    { label: 'React', color: 'blue' },\n    { label: 'TypeScript', color: 'purple' },\n    { label: 'Tailwind', color: 'sky' },\n    { label: 'Node.js', color: 'green' },\n    { label: 'GraphQL', color: 'pink' },\n  ]}\n/>",
+        "stories": ["Group"]
+      },
+      {
+        "title": "Group Expanded",
+        "description": "Badge.Group without maxVisible shows all badges with no toggle.",
+        "code": "<Badge.Group\n  variant=\"filled\"\n  items={[\n    { label: 'Design', color: 'purple' },\n    { label: 'Code', color: 'blue' },\n    { label: 'Ship', color: 'green' },\n  ]}\n/>",
+        "stories": ["GroupExpanded"]
       }
     ],
     "api": [
@@ -146,6 +165,52 @@
         "name": "Badge.Dot",
         "description": "A small dot indicator that inherits color from Badge.Root.",
         "props": []
+      },
+      {
+        "name": "Badge.Group",
+        "description": "A composed component that renders a list of badges with an optional collapsible toggle.",
+        "props": [
+          {
+            "name": "items",
+            "type": "BadgeGroupItem[]",
+            "description": "Array of badge items to render. Each item has label, and optional variant, color, size, icon, and dot."
+          },
+          {
+            "name": "maxVisible",
+            "type": "number",
+            "description": "Maximum badges visible before collapsing. Shows all when omitted."
+          },
+          {
+            "name": "variant",
+            "type": "'filled' | 'light' | 'lighter' | 'stroke'",
+            "default": "'lighter'",
+            "description": "Shared variant for all badges (overridden by per-item variant)"
+          },
+          {
+            "name": "color",
+            "type": "'gray' | 'blue' | 'orange' | 'red' | 'green' | 'yellow' | 'purple' | 'sky' | 'pink' | 'teal'",
+            "default": "'gray'",
+            "description": "Shared color for all badges (overridden by per-item color)"
+          },
+          {
+            "name": "size",
+            "type": "'small' | 'medium'",
+            "default": "'small'",
+            "description": "Shared size for all badges (overridden by per-item size)"
+          },
+          {
+            "name": "toggleVariant",
+            "type": "'filled' | 'light' | 'lighter' | 'stroke'",
+            "default": "'stroke'",
+            "description": "Variant for the show more/less toggle badge"
+          },
+          {
+            "name": "toggleColor",
+            "type": "'gray' | 'blue' | 'orange' | 'red' | 'green' | 'yellow' | 'purple' | 'sky' | 'pink' | 'teal'",
+            "default": "'gray'",
+            "description": "Color for the show more/less toggle badge"
+          }
+        ]
       }
     ]
   },
