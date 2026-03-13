@@ -3,6 +3,7 @@ import {
   RiCheckboxCircleFill,
   RiCloseLine,
   RiDeleteBinLine,
+  RiDownloadLine,
   RiErrorWarningFill,
   RiLoader2Fill,
   RiVideoFill,
@@ -16,29 +17,29 @@ import * as FileFormatIcon from '@/components/ui/file-format-icon';
 
 // ─── Variants ────────────────────────────────────────────────────────────────
 
-const fileUploadCardVariants = tv({
+const fileCardVariants = tv({
   base: 'flex w-full flex-col items-stretch overflow-clip rounded-xl border border-stroke-soft-200 bg-bg-white-0 shadow-regular-xs @sm:flex-row @sm:items-center',
 });
 
 // ─── Root ────────────────────────────────────────────────────────────────────
 
-type FileUploadCardRootProps = React.HTMLAttributes<HTMLDivElement> &
-  VariantProps<typeof fileUploadCardVariants>;
+type FileCardRootProps = React.HTMLAttributes<HTMLDivElement> &
+  VariantProps<typeof fileCardVariants>;
 
-const FileUploadCardRoot = React.forwardRef<HTMLDivElement, FileUploadCardRootProps>(
+const FileCardRoot = React.forwardRef<HTMLDivElement, FileCardRootProps>(
   ({ className, ...rest }, forwardedRef) => {
     return (
       <div className='@container w-full'>
-        <div ref={forwardedRef} className={cn(fileUploadCardVariants(), className)} {...rest} />
+        <div ref={forwardedRef} className={cn(fileCardVariants(), className)} {...rest} />
       </div>
     );
   },
 );
-FileUploadCardRoot.displayName = 'FileUploadCardRoot';
+FileCardRoot.displayName = 'FileCardRoot';
 
 // ─── Thumbnail ───────────────────────────────────────────────────────────────
 
-const FileUploadCardThumbnail = React.forwardRef<
+const FileCardThumbnail = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, children, ...rest }, forwardedRef) => {
@@ -55,11 +56,11 @@ const FileUploadCardThumbnail = React.forwardRef<
     </div>
   );
 });
-FileUploadCardThumbnail.displayName = 'FileUploadCardThumbnail';
+FileCardThumbnail.displayName = 'FileCardThumbnail';
 
 // ─── Image Thumbnail ─────────────────────────────────────────────────────────
 
-const FileUploadCardImage = React.forwardRef<
+const FileCardImage = React.forwardRef<
   HTMLImageElement,
   React.ImgHTMLAttributes<HTMLImageElement>
 >(({ className, alt = '', ...rest }, forwardedRef) => {
@@ -72,11 +73,11 @@ const FileUploadCardImage = React.forwardRef<
     />
   );
 });
-FileUploadCardImage.displayName = 'FileUploadCardImage';
+FileCardImage.displayName = 'FileCardImage';
 
 // ─── Video Thumbnail ─────────────────────────────────────────────────────────
 
-const FileUploadCardVideo = React.forwardRef<
+const FileCardVideo = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & { src: string; alt?: string }
 >(({ className, src, alt = '', children, ...rest }, forwardedRef) => {
@@ -90,11 +91,11 @@ const FileUploadCardVideo = React.forwardRef<
     </div>
   );
 });
-FileUploadCardVideo.displayName = 'FileUploadCardVideo';
+FileCardVideo.displayName = 'FileCardVideo';
 
 // ─── Audio Thumbnail ─────────────────────────────────────────────────────────
 
-const FileUploadCardAudio = React.forwardRef<
+const FileCardAudio = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...rest }, forwardedRef) => {
@@ -110,11 +111,11 @@ const FileUploadCardAudio = React.forwardRef<
     </div>
   );
 });
-FileUploadCardAudio.displayName = 'FileUploadCardAudio';
+FileCardAudio.displayName = 'FileCardAudio';
 
 // ─── Content ─────────────────────────────────────────────────────────────────
 
-const FileUploadCardContent = React.forwardRef<
+const FileCardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...rest }, forwardedRef) => {
@@ -129,11 +130,11 @@ const FileUploadCardContent = React.forwardRef<
     />
   );
 });
-FileUploadCardContent.displayName = 'FileUploadCardContent';
+FileCardContent.displayName = 'FileCardContent';
 
 // ─── Body (filename + meta stacked vertically) ──────────────────────────────
 
-const FileUploadCardBody = React.forwardRef<
+const FileCardBody = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...rest }, forwardedRef) => {
@@ -145,11 +146,11 @@ const FileUploadCardBody = React.forwardRef<
     />
   );
 });
-FileUploadCardBody.displayName = 'FileUploadCardBody';
+FileCardBody.displayName = 'FileCardBody';
 
 // ─── Upload Body (uploading/failed: different gap structure) ─────────────────
 
-const FileUploadCardUploadBody = React.forwardRef<
+const FileCardUploadBody = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...rest }, forwardedRef) => {
@@ -161,11 +162,11 @@ const FileUploadCardUploadBody = React.forwardRef<
     />
   );
 });
-FileUploadCardUploadBody.displayName = 'FileUploadCardUploadBody';
+FileCardUploadBody.displayName = 'FileCardUploadBody';
 
 // ─── Info Group (name + status with gap-1.5 for upload states) ───────────────
 
-const FileUploadCardInfoGroup = React.forwardRef<
+const FileCardInfoGroup = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...rest }, forwardedRef) => {
@@ -177,11 +178,11 @@ const FileUploadCardInfoGroup = React.forwardRef<
     />
   );
 });
-FileUploadCardInfoGroup.displayName = 'FileUploadCardInfoGroup';
+FileCardInfoGroup.displayName = 'FileCardInfoGroup';
 
 // ─── Name ────────────────────────────────────────────────────────────────────
 
-const FileUploadCardName = React.forwardRef<
+const FileCardName = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...rest }, forwardedRef) => {
@@ -193,11 +194,11 @@ const FileUploadCardName = React.forwardRef<
     />
   );
 });
-FileUploadCardName.displayName = 'FileUploadCardName';
+FileCardName.displayName = 'FileCardName';
 
 // ─── Meta ────────────────────────────────────────────────────────────────────
 
-const FileUploadCardMeta = React.forwardRef<
+const FileCardMeta = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...rest }, forwardedRef) => {
@@ -209,11 +210,11 @@ const FileUploadCardMeta = React.forwardRef<
     />
   );
 });
-FileUploadCardMeta.displayName = 'FileUploadCardMeta';
+FileCardMeta.displayName = 'FileCardMeta';
 
 // ─── Hint ────────────────────────────────────────────────────────────────────
 
-const FileUploadCardHint = React.forwardRef<
+const FileCardHint = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...rest }, forwardedRef) => {
@@ -225,15 +226,15 @@ const FileUploadCardHint = React.forwardRef<
     />
   );
 });
-FileUploadCardHint.displayName = 'FileUploadCardHint';
+FileCardHint.displayName = 'FileCardHint';
 
 // ─── Status ──────────────────────────────────────────────────────────────────
 
-type FileUploadCardStatusProps = React.HTMLAttributes<HTMLDivElement> & {
+type FileCardStatusProps = React.HTMLAttributes<HTMLDivElement> & {
   status: 'uploading' | 'failed';
 };
 
-const FileUploadCardStatus = React.forwardRef<HTMLDivElement, FileUploadCardStatusProps>(
+const FileCardStatus = React.forwardRef<HTMLDivElement, FileCardStatusProps>(
   ({ className, status, children, ...rest }, forwardedRef) => {
     return (
       <div
@@ -252,16 +253,16 @@ const FileUploadCardStatus = React.forwardRef<HTMLDivElement, FileUploadCardStat
     );
   },
 );
-FileUploadCardStatus.displayName = 'FileUploadCardStatus';
+FileCardStatus.displayName = 'FileCardStatus';
 
 // ─── Progress ────────────────────────────────────────────────────────────────
 
-type FileUploadCardProgressProps = React.HTMLAttributes<HTMLDivElement> & {
+type FileCardProgressProps = React.HTMLAttributes<HTMLDivElement> & {
   value?: number;
   max?: number;
 };
 
-const FileUploadCardProgress = React.forwardRef<HTMLDivElement, FileUploadCardProgressProps>(
+const FileCardProgress = React.forwardRef<HTMLDivElement, FileCardProgressProps>(
   ({ className, value = 0, max = 100, ...rest }, forwardedRef) => {
     const safeValue = Math.min(max, Math.max(value, 0));
 
@@ -282,11 +283,11 @@ const FileUploadCardProgress = React.forwardRef<HTMLDivElement, FileUploadCardPr
     );
   },
 );
-FileUploadCardProgress.displayName = 'FileUploadCardProgress';
+FileCardProgress.displayName = 'FileCardProgress';
 
 // ─── Actions ─────────────────────────────────────────────────────────────────
 
-const FileUploadCardActions = React.forwardRef<
+const FileCardActions = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...rest }, forwardedRef) => {
@@ -298,11 +299,11 @@ const FileUploadCardActions = React.forwardRef<
     />
   );
 });
-FileUploadCardActions.displayName = 'FileUploadCardActions';
+FileCardActions.displayName = 'FileCardActions';
 
 // ─── Remove Button ───────────────────────────────────────────────────────────
 
-const FileUploadCardRemoveButton = React.forwardRef<
+const FileCardRemoveButton = React.forwardRef<
   HTMLButtonElement,
   React.ComponentPropsWithoutRef<typeof Button.Root>
 >(({ className, children = 'Remove', ...rest }, forwardedRef) => {
@@ -319,11 +320,34 @@ const FileUploadCardRemoveButton = React.forwardRef<
     </Button.Root>
   );
 });
-FileUploadCardRemoveButton.displayName = 'FileUploadCardRemoveButton';
+FileCardRemoveButton.displayName = 'FileCardRemoveButton';
+
+// ─── Download Button ─────────────────────────────────────────────────────────
+
+const FileCardDownloadButton = React.forwardRef<
+  HTMLButtonElement,
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+>(({ className, ...rest }, forwardedRef) => {
+  return (
+    <button
+      ref={forwardedRef}
+      type='button'
+      className={cn(
+        'flex shrink-0 items-center justify-center rounded-md p-0.5 text-text-sub-600',
+        'transition duration-200 ease-out hover:text-text-strong-950',
+        className,
+      )}
+      {...rest}
+    >
+      <RiDownloadLine className='size-5' />
+    </button>
+  );
+});
+FileCardDownloadButton.displayName = 'FileCardDownloadButton';
 
 // ─── Close Button ────────────────────────────────────────────────────────────
 
-const FileUploadCardCloseButton = React.forwardRef<
+const FileCardCloseButton = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
 >(({ className, ...rest }, forwardedRef) => {
@@ -342,11 +366,11 @@ const FileUploadCardCloseButton = React.forwardRef<
     </button>
   );
 });
-FileUploadCardCloseButton.displayName = 'FileUploadCardCloseButton';
+FileCardCloseButton.displayName = 'FileCardCloseButton';
 
 // ─── Retry Link ──────────────────────────────────────────────────────────────
 
-const FileUploadCardRetryLink = React.forwardRef<
+const FileCardRetryLink = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
 >(({ className, children = 'Try Again', ...rest }, forwardedRef) => {
@@ -365,7 +389,7 @@ const FileUploadCardRetryLink = React.forwardRef<
     </button>
   );
 });
-FileUploadCardRetryLink.displayName = 'FileUploadCardRetryLink';
+FileCardRetryLink.displayName = 'FileCardRetryLink';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // COMPACT VARIANT
@@ -390,7 +414,7 @@ type CompactRootProps = React.HTMLAttributes<HTMLDivElement> & {
   error?: boolean;
 };
 
-const FileUploadCardCompactRoot = React.forwardRef<HTMLDivElement, CompactRootProps>(
+const FileCardCompactRoot = React.forwardRef<HTMLDivElement, CompactRootProps>(
   ({ className, error, children, ...rest }, forwardedRef) => {
     return (
       <div ref={forwardedRef} className={cn(compactRootVariants({ error }), className)} {...rest}>
@@ -399,11 +423,11 @@ const FileUploadCardCompactRoot = React.forwardRef<HTMLDivElement, CompactRootPr
     );
   },
 );
-FileUploadCardCompactRoot.displayName = 'FileUploadCardCompactRoot';
+FileCardCompactRoot.displayName = 'FileCardCompactRoot';
 
 // ─── Compact Content ────────────────────────────────────────────────────────
 
-const FileUploadCardCompactContent = React.forwardRef<
+const FileCardCompactContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...rest }, forwardedRef) => {
@@ -415,11 +439,11 @@ const FileUploadCardCompactContent = React.forwardRef<
     />
   );
 });
-FileUploadCardCompactContent.displayName = 'FileUploadCardCompactContent';
+FileCardCompactContent.displayName = 'FileCardCompactContent';
 
 // ─── Compact Body ───────────────────────────────────────────────────────────
 
-const FileUploadCardCompactBody = React.forwardRef<
+const FileCardCompactBody = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...rest }, forwardedRef) => {
@@ -431,11 +455,11 @@ const FileUploadCardCompactBody = React.forwardRef<
     />
   );
 });
-FileUploadCardCompactBody.displayName = 'FileUploadCardCompactBody';
+FileCardCompactBody.displayName = 'FileCardCompactBody';
 
 // ─── Compact Error Body ─────────────────────────────────────────────────────
 
-const FileUploadCardCompactErrorBody = React.forwardRef<
+const FileCardCompactErrorBody = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...rest }, forwardedRef) => {
@@ -447,11 +471,11 @@ const FileUploadCardCompactErrorBody = React.forwardRef<
     />
   );
 });
-FileUploadCardCompactErrorBody.displayName = 'FileUploadCardCompactErrorBody';
+FileCardCompactErrorBody.displayName = 'FileCardCompactErrorBody';
 
 // ─── Compact Description ────────────────────────────────────────────────────
 
-const FileUploadCardCompactDescription = React.forwardRef<
+const FileCardCompactDescription = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...rest }, forwardedRef) => {
@@ -463,16 +487,16 @@ const FileUploadCardCompactDescription = React.forwardRef<
     />
   );
 });
-FileUploadCardCompactDescription.displayName = 'FileUploadCardCompactDescription';
+FileCardCompactDescription.displayName = 'FileCardCompactDescription';
 
 // ─── Compact Dot Separator ──────────────────────────────────────────────────
 
-function FileUploadCardDot({ className }: { className?: string }) {
+function FileCardDot({ className }: { className?: string }) {
   return (
     <span className={cn('shrink-0 text-paragraph-xs text-text-sub-600', className)}>∙</span>
   );
 }
-FileUploadCardDot.displayName = 'FileUploadCardDot';
+FileCardDot.displayName = 'FileCardDot';
 
 // ─── Compact Status ─────────────────────────────────────────────────────────
 
@@ -480,7 +504,7 @@ type CompactStatusProps = React.HTMLAttributes<HTMLDivElement> & {
   status: 'uploading' | 'completed' | 'failed';
 };
 
-const FileUploadCardCompactStatus = React.forwardRef<HTMLDivElement, CompactStatusProps>(
+const FileCardCompactStatus = React.forwardRef<HTMLDivElement, CompactStatusProps>(
   ({ className, status, children, ...rest }, forwardedRef) => {
     return (
       <div
@@ -502,11 +526,11 @@ const FileUploadCardCompactStatus = React.forwardRef<HTMLDivElement, CompactStat
     );
   },
 );
-FileUploadCardCompactStatus.displayName = 'FileUploadCardCompactStatus';
+FileCardCompactStatus.displayName = 'FileCardCompactStatus';
 
 // ─── Delete Button ──────────────────────────────────────────────────────────
 
-const FileUploadCardDeleteButton = React.forwardRef<
+const FileCardDeleteButton = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
 >(({ className, ...rest }, forwardedRef) => {
@@ -525,7 +549,7 @@ const FileUploadCardDeleteButton = React.forwardRef<
     </button>
   );
 });
-FileUploadCardDeleteButton.displayName = 'FileUploadCardDeleteButton';
+FileCardDeleteButton.displayName = 'FileCardDeleteButton';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // ITEM PRESET
@@ -566,7 +590,7 @@ function isImageType(type: string): boolean {
 
 // ─── Item component ─────────────────────────────────────────────────────────
 
-interface FileUploadCardItemFile {
+interface FileCardItemFile {
   id: string;
   name: string;
   size: number;
@@ -578,16 +602,17 @@ interface FileUploadCardItemFile {
   error?: string;
 }
 
-interface FileUploadCardItemProps {
-  file: FileUploadCardItemFile;
+interface FileCardItemProps {
+  file: FileCardItemFile;
   variant?: 'default' | 'compact';
   onRemove?: () => void;
   onRetry?: () => void;
   onClose?: () => void;
+  onDownload?: () => void;
   className?: string;
 }
 
-function FileUploadCardItem({ file, variant = 'default', onRemove, onRetry, onClose, className }: FileUploadCardItemProps) {
+function FileCardItem({ file, variant = 'default', onRemove, onRetry, onClose, onDownload, className }: FileCardItemProps) {
   const format = getFileFormat(file.name);
   const color = getFormatColor(format);
   const size = formatFileSize(file.size);
@@ -597,47 +622,48 @@ function FileUploadCardItem({ file, variant = 'default', onRemove, onRetry, onCl
   if (variant === 'compact') {
     if (file.status === 'failed') {
       return (
-        <FileUploadCardCompactRoot error className={className}>
-          <FileUploadCardCompactContent>
+        <FileCardCompactRoot error className={className}>
+          <FileCardCompactContent>
             <FileFormatIcon.Root format={format} color={color} size='medium' />
-            <FileUploadCardCompactErrorBody>
-              <FileUploadCardCompactBody>
-                <FileUploadCardName>{file.name}</FileUploadCardName>
-                <FileUploadCardCompactDescription>
-                  <FileUploadCardMeta>{size}</FileUploadCardMeta>
-                  <FileUploadCardDot />
-                  <FileUploadCardCompactStatus status='failed'>Failed</FileUploadCardCompactStatus>
-                </FileUploadCardCompactDescription>
-              </FileUploadCardCompactBody>
-              {onRetry && <FileUploadCardRetryLink onClick={onRetry} />}
-            </FileUploadCardCompactErrorBody>
-            {onRemove && <FileUploadCardDeleteButton onClick={onRemove} />}
-          </FileUploadCardCompactContent>
-        </FileUploadCardCompactRoot>
+            <FileCardCompactErrorBody>
+              <FileCardCompactBody>
+                <FileCardName>{file.name}</FileCardName>
+                <FileCardCompactDescription>
+                  <FileCardMeta>{size}</FileCardMeta>
+                  <FileCardDot />
+                  <FileCardCompactStatus status='failed'>Failed</FileCardCompactStatus>
+                </FileCardCompactDescription>
+              </FileCardCompactBody>
+              {onRetry && <FileCardRetryLink onClick={onRetry} />}
+            </FileCardCompactErrorBody>
+            {onRemove && <FileCardDeleteButton onClick={onRemove} />}
+          </FileCardCompactContent>
+        </FileCardCompactRoot>
       );
     }
 
     return (
-      <FileUploadCardCompactRoot className={className}>
-        <FileUploadCardCompactContent>
+      <FileCardCompactRoot className={className}>
+        <FileCardCompactContent>
           <FileFormatIcon.Root format={format} color={color} size='medium' />
-          <FileUploadCardCompactBody>
-            <FileUploadCardName>{file.name}</FileUploadCardName>
-            <FileUploadCardCompactDescription>
-              <FileUploadCardMeta>
+          <FileCardCompactBody>
+            <FileCardName>{file.name}</FileCardName>
+            <FileCardCompactDescription>
+              <FileCardMeta>
                 {isActive ? `${formatFileSize(Math.round(file.size * file.progress / 100))} of ${size}` : size}
-              </FileUploadCardMeta>
-              <FileUploadCardDot />
-              <FileUploadCardCompactStatus status={file.status === 'completed' ? 'completed' : 'uploading'}>
+              </FileCardMeta>
+              <FileCardDot />
+              <FileCardCompactStatus status={file.status === 'completed' ? 'completed' : 'uploading'}>
                 {file.status === 'completed' ? 'Completed' : 'Uploading...'}
-              </FileUploadCardCompactStatus>
-            </FileUploadCardCompactDescription>
-          </FileUploadCardCompactBody>
-          {isActive && onClose && <FileUploadCardCloseButton onClick={onClose} />}
-          {file.status === 'completed' && onRemove && <FileUploadCardDeleteButton onClick={onRemove} />}
-        </FileUploadCardCompactContent>
-        {isActive && <FileUploadCardProgress value={file.progress} />}
-      </FileUploadCardCompactRoot>
+              </FileCardCompactStatus>
+            </FileCardCompactDescription>
+          </FileCardCompactBody>
+          {isActive && onClose && <FileCardCloseButton onClick={onClose} />}
+          {file.status === 'completed' && onDownload && <FileCardDownloadButton onClick={onDownload} />}
+          {file.status === 'completed' && onRemove && <FileCardDeleteButton onClick={onRemove} />}
+        </FileCardCompactContent>
+        {isActive && <FileCardProgress value={file.progress} />}
+      </FileCardCompactRoot>
     );
   }
 
@@ -645,45 +671,45 @@ function FileUploadCardItem({ file, variant = 'default', onRemove, onRetry, onCl
 
   if (isActive) {
     return (
-      <FileUploadCardRoot className={className}>
-        <FileUploadCardThumbnail>
+      <FileCardRoot className={className}>
+        <FileCardThumbnail>
           <FileFormatIcon.Root format={format} color={color} size='medium' />
-        </FileUploadCardThumbnail>
-        <FileUploadCardContent>
-          <FileUploadCardUploadBody>
-            <FileUploadCardInfoGroup>
-              <FileUploadCardName>{file.name}</FileUploadCardName>
-              <FileUploadCardStatus status='uploading'>Uploading...</FileUploadCardStatus>
-            </FileUploadCardInfoGroup>
-            <FileUploadCardProgress value={file.progress} />
-          </FileUploadCardUploadBody>
-          <FileUploadCardActions>
-            {onClose && <FileUploadCardCloseButton onClick={onClose} />}
-          </FileUploadCardActions>
-        </FileUploadCardContent>
-      </FileUploadCardRoot>
+        </FileCardThumbnail>
+        <FileCardContent>
+          <FileCardUploadBody>
+            <FileCardInfoGroup>
+              <FileCardName>{file.name}</FileCardName>
+              <FileCardStatus status='uploading'>Uploading...</FileCardStatus>
+            </FileCardInfoGroup>
+            <FileCardProgress value={file.progress} />
+          </FileCardUploadBody>
+          <FileCardActions>
+            {onClose && <FileCardCloseButton onClick={onClose} />}
+          </FileCardActions>
+        </FileCardContent>
+      </FileCardRoot>
     );
   }
 
   if (file.status === 'failed') {
     return (
-      <FileUploadCardRoot className={className}>
-        <FileUploadCardThumbnail>
+      <FileCardRoot className={className}>
+        <FileCardThumbnail>
           <FileFormatIcon.Root format={format} color={color} size='medium' />
-        </FileUploadCardThumbnail>
-        <FileUploadCardContent>
-          <FileUploadCardUploadBody>
-            <FileUploadCardInfoGroup>
-              <FileUploadCardName>{file.name}</FileUploadCardName>
-              <FileUploadCardStatus status='failed'>Failed</FileUploadCardStatus>
-            </FileUploadCardInfoGroup>
-            {onRetry && <FileUploadCardRetryLink onClick={onRetry} />}
-          </FileUploadCardUploadBody>
-          <FileUploadCardActions>
-            {onRemove && <FileUploadCardRemoveButton onClick={onRemove} />}
-          </FileUploadCardActions>
-        </FileUploadCardContent>
-      </FileUploadCardRoot>
+        </FileCardThumbnail>
+        <FileCardContent>
+          <FileCardUploadBody>
+            <FileCardInfoGroup>
+              <FileCardName>{file.name}</FileCardName>
+              <FileCardStatus status='failed'>Failed</FileCardStatus>
+            </FileCardInfoGroup>
+            {onRetry && <FileCardRetryLink onClick={onRetry} />}
+          </FileCardUploadBody>
+          <FileCardActions>
+            {onRemove && <FileCardRemoveButton onClick={onRemove} />}
+          </FileCardActions>
+        </FileCardContent>
+      </FileCardRoot>
     );
   }
 
@@ -691,57 +717,59 @@ function FileUploadCardItem({ file, variant = 'default', onRemove, onRetry, onCl
   const thumbnailSrc = file.preview ?? file.url;
 
   return (
-    <FileUploadCardRoot className={className}>
-      <FileUploadCardThumbnail className={isImage && thumbnailSrc ? 'bg-transparent' : undefined}>
+    <FileCardRoot className={className}>
+      <FileCardThumbnail className={isImage && thumbnailSrc ? 'bg-transparent' : undefined}>
         {isImage && thumbnailSrc ? (
-          <FileUploadCardImage src={thumbnailSrc} alt={file.name} />
+          <FileCardImage src={thumbnailSrc} alt={file.name} />
         ) : (
           <FileFormatIcon.Root format={format} color={color} size='medium' />
         )}
-      </FileUploadCardThumbnail>
-      <FileUploadCardContent>
-        <FileUploadCardBody>
-          <FileUploadCardName>{file.name}</FileUploadCardName>
-          <FileUploadCardMeta>{size}</FileUploadCardMeta>
-          {isImage && <FileUploadCardHint>Image uploaded successfully</FileUploadCardHint>}
-        </FileUploadCardBody>
-        <FileUploadCardActions>
-          {onRemove && <FileUploadCardRemoveButton onClick={onRemove} />}
-        </FileUploadCardActions>
-      </FileUploadCardContent>
-    </FileUploadCardRoot>
+      </FileCardThumbnail>
+      <FileCardContent>
+        <FileCardBody>
+          <FileCardName>{file.name}</FileCardName>
+          <FileCardMeta>{size}</FileCardMeta>
+          {isImage && <FileCardHint>Image uploaded successfully</FileCardHint>}
+        </FileCardBody>
+        <FileCardActions>
+          {onDownload && <FileCardDownloadButton onClick={onDownload} />}
+          {onRemove && <FileCardRemoveButton onClick={onRemove} />}
+        </FileCardActions>
+      </FileCardContent>
+    </FileCardRoot>
   );
 }
-FileUploadCardItem.displayName = 'FileUploadCardItem';
+FileCardItem.displayName = 'FileCardItem';
 
 export {
-  FileUploadCardRoot as Root,
-  FileUploadCardThumbnail as Thumbnail,
-  FileUploadCardImage as Image,
-  FileUploadCardVideo as Video,
-  FileUploadCardAudio as Audio,
-  FileUploadCardContent as Content,
-  FileUploadCardBody as Body,
-  FileUploadCardUploadBody as UploadBody,
-  FileUploadCardInfoGroup as InfoGroup,
-  FileUploadCardName as Name,
-  FileUploadCardMeta as Meta,
-  FileUploadCardHint as Hint,
-  FileUploadCardStatus as Status,
-  FileUploadCardProgress as Progress,
-  FileUploadCardActions as Actions,
-  FileUploadCardRemoveButton as RemoveButton,
-  FileUploadCardCloseButton as CloseButton,
-  FileUploadCardRetryLink as RetryLink,
-  FileUploadCardCompactRoot as CompactRoot,
-  FileUploadCardCompactContent as CompactContent,
-  FileUploadCardCompactBody as CompactBody,
-  FileUploadCardCompactErrorBody as CompactErrorBody,
-  FileUploadCardCompactDescription as CompactDescription,
-  FileUploadCardDot as Dot,
-  FileUploadCardCompactStatus as CompactStatus,
-  FileUploadCardDeleteButton as DeleteButton,
-  FileUploadCardItem as Item,
-  fileUploadCardVariants,
+  FileCardRoot as Root,
+  FileCardThumbnail as Thumbnail,
+  FileCardImage as Image,
+  FileCardVideo as Video,
+  FileCardAudio as Audio,
+  FileCardContent as Content,
+  FileCardBody as Body,
+  FileCardUploadBody as UploadBody,
+  FileCardInfoGroup as InfoGroup,
+  FileCardName as Name,
+  FileCardMeta as Meta,
+  FileCardHint as Hint,
+  FileCardStatus as Status,
+  FileCardProgress as Progress,
+  FileCardActions as Actions,
+  FileCardRemoveButton as RemoveButton,
+  FileCardDownloadButton as DownloadButton,
+  FileCardCloseButton as CloseButton,
+  FileCardRetryLink as RetryLink,
+  FileCardCompactRoot as CompactRoot,
+  FileCardCompactContent as CompactContent,
+  FileCardCompactBody as CompactBody,
+  FileCardCompactErrorBody as CompactErrorBody,
+  FileCardCompactDescription as CompactDescription,
+  FileCardDot as Dot,
+  FileCardCompactStatus as CompactStatus,
+  FileCardDeleteButton as DeleteButton,
+  FileCardItem as Item,
+  fileCardVariants,
   compactRootVariants,
 };

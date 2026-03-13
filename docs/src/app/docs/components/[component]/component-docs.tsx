@@ -27,7 +27,7 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
   // Components that need custom preview styling
   const previewClassOverrides: Record<string, string> = {
     section: 'bg-bg-weak-50',
-    'file-upload-card': '[&>div]:w-full',
+    'file-card': '[&>div]:w-full',
     'theme-provider': '[&>div]:w-full',
   };
   const previewClassName = previewClassOverrides[name];

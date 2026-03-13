@@ -137,7 +137,7 @@ function main() {
   const FILE_UPLOAD_COMPONENTS = [
     'file-format-icon',
     'file-upload',
-    'file-upload-card',
+    'file-card',
   ];
 
   const PROVIDER_COMPONENTS = [

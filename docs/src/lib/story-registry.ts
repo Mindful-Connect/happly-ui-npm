@@ -24,8 +24,8 @@ import { default as drawerMeta, Playground as drawer_Playground, Basic as drawer
 import { default as dropdownMeta, Playground as dropdown_Playground, Demo as dropdown_Demo, SubMenu as dropdown_SubMenu } from '@/components/ui/dropdown.stories';
 import { default as emojiDialogMeta, Playground as emojiDialog_Playground, Default as emojiDialog_Default, DeleteConfirmation as emojiDialog_DeleteConfirmation, UnsavedChanges as emojiDialog_UnsavedChanges, SuccessConfirmation as emojiDialog_SuccessConfirmation, WithFormContent as emojiDialog_WithFormContent, WithFloatingMemojis as emojiDialog_WithFloatingMemojis, StaticNoAnimations as emojiDialog_StaticNoAnimations, CustomEmojiArea as emojiDialog_CustomEmojiArea } from '@/components/ui/emoji-dialog.stories';
 import { default as fancyButtonMeta, Playground as fancyButton_Playground, Variants as fancyButton_Variants, WithIcon as fancyButton_WithIcon, Sizes as fancyButton_Sizes, Disabled as fancyButton_Disabled, AsChild as fancyButton_AsChild } from '@/components/ui/fancy-button.stories';
+import { default as fileCardMeta, UploadStates as fileCard_UploadStates, CompletedMediaTypes as fileCard_CompletedMediaTypes, Download as fileCard_Download, Compact as fileCard_Compact, Item as fileCard_Item, ItemDownload as fileCard_ItemDownload, ItemCompact as fileCard_ItemCompact } from '@/components/ui/file-card.stories';
 import { default as fileFormatIconMeta, Default as fileFormatIcon_Default, Colors as fileFormatIcon_Colors, Sizes as fileFormatIcon_Sizes } from '@/components/ui/file-format-icon.stories';
-import { default as fileUploadCardMeta, Uploading as fileUploadCard_Uploading, Failed as fileUploadCard_Failed, CompletedDocument as fileUploadCard_CompletedDocument, CompletedImage as fileUploadCard_CompletedImage, CompletedVideo as fileUploadCard_CompletedVideo, CompletedAudio as fileUploadCard_CompletedAudio, CompactUploading as fileUploadCard_CompactUploading, CompactCompleted as fileUploadCard_CompactCompleted, CompactFailed as fileUploadCard_CompactFailed, ItemUploading as fileUploadCard_ItemUploading, ItemFailed as fileUploadCard_ItemFailed, ItemCompletedDocument as fileUploadCard_ItemCompletedDocument, ItemCompletedImage as fileUploadCard_ItemCompletedImage, ItemCompactUploading as fileUploadCard_ItemCompactUploading, ItemCompactCompleted as fileUploadCard_ItemCompactCompleted, ItemCompactFailed as fileUploadCard_ItemCompactFailed } from '@/components/ui/file-upload-card.stories';
 import { default as fileUploadMeta, Document as fileUpload_Document, Image as fileUpload_Image, Video as fileUpload_Video, Audio as fileUpload_Audio, Attachment as fileUpload_Attachment, CustomOverrides as fileUpload_CustomOverrides, Dragging as fileUpload_Dragging } from '@/components/ui/file-upload.stories';
 import { default as formFieldMeta, Playground as formField_Playground, Demo as formField_Demo, WithError as formField_WithError, Disabled as formField_Disabled, CompoundMode as formField_CompoundMode, FormValidation as formField_FormValidation } from '@/components/ui/form-field.stories';
 import { default as hintMeta, Playground as hint_Playground, Demo as hint_Demo, Disabled as hint_Disabled, HasError as hint_HasError, CustomIcon as hint_CustomIcon, Composed as hint_Composed } from '@/components/ui/hint.stories';
@@ -336,33 +336,24 @@ export const storyRegistry: Record<string, {
     'AsChild': fancyButton_AsChild
     }
   },
+  'file-card': {
+    meta: fileCardMeta,
+    stories: {
+    'UploadStates': fileCard_UploadStates,
+    'CompletedMediaTypes': fileCard_CompletedMediaTypes,
+    'Download': fileCard_Download,
+    'Compact': fileCard_Compact,
+    'Item': fileCard_Item,
+    'ItemDownload': fileCard_ItemDownload,
+    'ItemCompact': fileCard_ItemCompact
+    }
+  },
   'file-format-icon': {
     meta: fileFormatIconMeta,
     stories: {
     'Default': fileFormatIcon_Default,
     'Colors': fileFormatIcon_Colors,
     'Sizes': fileFormatIcon_Sizes
-    }
-  },
-  'file-upload-card': {
-    meta: fileUploadCardMeta,
-    stories: {
-    'Uploading': fileUploadCard_Uploading,
-    'Failed': fileUploadCard_Failed,
-    'CompletedDocument': fileUploadCard_CompletedDocument,
-    'CompletedImage': fileUploadCard_CompletedImage,
-    'CompletedVideo': fileUploadCard_CompletedVideo,
-    'CompletedAudio': fileUploadCard_CompletedAudio,
-    'CompactUploading': fileUploadCard_CompactUploading,
-    'CompactCompleted': fileUploadCard_CompactCompleted,
-    'CompactFailed': fileUploadCard_CompactFailed,
-    'ItemUploading': fileUploadCard_ItemUploading,
-    'ItemFailed': fileUploadCard_ItemFailed,
-    'ItemCompletedDocument': fileUploadCard_ItemCompletedDocument,
-    'ItemCompletedImage': fileUploadCard_ItemCompletedImage,
-    'ItemCompactUploading': fileUploadCard_ItemCompactUploading,
-    'ItemCompactCompleted': fileUploadCard_ItemCompactCompleted,
-    'ItemCompactFailed': fileUploadCard_ItemCompactFailed
     }
   },
   'file-upload': {

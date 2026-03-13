@@ -1,50 +1,62 @@
 {
   "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
-  "name": "file-upload-card",
+  "name": "file-card",
   "type": "registry:ui",
-  "title": "File Upload Card",
-  "description": "A card component for displaying uploaded file state with thumbnail, progress, and actions.",
-  "version": "1.1.0",
+  "title": "File Card",
+  "description": "A card component for displaying file state with thumbnail, progress, download, and actions.",
+  "version": "1.0.0",
   "dependencies": ["@remixicon/react"],
   "registryDependencies": ["tv", "happly-ui-utils", "button", "file-format-icon"],
   "docs": {
-    "lead": "A compound card component for displaying uploaded files with thumbnails, upload progress, error states, and remove actions. Supports document, image, video, and audio file types. Includes a high-level Item preset for quick rendering from upload state.",
-    "usage": "import * as FileUploadCard from \"@/components/ui/file-upload-card\"\n\n<FileUploadCard.Item\n  file={{ id: '1', name: 'file.pdf', size: 2621440, type: 'application/pdf', progress: 100, status: 'completed' }}\n  onRemove={() => {}}\n/>",
+    "lead": "A compound card component for displaying files with thumbnails, upload progress, download actions, error states, and remove actions. Supports document, image, video, and audio file types. Includes a high-level Item preset for quick rendering from file state.",
+    "usage": "import * as FileCard from \"@/components/ui/file-card\"\n\n<FileCard.Item\n  file={{ id: '1', name: 'file.pdf', size: 2621440, type: 'application/pdf', progress: 100, status: 'completed' }}\n  onDownload={() => {}}\n/>",
     "examples": [
       {
         "title": "Upload States",
         "description": "Uploading and failed states with progress bar, spinner, retry link, and action buttons.",
-        "code": "<FileUploadCard.Root>\n  <FileUploadCard.Thumbnail>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" size=\"medium\" />\n  </FileUploadCard.Thumbnail>\n  <FileUploadCard.Content>\n    <FileUploadCard.UploadBody>\n      <FileUploadCard.InfoGroup>\n        <FileUploadCard.Name>DataAnalysis.pdf</FileUploadCard.Name>\n        <FileUploadCard.Status status=\"uploading\">Uploading...</FileUploadCard.Status>\n      </FileUploadCard.InfoGroup>\n      <FileUploadCard.Progress value={10} />\n    </FileUploadCard.UploadBody>\n    <FileUploadCard.Actions>\n      <FileUploadCard.CloseButton />\n    </FileUploadCard.Actions>\n  </FileUploadCard.Content>\n</FileUploadCard.Root>",
+        "code": "<FileCard.Root>\n  <FileCard.Thumbnail>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" size=\"medium\" />\n  </FileCard.Thumbnail>\n  <FileCard.Content>\n    <FileCard.UploadBody>\n      <FileCard.InfoGroup>\n        <FileCard.Name>DataAnalysis.pdf</FileCard.Name>\n        <FileCard.Status status=\"uploading\">Uploading...</FileCard.Status>\n      </FileCard.InfoGroup>\n      <FileCard.Progress value={10} />\n    </FileCard.UploadBody>\n    <FileCard.Actions>\n      <FileCard.CloseButton />\n    </FileCard.Actions>\n  </FileCard.Content>\n</FileCard.Root>",
         "stories": ["UploadStates"]
       },
       {
         "title": "Completed Media Types",
         "description": "Completed cards for document, image, video, and audio file types with appropriate thumbnails.",
-        "code": "<FileUploadCard.Root>\n  <FileUploadCard.Thumbnail>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" size=\"medium\" />\n  </FileUploadCard.Thumbnail>\n  <FileUploadCard.Content>\n    <FileUploadCard.Body>\n      <FileUploadCard.Name>DataAnalysis.pdf</FileUploadCard.Name>\n      <FileUploadCard.Meta>2.5 MB</FileUploadCard.Meta>\n      <FileUploadCard.Hint>Uploaded on: June 5, 2023</FileUploadCard.Hint>\n    </FileUploadCard.Body>\n    <FileUploadCard.Actions>\n      <FileUploadCard.RemoveButton />\n    </FileUploadCard.Actions>\n  </FileUploadCard.Content>\n</FileUploadCard.Root>",
+        "code": "<FileCard.Root>\n  <FileCard.Thumbnail>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" size=\"medium\" />\n  </FileCard.Thumbnail>\n  <FileCard.Content>\n    <FileCard.Body>\n      <FileCard.Name>DataAnalysis.pdf</FileCard.Name>\n      <FileCard.Meta>2.5 MB</FileCard.Meta>\n      <FileCard.Hint>Uploaded on: June 5, 2023</FileCard.Hint>\n    </FileCard.Body>\n    <FileCard.Actions>\n      <FileCard.RemoveButton />\n    </FileCard.Actions>\n  </FileCard.Content>\n</FileCard.Root>",
         "stories": ["CompletedMediaTypes"]
+      },
+      {
+        "title": "Download",
+        "description": "Completed file cards with a download icon button action.",
+        "code": "<FileCard.Root>\n  <FileCard.Thumbnail>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" size=\"medium\" />\n  </FileCard.Thumbnail>\n  <FileCard.Content>\n    <FileCard.Body>\n      <FileCard.Name>DataAnalysis.pdf</FileCard.Name>\n      <FileCard.Meta>2.5 MB</FileCard.Meta>\n    </FileCard.Body>\n    <FileCard.Actions>\n      <FileCard.DownloadButton />\n    </FileCard.Actions>\n  </FileCard.Content>\n</FileCard.Root>",
+        "stories": ["Download"]
       },
       {
         "title": "Compact",
         "description": "Compact variant showing uploading, completed, and failed states with inline layout.",
-        "code": "<FileUploadCard.CompactRoot>\n  <FileUploadCard.CompactContent>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" size=\"medium\" />\n    <FileUploadCard.CompactBody>\n      <FileUploadCard.Name>my-cv.pdf</FileUploadCard.Name>\n      <FileUploadCard.CompactDescription>\n        <FileUploadCard.Meta>0 KB of 120 KB</FileUploadCard.Meta>\n        <FileUploadCard.Dot />\n        <FileUploadCard.CompactStatus status=\"uploading\">Uploading...</FileUploadCard.CompactStatus>\n      </FileUploadCard.CompactDescription>\n    </FileUploadCard.CompactBody>\n    <FileUploadCard.CloseButton />\n  </FileUploadCard.CompactContent>\n  <FileUploadCard.Progress value={10} />\n</FileUploadCard.CompactRoot>",
+        "code": "<FileCard.CompactRoot>\n  <FileCard.CompactContent>\n    <FileFormatIcon.Root format=\"PDF\" color=\"red\" size=\"medium\" />\n    <FileCard.CompactBody>\n      <FileCard.Name>my-cv.pdf</FileCard.Name>\n      <FileCard.CompactDescription>\n        <FileCard.Meta>0 KB of 120 KB</FileCard.Meta>\n        <FileCard.Dot />\n        <FileCard.CompactStatus status=\"uploading\">Uploading...</FileCard.CompactStatus>\n      </FileCard.CompactDescription>\n    </FileCard.CompactBody>\n    <FileCard.CloseButton />\n  </FileCard.CompactContent>\n  <FileCard.Progress value={10} />\n</FileCard.CompactRoot>",
         "stories": ["Compact"]
       },
       {
         "title": "Item Preset",
         "description": "High-level Item preset rendering uploading, failed, completed document, and completed image states automatically.",
-        "code": "<FileUploadCard.Item\n  file={{ id: '1', name: 'DataAnalysis.pdf', size: 2621440, type: 'application/pdf', progress: 35, status: 'uploading' }}\n  onClose={() => {}}\n/>",
+        "code": "<FileCard.Item\n  file={{ id: '1', name: 'DataAnalysis.pdf', size: 2621440, type: 'application/pdf', progress: 35, status: 'uploading' }}\n  onClose={() => {}}\n/>",
         "stories": ["Item"]
+      },
+      {
+        "title": "Item Preset: Download",
+        "description": "Item preset with download action for completed files.",
+        "code": "<FileCard.Item\n  file={{ id: '8', name: 'DataAnalysis.pdf', size: 2621440, type: 'application/pdf', progress: 100, status: 'completed' }}\n  onDownload={() => {}}\n/>",
+        "stories": ["ItemDownload"]
       },
       {
         "title": "Item Preset: Compact",
         "description": "Item preset in compact variant showing uploading, completed, and failed states.",
-        "code": "<FileUploadCard.Item\n  variant=\"compact\"\n  file={{ id: '5', name: 'my-cv.pdf', size: 122880, type: 'application/pdf', progress: 10, status: 'uploading' }}\n  onClose={() => {}}\n/>",
+        "code": "<FileCard.Item\n  variant=\"compact\"\n  file={{ id: '5', name: 'my-cv.pdf', size: 122880, type: 'application/pdf', progress: 10, status: 'uploading' }}\n  onClose={() => {}}\n/>",
         "stories": ["ItemCompact"]
       }
     ],
     "api": [
       {
-        "name": "FileUploadCard.Item",
+        "name": "FileCard.Item",
         "description": "A high-level preset that renders the correct card layout based on file status and variant. Reduces boilerplate by composing the compound sub-components internally.",
         "props": [
           {
@@ -72,21 +84,26 @@
             "name": "onClose",
             "type": "() => void",
             "description": "Called when the close button is clicked (uploading state only)."
+          },
+          {
+            "name": "onDownload",
+            "type": "() => void",
+            "description": "Called when the download button is clicked (completed state only)."
           }
         ]
       },
       {
-        "name": "FileUploadCard.Root",
+        "name": "FileCard.Root",
         "description": "The card container with rounded border and shadow.",
         "props": []
       },
       {
-        "name": "FileUploadCard.Thumbnail",
+        "name": "FileCard.Thumbnail",
         "description": "Left-side thumbnail area (176x104px, gray background).",
         "props": []
       },
       {
-        "name": "FileUploadCard.Image",
+        "name": "FileCard.Image",
         "description": "An image thumbnail that fills the thumbnail area.",
         "props": [
           {
@@ -97,7 +114,7 @@
         ]
       },
       {
-        "name": "FileUploadCard.Video",
+        "name": "FileCard.Video",
         "description": "A video thumbnail with a centered video icon overlay.",
         "props": [
           {
@@ -108,47 +125,47 @@
         ]
       },
       {
-        "name": "FileUploadCard.Audio",
+        "name": "FileCard.Audio",
         "description": "An audio thumbnail with a speaker icon.",
         "props": []
       },
       {
-        "name": "FileUploadCard.Content",
+        "name": "FileCard.Content",
         "description": "Right-side content area containing body and actions.",
         "props": []
       },
       {
-        "name": "FileUploadCard.Body",
+        "name": "FileCard.Body",
         "description": "Stacks filename, meta, and hint vertically with gap-1 (4px). Use for completed states.",
         "props": []
       },
       {
-        "name": "FileUploadCard.UploadBody",
+        "name": "FileCard.UploadBody",
         "description": "Stacks info group and progress/retry vertically with gap-3 (12px). Use for uploading/failed states.",
         "props": []
       },
       {
-        "name": "FileUploadCard.InfoGroup",
+        "name": "FileCard.InfoGroup",
         "description": "Groups name and status with gap-1.5 (6px). Use inside UploadBody.",
         "props": []
       },
       {
-        "name": "FileUploadCard.Name",
+        "name": "FileCard.Name",
         "description": "The filename text (truncated).",
         "props": []
       },
       {
-        "name": "FileUploadCard.Meta",
+        "name": "FileCard.Meta",
         "description": "Secondary info like file size.",
         "props": []
       },
       {
-        "name": "FileUploadCard.Hint",
+        "name": "FileCard.Hint",
         "description": "Tertiary info like upload date or size recommendations.",
         "props": []
       },
       {
-        "name": "FileUploadCard.Status",
+        "name": "FileCard.Status",
         "description": "Upload status indicator with icon.",
         "props": [
           {
@@ -159,7 +176,7 @@
         ]
       },
       {
-        "name": "FileUploadCard.Progress",
+        "name": "FileCard.Progress",
         "description": "A progress bar for upload progress.",
         "props": [
           {
@@ -177,22 +194,27 @@
         ]
       },
       {
-        "name": "FileUploadCard.RemoveButton",
+        "name": "FileCard.RemoveButton",
         "description": "A red outline button for removing the file.",
         "props": []
       },
       {
-        "name": "FileUploadCard.CloseButton",
+        "name": "FileCard.DownloadButton",
+        "description": "A subtle download icon button for downloading files.",
+        "props": []
+      },
+      {
+        "name": "FileCard.CloseButton",
         "description": "A subtle close (x) button for canceling uploads.",
         "props": []
       },
       {
-        "name": "FileUploadCard.RetryLink",
+        "name": "FileCard.RetryLink",
         "description": "A red underlined link for retrying failed uploads.",
         "props": []
       },
       {
-        "name": "FileUploadCard.CompactRoot",
+        "name": "FileCard.CompactRoot",
         "description": "Compact card container without thumbnail area. Supports error border.",
         "props": [
           {
@@ -204,32 +226,32 @@
         ]
       },
       {
-        "name": "FileUploadCard.CompactContent",
+        "name": "FileCard.CompactContent",
         "description": "Row layout for icon, text body, and action button.",
         "props": []
       },
       {
-        "name": "FileUploadCard.CompactBody",
+        "name": "FileCard.CompactBody",
         "description": "Stacks name and description vertically with gap-1.",
         "props": []
       },
       {
-        "name": "FileUploadCard.CompactErrorBody",
+        "name": "FileCard.CompactErrorBody",
         "description": "Wraps CompactBody and RetryLink with gap-2. Use for failed states.",
         "props": []
       },
       {
-        "name": "FileUploadCard.CompactDescription",
+        "name": "FileCard.CompactDescription",
         "description": "Inline row for meta, dot separator, and status.",
         "props": []
       },
       {
-        "name": "FileUploadCard.Dot",
+        "name": "FileCard.Dot",
         "description": "A dot separator for inline descriptions.",
         "props": []
       },
       {
-        "name": "FileUploadCard.CompactStatus",
+        "name": "FileCard.CompactStatus",
         "description": "Status indicator with icon for compact variant.",
         "props": [
           {
@@ -240,7 +262,7 @@
         ]
       },
       {
-        "name": "FileUploadCard.DeleteButton",
+        "name": "FileCard.DeleteButton",
         "description": "A subtle delete bin icon button for removing files.",
         "props": []
       }
@@ -248,7 +270,7 @@
   },
   "files": [
     {
-      "path": "ui/file-upload-card.tsx",
+      "path": "ui/file-card.tsx",
       "type": "registry:ui"
     }
   ]
