@@ -24,7 +24,7 @@ function PlaygroundRender(args: any) {
   const [open, setOpen] = useState(args.defaultOpen);
 
   return (
-    <SectionToggle.SectionToggle
+    <SectionToggle.Composed
       className='w-full max-w-[682px]'
       title={args.title}
       description={args.description}
@@ -32,7 +32,7 @@ function PlaygroundRender(args: any) {
       onOpenChange={setOpen}
     >
       {CONTENT}
-    </SectionToggle.SectionToggle>
+    </SectionToggle.Composed>
   );
 }
 
@@ -112,7 +112,7 @@ function ComposedRender() {
   const [open, setOpen] = useState(true);
 
   return (
-    <SectionToggle.SectionToggle
+    <SectionToggle.Composed
       className='w-full max-w-[682px]'
       title='Do you want to set a closing date for offers?'
       description='Set the end dates for when Offer will be accepted for the program.'
@@ -120,7 +120,7 @@ function ComposedRender() {
       onOpenChange={setOpen}
     >
       {CONTENT}
-    </SectionToggle.SectionToggle>
+    </SectionToggle.Composed>
   );
 }
 

@@ -3,18 +3,18 @@
   "name": "section",
   "type": "registry:ui",
   "title": "Section",
-  "description": "A two-column section layout with a title/description header on the left and content area on the right. Uses namespace exports: Section.Root, Section.Header, Section.Title, Section.Description, Section.Content, Section.Section (composed).",
+  "description": "A two-column section layout with a title/description header on the left and content area on the right. Uses namespace exports: Section.Root, Section.Header, Section.Title, Section.Description, Section.Content, Section.Composed (composed).",
   "version": "1.0.0",
   "dependencies": [],
   "registryDependencies": ["happly-ui-utils"],
   "docs": {
     "lead": "A two-column section layout for organizing form fields and content with a descriptive header.",
-    "usage": "import * as Section from \"@/components/ui/section\"\n\n// Composed (recommended)\n<Section.Section title=\"Title\" description=\"Description\">\n  {children}\n</Section.Section>\n\n// Namespace\n<Section.Root>\n  <Section.Header>\n    <Section.Title>Title</Section.Title>\n    <Section.Description>Description</Section.Description>\n  </Section.Header>\n  <Section.Content>\n    {children}\n  </Section.Content>\n</Section.Root>",
+    "usage": "import * as Section from \"@/components/ui/section\"\n\n// Composed (recommended)\n<Section.Composed title=\"Title\" description=\"Description\">\n  {children}\n</Section.Composed>\n\n// Namespace\n<Section.Root>\n  <Section.Header>\n    <Section.Title>Title</Section.Title>\n    <Section.Description>Description</Section.Description>\n  </Section.Header>\n  <Section.Content>\n    {children}\n  </Section.Content>\n</Section.Root>",
     "examples": [
       {
         "title": "Composed",
         "description": "Simplified single-component API with title and description as props.",
-        "code": "<Section.Section\n  title=\"Enter your business details\"\n  description=\"Share the key details about your business.\"\n>\n  {children}\n</Section.Section>",
+        "code": "<Section.Composed\n  title=\"Enter your business details\"\n  description=\"Share the key details about your business.\"\n>\n  {children}\n</Section.Composed>",
         "stories": ["Composed"]
       },
       {
@@ -32,7 +32,7 @@
     ],
     "api": [
       {
-        "name": "Section.Section",
+        "name": "Section.Composed",
         "description": "Composed version — renders the full section from props.",
         "props": [
           {

@@ -3,18 +3,18 @@
   "name": "section-toggle",
   "type": "registry:ui",
   "title": "Section Toggle",
-  "description": "A collapsible section with a title, description, and switch toggle that reveals content when enabled. Uses namespace exports: SectionToggle.Root, SectionToggle.Header, SectionToggle.TextGroup, SectionToggle.Title, SectionToggle.Description, SectionToggle.Content, SectionToggle.SectionToggle (composed).",
+  "description": "A collapsible section with a title, description, and switch toggle that reveals content when enabled. Uses namespace exports: SectionToggle.Root, SectionToggle.Header, SectionToggle.TextGroup, SectionToggle.Title, SectionToggle.Description, SectionToggle.Content, SectionToggle.Composed (composed).",
   "version": "1.0.0",
   "dependencies": ["framer-motion"],
   "registryDependencies": ["happly-ui-utils", "switch"],
   "docs": {
     "lead": "A toggleable section that expands to reveal content when a switch is activated.",
-    "usage": "import * as SectionToggle from \"@/components/ui/section-toggle\"\n\n// Composed (recommended)\n<SectionToggle.SectionToggle\n  title=\"Title\"\n  description=\"Description\"\n  open={open}\n  onOpenChange={setOpen}\n>\n  {children}\n</SectionToggle.SectionToggle>\n\n// Namespace\n<SectionToggle.Root open={open}>\n  <SectionToggle.Header open={open}>\n    <SectionToggle.TextGroup>\n      <SectionToggle.Title>Title</SectionToggle.Title>\n      <SectionToggle.Description>Description</SectionToggle.Description>\n    </SectionToggle.TextGroup>\n    <Switch.Root variant=\"neutral\" checked={open} onCheckedChange={setOpen} />\n  </SectionToggle.Header>\n  <SectionToggle.Content open={open}>{children}</SectionToggle.Content>\n</SectionToggle.Root>",
+    "usage": "import * as SectionToggle from \"@/components/ui/section-toggle\"\n\n// Composed (recommended)\n<SectionToggle.Composed\n  title=\"Title\"\n  description=\"Description\"\n  open={open}\n  onOpenChange={setOpen}\n>\n  {children}\n</SectionToggle.Composed>\n\n// Namespace\n<SectionToggle.Root open={open}>\n  <SectionToggle.Header open={open}>\n    <SectionToggle.TextGroup>\n      <SectionToggle.Title>Title</SectionToggle.Title>\n      <SectionToggle.Description>Description</SectionToggle.Description>\n    </SectionToggle.TextGroup>\n    <Switch.Root variant=\"neutral\" checked={open} onCheckedChange={setOpen} />\n  </SectionToggle.Header>\n  <SectionToggle.Content open={open}>{children}</SectionToggle.Content>\n</SectionToggle.Root>",
     "examples": [
       {
         "title": "Composed",
         "description": "Simplified single-component API with built-in switch toggle.",
-        "code": "<SectionToggle.SectionToggle\n  title=\"Set a deadline?\"\n  description=\"Offers close after this date.\"\n  open={open}\n  onOpenChange={setOpen}\n>\n  {children}\n</SectionToggle.SectionToggle>",
+        "code": "<SectionToggle.Composed\n  title=\"Set a deadline?\"\n  description=\"Offers close after this date.\"\n  open={open}\n  onOpenChange={setOpen}\n>\n  {children}\n</SectionToggle.Composed>",
         "stories": ["Composed"]
       },
       {
@@ -32,7 +32,7 @@
     ],
     "api": [
       {
-        "name": "SectionToggle.SectionToggle",
+        "name": "SectionToggle.Composed",
         "description": "Composed version — renders the full toggle section with built-in switch from props.",
         "props": [
           {

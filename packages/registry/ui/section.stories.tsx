@@ -78,7 +78,7 @@ export const WithCustomHeaderWidth = {
 
 export const Composed = {
   render: () => (
-    <Section.Section
+    <Section.Composed
       className='w-full'
       title='Enter your business details'
       description='Share the key details about your business so buyers can understand the opportunity.'
@@ -92,6 +92,6 @@ export const Composed = {
       <div className='h-10 rounded-[10px] border border-stroke-soft-200 bg-bg-white-0 px-3 py-2.5 text-paragraph-sm text-text-soft-400 shadow-regular-xs'>
         Where is the business located?
       </div>
-    </Section.Section>
+    </Section.Composed>
   ),
 };

@@ -123,5 +123,5 @@ export {
   SectionTitle as Title,
   SectionDescription as Description,
   SectionContent as Content,
-  Section,
+  Section as Composed,
 };

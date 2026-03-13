@@ -182,5 +182,5 @@ export {
   SectionToggleTitle as Title,
   SectionToggleDescription as Description,
   SectionToggleContent as Content,
-  SectionToggle,
+  SectionToggle as Composed,
 };
