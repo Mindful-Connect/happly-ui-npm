@@ -133,7 +133,7 @@ export const FinancialData = {
           <div className='flex flex-col gap-0.5'>
             <p className='text-label-xs text-text-strong-950'>Annual revenue</p>
             <div className='flex flex-wrap items-center gap-1'>
-              <span className='text-label-md text-success-dark'>
+              <span className='text-label-md text-green-700'>
                 $34,000 CAD
               </span>
               <span className='text-label-xs text-text-soft-400'>
@@ -148,7 +148,7 @@ export const FinancialData = {
           <div className='flex flex-col gap-0.5'>
             <p className='text-label-xs text-text-strong-950'>Revenue</p>
             <div className='flex flex-wrap items-center gap-1'>
-              <span className='text-label-md text-success-dark'>
+              <span className='text-label-md text-green-700'>
                 85,000 CAD
               </span>
               <span className='text-label-xs text-text-soft-400'>
@@ -165,7 +165,7 @@ export const FinancialData = {
               Annual Recurring Revenue
             </p>
             <div className='flex flex-wrap items-center gap-1'>
-              <span className='text-label-md text-success-dark'>
+              <span className='text-label-md text-green-700'>
                 85,000 CAD
               </span>
               <span className='text-label-xs text-text-soft-400'>
@@ -185,7 +185,7 @@ export const FinancialData = {
               Monthly Recurring Revenue
             </p>
             <div className='flex flex-wrap items-center gap-1'>
-              <span className='text-label-md text-success-dark'>
+              <span className='text-label-md text-green-700'>
                 85,000 CAD
               </span>
               <span className='text-label-xs text-text-soft-400'>
@@ -200,7 +200,7 @@ export const FinancialData = {
           <div className='flex flex-col gap-0.5'>
             <p className='text-label-xs text-text-strong-950'>Net profit</p>
             <div className='flex flex-wrap items-center gap-1'>
-              <span className='text-label-md text-success-dark'>
+              <span className='text-label-md text-green-700'>
                 $34,000 CAD
               </span>
               <span className='text-label-xs text-text-soft-400'>
@@ -215,7 +215,7 @@ export const FinancialData = {
           <div className='flex flex-col gap-0.5'>
             <p className='text-label-xs text-text-strong-950'>Net profit</p>
             <div className='flex flex-wrap items-center gap-1'>
-              <span className='text-label-md text-success-dark'>
+              <span className='text-label-md text-green-700'>
                 85,000 CAD
               </span>
               <span className='text-label-xs text-text-soft-400'>

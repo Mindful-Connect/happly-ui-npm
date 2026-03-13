@@ -106,7 +106,7 @@ const InfoGridGroup = React.forwardRef<HTMLDivElement, InfoGridGroupProps>(
             {row.items.map((item, cellIndex) => (
               <InfoGridCell key={cellIndex}>
                 <KeyIcon.Root icon={item.icon} />
-                <div className='flex flex-col gap-1'>
+                <div className='flex flex-col items-start gap-1'>
                   <p className='text-label-xs text-text-strong-950'>{item.label}</p>
                   {item.children}
                 </div>
