@@ -1,17 +1,25 @@
-import { Fragment, ReactElement, SVGProps, useEffect, useState } from 'react';
-import { useDebounce } from 'use-debounce';
+'use client';
 
-import { cn } from '@/lib/happly-ui-utils';
+import * as React from 'react';
+import { RiMapPinLine } from '@remixicon/react';
+import * as ScrollAreaPrimitives from '@radix-ui/react-scroll-area';
+import { RemoveScroll } from 'react-remove-scroll';
+import { useDebounce } from 'use-debounce';
 import { Loader } from '@googlemaps/js-api-loader';
+
+import * as Input from './input';
+import * as Popover from './popover';
+import { cn } from '@/lib/happly-ui-utils';
+
+// ─── Types ─────────────────────────────────────────────────
 
 declare global {
   interface Window {
     google: typeof google;
   }
 }
-import { Combobox, Transition } from '@headlessui/react';
 
-export interface Suggestion {
+interface Suggestion {
   description: string;
   place_id: string;
 }
@@ -43,216 +51,240 @@ export type LocationRequest = {
   longitude: number;
 } | null;
 
+// ─── Helpers ───────────────────────────────────────────────
+
 function normalizeAddress(address: string): string {
   return address.replaceAll('null,', '').trim();
 }
 
-export function LocationInput({
-  location,
-  setLocation,
-  placeholder = 'Select a location...',
-  icon,
-}: {
-  location: LocationRequest;
-  setLocation: (location: LocationRequest) => void;
-  placeholder?: string;
-  icon?: ReactElement<SVGProps<SVGSVGElement>>;
-}) {
-  const [locationSearchActive, setLocationSearchActive] = useState(false);
-  const [locationSearch, setLocationSearch] = useState(
-    location?.formatted_address ?? ''
+function resolvePlace(
+  placeId: string,
+  callback: (location: NonNullable<LocationRequest>) => void,
+) {
+  const placesService = new window.google.maps.places.PlacesService(
+    document.createElement('div'),
   );
-  const [locationSuggestions, setLocationSuggestions] = useState<Suggestion[]>(
-    []
-  );
-  const [debouncedLocationSearch] = useDebounce(locationSearch, 500, {
-    leading: false,
-    trailing: true,
-  });
-  const [isFocused, setIsFocused] = useState(false);
+  placesService.getDetails(
+    {
+      placeId,
+      fields: ['geometry', 'address_components'],
+    },
+    (place: PlaceResult | null, status: string) => {
+      if (status !== 'OK' || !place) return;
 
-  // load google maps script with places library
-  useEffect(() => {
-    const loader = new Loader({
-      apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || '',
-      version: 'weekly',
-      libraries: ['places'],
-    });
+      const get = (type: string, field: 'long_name' | 'short_name' = 'long_name') =>
+        place.address_components?.find((c) => c.types.includes(type))?.[field] ?? '';
 
-    loader.load().then(() => {});
-  }, []);
+      const streetNumber = get('street_number');
+      const route = get('route');
+      const city = get('locality');
+      const region = get('administrative_area_level_1', 'short_name');
+      const country = get('country');
+      const address = `${streetNumber} ${route}`.trim();
 
-  useEffect(() => {
-    (async () => {
-      if (debouncedLocationSearch.length < 3) setLocationSuggestions([]);
-      if (debouncedLocationSearch.length === 0) setLocation(null);
-      else {
-        if (!locationSearchActive) return;
-        const autocompleteService =
-          new window.google.maps.places.AutocompleteService();
-        const { predictions } = await autocompleteService.getPlacePredictions({
-          input: debouncedLocationSearch,
-          componentRestrictions: { country: ['ca', 'us', 'fr'] },
-          types: ['address'],
-          // types: ['(regions)'],
-        });
-        setLocationSuggestions(predictions);
-      }
-    })();
-  }, [debouncedLocationSearch, locationSearchActive, setLocation]);
+      const parts = [address, city, region, country].filter(Boolean);
+      const formatted_address = normalizeAddress(parts.join(', '));
 
-  return (
-    <Combobox
-      nullable
-      value={locationSearch}
-      onChange={async (value: string | null) => {
-        if (!value) return setLocation(null);
-
-        const selectedPlace = locationSuggestions.find(
-          (suggestion: Suggestion) => suggestion.place_id === value
-        );
-        if (!selectedPlace) return;
-        const location = {
-          place_id: selectedPlace.place_id,
-          address: '',
-          city: '',
-          region: '',
-          country: '',
-          formatted_address: '',
-          latitude: 0,
-          longitude: 0,
-        };
-        const placesService = new window.google.maps.places.PlacesService(
-          document.createElement('div')
-        );
-        placesService.getDetails(
-          {
-            placeId: selectedPlace.place_id,
-            fields: ['geometry', 'address_components'],
-          },
-          (place: PlaceResult | null, status: string) => {
-            if (status !== 'OK' || !place) return;
-            location.address =
-              (place.address_components?.find((c) =>
-                c.types.includes('street_number')
-              )?.long_name ?? '') +
-              ' ' +
-              (place.address_components?.find((c) => c.types.includes('route'))
-                ?.long_name ?? '');
-            location.city =
-              place.address_components?.find((c) =>
-                c.types.includes('locality')
-              )?.long_name ?? '';
-            location.region =
-              place.address_components?.find((c) =>
-                c.types.includes('administrative_area_level_1')
-              )?.short_name ?? '';
-            location.latitude = place.geometry?.location?.lat() ?? 0;
-            location.longitude = place.geometry?.location?.lng() ?? 0;
-            location.country =
-              place.address_components?.find((c) => c.types.includes('country'))
-                ?.long_name ?? '';
-            location.formatted_address = normalizeAddress(
-              `${location.address ? location.address + ',' : ''} ${
-                location.city ? location.city + ',' : ''
-              } ${location.region ? location.region + ',' : ''} ${
-                location.country ? location.country : ''
-              }`
-            );
-
-            setLocationSearch(
-              locationSuggestions.find(
-                (suggestion: Suggestion) => suggestion.place_id === value
-              )?.description ?? ''
-            );
-
-            setLocation(location);
-          }
-        );
-      }}
-    >
-      {() => {
-        return (
-          <div className='relative w-full'>
-            <div
-              className={cn(
-                'flex h-10 items-center rounded-[10px] border bg-white py-2 pr-2 pl-2.5 shadow-[0px_1px_2px_0px_rgba(10,13,20,0.03)]',
-                'hover:[&:not(:focus-within)]:border-ds-neutral-200 hover:[&:not(:focus-within)]:bg-ds-weak-50',
-                'focus-within:shadow-button-important-focus focus-within:before:ring-ds-stroke-strong-950',
-                isFocused ? 'border-ds-neutral-950' : 'border-ds-neutral-200'
-              )}
-            >
-              {icon && (
-                <span
-                  className={cn(
-                    '',
-                    location ? 'text-ds-neutral-600' : 'text-ds-neutral-400'
-                  )}
-                >
-                  {icon}
-                </span>
-              )}
-              <Combobox.Input
-                value={locationSearch}
-                className={cn(
-                  'text-ds-neutral-950 placeholder:text-ds-neutral-600 w-full border-none bg-transparent pl-1.5 text-sm focus:ring-0 focus:outline-none',
-                  'placeholder:truncate placeholder-shown:truncate'
-                )}
-                onFocus={() => {
-                  setLocationSearchActive(true);
-                  setIsFocused(true);
-                }}
-                onBlur={() => {
-                  setLocationSearchActive(false);
-                  setIsFocused(false);
-                }}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setLocationSearch(event.target.value);
-                }}
-                placeholder={placeholder}
-              />
-            </div>
-
-            <Transition
-              as={Fragment}
-              leave='transition ease-in duration-100'
-              leaveFrom='opacity-100'
-              leaveTo='opacity-0'
-            >
-              <div>
-                {locationSuggestions.length > 0 && (
-                  <Combobox.Options className='border-ds-neutral-200 absolute z-10 mt-2.5 max-h-60 w-full overflow-auto rounded-2xl border bg-white p-2 text-sm shadow-lg ring-0 focus:outline-none'>
-                    {locationSuggestions.map(
-                      (suggestion: Suggestion, suggestionIndex: number) => (
-                        <Combobox.Option
-                          key={suggestionIndex}
-                          value={suggestion.place_id}
-                        >
-                          {({ selected }: { selected: boolean }) => (
-                            <div
-                              className='hover:bg-ds-neutral-50 cursor-default rounded-[10px] px-3 py-2 select-none'
-                              title={suggestion.description}
-                            >
-                              <span
-                                className={cn(
-                                  'block truncate',
-                                  selected && 'font-medium'
-                                )}
-                              >
-                                {suggestion.description}
-                              </span>
-                            </div>
-                          )}
-                        </Combobox.Option>
-                      )
-                    )}
-                  </Combobox.Options>
-                )}
-              </div>
-            </Transition>
-          </div>
-        );
-      }}
-    </Combobox>
+      callback({
+        place_id: placeId,
+        address,
+        city: city || null,
+        region: region || null,
+        country,
+        formatted_address,
+        latitude: place.geometry?.location?.lat() ?? 0,
+        longitude: place.geometry?.location?.lng() ?? 0,
+      });
+    },
   );
 }
+
+// ─── LocationInput ─────────────────────────────────────────
+
+type LocationInputProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'value' | 'size'
+> & {
+  /** Current location value */
+  location: LocationRequest;
+  /** Callback when a location is selected or cleared */
+  onLocationChange?: (location: LocationRequest) => void;
+  /** Leading icon component */
+  icon?: React.ElementType;
+  /** Input size */
+  size?: 'medium' | 'small' | 'xsmall';
+  /** Error state */
+  hasError?: boolean;
+  /** Country restrictions for autocomplete (ISO 3166-1 alpha-2 codes) */
+  countryRestrictions?: string[];
+  /** Google Maps API key — defaults to NEXT_PUBLIC_GOOGLE_API_KEY env var */
+  apiKey?: string;
+};
+
+const LocationInputRoot = React.forwardRef<HTMLInputElement, LocationInputProps>(
+  (
+    {
+      location,
+      onLocationChange,
+      placeholder = 'Search address...',
+      icon: Icon = RiMapPinLine,
+      size,
+      hasError,
+      disabled,
+      countryRestrictions = ['ca', 'us', 'fr'],
+      apiKey,
+      className,
+      ...rest
+    },
+    forwardedRef,
+  ) => {
+    const [open, setOpen] = React.useState(false);
+    const [search, setSearch] = React.useState(location?.formatted_address ?? '');
+    const [suggestions, setSuggestions] = React.useState<Suggestion[]>([]);
+    const [anchorWidth, setAnchorWidth] = React.useState(0);
+    const anchorRef = React.useRef<HTMLDivElement>(null);
+    const searchActiveRef = React.useRef(false);
+
+    const [debouncedSearch] = useDebounce(search, 500, {
+      leading: false,
+      trailing: true,
+    });
+
+    function handleOpenChange(newOpen: boolean) {
+      if (newOpen && anchorRef.current) {
+        setAnchorWidth(anchorRef.current.offsetWidth);
+      }
+      setOpen(newOpen);
+    }
+
+    // Load Google Maps script
+    React.useEffect(() => {
+      const loader = new Loader({
+        apiKey: apiKey || process.env.NEXT_PUBLIC_GOOGLE_API_KEY || '',
+        version: 'weekly',
+        libraries: ['places'],
+      });
+      loader.load().then(() => {});
+    }, [apiKey]);
+
+    // Fetch suggestions on debounced search change
+    React.useEffect(() => {
+      if (!searchActiveRef.current) return;
+
+      if (debouncedSearch.length < 3) {
+        setSuggestions([]);
+        if (debouncedSearch.length === 0) onLocationChange?.(null);
+        return;
+      }
+
+      const autocompleteService =
+        new window.google.maps.places.AutocompleteService();
+      autocompleteService
+        .getPlacePredictions({
+          input: debouncedSearch,
+          componentRestrictions: { country: countryRestrictions },
+          types: ['address'],
+        })
+        .then(({ predictions }) => {
+          setSuggestions(predictions);
+          if (predictions.length > 0) handleOpenChange(true);
+        });
+    }, [debouncedSearch, countryRestrictions, onLocationChange]);
+
+    function handleSelect(suggestion: Suggestion) {
+      resolvePlace(suggestion.place_id, (resolved) => {
+        setSearch(suggestion.description);
+        onLocationChange?.(resolved);
+        setOpen(false);
+        searchActiveRef.current = false;
+      });
+    }
+
+    return (
+      <Popover.Root open={open} onOpenChange={handleOpenChange}>
+        <Popover.Anchor asChild>
+          <div ref={anchorRef} className={className}>
+            <Input.Root size={size} hasError={hasError}>
+              <Input.Wrapper>
+                <Input.Icon as={Icon} />
+                <Input.Input
+                  ref={forwardedRef}
+                  role='combobox'
+                  aria-expanded={open}
+                  aria-haspopup='listbox'
+                  value={search}
+                  onChange={(e) => {
+                    searchActiveRef.current = true;
+                    setSearch(e.target.value);
+                  }}
+                  onFocus={() => {
+                    if (!disabled && suggestions.length > 0) {
+                      handleOpenChange(true);
+                    }
+                  }}
+                  placeholder={placeholder}
+                  disabled={disabled}
+                  {...rest}
+                />
+              </Input.Wrapper>
+            </Input.Root>
+          </div>
+        </Popover.Anchor>
+
+        {suggestions.length > 0 && (
+          <Popover.Content
+            align='start'
+            sideOffset={8}
+            collisionPadding={8}
+            showArrow={false}
+            onOpenAutoFocus={(e) => e.preventDefault()}
+            onInteractOutside={(e) => {
+              if (anchorRef.current?.contains(e.target as Node)) {
+                e.preventDefault();
+              }
+            }}
+            style={{ width: anchorWidth || undefined }}
+            className='overflow-hidden p-0'
+          >
+            <RemoveScroll allowPinchZoom>
+              <ScrollAreaPrimitives.Root type='auto'>
+                <ScrollAreaPrimitives.Viewport
+                  style={{ overflowY: undefined }}
+                  className='max-h-[196px] w-full scroll-py-2 overflow-auto p-2'
+                  role='listbox'
+                >
+                  <div className='flex flex-col gap-1'>
+                    {suggestions.map((suggestion) => (
+                      <div
+                        key={suggestion.place_id}
+                        role='option'
+                        aria-selected={location?.place_id === suggestion.place_id}
+                        onClick={() => handleSelect(suggestion)}
+                        className={cn(
+                          'rounded-10 text-paragraph-sm text-text-strong-950 flex w-full cursor-pointer items-center gap-2 p-2 text-left select-none',
+                          'transition duration-200 ease-out',
+                          'hover:bg-bg-weak-50',
+                        )}
+                        title={suggestion.description}
+                      >
+                        <span className='line-clamp-1'>
+                          {suggestion.description}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </ScrollAreaPrimitives.Viewport>
+                <ScrollAreaPrimitives.Scrollbar orientation='vertical'>
+                  <ScrollAreaPrimitives.Thumb className='bg-bg-soft-200 !w-1 rounded' />
+                </ScrollAreaPrimitives.Scrollbar>
+              </ScrollAreaPrimitives.Root>
+            </RemoveScroll>
+          </Popover.Content>
+        )}
+      </Popover.Root>
+    );
+  },
+);
+LocationInputRoot.displayName = 'LocationInputRoot';
+
+export { LocationInputRoot as Root, type LocationInputProps };

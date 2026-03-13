@@ -223,7 +223,7 @@
       "name": "location-input",
       "type": "registry:ui",
       "title": "Location Input",
-      "description": "A Google Maps address autocomplete input."
+      "description": "A Google Maps address autocomplete input with Popover dropdown."
     },
     {
       "name": "memoji",

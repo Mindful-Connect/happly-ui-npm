@@ -119,6 +119,7 @@ function main() {
   const COMPOSED_INPUT_COMPONENTS = [
     'combo-box',
     'currency-input',
+    'location-input',
     'password-input',
     'phone-input',
     'socials-input',
@@ -140,12 +141,7 @@ function main() {
     'section-toggle',
   ];
 
-  const LEGACY_COMPONENTS = [
-    'location-input',
-    'upload-file-input',
-  ];
-
-  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS, ...FILE_UPLOAD_COMPONENTS, ...PROVIDER_COMPONENTS, ...SECTION_COMPONENTS, ...LEGACY_COMPONENTS];
+  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS, ...FILE_UPLOAD_COMPONENTS, ...PROVIDER_COMPONENTS, ...SECTION_COMPONENTS];
 
   const mainLinks = componentLinks
     .filter((item) => !GROUPED_COMPONENTS.includes(item.name))
@@ -189,10 +185,6 @@ function main() {
 
   const sectionLinks = componentLinks
     .filter((item) => SECTION_COMPONENTS.includes(item.name))
-    .map(({ name, ...rest }) => rest);
-
-  const legacyLinks = componentLinks
-    .filter((item) => LEGACY_COMPONENTS.includes(item.name))
     .map(({ name, ...rest }) => rest);
 
   // Build full navigation structure
@@ -260,11 +252,6 @@ function main() {
           collapsed: false,
         },
         ...mainLinks,
-        {
-          title: 'Needs Refactor',
-          links: legacyLinks,
-          collapsed: true,
-        },
       ],
     },
     ...(hookLinks.length > 0
