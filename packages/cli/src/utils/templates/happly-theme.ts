@@ -572,6 +572,7 @@ export const HAPPLY_THEME_V4 = `/* HapplyUI Design Tokens — https://ui.happly.
   /* HapplyUI Animation System */
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-shimmer: shimmer 2s infinite linear;
 }
 
 /* Dark Mode — prefers-color-scheme */
@@ -938,6 +939,15 @@ export const HAPPLY_THEME_V4 = `/* HapplyUI Design Tokens — https://ui.happly.
   to {
     height: 0;
     opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
   }
 }
 
@@ -1378,6 +1388,15 @@ export const HAPPLY_THEME_V3 = `/* HapplyUI Design Tokens — https://ui.happly.
   to {
     height: 0;
     opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
   }
 }
 

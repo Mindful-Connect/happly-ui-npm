@@ -81,6 +81,12 @@
         "stories": ["AsChild"]
       },
       {
+        "title": "Loading",
+        "description": "Use the loading prop to show a shimmer \"Loading...\" state. The button is automatically disabled while loading.",
+        "code": "<Button.Root loading>Get Started</Button.Root>",
+        "stories": ["Loading"]
+      },
+      {
         "title": "Composed",
         "description": "Simplified usage via the Composed wrapper with leadingIcon and trailingIcon props.",
         "code": "<Button.Composed\n  leadingIcon={RiArrowLeftSLine}\n  trailingIcon={RiArrowRightSLine}\n  variant=\"neutral\"\n  mode=\"stroke\"\n>\n  Button\n</Button.Composed>",
@@ -115,6 +121,12 @@
             "type": "boolean",
             "default": "false",
             "description": "Renders as child element using Radix Slot"
+          },
+          {
+            "name": "loading",
+            "type": "boolean",
+            "default": "false",
+            "description": "Shows a shimmer \"Loading...\" state and disables the button"
           },
           {
             "name": "disabled",

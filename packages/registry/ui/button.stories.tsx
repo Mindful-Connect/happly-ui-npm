@@ -11,6 +11,7 @@ export const Playground = {
     mode: 'filled',
     size: 'medium',
     disabled: false,
+    loading: false,
   },
   argTypes: {
     children: { control: 'text' },
@@ -18,6 +19,7 @@ export const Playground = {
     mode: { control: 'select', options: ['filled', 'stroke', 'lighter', 'ghost'] },
     size: { control: 'select', options: ['medium', 'small', 'xsmall', 'xxsmall'] },
     disabled: { control: 'boolean' },
+    loading: { control: 'boolean' },
   },
   render: (args: any) => <Button.Root {...args} />,
 };
@@ -158,6 +160,17 @@ export const AsChild = {
       <Button.Root asChild>
         <a href='#'>As link</a>
       </Button.Root>
+    </div>
+  ),
+};
+
+export const Loading = {
+  render: () => (
+    <div className='flex flex-col items-center gap-4'>
+      <Button.Root loading>Get Started</Button.Root>
+      <Button.Root loading variant='neutral' mode='stroke'>Learn More</Button.Root>
+      <Button.Root loading variant='error' mode='filled'>Delete</Button.Root>
+      <Button.Root loading variant='success' mode='lighter'>Save</Button.Root>
     </div>
   ),
 };

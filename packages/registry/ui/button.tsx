@@ -373,11 +373,12 @@ type ButtonSharedProps = VariantProps<typeof buttonVariants>;
 type ButtonRootProps = VariantProps<typeof buttonVariants> &
   React.ButtonHTMLAttributes<HTMLButtonElement> & {
     asChild?: boolean;
+    loading?: boolean;
   };
 
 const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
   (
-    { children, variant, mode, size, asChild, className, ...rest },
+    { children, variant, mode, size, asChild, loading, className, disabled, ...rest },
     forwardedRef
   ) => {
     const uniqueId = React.useId();
@@ -401,10 +402,20 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
     return (
       <Component
         ref={forwardedRef}
-        className={root({ class: className })}
+        className={root({
+          class: [loading && 'pointer-events-none bg-bg-weak-50 text-text-disabled-300 ring-transparent shadow-none', className],
+        })}
+        disabled={disabled}
+        aria-disabled={loading || undefined}
         {...rest}
       >
-        {extendedChildren}
+        {loading ? (
+          <span className='animate-pulse'>
+            Loading...
+          </span>
+        ) : (
+          extendedChildren
+        )}
       </Component>
     );
   }

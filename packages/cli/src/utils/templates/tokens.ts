@@ -812,6 +812,10 @@ export const keyframes = {
     '50%': { transform: 'scale(1.2)' },
     '100%': { transform: 'scale(1)', opacity: '1' },
   },
+  shimmer: {
+    '0%': { backgroundPosition: '200% 0' },
+    '100%': { backgroundPosition: '-200% 0' },
+  },
 };
 
 export const animations = {
@@ -819,4 +823,5 @@ export const animations = {
   'accordion-up': 'accordion-up 0.2s ease-out',
   'spin-smooth': 'spin-smooth 1s linear infinite',
   'copy-success': 'copy-success 0.3s ease-out forwards',
+  shimmer: 'shimmer 2s infinite linear',
 };
