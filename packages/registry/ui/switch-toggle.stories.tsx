@@ -50,3 +50,39 @@ export const Rounded = {
     </SwitchToggle.Root>
   ),
 };
+
+// --- Composed (Group) stories ---
+
+const themeItems: SwitchToggle.SwitchToggleGroupItem[] = [
+  { value: 'light', label: 'Light', icon: RiSunLine },
+  { value: 'dark', label: 'Dark', icon: RiMoonLine },
+  { value: 'system', label: 'System', icon: RiEqualizer3Fill },
+];
+
+const textOnlyItems: SwitchToggle.SwitchToggleGroupItem[] = [
+  { value: 'daily', label: 'Daily' },
+  { value: 'weekly', label: 'Weekly' },
+  { value: 'monthly', label: 'Monthly' },
+];
+
+export const GroupDefault = {
+  render: () => (
+    <div className='w-full max-w-sm'>
+      <SwitchToggle.Group
+        defaultValue='system'
+        items={themeItems}
+      />
+    </div>
+  ),
+};
+
+export const GroupTextOnly = {
+  render: () => (
+    <div className='w-full max-w-sm'>
+      <SwitchToggle.Group
+        defaultValue='weekly'
+        items={textOnlyItems}
+      />
+    </div>
+  ),
+};

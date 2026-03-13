@@ -91,9 +91,59 @@ const SwitchToggleContent = React.forwardRef<
 });
 SwitchToggleContent.displayName = 'SwitchToggleContent';
 
+const SWITCH_TOGGLE_GROUP_NAME = 'SwitchToggleGroup';
+
+type SwitchToggleGroupItem = {
+  value: string;
+  label: React.ReactNode;
+  icon?: React.ElementType;
+};
+
+type SwitchToggleGroupProps = Omit<
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>,
+  'children'
+> & {
+  items: SwitchToggleGroupItem[];
+  listClassName?: string;
+  floatingBgClassName?: string;
+};
+
+const SwitchToggleGroup = React.forwardRef<
+  React.ComponentRef<typeof TabsPrimitive.Root>,
+  SwitchToggleGroupProps
+>(
+  (
+    { items, listClassName, floatingBgClassName, ...rest },
+    forwardedRef,
+  ) => {
+    return (
+      <SwitchToggleRoot ref={forwardedRef} {...rest}>
+        <SwitchToggleList
+          className={listClassName}
+          floatingBgClassName={floatingBgClassName}
+        >
+          {items.map((item) => {
+            const Icon = item.icon;
+            return (
+              <SwitchToggleTrigger key={item.value} value={item.value}>
+                {Icon && <Icon className='size-5 shrink-0' />}
+                {item.label}
+              </SwitchToggleTrigger>
+            );
+          })}
+        </SwitchToggleList>
+      </SwitchToggleRoot>
+    );
+  },
+);
+SwitchToggleGroup.displayName = SWITCH_TOGGLE_GROUP_NAME;
+
 export {
   SwitchToggleRoot as Root,
   SwitchToggleList as List,
   SwitchToggleTrigger as Trigger,
   SwitchToggleContent as Content,
+  SwitchToggleGroup as Group,
 };
+
+export type { SwitchToggleGroupItem, SwitchToggleGroupProps };

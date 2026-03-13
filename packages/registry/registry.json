@@ -361,7 +361,7 @@
       "name": "switch-toggle",
       "type": "registry:ui",
       "title": "Switch Toggle",
-      "description": "A tab-based switch toggle with animated floating background indicator. Uses Radix Tabs with namespace exports: SwitchToggle.Root, SwitchToggle.List, SwitchToggle.Trigger, SwitchToggle.Content."
+      "description": "A tab-based switch toggle with animated floating background indicator. Includes a composed SwitchToggle.Group for quick usage. Uses Radix Tabs with namespace exports."
     },
     {
       "name": "tab-menu-horizontal",

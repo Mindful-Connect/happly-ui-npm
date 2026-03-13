@@ -53,7 +53,7 @@ import { default as skeletonMeta, Default as skeleton_Default, Card as skeleton_
 import { default as sliderMeta, Playground as slider_Playground, Demo as slider_Demo, Variants as slider_Variants, Range as slider_Range, WithTooltip as slider_WithTooltip, WithFormField as slider_WithFormField } from '@/components/ui/slider.stories';
 import { default as socialsInputMeta, Default as socialsInput_Default, WithExistingValues as socialsInput_WithExistingValues, AllSocials as socialsInput_AllSocials, CustomSocials as socialsInput_CustomSocials, ReadOnly as socialsInput_ReadOnly, WithFormField as socialsInput_WithFormField, ErrorState as socialsInput_ErrorState, CustomLabels as socialsInput_CustomLabels } from '@/components/ui/socials-input.stories';
 import { default as statusBadgeMeta, Playground as statusBadge_Playground, Completed as statusBadge_Completed, Pending as statusBadge_Pending, Failed as statusBadge_Failed, Disabled as statusBadge_Disabled, AsChild as statusBadge_AsChild } from '@/components/ui/status-badge.stories';
-import { default as switchToggleMeta, Default as switchToggle_Default, Rounded as switchToggle_Rounded } from '@/components/ui/switch-toggle.stories';
+import { default as switchToggleMeta, Default as switchToggle_Default, Rounded as switchToggle_Rounded, GroupDefault as switchToggle_GroupDefault, GroupTextOnly as switchToggle_GroupTextOnly } from '@/components/ui/switch-toggle.stories';
 import { default as switchMeta, Playground as switch_Playground, Demo as switch_Demo, Variants as switch_Variants, Disabled as switch_Disabled, WithLabel as switch_WithLabel, WithLabelExtended as switch_WithLabelExtended, WithFormField as switch_WithFormField } from '@/components/ui/switch.stories';
 import { default as tabMenuHorizontalMeta, Default as tabMenuHorizontal_Default, Primary as tabMenuHorizontal_Primary, WithIcons as tabMenuHorizontal_WithIcons, WithCounter as tabMenuHorizontal_WithCounter, Composed as tabMenuHorizontal_Composed, Overflow as tabMenuHorizontal_Overflow, Disabled as tabMenuHorizontal_Disabled } from '@/components/ui/tab-menu-horizontal.stories';
 import { default as tableMeta, Default as table_Default } from '@/components/ui/table.stories';
@@ -659,7 +659,9 @@ export const storyRegistry: Record<string, {
     meta: switchToggleMeta,
     stories: {
     'Default': switchToggle_Default,
-    'Rounded': switchToggle_Rounded
+    'Rounded': switchToggle_Rounded,
+    'GroupDefault': switchToggle_GroupDefault,
+    'GroupTextOnly': switchToggle_GroupTextOnly
     }
   },
   'switch': {
