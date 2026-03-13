@@ -37,7 +37,6 @@ function main() {
     .filter(
       (item) =>
         item.type === 'registry:ui' &&
-        item.name !== 'phone-input' &&
         item.name !== 'avatar-empty-icons'
     )
     .map((item) => ({
@@ -121,6 +120,7 @@ function main() {
     'combo-box',
     'currency-input',
     'password-input',
+    'phone-input',
     'socials-input',
     'tag-input',
   ];
@@ -142,7 +142,6 @@ function main() {
 
   const LEGACY_COMPONENTS = [
     'location-input',
-    'phone-input',
     'upload-file-input',
   ];
 

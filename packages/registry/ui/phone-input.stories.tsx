@@ -1,54 +1,107 @@
 'use client';
 
-import { useState } from 'react';
-import { Root as PhoneInput } from './phone-input';
+import * as React from 'react';
 
-export default { title: 'Needs Refactor/Phone Input', component: PhoneInput };
+import * as FormField from './form-field';
+import * as PhoneInput from './phone-input';
+
+export default { title: 'Form/Composed Inputs/Phone Input' };
 
 export const Playground = {
   args: {
+    size: 'medium',
+    hasError: false,
+    disabled: false,
     placeholder: '(555) 000-0000',
-    readOnly: false,
-    defaultCountryIso2: 'ca',
+    defaultCountry: 'ca',
   },
   argTypes: {
+    size: { control: 'select', options: ['medium', 'small', 'xsmall'] },
+    hasError: { control: 'boolean' },
+    disabled: { control: 'boolean' },
     placeholder: { control: 'text' },
-    readOnly: { control: 'boolean' },
-    defaultCountryIso2: { control: 'select', options: ['ca', 'us', 'fr'] },
+    defaultCountry: { control: 'select', options: ['ca', 'us', 'fr'] },
   },
-  render: (args: any) => {
-    function PhoneInputPlayground() {
-      const [value, setValue] = useState('');
-      return (
-        <div style={{ width: '100%', maxWidth: '400px' }}>
-          <PhoneInput
-            inputValue={value}
-            onChange={setValue}
-            placeholder={args.placeholder}
-            readOnly={args.readOnly}
-            defaultCountryIso2={args.defaultCountryIso2}
-          />
-        </div>
-      );
-    }
-    return <PhoneInputPlayground />;
-  },
+  render: (args: any) => (
+    <div className='w-full max-w-[300px]'>
+      <PhoneInput.Root
+        size={args.size}
+        hasError={args.hasError}
+        disabled={args.disabled}
+        placeholder={args.placeholder}
+        defaultCountry={args.defaultCountry}
+      />
+    </div>
+  ),
 };
 
 export const Default = {
-  render: () => {
-    function PhoneInputDemo() {
-      const [value, setValue] = useState('');
-      return (
-        <div style={{ width: '100%', maxWidth: '400px' }}>
-          <PhoneInput
-            inputValue={value}
-            onChange={setValue}
-            defaultCountryIso2="ca"
-          />
-        </div>
-      );
-    }
-    return <PhoneInputDemo />;
-  },
+  render: () => (
+    <div className='w-full max-w-[300px]'>
+      <PhoneInput.Root />
+    </div>
+  ),
+};
+
+function ControlledRender() {
+  const [value, setValue] = React.useState('');
+  const [country, setCountry] = React.useState<string>('us');
+
+  return (
+    <div className='w-full max-w-[300px]'>
+      <PhoneInput.Root
+        value={value}
+        onValueChange={setValue}
+        country={country as any}
+        onCountryChange={(iso2) => setCountry(iso2)}
+      />
+      <p className='mt-2 text-paragraph-xs text-text-sub-600'>
+        Value: {value || '—'} | Country: {country}
+      </p>
+    </div>
+  );
+}
+export const Controlled = {
+  render: () => <ControlledRender />,
+};
+
+export const Sizes = {
+  render: () => (
+    <div className='flex w-full max-w-[300px] flex-col gap-6'>
+      <PhoneInput.Root size='medium' />
+      <PhoneInput.Root size='small' />
+      <PhoneInput.Root size='xsmall' />
+    </div>
+  ),
+};
+
+export const ErrorState = {
+  render: () => (
+    <div className='w-full max-w-[300px]'>
+      <PhoneInput.Root hasError />
+    </div>
+  ),
+};
+
+export const Disabled = {
+  render: () => (
+    <div className='w-full max-w-[300px]'>
+      <PhoneInput.Root disabled />
+    </div>
+  ),
+};
+
+export const WithFormField = {
+  render: () => (
+    <div className='w-full min-w-[300px] max-w-[300px]'>
+      <FormField.Root
+        label='Phone Number'
+        htmlFor='phone'
+        required
+        hint='Enter your phone number.'
+      >
+        <PhoneInput.Root id='phone' />
+      </FormField.Root>
+    </div>
+  ),
 };

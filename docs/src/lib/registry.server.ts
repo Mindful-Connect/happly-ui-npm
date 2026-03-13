@@ -23,7 +23,7 @@ export function getUIComponents(): RegistryItem[] {
   return registry.items.filter(
     (item) =>
       item.type === 'registry:ui' &&
-      !['phone-input', 'radio-group', 'key-icon'].includes(item.name)
+      !['radio-group', 'key-icon'].includes(item.name)
   );
 }
 

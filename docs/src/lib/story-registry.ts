@@ -38,7 +38,7 @@ import { default as locationInputMeta, Playground as locationInput_Playground, D
 import { default as modalMeta, Playground as modal_Playground, Demo as modal_Demo, WithHeader as modal_WithHeader } from '@/components/ui/modal.stories';
 import { default as paginationMeta, Playground as pagination_Playground, Demo as pagination_Demo, Rounded as pagination_Rounded, Group as pagination_Group, AsLink as pagination_AsLink } from '@/components/ui/pagination.stories';
 import { default as passwordInputMeta, Playground as passwordInput_Playground, Default as passwordInput_Default, WithStrength as passwordInput_WithStrength, Sizes as passwordInput_Sizes, ErrorState as passwordInput_ErrorState, WithFormField as passwordInput_WithFormField } from '@/components/ui/password-input.stories';
-import { default as phoneInputMeta, Playground as phoneInput_Playground, Default as phoneInput_Default } from '@/components/ui/phone-input.stories';
+import { default as phoneInputMeta, Playground as phoneInput_Playground, Default as phoneInput_Default, Controlled as phoneInput_Controlled, Sizes as phoneInput_Sizes, ErrorState as phoneInput_ErrorState, Disabled as phoneInput_Disabled, WithFormField as phoneInput_WithFormField } from '@/components/ui/phone-input.stories';
 import { default as popoverMeta, Playground as popover_Playground, Demo as popover_Demo, Position as popover_Position } from '@/components/ui/popover.stories';
 import { default as progressBarMeta, Playground as progressBar_Playground, Color as progressBar_Color, WithLabel as progressBar_WithLabel, DataStorage as progressBar_DataStorage } from '@/components/ui/progress-bar.stories';
 import { default as progressCircleMeta, Playground as progressCircle_Playground, Sizes as progressCircle_Sizes } from '@/components/ui/progress-circle.stories';
@@ -484,7 +484,12 @@ export const storyRegistry: Record<string, {
     meta: phoneInputMeta,
     stories: {
     'Playground': phoneInput_Playground,
-    'Default': phoneInput_Default
+    'Default': phoneInput_Default,
+    'Controlled': phoneInput_Controlled,
+    'Sizes': phoneInput_Sizes,
+    'ErrorState': phoneInput_ErrorState,
+    'Disabled': phoneInput_Disabled,
+    'WithFormField': phoneInput_WithFormField
     }
   },
   'popover': {

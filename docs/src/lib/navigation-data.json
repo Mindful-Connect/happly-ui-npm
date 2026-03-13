@@ -178,6 +178,10 @@
                 "href": "/docs/components/password-input"
               },
               {
+                "title": "Phone Input",
+                "href": "/docs/components/phone-input"
+              },
+              {
                 "title": "Socials Input",
                 "href": "/docs/components/socials-input"
               },

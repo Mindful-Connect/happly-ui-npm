@@ -6,49 +6,102 @@
   "description": "A phone input component with country selection and formatting.",
   "dependencies": [
     "react-international-phone",
-    "libphonenumber-js",
-    "flag-icons",
-    "lucide-react",
-    "@headlessui/react"
+    "libphonenumber-js"
   ],
-  "registryDependencies": ["happly-ui-utils"],
+  "registryDependencies": ["input", "select"],
   "docs": {
     "lead": "A phone input component with country selection and automatic formatting.",
-    "usage": "import * as PhoneInput from \"@/components/ui/phone-input\"\n\n<PhoneInput.Root\n  inputValue={value}\n  onChange={(val) => setValue(val)}\n  defaultCountryIso2=\"ca\"\n/>",
+    "usage": "import * as PhoneInput from \"@/components/ui/phone-input\"\n\n<PhoneInput.Root onValueChange={(e164) => console.log(e164)} />",
     "examples": [
       {
         "title": "Default",
-        "description": "Default phone input with Canada selected.",
-        "code": "<PhoneInput.Root\n  inputValue={value}\n  onChange={setValue}\n  defaultCountryIso2=\"ca\"\n/>",
+        "description": "Phone input with default country (Canada).",
+        "code": "<PhoneInput.Root onValueChange={(e164) => console.log(e164)} />",
         "stories": ["Default"]
+      },
+      {
+        "title": "Controlled",
+        "description": "Fully controlled phone input with value and country.",
+        "code": "<PhoneInput.Root\n  value={value}\n  onValueChange={setValue}\n  country={country}\n  onCountryChange={setCountry}\n/>",
+        "stories": ["Controlled"]
+      },
+      {
+        "title": "Sizes",
+        "description": "All three input sizes: medium (default), small, and xsmall.",
+        "code": "<PhoneInput.Root size=\"medium\" />\n<PhoneInput.Root size=\"small\" />\n<PhoneInput.Root size=\"xsmall\" />",
+        "stories": ["Sizes"]
+      },
+      {
+        "title": "Error State",
+        "description": "Phone input in error state.",
+        "code": "<PhoneInput.Root hasError />",
+        "stories": ["ErrorState"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Phone input in disabled state.",
+        "code": "<PhoneInput.Root disabled />",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "With Form Field",
+        "description": "Phone input composed with FormField for consistent label and hint.",
+        "code": "<FormField.Root\n  label=\"Phone Number\"\n  htmlFor=\"phone\"\n  required\n  hint=\"Enter your phone number.\"\n>\n  <PhoneInput.Root id=\"phone\" />\n</FormField.Root>",
+        "stories": ["WithFormField"]
       }
     ],
     "api": [
       {
         "name": "PhoneInput.Root",
-        "description": "The main component.",
+        "description": "The composed phone input component. Forwards ref to the underlying input element.",
         "props": [
           {
-            "name": "inputValue",
+            "name": "value",
             "type": "string",
-            "default": "''",
-            "description": "The current value in E.164 format."
+            "description": "Phone value in E.164 format (controlled)."
           },
           {
-            "name": "onChange",
-            "type": "(value: string) => void",
+            "name": "onValueChange",
+            "type": "(e164: string) => void",
             "description": "Callback when value changes."
           },
           {
-            "name": "defaultCountryIso2",
+            "name": "country",
+            "type": "CountryIso2",
+            "description": "Controlled country ISO2 code."
+          },
+          {
+            "name": "defaultCountry",
             "type": "CountryIso2",
             "default": "'ca'",
             "description": "Default country to select."
           },
           {
-            "name": "readOnly",
+            "name": "onCountryChange",
+            "type": "(iso2: CountryIso2) => void",
+            "description": "Callback when country changes."
+          },
+          {
+            "name": "preferredCountries",
+            "type": "CountryIso2[]",
+            "default": "['ca', 'us', 'fr']",
+            "description": "Countries shown at the top of the dropdown."
+          },
+          {
+            "name": "size",
+            "type": "'medium' | 'small' | 'xsmall'",
+            "default": "'medium'",
+            "description": "Size variant."
+          },
+          {
+            "name": "hasError",
             "type": "boolean",
-            "description": "Whether the input is read-only."
+            "description": "Whether the input has an error state."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "description": "Whether the input is disabled."
           }
         ]
       }
