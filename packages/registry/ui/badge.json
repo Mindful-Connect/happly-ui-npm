@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Badge",
   "description": "A compound badge component with variants, colors, sizes, dot indicators, and polymorphic icon support. Uses namespace exports: Badge.Root, Badge.Icon, Badge.Dot.",
-  "version": "2.0.0",
+  "version": "2.2.0",
   "dependencies": [
     "@radix-ui/react-slot"
   ],
@@ -22,25 +22,25 @@
     "examples": [
       {
         "title": "Filled Variant",
-        "description": "The filled variant uses a solid background with white text.",
+        "description": "The filled variant uses the color's 500 token as background with white text.",
         "code": "<Badge.Root variant=\"filled\">Badge</Badge.Root>\n<Badge.Root variant=\"filled\" color=\"red\">Badge</Badge.Root>\n<Badge.Root variant=\"filled\" color=\"blue\">Badge</Badge.Root>",
         "stories": ["BadgeFilled"]
       },
       {
         "title": "Light Variant",
-        "description": "The light variant uses a lighter background with dark text.",
+        "description": "The light variant uses the color's 200 token as background and 950 for text.",
         "code": "<Badge.Root variant=\"light\">Badge</Badge.Root>\n<Badge.Root variant=\"light\" color=\"red\">Badge</Badge.Root>",
         "stories": ["BadgeLight"]
       },
       {
         "title": "Lighter Variant",
-        "description": "The lighter variant uses the lightest background tint.",
+        "description": "The lighter variant uses the color's 50 token for background, 100 for the border, and 950 for text.",
         "code": "<Badge.Root variant=\"lighter\">Badge</Badge.Root>\n<Badge.Root variant=\"lighter\" color=\"red\">Badge</Badge.Root>",
         "stories": ["BadgeLighter"]
       },
       {
         "title": "Stroke Variant",
-        "description": "The stroke variant uses a ring outline with no background fill.",
+        "description": "The stroke variant uses a neutral-200 border on a white background with the color's 500 text.",
         "code": "<Badge.Root variant=\"stroke\">Badge</Badge.Root>\n<Badge.Root variant=\"stroke\" color=\"red\">Badge</Badge.Root>",
         "stories": ["BadgeStroke"]
       },

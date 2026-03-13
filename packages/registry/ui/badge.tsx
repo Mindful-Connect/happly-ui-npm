@@ -26,14 +26,14 @@ export const badgeVariants = tv({
   variants: {
     size: {
       small: {
-        root: 'h-4 gap-1.5 px-2 text-subheading-2xs uppercase has-[>.dot]:gap-2',
-        icon: '-mx-1 size-3',
-        dot: '-mx-2 size-4',
+        root: 'h-5 gap-0.5 px-2 text-subheading-2xs',
+        icon: 'size-3',
+        dot: 'size-4',
       },
       medium: {
-        root: 'h-5 gap-1.5 px-2 text-label-xs',
-        icon: '-mx-1 size-4',
-        dot: '-mx-1.5 size-4',
+        root: 'h-6 gap-0.5 px-2 text-label-xs',
+        icon: 'size-4',
+        dot: 'size-4',
       },
     },
     variant: {
@@ -41,9 +41,11 @@ export const badgeVariants = tv({
         root: 'text-static-white',
       },
       light: {},
-      lighter: {},
+      lighter: {
+        root: 'ring-1 ring-inset',
+      },
       stroke: {
-        root: 'ring-1 ring-inset ring-current',
+        root: 'ring-1 ring-inset ring-neutral-200 bg-white',
       },
     },
     color: {
@@ -72,72 +74,52 @@ export const badgeVariants = tv({
     {
       variant: 'filled',
       color: 'gray',
-      class: {
-        root: 'bg-faded-base',
-      },
+      class: { root: 'bg-neutral-500' },
     },
     {
       variant: 'filled',
       color: 'blue',
-      class: {
-        root: 'bg-information-base',
-      },
+      class: { root: 'bg-blue-500' },
     },
     {
       variant: 'filled',
       color: 'orange',
-      class: {
-        root: 'bg-warning-base',
-      },
+      class: { root: 'bg-orange-500' },
     },
     {
       variant: 'filled',
       color: 'red',
-      class: {
-        root: 'bg-error-base',
-      },
+      class: { root: 'bg-red-500' },
     },
     {
       variant: 'filled',
       color: 'green',
-      class: {
-        root: 'bg-success-base',
-      },
+      class: { root: 'bg-green-500' },
     },
     {
       variant: 'filled',
       color: 'yellow',
-      class: {
-        root: 'bg-away-base',
-      },
+      class: { root: 'bg-yellow-500' },
     },
     {
       variant: 'filled',
       color: 'purple',
-      class: {
-        root: 'bg-feature-base',
-      },
+      class: { root: 'bg-purple-500' },
     },
     {
       variant: 'filled',
       color: 'sky',
-      class: {
-        root: 'bg-verified-base',
-      },
+      class: { root: 'bg-sky-500' },
     },
     {
       variant: 'filled',
       color: 'pink',
-      class: {
-        root: 'bg-highlighted-base',
-      },
+      class: { root: 'bg-pink-500' },
     },
     {
       variant: 'filled',
       color: 'teal',
-      class: {
-        root: 'bg-stable-base',
-      },
+      class: { root: 'bg-teal-500' },
     },
     //#endregion
 
@@ -145,72 +127,52 @@ export const badgeVariants = tv({
     {
       variant: 'light',
       color: 'gray',
-      class: {
-        root: 'bg-faded-light text-faded-dark',
-      },
+      class: { root: 'bg-neutral-200 text-neutral-800' },
     },
     {
       variant: 'light',
       color: 'blue',
-      class: {
-        root: 'bg-information-light text-information-dark',
-      },
+      class: { root: 'bg-blue-200 text-blue-950' },
     },
     {
       variant: 'light',
       color: 'orange',
-      class: {
-        root: 'bg-warning-light text-warning-dark',
-      },
+      class: { root: 'bg-orange-200 text-orange-950' },
     },
     {
       variant: 'light',
       color: 'red',
-      class: {
-        root: 'bg-error-light text-error-dark',
-      },
+      class: { root: 'bg-red-200 text-red-950' },
     },
     {
       variant: 'light',
       color: 'green',
-      class: {
-        root: 'bg-success-light text-success-dark',
-      },
+      class: { root: 'bg-green-200 text-green-950' },
     },
     {
       variant: 'light',
       color: 'yellow',
-      class: {
-        root: 'bg-away-light text-away-dark',
-      },
+      class: { root: 'bg-yellow-200 text-yellow-950' },
     },
     {
       variant: 'light',
       color: 'purple',
-      class: {
-        root: 'bg-feature-light text-feature-dark',
-      },
+      class: { root: 'bg-purple-200 text-purple-950' },
     },
     {
       variant: 'light',
       color: 'sky',
-      class: {
-        root: 'bg-verified-light text-verified-dark',
-      },
+      class: { root: 'bg-sky-200 text-sky-950' },
     },
     {
       variant: 'light',
       color: 'pink',
-      class: {
-        root: 'bg-highlighted-light text-highlighted-dark',
-      },
+      class: { root: 'bg-pink-200 text-pink-950' },
     },
     {
       variant: 'light',
       color: 'teal',
-      class: {
-        root: 'bg-stable-light text-stable-dark',
-      },
+      class: { root: 'bg-teal-200 text-teal-950' },
     },
     //#endregion
 
@@ -218,72 +180,52 @@ export const badgeVariants = tv({
     {
       variant: 'lighter',
       color: 'gray',
-      class: {
-        root: 'bg-faded-lighter text-faded-base',
-      },
+      class: { root: 'bg-neutral-100 text-neutral-800 ring-neutral-200' },
     },
     {
       variant: 'lighter',
       color: 'blue',
-      class: {
-        root: 'bg-information-lighter text-information-base',
-      },
+      class: { root: 'bg-blue-50 text-blue-950 ring-blue-100' },
     },
     {
       variant: 'lighter',
       color: 'orange',
-      class: {
-        root: 'bg-warning-lighter text-warning-base',
-      },
+      class: { root: 'bg-orange-50 text-orange-950 ring-orange-100' },
     },
     {
       variant: 'lighter',
       color: 'red',
-      class: {
-        root: 'bg-error-lighter text-error-base',
-      },
+      class: { root: 'bg-red-50 text-red-950 ring-red-100' },
     },
     {
       variant: 'lighter',
       color: 'green',
-      class: {
-        root: 'bg-success-lighter text-success-base',
-      },
+      class: { root: 'bg-green-50 text-green-950 ring-green-100' },
     },
     {
       variant: 'lighter',
       color: 'yellow',
-      class: {
-        root: 'bg-away-lighter text-away-base',
-      },
+      class: { root: 'bg-yellow-50 text-yellow-950 ring-yellow-100' },
     },
     {
       variant: 'lighter',
       color: 'purple',
-      class: {
-        root: 'bg-feature-lighter text-feature-base',
-      },
+      class: { root: 'bg-purple-50 text-purple-950 ring-purple-100' },
     },
     {
       variant: 'lighter',
       color: 'sky',
-      class: {
-        root: 'bg-verified-lighter text-verified-base',
-      },
+      class: { root: 'bg-sky-50 text-sky-950 ring-sky-100' },
     },
     {
       variant: 'lighter',
       color: 'pink',
-      class: {
-        root: 'bg-highlighted-lighter text-highlighted-base',
-      },
+      class: { root: 'bg-pink-50 text-pink-950 ring-pink-100' },
     },
     {
       variant: 'lighter',
       color: 'teal',
-      class: {
-        root: 'bg-stable-lighter text-stable-base',
-      },
+      class: { root: 'bg-teal-50 text-teal-950 ring-teal-100' },
     },
     //#endregion
 
@@ -291,72 +233,52 @@ export const badgeVariants = tv({
     {
       variant: 'stroke',
       color: 'gray',
-      class: {
-        root: 'text-faded-base',
-      },
+      class: { root: 'text-neutral-500' },
     },
     {
       variant: 'stroke',
       color: 'blue',
-      class: {
-        root: 'text-information-base',
-      },
+      class: { root: 'text-blue-500' },
     },
     {
       variant: 'stroke',
       color: 'orange',
-      class: {
-        root: 'text-warning-base',
-      },
+      class: { root: 'text-orange-500' },
     },
     {
       variant: 'stroke',
       color: 'red',
-      class: {
-        root: 'text-error-base',
-      },
+      class: { root: 'text-red-500' },
     },
     {
       variant: 'stroke',
       color: 'green',
-      class: {
-        root: 'text-success-base',
-      },
+      class: { root: 'text-green-500' },
     },
     {
       variant: 'stroke',
       color: 'yellow',
-      class: {
-        root: 'text-away-base',
-      },
+      class: { root: 'text-yellow-500' },
     },
     {
       variant: 'stroke',
       color: 'purple',
-      class: {
-        root: 'text-feature-base',
-      },
+      class: { root: 'text-purple-500' },
     },
     {
       variant: 'stroke',
       color: 'sky',
-      class: {
-        root: 'text-verified-base',
-      },
+      class: { root: 'text-sky-500' },
     },
     {
       variant: 'stroke',
       color: 'pink',
-      class: {
-        root: 'text-highlighted-base',
-      },
+      class: { root: 'text-pink-500' },
     },
     {
       variant: 'stroke',
       color: 'teal',
-      class: {
-        root: 'text-stable-base',
-      },
+      class: { root: 'text-teal-500' },
     },
     //#endregion
 
@@ -365,14 +287,14 @@ export const badgeVariants = tv({
       size: 'small',
       square: true,
       class: {
-        root: 'min-w-4 px-1',
+        root: 'min-w-5 p-0.5',
       },
     },
     {
       size: 'medium',
       square: true,
       class: {
-        root: 'min-w-5 px-1',
+        root: 'min-w-6 p-1',
       },
     },
     //#endregion
@@ -416,6 +338,32 @@ type BadgeRootProps = VariantProps<typeof badgeVariants> &
     asChild?: boolean;
   };
 
+// Padding overrides for icon/dot positioning per Figma specs
+const ICON_PADDING: Record<string, { left: string; right: string }> = {
+  small: { left: 'pl-1 pr-2', right: 'pl-2 pr-1' },
+  medium: { left: 'pl-1.5 pr-2', right: 'pl-2 pr-1.5' },
+};
+const DOT_PADDING: Record<string, { left: string; right: string }> = {
+  small: { left: 'pl-0 pr-2 py-0.5', right: 'pl-2 pr-0 py-0.5' },
+  medium: { left: 'pl-0.5 pr-2', right: 'pl-2 pr-0.5' },
+};
+
+function getChildLayout(children: React.ReactNode) {
+  const arr = React.Children.toArray(children);
+  const first = arr[0];
+  const last = arr[arr.length - 1];
+  const getDisplayName = (c: React.ReactNode) =>
+    React.isValidElement(c)
+      ? (c.type as React.ComponentType)?.displayName
+      : undefined;
+  return {
+    firstIsIcon: getDisplayName(first) === BADGE_ICON_NAME,
+    lastIsIcon: getDisplayName(last) === BADGE_ICON_NAME,
+    firstIsDot: getDisplayName(first) === BADGE_DOT_NAME,
+    lastIsDot: getDisplayName(last) === BADGE_DOT_NAME,
+  };
+}
+
 const BadgeRoot = React.forwardRef<HTMLDivElement, BadgeRootProps>(
   (
     {
@@ -449,10 +397,25 @@ const BadgeRoot = React.forwardRef<HTMLDivElement, BadgeRootProps>(
       asChild
     );
 
+    // Detect icon/dot position to apply Figma-accurate padding
+    const sizeKey = size ?? 'small';
+    const { firstIsIcon, lastIsIcon, firstIsDot, lastIsDot } =
+      getChildLayout(children);
+    let paddingClass = '';
+    if (firstIsDot) {
+      paddingClass = DOT_PADDING[sizeKey]?.left ?? '';
+    } else if (lastIsDot) {
+      paddingClass = DOT_PADDING[sizeKey]?.right ?? '';
+    } else if (firstIsIcon && !lastIsIcon) {
+      paddingClass = ICON_PADDING[sizeKey]?.left ?? '';
+    } else if (lastIsIcon && !firstIsIcon) {
+      paddingClass = ICON_PADDING[sizeKey]?.right ?? '';
+    }
+
     return (
       <Component
         ref={forwardedRef}
-        className={root({ class: className })}
+        className={root({ class: [paddingClass, className] })}
         {...rest}
       >
         {extendedChildren}
