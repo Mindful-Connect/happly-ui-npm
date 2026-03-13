@@ -18,6 +18,7 @@ const nextConfig = {
   webpack: (config) => {
     const registryUi = path.resolve(__dirname, '..', 'packages', 'registry', 'ui');
     const registryLib = path.resolve(__dirname, '..', 'packages', 'registry', 'lib');
+    const registryHooks = path.resolve(__dirname, '..', 'packages', 'registry', 'hooks');
 
     // Ensure registry files can resolve packages from docs/node_modules
     config.resolve.modules = [
@@ -38,6 +39,8 @@ const nextConfig = {
       '@/lib/tag-utils': path.resolve(registryLib, 'tag-utils'),
       '@/lib/currency-input-utils': path.resolve(registryLib, 'currency-input-utils'),
       '@/lib/memoji': path.resolve(registryLib, 'memoji'),
+      // Point @/hooks to registry hooks source
+      '@/hooks': registryHooks,
       // Fix for headlessui 1.7.19 import error: transition/transition.js -> transitions/transition.js
       [path.resolve(
         __dirname,

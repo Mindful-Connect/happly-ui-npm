@@ -316,6 +316,12 @@
       "description": "A collapsible section with a title, description, and switch toggle that reveals content when enabled. Uses namespace exports: SectionToggle.Root, SectionToggle.Header, SectionToggle.TextGroup, SectionToggle.Title, SectionToggle.Description, SectionToggle.Content, SectionToggle.Composed (composed)."
     },
     {
+      "name": "segmented-control",
+      "type": "registry:ui",
+      "title": "Segmented Control",
+      "description": "A tab-based segmented control with animated floating background indicator. Uses Radix Tabs with namespace exports: SegmentedControl.Root, SegmentedControl.List, SegmentedControl.Trigger, SegmentedControl.Content."
+    },
+    {
       "name": "select",
       "type": "registry:ui",
       "title": "Select",

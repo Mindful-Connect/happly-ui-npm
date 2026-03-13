@@ -47,6 +47,7 @@ import { default as radioCardMeta, Playground as radioCard_Playground, Default a
 import { default as radioMeta, Playground as radio_Playground, Demo as radio_Demo, Variants as radio_Variants, Disabled as radio_Disabled, WithLabel as radio_WithLabel, WithLabelExtended as radio_WithLabelExtended, WithFormField as radio_WithFormField } from '@/components/ui/radio.stories';
 import { default as sectionToggleMeta, Playground as sectionToggle_Playground, Default as sectionToggle_Default, Collapsed as sectionToggle_Collapsed, Composed as sectionToggle_Composed } from '@/components/ui/section-toggle.stories';
 import { default as sectionMeta, Playground as section_Playground, Default as section_Default, WithCustomHeaderWidth as section_WithCustomHeaderWidth, Composed as section_Composed } from '@/components/ui/section.stories';
+import { default as segmentedControlMeta, Default as segmentedControl_Default, Rounded as segmentedControl_Rounded } from '@/components/ui/segmented-control.stories';
 import { default as selectMeta, Playground as select_Playground, Demo as select_Demo, WithLabelHint as select_WithLabelHint, WithIcons as select_WithIcons, Sizes as select_Sizes, WithCountryFlags as select_WithCountryFlags, WithUsers as select_WithUsers, Disabled as select_Disabled, Compact as select_Compact, CompactCountry as select_CompactCountry, CompactSizes as select_CompactSizes, InlineCountry as select_InlineCountry, InputWithInlineSelect as select_InputWithInlineSelect, WithInput as select_WithInput, WithInputSizes as select_WithInputSizes } from '@/components/ui/select.stories';
 import { default as skeletonMeta, Default as skeleton_Default, Card as skeleton_Card, Circular as skeleton_Circular } from '@/components/ui/skeleton.stories';
 import { default as sliderMeta, Playground as slider_Playground, Demo as slider_Demo, Variants as slider_Variants, Range as slider_Range, WithTooltip as slider_WithTooltip, WithFormField as slider_WithFormField } from '@/components/ui/slider.stories';
@@ -575,6 +576,13 @@ export const storyRegistry: Record<string, {
     'Default': section_Default,
     'WithCustomHeaderWidth': section_WithCustomHeaderWidth,
     'Composed': section_Composed
+    }
+  },
+  'segmented-control': {
+    meta: segmentedControlMeta,
+    stories: {
+    'Default': segmentedControl_Default,
+    'Rounded': segmentedControl_Rounded
     }
   },
   'select': {

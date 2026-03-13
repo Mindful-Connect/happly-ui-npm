@@ -322,6 +322,10 @@
           }
         ],
         "collapsed": false
+      },
+      {
+        "title": "Segmented Control",
+        "href": "/docs/components/segmented-control"
       }
     ]
   },
