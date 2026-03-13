@@ -29,6 +29,7 @@ import { default as fileUploadCardMeta, Uploading as fileUploadCard_Uploading, F
 import { default as fileUploadMeta, Document as fileUpload_Document, Image as fileUpload_Image, Video as fileUpload_Video, Audio as fileUpload_Audio, Attachment as fileUpload_Attachment, CustomOverrides as fileUpload_CustomOverrides, Dragging as fileUpload_Dragging } from '@/components/ui/file-upload.stories';
 import { default as formFieldMeta, Playground as formField_Playground, Demo as formField_Demo, WithError as formField_WithError, Disabled as formField_Disabled, CompoundMode as formField_CompoundMode, FormValidation as formField_FormValidation } from '@/components/ui/form-field.stories';
 import { default as hintMeta, Playground as hint_Playground, Demo as hint_Demo, Disabled as hint_Disabled, HasError as hint_HasError, CustomIcon as hint_CustomIcon, Composed as hint_Composed } from '@/components/ui/hint.stories';
+import { default as infoGridMeta, BusinessProfile as infoGrid_BusinessProfile, FinancialData as infoGrid_FinancialData, TwoColumns as infoGrid_TwoColumns, MobileResponsive as infoGrid_MobileResponsive, ComposedGroup as infoGrid_ComposedGroup } from '@/components/ui/info-grid.stories';
 import { default as inputMeta, Playground as input_Playground, WithIcon as input_WithIcon, Sizes as input_Sizes, WithAffix as input_WithAffix, WithInlineAffix as input_WithInlineAffix, LabelAndHint as input_LabelAndHint, WithKbd as input_WithKbd, Password as input_Password, PasswordWithLevel as input_PasswordWithLevel, Disabled as input_Disabled, ErrorState as input_ErrorState, WithButton as input_WithButton, WithTags as input_WithTags, DateFieldStory as input_DateFieldStory, PaymentInput as input_PaymentInput, WithSelect as input_WithSelect, WithInlineSelect as input_WithInlineSelect, CounterInput as input_CounterInput, Composition as input_Composition } from '@/components/ui/input.stories';
 import { default as kbdMeta, Playground as kbd_Playground, Demo as kbd_Demo } from '@/components/ui/kbd.stories';
 import { default as keyIconMeta, Playground as keyIcon_Playground, Stroke as keyIcon_Stroke, Lighter as keyIcon_Lighter, Sizes as keyIcon_Sizes, Colors as keyIcon_Colors } from '@/components/ui/key-icon.stories';
@@ -392,6 +393,16 @@ export const storyRegistry: Record<string, {
     'HasError': hint_HasError,
     'CustomIcon': hint_CustomIcon,
     'Composed': hint_Composed
+    }
+  },
+  'info-grid': {
+    meta: infoGridMeta,
+    stories: {
+    'BusinessProfile': infoGrid_BusinessProfile,
+    'FinancialData': infoGrid_FinancialData,
+    'TwoColumns': infoGrid_TwoColumns,
+    'MobileResponsive': infoGrid_MobileResponsive,
+    'ComposedGroup': infoGrid_ComposedGroup
     }
   },
   'input': {

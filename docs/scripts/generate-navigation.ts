@@ -71,6 +71,7 @@ function main() {
     'banner',
     'divider',
     'kbd',
+    'info-grid',
     'key-icon',
     'level-bar',
     'progress-bar',

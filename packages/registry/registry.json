@@ -190,6 +190,12 @@
       "description": "A hint text component for form fields with icon, error, disabled states, and composed mode. Uses namespace exports: Hint.Root, Hint.Icon, Hint.Composed."
     },
     {
+      "name": "info-grid",
+      "type": "registry:ui",
+      "title": "Info Grid",
+      "description": "A configurable card-based grid layout with automatic dividers and corner rounding. Cells accept any children — compose with KeyIcon, Badge, or any custom content."
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
