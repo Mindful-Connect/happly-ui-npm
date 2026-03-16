@@ -45,6 +45,10 @@
         "title": "Displaying data",
         "links": [
           {
+            "title": "AI Orb",
+            "href": "/docs/components/ai-orb"
+          },
+          {
             "title": "Avatar",
             "href": "/docs/components/avatar"
           },
@@ -346,10 +350,6 @@
           }
         ],
         "collapsed": false
-      },
-      {
-        "title": "AI Orb",
-        "href": "/docs/components/ai-orb"
       }
     ]
   },
