@@ -6,7 +6,7 @@
   "description": "A reusable section for displaying labeled detail items in flexible layouts (inline, grid, stack, wrap).",
   "version": "1.0.0",
   "dependencies": [],
-  "registryDependencies": ["tv", "utils"],
+  "registryDependencies": ["tv", "happly-ui-utils"],
   "docs": {
     "lead": "Display labeled key-value detail items within a section card. Supports inline, grid, stacked, and wrapped layouts. Each item has a label and a custom-rendered value as children. The value container defaults to text-label-xs and text-sub-600 styling.",
     "usage": "import * as InfoCard from \"@/components/ui/info-card\"\n\n<InfoCard.Root layout=\"inline\">\n  <InfoCard.Item>\n    <InfoCard.Label>Label</InfoCard.Label>\n    <InfoCard.Value>Value content</InfoCard.Value>\n  </InfoCard.Item>\n</InfoCard.Root>",

@@ -2,14 +2,14 @@ import * as React from 'react';
 
 import { cn } from '@/lib/happly-ui-utils';
 
-type SmartMatchingAiProps = Omit<React.SVGProps<SVGSVGElement>, 'width' | 'height'> & {
+type AiOrbProps = Omit<React.SVGProps<SVGSVGElement>, 'width' | 'height'> & {
   /** Size in pixels. Defaults to 40. */
   size?: number;
   /** Enable aurora drift and shimmer animations. Defaults to true. */
   animated?: boolean;
 };
 
-const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps>(
+const AiOrbRoot = React.forwardRef<SVGSVGElement, AiOrbProps>(
   ({ className, size = 40, style, animated = true, ...rest }, forwardedRef) => {
     const uid = React.useId().replace(/:/g, '');
 
@@ -582,6 +582,6 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
     );
   },
 );
-SmartMatchingAiRoot.displayName = 'SmartMatchingAiRoot';
+AiOrbRoot.displayName = 'AiOrbRoot';
 
-export { SmartMatchingAiRoot as Root };
+export { AiOrbRoot as Root };

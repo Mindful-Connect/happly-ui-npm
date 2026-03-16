@@ -6,7 +6,7 @@
   "description": "A markdown text editor with formatting toolbar, preview mode, and built-in English/French language toggle. Supports single-language and multi-language modes with per-language value objects. Compound or composed mode. Works with FormField.",
   "version": "2.0.0",
   "dependencies": ["@remixicon/react", "marked"],
-  "registryDependencies": ["switch-toggle", "textarea", "tooltip", "utils"],
+  "registryDependencies": ["switch-toggle", "textarea", "tooltip", "happly-ui-utils"],
   "docs": {
     "lead": "A markdown text editor with formatting toolbar and live preview. Built-in English/French language toggle with per-language value storage — or single-language mode for simpler use cases. Uses `marked` for accurate markdown rendering.",
     "usage": "import * as MarkdownEditor from \"@/components/ui/markdown-editor\"\n\n// Multi-language (default) — value is { en: \"\", fr: \"\" }\n<MarkdownEditor.Composed\n  placeholder=\"Start writing...\"\n  onChange={(values) => console.log(values)}\n/>\n\n// Single-language — value is a plain string\n<MarkdownEditor.Composed\n  toggleItems={false}\n  placeholder=\"Start writing...\"\n  onChange={(md) => console.log(md)}\n/>",
