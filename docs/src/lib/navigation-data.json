@@ -69,6 +69,10 @@
             "href": "/docs/components/divider"
           },
           {
+            "title": "Info Card",
+            "href": "/docs/components/info-card"
+          },
+          {
             "title": "Info Grid",
             "href": "/docs/components/info-grid"
           },
