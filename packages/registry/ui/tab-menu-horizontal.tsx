@@ -231,8 +231,10 @@ type TabMenuHorizontalCounterProps = React.HTMLAttributes<HTMLSpanElement> & {
 function TabMenuHorizontalCounter({
   className,
   count,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  variant: _variant,
   ...rest
-}: TabMenuHorizontalCounterProps) {
+}: TabMenuHorizontalCounterProps & { variant?: string }) {
   const { counter } = tabMenuHorizontalVariants();
 
   if (count <= 0) return null;
