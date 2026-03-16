@@ -6,6 +6,16 @@ export const Default = {
   render: () => <SmartMatchingAi.Root size={112} />,
 };
 
+export const Animated = {
+  render: () => (
+    <div className='flex items-center gap-8'>
+      <SmartMatchingAi.Root size={112} animated />
+      <SmartMatchingAi.Root size={56} animated />
+      <SmartMatchingAi.Root size={40} animated />
+    </div>
+  ),
+};
+
 export const Sizes = {
   render: () => (
     <div className='flex items-center gap-4'>
@@ -22,11 +32,17 @@ export const Sizes = {
 export const Playground = {
   args: {
     size: 112,
+    animated: false,
   },
   argTypes: {
     size: {
       control: { type: 'range', min: 16, max: 200, step: 4 },
     },
+    animated: {
+      control: 'boolean',
+    },
   },
-  render: (args: { size: number }) => <SmartMatchingAi.Root {...args} />,
+  render: (args: { size: number; animated: boolean }) => (
+    <SmartMatchingAi.Root {...args} />
+  ),
 };

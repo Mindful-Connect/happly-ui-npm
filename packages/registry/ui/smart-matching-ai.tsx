@@ -5,10 +5,12 @@ import { cn } from '@/lib/happly-ui-utils';
 type SmartMatchingAiProps = Omit<React.SVGProps<SVGSVGElement>, 'width' | 'height'> & {
   /** Size in pixels. Defaults to 40. */
   size?: number;
+  /** Enable aurora drift and shimmer animations. Defaults to true. */
+  animated?: boolean;
 };
 
 const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps>(
-  ({ className, size = 40, style, ...rest }, forwardedRef) => {
+  ({ className, size = 40, style, animated = true, ...rest }, forwardedRef) => {
     const uid = React.useId().replace(/:/g, '');
 
     return (
@@ -24,6 +26,33 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
         className={cn('shrink-0', className)}
         {...rest}
       >
+        {animated && (
+          <style>{`
+            @keyframes ${uid}-drift-a {
+              0%, 100% { transform: rotate(-30deg); }
+              50% { transform: rotate(30deg); }
+            }
+            @keyframes ${uid}-drift-b {
+              0%, 100% { transform: rotate(25deg); }
+              50% { transform: rotate(-25deg); }
+            }
+            @keyframes ${uid}-shimmer {
+              0%, 100% { transform: translateX(-80px) rotate(25deg); }
+              50% { transform: translateX(80px) rotate(25deg); }
+            }
+            .${uid}-drift-a {
+              transform-origin: 56px 56px;
+              animation: ${uid}-drift-a 10s ease-in-out infinite;
+            }
+            .${uid}-drift-b {
+              transform-origin: 56px 56px;
+              animation: ${uid}-drift-b 14s ease-in-out infinite;
+            }
+            .${uid}-shimmer {
+              animation: ${uid}-shimmer 6s ease-in-out infinite;
+            }
+          `}</style>
+        )}
         <defs>
           <clipPath id={`${uid}-clip`}>
             <circle cx='56' cy='56' r='56' />
@@ -289,6 +318,18 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
             <stop offset='1' stopColor='white' />
           </linearGradient>
 
+          {/* ── Shimmer blur ── */}
+          <filter
+            id={`${uid}-shimmer-blur`}
+            x='-100%'
+            y='-100%'
+            width='300%'
+            height='300%'
+            colorInterpolationFilters='sRGB'
+          >
+            <feGaussianBlur stdDeviation='8' />
+          </filter>
+
           {/* ── Inner shadow filter ── */}
           <filter
             id={`${uid}-inner-shadow`}
@@ -329,6 +370,7 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
           </g>
 
           {/* ── Layer 3: Rainbow gradient 1 (normal blend) ── */}
+          <g className={animated ? `${uid}-drift-a` : undefined}>
           <g opacity='0.999' transform='translate(-68, -77.4)'>
             {/* Cyan */}
             <g filter={`url(#${uid}-rb1-f0)`}>
@@ -372,7 +414,10 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
             </g>
           </g>
 
+          </g>
+
           {/* ── Layer 4: Rainbow gradient 2 (hard-light, 20% opacity, rotated 19.67°) ── */}
+          <g className={animated ? `${uid}-drift-b` : undefined}>
           <g
             style={{ mixBlendMode: 'hard-light' }}
             opacity='0.2'
@@ -414,6 +459,8 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
                 fill='#536FFF'
               />
             </g>
+          </g>
+
           </g>
 
           {/* ── Layer 5: Large sparkle star (color-dodge) ── */}
@@ -506,6 +553,21 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
             opacity='0.1'
             style={{ mixBlendMode: 'overlay' }}
           />
+
+          {/* ── Shimmer ── */}
+          {animated && (
+            <g className={`${uid}-shimmer`}>
+              <ellipse
+                cx='56'
+                cy='56'
+                rx='12'
+                ry='70'
+                fill='white'
+                opacity='0.18'
+                filter={`url(#${uid}-shimmer-blur)`}
+              />
+            </g>
+          )}
 
           {/* ── Layer 11: Inner shadow (inset 0px -11.667px 44.333px -4.667px black) ── */}
           <circle
