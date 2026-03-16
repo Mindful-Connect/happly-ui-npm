@@ -10,7 +10,7 @@
   ],
   "registryDependencies": [
     "tv",
-    "utils",
+    "happly-ui-utils",
     "polymorphic",
     "recursive-clone-children"
   ],

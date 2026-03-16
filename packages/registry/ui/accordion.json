@@ -12,7 +12,7 @@
   "registryDependencies": [
     "tv",
     "polymorphic",
-    "utils"
+    "happly-ui-utils"
   ],
   "docs": {
     "lead": "A collapsible accordion component with filled and stroke variants. Built on Radix Accordion for full accessibility.",
