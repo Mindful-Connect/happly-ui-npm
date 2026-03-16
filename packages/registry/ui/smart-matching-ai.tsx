@@ -346,6 +346,7 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
 
           {/* ── Layer 3: Rainbow gradient 1 (normal blend) ── */}
           <g opacity='0.999' transform='translate(-68, -77.4)'>
+            {/* Cyan */}
             <g filter={`url(#${uid}-rb1-f0)`}>
               <circle
                 cx='166.551'
@@ -355,24 +356,27 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
                 fill='#53E0FF'
               />
             </g>
+            {/* Yellow — boosted from #FBD570 to compensate sRGB vs Display P3 */}
             <g filter={`url(#${uid}-rb1-f1)`}>
               <circle
                 cx='145.551'
                 cy='157.217'
                 r='35.8793'
                 transform='rotate(32.262 145.551 157.217)'
-                fill='#FBD570'
+                fill='#FFCF45'
               />
             </g>
+            {/* Red — boosted from #FF5D53 */}
             <g filter={`url(#${uid}-rb1-f2)`}>
               <circle
                 cx='96.5506'
                 cy='145.551'
                 r='35.8793'
                 transform='rotate(32.262 96.5506 145.551)'
-                fill='#FF5D53'
+                fill='#FF4538'
               />
             </g>
+            {/* Blue */}
             <g filter={`url(#${uid}-rb1-f3)`}>
               <circle
                 cx='110.551'
@@ -405,7 +409,7 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
                 cy='152.551'
                 r='35.8793'
                 transform='rotate(32.262 140.884 152.551)'
-                fill='#FBD570'
+                fill='#FFCF45'
               />
             </g>
             <g filter={`url(#${uid}-rb2-f2)`}>
@@ -414,7 +418,7 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
                 cy='140.884'
                 r='35.8793'
                 transform='rotate(32.262 91.8839 140.884)'
-                fill='#FF5D53'
+                fill='#FF4538'
               />
             </g>
             <g filter={`url(#${uid}-rb2-f3)`}>
