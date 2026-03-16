@@ -575,8 +575,9 @@ function ComposedSingle({
   contentClassName,
   height,
   id,
+  toggleItems: _,
   ...textareaProps
-}: Omit<ComposedSingleProps, 'toggleItems'> & { toggleItems: false }) {
+}: ComposedSingleProps & { toggleItems: false }) {
   const [previewing, setPreviewing] = React.useState(false);
   const [internalValue, setInternalValue] = React.useState(
     controlledValue ?? defaultValue,
