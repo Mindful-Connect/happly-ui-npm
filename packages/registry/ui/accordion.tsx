@@ -18,7 +18,7 @@ const ACCORDION_CONTENT_NAME = 'AccordionContent';
 const accordionItemVariants = tv({
   base: [
     'group/accordion',
-    'rounded-10 overflow-hidden p-3.5 ring-1 ring-inset',
+    'rounded-10 overflow-hidden ring-1 ring-inset',
     'transition duration-200 ease-out',
   ],
   variants: {
@@ -87,6 +87,7 @@ const AccordionTrigger = React.forwardRef<
       className={cn(
         'w-full text-left text-label-sm text-text-strong-950',
         'grid auto-cols-auto grid-flow-col grid-cols-[auto_minmax(0,1fr)] items-center gap-2.5',
+        'p-3.5',
         'outline-none focus:outline-none',
         className,
       )}
@@ -162,7 +163,7 @@ const AccordionContent = React.forwardRef<
     >
       <div
         className={cn(
-          'pt-1.5 text-paragraph-sm text-text-sub-600',
+          'px-3.5 pb-3.5 pt-1.5 text-paragraph-sm text-text-sub-600',
           className,
         )}
       >
