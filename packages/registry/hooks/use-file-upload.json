@@ -1,0 +1,218 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "use-file-upload",
+  "type": "registry:hook",
+  "title": "useFileUpload",
+  "description": "Hook for managing file uploads with presigned URLs, progress tracking, and file state.",
+  "version": "1.0.0",
+  "dependencies": ["@uppy/core", "@uppy/xhr-upload"],
+  "registryDependencies": [],
+  "docs": {
+    "lead": "A React hook that manages file uploads with GCS presigned URLs via Uppy. Handles progress tracking, retry logic, file state management, and provides dropzone integration helpers.",
+    "usage": "import { useFileUpload } from \"@/hooks/use-file-upload\"\n\nconst upload = useFileUpload({\n  endpoint: '/api/assets/pre-signed',\n  providerId: workspace.id,\n  assetType: 'attachment',\n  headers: () => ({ Authorization: `Bearer ${token}` }),\n})",
+    "examples": [
+      {
+        "title": "Document Upload with Dropzone",
+        "description": "Combine useFileUpload with FileUpload.Dropzone and FileCard.Item to create a full upload experience with minimal boilerplate.",
+        "code": "import { useFileUpload } from \"@/hooks/use-file-upload\"\nimport * as FileUpload from \"@/components/ui/file-upload\"\nimport * as FileCard from \"@/components/ui/file-card\"\n\nfunction DocumentUploader() {\n  const upload = useFileUpload({\n    endpoint: '/api/assets/pre-signed',\n    providerId: workspace.id,\n    assetType: 'attachment',\n    headers: () => ({ Authorization: `Bearer ${token}` }),\n    maxFiles: 5,\n    allowedFileTypes: ['application/pdf'],\n    onUploadSuccess: (file) => saveToForm(file.url),\n  })\n\n  return (\n    <div className=\"space-y-3\">\n      <FileUpload.Dropzone\n        type=\"document\"\n        {...upload.getRootProps()}\n        inputProps={upload.getInputProps()}\n      />\n      {upload.files.map((file) => (\n        <FileCard.Item\n          key={file.id}\n          file={file}\n          variant=\"compact\"\n          onRemove={() => upload.removeFile(file.id)}\n          onRetry={() => upload.retryFile(file.id)}\n          onClose={() => upload.removeFile(file.id)}\n        />\n      ))}\n    </div>\n  )\n}",
+        "stories": []
+      },
+      {
+        "title": "Logo Upload",
+        "description": "Pair useFileUpload with LogoUpload.Item for a complete logo upload experience with avatar preview.",
+        "code": "import { useFileUpload } from \"@/hooks/use-file-upload\"\nimport * as LogoUpload from \"@/components/ui/logo-upload\"\n\nfunction BusinessLogoUploader() {\n  const upload = useFileUpload({\n    endpoint: '/api/assets/pre-signed',\n    providerId: workspace.id,\n    assetType: 'logo',\n    acl: 'public-read',\n    maxFiles: 1,\n    allowedFileTypes: ['image/jpeg', 'image/png'],\n    maxFileSize: 3 * 1024 * 1024,\n    onUploadSuccess: (file) => updateLogo(file.url),\n  })\n\n  return (\n    <>\n      <LogoUpload.Item\n        file={upload.files[0]}\n        label=\"Business logo\"\n        description={\n          <>\n            <p>Supports JPEG or PNG files (max 3MB).</p>\n            <p>Use a horizontal image (16:9). Best size: 1200 × 675 px.</p>\n          </>\n        }\n        onButtonClick={upload.openFilePicker}\n      />\n      <input {...upload.getInputProps()} />\n    </>\n  )\n}",
+        "stories": []
+      }
+    ],
+    "api": [
+      {
+        "name": "useFileUpload Options",
+        "description": "Configuration options passed to the hook.",
+        "props": [
+          {
+            "name": "endpoint",
+            "type": "string",
+            "description": "The API endpoint for obtaining presigned upload URLs (e.g. '/api/assets/pre-signed')."
+          },
+          {
+            "name": "baseUrl",
+            "type": "string",
+            "default": "''",
+            "description": "Base URL prepended to the endpoint."
+          },
+          {
+            "name": "headers",
+            "type": "() => Record<string, string>",
+            "description": "Function returning headers for the presigned URL request (e.g. auth tokens)."
+          },
+          {
+            "name": "providerId",
+            "type": "string",
+            "description": "The provider/workspace ID sent to the presigned URL endpoint."
+          },
+          {
+            "name": "assetType",
+            "type": "string",
+            "description": "The asset type sent to the presigned URL endpoint (matches backend AssetType enum)."
+          },
+          {
+            "name": "acl",
+            "type": "'private' | 'public-read'",
+            "default": "'private'",
+            "description": "Access control level for the uploaded file."
+          },
+          {
+            "name": "maxFiles",
+            "type": "number",
+            "default": "1",
+            "description": "Maximum number of files allowed."
+          },
+          {
+            "name": "maxFileSize",
+            "type": "number",
+            "default": "5242880",
+            "description": "Maximum file size in bytes (default 5MB)."
+          },
+          {
+            "name": "allowedFileTypes",
+            "type": "string[]",
+            "description": "Allowed MIME types or file extensions."
+          },
+          {
+            "name": "onUploadSuccess",
+            "type": "(file: UploadFile) => void",
+            "description": "Called when a file upload completes successfully."
+          },
+          {
+            "name": "onUploadError",
+            "type": "(file: UploadFile, error: Error) => void",
+            "description": "Called when a file upload fails."
+          },
+          {
+            "name": "onFileRemove",
+            "type": "(file: UploadFile) => void",
+            "description": "Called when a file is removed from the list."
+          }
+        ]
+      },
+      {
+        "name": "useFileUpload Return Value",
+        "description": "The object returned by the hook.",
+        "props": [
+          {
+            "name": "files",
+            "type": "UploadFile[]",
+            "description": "Array of all files with their current upload state."
+          },
+          {
+            "name": "isUploading",
+            "type": "boolean",
+            "description": "True if any file is currently uploading."
+          },
+          {
+            "name": "isDraggingOver",
+            "type": "boolean",
+            "description": "True when a file is being dragged over the dropzone (via getRootProps)."
+          },
+          {
+            "name": "addFiles",
+            "type": "(files: File[]) => void",
+            "description": "Add native File objects to the upload queue."
+          },
+          {
+            "name": "removeFile",
+            "type": "(id: string) => void",
+            "description": "Remove a file by ID. Cancels upload if in progress."
+          },
+          {
+            "name": "retryFile",
+            "type": "(id: string) => void",
+            "description": "Retry a failed upload by re-adding the original file."
+          },
+          {
+            "name": "clearFiles",
+            "type": "() => void",
+            "description": "Remove all files and revoke preview URLs."
+          },
+          {
+            "name": "openFilePicker",
+            "type": "() => void",
+            "description": "Programmatically open the native file picker dialog."
+          },
+          {
+            "name": "getInputProps",
+            "type": "() => InputHTMLAttributes",
+            "description": "Returns props to spread on a hidden <input type=\"file\">."
+          },
+          {
+            "name": "getRootProps",
+            "type": "() => { onDrop, onDragOver, onDragEnter, onDragLeave }",
+            "description": "Returns drag event handlers to spread on a dropzone container. Tracks isDraggingOver state internally."
+          }
+        ]
+      },
+      {
+        "name": "UploadFile",
+        "description": "The file state object tracked by the hook.",
+        "props": [
+          {
+            "name": "id",
+            "type": "string",
+            "description": "Unique file identifier (from Uppy)."
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "description": "Original file name."
+          },
+          {
+            "name": "size",
+            "type": "number",
+            "description": "File size in bytes."
+          },
+          {
+            "name": "type",
+            "type": "string",
+            "description": "MIME type."
+          },
+          {
+            "name": "progress",
+            "type": "number",
+            "description": "Upload progress from 0 to 100."
+          },
+          {
+            "name": "status",
+            "type": "'pending' | 'uploading' | 'completed' | 'failed'",
+            "description": "Current upload status."
+          },
+          {
+            "name": "url",
+            "type": "string",
+            "description": "Public URL after successful upload."
+          },
+          {
+            "name": "key",
+            "type": "string",
+            "description": "GCS storage path/key."
+          },
+          {
+            "name": "preview",
+            "type": "string",
+            "description": "Object URL for image file previews (revoked on removal)."
+          },
+          {
+            "name": "error",
+            "type": "string",
+            "description": "Error message if upload failed."
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "hooks/use-file-upload.ts",
+      "type": "registry:hook"
+    }
+  ]
+}

@@ -1,0 +1,211 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "radio-card",
+  "type": "registry:ui",
+  "title": "Radio Card",
+  "description": "A composable radio input styled as a card. Compose with Title, Description, Content, Indicator, KeyIcon, and Badge sub-components.",
+  "version": "1.0.0",
+  "dependencies": ["@radix-ui/react-radio-group"],
+  "registryDependencies": ["radio", "tv", "happly-ui-utils"],
+  "docs": {
+    "lead": "A composable radio input styled as a card. Arrange titles, descriptions, icons, and badges however you want.",
+    "usage": "import { RadioCard } from \"@/components/ui/radio-card\"\n\n<RadioCard.Root value={value} onValueChange={setValue}>\n  <RadioCard\n    value=\"opt1\"\n    title=\"Option 1\"\n    description=\"Description\"\n  />\n</RadioCard.Root>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Basic radio cards with title and description.",
+        "code": "<RadioCard.Root value={value} onValueChange={setValue}>\n  <RadioCard.Item value=\"personal\">\n    <RadioCard.Content>\n      <RadioCard.Title>Personal</RadioCard.Title>\n      <RadioCard.Description>For individual use</RadioCard.Description>\n    </RadioCard.Content>\n    <RadioCard.Indicator />\n  </RadioCard.Item>\n</RadioCard.Root>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "With Key Icons",
+        "description": "Icons wrapped in KeyIcon for a styled container.",
+        "code": "<RadioCard.Item value=\"card\">\n  <KeyIcon.Root icon={<RiBankCardLine />} />\n  <RadioCard.Content>\n    <RadioCard.Title>Credit Card</RadioCard.Title>\n  </RadioCard.Content>\n  <RadioCard.Indicator />\n</RadioCard.Item>",
+        "stories": ["WithKeyIcons"]
+      },
+      {
+        "title": "With Simple Icons",
+        "description": "Raw icons without KeyIcon wrapper.",
+        "code": "<RadioCard.Item value=\"card\">\n  <RiBankCardLine className=\"size-5 shrink-0 text-text-sub-600\" />\n  <RadioCard.Content>\n    <RadioCard.Title>Credit Card</RadioCard.Title>\n  </RadioCard.Content>\n  <RadioCard.Indicator />\n</RadioCard.Item>",
+        "stories": ["WithSimpleIcons"]
+      },
+      {
+        "title": "With Badges",
+        "description": "Badges placed inline with the title.",
+        "code": "<RadioCard.Content>\n  <div className=\"flex items-center gap-2\">\n    <RadioCard.Title>Pro Plan</RadioCard.Title>\n    <Badge.Root variant=\"light\" color=\"blue\" size=\"small\">Popular</Badge.Root>\n  </div>\n  <RadioCard.Description>Advanced features</RadioCard.Description>\n</RadioCard.Content>",
+        "stories": ["WithBadges"]
+      },
+      {
+        "title": "Inline Description",
+        "description": "Description rendered inline with the title using the inline prop.",
+        "code": "<RadioCard.Content inline>\n  <RadioCard.Title>Monthly</RadioCard.Title>\n  <RadioCard.Description>$10/mo</RadioCard.Description>\n</RadioCard.Content>",
+        "stories": ["InlineDescription"]
+      },
+      {
+        "title": "Allow Deselect",
+        "description": "Click a selected card to deselect it.",
+        "code": "<RadioCard.Root allowDeselect value={value} onValueChange={setValue}>\n  ...\n</RadioCard.Root>",
+        "stories": ["AllowDeselect"]
+      },
+      {
+        "title": "Error State",
+        "description": "Error styling on the cards.",
+        "code": "<RadioCard.Root hasError value={value} onValueChange={setValue}>\n  ...\n</RadioCard.Root>",
+        "stories": ["ErrorState"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Disabled radio cards.",
+        "code": "<RadioCard.Item value=\"opt1\" disabled>\n  ...\n</RadioCard.Item>",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "Composed",
+        "description": "Shorthand component that pre-assembles Item, Content, Title, Description, and Indicator. Import as { RadioCard } for direct use.",
+        "code": "<RadioCard\n  value=\"card\"\n  title=\"Credit Card\"\n  description=\"Pay with credit card\"\n  icon={<KeyIcon.Root icon={<RiBankCardLine />} />}\n/>",
+        "stories": ["Composed"]
+      },
+      {
+        "title": "Primary Variant",
+        "description": "Primary colored radio indicator.",
+        "code": "<RadioCard.Root variant=\"primary\" value={value} onValueChange={setValue}>\n  ...\n</RadioCard.Root>",
+        "stories": ["PrimaryVariant"]
+      },
+      {
+        "title": "With Form Field",
+        "description": "Radio cards composed with FormField for consistent label and hint.",
+        "code": "<FormField.Root label=\"Select Plan\" required hint=\"Choose the plan that works for you.\">\n  <RadioCard.Root value={value} onValueChange={setValue}>\n    <RadioCard.Item value=\"personal\">\n      <RadioCard.Content>\n        <RadioCard.Title>Personal</RadioCard.Title>\n        <RadioCard.Description>For individual use</RadioCard.Description>\n      </RadioCard.Content>\n      <RadioCard.Indicator />\n    </RadioCard.Item>\n  </RadioCard.Root>\n</FormField.Root>",
+        "stories": ["WithFormField"]
+      }
+    ],
+    "api": [
+      {
+        "name": "RadioCard.Root",
+        "description": "The root container wrapping Radix RadioGroup.Root.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'primary' | 'neutral'",
+            "default": "'neutral'",
+            "description": "Radio indicator color variant"
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Error state — changes ring and focus shadow to error colors"
+          },
+          {
+            "name": "allowDeselect",
+            "type": "boolean",
+            "default": "false",
+            "description": "Allow clicking a selected card to deselect it"
+          },
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The controlled value"
+          },
+          {
+            "name": "onValueChange",
+            "type": "(value: string) => void",
+            "description": "Change callback"
+          }
+        ]
+      },
+      {
+        "name": "RadioCard.Item",
+        "description": "A card container. Renders a label element. Place Content, icons, badges, and Indicator as children.",
+        "props": [
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The radio value for this card"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disabled state"
+          }
+        ]
+      },
+      {
+        "name": "RadioCard.Content",
+        "description": "Flex wrapper for title and description. Takes flex-1 to fill available space.",
+        "props": [
+          {
+            "name": "inline",
+            "type": "boolean",
+            "default": "false",
+            "description": "When true, renders children in a row (inline) instead of a column"
+          }
+        ]
+      },
+      {
+        "name": "RadioCard.Title",
+        "description": "Styled title text. Renders a span element.",
+        "props": []
+      },
+      {
+        "name": "RadioCard.Description",
+        "description": "Styled description text. Renders a p element.",
+        "props": []
+      },
+      {
+        "name": "RadioCard.Indicator",
+        "description": "The radio circle indicator. Reads value and disabled from the parent Item context.",
+        "props": []
+      },
+      {
+        "name": "RadioCard",
+        "description": "Shorthand that pre-assembles Item + Content + Title + Description + Indicator. Import as { RadioCard } for direct use, or access as RadioCard.RadioCard via namespace import. Use primitives directly for custom layouts.",
+        "props": [
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The radio value for this card"
+          },
+          {
+            "name": "title",
+            "type": "React.ReactNode",
+            "description": "Card title"
+          },
+          {
+            "name": "description",
+            "type": "React.ReactNode",
+            "description": "Card description"
+          },
+          {
+            "name": "icon",
+            "type": "React.ReactNode",
+            "description": "Leading element (e.g. KeyIcon.Root or raw icon)"
+          },
+          {
+            "name": "badge",
+            "type": "React.ReactNode",
+            "description": "Badge element rendered next to the title"
+          },
+          {
+            "name": "inline",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render title and description inline"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disabled state"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/radio-card.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+import { readFile, writeFile } from 'fs/promises';
+import { existsSync } from 'fs';
 import prompts from 'prompts';
 import ora from 'ora';
 import path from 'path';
@@ -18,7 +20,7 @@ import { transformComponent } from '../utils/transform.js';
 import { installDependencies } from '../utils/install.js';
 import { updateTailwindConfig } from '../utils/transformers/tailwind.js';
 import { detectProject } from '../utils/detect.js';
-import type { AddOptions, RegistryItem } from '../types/index.js';
+import type { AddOptions, HapplyConfig, RegistryItem } from '../types/index.js';
 
 export async function add(
   components: string[],
@@ -196,6 +198,12 @@ export async function add(
     throw error;
   }
 
+  // Auto-import any style files into the project's CSS
+  const styleFiles = writtenFiles.filter((f) => f.endsWith('.css'));
+  if (styleFiles.length > 0) {
+    await injectStyleImports(cwd, config, styleFiles);
+  }
+
   // Collect and install dependencies
   const { dependencies, devDependencies } = collectDependencies(items);
 
@@ -272,4 +280,59 @@ function pascalCase(str: string): string {
     .split('-')
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join('');
+}
+
+/**
+ * Inject @import statements for component CSS files into the project's
+ * main CSS file (config.tailwind.css). Skips if already imported.
+ */
+async function injectStyleImports(
+  cwd: string,
+  config: HapplyConfig,
+  styleFiles: string[]
+): Promise<void> {
+  const cssPath = path.join(cwd, config.tailwind.css);
+  if (!existsSync(cssPath)) return;
+
+  let css = await readFile(cssPath, 'utf-8');
+  let added = false;
+
+  for (const styleFile of styleFiles) {
+    // Build a relative path from the CSS file to the style file
+    const cssDir = path.dirname(cssPath);
+    let rel = path.relative(cssDir, path.join(cwd, styleFile));
+    // Normalise to posix separators for CSS @import
+    rel = rel.split(path.sep).join('/');
+    if (!rel.startsWith('.')) rel = './' + rel;
+
+    // Skip if already imported
+    if (css.includes(rel)) continue;
+
+    // Insert the @import after the last existing @import line
+    const importStatement = `@import '${rel}';`;
+    const lines = css.split('\n');
+    let lastImportIndex = -1;
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].trimStart().startsWith('@import ')) {
+        lastImportIndex = i;
+      }
+    }
+
+    if (lastImportIndex >= 0) {
+      lines.splice(lastImportIndex + 1, 0, importStatement);
+    } else {
+      // No existing imports — prepend
+      lines.unshift(importStatement);
+    }
+
+    css = lines.join('\n');
+    added = true;
+  }
+
+  if (added) {
+    await writeFile(cssPath, css, 'utf-8');
+    logger.info(
+      `Added style import${styleFiles.length > 1 ? 's' : ''} to ${config.tailwind.css}`
+    );
+  }
 }

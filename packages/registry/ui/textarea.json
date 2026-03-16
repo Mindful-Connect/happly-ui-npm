@@ -3,91 +3,99 @@
   "name": "textarea",
   "type": "registry:ui",
   "title": "Textarea",
-  "description": "A textarea component.",
+  "description": "A textarea component with character counter, resize handle, error state, and simple mode. Uses namespace exports: Textarea.Root, Textarea.CharCounter.",
+  "version": "2.0.0",
+  "migration": {
+    "guide": "API changed: import as namespace `import * as Textarea from ...`, use `<Textarea.Root>` with children for `<Textarea.CharCounter>`. Old named export `{ Textarea }` removed. New sub-component: `Textarea.CharCounter`. New props: `simple` (renders without container), `hasError`, `containerClassName`. Built-in resize handle in non-simple mode."
+  },
   "dependencies": [],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "happly-ui-utils"
+  ],
   "docs": {
-    "lead": "A textarea component.",
-    "usage": "import { Textarea } from \"@/components/ui/textarea\"\n\n<Textarea placeholder=\"Type your message here.\" />",
+    "lead": "A textarea component with character counter, resize handle, error state, and simple mode.",
+    "usage": "import * as Textarea from \"@/components/ui/textarea\"\n\n<Textarea.Root placeholder=\"Jot down your thoughts...\">\n  <Textarea.CharCounter current={78} max={200} />\n</Textarea.Root>",
     "examples": [
       {
-        "title": "Default",
-        "description": "A default textarea component.",
-        "code": "<Textarea placeholder=\"Type your message here.\" />",
-        "preview": [
-          {
-            "component": "textarea",
-            "props": {
-              "placeholder": "Type your message here."
-            }
-          }
-        ]
+        "title": "Demo",
+        "description": "Textarea with character counter.",
+        "code": "<Textarea.Root placeholder=\"Jot down your thoughts...\">\n  <Textarea.CharCounter current={78} max={200} />\n</Textarea.Root>",
+        "stories": ["Demo"]
+      },
+      {
+        "title": "Interactive Counter",
+        "description": "Textarea with live character counter tracking input length.",
+        "code": "<Textarea.Root value={value} onChange={(e) => setValue(e.target.value)}>\n  <Textarea.CharCounter current={value.length} max={200} />\n</Textarea.Root>",
+        "stories": ["InteractiveCounter"]
+      },
+      {
+        "title": "Has Error",
+        "description": "Textarea in error state with red ring and error focus shadow.",
+        "code": "<Textarea.Root hasError>\n  <Textarea.CharCounter current={78} max={200} />\n</Textarea.Root>",
+        "stories": ["HasError"]
+      },
+      {
+        "title": "With Label and Hint",
+        "description": "Textarea composed with Label and Hint components.",
+        "code": "<FormField.Root\n  label=\"Enter Your Message\"\n  htmlFor=\"message\"\n  required\n  labelSub=\"Optional\"\n  labelSubParens\n  hint=\"This is a hint text to help user.\"\n>\n  <Textarea.Root id=\"message\" placeholder=\"Jot down your thoughts...\">\n    <Textarea.CharCounter current={78} max={200} />\n  </Textarea.Root>\n</FormField.Root>",
+        "stories": ["WithLabelAndHint"]
       },
       {
         "title": "Disabled",
-        "description": "A disabled textarea component.",
-        "code": "<Textarea disabled placeholder=\"Type your message here.\" />",
-        "preview": [
-          {
-            "component": "textarea",
-            "props": {
-              "disabled": true,
-              "placeholder": "Type your message here."
-            }
-          }
-        ]
+        "description": "Disabled textarea with muted styling.",
+        "code": "<Textarea.Root placeholder=\"...\" disabled>\n  <Textarea.CharCounter current={78} max={200} />\n</Textarea.Root>",
+        "stories": ["Disabled"]
       },
       {
-        "title": "With Label",
-        "description": "A textarea with a label.",
-        "code": "<div className=\"grid w-full gap-1.5\">\n  <Label htmlFor=\"message\">Your message</Label>\n  <Textarea placeholder=\"Type your message here.\" id=\"message\" />\n</div>",
-        "preview": [
-          {
-            "component": "form-group",
-            "children": [
-              {
-                "component": "label",
-                "children": "Your message",
-                "props": {
-                  "htmlFor": "message"
-                }
-              },
-              {
-                "component": "textarea",
-                "props": {
-                  "id": "message",
-                  "placeholder": "Type your message here."
-                }
-              }
-            ]
-          }
-        ]
+        "title": "Simple",
+        "description": "Simple textarea without container wrapper or resize handle.",
+        "code": "<Textarea.Root placeholder=\"...\" simple />",
+        "stories": ["Simple"]
       },
       {
-        "title": "With Maximum Length",
-        "description": "A textarea with a maximum length.",
-        "code": "<Textarea placeholder=\"Type your message here.\" maxLength={250} />",
-        "preview": [
-          {
-            "component": "textarea",
-            "props": {
-              "placeholder": "Type your message here.",
-              "maxLength": 250
-            }
-          }
-        ]
+        "title": "Simple Resize",
+        "description": "Simple textarea with CSS resize enabled.",
+        "code": "<Textarea.Root placeholder=\"...\" simple className=\"resize-y\" />",
+        "stories": ["SimpleResize"]
       }
     ],
     "api": [
       {
-        "name": "Textarea",
-        "description": "The textarea component.",
+        "name": "Textarea.Root",
+        "description": "The textarea component with optional container wrapper.",
         "props": [
+          {
+            "name": "simple",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render as a plain textarea without the container wrapper and resize handle"
+          },
           {
             "name": "hasError",
             "type": "boolean",
             "default": "false",
-            "description": "Indicates whether the textarea is in an error state."
+            "description": "Show error styling with red ring"
+          },
+          {
+            "name": "containerClassName",
+            "type": "string",
+            "description": "Additional classes for the container wrapper (non-simple mode only)"
+          }
+        ]
+      },
+      {
+        "name": "Textarea.CharCounter",
+        "description": "Character counter displayed in the textarea footer.",
+        "props": [
+          {
+            "name": "current",
+            "type": "number",
+            "description": "Current character count"
+          },
+          {
+            "name": "max",
+            "type": "number",
+            "description": "Maximum character count. Turns red when exceeded."
           }
         ]
       }

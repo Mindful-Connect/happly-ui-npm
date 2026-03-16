@@ -1,0 +1,16 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "avatar-empty-icons",
+  "type": "registry:ui",
+  "title": "Avatar Empty Icons",
+  "description": "SVG placeholder icons for the Avatar component (user and company silhouettes).",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "ui/avatar-empty-icons.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

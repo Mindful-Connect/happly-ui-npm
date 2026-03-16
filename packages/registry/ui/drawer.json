@@ -1,0 +1,114 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "drawer",
+  "type": "registry:ui",
+  "title": "Drawer",
+  "description": "A slide-in drawer panel built on Radix UI Dialog with overlay, header, body, and footer sections. Uses namespace exports: Drawer.Root, Drawer.Trigger, Drawer.Content, Drawer.Header, Drawer.Title, Drawer.Body, Drawer.Footer, Drawer.Close.",
+  "version": "1.0.0",
+  "dependencies": [
+    "@radix-ui/react-dialog",
+    "@remixicon/react"
+  ],
+  "registryDependencies": [
+    "happly-ui-utils",
+    "compact-button"
+  ],
+  "docs": {
+    "lead": "A slide-in drawer panel with overlay backdrop, header with close button, body, and footer sections.",
+    "usage": "import * as Drawer from \"@/components/ui/drawer\"\n\n<Drawer.Root>\n  <Drawer.Trigger>Open</Drawer.Trigger>\n  <Drawer.Content>\n    <Drawer.Header>\n      <Drawer.Title>Title</Drawer.Title>\n    </Drawer.Header>\n    <Drawer.Body>Content</Drawer.Body>\n    <Drawer.Footer>Footer</Drawer.Footer>\n  </Drawer.Content>\n</Drawer.Root>",
+    "examples": [
+      {
+        "title": "Basic",
+        "description": "Simple drawer with header, body placeholder, and footer button.",
+        "code": "<Drawer.Root>\n  <Drawer.Trigger asChild>\n    <Button.Root>Open Drawer</Button.Root>\n  </Drawer.Trigger>\n  <Drawer.Content>\n    <Drawer.Header>\n      <Drawer.Title>Drawer Title</Drawer.Title>\n    </Drawer.Header>\n    <Drawer.Body>Content</Drawer.Body>\n    <Drawer.Footer className=\"border-t\">\n      <Button.Root>Footer Button</Button.Root>\n    </Drawer.Footer>\n  </Drawer.Content>\n</Drawer.Root>",
+        "stories": ["Basic"]
+      },
+      {
+        "title": "Demo",
+        "description": "Drawer with contact details, information sections, and transaction list.",
+        "code": "<Drawer.Root>\n  <Drawer.Trigger asChild>\n    <Button.Root>Open Drawer</Button.Root>\n  </Drawer.Trigger>\n  <Drawer.Content>\n    <Drawer.Header>\n      <Drawer.Title>Contact Details</Drawer.Title>\n    </Drawer.Header>\n    <Drawer.Body>...</Drawer.Body>\n    <Drawer.Footer className=\"border-t\">\n      <Button.Root>See All Transactions</Button.Root>\n    </Drawer.Footer>\n  </Drawer.Content>\n</Drawer.Root>",
+        "stories": ["Demo"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Drawer.Root",
+        "description": "The root drawer container. Passes through Radix Dialog.Root props.",
+        "props": [
+          {
+            "name": "open",
+            "type": "boolean",
+            "description": "Controlled open state"
+          },
+          {
+            "name": "onOpenChange",
+            "type": "(open: boolean) => void",
+            "description": "Callback when open state changes"
+          }
+        ]
+      },
+      {
+        "name": "Drawer.Trigger",
+        "description": "The element that opens the drawer.",
+        "props": [
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render as child element using Radix Slot"
+          }
+        ]
+      },
+      {
+        "name": "Drawer.Content",
+        "description": "The drawer panel that slides in from the right with overlay.",
+        "props": []
+      },
+      {
+        "name": "Drawer.Header",
+        "description": "Header area with optional close button.",
+        "props": [
+          {
+            "name": "showCloseButton",
+            "type": "boolean",
+            "default": "true",
+            "description": "Show the close button"
+          }
+        ]
+      },
+      {
+        "name": "Drawer.Title",
+        "description": "The drawer title text.",
+        "props": []
+      },
+      {
+        "name": "Drawer.Body",
+        "description": "The main scrollable content area.",
+        "props": []
+      },
+      {
+        "name": "Drawer.Footer",
+        "description": "Footer area for action buttons.",
+        "props": []
+      },
+      {
+        "name": "Drawer.Close",
+        "description": "Closes the drawer when clicked.",
+        "props": [
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render as child element using Radix Slot"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/drawer.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

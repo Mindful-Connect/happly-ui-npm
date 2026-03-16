@@ -23,7 +23,7 @@ export function getUIComponents(): RegistryItem[] {
   return registry.items.filter(
     (item) =>
       item.type === 'registry:ui' &&
-      !['phone-input', 'radio-group', 'key-icon'].includes(item.name)
+      !['radio-group', 'key-icon'].includes(item.name)
   );
 }
 
@@ -36,12 +36,24 @@ export function getLibraries(): RegistryItem[] {
 }
 
 /**
+ * Get all hooks from the registry
+ */
+export function getHooks(): RegistryItem[] {
+  const registry = getRegistry();
+  return registry.items.filter((item) => item.type === 'registry:hook');
+}
+
+/**
  * Get a specific component's full data including files
  */
 export function getComponent(name: string): RegistryItemWithDocs | null {
-  const componentPath = path.join(REGISTRY_PATH, 'ui', `${name}.json`);
+  // Try ui/ first, then hooks/
+  const uiPath = path.join(REGISTRY_PATH, 'ui', `${name}.json`);
+  const hookPath = path.join(REGISTRY_PATH, 'hooks', `${name}.json`);
 
-  if (!fs.existsSync(componentPath)) {
+  const componentPath = fs.existsSync(uiPath) ? uiPath : fs.existsSync(hookPath) ? hookPath : null;
+
+  if (!componentPath) {
     return null;
   }
 
@@ -55,6 +67,14 @@ export function getComponent(name: string): RegistryItemWithDocs | null {
 export function getAllComponentNames(): string[] {
   const components = getUIComponents();
   return components.map((c) => c.name);
+}
+
+/**
+ * Get all hook names for static generation
+ */
+export function getAllHookNames(): string[] {
+  const hooks = getHooks();
+  return hooks.map((h) => h.name);
 }
 
 /**

@@ -1,0 +1,97 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "checkbox",
+  "type": "registry:ui",
+  "title": "Checkbox",
+  "description": "An animated checkbox component built on Radix UI with check and indeterminate states, primary and neutral variants. Uses namespace exports: Checkbox.Root.",
+  "version": "1.0.0",
+  "dependencies": [
+    "@radix-ui/react-checkbox"
+  ],
+  "registryDependencies": [
+    "happly-ui-utils"
+  ],
+  "docs": {
+    "lead": "An animated checkbox with check and indeterminate states, SVG stroke animation, and primary/neutral color variants.",
+    "usage": "import * as Checkbox from \"@/components/ui/checkbox\"\n\n<Checkbox.Root />",
+    "examples": [
+      {
+        "title": "Demo",
+        "description": "Default checkbox.",
+        "code": "<Checkbox.Root />",
+        "stories": ["Demo"]
+      },
+      {
+        "title": "Variants",
+        "description": "Primary and neutral color variants in unchecked, checked, and indeterminate states.",
+        "code": "<Checkbox.Root variant=\"primary\" defaultChecked />\n<Checkbox.Root variant=\"neutral\" defaultChecked />",
+        "stories": ["Variants"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Disabled checkbox in unchecked, checked, and indeterminate states.",
+        "code": "<Checkbox.Root disabled />\n<Checkbox.Root disabled checked />\n<Checkbox.Root disabled checked=\"indeterminate\" />",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "With Label",
+        "description": "Checkboxes paired with Label component for form usage.",
+        "code": "<div className=\"flex items-center gap-2\">\n  <Checkbox.Root id=\"c1\" />\n  <Label.Root htmlFor=\"c1\">SMS Verification</Label.Root>\n</div>",
+        "stories": ["WithLabel"]
+      },
+      {
+        "title": "With Label Extended",
+        "description": "Checkboxes with labels, sublabels, badges, descriptions, and link buttons.",
+        "code": "<div className=\"flex items-center gap-2\">\n  <Checkbox.Root id=\"c1\" />\n  <Label.Root htmlFor=\"c1\">\n    Label\n    <Label.Sub>(Sublabel)</Label.Sub>\n    <Badge.Root>NEW</Badge.Root>\n  </Label.Root>\n</div>",
+        "stories": ["WithLabelExtended"]
+      },
+      {
+        "title": "With Form Field",
+        "description": "Checkbox group composed with FormField for consistent label and hint.",
+        "code": "<FormField.Root label=\"Notifications\" hint=\"Choose how you want to be notified.\">\n  <div className=\"flex flex-col gap-3\">\n    <div className=\"flex items-center gap-2\">\n      <Checkbox.Root id=\"email\" defaultChecked />\n      <Label.Root htmlFor=\"email\" className=\"text-paragraph-sm\">\n        Email notifications\n      </Label.Root>\n    </div>\n    <div className=\"flex items-center gap-2\">\n      <Checkbox.Root id=\"sms\" />\n      <Label.Root htmlFor=\"sms\" className=\"text-paragraph-sm\">\n        SMS notifications\n      </Label.Root>\n    </div>\n    <div className=\"flex items-center gap-2\">\n      <Checkbox.Root id=\"push\" />\n      <Label.Root htmlFor=\"push\" className=\"text-paragraph-sm\">\n        Push notifications\n      </Label.Root>\n    </div>\n  </div>\n</FormField.Root>",
+        "stories": ["WithFormField"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Checkbox.Root",
+        "description": "The checkbox component with animated SVG check/indeterminate indicators.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'primary' | 'neutral'",
+            "default": "'primary'",
+            "description": "The color variant for the checked state"
+          },
+          {
+            "name": "checked",
+            "type": "boolean | 'indeterminate'",
+            "description": "Controlled checked state"
+          },
+          {
+            "name": "defaultChecked",
+            "type": "boolean",
+            "description": "Default checked state for uncontrolled usage"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disable the checkbox"
+          },
+          {
+            "name": "onCheckedChange",
+            "type": "(checked: boolean | 'indeterminate') => void",
+            "description": "Callback when checked state changes"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/checkbox.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

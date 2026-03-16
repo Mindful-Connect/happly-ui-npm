@@ -2,135 +2,196 @@
 
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
-import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '@/lib/happly-ui-utils';
-import { RiCloseFill } from 'react-icons/ri';
+import { RiCloseFill } from '@remixicon/react';
 
-export const tagRoot = cva(
-  [
-    'group inline-flex items-center py-1 gap-2 rounded-[6px] ps-2 pe-1 text-xs text-ds-sub-600',
-    'transition duration-200 ease-out ring-1 ring-inset',
-  ].join(' '),
-  {
-    variants: {
-      variant: {
-        stroke: [
-          'bg-ds-white-0 ring-ds-stroke-soft-200',
-          'hover:bg-ds-weak-50 hover:ring-transparent',
-          'focus-within:bg-ds-weak-50 focus-within:ring-transparent',
-        ].join(' '),
-        gray: [
-          'bg-ds-weak-50 ring-transparent',
-          'hover:bg-ds-white-0 hover:ring-ds-stroke-soft-200',
-        ].join(' '),
+import type { PolymorphicComponentProps } from '@/lib/polymorphic';
+import { recursiveCloneChildren } from '@/lib/recursive-clone-children';
+import { tv, type VariantProps } from '@/lib/tv';
+
+const TAG_ROOT_NAME = 'TagRoot';
+const TAG_ICON_NAME = 'TagIcon';
+const TAG_DISMISS_BUTTON_NAME = 'TagDismissButton';
+const TAG_DISMISS_ICON_NAME = 'TagDismissIcon';
+
+export const tagVariants = tv({
+  slots: {
+    root: [
+      'group/tag inline-flex h-6 items-center gap-2 px-2 text-label-xs text-text-sub-600',
+      'transition duration-200 ease-out',
+      'ring-1 ring-inset',
+    ],
+    icon: [
+      // base
+      '-mx-1 size-4 shrink-0 text-text-soft-400 transition duration-200 ease-out',
+      // hover
+      'group-hover/tag:text-text-sub-600',
+    ],
+    dismissButton: [
+      // base
+      'group/dismiss-button -ml-1.5 -mr-1 size-4 shrink-0',
+      // focus
+      'focus:outline-none',
+    ],
+    dismissIcon: 'size-4 text-text-soft-400 transition duration-200 ease-out',
+  },
+  variants: {
+    variant: {
+      stroke: {
+        root: [
+          // base
+          'bg-bg-white-0 ring-stroke-soft-200',
+          // hover
+          'hover:bg-bg-weak-50 hover:ring-transparent',
+          // focus-within
+          'focus-within:bg-bg-weak-50 focus-within:ring-transparent',
+        ],
+        dismissIcon: [
+          // hover
+          'group-hover/dismiss-button:text-text-sub-600',
+          // focus
+          'group-focus/dismiss-button:text-text-sub-600',
+        ],
       },
-      disabled: {
-        true: [
-          'pointer-events-none bg-ds-weak-50 text-ds-disabled-300 ring-transparent',
-        ].join(' '),
+      gray: {
+        root: [
+          // base
+          'bg-bg-weak-50 ring-transparent',
+          // hover
+          'hover:bg-bg-white-0 hover:ring-stroke-soft-200',
+        ],
       },
     },
-    defaultVariants: {
-      variant: 'stroke',
-      disabled: false,
+    rounded: {
+      true: {
+        root: 'rounded-full',
+      },
+      false: {
+        root: 'rounded-md',
+      },
     },
-  }
-);
+    disabled: {
+      true: {
+        root: 'pointer-events-none bg-bg-weak-50 text-text-disabled-300 ring-transparent',
+        icon: 'text-text-disabled-300 [&:not(.remixicon)]:opacity-[.48]',
+        dismissIcon: 'text-text-disabled-300',
+      },
+    },
+  },
+  defaultVariants: {
+    variant: 'gray',
+    rounded: true,
+  },
+});
 
-export interface TagProps
-  extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof tagRoot> {
-  asChild?: boolean;
-}
+type TagSharedProps = VariantProps<typeof tagVariants>;
 
-export const Tag = React.forwardRef<HTMLDivElement, TagProps>(
-  (
-    { asChild, variant, disabled, className, children, ...props }: TagProps,
-    ref
-  ) => {
-    const Comp = asChild ? Slot : 'div';
-    return (
-      <Comp
-        ref={ref}
-        className={cn(tagRoot({ variant, disabled, class: className }))}
-        aria-disabled={disabled ?? undefined}
-        {...props}
-      >
-        {children}
-      </Comp>
-    );
-  }
-);
-Tag.displayName = 'Tag';
-
-// Slot for an icon inside the Tag
-type TagIconProps = {
-  asChild?: boolean;
-} & VariantProps<typeof tagRoot> &
-  React.HTMLAttributes<HTMLElement>;
-
-export const TagIcon = React.forwardRef<HTMLElement, TagIconProps>(
-  (
-    {
-      asChild,
-      variant: _variant,
-      disabled: _disabled,
-      className,
-      ...props
-    }: TagIconProps,
-    ref
-  ) => {
-    const Comp = asChild ? Slot : 'span';
-    return (
-      <Comp
-        ref={ref}
-        className={cn(
-          'flex h-4 w-4 shrink-0 items-center justify-center select-none',
-          'text-ds-soft-400 transition duration-200 ease-out',
-          'group-focus-within:text-ds-sub-600 group-hover:text-ds-sub-600',
-          className
-        )}
-        {...props}
-      />
-    );
-  }
-);
-TagIcon.displayName = 'TagIcon';
-
-// Dismiss (close) button inside Tag
-export type TagCloseProps = Omit<VariantProps<typeof tagRoot>, 'disabled'> &
-  React.ButtonHTMLAttributes<HTMLButtonElement> & {
+type TagProps = VariantProps<typeof tagVariants> &
+  React.HTMLAttributes<HTMLDivElement> & {
     asChild?: boolean;
-    disabled?: boolean;
   };
 
-export const TagClose = React.forwardRef<HTMLButtonElement, TagCloseProps>(
+const TagRoot = React.forwardRef<HTMLDivElement, TagProps>(
   (
-    {
-      asChild,
-      variant: _variant,
-      disabled,
-      className,
-      ...props
-    }: TagCloseProps,
-    ref
+    { asChild, children, variant, rounded, disabled, className, ...rest },
+    forwardedRef
   ) => {
-    const Comp = asChild ? Slot : 'button';
+    const uniqueId = React.useId();
+    const Component = asChild ? Slot : 'div';
+    const { root } = tagVariants({ variant, rounded, disabled });
+
+    const sharedProps: TagSharedProps = {
+      variant,
+      disabled,
+    };
+
+    const extendedChildren = recursiveCloneChildren(
+      children as React.ReactElement[],
+      sharedProps,
+      [TAG_ICON_NAME, TAG_DISMISS_BUTTON_NAME, TAG_DISMISS_ICON_NAME],
+      uniqueId,
+      asChild
+    );
+
     return (
-      <Comp
-        ref={ref}
-        type='button'
-        className={cn(
-          'flex h-4 w-4 shrink-0 items-center justify-center focus:outline-none',
-          'text-ds-soft-400 transition duration-200 ease-out',
-          'group-focus-within:text-ds-sub-600 group-hover:text-ds-sub-600',
-          className
-        )}
+      <Component
+        ref={forwardedRef}
+        className={root({ class: className })}
         aria-disabled={disabled}
-        {...props}
+        {...rest}
       >
-        <RiCloseFill className='h-4 w-4' />
-      </Comp>
+        {extendedChildren}
+      </Component>
     );
   }
 );
-TagClose.displayName = 'TagClose';
+TagRoot.displayName = TAG_ROOT_NAME;
+
+function TagIcon<T extends React.ElementType>({
+  className,
+  variant,
+  disabled,
+  as,
+  ...rest
+}: PolymorphicComponentProps<T, TagSharedProps>) {
+  const Component = as || 'div';
+  const { icon } = tagVariants({ variant, disabled });
+
+  return <Component className={icon({ class: className })} {...rest} />;
+}
+TagIcon.displayName = TAG_ICON_NAME;
+
+type TagDismissButtonProps = TagSharedProps &
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    asChild?: boolean;
+  };
+
+const TagDismissButton = React.forwardRef<
+  HTMLButtonElement,
+  TagDismissButtonProps
+>(
+  (
+    { asChild, children, className, variant, disabled, ...rest },
+    forwardedRef
+  ) => {
+    const Component = asChild ? Slot : 'button';
+    const { dismissButton } = tagVariants({ variant, disabled });
+
+    return (
+      <Component
+        ref={forwardedRef}
+        className={dismissButton({ class: className })}
+        {...rest}
+      >
+        {children ?? (
+          <TagDismissIcon
+            variant={variant}
+            disabled={disabled}
+            as={RiCloseFill}
+          />
+        )}
+      </Component>
+    );
+  }
+);
+TagDismissButton.displayName = TAG_DISMISS_BUTTON_NAME;
+
+function TagDismissIcon<T extends React.ElementType>({
+  className,
+  variant,
+  disabled,
+  as,
+  ...rest
+}: PolymorphicComponentProps<T, TagSharedProps>) {
+  const Component = as || 'div';
+  const { dismissIcon } = tagVariants({ variant, disabled });
+
+  return <Component className={dismissIcon({ class: className })} {...rest} />;
+}
+TagDismissIcon.displayName = TAG_DISMISS_ICON_NAME;
+
+export {
+  TagRoot as Root,
+  TagIcon as Icon,
+  TagDismissButton as DismissButton,
+  TagDismissIcon as DismissIcon,
+};

@@ -1,0 +1,102 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "fancy-button",
+  "type": "registry:ui",
+  "title": "Fancy Button",
+  "description": "A compound button component with gradient overlay effects, multiple variants, and sizes. Uses namespace exports: FancyButton.Root, FancyButton.Icon.",
+  "version": "1.0.0",
+  "dependencies": [
+    "@radix-ui/react-slot"
+  ],
+  "registryDependencies": [
+    "tv",
+    "polymorphic",
+    "recursive-clone-children"
+  ],
+  "docs": {
+    "lead": "A compound button component with gradient overlay effects, multiple variants, and sizes.",
+    "usage": "import * as FancyButton from \"@/components/ui/fancy-button\"\n\n<FancyButton.Root variant=\"neutral\">\n  <FancyButton.Icon as={ArrowIcon} />\n  Button\n</FancyButton.Root>",
+    "examples": [
+      {
+        "title": "Variants",
+        "description": "All four visual variants: neutral (dark + gradient), primary (brand color), error (destructive), and basic (white + stroke).",
+        "code": "<FancyButton.Root variant=\"neutral\">Neutral</FancyButton.Root>\n<FancyButton.Root variant=\"primary\">Primary</FancyButton.Root>\n<FancyButton.Root variant=\"error\">Error</FancyButton.Root>\n<FancyButton.Root variant=\"basic\">Basic</FancyButton.Root>",
+        "stories": ["Variants"]
+      },
+      {
+        "title": "With Icon",
+        "description": "Use FancyButton.Icon with the `as` prop for polymorphic icon rendering.",
+        "code": "<FancyButton.Root>\n  <FancyButton.Icon as={RiArrowLeftSLine} />\n  Button\n  <FancyButton.Icon as={RiArrowRightSLine} />\n</FancyButton.Root>",
+        "stories": ["WithIcon"]
+      },
+      {
+        "title": "Sizes",
+        "description": "Fancy buttons come in medium (default), small, and xsmall sizes.",
+        "code": "<FancyButton.Root size=\"medium\">Button</FancyButton.Root>\n<FancyButton.Root size=\"small\">Button</FancyButton.Root>\n<FancyButton.Root size=\"xsmall\">Button</FancyButton.Root>",
+        "stories": ["Sizes"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Disabled state removes gradient overlays and applies muted styling across all variants.",
+        "code": "<FancyButton.Root disabled variant=\"neutral\">Button</FancyButton.Root>\n<FancyButton.Root disabled variant=\"primary\">Button</FancyButton.Root>",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "As Child",
+        "description": "Use the asChild prop with Radix Slot to render as a different element, such as a link.",
+        "code": "<FancyButton.Root asChild>\n  <a href=\"#\">Button</a>\n</FancyButton.Root>",
+        "stories": ["AsChild"]
+      }
+    ],
+    "api": [
+      {
+        "name": "FancyButton.Root",
+        "description": "The main fancy button component with gradient overlay effects.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'neutral' | 'primary' | 'error' | 'basic'",
+            "default": "'neutral'",
+            "description": "The visual style"
+          },
+          {
+            "name": "size",
+            "type": "'medium' | 'small' | 'xsmall'",
+            "default": "'medium'",
+            "description": "The size of the button"
+          },
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Renders as child element using Radix Slot"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disables the button"
+          }
+        ]
+      },
+      {
+        "name": "FancyButton.Icon",
+        "description": "Polymorphic icon container that receives variant and size from FancyButton.Root.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "default": "'div'",
+            "description": "The element or component to render as"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/fancy-button.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

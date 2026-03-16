@@ -3,33 +3,34 @@
   "name": "location-input",
   "type": "registry:ui",
   "title": "Location Input",
-  "description": "A Google Maps address autocomplete input.",
+  "description": "A Google Maps address autocomplete input with Popover dropdown.",
+  "version": "2.0.0",
+  "migration": {
+    "guide": "v2 replaces @headlessui/react with Radix Popover + Input primitives for consistent styling. Import changed from `{ LocationInput }` to `* as LocationInput` with `LocationInput.Root`. The `setLocation` prop is now `onLocationChange`. The `icon` prop accepts a React component (ElementType) instead of a ReactElement. New props: `size`, `hasError`, `disabled`, `countryRestrictions`, `apiKey`."
+  },
   "dependencies": [
     "use-debounce",
     "@googlemaps/js-api-loader",
-    "@headlessui/react"
+    "@remixicon/react",
+    "@radix-ui/react-scroll-area",
+    "react-remove-scroll"
   ],
-  "registryDependencies": ["happly-ui-utils"],
+  "registryDependencies": ["popover", "input", "happly-ui-utils"],
   "docs": {
-    "lead": "A Google Maps address autocomplete input.",
-    "usage": "import { LocationInput } from \"@/components/ui/location-input\"\n\n<LocationInput location={location} setLocation={setLocation} />",
+    "lead": "A Google Maps address autocomplete input with async search and place resolution.",
+    "usage": "import * as LocationInput from \"@/components/ui/location-input\"\n\n<LocationInput.Root location={location} onLocationChange={setLocation} />",
     "examples": [
       {
         "title": "Default",
         "description": "Default location input.",
-        "code": "import { LocationInput } from \"@/components/ui/location-input\"\nimport { useState } from \"react\"\n\nexport function DemoLocationInput() {\n  const [location, setLocation] = useState<any>(null)\n\n  return (\n    <LocationInput\n      location={location}\n      setLocation={setLocation}\n    />\n  )\n}",
-        "preview": [
-          {
-            "component": "location-input",
-            "props": {}
-          }
-        ]
+        "code": "<LocationInput.Root location={location} onLocationChange={setLocation} />",
+        "stories": ["Default"]
       }
     ],
     "api": [
       {
-        "name": "LocationInput",
-        "description": "The LocationInput component.",
+        "name": "LocationInput.Root",
+        "description": "Google Maps address autocomplete input.",
         "props": [
           {
             "name": "location",
@@ -37,20 +38,50 @@
             "description": "The current location object."
           },
           {
-            "name": "setLocation",
+            "name": "onLocationChange",
             "type": "(location: LocationRequest) => void",
             "description": "Callback when location updates."
           },
           {
             "name": "placeholder",
             "type": "string",
-            "default": "\"Select a location...\"",
+            "default": "'Search address...'",
             "description": "Input placeholder text."
           },
           {
             "name": "icon",
-            "type": "ReactElement<SVGProps<SVGSVGElement>>",
-            "description": "Optional icon to display."
+            "type": "React.ElementType",
+            "default": "RiMapPinLine",
+            "description": "Leading icon component."
+          },
+          {
+            "name": "size",
+            "type": "'medium' | 'small' | 'xsmall'",
+            "default": "'medium'",
+            "description": "Input size variant."
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Error state."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disabled state."
+          },
+          {
+            "name": "countryRestrictions",
+            "type": "string[]",
+            "default": "['ca', 'us', 'fr']",
+            "description": "ISO 3166-1 alpha-2 country codes for autocomplete."
+          },
+          {
+            "name": "apiKey",
+            "type": "string",
+            "description": "Google Maps API key. Defaults to NEXT_PUBLIC_GOOGLE_API_KEY."
           }
         ]
       }

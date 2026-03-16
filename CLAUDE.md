@@ -34,6 +34,10 @@ bun run clean
 bun packages/cli/dist/index.js init
 bun packages/cli/dist/index.js add button
 bun packages/cli/dist/index.js list
+
+# Storybook (component development)
+bun run storybook              # Starts on http://localhost:6006
+bun run build-storybook        # Static build
 ```
 
 ## Architecture
@@ -41,7 +45,7 @@ bun packages/cli/dist/index.js list
 ### Monorepo Structure
 
 - **packages/cli** - CLI tool published as `@happlyui/cli`
-- **packages/registry** - Component source files and JSON definitions
+- **packages/registry** - Component source files, JSON definitions, Storybook stories, and shared design tokens
 - **docs** - Documentation site (Next.js, auto-deployed to GitHub Pages)
 - **schemas** - JSON Schema files for IDE validation (hosted via jsDelivr CDN)
 
@@ -65,12 +69,13 @@ File Writing & npm Install
 
 ### Registry System
 
-Each component has two files:
+Each component has up to three files:
 
 - **Source file** (`ui/button.tsx`) - The actual React component
 - **Definition file** (`ui/button.json`) - Metadata with dependencies
+- **Story file** (`ui/button.stories.tsx`) - Storybook stories (used for dev + docs previews)
 
-The `registry.json` index lists all available components with their npm and registry dependencies.
+The `registry.json` index lists all available components with their npm and registry dependencies. Story files are not included in the JSON `files` arrays, so they are never installed into user projects.
 
 ## Key Modules
 
@@ -92,12 +97,24 @@ The `registry.json` index lists all available components with their npm and regi
 - **RegistryItemType** - `"registry:ui" | "registry:hook" | "registry:lib"`
 - **ProjectInfo** - Detected project setup (framework, package manager, etc.)
 
-## Adding a New Component
+## Adding or Editing a Component
 
-1. Create source file: `packages/registry/ui/my-component.tsx`
-2. Create definition: `packages/registry/ui/my-component.json` with `docs` field
-3. Run `bun run build:registry` to update the index
-4. Merge to `production` branch - docs auto-deploy via GitHub Actions
+Follow **all** steps below whenever you create a new component or edit an existing one (add stories, change variants, rename exports, etc.):
+
+1. Create/edit source file: `packages/registry/ui/my-component.tsx`
+2. Create/edit story file: `packages/registry/ui/my-component.stories.tsx` (CSF3 format)
+3. Create/edit definition: `packages/registry/ui/my-component.json` with `docs` field (reference story names in `examples[].stories`)
+4. Rebuild the registry index: `bun run build:registry`
+5. Regenerate docs navigation and story registry:
+   ```bash
+   bun run --cwd docs scripts/generate-navigation.ts
+   bun run --cwd docs scripts/generate-story-registry.ts
+   ```
+6. Verify in Storybook: `bun run storybook`
+7. Verify in docs (if running): `bun run --cwd docs dev`
+8. Merge to `production` branch — docs auto-deploy via GitHub Actions
+
+**If you skip steps 4–5, the component will not appear in the CLI listing, the docs sidebar, or the docs story previews.**
 
 ### Component JSON Structure
 
@@ -118,9 +135,7 @@ The `registry.json` index lists all available components with their npm and regi
         "title": "Example Title",
         "description": "Example description",
         "code": "<MyComponent.Root variant=\"default\" />",
-        "preview": [
-          { "component": "my-component", "props": { "variant": "default" } }
-        ]
+        "stories": ["Default"]
       }
     ],
     "api": [
@@ -147,27 +162,38 @@ The `registry.json` index lists all available components with their npm and regi
 }
 ```
 
-### Preview Components
+### Story Files (CSF3 Format)
 
-Available preview components for the `docs.examples[].preview` field:
+Each component can have a `*.stories.tsx` file that provides live previews for both Storybook and the docs site. Use plain CSF3 format (no Storybook type imports needed):
 
-- `button` - DemoButton with variant, mode, size props
-- `badge` - DemoBadge with variant prop
-- `input` - DemoInput with placeholder, disabled props
-- `label` - DemoLabel
-- `card` - DemoCard with title, description props
-- `divider` - DemoDivider with variant prop
-- `progress-bar` - DemoProgressBar with variant, progress props
+```tsx
+// packages/registry/ui/my-component.stories.tsx
+import { MyComponent } from './my-component';
 
-To add a new preview component, update `docs/src/components/ComponentPreview.tsx` and `docs/src/lib/registry.ts`.
+export default { title: 'UI/My Component', component: MyComponent };
+
+export const Default = {
+  render: () => (
+    <MyComponent variant="default">Example</MyComponent>
+  ),
+};
+```
+
+The `stories` field in the JSON references the export names (e.g., `"Default"` maps to `export const Default`). The docs site imports these render functions directly via a prebuild story registry.
+
+To regenerate the story registry after adding/renaming stories:
+```bash
+bun run --cwd docs scripts/generate-story-registry.ts
+```
 
 ## Component Conventions
 
 - Use Radix UI primitives for accessibility
-- Use `cva` (class-variance-authority) for variants
+- Use `tv` (tailwind-variants) for variants — not `cva`
 - Use `cn()` utility for class merging
 - Always use `@/lib/happly-ui/happly-ui-utils` import path (transformed at install time)
-- Export both component and variants config
+- Namespace exports pattern: `Button.Root`, `Button.Icon` (compound components)
+- `docs.usage` field in JSON drives the CLI usage hint
 
 ## Release Workflow
 
@@ -202,16 +228,49 @@ npm publish --access public packages/cli
 
 ### How Docs Auto-Generation Works
 
-1. **Prebuild script** (`docs/scripts/generate-navigation.ts`) reads `registry.json` and generates navigation
+1. **Prebuild scripts** run in sequence:
+   - `docs/scripts/generate-navigation.ts` - reads `registry.json` and generates navigation
+   - `docs/scripts/generate-story-registry.ts` - scans `packages/registry/ui/*.stories.tsx` and generates a static import map at `docs/src/lib/story-registry.ts`
 2. **Dynamic route** (`docs/src/app/docs/components/[component]/`) generates pages from component JSON files
-3. **Preview components** render live examples from `docs.examples[].preview` config
-4. No manual markdown needed - just add component JSON with `docs` field
+3. **Story previews** render live examples by importing story `render()` functions from the registry via `StoryPreview` component
+4. No manual markdown needed - just add component JSON with `docs` field and matching story file
+
+### Architecture: Single Source of Truth
+
+The docs site imports components directly from `packages/registry/` via webpack aliases (configured in `docs/next.config.mjs`). There are no duplicated component files in the docs directory.
+
+```
+packages/registry/ui/button.tsx          ← single source of truth
+packages/registry/ui/button.stories.tsx  ← stories (dev + docs preview)
+packages/registry/ui/button.json         ← metadata, references story names
+         │
+         ├──→ Storybook (localhost:6006) — live component dev
+         └──→ docs site (localhost:3005) — imports story render() as React components
+```
+
+### Design Tokens
+
+- **Shared tokens**: `packages/registry/styles/happly-theme.css` — used by Storybook
+- **Docs tokens**: `docs/src/styles/tailwind.css` — extends shared tokens with docs-specific fonts and plugins
 
 ### Running Docs Locally
 
 ```bash
 bun run --cwd docs dev    # Starts on http://localhost:3005
 bun run --cwd docs build  # Production build (uses --webpack for Markdoc)
+```
+
+## Storybook
+
+- **Source**: `packages/registry/.storybook/`
+- **Stories**: `packages/registry/ui/*.stories.tsx` (CSF3 format)
+- **CSS**: `packages/registry/storybook.css` imports Tailwind + `styles/happly-theme.css`
+
+### Running Storybook
+
+```bash
+bun run storybook         # Starts on http://localhost:6006
+bun run build-storybook   # Static build
 ```
 
 ## Registry URL

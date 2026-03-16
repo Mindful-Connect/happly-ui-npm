@@ -3,267 +3,104 @@
   "name": "button",
   "type": "registry:ui",
   "title": "Button",
-  "description": "A button component with multiple variants, modes, and sizes. Use namespace import: import { Button } from '@/components/ui/button'. Supports new variant system.",
+  "description": "A compound button component with variants, modes, sizes, and polymorphic icon support. Uses namespace exports: Button.Root, Button.Icon.",
+  "version": "2.0.0",
+  "migration": {
+    "guide": "Button v2 is a full rewrite using tv (tailwind-variants) and compound components. Replace `<Button variant=\"primary\">` with `<Button.Root variant=\"primary\">`. Icons now use `<Button.Icon as={Icon} />` instead of the `icon` prop. A new `mode` prop replaces the old style variants. The `cva` and `happly-ui-utils` dependencies are no longer needed."
+  },
   "dependencies": [
-    "@radix-ui/react-slot",
-    "tailwind-variants",
-    "colord",
-    "react-icons"
+    "@radix-ui/react-slot"
   ],
   "registryDependencies": [
     "tv",
     "polymorphic",
-    "recursive-clone-children",
-    "happly-ui-utils"
+    "recursive-clone-children"
   ],
   "docs": {
-    "lead": "A compound button component with variants, modes, sizes, and icon support.",
-    "usage": "import { Button } from \"@/components/ui/button\"\n\n<Button variant=\"primary\" mode=\"filled\">\n  Click me\n</Button>",
+    "lead": "A compound button component with variants, modes, sizes, and polymorphic icon support.",
+    "usage": "import * as Button from \"@/components/ui/button\"\n\n<Button.Root variant=\"primary\" mode=\"filled\">\n  <Button.Icon as={MailIcon} />\n  Send Email\n</Button.Root>",
     "examples": [
       {
         "title": "Primary Variant",
         "description": "The primary variant uses the brand color for main call-to-action buttons.",
-        "code": "<Button variant=\"primary\" mode=\"filled\">Filled</Button>\n<Button variant=\"primary\" mode=\"stroke\">Stroke</Button>\n<Button variant=\"primary\" mode=\"lighter\">Lighter</Button>\n<Button variant=\"primary\" mode=\"ghost\">Ghost</Button>",
-        "preview": [
-          {
-            "component": "button",
-            "props": {
-              "variant": "primary",
-              "mode": "filled"
-            },
-            "children": "Filled"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "primary",
-              "mode": "stroke"
-            },
-            "children": "Stroke"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "primary",
-              "mode": "lighter"
-            },
-            "children": "Lighter"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "primary",
-              "mode": "ghost"
-            },
-            "children": "Ghost"
-          }
-        ]
+        "code": "<Button.Root variant=\"primary\" mode=\"filled\">Get Started</Button.Root>\n<Button.Root variant=\"primary\" mode=\"stroke\">Get Started</Button.Root>\n<Button.Root variant=\"primary\" mode=\"lighter\">Get Started</Button.Root>\n<Button.Root variant=\"primary\" mode=\"ghost\">Get Started</Button.Root>",
+        "stories": ["PrimaryVariant"]
       },
       {
         "title": "Neutral Variant",
         "description": "The neutral variant uses grayscale colors for secondary actions.",
-        "code": "<Button variant=\"neutral\" mode=\"filled\">Filled</Button>\n<Button variant=\"neutral\" mode=\"stroke\">Stroke</Button>\n<Button variant=\"neutral\" mode=\"lighter\">Lighter</Button>\n<Button variant=\"neutral\" mode=\"ghost\">Ghost</Button>",
-        "preview": [
-          {
-            "component": "button",
-            "props": {
-              "variant": "neutral",
-              "mode": "filled"
-            },
-            "children": "Filled"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "neutral",
-              "mode": "stroke"
-            },
-            "children": "Stroke"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "neutral",
-              "mode": "lighter"
-            },
-            "children": "Lighter"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "neutral",
-              "mode": "ghost"
-            },
-            "children": "Ghost"
-          }
-        ]
-      },
-      {
-        "title": "Error Variant",
-        "description": "The error variant for destructive actions.",
-        "code": "<Button variant=\"error\" mode=\"filled\">Filled</Button>\n<Button variant=\"error\" mode=\"stroke\">Stroke</Button>\n<Button variant=\"error\" mode=\"lighter\">Lighter</Button>\n<Button variant=\"error\" mode=\"ghost\">Ghost</Button>",
-        "preview": [
-          {
-            "component": "button",
-            "props": {
-              "variant": "error",
-              "mode": "filled"
-            },
-            "children": "Filled"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "error",
-              "mode": "stroke"
-            },
-            "children": "Stroke"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "error",
-              "mode": "lighter"
-            },
-            "children": "Lighter"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "error",
-              "mode": "ghost"
-            },
-            "children": "Ghost"
-          }
-        ]
+        "code": "<Button.Root variant=\"neutral\" mode=\"filled\">Learn More</Button.Root>\n<Button.Root variant=\"neutral\" mode=\"stroke\">Learn More</Button.Root>\n<Button.Root variant=\"neutral\" mode=\"lighter\">Learn More</Button.Root>\n<Button.Root variant=\"neutral\" mode=\"ghost\">Learn More</Button.Root>",
+        "stories": ["NeutralVariant"]
       },
       {
         "title": "Success Variant",
-        "description": "The success variant for positive actions.",
-        "code": "<Button variant=\"success\" mode=\"filled\">Filled</Button>\n<Button variant=\"success\" mode=\"stroke\">Stroke</Button>\n<Button variant=\"success\" mode=\"lighter\">Lighter</Button>\n<Button variant=\"success\" mode=\"ghost\">Ghost</Button>",
-        "preview": [
-          {
-            "component": "button",
-            "props": {
-              "variant": "success",
-              "mode": "filled"
-            },
-            "children": "Filled"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "success",
-              "mode": "stroke"
-            },
-            "children": "Stroke"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "success",
-              "mode": "lighter"
-            },
-            "children": "Lighter"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "success",
-              "mode": "ghost"
-            },
-            "children": "Ghost"
-          }
-        ]
+        "description": "The success variant for positive or confirmation actions.",
+        "code": "<Button.Root variant=\"success\" mode=\"filled\">Try Again</Button.Root>\n<Button.Root variant=\"success\" mode=\"stroke\">Try Again</Button.Root>\n<Button.Root variant=\"success\" mode=\"lighter\">Try Again</Button.Root>\n<Button.Root variant=\"success\" mode=\"ghost\">Try Again</Button.Root>",
+        "stories": ["SuccessVariant"]
       },
       {
         "title": "Warning Variant",
         "description": "The warning variant for cautionary actions.",
-        "code": "<Button variant=\"warning\" mode=\"filled\">Filled</Button>\n<Button variant=\"warning\" mode=\"stroke\">Stroke</Button>\n<Button variant=\"warning\" mode=\"lighter\">Lighter</Button>\n<Button variant=\"warning\" mode=\"ghost\">Ghost</Button>",
-        "preview": [
-          {
-            "component": "button",
-            "props": {
-              "variant": "warning",
-              "mode": "filled"
-            },
-            "children": "Filled"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "warning",
-              "mode": "stroke"
-            },
-            "children": "Stroke"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "warning",
-              "mode": "lighter"
-            },
-            "children": "Lighter"
-          },
-          {
-            "component": "button",
-            "props": {
-              "variant": "warning",
-              "mode": "ghost"
-            },
-            "children": "Ghost"
-          }
-        ]
+        "code": "<Button.Root variant=\"warning\" mode=\"filled\">Try Again</Button.Root>\n<Button.Root variant=\"warning\" mode=\"stroke\">Try Again</Button.Root>\n<Button.Root variant=\"warning\" mode=\"lighter\">Try Again</Button.Root>\n<Button.Root variant=\"warning\" mode=\"ghost\">Try Again</Button.Root>",
+        "stories": ["WarningVariant"]
+      },
+      {
+        "title": "Error Variant",
+        "description": "The error variant for destructive actions.",
+        "code": "<Button.Root variant=\"error\" mode=\"filled\">Try Again</Button.Root>\n<Button.Root variant=\"error\" mode=\"stroke\">Try Again</Button.Root>\n<Button.Root variant=\"error\" mode=\"lighter\">Try Again</Button.Root>\n<Button.Root variant=\"error\" mode=\"ghost\">Try Again</Button.Root>",
+        "stories": ["ErrorVariant"]
       },
       {
         "title": "Sizes",
-        "description": "Buttons come in multiple sizes.",
-        "code": "<Button size=\"medium\">Medium</Button>\n<Button size=\"small\">Small</Button>\n<Button size=\"xsmall\">XSmall</Button>\n<Button size=\"xxsmall\">XXSmall</Button>",
-        "preview": [
-          {
-            "component": "button",
-            "props": {
-              "size": "medium"
-            },
-            "children": "Medium"
-          },
-          {
-            "component": "button",
-            "props": {
-              "size": "small"
-            },
-            "children": "Small"
-          },
-          {
-            "component": "button",
-            "props": {
-              "size": "xsmall"
-            },
-            "children": "XSmall"
-          },
-          {
-            "component": "button",
-            "props": {
-              "size": "xxsmall"
-            },
-            "children": "XXSmall"
-          }
-        ]
+        "description": "Buttons come in multiple sizes across all modes.",
+        "code": "<Button.Root size=\"medium\">Medium</Button.Root>\n<Button.Root size=\"small\">Small</Button.Root>\n<Button.Root size=\"xsmall\">Xsmall</Button.Root>\n<Button.Root size=\"xxsmall\">Xxsmall</Button.Root>",
+        "stories": ["Sizes"]
       },
       {
-        "title": "With Icons",
-        "description": "You can embed icons directly in the button.",
-        "code": "<Button variant=\"primary\" mode=\"filled\">\n  <MailIcon />\n  Send Email\n</Button>"
+        "title": "Disabled",
+        "description": "Disabled buttons across all modes.",
+        "code": "<Button.Root disabled>Disabled</Button.Root>\n<Button.Root mode=\"stroke\" disabled>Disabled</Button.Root>",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "With Icon",
+        "description": "Use Button.Icon with the `as` prop for polymorphic icon rendering.",
+        "code": "<Button.Root>\n  Button\n  <Button.Icon as={RiArrowRightSLine} />\n</Button.Root>\n\n<Button.Root>\n  <Button.Icon as={RiFileCopyLine} />\n</Button.Root>",
+        "stories": ["WithIcon"]
+      },
+      {
+        "title": "Full Width",
+        "description": "Buttons can stretch to fill their container with a className override.",
+        "code": "<Button.Root variant=\"neutral\" className=\"w-full\">\n  Learn More\n</Button.Root>",
+        "stories": ["FullWidth"]
+      },
+      {
+        "title": "As Child",
+        "description": "Use the asChild prop with Radix Slot to render as a different element, such as a link.",
+        "code": "<Button.Root asChild>\n  <a href=\"#\">As link</a>\n</Button.Root>",
+        "stories": ["AsChild"]
+      },
+      {
+        "title": "Loading",
+        "description": "Use the loading prop to show a shimmer \"Loading...\" state. The button is automatically disabled while loading.",
+        "code": "<Button.Root loading>Get Started</Button.Root>",
+        "stories": ["Loading"]
+      },
+      {
+        "title": "Composed",
+        "description": "Simplified usage via the Composed wrapper with leadingIcon and trailingIcon props.",
+        "code": "<Button.Composed\n  leadingIcon={RiArrowLeftSLine}\n  trailingIcon={RiArrowRightSLine}\n  variant=\"neutral\"\n  mode=\"stroke\"\n>\n  Button\n</Button.Composed>",
+        "stories": ["Composition"]
       }
     ],
     "api": [
       {
-        "name": "Button",
+        "name": "Button.Root",
         "description": "The main button component.",
         "props": [
           {
             "name": "variant",
-            "type": "'primary' | 'neutral' | 'error' | 'success' | 'warning'",
+            "type": "'primary' | 'neutral' | 'error' | 'warning' | 'success'",
             "default": "'primary'",
             "description": "The color variant"
           },
@@ -283,19 +120,65 @@
             "name": "asChild",
             "type": "boolean",
             "default": "false",
-            "description": "Renders as child element instead of button"
+            "description": "Renders as child element using Radix Slot"
+          },
+          {
+            "name": "loading",
+            "type": "boolean",
+            "default": "false",
+            "description": "Shows a shimmer \"Loading...\" state and disables the button"
           },
           {
             "name": "disabled",
             "type": "boolean",
             "default": "false",
             "description": "Disables the button"
+          }
+        ]
+      },
+      {
+        "name": "Button.Icon",
+        "description": "Polymorphic icon container that receives variant props from Button.Root.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "default": "'div'",
+            "description": "The element or component to render as"
+          }
+        ]
+      },
+      {
+        "name": "Button.Composed",
+        "description": "A simplified wrapper that composes Root and Icon into a single component.",
+        "props": [
+          {
+            "name": "leadingIcon",
+            "type": "React.ElementType",
+            "description": "Icon rendered before the children"
           },
           {
-            "name": "loading",
-            "type": "boolean",
-            "default": "false",
-            "description": "Shows loading spinner"
+            "name": "trailingIcon",
+            "type": "React.ElementType",
+            "description": "Icon rendered after the children"
+          },
+          {
+            "name": "variant",
+            "type": "'primary' | 'neutral' | 'error' | 'warning' | 'success'",
+            "default": "'primary'",
+            "description": "The color variant"
+          },
+          {
+            "name": "mode",
+            "type": "'filled' | 'stroke' | 'lighter' | 'ghost'",
+            "default": "'filled'",
+            "description": "The visual style"
+          },
+          {
+            "name": "size",
+            "type": "'medium' | 'small' | 'xsmall' | 'xxsmall'",
+            "default": "'medium'",
+            "description": "The size of the button"
           }
         ]
       }

@@ -9,6 +9,11 @@ export function transformComponent(
 ): string {
   let content = file.content;
 
+  // CSS files don't need import or TS transforms
+  if (file.type === 'registry:style' || file.path.endsWith('.css')) {
+    return content;
+  }
+
   // Transform import paths based on aliases
   content = transformImports(content, config);
 
@@ -85,15 +90,10 @@ function transformToJs(content: string): string {
 }
 
 /**
- * Transform CSS variables based on config
+ * Transform CSS variables based on config.
+ * HapplyUI always uses CSS variables — this is a passthrough.
  */
-export function transformCssVars(css: string, config: HapplyConfig): string {
-  if (!config.tailwind.cssVariables) {
-    return css;
-  }
-
-  // CSS variable mappings would be applied here
-  // For now, return as-is since we're using CSS variables by default
+export function transformCssVars(css: string, _config: HapplyConfig): string {
   return css;
 }
 

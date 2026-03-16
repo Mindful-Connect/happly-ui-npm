@@ -1,0 +1,65 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "file-format-icon",
+  "type": "registry:ui",
+  "title": "File Format Icon",
+  "description": "A file icon with a colored format badge, useful for representing file types.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": ["tv", "happly-ui-utils"],
+  "docs": {
+    "lead": "A file document icon with a colored format badge in the bottom-left corner, useful for visually representing different file types.",
+    "usage": "import * as FileFormatIcon from \"@/components/ui/file-format-icon\"\n\n<FileFormatIcon.Root format=\"PDF\" color=\"red\" />",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "A file icon with a red PDF format badge.",
+        "code": "<FileFormatIcon.Root format=\"PDF\" color=\"red\" />",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Colors",
+        "description": "All available semantic colors for different file types.",
+        "code": "<FileFormatIcon.Root format=\"DOC\" color=\"blue\" />",
+        "stories": ["Colors"]
+      },
+      {
+        "title": "Sizes",
+        "description": "Available in medium (40px) and small (32px) sizes.",
+        "code": "<FileFormatIcon.Root format=\"PDF\" color=\"red\" size=\"small\" />",
+        "stories": ["Sizes"]
+      }
+    ],
+    "api": [
+      {
+        "name": "FileFormatIcon.Root",
+        "description": "The file format icon SVG element.",
+        "props": [
+          {
+            "name": "format",
+            "type": "string",
+            "description": "The file format text to display in the badge (e.g., 'PDF', 'DOC')."
+          },
+          {
+            "name": "color",
+            "type": "'red' | 'orange' | 'yellow' | 'green' | 'sky' | 'blue' | 'purple' | 'pink' | 'gray'",
+            "default": "'gray'",
+            "description": "The semantic color of the format badge."
+          },
+          {
+            "name": "size",
+            "type": "'medium' | 'small'",
+            "default": "'medium'",
+            "description": "The size of the icon (medium: 40px, small: 32px)."
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/file-format-icon.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

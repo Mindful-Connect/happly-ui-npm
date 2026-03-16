@@ -1,0 +1,287 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "markdown-editor",
+  "type": "registry:ui",
+  "title": "Markdown Editor",
+  "description": "A markdown text editor with formatting toolbar, preview mode, and built-in English/French language toggle. Supports single-language and multi-language modes with per-language value objects. Compound or composed mode. Works with FormField.",
+  "version": "2.0.0",
+  "dependencies": ["@remixicon/react", "marked"],
+  "registryDependencies": ["switch-toggle", "textarea", "tooltip", "utils"],
+  "docs": {
+    "lead": "A markdown text editor with formatting toolbar and live preview. Built-in English/French language toggle with per-language value storage — or single-language mode for simpler use cases. Uses `marked` for accurate markdown rendering.",
+    "usage": "import * as MarkdownEditor from \"@/components/ui/markdown-editor\"\n\n// Multi-language (default) — value is { en: \"\", fr: \"\" }\n<MarkdownEditor.Composed\n  placeholder=\"Start writing...\"\n  onChange={(values) => console.log(values)}\n/>\n\n// Single-language — value is a plain string\n<MarkdownEditor.Composed\n  toggleItems={false}\n  placeholder=\"Start writing...\"\n  onChange={(md) => console.log(md)}\n/>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Multi-language editor with built-in English/French toggle. Manages `{ en: \"\", fr: \"\" }` state internally.",
+        "code": "<MarkdownEditor.Composed\n  placeholder=\"Describe your ideal successor...\"\n/>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Single Language",
+        "description": "No language toggle. Value is a plain markdown string.",
+        "code": "<MarkdownEditor.Composed\n  toggleItems={false}\n  placeholder=\"Write in a single language...\"\n/>",
+        "stories": ["SingleLanguage"]
+      },
+      {
+        "title": "Controlled Multi-Language",
+        "description": "Parent owns the per-language values object. The component handles language switching internally.",
+        "code": "const [values, setValues] = useState<LocalizedValue>({\n  en: '',\n  fr: '',\n});\n\n<MarkdownEditor.Composed\n  value={values}\n  onChange={setValues}\n/>",
+        "stories": ["ControlledMulti"]
+      },
+      {
+        "title": "Custom Toggle",
+        "description": "Override the default English/French toggle with custom language items.",
+        "code": "<MarkdownEditor.Composed\n  toggleItems={[\n    { value: 'en', label: 'EN' },\n    { value: 'fr', label: 'FR' },\n    { value: 'es', label: 'ES' },\n  ]}\n  defaultToggleValue=\"en\"\n/>",
+        "stories": ["CustomToggle"]
+      },
+      {
+        "title": "Compound",
+        "description": "Full compound mode with custom toolbar layout using the useMarkdownFormatting hook.",
+        "code": "const [previewing, setPreviewing] = useState(false);\nconst [value, setValue] = useState('');\nconst ref = useRef<HTMLTextAreaElement>(null);\nconst format = MarkdownEditor.useMarkdownFormatting(ref, setValue);\n\n<MarkdownEditor.Root previewing={previewing}>\n  <MarkdownEditor.Toolbar>\n    <MarkdownEditor.ToolbarGroup>\n      <MarkdownEditor.ToolbarButton onClick={() => format('bold')}>B</MarkdownEditor.ToolbarButton>\n    </MarkdownEditor.ToolbarGroup>\n    <MarkdownEditor.Toggle items={MarkdownEditor.DEFAULT_TOGGLE_ITEMS} defaultValue=\"en\" />\n  </MarkdownEditor.Toolbar>\n  <MarkdownEditor.Content ref={ref} value={value} onChange={(e) => setValue(e.target.value)} />\n</MarkdownEditor.Root>",
+        "stories": ["Compound"]
+      },
+      {
+        "title": "With FormField",
+        "description": "Inside a FormField with label, required indicator, and hint.",
+        "code": "<FormField.Root label=\"Description\" required hint=\"Describe in detail.\">\n  <MarkdownEditor.Composed />\n</FormField.Root>",
+        "stories": ["WithFormField"]
+      },
+      {
+        "title": "With Error",
+        "description": "Error state inside a FormField.",
+        "code": "<FormField.Root label=\"Description\" error=\"Required.\">\n  <MarkdownEditor.Composed hasError />\n</FormField.Root>",
+        "stories": ["WithError"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Disabled editor with muted toolbar and content.",
+        "code": "<FormField.Root label=\"Description\" disabled>\n  <MarkdownEditor.Composed disabled />\n</FormField.Root>",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "With Default Content",
+        "description": "Editor pre-filled with per-language markdown content. Toggle between languages to see different content. Click preview to see rendered markdown.",
+        "code": "<MarkdownEditor.Composed\n  defaultValue={{\n    en: '# Hello\\n\\nThis is **bold** text.',\n    fr: '# Bonjour\\n\\nCeci est du texte en **gras**.',\n  }}\n/>",
+        "stories": ["WithDefaultContent"]
+      }
+    ],
+    "api": [
+      {
+        "name": "MarkdownEditor.Root",
+        "description": "The root container. Provides context for hasError, disabled, and previewing state.",
+        "props": [
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Error state applied to the content area."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disables toolbar and content."
+          },
+          {
+            "name": "previewing",
+            "type": "boolean",
+            "default": "false",
+            "description": "Whether the editor is in preview mode."
+          }
+        ]
+      },
+      {
+        "name": "MarkdownEditor.Toolbar",
+        "description": "The toolbar container with role='toolbar'.",
+        "props": []
+      },
+      {
+        "name": "MarkdownEditor.ToolbarButton",
+        "description": "An individual toolbar button with hover and active states.",
+        "props": [
+          {
+            "name": "active",
+            "type": "boolean",
+            "default": "false",
+            "description": "Whether the button is active/pressed."
+          },
+          {
+            "name": "tooltip",
+            "type": "string",
+            "description": "Tooltip label shown on hover (xsmall size)."
+          }
+        ]
+      },
+      {
+        "name": "MarkdownEditor.ToolbarGroup",
+        "description": "Groups toolbar buttons with consistent spacing.",
+        "props": []
+      },
+      {
+        "name": "MarkdownEditor.Toggle",
+        "description": "Built-in SwitchToggle.Group for the toolbar. Used in compound mode.",
+        "props": [
+          {
+            "name": "items",
+            "type": "SwitchToggleGroupItem[]",
+            "description": "Array of toggle items."
+          },
+          {
+            "name": "value",
+            "type": "string",
+            "description": "Controlled active value."
+          },
+          {
+            "name": "defaultValue",
+            "type": "string",
+            "description": "Default active value."
+          },
+          {
+            "name": "onValueChange",
+            "type": "(value: string) => void",
+            "description": "Callback on change."
+          }
+        ]
+      },
+      {
+        "name": "MarkdownEditor.Content",
+        "description": "The editor content area. Renders a textarea in edit mode and rendered HTML in preview mode.",
+        "props": [
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "description": "Override error state from context."
+          },
+          {
+            "name": "height",
+            "type": "string",
+            "default": "'200px'",
+            "description": "Min-height of the editor content area."
+          },
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The markdown content string for the current language."
+          }
+        ]
+      },
+      {
+        "name": "MarkdownEditor.Composed",
+        "description": "Props-driven composed mode with two variants: multi-language (default, with English/French toggle) and single-language (toggleItems={false}). In multi-language mode, value/onChange use a `LocalizedValue` object (`{ en: \"\", fr: \"\" }`). In single-language mode, value/onChange use a plain string.",
+        "props": [
+          {
+            "name": "toggleItems",
+            "type": "SwitchToggleGroupItem[] | false",
+            "default": "DEFAULT_TOGGLE_ITEMS",
+            "description": "Pass false to hide the toggle (single-language mode). Pass an array to override the default English/French items. Omit for default English/French toggle."
+          },
+          {
+            "name": "value",
+            "type": "LocalizedValue | string",
+            "description": "Controlled value. Object when toggle is shown, string when toggleItems={false}."
+          },
+          {
+            "name": "defaultValue",
+            "type": "LocalizedValue | string",
+            "description": "Initial uncontrolled value. Object when toggle is shown, string when toggleItems={false}."
+          },
+          {
+            "name": "onChange",
+            "type": "(values: LocalizedValue) => void | (markdown: string) => void",
+            "description": "Callback on change. Receives the full values object in multi-language mode, or a plain string in single-language mode."
+          },
+          {
+            "name": "placeholder",
+            "type": "string",
+            "description": "Placeholder text for the textarea."
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Error state."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disabled state."
+          },
+          {
+            "name": "toggleValue",
+            "type": "string",
+            "description": "Controlled active language (multi-language mode only)."
+          },
+          {
+            "name": "defaultToggleValue",
+            "type": "string",
+            "default": "'en'",
+            "description": "Default active language (multi-language mode only)."
+          },
+          {
+            "name": "onToggleChange",
+            "type": "(value: string) => void",
+            "description": "Callback when the active language changes (multi-language mode only)."
+          },
+          {
+            "name": "containerClassName",
+            "type": "string",
+            "description": "ClassName for the root container."
+          },
+          {
+            "name": "contentClassName",
+            "type": "string",
+            "description": "ClassName for the content area."
+          },
+          {
+            "name": "height",
+            "type": "string",
+            "default": "'200px'",
+            "description": "Min-height of the editor content area."
+          }
+        ]
+      },
+      {
+        "name": "useMarkdownFormatting",
+        "description": "Hook that returns a function to apply markdown formatting actions to a textarea. Use with compound mode for custom toolbar buttons.",
+        "props": [
+          {
+            "name": "textareaRef",
+            "type": "RefObject<HTMLTextAreaElement | null>",
+            "description": "Ref to the textarea element."
+          },
+          {
+            "name": "onChange",
+            "type": "(value: string) => void",
+            "description": "Callback when the value changes from formatting."
+          }
+        ]
+      },
+      {
+        "name": "renderMarkdown",
+        "description": "Converts a markdown string to HTML using marked with GFM support. Used internally for preview mode but exported for custom use.",
+        "props": [
+          {
+            "name": "md",
+            "type": "string",
+            "description": "The markdown string to render."
+          }
+        ]
+      }
+    ]
+  },
+  "migration": {
+    "guide": "v2.0.0 changes: (1) Replaced TipTap with plain textarea + marked for preview. Remove @tiptap/* dependencies. (2) Value type changed — multi-language mode now uses `{ en: '', fr: '' }` object instead of a single HTML string. Single-language mode uses `toggleItems={false}` with plain string value. (3) English/French toggle is shown by default — pass `toggleItems={false}` to hide it. (4) `onChange` returns `LocalizedValue` object in multi-language mode. (5) Requires `marked` npm dependency. (6) Requires `styles/markdown-editor.css` — auto-imported by CLI."
+  },
+  "files": [
+    {
+      "path": "ui/markdown-editor.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "styles/markdown-editor.css",
+      "type": "registry:style"
+    }
+  ]
+}

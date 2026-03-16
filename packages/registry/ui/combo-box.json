@@ -1,0 +1,336 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "combo-box",
+  "type": "registry:ui",
+  "title": "Combo Box",
+  "description": "A searchable multi-select combo box with compound components for full composability.",
+  "version": "3.0.0",
+  "migration": {
+    "guide": "v3 modularizes into compound components (Root, SearchTrigger, Content, Item, ItemIcon, ItemIndicator, Empty, Tags). Use ComboBox.Composed for the same flat-props API as v2. For custom item rendering (checkbox + avatar + name), use the compound API with ComboBox.Item children. useComboBoxContext() is exported for advanced composition."
+  },
+  "dependencies": ["@remixicon/react", "@radix-ui/react-scroll-area", "react-remove-scroll"],
+  "registryDependencies": ["popover", "input", "tag", "happly-ui-utils"],
+  "docs": {
+    "lead": "A searchable multi-select combo box with compound components. Use ComboBox.Composed for the simple flat-props API, or compose with Root, SearchTrigger, Content, Item, and Tags for full control over item rendering and tag display.",
+    "usage": "import * as ComboBox from \"@/components/ui/combo-box\"\n\n// Simple usage\n<ComboBox.Composed\n  options={options}\n  value={selected}\n  onValueChange={setSelected}\n/>\n\n// Compound usage\n<ComboBox.Root options={options} value={selected} onValueChange={setSelected}>\n  <ComboBox.SearchTrigger />\n  <ComboBox.Content />\n  <ComboBox.Tags />\n</ComboBox.Root>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Basic multi-select combo box with label.",
+        "code": "<ComboBox.Composed\n  options={options}\n  value={value}\n  onValueChange={setValue}\n/>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "With Pre-selected Values",
+        "description": "Combo box with initial selections, useful for editing saved forms.",
+        "code": "<ComboBox.Composed\n  options={options}\n  value={['ai', 'product', 'saas']}\n  onValueChange={setValue}\n/>",
+        "stories": ["WithPreselectedValues"]
+      },
+      {
+        "title": "Uncontrolled",
+        "description": "Use defaultValue for uncontrolled mode in forms.",
+        "code": "<ComboBox.Composed\n  options={options}\n  defaultValue={['grants', 'loans']}\n  name=\"sectors\"\n/>",
+        "stories": ["Uncontrolled"]
+      },
+      {
+        "title": "Form Submission",
+        "description": "Use the name prop to include selected values in form submissions via hidden inputs.",
+        "code": "<ComboBox.Composed\n  options={options}\n  value={value}\n  onValueChange={setValue}\n  name=\"tags\"\n/>",
+        "stories": ["FormSubmission"]
+      },
+      {
+        "title": "Sizes",
+        "description": "All three input sizes: medium (default), small, and xsmall.",
+        "code": "<ComboBox.Composed options={options} value={value} onValueChange={setValue} />\n<ComboBox.Composed options={options} size=\"small\" />\n<ComboBox.Composed options={options} size=\"xsmall\" />",
+        "stories": ["Sizes"]
+      },
+      {
+        "title": "Selection Constraints",
+        "description": "Limit selections with max, min, or both combined.",
+        "code": "<ComboBox.Composed options={options} value={value} onValueChange={setValue} max={3} />",
+        "stories": ["SelectionConstraints"]
+      },
+      {
+        "title": "Tag Variants",
+        "description": "Gray (default), stroke tag style, and selectAllLabel summary tag.",
+        "code": "<ComboBox.Composed options={options} tagVariant=\"stroke\" />",
+        "stories": ["TagVariants"]
+      },
+      {
+        "title": "States",
+        "description": "Error and disabled states.",
+        "code": "<ComboBox.Composed options={options} hasError />\n<ComboBox.Composed options={options} disabled />",
+        "stories": ["States"]
+      },
+      {
+        "title": "Customization",
+        "description": "Custom icon, placeholder text, and empty message.",
+        "code": "<ComboBox.Composed options={options} icon={RiMapPinLine} placeholder=\"Search cities...\" />",
+        "stories": ["Customization"]
+      },
+      {
+        "title": "With Icons",
+        "description": "Options with leading icons — supports React components and image URLs.",
+        "code": "<ComboBox.Composed options={iconOptions} value={value} onValueChange={setValue} />",
+        "stories": ["WithIcons"]
+      },
+      {
+        "title": "Compound Custom Items",
+        "description": "Use the compound API for fully custom item rendering with checkbox indicators, avatars, and custom layouts.",
+        "code": "<ComboBox.Root options={users} value={selected} onValueChange={setSelected}>\n  <ComboBox.SearchTrigger placeholder=\"Search team members...\" />\n  <ComboBox.Content>\n    {filteredOptions.map(user => (\n      <ComboBox.Item key={user.value} value={user.value}>\n        <Checkbox checked={isSelected(user.value)} />\n        <Avatar src={user.avatar} />\n        <span>{user.name}</span>\n        <ComboBox.ItemIndicator selected={isSelected(user.value)} />\n      </ComboBox.Item>\n    ))}\n  </ComboBox.Content>\n  <ComboBox.Tags variant=\"stroke\" />\n</ComboBox.Root>",
+        "stories": ["CompoundCustomItems"]
+      },
+      {
+        "title": "Compound Custom Tags",
+        "description": "Omit ComboBox.Tags and render your own tag display using useComboBoxContext().",
+        "code": "<ComboBox.Root options={users} value={selected} onValueChange={setSelected}>\n  <ComboBox.SearchTrigger />\n  <ComboBox.Content />\n  <CustomTags />\n</ComboBox.Root>",
+        "stories": ["CompoundCustomTags"]
+      },
+      {
+        "title": "Preview",
+        "description": "Preview mode renders the option list inline in the DOM and hides tags.",
+        "code": "<ComboBox.Composed\n  options={options}\n  value={value}\n  onValueChange={setValue}\n  preview\n/>",
+        "stories": ["Preview"]
+      },
+      {
+        "title": "Custom Max Height",
+        "description": "Override the dropdown height via the --combobox-content-max-height CSS variable on Content.",
+        "code": "<ComboBox.Root options={options} value={value} onValueChange={setValue}>\n  <ComboBox.SearchTrigger />\n  <ComboBox.Content className=\"[--combobox-content-max-height:350px]\" />\n  <ComboBox.Tags />\n</ComboBox.Root>",
+        "stories": ["CustomMaxHeight"]
+      }
+    ],
+    "api": [
+      {
+        "name": "ComboBox.Root",
+        "description": "Context provider and state orchestrator. Wraps all compound sub-components.",
+        "props": [
+          {
+            "name": "options",
+            "type": "ComboBoxOption[]",
+            "description": "Available options ({ value, label, icon? })."
+          },
+          {
+            "name": "value",
+            "type": "string[]",
+            "description": "Currently selected values (controlled)."
+          },
+          {
+            "name": "defaultValue",
+            "type": "string[]",
+            "default": "[]",
+            "description": "Default selected values (uncontrolled)."
+          },
+          {
+            "name": "onValueChange",
+            "type": "(values: string[], selectedOptions: ComboBoxOption[]) => void",
+            "description": "Callback when selection changes."
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "description": "Form field name — renders hidden inputs for form submission."
+          },
+          {
+            "name": "max",
+            "type": "number",
+            "default": "Infinity",
+            "description": "Maximum number of selections."
+          },
+          {
+            "name": "min",
+            "type": "number",
+            "default": "0",
+            "description": "Minimum selections (prevents removing below this)."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disabled state."
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Error state."
+          },
+          {
+            "name": "size",
+            "type": "'medium' | 'small' | 'xsmall'",
+            "default": "'medium'",
+            "description": "Input size."
+          },
+          {
+            "name": "preview",
+            "type": "boolean",
+            "default": "false",
+            "description": "Preview mode — renders the option list inline in the DOM and hides tags."
+          },
+          {
+            "name": "onOpenChange",
+            "type": "(open: boolean) => void",
+            "description": "Callback when dropdown open state changes."
+          }
+        ]
+      },
+      {
+        "name": "ComboBox.SearchTrigger",
+        "description": "Search input trigger with leading icon. Uses inputVariants for styling.",
+        "props": [
+          {
+            "name": "leadingIcon",
+            "type": "React.ElementType",
+            "default": "RiSearchLine",
+            "description": "Leading icon component."
+          },
+          {
+            "name": "trailingIcon",
+            "type": "React.ElementType",
+            "default": "RiArrowDownSLine",
+            "description": "Trailing icon component."
+          },
+          {
+            "name": "placeholder",
+            "type": "string",
+            "default": "'Choose or search...'",
+            "description": "Search input placeholder."
+          }
+        ]
+      },
+      {
+        "name": "ComboBox.Content",
+        "description": "Dropdown popover content with scroll area. When children are omitted, auto-renders items from filtered options.",
+        "props": [
+          {
+            "name": "emptyMessage",
+            "type": "string",
+            "default": "'No results found.'",
+            "description": "Message when no options match the search."
+          },
+          {
+            "name": "children",
+            "type": "React.ReactNode",
+            "description": "Custom content — overrides default item rendering."
+          }
+        ]
+      },
+      {
+        "name": "ComboBox.Item",
+        "description": "A single option row. When children are provided, renders custom content; otherwise renders icon + label from options.",
+        "props": [
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The option value this item represents."
+          },
+          {
+            "name": "children",
+            "type": "React.ReactNode",
+            "description": "Custom content for the item."
+          }
+        ]
+      },
+      {
+        "name": "ComboBox.ItemIcon",
+        "description": "Polymorphic icon for items. Supports React components and image URL strings.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType | string",
+            "description": "Icon component or image URL."
+          }
+        ]
+      },
+      {
+        "name": "ComboBox.ItemIndicator",
+        "description": "Check indicator for selected items. Defaults to RiCheckLine.",
+        "props": [
+          {
+            "name": "selected",
+            "type": "boolean",
+            "description": "Whether the item is selected."
+          },
+          {
+            "name": "children",
+            "type": "React.ReactNode",
+            "description": "Custom indicator content."
+          }
+        ]
+      },
+      {
+        "name": "ComboBox.Empty",
+        "description": "Empty state content shown when no options match.",
+        "props": [
+          {
+            "name": "children",
+            "type": "React.ReactNode",
+            "default": "'No results found.'",
+            "description": "Custom empty message."
+          }
+        ]
+      },
+      {
+        "name": "ComboBox.Tags",
+        "description": "Tag display area for selected items. Omit entirely for custom tag rendering.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'stroke' | 'gray'",
+            "default": "'gray'",
+            "description": "Visual variant for tags."
+          },
+          {
+            "name": "selectAllLabel",
+            "type": "string",
+            "description": "When provided and all options selected, show a single summary tag."
+          }
+        ]
+      },
+      {
+        "name": "ComboBox.Composed",
+        "description": "Convenience flat-props wrapper. Assembles Root + SearchTrigger + Content + Tags internally. Drop-in replacement for the v2 API.",
+        "props": [
+          {
+            "name": "icon",
+            "type": "React.ElementType",
+            "default": "RiSearchLine",
+            "description": "Leading icon component."
+          },
+          {
+            "name": "placeholder",
+            "type": "string",
+            "default": "'Choose or search...'",
+            "description": "Search input placeholder."
+          },
+          {
+            "name": "emptyMessage",
+            "type": "string",
+            "default": "'No results found.'",
+            "description": "Message when no options match."
+          },
+          {
+            "name": "selectAllLabel",
+            "type": "string",
+            "description": "Summary tag label when all selected."
+          },
+          {
+            "name": "tagVariant",
+            "type": "'stroke' | 'gray'",
+            "default": "'gray'",
+            "description": "Visual variant for tags."
+          }
+        ]
+      },
+      {
+        "name": "useComboBoxContext",
+        "description": "Hook to access ComboBox state from custom child components. Returns options, value, filteredOptions, isSelected, toggle, remove, removeAll, search, setSearch, open, disabled, and more."
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/combo-box.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

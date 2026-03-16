@@ -3,143 +3,238 @@
   "name": "input",
   "type": "registry:ui",
   "title": "Input",
-  "description": "A text input component.",
-  "dependencies": [],
-  "registryDependencies": [],
+  "description": "A compound input component with wrapper, icons, affixes, and inline affixes. Uses namespace exports: Input.Root, Input.Wrapper, Input.Input, Input.Icon, Input.Affix, Input.InlineAffix.",
+  "version": "2.0.0",
+  "migration": {
+    "guide": "API changed: now uses compound component pattern with namespace exports. Import as `import * as Input from ...`. Use `<Input.Root>` with `<Input.Wrapper>` and `<Input.Input>` children. Old flat `<Input>` component removed. Uses tv (tailwind-variants) instead of manual class config. Uses recursiveCloneChildren for prop propagation."
+  },
+  "dependencies": [
+    "@radix-ui/react-slot"
+  ],
+  "registryDependencies": [
+    "happly-ui-utils",
+    "polymorphic",
+    "recursive-clone-children",
+    "tv"
+  ],
   "docs": {
-    "lead": "A text input component.",
-    "usage": "import { Input } from \"@/components/ui/input\"\n\n<Input type=\"email\" placeholder=\"Email\" />",
+    "lead": "A compound input component with wrapper, icons, affixes, and size/error variants.",
+    "usage": "import * as Input from \"@/components/ui/input\"\n\n<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiSearchLine} />\n    <Input.Input placeholder=\"Search...\" />\n  </Input.Wrapper>\n</Input.Root>",
     "examples": [
       {
-        "title": "Showcase",
-        "description": "Input component with various sizes, icons, and affixes.",
-        "code": "import { Input } from \"@/components/ui/input\"\nimport { RiUser3Line } from \"react-icons/ri\"\n\n<Input placeholder=\"Username\" leftIcon={<RiUser3Line />} />",
-        "preview": [
+        "title": "With Icon",
+        "description": "Input with leading or trailing icons.",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiUser6Line} />\n    <Input.Input placeholder=\"Placeholder text...\" />\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["WithIcon"]
+      },
+      {
+        "title": "Sizes",
+        "description": "Available size variants: medium, small, and xsmall.",
+        "code": "<Input.Root size=\"small\">\n  <Input.Wrapper>\n    <Input.Icon as={RiUser6Line} />\n    <Input.Input placeholder=\"Placeholder text...\" />\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["Sizes"]
+      },
+      {
+        "title": "With Affix",
+        "description": "Input with prefix or suffix affix sections separated by a divider.",
+        "code": "<Input.Root>\n  <Input.Affix>https://</Input.Affix>\n  <Input.Wrapper>\n    <Input.Input placeholder=\"www.example.com\" />\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["WithAffix"]
+      },
+      {
+        "title": "With Inline Affix",
+        "description": "Input with an inline affix displayed within the input area.",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.InlineAffix>€</Input.InlineAffix>\n    <Input.Input placeholder=\"0.00\" />\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["WithInlineAffix"]
+      },
+      {
+        "title": "Label and Hint",
+        "description": "Input composed with Label and Hint components.",
+        "code": "<FormField.Root\n  label=\"Email Address\"\n  htmlFor=\"email\"\n  hint=\"This is a hint text to help user.\"\n>\n  <Input.Root>\n    <Input.Wrapper>\n      <Input.Icon as={RiMailLine} />\n      <Input.Input\n        id=\"email\"\n        type=\"email\"\n        placeholder=\"hello@example.com\"\n      />\n    </Input.Wrapper>\n  </Input.Root>\n</FormField.Root>",
+        "stories": ["LabelAndHint"]
+      },
+      {
+        "title": "With Kbd",
+        "description": "Input with a keyboard shortcut indicator.",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiSearch2Line} />\n    <Input.Input placeholder=\"Search...\" />\n    <Kbd.Root>⌘1</Kbd.Root>\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["WithKbd"]
+      },
+      {
+        "title": "Password",
+        "description": "Password input with show/hide toggle.",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiLock2Line} />\n    <Input.Input type=\"password\" placeholder=\"••••••••••\" />\n    <button onClick={() => setShowPassword(s => !s)}>Toggle</button>\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["Password"]
+      },
+      {
+        "title": "Password with Strength Level",
+        "description": "Password input with a strength indicator and criteria checklist.",
+        "code": "const [showPassword, setShowPassword] = React.useState(false);\nconst [newPassword, setNewPassword] = React.useState('');\n\n<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiLock2Line} />\n    <Input.Input\n      type={showPassword ? 'text' : 'password'}\n      placeholder=\"••••••••••\"\n      value={newPassword}\n      onChange={handleNewPasswordChange}\n    />\n    <button onClick={() => setShowPassword((s) => !s)}>\n      {showPassword ? <RiEyeOffLine /> : <RiEyeLine />}\n    </button>\n  </Input.Wrapper>\n</Input.Root>\n\n{/* Strength bar and criteria checklist */}\n<LevelBar levels={3} level={trueCriteriaCount} />",
+        "stories": ["PasswordWithLevel"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Disabled input state.",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Input placeholder=\"Placeholder text...\" disabled />\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "Error State",
+        "description": "Input with error styling.",
+        "code": "<Input.Root hasError>\n  <Input.Wrapper>\n    <Input.Input placeholder=\"Placeholder text...\" />\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["ErrorState"]
+      },
+      {
+        "title": "With Button",
+        "description": "Input with an action button alongside.",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiLinksLine} />\n    <Input.Input placeholder=\"www.example.com\" />\n  </Input.Wrapper>\n  <button className=\"inline-flex h-10 items-center justify-center px-3.5\">\n    <RiFileCopyLine className=\"size-5\" />\n  </button>\n</Input.Root>",
+        "stories": ["WithButton"]
+      },
+      {
+        "title": "With Tags",
+        "description": "Input that creates tags on Enter key press.",
+        "code": "const [tags, setTags] = React.useState(['Berlin', 'London', 'Paris']);\nconst [inputValue, setInputValue] = React.useState('');\n\n<Input.Root>\n  <Input.Wrapper>\n    <Input.Input\n      placeholder=\"Add tags...\"\n      value={inputValue}\n      onChange={(e) => setInputValue(e.target.value)}\n      onKeyDown={(e) => {\n        if (e.key === 'Enter' && inputValue.trim()) {\n          setTags([...tags, inputValue.trim()]);\n          setInputValue('');\n        }\n      }}\n    />\n  </Input.Wrapper>\n</Input.Root>\n\n<div className=\"mt-2 flex flex-wrap gap-2\">\n  {tags.map((tag) => (\n    <Tag.Root key={tag}>\n      {tag}\n      <Tag.DismissButton onClick={() => removeTag(tag)} />\n    </Tag.Root>\n  ))}\n</div>",
+        "stories": ["WithTags"]
+      },
+      {
+        "title": "Counter Input",
+        "description": "Number field with increment/decrement buttons using React Aria.",
+        "code": "import { Button, Group, Input, Label, NumberField } from 'react-aria-components';\nimport { compactButtonVariants } from '@/components/ui/compact-button';\nimport { inputVariants } from '@/components/ui/input';\n\nconst { root, wrapper, input } = inputVariants();\nconst { root: btnRoot, icon: btnIcon } = compactButtonVariants({ variant: 'ghost' });\n\n<NumberField defaultValue={16} minValue={0}>\n  <Label>Counter Input</Label>\n  <div className={root()}>\n    <Group className={wrapper()}>\n      <Button slot=\"decrement\" className={btnRoot()}>\n        <RiSubtractLine className={btnIcon()} />\n      </Button>\n      <Input className={input({ class: 'text-center' })} />\n      <Button slot=\"increment\" className={btnRoot()}>\n        <RiAddLine className={btnIcon()} />\n      </Button>\n    </Group>\n  </div>\n</NumberField>",
+        "stories": ["CounterInput"]
+      },
+      {
+        "title": "Date Field",
+        "description": "Date input using React Aria DateField with inputVariants styling.",
+        "code": "import { DateField, DateInput, DateSegment, Label } from 'react-aria-components';\nimport { inputVariants } from '@/components/ui/input';\n\nconst { root, wrapper, icon } = inputVariants();\n\n<DateField>\n  <Label>Date</Label>\n  <div className={root()}>\n    <div className={wrapper({ class: 'h-10' })}>\n      <RiCalendarLine className={icon()} />\n      <DateInput className=\"flex\">\n        {(segment) => <DateSegment segment={segment} />}\n      </DateInput>\n    </div>\n  </div>\n</DateField>",
+        "stories": ["DateFieldStory"]
+      },
+      {
+        "title": "Payment Input",
+        "description": "Credit card number input with auto-detection using react-payment-inputs.",
+        "code": "import { usePaymentInputs } from 'react-payment-inputs';\n\nconst { getCardNumberProps, meta } = usePaymentInputs();\n\n<Input.Root>\n  <Input.Wrapper className=\"pr-2\">\n    <Input.Icon as={RiBankCardLine} />\n    <Input.Input\n      {...getCardNumberProps()}\n      placeholder=\"0000 0000 0000 0000\"\n    />\n    <img src={cardIcon} alt=\"\" className=\"h-6 w-8 shrink-0\" />\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["PaymentInput"]
+      },
+      {
+        "title": "With Select",
+        "description": "Input combined with a compact select for currency picking.",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.InlineAffix>€</Input.InlineAffix>\n    <Input.Input placeholder=\"0.00\" />\n  </Input.Wrapper>\n  <Select.Root variant=\"compactForInput\" defaultValue=\"EUR\">\n    <Select.Trigger>\n      <Select.Value />\n    </Select.Trigger>\n    <Select.Content>\n      <Select.Item value=\"EUR\">EUR</Select.Item>\n    </Select.Content>\n  </Select.Root>\n</Input.Root>",
+        "stories": ["WithSelect"]
+      },
+      {
+        "title": "With Inline Select",
+        "description": "Input with an inline select for permissions inside the wrapper.",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiUser6Line} />\n    <Input.Input placeholder=\"Placeholder text...\" />\n    <Select.Root variant=\"inline\" defaultValue=\"view\">\n      <Select.Trigger>\n        <Select.TriggerIcon as={RiGlobalLine} />\n        <Select.Value />\n      </Select.Trigger>\n      <Select.Content>\n        <Select.Item value=\"view\">can view</Select.Item>\n        <Select.Item value=\"edit\">can edit</Select.Item>\n      </Select.Content>\n    </Select.Root>\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["WithInlineSelect"]
+      },
+      {
+        "title": "Composed",
+        "description": "Simplified usage via the Composed wrapper with leadingIcon, trailingIcon, and node slots.",
+        "code": "import * as Input from \"@/components/ui/input\"\n\n<Input.Composed\n  leadingIcon={RiLock2Line}\n  type=\"password\"\n  placeholder=\"••••••••••\"\n  inlineTrailingNode={<button>Toggle</button>}\n/>",
+        "stories": ["Composition"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Input.Root",
+        "description": "The root container with ring border and shadow.",
+        "props": [
           {
-            "component": "input",
-            "props": {}
+            "name": "size",
+            "type": "'medium' | 'small' | 'xsmall'",
+            "default": "'medium'",
+            "description": "Size variant"
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Show error styling"
+          },
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render as child element using Slot"
+          }
+        ]
+      },
+      {
+        "name": "Input.Wrapper",
+        "description": "Label wrapper with cursor and hover styling.",
+        "props": []
+      },
+      {
+        "name": "Input.Input",
+        "description": "The actual input element.",
+        "props": []
+      },
+      {
+        "name": "Input.Icon",
+        "description": "Icon displayed in the input wrapper.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "description": "The icon component to render"
+          }
+        ]
+      },
+      {
+        "name": "Input.Affix",
+        "description": "Affix section (prefix/suffix) with divider.",
+        "props": []
+      },
+      {
+        "name": "Input.InlineAffix",
+        "description": "Inline affix displayed within the input area.",
+        "props": []
+      },
+      {
+        "name": "Input.Composed",
+        "description": "A simplified wrapper that composes Root, Wrapper, Input, and Icon into a single component.",
+        "props": [
+          {
+            "name": "size",
+            "type": "'medium' | 'small' | 'xsmall'",
+            "default": "'medium'",
+            "description": "Size variant"
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Show error styling"
+          },
+          {
+            "name": "leadingIcon",
+            "type": "React.ElementType",
+            "description": "Icon rendered before the input"
+          },
+          {
+            "name": "trailingIcon",
+            "type": "React.ElementType",
+            "description": "Icon rendered after the input"
+          },
+          {
+            "name": "leadingNode",
+            "type": "React.ReactNode",
+            "description": "Node rendered before the wrapper (e.g. Affix)"
+          },
+          {
+            "name": "trailingNode",
+            "type": "React.ReactNode",
+            "description": "Node rendered after the wrapper (e.g. Affix)"
+          },
+          {
+            "name": "inlineLeadingNode",
+            "type": "React.ReactNode",
+            "description": "Node rendered inside the wrapper before icons"
+          },
+          {
+            "name": "inlineTrailingNode",
+            "type": "React.ReactNode",
+            "description": "Node rendered inside the wrapper after icons"
           }
         ]
       }
-    ],
-    "phoneInput": {
-      "title": "Phone Input",
-      "lead": "A phone input component with country selection and automatic formatting.",
-      "usage": "import * as PhoneInput from \"@/components/ui/phone-input\"\n\n<PhoneInput.Root\n  inputValue={value}\n  onChange={(val) => setValue(val)}\n  defaultCountryIso2=\"ca\"\n/>",
-      "examples": [
-        {
-          "title": "Default",
-          "description": "Default phone input with Canada selected.",
-          "code": "<PhoneInput.Root\n  inputValue={value}\n  onChange={setValue}\n  defaultCountryIso2=\"ca\"\n/>",
-          "preview": [
-            {
-              "component": "phone-input",
-              "props": {
-                "defaultCountryIso2": "ca"
-              }
-            }
-          ]
-        }
-      ],
-      "api": [
-        {
-          "name": "PhoneInput.Root",
-          "description": "The main component.",
-          "props": [
-            {
-              "name": "inputValue",
-              "type": "string",
-              "default": "''",
-              "description": "The current value in E.164 format."
-            },
-            {
-              "name": "onChange",
-              "type": "(value: string) => void",
-              "description": "Callback when value changes."
-            },
-            {
-              "name": "defaultCountryIso2",
-              "type": "CountryIso2",
-              "default": "'ca'",
-              "description": "Default country to select."
-            },
-            {
-              "name": "readOnly",
-              "type": "boolean",
-              "description": "Whether the input is read-only."
-            }
-          ]
-        }
-      ],
-      "dependencies": [
-        "react-international-phone",
-        "libphonenumber-js",
-        "flag-icons",
-        "lucide-react",
-        "@headlessui/react"
-      ]
-    },
-    "currencyInput": {
-      "title": "Currency Input",
-      "lead": "A currency input component with currency selection.",
-      "usage": "import { CurrencyInput } from \"@/components/ui/currency-input\"\n\n<CurrencyInput />",
-      "examples": [
-        {
-          "title": "Default",
-          "description": "Default usage.",
-          "code": "<CurrencyInput />",
-          "preview": [
-            {
-              "component": "currency-input",
-              "props": {},
-              "children": ""
-            }
-          ]
-        }
-      ],
-      "api": [
-        {
-          "name": "CurrencyInput",
-          "description": "The CurrencyInput component.",
-          "props": [
-            {
-              "name": "value",
-              "type": "string",
-              "description": "The value of the input."
-            },
-            {
-              "name": "onChange",
-              "type": "(val: string, currency: string) => void",
-              "description": "Callback when value or currency changes."
-            },
-            {
-              "name": "defaultCurrency",
-              "type": "string",
-              "default": "\"CAD\"",
-              "description": "The default currency code."
-            },
-            {
-              "name": "placeholder",
-              "type": "string",
-              "default": "\"0.00\"",
-              "description": "Placeholder text."
-            },
-            {
-              "name": "readOnly",
-              "type": "boolean",
-              "default": "false",
-              "description": "Whether the input is read-only."
-            },
-            {
-              "name": "className",
-              "type": "string",
-              "description": "Additional CSS classes."
-            }
-          ]
-        }
-      ],
-      "dependencies": ["@headlessui/react", "lucide-react", "flag-icons"]
-    }
+    ]
   },
   "files": [
     {

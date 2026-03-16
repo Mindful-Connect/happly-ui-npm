@@ -1,0 +1,78 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "dot-stepper",
+  "type": "registry:ui",
+  "title": "Dot Stepper",
+  "description": "A minimal dot-based stepper/pagination component with small and xsmall sizes. Supports asChild for Radix integration. Uses namespace exports: DotStepper.Root, DotStepper.Item.",
+  "version": "1.0.0",
+  "dependencies": [
+    "@radix-ui/react-slot"
+  ],
+  "registryDependencies": [
+    "happly-ui-utils",
+    "recursive-clone-children",
+    "tv"
+  ],
+  "docs": {
+    "lead": "A minimal dot-based stepper component with two sizes and active state highlighting for step navigation.",
+    "usage": "import * as DotStepper from \"@/components/ui/dot-stepper\"\n\n<DotStepper.Root size=\"small\">\n  <DotStepper.Item active onClick={() => {}} />\n  <DotStepper.Item onClick={() => {}} />\n</DotStepper.Root>",
+    "examples": [
+      {
+        "title": "Demo",
+        "description": "Dot stepper in small and xsmall sizes with interactive step selection.",
+        "code": "<DotStepper.Root size=\"small\">\n  <DotStepper.Item active={activeStep === 0} onClick={() => setActiveStep(0)} />\n  <DotStepper.Item active={activeStep === 1} onClick={() => setActiveStep(1)} />\n</DotStepper.Root>",
+        "stories": ["Demo"]
+      },
+      {
+        "title": "With Radix Tabs",
+        "description": "Dot stepper composed with Radix UI Tabs using the asChild pattern for accessible tab navigation.",
+        "code": "<TabsPrimitives.Root value={activeStep} onValueChange={setActiveStep}>\n  <DotStepper.Root asChild>\n    <TabsPrimitives.List>\n      <DotStepper.Item active={activeStep === step.id} asChild>\n        <TabsPrimitives.Trigger value={step.id} />\n      </DotStepper.Item>\n    </TabsPrimitives.List>\n  </DotStepper.Root>\n</TabsPrimitives.Root>",
+        "stories": ["WithRadixTabs"]
+      }
+    ],
+    "api": [
+      {
+        "name": "DotStepper.Root",
+        "description": "The container for dot stepper items. Propagates size to children via recursiveCloneChildren.",
+        "props": [
+          {
+            "name": "size",
+            "type": "'small' | 'xsmall'",
+            "default": "'small'",
+            "description": "The size of the dots"
+          },
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render as child element using Radix Slot"
+          }
+        ]
+      },
+      {
+        "name": "DotStepper.Item",
+        "description": "An individual dot step. Renders as a button by default.",
+        "props": [
+          {
+            "name": "active",
+            "type": "boolean",
+            "default": "false",
+            "description": "Whether this step is currently active"
+          },
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render as child element using Radix Slot"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/dot-stepper.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

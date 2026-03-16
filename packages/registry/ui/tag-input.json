@@ -1,0 +1,129 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "tag-input",
+  "type": "registry:ui",
+  "title": "Tag Input",
+  "description": "A tag input component with controlled/uncontrolled pattern, add-on-Enter, remove-on-dismiss, backspace-to-delete-last.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": ["input", "tag"],
+  "docs": {
+    "lead": "A tag input component with controlled/uncontrolled pattern. Add tags on Enter, remove on dismiss or Backspace.",
+    "usage": "import * as TagInput from \"@/components/ui/tag-input\"\n\n<TagInput.Root defaultValue={['Berlin', 'London']} />",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Tag input with default tags.",
+        "code": "<TagInput.Root defaultValue={['Berlin', 'London', 'Paris']} />",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Controlled",
+        "description": "A controlled tag input with onValueChange callback.",
+        "code": "const [tags, setTags] = React.useState(['React', 'TypeScript'])\n\n<TagInput.Root value={tags} onValueChange={setTags} />",
+        "stories": ["Controlled"]
+      },
+      {
+        "title": "Max Tags",
+        "description": "Tag input limited to a maximum number of tags.",
+        "code": "<TagInput.Root defaultValue={['Tag 1']} maxTags={3} placeholder='Max 3 tags...' />",
+        "stories": ["MaxTags"]
+      },
+      {
+        "title": "Gray Variant",
+        "description": "Tag input with gray tag variant.",
+        "code": "<TagInput.Root defaultValue={['Design', 'Dev', 'QA']} tagVariant='gray' />",
+        "stories": ["GrayVariant"]
+      },
+      {
+        "title": "Sizes",
+        "description": "Tag input in medium, small, and xsmall sizes.",
+        "code": "<TagInput.Root size='medium' defaultValue={['Medium']} />\n<TagInput.Root size='small' defaultValue={['Small']} />\n<TagInput.Root size='xsmall' defaultValue={['XSmall']} />",
+        "stories": ["Sizes"]
+      },
+      {
+        "title": "With Form Field",
+        "description": "Tag input composed with FormField for consistent label and hint.",
+        "code": "<FormField.Root\n  label=\"Tags\"\n  required\n  hint=\"Press Enter to add a tag.\"\n>\n  <TagInput.Root />\n</FormField.Root>",
+        "stories": ["WithFormField"]
+      }
+    ],
+    "api": [
+      {
+        "name": "TagInput.Root",
+        "description": "The tag input component. Forwards ref to the underlying input element.",
+        "props": [
+          {
+            "name": "value",
+            "type": "string[]",
+            "description": "Tags (controlled)"
+          },
+          {
+            "name": "defaultValue",
+            "type": "string[]",
+            "default": "[]",
+            "description": "Tags (uncontrolled)"
+          },
+          {
+            "name": "onValueChange",
+            "type": "(tags: string[]) => void",
+            "description": "Change callback"
+          },
+          {
+            "name": "size",
+            "type": "'medium' | 'small' | 'xsmall'",
+            "default": "'medium'",
+            "description": "Input size"
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Error state"
+          },
+          {
+            "name": "placeholder",
+            "type": "string",
+            "default": "'Add tags...'",
+            "description": "Placeholder text"
+          },
+          {
+            "name": "tagVariant",
+            "type": "'stroke' | 'gray'",
+            "default": "'gray'",
+            "description": "Tag appearance"
+          },
+          {
+            "name": "maxTags",
+            "type": "number",
+            "description": "Maximum number of tags"
+          },
+          {
+            "name": "allowDuplicates",
+            "type": "boolean",
+            "default": "false",
+            "description": "Allow duplicate tags"
+          },
+          {
+            "name": "triggerKeys",
+            "type": "string[]",
+            "default": "['Enter']",
+            "description": "Keys that trigger adding a tag"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disabled state"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/tag-input.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

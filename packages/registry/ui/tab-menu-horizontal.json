@@ -1,0 +1,143 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "tab-menu-horizontal",
+  "type": "registry:ui",
+  "title": "Tab Menu Horizontal",
+  "description": "A horizontal pill-shaped tab menu with selected/unselected states, icon and counter support. Uses namespace exports: TabMenuHorizontal.Root, TabMenuHorizontal.Item, TabMenuHorizontal.Icon, TabMenuHorizontal.Counter, TabMenuHorizontal.Composed.",
+  "version": "1.0.0",
+  "dependencies": ["framer-motion"],
+  "registryDependencies": [
+    "tv",
+    "polymorphic",
+    "recursive-clone-children"
+  ],
+  "docs": {
+    "lead": "A horizontal pill-shaped tab menu with selected/unselected states. Supports neutral and primary variants, icons, number counter badges, and a composed shorthand.",
+    "usage": "import * as TabMenuHorizontal from \"@/components/ui/tab-menu-horizontal\"\n\n<TabMenuHorizontal.Root>\n  <TabMenuHorizontal.Item selected>\n    <span>Overview</span>\n  </TabMenuHorizontal.Item>\n  <TabMenuHorizontal.Item>\n    <span>Details</span>\n  </TabMenuHorizontal.Item>\n</TabMenuHorizontal.Root>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Neutral variant with dark selected state.",
+        "code": "<TabMenuHorizontal.Root>\n  <TabMenuHorizontal.Item selected={selected === 'overview'} onClick={() => setSelected('overview')}>\n    <span>Overview</span>\n  </TabMenuHorizontal.Item>\n  <TabMenuHorizontal.Item selected={selected === 'details'} onClick={() => setSelected('details')}>\n    <span>Details</span>\n  </TabMenuHorizontal.Item>\n</TabMenuHorizontal.Root>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Primary",
+        "description": "Primary variant using the brand color for the selected tab.",
+        "code": "<TabMenuHorizontal.Root variant=\"primary\">\n  <TabMenuHorizontal.Item selected>\n    <span>Overview</span>\n  </TabMenuHorizontal.Item>\n</TabMenuHorizontal.Root>",
+        "stories": ["Primary"]
+      },
+      {
+        "title": "With Icons",
+        "description": "Tabs with leading icons using the polymorphic Icon subcomponent.",
+        "code": "<TabMenuHorizontal.Item selected>\n  <TabMenuHorizontal.Icon as={RiHome5Line} />\n  <span>Home</span>\n</TabMenuHorizontal.Item>",
+        "stories": ["WithIcons"]
+      },
+      {
+        "title": "With Counter",
+        "description": "Tabs with a red number counter badge, matching the design system badge pattern.",
+        "code": "<TabMenuHorizontal.Item selected>\n  <span>My opportunities</span>\n  <TabMenuHorizontal.Counter count={3} />\n</TabMenuHorizontal.Item>",
+        "stories": ["WithCounter"]
+      },
+      {
+        "title": "Composed",
+        "description": "Shorthand composed version with controlled value and optional count.",
+        "code": "<TabMenuHorizontal.Composed\n  value={value}\n  onValueChange={setValue}\n  items={[\n    { label: 'Overview', value: 'overview', icon: RiHome5Line },\n    { label: 'Profile', value: 'profile', icon: RiUserLine, count: 5 },\n  ]}\n/>",
+        "stories": ["Composed"]
+      },
+      {
+        "title": "Overflow",
+        "description": "When tabs exceed the container width, the menu scrolls horizontally.",
+        "code": "<div className=\"max-w-md\">\n  <TabMenuHorizontal.Root>\n    <TabMenuHorizontal.Item selected>Dashboard</TabMenuHorizontal.Item>\n    <TabMenuHorizontal.Item>Analytics</TabMenuHorizontal.Item>\n    <TabMenuHorizontal.Item>Reports</TabMenuHorizontal.Item>\n    <!-- more tabs... -->\n  </TabMenuHorizontal.Root>\n</div>",
+        "stories": ["Overflow"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Individual tabs can be disabled.",
+        "code": "<TabMenuHorizontal.Item disabled>\n  <span>Disabled</span>\n</TabMenuHorizontal.Item>",
+        "stories": ["Disabled"]
+      }
+    ],
+    "api": [
+      {
+        "name": "TabMenuHorizontal.Root",
+        "description": "Container for tab items with tablist role.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'neutral' | 'primary'",
+            "default": "'neutral'",
+            "description": "Color scheme for selected tabs"
+          }
+        ]
+      },
+      {
+        "name": "TabMenuHorizontal.Item",
+        "description": "Individual tab button with pill shape.",
+        "props": [
+          {
+            "name": "selected",
+            "type": "boolean",
+            "default": "false",
+            "description": "Whether this tab is currently selected"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "description": "Disables the tab"
+          }
+        ]
+      },
+      {
+        "name": "TabMenuHorizontal.Icon",
+        "description": "Polymorphic icon inside a tab item.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "default": "'div'",
+            "description": "The element or component to render as"
+          }
+        ]
+      },
+      {
+        "name": "TabMenuHorizontal.Counter",
+        "description": "Red number badge inside a tab item. Hidden when count is 0 or less. Shows '99+' for values over 99.",
+        "props": [
+          {
+            "name": "count",
+            "type": "number",
+            "description": "The number to display"
+          }
+        ]
+      },
+      {
+        "name": "TabMenuHorizontal.Composed",
+        "description": "Shorthand controlled tab menu. Accepts all Root props.",
+        "props": [
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The currently selected tab value"
+          },
+          {
+            "name": "onValueChange",
+            "type": "(value: string) => void",
+            "description": "Callback when a tab is clicked"
+          },
+          {
+            "name": "items",
+            "type": "{ label: string; value: string; disabled?: boolean; icon?: React.ElementType; count?: number }[]",
+            "description": "Array of tab definitions"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/tab-menu-horizontal.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

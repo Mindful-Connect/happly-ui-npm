@@ -118,8 +118,8 @@ export function Navigation({
             >
               {section.links.map((link) => (
                 <NavItem
-                  key={link.href || link.title}
-                  item={link}
+                  key={'href' in link ? link.href : link.title}
+                  item={link as NavItem}
                   onLinkClick={onLinkClick}
                 />
               ))}

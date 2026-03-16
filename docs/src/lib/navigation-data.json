@@ -16,110 +16,353 @@
     "title": "Components",
     "links": [
       {
-        "title": "Badge",
-        "href": "/docs/components/badge"
-      },
-      {
-        "title": "Button",
-        "href": "/docs/components/button"
-      },
-      {
-        "title": "Calendar Input",
-        "href": "/docs/components/calendar-input"
-      },
-      {
-        "title": "Card",
-        "href": "/docs/components/card"
-      },
-      {
-        "title": "Circular Progress",
-        "href": "/docs/components/circular-progress"
-      },
-      {
-        "title": "Currency Input",
-        "href": "/docs/components/currency-input"
-      },
-      {
-        "title": "Divider",
-        "href": "/docs/components/divider"
-      },
-      {
-        "title": "Input",
-        "href": "/docs/components/input"
-      },
-      {
-        "title": "Label",
-        "href": "/docs/components/label"
-      },
-      {
-        "title": "Location Input",
-        "href": "/docs/components/location-input"
-      },
-      {
-        "title": "Progress Bar",
-        "href": "/docs/components/progress-bar"
-      },
-      {
-        "title": "Radio Card Group",
-        "href": "/docs/components/radio-card-group"
-      },
-      {
-        "title": "Radio Group",
-        "href": "/docs/components/radio-group"
-      },
-      {
-        "title": "Searchable Combo Box",
-        "href": "/docs/components/searchable-combo-box"
-      },
-      {
-        "title": "Select",
-        "href": "/docs/components/select"
-      },
-      {
-        "title": "Socials Input",
-        "href": "/docs/components/socials-input"
-      },
-      {
-        "title": "Tag",
-        "href": "/docs/components/tag"
-      },
-      {
-        "title": "Textarea",
-        "href": "/docs/components/textarea"
-      },
-      {
-        "title": "Upload File Input",
-        "href": "/docs/components/upload-file-input"
-      },
-      {
-        "title": "Support components",
+        "title": "Actions",
         "links": [
           {
-            "title": "Alert",
-            "href": "/docs/components/alert"
+            "title": "Button",
+            "href": "/docs/components/button"
           },
           {
-            "title": "Command",
-            "href": "/docs/components/command"
+            "title": "Button Group",
+            "href": "/docs/components/button-group"
           },
           {
-            "title": "Custom Input Wrapper",
-            "href": "/docs/components/custom-input-wrapper"
+            "title": "Compact Button",
+            "href": "/docs/components/compact-button"
           },
           {
-            "title": "Dialog",
-            "href": "/docs/components/dialog"
+            "title": "Fancy Button",
+            "href": "/docs/components/fancy-button"
+          },
+          {
+            "title": "Link Button",
+            "href": "/docs/components/link-button"
+          }
+        ],
+        "collapsed": false
+      },
+      {
+        "title": "Displaying data",
+        "links": [
+          {
+            "title": "Avatar",
+            "href": "/docs/components/avatar"
+          },
+          {
+            "title": "Avatar Group",
+            "href": "/docs/components/avatar-group"
+          },
+          {
+            "title": "Avatar Group Compact",
+            "href": "/docs/components/avatar-group-compact"
+          },
+          {
+            "title": "Badge",
+            "href": "/docs/components/badge"
+          },
+          {
+            "title": "Banner",
+            "href": "/docs/components/banner"
+          },
+          {
+            "title": "Divider",
+            "href": "/docs/components/divider"
+          },
+          {
+            "title": "Info Grid",
+            "href": "/docs/components/info-grid"
+          },
+          {
+            "title": "Kbd",
+            "href": "/docs/components/kbd"
           },
           {
             "title": "Key Icon",
             "href": "/docs/components/key-icon"
           },
           {
+            "title": "Level Bar",
+            "href": "/docs/components/level-bar"
+          },
+          {
+            "title": "Progress Bar",
+            "href": "/docs/components/progress-bar"
+          },
+          {
+            "title": "Progress Circle",
+            "href": "/docs/components/progress-circle"
+          },
+          {
+            "title": "Skeleton",
+            "href": "/docs/components/skeleton"
+          },
+          {
+            "title": "Smart Matching AI",
+            "href": "/docs/components/smart-matching-ai"
+          },
+          {
+            "title": "Status Badge",
+            "href": "/docs/components/status-badge"
+          },
+          {
+            "title": "Table",
+            "href": "/docs/components/table"
+          },
+          {
+            "title": "Tag",
+            "href": "/docs/components/tag"
+          }
+        ],
+        "collapsed": false
+      },
+      {
+        "title": "Form",
+        "links": [
+          {
+            "title": "Checkbox",
+            "href": "/docs/components/checkbox"
+          },
+          {
+            "title": "Color Picker",
+            "href": "/docs/components/color-picker"
+          },
+          {
+            "title": "Datepicker",
+            "href": "/docs/components/datepicker"
+          },
+          {
+            "title": "Digit Input",
+            "href": "/docs/components/digit-input"
+          },
+          {
+            "title": "Form Field",
+            "href": "/docs/components/form-field"
+          },
+          {
+            "title": "Hint",
+            "href": "/docs/components/hint"
+          },
+          {
+            "title": "Input",
+            "href": "/docs/components/input"
+          },
+          {
+            "title": "Label",
+            "href": "/docs/components/label"
+          },
+          {
+            "title": "Markdown Editor",
+            "href": "/docs/components/markdown-editor"
+          },
+          {
+            "title": "Radio",
+            "href": "/docs/components/radio"
+          },
+          {
+            "title": "Radio Card",
+            "href": "/docs/components/radio-card"
+          },
+          {
+            "title": "Select",
+            "href": "/docs/components/select"
+          },
+          {
+            "title": "Slider",
+            "href": "/docs/components/slider"
+          },
+          {
+            "title": "Switch",
+            "href": "/docs/components/switch"
+          },
+          {
+            "title": "Textarea",
+            "href": "/docs/components/textarea"
+          },
+          {
+            "title": "Composed Inputs",
+            "links": [
+              {
+                "title": "Combo Box",
+                "href": "/docs/components/combo-box"
+              },
+              {
+                "title": "Currency Input",
+                "href": "/docs/components/currency-input"
+              },
+              {
+                "title": "Location Input",
+                "href": "/docs/components/location-input"
+              },
+              {
+                "title": "Password Input",
+                "href": "/docs/components/password-input"
+              },
+              {
+                "title": "Phone Input",
+                "href": "/docs/components/phone-input"
+              },
+              {
+                "title": "Socials Input",
+                "href": "/docs/components/socials-input"
+              },
+              {
+                "title": "Tag Input",
+                "href": "/docs/components/tag-input"
+              }
+            ],
+            "collapsed": false
+          },
+          {
+            "title": "File Upload",
+            "links": [
+              {
+                "title": "File Card",
+                "href": "/docs/components/file-card"
+              },
+              {
+                "title": "File Format Icon",
+                "href": "/docs/components/file-format-icon"
+              },
+              {
+                "title": "File Upload",
+                "href": "/docs/components/file-upload"
+              },
+              {
+                "title": "Logo Upload",
+                "href": "/docs/components/logo-upload"
+              }
+            ],
+            "collapsed": false
+          }
+        ],
+        "collapsed": false
+      },
+      {
+        "title": "Navigation",
+        "links": [
+          {
+            "title": "Dot Stepper",
+            "href": "/docs/components/dot-stepper"
+          },
+          {
+            "title": "Pagination",
+            "href": "/docs/components/pagination"
+          }
+        ],
+        "collapsed": false
+      },
+      {
+        "title": "Layout",
+        "links": [
+          {
+            "title": "Accordion",
+            "href": "/docs/components/accordion"
+          },
+          {
+            "title": "Switch Toggle",
+            "href": "/docs/components/switch-toggle"
+          },
+          {
+            "title": "Tab Menu Horizontal",
+            "href": "/docs/components/tab-menu-horizontal"
+          }
+        ],
+        "collapsed": false
+      },
+      {
+        "title": "Feedback",
+        "links": [
+          {
+            "title": "Alert",
+            "href": "/docs/components/alert"
+          },
+          {
+            "title": "Tooltip",
+            "href": "/docs/components/tooltip"
+          }
+        ],
+        "collapsed": false
+      },
+      {
+        "title": "Overlays",
+        "links": [
+          {
+            "title": "Command Menu",
+            "href": "/docs/components/command-menu"
+          },
+          {
+            "title": "Drawer",
+            "href": "/docs/components/drawer"
+          },
+          {
+            "title": "Dropdown",
+            "href": "/docs/components/dropdown"
+          },
+          {
+            "title": "Emoji Dialog",
+            "href": "/docs/components/emoji-dialog"
+          },
+          {
+            "title": "Modal",
+            "href": "/docs/components/modal"
+          },
+          {
             "title": "Popover",
             "href": "/docs/components/popover"
           }
         ],
-        "collapsed": true
+        "collapsed": false
+      },
+      {
+        "title": "Providers",
+        "links": [
+          {
+            "title": "Theme Provider",
+            "href": "/docs/components/theme-provider"
+          }
+        ],
+        "collapsed": false
+      },
+      {
+        "title": "Cards",
+        "links": [
+          {
+            "title": "Info Card",
+            "href": "/docs/components/info-card"
+          },
+          {
+            "title": "Promotional Card",
+            "href": "/docs/components/promotional-card"
+          }
+        ],
+        "collapsed": false
+      },
+      {
+        "title": "Sections",
+        "links": [
+          {
+            "title": "Section",
+            "href": "/docs/components/section"
+          },
+          {
+            "title": "Section Toggle",
+            "href": "/docs/components/section-toggle"
+          }
+        ],
+        "collapsed": false
+      }
+    ]
+  },
+  {
+    "title": "Hooks",
+    "links": [
+      {
+        "title": "useFileUpload",
+        "href": "/docs/hooks/use-file-upload"
+      },
+      {
+        "title": "useTabObserver",
+        "href": "/docs/hooks/use-tab-observer"
       }
     ]
   }

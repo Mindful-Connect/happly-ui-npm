@@ -1,0 +1,100 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "tooltip",
+  "type": "registry:ui",
+  "title": "Tooltip",
+  "description": "A tooltip component built on Radix UI with dark/light variants, multiple sizes, and arrow indicator. Uses namespace exports: Tooltip.Root, Tooltip.Trigger, Tooltip.Content.",
+  "version": "1.0.0",
+  "dependencies": ["@radix-ui/react-tooltip"],
+  "registryDependencies": ["tv"],
+  "docs": {
+    "lead": "A tooltip component with dark/light variants, multiple sizes, positioned arrow, and rich HTML content support.",
+    "usage": "import * as Tooltip from \"@/components/ui/tooltip\"\n\n<Tooltip.Provider>\n  <Tooltip.Root>\n    <Tooltip.Trigger>Hover me</Tooltip.Trigger>\n    <Tooltip.Content>Tooltip content.</Tooltip.Content>\n  </Tooltip.Root>\n</Tooltip.Provider>",
+    "examples": [
+      {
+        "title": "Light",
+        "description": "Light variant tooltip with white background and border.",
+        "code": "<Tooltip.Root>\n  <Tooltip.Trigger asChild>\n    <Button.Root>Hover</Button.Root>\n  </Tooltip.Trigger>\n  <Tooltip.Content variant=\"light\">Tooltip content.</Tooltip.Content>\n</Tooltip.Root>",
+        "stories": ["Light"]
+      },
+      {
+        "title": "Size",
+        "description": "Tooltips in medium, small (default), and xsmall sizes.",
+        "code": "<Tooltip.Content size=\"medium\">Medium</Tooltip.Content>\n<Tooltip.Content size=\"small\">Small</Tooltip.Content>\n<Tooltip.Content size=\"xsmall\">XSmall</Tooltip.Content>",
+        "stories": ["Size"]
+      },
+      {
+        "title": "Position",
+        "description": "Tooltips positioned on all four sides: left, top, bottom, right.",
+        "code": "<Tooltip.Content side=\"left\">Left</Tooltip.Content>\n<Tooltip.Content side=\"top\">Top</Tooltip.Content>",
+        "stories": ["Position"]
+      },
+      {
+        "title": "HTML Content",
+        "description": "Tooltip with rich HTML content including icon, title, and description.",
+        "code": "<Tooltip.Content size=\"medium\" variant=\"light\">\n  <div className=\"flex gap-3\">\n    <RiGlobalLine />\n    <div>Title and description</div>\n  </div>\n</Tooltip.Content>",
+        "stories": ["HTMLContent"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Tooltip.Root",
+        "description": "Wraps the trigger and content. Passes through Radix Tooltip.Root props.",
+        "props": []
+      },
+      {
+        "name": "Tooltip.Trigger",
+        "description": "The element that triggers the tooltip on hover/focus.",
+        "props": [
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render as child element using Radix Slot"
+          }
+        ]
+      },
+      {
+        "name": "Tooltip.Content",
+        "description": "The tooltip popup content with arrow.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'dark' | 'light'",
+            "default": "'dark'",
+            "description": "The visual variant"
+          },
+          {
+            "name": "size",
+            "type": "'xsmall' | 'small' | 'medium'",
+            "default": "'small'",
+            "description": "The size of the tooltip"
+          },
+          {
+            "name": "side",
+            "type": "'top' | 'right' | 'bottom' | 'left'",
+            "default": "'top'",
+            "description": "The preferred side to position the tooltip"
+          },
+          {
+            "name": "sideOffset",
+            "type": "number",
+            "default": "4",
+            "description": "Distance in pixels from the trigger"
+          }
+        ]
+      },
+      {
+        "name": "Tooltip.Provider",
+        "description": "Wraps your app to provide shared tooltip delay and skip settings.",
+        "props": []
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/tooltip.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

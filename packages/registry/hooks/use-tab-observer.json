@@ -1,0 +1,50 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "use-tab-observer",
+  "type": "registry:hook",
+  "title": "useTabObserver",
+  "description": "Hook to observe active tab changes using ResizeObserver and MutationObserver.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": [],
+  "docs": {
+    "lead": "A React hook that observes active tab changes within a tab list using ResizeObserver and MutationObserver. Useful for animating tab indicators or tracking the active tab index.",
+    "usage": "import { useTabObserver } from \"@/hooks/use-tab-observer\"\n\nconst { mounted, listRef } = useTabObserver({\n  onActiveTabChange: (index, element) => {\n    // Handle tab change\n  },\n})",
+    "examples": [],
+    "api": [
+      {
+        "name": "useTabObserver Options",
+        "description": "Configuration options passed to the hook.",
+        "props": [
+          {
+            "name": "onActiveTabChange",
+            "type": "(index: number, element: HTMLElement) => void",
+            "description": "Callback fired when the active tab changes. Receives the tab index and the DOM element."
+          }
+        ]
+      },
+      {
+        "name": "useTabObserver Return Value",
+        "description": "The object returned by the hook.",
+        "props": [
+          {
+            "name": "mounted",
+            "type": "boolean",
+            "description": "Whether the observer has mounted and performed its initial check."
+          },
+          {
+            "name": "listRef",
+            "type": "React.RefObject<HTMLDivElement>",
+            "description": "Ref to attach to the tab list container element."
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "hooks/use-tab-observer.ts",
+      "type": "registry:hook"
+    }
+  ]
+}

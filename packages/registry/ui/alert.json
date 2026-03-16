@@ -3,45 +3,103 @@
   "name": "alert",
   "type": "registry:ui",
   "title": "Alert",
-  "description": "Displays a callout for user attention.",
+  "description": "A versatile alert component with multiple variants (filled, light, lighter, stroke), status colors (error, warning, success, information, feature), and sizes. Uses namespace exports: Alert.Root, Alert.Icon, Alert.CloseIcon.",
+  "version": "2.0.0",
+  "migration": {
+    "guide": "API changed: import as namespace `import * as Alert from ...`, use `<Alert.Root variant=\"filled\" status=\"error\">` instead of `<Alert variant=\"errorFilled\">`. Variant and status are now separate props. Sub-components: `Alert.Icon` (polymorphic), `Alert.CloseIcon`. Old `AlertTitle`, `AlertDescription`, `AlertActions`, `AlertLink`, `AlertButton` sub-components removed. Dependencies changed from `cva` + `react-icons` to `tv` + `@remixicon/react`. Old `alert-utils.ts` is no longer included."
+  },
   "dependencies": [
-    "react-icons",
-    "@radix-ui/react-slot",
-    "class-variance-authority"
+    "@remixicon/react"
   ],
-  "registryDependencies": ["alert-utils", "happly-ui-utils"],
+  "registryDependencies": [
+    "tv",
+    "polymorphic",
+    "recursive-clone-children"
+  ],
   "docs": {
-    "lead": "Displays a callout for user attention.",
-    "usage": "import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'\n\n<Alert>\n  <AlertTitle>Heads up!</AlertTitle>\n  <AlertDescription>\n    You can add components to your app using the cli.\n  </AlertDescription>\n</Alert>",
-    "examples": [],
+    "lead": "A versatile alert component with multiple variants, status colors, and sizes for user notifications.",
+    "usage": "import * as Alert from \"@/components/ui/alert\"\n\n<Alert.Root variant=\"filled\" status=\"error\">\n  <Alert.Icon as={RiErrorWarningFill} />\n  Insert your alert title here!\n</Alert.Root>",
+    "examples": [
+      {
+        "title": "Filled",
+        "description": "Filled variant alerts in all status colors with icon, link, and close button.",
+        "code": "<Alert.Root variant=\"filled\" status=\"error\">\n  <Alert.Icon as={RiErrorWarningFill} />\n  Alert title\n</Alert.Root>",
+        "stories": ["Filled"]
+      },
+      {
+        "title": "Light",
+        "description": "Light variant alerts in all status colors.",
+        "code": "<Alert.Root variant=\"light\" status=\"warning\">\n  <Alert.Icon as={RiAlertFill} />\n  Alert title\n</Alert.Root>",
+        "stories": ["Light"]
+      },
+      {
+        "title": "Lighter",
+        "description": "Lighter variant alerts in all status colors.",
+        "code": "<Alert.Root variant=\"lighter\" status=\"success\">\n  <Alert.Icon as={RiCheckboxCircleFill} />\n  Alert title\n</Alert.Root>",
+        "stories": ["Lighter"]
+      },
+      {
+        "title": "Stroke",
+        "description": "Stroke variant alerts in all status colors with outline border.",
+        "code": "<Alert.Root variant=\"stroke\" status=\"information\">\n  <Alert.Icon as={RiInformationFill} />\n  Alert title\n</Alert.Root>",
+        "stories": ["Stroke"]
+      },
+      {
+        "title": "Sizes",
+        "description": "Alerts come in three sizes: xsmall, small (default), and large. The large size supports title, description, and action links.",
+        "code": "<Alert.Root variant=\"filled\" status=\"error\" size=\"xsmall\">\n  <Alert.Icon as={RiErrorWarningFill} />\n  Alert title\n</Alert.Root>\n\n<Alert.Root variant=\"light\" status=\"warning\" size=\"small\">\n  <Alert.Icon as={RiAlertFill} />\n  Alert title\n</Alert.Root>\n\n<Alert.Root variant=\"lighter\" status=\"success\" size=\"large\">\n  <Alert.Icon as={RiCheckboxCircleFill} />\n  <div>\n    <div className=\"text-label-sm\">Title</div>\n    <div>Description</div>\n  </div>\n</Alert.Root>",
+        "stories": ["Sizes"]
+      }
+    ],
     "api": [
       {
-        "name": "Alert",
-        "description": "The main alert component.",
+        "name": "Alert.Root",
+        "description": "The main alert container.",
         "props": [
           {
             "name": "variant",
-            "type": "AlertVariant",
-            "default": "warningLighter",
-            "description": "The visual style of the alert"
+            "type": "'filled' | 'light' | 'lighter' | 'stroke'",
+            "default": "'filled'",
+            "description": "The visual variant of the alert"
+          },
+          {
+            "name": "status",
+            "type": "'error' | 'warning' | 'success' | 'information' | 'feature'",
+            "default": "'information'",
+            "description": "The semantic status color"
           },
           {
             "name": "size",
-            "type": "'xs' | 'sm' | 'md'",
-            "default": "'sm'",
+            "type": "'xsmall' | 'small' | 'large'",
+            "default": "'small'",
             "description": "The size of the alert"
           },
           {
-            "name": "dismissButton",
-            "type": "boolean",
-            "default": "false",
-            "description": "Whether to show a dismiss button"
-          },
+            "name": "wrapperClassName",
+            "type": "ClassValue",
+            "description": "Additional classes for the inner wrapper grid"
+          }
+        ]
+      },
+      {
+        "name": "Alert.Icon",
+        "description": "Renders a polymorphic status icon.",
+        "props": [
           {
-            "name": "onDismiss",
-            "type": "() => void",
-            "default": "-",
-            "description": "Callback when dismiss button is clicked"
+            "name": "as",
+            "type": "React.ElementType",
+            "description": "The icon component to render"
+          }
+        ]
+      },
+      {
+        "name": "Alert.CloseIcon",
+        "description": "Renders a close/dismiss icon. Defaults to RiCloseLine.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "description": "Override the default close icon component"
           }
         ]
       }

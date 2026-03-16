@@ -1,0 +1,86 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "table",
+  "type": "registry:ui",
+  "title": "Table",
+  "description": "A styled HTML table component with header, body, row dividers, and cell sub-components. Uses namespace exports: Table.Root, Table.Header, Table.Body, Table.Head, Table.Row, Table.RowDivider, Table.Cell, Table.Caption.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": [
+    "happly-ui-utils",
+    "divider"
+  ],
+  "docs": {
+    "lead": "A styled HTML table component with header, body, row dividers, and cell sub-components. Works well with @tanstack/react-table for sorting, selection, and pagination.",
+    "usage": "import * as Table from \"@/components/ui/table\"\n\n<Table.Root>\n  <Table.Header>\n    <Table.Row>\n      <Table.Head>Name</Table.Head>\n      <Table.Head>Email</Table.Head>\n    </Table.Row>\n  </Table.Header>\n  <Table.Body>\n    <Table.Row>\n      <Table.Cell>John</Table.Cell>\n      <Table.Cell>john@example.com</Table.Cell>\n    </Table.Row>\n  </Table.Body>\n</Table.Root>",
+    "examples": [
+      {
+        "title": "Data Table",
+        "description": "A full data table example with sortable columns, avatars, and action buttons using @tanstack/react-table.",
+        "code": "<Table.Root>\n  <Table.Header>\n    <Table.Row>\n      <Table.Head>Member</Table.Head>\n      <Table.Head>Title</Table.Head>\n      <Table.Head>Status</Table.Head>\n    </Table.Row>\n  </Table.Header>\n  <Table.Body>\n    <Table.Row>\n      <Table.Cell>...</Table.Cell>\n    </Table.Row>\n    <Table.RowDivider />\n    <Table.Row>\n      <Table.Cell>...</Table.Cell>\n    </Table.Row>\n  </Table.Body>\n</Table.Root>",
+        "stories": ["Default"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Table.Root",
+        "description": "The main table wrapper with horizontal scroll overflow.",
+        "props": []
+      },
+      {
+        "name": "Table.Header",
+        "description": "The table header section (thead).",
+        "props": []
+      },
+      {
+        "name": "Table.Head",
+        "description": "A table header cell with subtle background and rounded corners.",
+        "props": []
+      },
+      {
+        "name": "Table.Body",
+        "description": "The table body section with configurable spacing from the header.",
+        "props": [
+          {
+            "name": "spacing",
+            "type": "number",
+            "default": "8",
+            "description": "Space in pixels between the header and body"
+          }
+        ]
+      },
+      {
+        "name": "Table.Row",
+        "description": "A table row with group hover support.",
+        "props": []
+      },
+      {
+        "name": "Table.RowDivider",
+        "description": "A visual divider row between table rows using the Divider component.",
+        "props": [
+          {
+            "name": "dividerClassName",
+            "type": "string",
+            "description": "Additional class name for the inner Divider component"
+          }
+        ]
+      },
+      {
+        "name": "Table.Cell",
+        "description": "A table data cell with hover background transition.",
+        "props": []
+      },
+      {
+        "name": "Table.Caption",
+        "description": "A table caption element.",
+        "props": []
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/table.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

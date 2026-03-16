@@ -61,8 +61,12 @@ yarn-error.log*
 coverage/
 .nyc_output/
 
+# Storybook
+storybook-static/
+
 # Misc
 *.pem
+*.stackdump
 .vercel
 .netlify
 

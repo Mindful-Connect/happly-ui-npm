@@ -13,8 +13,14 @@ import {
 import { installDependencies } from '../utils/install.js';
 import { updateTailwindConfig } from '../utils/transformers/tailwind.js';
 import { isNonInteractive, getAgentName } from '../utils/env.js';
-import type { HapplyConfig, InitOptions, BaseColor } from '../types/index.js';
-import { BASE_COLORS, CONFIG_FILE } from '../types/index.js';
+import type { HapplyConfig, InitOptions } from '../types/index.js';
+import { CONFIG_FILE } from '../types/index.js';
+import {
+  HAPPLY_THEME_V4,
+  HAPPLY_THEME_V3,
+} from '../utils/templates/happly-theme.js';
+
+const HAPPLY_THEME_FILE = 'happly-theme.css';
 
 const UTILS_TEMPLATE = `import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -29,128 +35,6 @@ import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
-}
-`;
-
-// Tailwind v3 CSS template
-const CSS_TEMPLATE_V3 = `@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-`;
-
-// Tailwind v4 CSS template
-const CSS_TEMPLATE_V4 = `@import "tailwindcss";
-
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-  }
-
-  * {
-    border-color: hsl(var(--border));
-  }
-
-  body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
-  }
 }
 `;
 
@@ -208,36 +92,13 @@ export async function init(options: InitOptions): Promise<void> {
   }
   logger.break();
 
-  // Interactive prompts
+  // Interactive prompts (simplified — no baseColor or cssVariables)
   let config: HapplyConfig;
 
   if (useDefaults) {
     config = createDefaultConfig(projectInfo);
-    // Apply CLI overrides if provided
-    if (options.baseColor && BASE_COLORS.includes(options.baseColor)) {
-      config.tailwind.baseColor = options.baseColor;
-    }
-    if (options.cssVariables === false) {
-      config.tailwind.cssVariables = false;
-    }
   } else {
     const responses = await prompts([
-      {
-        type: 'select',
-        name: 'baseColor',
-        message: 'Which base color would you like to use?',
-        choices: BASE_COLORS.map((color) => ({
-          title: color.charAt(0).toUpperCase() + color.slice(1),
-          value: color,
-        })),
-        initial: 0,
-      },
-      {
-        type: 'confirm',
-        name: 'cssVariables',
-        message: 'Would you like to use CSS variables for colors?',
-        initial: true,
-      },
       {
         type: 'text',
         name: 'componentsPath',
@@ -256,7 +117,7 @@ export async function init(options: InitOptions): Promise<void> {
       },
     ]);
 
-    if (!responses.baseColor) {
+    if (responses.componentsPath === undefined) {
       logger.error('Initialization cancelled.');
       process.exit(1);
     }
@@ -280,56 +141,83 @@ export async function init(options: InitOptions): Promise<void> {
     await writeComponentFile(cwd, `${utilsPath}${utilsExt}`, utilsContent);
     writeSpinner.text = `Created ${utilsPath}${utilsExt}`;
 
-    // Write/update CSS file if it doesn't exist or is empty
+    // Write happly-theme.css
     const cssPath = config.tailwind.css;
-    const fullCssPath = path.join(cwd, cssPath);
-    const cssTemplate =
-      projectInfo.tailwindVersion === 4 ? CSS_TEMPLATE_V4 : CSS_TEMPLATE_V3;
+    const cssDir = path.dirname(path.join(cwd, cssPath));
+    const themePath = path.join(cssDir, HAPPLY_THEME_FILE);
+    const themeContent =
+      projectInfo.tailwindVersion === 4 ? HAPPLY_THEME_V4 : HAPPLY_THEME_V3;
 
-    if (!existsSync(fullCssPath)) {
-      await writeComponentFile(cwd, cssPath, cssTemplate);
-      writeSpinner.text = `Created ${cssPath}`;
-    } else {
-      // Check if CSS already has our variables
-      const existingCss = await readFile(fullCssPath, 'utf-8');
-      if (!existingCss.includes('--background:')) {
-        // For v4, we need to handle @import "tailwindcss" differently
-        if (
-          projectInfo.tailwindVersion === 4 &&
-          existingCss.includes('@import "tailwindcss"')
-        ) {
-          // Insert our variables after the import
-          const updatedCss = existingCss.replace(
-            '@import "tailwindcss";',
-            cssTemplate
-          );
-          await writeFile(fullCssPath, updatedCss, 'utf-8');
-        } else {
-          // Check if @tailwind directives exist
-          if (existingCss.includes('@tailwind base')) {
-            const templateWithoutDirectives = cssTemplate.replace(
-              /@tailwind\s+(base|components|utilities);\n?/g,
-              ''
-            );
-            await writeFile(
-              fullCssPath,
-              existingCss + '\n' + templateWithoutDirectives,
-              'utf-8'
-            );
-          } else {
-            // Prepend our CSS variables
-            await writeFile(
-              fullCssPath,
-              cssTemplate + '\n' + existingCss,
-              'utf-8'
-            );
-          }
-        }
-        writeSpinner.text = `Updated ${cssPath}`;
+    if (existsSync(themePath) && !useDefaults) {
+      const { overwriteTheme } = await prompts({
+        type: 'confirm',
+        name: 'overwriteTheme',
+        message: `${HAPPLY_THEME_FILE} already exists. Overwrite?`,
+        initial: true,
+      });
+
+      if (overwriteTheme) {
+        await writeFile(themePath, themeContent, 'utf-8');
+        writeSpinner.text = `Updated ${HAPPLY_THEME_FILE}`;
       }
+    } else {
+      await writeFile(themePath, themeContent, 'utf-8');
+      writeSpinner.text = `Created ${HAPPLY_THEME_FILE}`;
     }
 
-    // Apply Happly UI Tailwind Configuration (Colors, Typography, etc)
+    // Add @import to user's main CSS file
+    const fullCssPath = path.join(cwd, cssPath);
+    if (existsSync(fullCssPath)) {
+      let existingCss = await readFile(fullCssPath, 'utf-8');
+
+      // Detect existing design tokens and log info
+      if (
+        existingCss.includes('--background:') ||
+        existingCss.includes('--foreground:')
+      ) {
+        logger.info(
+          'Existing shadcn design tokens detected. These will continue to work alongside HapplyUI tokens.'
+        );
+      }
+      if (existingCss.includes('--color-neutral-') || existingCss.includes('--color-primary-')) {
+        logger.info(
+          'Existing design system tokens detected. Your tokens will take precedence over happly-theme.css defaults.'
+        );
+      }
+
+      // Add import for happly-theme.css if not already present
+      if (!existingCss.includes(HAPPLY_THEME_FILE)) {
+        const importStatement = `@import "./${HAPPLY_THEME_FILE}";\n`;
+
+        if (projectInfo.tailwindVersion === 4) {
+          // For v4: add after @import "tailwindcss" if present
+          if (existingCss.includes('@import "tailwindcss"')) {
+            existingCss = existingCss.replace(
+              '@import "tailwindcss";',
+              `@import "tailwindcss";\n${importStatement}`
+            );
+          } else {
+            existingCss = importStatement + existingCss;
+          }
+        } else {
+          // For v3: add at the top (before @tailwind directives)
+          existingCss = importStatement + existingCss;
+        }
+
+        await writeFile(fullCssPath, existingCss, 'utf-8');
+        writeSpinner.text = `Updated ${cssPath} with happly-theme import`;
+      }
+    } else {
+      // Create CSS file with import
+      const cssContent =
+        projectInfo.tailwindVersion === 4
+          ? `@import "tailwindcss";\n@import "./${HAPPLY_THEME_FILE}";\n`
+          : `@import "./${HAPPLY_THEME_FILE}";\n\n@tailwind base;\n@tailwind components;\n@tailwind utilities;\n`;
+      await writeComponentFile(cwd, cssPath, cssContent);
+      writeSpinner.text = `Created ${cssPath}`;
+    }
+
+    // Apply Happly UI Tailwind Configuration (v3 only needs tailwind.config update)
     writeSpinner.text = 'Applying Happly UI design tokens...';
     await updateTailwindConfig(cwd, config, projectInfo.tailwindVersion);
 
@@ -348,16 +236,11 @@ export async function init(options: InitOptions): Promise<void> {
       packageManager: projectInfo.packageManager,
     });
 
-    // Install class-variance-authority for variants
-    await installDependencies(cwd, ['class-variance-authority'], {
-      packageManager: projectInfo.packageManager,
-    });
-
     installSpinner.succeed('Dependencies installed');
   } catch {
     installSpinner.fail('Failed to install dependencies');
     logger.warn(
-      'Please install manually: clsx tailwind-merge class-variance-authority'
+      'Please install manually: clsx tailwind-merge'
     );
   }
 
@@ -384,8 +267,6 @@ function createDefaultConfig(
       config: projectInfo.tailwindConfig || 'tailwind.config.ts',
       css:
         projectInfo.tailwindCss || (isSrcDir ? 'src/index.css' : 'index.css'),
-      baseColor: 'slate',
-      cssVariables: true,
     },
     tsx: projectInfo.isTypeScript,
     aliases: {
@@ -403,8 +284,6 @@ function createConfig(
     ? T
     : never,
   responses: {
-    baseColor: BaseColor;
-    cssVariables: boolean;
     componentsPath: string;
     utilsPath: string;
   }
@@ -418,8 +297,6 @@ function createConfig(
       css:
         projectInfo.tailwindCss ||
         (projectInfo.isSrcDir ? 'src/index.css' : 'index.css'),
-      baseColor: responses.baseColor,
-      cssVariables: responses.cssVariables,
     },
     tsx: projectInfo.isTypeScript,
     aliases: {

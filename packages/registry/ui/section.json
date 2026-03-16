@@ -1,0 +1,102 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "section",
+  "type": "registry:ui",
+  "title": "Section",
+  "description": "A two-column section layout with a title/description header on the left and content area on the right. Uses namespace exports: Section.Root, Section.Header, Section.Title, Section.Description, Section.Content, Section.Composed (composed).",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": ["happly-ui-utils"],
+  "docs": {
+    "lead": "A two-column section layout for organizing form fields and content with a descriptive header.",
+    "usage": "import * as Section from \"@/components/ui/section\"\n\n// Composed (recommended)\n<Section.Composed title=\"Title\" description=\"Description\">\n  {children}\n</Section.Composed>\n\n// Namespace\n<Section.Root>\n  <Section.Header>\n    <Section.Title>Title</Section.Title>\n    <Section.Description>Description</Section.Description>\n  </Section.Header>\n  <Section.Content>\n    {children}\n  </Section.Content>\n</Section.Root>",
+    "examples": [
+      {
+        "title": "Composed",
+        "description": "Simplified single-component API with title and description as props.",
+        "code": "<Section.Composed\n  title=\"Enter your business details\"\n  description=\"Share the key details about your business.\"\n>\n  {children}\n</Section.Composed>",
+        "stories": ["Composed"]
+      },
+      {
+        "title": "Default",
+        "description": "Standard two-column section with title, description, and form content using namespace pattern.",
+        "code": "<Section.Root>\n  <Section.Header>\n    <Section.Title>Enter your business details</Section.Title>\n    <Section.Description>Share the key details about your business.</Section.Description>\n  </Section.Header>\n  <Section.Content>\n    {children}\n  </Section.Content>\n</Section.Root>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Custom Header Width",
+        "description": "Section with a narrower header column.",
+        "code": "<Section.Root>\n  <Section.Header className=\"w-[200px]\">\n    <Section.Title>Short header</Section.Title>\n    <Section.Description>Narrower left column.</Section.Description>\n  </Section.Header>\n  <Section.Content>{children}</Section.Content>\n</Section.Root>",
+        "stories": ["WithCustomHeaderWidth"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Section.Composed",
+        "description": "Composed version — renders the full section from props.",
+        "props": [
+          {
+            "name": "title",
+            "type": "string",
+            "description": "The section title"
+          },
+          {
+            "name": "description",
+            "type": "string",
+            "description": "The section description"
+          },
+          {
+            "name": "headerClassName",
+            "type": "string",
+            "description": "Additional classes for the header column"
+          },
+          {
+            "name": "contentClassName",
+            "type": "string",
+            "description": "Additional classes for the content area"
+          }
+        ]
+      },
+      {
+        "name": "Section.Root",
+        "description": "The outer container with white background and rounded corners.",
+        "props": [
+          {
+            "name": "className",
+            "type": "string",
+            "description": "Additional classes for the root container"
+          }
+        ]
+      },
+      {
+        "name": "Section.Header",
+        "description": "The left-side header column (fixed 286px width by default).",
+        "props": [
+          {
+            "name": "className",
+            "type": "string",
+            "description": "Override width or other styles"
+          }
+        ]
+      },
+      {
+        "name": "Section.Title",
+        "description": "The section title text."
+      },
+      {
+        "name": "Section.Description",
+        "description": "The section description text."
+      },
+      {
+        "name": "Section.Content",
+        "description": "The right-side content area that fills remaining space."
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/section.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

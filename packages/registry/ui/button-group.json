@@ -1,0 +1,90 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "button-group",
+  "type": "registry:ui",
+  "title": "Button Group",
+  "description": "A compound button group component with sizes, icons, and toggle group support via asChild. Uses namespace exports: ButtonGroup.Root, ButtonGroup.Item, ButtonGroup.Icon.",
+  "version": "1.0.0",
+  "dependencies": [
+    "@radix-ui/react-slot"
+  ],
+  "registryDependencies": [
+    "tv",
+    "polymorphic",
+    "recursive-clone-children"
+  ],
+  "docs": {
+    "lead": "A compound button group component with sizes, icons, and toggle group support via asChild.",
+    "usage": "import * as ButtonGroup from \"@/components/ui/button-group\"\n\n<ButtonGroup.Root>\n  <ButtonGroup.Item>\n    <ButtonGroup.Icon as={GridIcon} />\n    Grid view\n  </ButtonGroup.Item>\n  <ButtonGroup.Item>List view</ButtonGroup.Item>\n</ButtonGroup.Root>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "A basic button group with icons and labels.",
+        "code": "<ButtonGroup.Root>\n  <ButtonGroup.Item>\n    <ButtonGroup.Icon as={RiLayoutGridLine} />\n    Grid view\n  </ButtonGroup.Item>\n  <ButtonGroup.Item>\n    <ButtonGroup.Icon as={RiListCheck} />\n    List view\n  </ButtonGroup.Item>\n  <ButtonGroup.Item>\n    <ButtonGroup.Icon as={RiLayout2Line} />\n    Gallery view\n  </ButtonGroup.Item>\n</ButtonGroup.Root>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Sizes",
+        "description": "Button groups come in small (default), xsmall, and xxsmall sizes.",
+        "code": "<ButtonGroup.Root size=\"small\">...</ButtonGroup.Root>\n<ButtonGroup.Root size=\"xsmall\">...</ButtonGroup.Root>\n<ButtonGroup.Root size=\"xxsmall\">...</ButtonGroup.Root>",
+        "stories": ["Sizes"]
+      }
+    ],
+    "api": [
+      {
+        "name": "ButtonGroup.Root",
+        "description": "The container that groups items together with negative spacing.",
+        "props": [
+          {
+            "name": "size",
+            "type": "'small' | 'xsmall' | 'xxsmall'",
+            "default": "'small'",
+            "description": "The size of the button group items"
+          },
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Renders as child element using Radix Slot"
+          }
+        ]
+      },
+      {
+        "name": "ButtonGroup.Item",
+        "description": "An individual button within the group. Supports active state via data-[state=on].",
+        "props": [
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Renders as child element using Radix Slot"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disables the button item"
+          }
+        ]
+      },
+      {
+        "name": "ButtonGroup.Icon",
+        "description": "Polymorphic icon container that receives size from ButtonGroup.Root.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "default": "'div'",
+            "description": "The element or component to render as"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/button-group.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

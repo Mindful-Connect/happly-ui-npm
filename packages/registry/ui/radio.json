@@ -1,0 +1,108 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "radio",
+  "type": "registry:ui",
+  "title": "Radio",
+  "description": "A radio group component with animated SVG indicator and primary/neutral variants. Uses namespace exports: Radio.Group, Radio.Item.",
+  "version": "1.0.0",
+  "dependencies": [
+    "@radix-ui/react-radio-group"
+  ],
+  "registryDependencies": [
+    "happly-ui-utils"
+  ],
+  "docs": {
+    "lead": "A radio group component with animated SVG indicator and primary/neutral color variants.",
+    "usage": "import * as Radio from \"@/components/ui/radio\"\n\n<Radio.Group defaultValue=\"r1\">\n  <Radio.Item value=\"r1\" />\n  <Radio.Item value=\"r2\" />\n</Radio.Group>",
+    "examples": [
+      {
+        "title": "Demo",
+        "description": "Basic radio group.",
+        "code": "<Radio.Group defaultValue=\"r1\" className=\"flex gap-2\">\n  <Radio.Item value=\"r1\" />\n  <Radio.Item value=\"r2\" />\n</Radio.Group>",
+        "stories": ["Demo"]
+      },
+      {
+        "title": "Variants",
+        "description": "Primary and neutral color variants.",
+        "code": "<Radio.Group variant=\"primary\" defaultValue=\"r1\">\n  <Radio.Item value=\"r1\" />\n</Radio.Group>\n<Radio.Group variant=\"neutral\" defaultValue=\"r1\">\n  <Radio.Item value=\"r1\" />\n</Radio.Group>",
+        "stories": ["Variants"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Disabled radio items.",
+        "code": "<Radio.Group defaultValue=\"r1\">\n  <Radio.Item value=\"r1\" disabled />\n  <Radio.Item value=\"r2\" disabled />\n</Radio.Group>",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "With Label",
+        "description": "Radio group composed with Label component.",
+        "code": "<Radio.Group defaultValue=\"spam\">\n  <div className=\"flex items-start gap-2\">\n    <Radio.Item value=\"spam\" id=\"l1\" />\n    <Label.Root htmlFor=\"l1\">Spam</Label.Root>\n  </div>\n</Radio.Group>",
+        "stories": ["WithLabel"]
+      },
+      {
+        "title": "With Label Extended",
+        "description": "Radio with extended label layouts including sublabels, badges, descriptions, and link buttons.",
+        "code": "<Radio.Group defaultValue=\"r1\">\n  <div className=\"flex items-center gap-2\">\n    <Radio.Item value=\"r1\" id=\"r1\" />\n    <Label.Root htmlFor=\"r1\">\n      Label\n      <Label.Sub>(Sublabel)</Label.Sub>\n    </Label.Root>\n  </div>\n</Radio.Group>",
+        "stories": ["WithLabelExtended"]
+      },
+      {
+        "title": "With Form Field",
+        "description": "Radio group composed with FormField for consistent label and hint.",
+        "code": "<FormField.Root label=\"Report Reason\" required hint=\"Select the reason for your report.\">\n  <Radio.Group defaultValue=\"spam\" className=\"flex flex-col gap-3\">\n    <div className=\"flex items-center gap-2\">\n      <Radio.Item value=\"spam\" id=\"report-spam\" />\n      <Label.Root htmlFor=\"report-spam\" className=\"text-paragraph-sm\">\n        Spam\n      </Label.Root>\n    </div>\n    <div className=\"flex items-center gap-2\">\n      <Radio.Item value=\"harassment\" id=\"report-harassment\" />\n      <Label.Root htmlFor=\"report-harassment\" className=\"text-paragraph-sm\">\n        Harassment\n      </Label.Root>\n    </div>\n    <div className=\"flex items-center gap-2\">\n      <Radio.Item value=\"violation\" id=\"report-violation\" />\n      <Label.Root htmlFor=\"report-violation\" className=\"text-paragraph-sm\">\n        Violation of Rules\n      </Label.Root>\n    </div>\n  </Radio.Group>\n</FormField.Root>",
+        "stories": ["WithFormField"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Radio.Group",
+        "description": "The radio group container. Extends Radix RadioGroup.Root props.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'primary' | 'neutral'",
+            "default": "'primary'",
+            "description": "Color variant for the checked indicator"
+          },
+          {
+            "name": "defaultValue",
+            "type": "string",
+            "description": "Default selected value for uncontrolled usage"
+          },
+          {
+            "name": "value",
+            "type": "string",
+            "description": "Controlled selected value"
+          },
+          {
+            "name": "onValueChange",
+            "type": "(value: string) => void",
+            "description": "Callback when the selected value changes"
+          }
+        ]
+      },
+      {
+        "name": "Radio.Item",
+        "description": "An individual radio item with animated SVG indicator.",
+        "props": [
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The value of this radio item"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disable this radio item"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/radio.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

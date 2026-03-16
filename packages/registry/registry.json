@@ -4,10 +4,16 @@
   "homepage": "https://happly.cloud/ui",
   "items": [
     {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "A collapsible accordion component with filled and stroke variants. Includes a composed Accordion.Group for quick usage. Built on Radix Accordion with namespace exports."
+    },
+    {
       "name": "alert",
       "type": "registry:ui",
       "title": "Alert",
-      "description": "Displays a callout for user attention."
+      "description": "A versatile alert component with multiple variants (filled, light, lighter, stroke), status colors (error, warning, success, information, feature), and sizes. Uses namespace exports: Alert.Root, Alert.Icon, Alert.CloseIcon."
     },
     {
       "name": "alert-utils",
@@ -16,58 +22,100 @@
       "description": "Utility functions and types for the Alert component."
     },
     {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "A compound avatar component with image, text, placeholder, status indicator, brand logo, and notification support. Uses namespace exports: Avatar.Root, Avatar.Image, Avatar.Indicator, Avatar.Status, Avatar.BrandLogo, Avatar.Notification."
+    },
+    {
+      "name": "avatar-empty-icons",
+      "type": "registry:ui",
+      "title": "Avatar Empty Icons",
+      "description": "SVG placeholder icons for the Avatar component (user and company silhouettes)."
+    },
+    {
+      "name": "avatar-group",
+      "type": "registry:ui",
+      "title": "Avatar Group",
+      "description": "A compound component for displaying overlapping avatar stacks with an overflow indicator. Uses namespace exports: AvatarGroup.Root, AvatarGroup.Overflow."
+    },
+    {
+      "name": "avatar-group-compact",
+      "type": "registry:ui",
+      "title": "Avatar Group Compact",
+      "description": "A compact avatar group component with pill-shaped container, overlapping avatar stack, and overflow count. Uses namespace exports: AvatarGroupCompact.Root, AvatarGroupCompact.Stack, AvatarGroupCompact.Overflow."
+    },
+    {
       "name": "badge",
       "type": "registry:ui",
       "title": "Badge",
-      "description": "A badge component for status indicators."
+      "description": "A compound badge component with variants, colors, sizes, dot indicators, and polymorphic icon support. Uses namespace exports: Badge.Root, Badge.Icon, Badge.Dot."
+    },
+    {
+      "name": "banner",
+      "type": "registry:ui",
+      "title": "Banner",
+      "description": "A full-width banner component for alerts and announcements with multiple variants, statuses, and polymorphic icon support. Uses namespace exports: Banner.Root, Banner.Content, Banner.Icon, Banner.CloseButton."
     },
     {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
-      "description": "A button component with multiple variants, modes, and sizes. Use namespace import: import { Button } from '@/components/ui/button'. Supports new variant system."
+      "description": "A compound button component with variants, modes, sizes, and polymorphic icon support. Uses namespace exports: Button.Root, Button.Icon."
     },
     {
-      "name": "calendar-input",
+      "name": "button-group",
       "type": "registry:ui",
-      "title": "Calendar Input",
-      "description": "A date input component with calendar popover."
+      "title": "Button Group",
+      "description": "A compound button group component with sizes, icons, and toggle group support via asChild. Uses namespace exports: ButtonGroup.Root, ButtonGroup.Item, ButtonGroup.Icon."
     },
     {
-      "name": "card",
+      "name": "checkbox",
       "type": "registry:ui",
-      "title": "Card",
-      "description": "A card container component."
+      "title": "Checkbox",
+      "description": "An animated checkbox component built on Radix UI with check and indeterminate states, primary and neutral variants. Uses namespace exports: Checkbox.Root."
     },
     {
-      "name": "circular-progress",
+      "name": "color-picker",
       "type": "registry:ui",
-      "title": "Circular Progress",
-      "description": "A circular progress indicator."
+      "title": "Color Picker",
+      "description": "A color picker with area, sliders, swatches, eye dropper, and field inputs. Uses namespace exports: ColorPicker.Root, ColorPicker.Area, ColorPicker.Slider, ColorPicker.SliderTrack, ColorPicker.Thumb, ColorPicker.Field, ColorPicker.Swatch, ColorPicker.SwatchPicker, ColorPicker.SwatchPickerItem, ColorPicker.EyeDropperButton."
     },
     {
-      "name": "command",
+      "name": "combo-box",
       "type": "registry:ui",
-      "title": "Command",
-      "description": "Fast, composable, unstyled command menu for React."
+      "title": "Combo Box",
+      "description": "A searchable multi-select combo box with compound components for full composability."
+    },
+    {
+      "name": "command-menu",
+      "type": "registry:ui",
+      "title": "Command Menu",
+      "description": "A command menu component built on cmdk and Modal with search input, grouped items, and keyboard navigation footer. Uses namespace exports: CommandMenu.Dialog, CommandMenu.Input, CommandMenu.List, CommandMenu.Group, CommandMenu.Item, CommandMenu.ItemIcon, CommandMenu.Footer, CommandMenu.FooterKeyBox."
+    },
+    {
+      "name": "compact-button",
+      "type": "registry:ui",
+      "title": "Compact Button",
+      "description": "A small icon-only button component with variants, sizes, and optional full-radius. Uses namespace exports: CompactButton.Root, CompactButton.Icon."
     },
     {
       "name": "currency-input",
       "type": "registry:ui",
       "title": "Currency Input",
-      "description": "A currency input component with currency selection."
+      "description": "A composed currency input with inline currency symbol and currency selector dropdown. Built on Input and Select primitives."
     },
     {
-      "name": "custom-input-wrapper",
+      "name": "datepicker",
       "type": "registry:ui",
-      "title": "Custom Input Wrapper",
-      "description": "A wrapper for custom inputs with consistent styling."
+      "title": "Datepicker",
+      "description": "A calendar datepicker component with single date, range, and popover modes. Uses namespace exports: Datepicker.Calendar."
     },
     {
-      "name": "dialog",
+      "name": "digit-input",
       "type": "registry:ui",
-      "title": "Dialog",
-      "description": "A window overlaid on either the primary window or another dialog window."
+      "title": "Digit Input",
+      "description": "An OTP/digit input component with configurable number of slots, error, and disabled states. Uses namespace exports: DigitInput.Root."
     },
     {
       "name": "divider",
@@ -76,34 +124,160 @@
       "description": "A versatile divider component for creating visual separation between content elements. Supports multiple variants including line, text, and content dividers."
     },
     {
+      "name": "dot-stepper",
+      "type": "registry:ui",
+      "title": "Dot Stepper",
+      "description": "A minimal dot-based stepper/pagination component with small and xsmall sizes. Supports asChild for Radix integration. Uses namespace exports: DotStepper.Root, DotStepper.Item."
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "A slide-in drawer panel built on Radix UI Dialog with overlay, header, body, and footer sections. Uses namespace exports: Drawer.Root, Drawer.Trigger, Drawer.Content, Drawer.Header, Drawer.Title, Drawer.Body, Drawer.Footer, Drawer.Close."
+    },
+    {
+      "name": "dropdown",
+      "type": "registry:ui",
+      "title": "Dropdown",
+      "description": "A dropdown menu component built on Radix UI with items, groups, labels, sub-menus, and directional animations. Uses namespace exports: Dropdown.Root, Dropdown.Trigger, Dropdown.Content, Dropdown.Item, Dropdown.ItemIcon, Dropdown.Group, Dropdown.Label, Dropdown.MenuSub, Dropdown.MenuSubTrigger, Dropdown.MenuSubContent."
+    },
+    {
+      "name": "emoji-dialog",
+      "type": "registry:ui",
+      "title": "Emoji Dialog",
+      "description": "An animated modal dialog with memoji avatars, glassmorphism circle, speech bubbles, and decorative grid background. Uses namespace exports: EmojiDialog.Root, EmojiDialog.Content, EmojiDialog.EmojiArea, EmojiDialog.Bubble, EmojiDialog.Header, EmojiDialog.Title, EmojiDialog.Description, EmojiDialog.Footer."
+    },
+    {
+      "name": "fancy-button",
+      "type": "registry:ui",
+      "title": "Fancy Button",
+      "description": "A compound button component with gradient overlay effects, multiple variants, and sizes. Uses namespace exports: FancyButton.Root, FancyButton.Icon."
+    },
+    {
+      "name": "file-card",
+      "type": "registry:ui",
+      "title": "File Card",
+      "description": "A card component for displaying file state with thumbnail, progress, download, and actions."
+    },
+    {
+      "name": "file-format-icon",
+      "type": "registry:ui",
+      "title": "File Format Icon",
+      "description": "A file icon with a colored format badge, useful for representing file types."
+    },
+    {
+      "name": "file-upload",
+      "type": "registry:ui",
+      "title": "File Upload",
+      "description": "A dropzone-style file upload area with type presets for document, image, video, audio, and attachment uploads."
+    },
+    {
+      "name": "form-field",
+      "type": "registry:ui",
+      "title": "Form Field",
+      "description": "A smart form field wrapper with built-in label, hint, and error support. Props-driven or compound mode. Uses namespace exports: FormField.Root, FormField.Label, FormField.Hint, FormField.Error."
+    },
+    {
       "name": "happly-ui-utils",
       "type": "registry:lib",
       "title": "Happly UI Utils",
       "description": "Utility functions for class name merging."
     },
     {
+      "name": "hint",
+      "type": "registry:ui",
+      "title": "Hint",
+      "description": "A hint text component for form fields with icon, error, disabled states, and composed mode. Uses namespace exports: Hint.Root, Hint.Icon, Hint.Composed."
+    },
+    {
+      "name": "info-card",
+      "type": "registry:ui",
+      "title": "Info Card",
+      "description": "A reusable section for displaying labeled detail items in flexible layouts (inline, grid, stack, wrap)."
+    },
+    {
+      "name": "info-grid",
+      "type": "registry:ui",
+      "title": "Info Grid",
+      "description": "A configurable card-based grid layout with automatic dividers and corner rounding. Cells accept any children — compose with KeyIcon, Badge, or any custom content."
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
-      "description": "A text input component."
+      "description": "A compound input component with wrapper, icons, affixes, and inline affixes. Uses namespace exports: Input.Root, Input.Wrapper, Input.Input, Input.Icon, Input.Affix, Input.InlineAffix."
+    },
+    {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "Kbd",
+      "description": "A keyboard key indicator component for displaying keyboard shortcuts. Uses namespace export: Kbd.Root."
     },
     {
       "name": "key-icon",
       "type": "registry:ui",
       "title": "Key Icon",
-      "description": "An icon container with various styles and colors."
+      "description": "An icon container with various styles, sizes, and colors."
     },
     {
       "name": "label",
       "type": "registry:ui",
       "title": "Label",
-      "description": "A label component for form inputs."
+      "description": "A label component with asterisk indicator, sub-text, info icon, and composed mode. Uses namespace exports: Label.Root, Label.Asterisk, Label.Sub, Label.InfoIcon, Label.Info, Label.Composed."
+    },
+    {
+      "name": "level-bar",
+      "type": "registry:ui",
+      "title": "Level Bar",
+      "description": "A segmented level indicator for displaying strength, progress, or multi-step status."
+    },
+    {
+      "name": "link-button",
+      "type": "registry:ui",
+      "title": "Link Button",
+      "description": "A text-style button component with underline decoration, multiple variants, and polymorphic icon support. Uses namespace exports: LinkButton.Root, LinkButton.Icon."
     },
     {
       "name": "location-input",
       "type": "registry:ui",
       "title": "Location Input",
-      "description": "A Google Maps address autocomplete input."
+      "description": "A Google Maps address autocomplete input with Popover dropdown."
+    },
+    {
+      "name": "logo-upload",
+      "type": "registry:ui",
+      "title": "Logo Upload",
+      "description": "A compound component for uploading logos or profile images with avatar preview, powered by useFileUpload."
+    },
+    {
+      "name": "markdown-editor",
+      "type": "registry:ui",
+      "title": "Markdown Editor",
+      "description": "A markdown text editor with formatting toolbar, preview mode, and built-in English/French language toggle. Supports single-language and multi-language modes with per-language value objects. Compound or composed mode. Works with FormField."
+    },
+    {
+      "name": "memoji",
+      "type": "registry:lib",
+      "title": "Memoji",
+      "description": "Memoji types, constants, and URL helper for rendering Happly memoji avatars."
+    },
+    {
+      "name": "modal",
+      "type": "registry:ui",
+      "title": "Modal",
+      "description": "A modal dialog component built on Radix UI Dialog with overlay, header, body, and footer sections. Uses namespace exports: Modal.Root, Modal.Trigger, Modal.Content, Modal.Header, Modal.Title, Modal.Description, Modal.Body, Modal.Footer, Modal.Close, Modal.Portal, Modal.Overlay."
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "A pagination component with basic, rounded, and group variants. Supports asChild for link-based navigation. Uses namespace exports: Pagination.Root, Pagination.Item, Pagination.NavButton, Pagination.NavIcon."
+    },
+    {
+      "name": "password-input",
+      "type": "registry:ui",
+      "title": "Password Input",
+      "description": "A composed password input with show/hide toggle and optional strength indicator with criteria checklist."
     },
     {
       "name": "phone-input",
@@ -121,25 +295,37 @@
       "name": "popover",
       "type": "registry:ui",
       "title": "Popover",
-      "description": "Displays rich content in a portal or inline, triggered by a button."
+      "description": "A popover component built on Radix UI with arrow indicator, close button, and directional animations. Uses namespace exports: Popover.Root, Popover.Trigger, Popover.Content, Popover.Close, Popover.Anchor."
     },
     {
       "name": "progress-bar",
       "type": "registry:ui",
       "title": "Progress Bar",
-      "description": "A progress bar component indicating the completion status of a task."
+      "description": "A progress bar component indicating the completion status of a task with multiple color options."
     },
     {
-      "name": "radio-card-group",
+      "name": "progress-circle",
       "type": "registry:ui",
-      "title": "Radio Card Group",
-      "description": "A radio group component with card styling, supporting icons, badges, and descriptions."
+      "title": "Progress Circle",
+      "description": "A circular progress indicator with SVG ring, multiple sizes, customizable color, and optional centered text content. Uses namespace exports: ProgressCircle.Root."
     },
     {
-      "name": "radio-group",
+      "name": "promotional-card",
       "type": "registry:ui",
-      "title": "Radio Group",
-      "description": "A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time."
+      "title": "Promotional Card",
+      "description": "A compact card for promotional content with icon, decorative background, title, description, and optional link. Uses namespace exports: PromotionalCard.Root, PromotionalCard.Icon, PromotionalCard.Decoration, PromotionalCard.Content, PromotionalCard.Title, PromotionalCard.Description, PromotionalCard.Link, PromotionalCard.Composed."
+    },
+    {
+      "name": "radio",
+      "type": "registry:ui",
+      "title": "Radio",
+      "description": "A radio group component with animated SVG indicator and primary/neutral variants. Uses namespace exports: Radio.Group, Radio.Item."
+    },
+    {
+      "name": "radio-card",
+      "type": "registry:ui",
+      "title": "Radio Card",
+      "description": "A composable radio input styled as a card. Compose with Title, Description, Content, Indicator, KeyIcon, and Badge sub-components."
     },
     {
       "name": "recursive-clone-children",
@@ -148,34 +334,106 @@
       "description": "Utility to recursively clone React children and inject shared props."
     },
     {
-      "name": "searchable-combo-box",
+      "name": "section",
       "type": "registry:ui",
-      "title": "Searchable Combo Box",
-      "description": "A searchable multi-select combobox component with portal controls, ad-hoc creation, and tag selection."
+      "title": "Section",
+      "description": "A two-column section layout with a title/description header on the left and content area on the right. Uses namespace exports: Section.Root, Section.Header, Section.Title, Section.Description, Section.Content, Section.Composed (composed)."
+    },
+    {
+      "name": "section-toggle",
+      "type": "registry:ui",
+      "title": "Section Toggle",
+      "description": "A collapsible section with a title, description, and switch toggle that reveals content when enabled. Uses namespace exports: SectionToggle.Root, SectionToggle.Header, SectionToggle.TextGroup, SectionToggle.Title, SectionToggle.Description, SectionToggle.Content, SectionToggle.Composed (composed)."
     },
     {
       "name": "select",
       "type": "registry:ui",
       "title": "Select",
-      "description": "A customizable select component based on Radix UI, supporting various sizes and display variants."
+      "description": "A select component with multiple variants, sizes, scroll area, and item icons. Uses namespace exports: Select.Root, Select.Trigger, Select.Value, Select.Content, Select.Item, Select.ItemIcon, Select.Group, Select.GroupLabel, Select.Separator, Select.TriggerIcon."
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "A placeholder loading animation for content that hasn't loaded yet."
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "A slider component with single and range modes, primary and neutral variants. Uses namespace exports: Slider.Root, Slider.Thumb."
+    },
+    {
+      "name": "smart-matching-ai",
+      "type": "registry:ui",
+      "title": "Smart Matching AI",
+      "description": "A decorative AI indicator orb with rainbow gradient and sparkle icons."
     },
     {
       "name": "socials-input",
       "type": "registry:ui",
       "title": "Socials Input",
-      "description": "A dynamic input list for social media URLs with validation and icons."
+      "description": "A searchable social media URL picker with tag chips and inline URL editing."
+    },
+    {
+      "name": "status-badge",
+      "type": "registry:ui",
+      "title": "Status Badge",
+      "description": "A compact status indicator badge with icon or dot variants and semantic status colors (completed, pending, failed, disabled). Uses namespace exports: StatusBadge.Root, StatusBadge.Icon, StatusBadge.Dot."
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "A toggle switch component with primary and neutral variants. Uses namespace exports: Switch.Root."
+    },
+    {
+      "name": "switch-toggle",
+      "type": "registry:ui",
+      "title": "Switch Toggle",
+      "description": "A tab-based switch toggle with animated floating background indicator. Includes a composed SwitchToggle.Group for quick usage. Uses Radix Tabs with namespace exports."
+    },
+    {
+      "name": "tab-menu-horizontal",
+      "type": "registry:ui",
+      "title": "Tab Menu Horizontal",
+      "description": "A horizontal pill-shaped tab menu with selected/unselected states, icon and counter support. Uses namespace exports: TabMenuHorizontal.Root, TabMenuHorizontal.Item, TabMenuHorizontal.Icon, TabMenuHorizontal.Counter, TabMenuHorizontal.Composed."
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "A styled HTML table component with header, body, row dividers, and cell sub-components. Uses namespace exports: Table.Root, Table.Header, Table.Body, Table.Head, Table.Row, Table.RowDivider, Table.Cell, Table.Caption."
     },
     {
       "name": "tag",
       "type": "registry:ui",
       "title": "Tag",
-      "description": "A compact tag component for labeling and categorization."
+      "description": "A compact tag component for labeling and categorization with icon, image, avatar, and dismiss support. Uses namespace exports: Tag.Root, Tag.Icon, Tag.DismissButton."
+    },
+    {
+      "name": "tag-input",
+      "type": "registry:ui",
+      "title": "Tag Input",
+      "description": "A tag input component with controlled/uncontrolled pattern, add-on-Enter, remove-on-dismiss, backspace-to-delete-last."
     },
     {
       "name": "textarea",
       "type": "registry:ui",
       "title": "Textarea",
-      "description": "A textarea component."
+      "description": "A textarea component with character counter, resize handle, error state, and simple mode. Uses namespace exports: Textarea.Root, Textarea.CharCounter."
+    },
+    {
+      "name": "theme-provider",
+      "type": "registry:ui",
+      "title": "Theme Provider",
+      "description": "Generates a primary color palette from a single hex color and applies it as CSS custom properties."
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "A tooltip component built on Radix UI with dark/light variants, multiple sizes, and arrow indicator. Uses namespace exports: Tooltip.Root, Tooltip.Trigger, Tooltip.Content."
     },
     {
       "name": "tv",
@@ -184,10 +442,16 @@
       "description": "Tailwind Variants wrapper with cn() for class merging."
     },
     {
-      "name": "upload-file-input",
-      "type": "registry:ui",
-      "title": "Upload File Input",
-      "description": "A file upload component with support for drag and drop, multiple files, and S3/GCS integration."
+      "name": "use-file-upload",
+      "type": "registry:hook",
+      "title": "useFileUpload",
+      "description": "Hook for managing file uploads with presigned URLs, progress tracking, and file state."
+    },
+    {
+      "name": "use-tab-observer",
+      "type": "registry:hook",
+      "title": "useTabObserver",
+      "description": "Hook to observe active tab changes using ResizeObserver and MutationObserver."
     }
   ]
 }

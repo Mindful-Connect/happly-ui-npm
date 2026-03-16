@@ -50,10 +50,16 @@ function getNodeText(node: Node) {
   return text;
 }
 
+export type SubSubsection = {
+  id: string;
+  title: string;
+  level: 4;
+};
+
 export type Subsection = H3Node['attributes'] & {
   id: string;
   title: string;
-  children?: undefined;
+  children?: Array<SubSubsection>;
 };
 
 export type Section = H2Node['attributes'] & {

@@ -1,0 +1,127 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "section-toggle",
+  "type": "registry:ui",
+  "title": "Section Toggle",
+  "description": "A collapsible section with a title, description, and switch toggle that reveals content when enabled. Uses namespace exports: SectionToggle.Root, SectionToggle.Header, SectionToggle.TextGroup, SectionToggle.Title, SectionToggle.Description, SectionToggle.Content, SectionToggle.Composed (composed).",
+  "version": "1.0.0",
+  "dependencies": ["framer-motion"],
+  "registryDependencies": ["happly-ui-utils", "switch"],
+  "docs": {
+    "lead": "A toggleable section that expands to reveal content when a switch is activated.",
+    "usage": "import * as SectionToggle from \"@/components/ui/section-toggle\"\n\n// Composed (recommended)\n<SectionToggle.Composed\n  title=\"Title\"\n  description=\"Description\"\n  open={open}\n  onOpenChange={setOpen}\n>\n  {children}\n</SectionToggle.Composed>\n\n// Namespace\n<SectionToggle.Root open={open}>\n  <SectionToggle.Header open={open}>\n    <SectionToggle.TextGroup>\n      <SectionToggle.Title>Title</SectionToggle.Title>\n      <SectionToggle.Description>Description</SectionToggle.Description>\n    </SectionToggle.TextGroup>\n    <Switch.Root variant=\"neutral\" checked={open} onCheckedChange={setOpen} />\n  </SectionToggle.Header>\n  <SectionToggle.Content open={open}>{children}</SectionToggle.Content>\n</SectionToggle.Root>",
+    "examples": [
+      {
+        "title": "Composed",
+        "description": "Simplified single-component API with built-in switch toggle.",
+        "code": "<SectionToggle.Composed\n  title=\"Set a deadline?\"\n  description=\"Offers close after this date.\"\n  open={open}\n  onOpenChange={setOpen}\n>\n  {children}\n</SectionToggle.Composed>",
+        "stories": ["Composed"]
+      },
+      {
+        "title": "Default (Expanded)",
+        "description": "Section toggle in its expanded state using namespace pattern.",
+        "code": "<SectionToggle.Root open={open}>\n  <SectionToggle.Header open={open}>\n    <SectionToggle.TextGroup>\n      <SectionToggle.Title>Set a deadline?</SectionToggle.Title>\n      <SectionToggle.Description>Description here.</SectionToggle.Description>\n    </SectionToggle.TextGroup>\n    <Switch.Root variant=\"neutral\" checked={open} onCheckedChange={setOpen} />\n  </SectionToggle.Header>\n  <SectionToggle.Content open={open}>{children}</SectionToggle.Content>\n</SectionToggle.Root>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Collapsed",
+        "description": "Section toggle in its collapsed state.",
+        "code": "<SectionToggle.Root open={open}>\n  <SectionToggle.Header open={open}>\n    <SectionToggle.TextGroup>\n      <SectionToggle.Title>Limit offers?</SectionToggle.Title>\n      <SectionToggle.Description>Description here.</SectionToggle.Description>\n    </SectionToggle.TextGroup>\n    <Switch.Root variant=\"neutral\" checked={open} onCheckedChange={setOpen} />\n  </SectionToggle.Header>\n  <SectionToggle.Content open={open}>{children}</SectionToggle.Content>\n</SectionToggle.Root>",
+        "stories": ["Collapsed"]
+      }
+    ],
+    "api": [
+      {
+        "name": "SectionToggle.Composed",
+        "description": "Composed version — renders the full toggle section with built-in switch from props.",
+        "props": [
+          {
+            "name": "title",
+            "type": "ReactNode",
+            "description": "The toggle section title"
+          },
+          {
+            "name": "description",
+            "type": "ReactNode",
+            "description": "The toggle section description"
+          },
+          {
+            "name": "open",
+            "type": "boolean",
+            "default": "false",
+            "description": "Controls the expanded/collapsed state"
+          },
+          {
+            "name": "onOpenChange",
+            "type": "(open: boolean) => void",
+            "description": "Callback when the switch is toggled"
+          },
+          {
+            "name": "contentClassName",
+            "type": "string",
+            "description": "Additional classes for the content area"
+          }
+        ]
+      },
+      {
+        "name": "SectionToggle.Root",
+        "description": "The outer container with subtle background, border, and rounded corners.",
+        "props": [
+          {
+            "name": "open",
+            "type": "boolean",
+            "default": "false",
+            "description": "Controls the visual state — white background when closed, gray when open"
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "description": "Additional classes for the root container"
+          }
+        ]
+      },
+      {
+        "name": "SectionToggle.Header",
+        "description": "The header row containing text and the switch toggle.",
+        "props": [
+          {
+            "name": "open",
+            "type": "boolean",
+            "default": "false",
+            "description": "Adjusts header padding — uniform when closed, no bottom padding when open"
+          }
+        ]
+      },
+      {
+        "name": "SectionToggle.TextGroup",
+        "description": "Groups the title and description together, filling available space."
+      },
+      {
+        "name": "SectionToggle.Title",
+        "description": "The toggle section title."
+      },
+      {
+        "name": "SectionToggle.Description",
+        "description": "The toggle section description."
+      },
+      {
+        "name": "SectionToggle.Content",
+        "description": "The collapsible content area with animated height transition via framer-motion.",
+        "props": [
+          {
+            "name": "open",
+            "type": "boolean",
+            "default": "false",
+            "description": "Controls visibility with animated expand/collapse transition"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/section-toggle.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

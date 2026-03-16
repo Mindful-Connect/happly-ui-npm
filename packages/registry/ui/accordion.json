@@ -1,0 +1,186 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "accordion",
+  "type": "registry:ui",
+  "title": "Accordion",
+  "description": "A collapsible accordion component with filled and stroke variants. Includes a composed Accordion.Group for quick usage. Built on Radix Accordion with namespace exports.",
+  "version": "1.0.0",
+  "dependencies": [
+    "@radix-ui/react-accordion",
+    "@remixicon/react"
+  ],
+  "registryDependencies": [
+    "tv",
+    "polymorphic",
+    "utils"
+  ],
+  "docs": {
+    "lead": "A collapsible accordion component with filled and stroke variants. Built on Radix Accordion for full accessibility.",
+    "usage": "import * as Accordion from \"@/components/ui/accordion\"\n\n<Accordion.Root type=\"single\" collapsible>\n  <Accordion.Item value=\"a\">\n    <Accordion.Trigger>\n      <Accordion.Icon as={Icon} />\n      Title\n      <Accordion.Arrow />\n    </Accordion.Trigger>\n    <Accordion.Content>Content</Accordion.Content>\n  </Accordion.Item>\n</Accordion.Root>",
+    "examples": [
+      {
+        "title": "Default (Filled)",
+        "description": "Default filled variant with icons. Items fill with a background color when open.",
+        "code": "<Accordion.Root type='single' collapsible className='space-y-6'>\n  <Accordion.Item value='a'>\n    <Accordion.Trigger>\n      <Accordion.Icon as={RiAccountCircleLine} />\n      How do I update my account information?\n      <Accordion.Arrow />\n    </Accordion.Trigger>\n    <Accordion.Content className='px-[30px]'>\n      Insert the accordion description here.\n    </Accordion.Content>\n  </Accordion.Item>\n</Accordion.Root>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Arrow Start",
+        "description": "Arrow positioned at the start of the trigger instead of the end.",
+        "code": "<Accordion.Root type='single' collapsible className='space-y-6'>\n  <Accordion.Item value='a'>\n    <Accordion.Trigger>\n      <Accordion.Arrow />\n      Insert your accordion title here\n    </Accordion.Trigger>\n    <Accordion.Content className='pl-[30px]'>\n      Insert the accordion description here.\n    </Accordion.Content>\n  </Accordion.Item>\n</Accordion.Root>",
+        "stories": ["ArrowStart"]
+      },
+      {
+        "title": "Stroke Variant",
+        "description": "Stroke variant keeps a visible border when open instead of filling with background color.",
+        "code": "<Accordion.Root type='single' collapsible className='space-y-6'>\n  <Accordion.Item value='a' variant='stroke'>\n    <Accordion.Trigger>\n      <Accordion.Icon as={RiAccountCircleLine} />\n      Title\n      <Accordion.Arrow />\n    </Accordion.Trigger>\n    <Accordion.Content className='px-[30px]'>\n      Content\n    </Accordion.Content>\n  </Accordion.Item>\n</Accordion.Root>",
+        "stories": ["StrokeVariant"]
+      },
+      {
+        "title": "Stroke with Arrow Start",
+        "description": "Stroke variant with arrow positioned at the start.",
+        "code": "<Accordion.Root type='single' collapsible className='space-y-6'>\n  <Accordion.Item value='a' variant='stroke'>\n    <Accordion.Trigger>\n      <Accordion.Arrow />\n      Insert your accordion title here\n    </Accordion.Trigger>\n    <Accordion.Content className='pl-[30px]'>\n      Content\n    </Accordion.Content>\n  </Accordion.Item>\n</Accordion.Root>",
+        "stories": ["StrokeArrowStart"]
+      },
+      {
+        "title": "Group (Composed)",
+        "description": "Composed group component with items as props and arrow at end.",
+        "code": "const items = [\n  { value: 'a', title: 'Account info', content: 'Details...', icon: RiAccountCircleLine },\n  { value: 'b', title: 'Payments', content: 'Details...', icon: RiQuestionLine },\n];\n\n<Accordion.Group type='single' collapsible items={items} />",
+        "stories": ["GroupDefault"]
+      },
+      {
+        "title": "Group with Arrow Start",
+        "description": "Composed group with arrow positioned at the start.",
+        "code": "<Accordion.Group type='single' collapsible items={items} arrowPosition='start' />",
+        "stories": ["GroupArrowStart"]
+      },
+      {
+        "title": "Group Stroke",
+        "description": "Composed group with stroke variant.",
+        "code": "<Accordion.Group type='single' collapsible items={items} variant='stroke' />",
+        "stories": ["GroupStroke"]
+      },
+      {
+        "title": "Group Stroke Arrow Start",
+        "description": "Composed group with stroke variant and arrow at start.",
+        "code": "<Accordion.Group type='single' collapsible items={items} variant='stroke' arrowPosition='start' />",
+        "stories": ["GroupStrokeArrowStart"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Accordion.Root",
+        "description": "The root container. Wraps Radix Accordion.Root.",
+        "props": [
+          {
+            "name": "type",
+            "type": "'single' | 'multiple'",
+            "description": "Whether one or multiple items can be open at a time"
+          },
+          {
+            "name": "collapsible",
+            "type": "boolean",
+            "default": "false",
+            "description": "When type is 'single', allows closing all items"
+          }
+        ]
+      },
+      {
+        "name": "Accordion.Item",
+        "description": "An individual collapsible section.",
+        "props": [
+          {
+            "name": "value",
+            "type": "string",
+            "description": "Unique value for this item"
+          },
+          {
+            "name": "variant",
+            "type": "'filled' | 'stroke'",
+            "default": "'filled'",
+            "description": "Visual style. Filled fills with background on open, stroke keeps a border"
+          }
+        ]
+      },
+      {
+        "name": "Accordion.Trigger",
+        "description": "The clickable header that toggles the content.",
+        "props": []
+      },
+      {
+        "name": "Accordion.Icon",
+        "description": "Polymorphic icon slot for the trigger. Renders any icon component via the `as` prop.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "description": "The icon component to render"
+          }
+        ]
+      },
+      {
+        "name": "Accordion.Arrow",
+        "description": "Toggle indicator that shows +/- icons based on open state.",
+        "props": [
+          {
+            "name": "openIcon",
+            "type": "React.ElementType",
+            "default": "RiAddLine",
+            "description": "Icon shown when the item is closed"
+          },
+          {
+            "name": "closeIcon",
+            "type": "React.ElementType",
+            "default": "RiSubtractLine",
+            "description": "Icon shown when the item is open"
+          }
+        ]
+      },
+      {
+        "name": "Accordion.Content",
+        "description": "The collapsible content area with slide animation.",
+        "props": []
+      },
+      {
+        "name": "Accordion.Group",
+        "description": "Composed accordion that renders items from props. Handles arrow placement and content padding automatically.",
+        "props": [
+          {
+            "name": "items",
+            "type": "AccordionGroupItem[]",
+            "description": "Array of items with value, title, content, and optional icon"
+          },
+          {
+            "name": "variant",
+            "type": "'filled' | 'stroke'",
+            "default": "'filled'",
+            "description": "Visual style applied to all items"
+          },
+          {
+            "name": "arrowPosition",
+            "type": "'start' | 'end'",
+            "default": "'end'",
+            "description": "Position of the +/- toggle arrow"
+          },
+          {
+            "name": "type",
+            "type": "'single' | 'multiple'",
+            "description": "Whether one or multiple items can be open at a time"
+          },
+          {
+            "name": "collapsible",
+            "type": "boolean",
+            "default": "false",
+            "description": "When type is 'single', allows closing all items"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/accordion.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "file-upload",
+  "type": "registry:ui",
+  "title": "File Upload",
+  "description": "A dropzone-style file upload area with type presets for document, image, video, audio, and attachment uploads.",
+  "version": "1.1.0",
+  "dependencies": ["@radix-ui/react-slot"],
+  "registryDependencies": ["happly-ui-utils", "polymorphic"],
+  "docs": {
+    "lead": "A styled dropzone area for file uploads with built-in presets for document, image, video, audio, and attachment types. Each preset includes a unique illustration, title, description, and button text for consistent usage across the platform.",
+    "usage": "import * as FileUpload from \"@/components/ui/file-upload\"\n\n<FileUpload.Dropzone type=\"document\" />",
+    "examples": [
+      {
+        "title": "Document Upload",
+        "description": "Preset for uploading documents (PDF, DOCX, XLSX, PPTX, ZIP).",
+        "code": "<FileUpload.Dropzone type=\"document\" />",
+        "stories": ["Document"]
+      },
+      {
+        "title": "Image Upload",
+        "description": "Preset for uploading images (JPG, PNG).",
+        "code": "<FileUpload.Dropzone type=\"image\" />",
+        "stories": ["Image"]
+      },
+      {
+        "title": "Video Upload",
+        "description": "Preset for uploading videos (MP4, AVI, MOV).",
+        "code": "<FileUpload.Dropzone type=\"video\" />",
+        "stories": ["Video"]
+      },
+      {
+        "title": "Audio Upload",
+        "description": "Preset for uploading audio files (MP3, WAV).",
+        "code": "<FileUpload.Dropzone type=\"audio\" />",
+        "stories": ["Audio"]
+      },
+      {
+        "title": "Attachment Upload",
+        "description": "General-purpose attachment upload preset.",
+        "code": "<FileUpload.Dropzone type=\"attachment\" />",
+        "stories": ["Attachment"]
+      },
+      {
+        "title": "Custom Overrides",
+        "description": "Override the preset title, description, or button text.",
+        "code": "<FileUpload.Dropzone\n  type=\"image\"\n  title=\"Upload your banner image\"\n  description=\"Recommended size: 1200 × 675 px\"\n  buttonText=\"Choose Image\"\n  inputProps={{ accept: 'image/*' }}\n/>",
+        "stories": ["CustomOverrides"]
+      },
+      {
+        "title": "Dragging",
+        "description": "Visual feedback when a file is dragged over the dropzone.",
+        "code": "<FileUpload.Root dragging>\n  <FileUpload.Content>\n    <FileUpload.Title>Drop your file here</FileUpload.Title>\n    <FileUpload.Description>Release to upload</FileUpload.Description>\n  </FileUpload.Content>\n  <FileUpload.Button>Browse File</FileUpload.Button>\n</FileUpload.Root>",
+        "stories": ["Dragging"]
+      }
+    ],
+    "api": [
+      {
+        "name": "FileUpload.Dropzone",
+        "description": "A convenience preset component that renders the full dropzone based on file type.",
+        "props": [
+          {
+            "name": "type",
+            "type": "'document' | 'image' | 'video' | 'audio' | 'attachment'",
+            "description": "The upload type preset. Determines the icon, title, description, and button text."
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "description": "Override the preset title text."
+          },
+          {
+            "name": "description",
+            "type": "string",
+            "description": "Override the preset description text."
+          },
+          {
+            "name": "buttonText",
+            "type": "string",
+            "description": "Override the preset button text."
+          },
+          {
+            "name": "inputProps",
+            "type": "React.InputHTMLAttributes<HTMLInputElement>",
+            "description": "Props passed to the hidden file input (e.g., accept, multiple)."
+          }
+        ]
+      },
+      {
+        "name": "FileUpload.Root",
+        "description": "The dropzone container for custom compositions. Renders as a <label> by default.",
+        "props": [
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Merge props onto a child element instead of rendering a <label>."
+          },
+          {
+            "name": "dragging",
+            "type": "boolean",
+            "default": "false",
+            "description": "When true, applies a highlighted border and background to indicate drag-over state."
+          }
+        ]
+      },
+      {
+        "name": "FileUpload.Content",
+        "description": "Wrapper for the title and description with consistent vertical spacing.",
+        "props": []
+      },
+      {
+        "name": "FileUpload.Title",
+        "description": "The main heading text inside the dropzone.",
+        "props": []
+      },
+      {
+        "name": "FileUpload.Description",
+        "description": "Secondary description text (e.g., accepted formats, size limits).",
+        "props": []
+      },
+      {
+        "name": "FileUpload.Button",
+        "description": "A visual button inside the dropzone.",
+        "props": []
+      },
+      {
+        "name": "FileUpload.Icon",
+        "description": "A polymorphic icon slot for custom compositions.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "default": "'div'",
+            "description": "The element or component to render."
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/file-upload.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

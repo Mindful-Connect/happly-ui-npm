@@ -1,0 +1,114 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "link-button",
+  "type": "registry:ui",
+  "title": "Link Button",
+  "description": "A text-style button component with underline decoration, multiple variants, and polymorphic icon support. Uses namespace exports: LinkButton.Root, LinkButton.Icon.",
+  "version": "1.0.0",
+  "dependencies": [
+    "@radix-ui/react-slot"
+  ],
+  "registryDependencies": [
+    "tv",
+    "polymorphic",
+    "recursive-clone-children"
+  ],
+  "docs": {
+    "lead": "A text-style button component with underline decoration, multiple variants, and polymorphic icon support.",
+    "usage": "import * as LinkButton from \"@/components/ui/link-button\"\n\n<LinkButton.Root variant=\"gray\">\n  Link Button\n</LinkButton.Root>",
+    "examples": [
+      {
+        "title": "Variants",
+        "description": "Available variants: gray (default), black, primary, error, and modifiable (no default styling, fully customizable via className).",
+        "code": "<LinkButton.Root variant=\"gray\">Gray</LinkButton.Root>\n<LinkButton.Root variant=\"black\">Black</LinkButton.Root>\n<LinkButton.Root variant=\"primary\">Primary</LinkButton.Root>\n<LinkButton.Root variant=\"error\">Error</LinkButton.Root>\n<LinkButton.Root variant=\"modifiable\" className=\"text-success-base\">Modifiable</LinkButton.Root>",
+        "stories": ["Variants"]
+      },
+      {
+        "title": "Sizes",
+        "description": "Link buttons come in medium (default) and small sizes.",
+        "code": "<LinkButton.Root>Medium (default)</LinkButton.Root>\n<LinkButton.Root size=\"small\">Small</LinkButton.Root>",
+        "stories": ["Sizes"]
+      },
+      {
+        "title": "Underline",
+        "description": "Use the underline prop to show permanent underline decoration.",
+        "code": "<LinkButton.Root underline variant=\"gray\">Link Button</LinkButton.Root>\n<LinkButton.Root underline variant=\"primary\">Link Button</LinkButton.Root>",
+        "stories": ["Underline"]
+      },
+      {
+        "title": "With Icon",
+        "description": "Use LinkButton.Icon with the `as` prop for polymorphic icon rendering.",
+        "code": "<LinkButton.Root>\n  <LinkButton.Icon as={RiArrowLeftSLine} />\n  Link Button\n  <LinkButton.Icon as={RiArrowRightSLine} />\n</LinkButton.Root>",
+        "stories": ["WithIcon"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Disabled state across all variants.",
+        "code": "<LinkButton.Root variant=\"gray\" disabled>Link Button</LinkButton.Root>\n<LinkButton.Root variant=\"primary\" disabled>Link Button</LinkButton.Root>",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "As Child",
+        "description": "Use the asChild prop with Radix Slot to render as a different element, such as a link.",
+        "code": "<LinkButton.Root asChild>\n  <a href=\"#\">Link Button</a>\n</LinkButton.Root>",
+        "stories": ["AsChild"]
+      }
+    ],
+    "api": [
+      {
+        "name": "LinkButton.Root",
+        "description": "The main link button component.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'gray' | 'black' | 'primary' | 'error' | 'modifiable'",
+            "default": "'gray'",
+            "description": "The visual style"
+          },
+          {
+            "name": "size",
+            "type": "'medium' | 'small'",
+            "default": "'medium'",
+            "description": "The size of the link button"
+          },
+          {
+            "name": "underline",
+            "type": "boolean",
+            "default": "false",
+            "description": "Shows permanent underline decoration"
+          },
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Renders as child element using Radix Slot"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disables the link button"
+          }
+        ]
+      },
+      {
+        "name": "LinkButton.Icon",
+        "description": "Polymorphic icon container that receives variant and size from LinkButton.Root.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "default": "'div'",
+            "description": "The element or component to render as"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/link-button.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

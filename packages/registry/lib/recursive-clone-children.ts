@@ -1,71 +1,51 @@
 import * as React from 'react';
 
 /**
- * Recursively clones React children and injects shared props
- * into components whose displayName matches the allowed list
+ * Recursively clones React children, adding additional props to components with matched display names.
  *
- * @param children - React children to clone
- * @param sharedProps - Props to inject into matching children
- * @param allowedDisplayNames - Array of displayNames that should receive the shared props
- * @param uniqueId - Unique identifier for generating stable keys
- * @param asChild - If true, skips the first level (for Slot components)
+ * @param children - The node(s) to be cloned.
+ * @param additionalProps - The props to add to the matched components.
+ * @param displayNames - An array of display names to match components against.
+ * @param uniqueId - A unique ID prefix from the parent component to generate stable keys.
+ * @param asChild - Indicates whether the parent component uses the Slot component.
+ *
+ * @returns The cloned node(s) with the additional props applied to the matched components.
  */
 export function recursiveCloneChildren(
-  children: React.ReactElement | React.ReactElement[],
-  sharedProps: Record<string, unknown>,
-  allowedDisplayNames: string[],
+  children: React.ReactNode,
+  additionalProps: any,
+  displayNames: string[],
   uniqueId: string,
   asChild?: boolean
-): React.ReactNode {
-  return React.Children.map(children, (child, index) => {
-    if (!React.isValidElement(child)) {
-      return child;
-    }
+): React.ReactNode | React.ReactNode[] {
+  const mappedChildren = React.Children.map(
+    children,
+    (child: React.ReactNode, index) => {
+      if (!React.isValidElement(child)) {
+        return child;
+      }
 
-    const childType = child.type as React.ComponentType & {
-      displayName?: string;
-    };
-    const displayName = childType?.displayName;
+      const displayName =
+        (child.type as React.ComponentType)?.displayName || '';
+      const newProps = displayNames.includes(displayName)
+        ? additionalProps
+        : {};
 
-    // Check if this child should receive shared props
-    const shouldInjectProps =
-      displayName && allowedDisplayNames.includes(displayName);
+      const childProps = (child as React.ReactElement<any>).props;
 
-    // Recursively handle nested children
-    const childChildren = (child.props as { children?: React.ReactNode })
-      .children;
-    const clonedChildren = childChildren
-      ? recursiveCloneChildren(
-          childChildren as React.ReactElement[],
-          sharedProps,
-          allowedDisplayNames,
+      return React.cloneElement(
+        child,
+        { ...newProps, key: `${uniqueId}-${index}` },
+        recursiveCloneChildren(
+          childProps?.children,
+          additionalProps,
+          displayNames,
           uniqueId,
-          false
+          childProps?.asChild
         )
-      : undefined;
-
-    // If asChild is true and this is the first level, just clone with children
-    if (asChild && index === 0) {
-      return React.cloneElement(child, {
-        key: `${uniqueId}-${index}`,
-        children: clonedChildren,
-      } as Partial<unknown>);
+      );
     }
+  );
 
-    // Clone with shared props if displayName matches
-    if (shouldInjectProps) {
-      return React.cloneElement(child, {
-        key: `${uniqueId}-${index}`,
-        ...sharedProps,
-        ...(child.props as object),
-        children: clonedChildren,
-      } as Partial<unknown>);
-    }
-
-    // Just clone with updated children
-    return React.cloneElement(child, {
-      key: `${uniqueId}-${index}`,
-      children: clonedChildren,
-    } as Partial<unknown>);
-  });
+  return asChild ? mappedChildren?.[0] : mappedChildren;
 }

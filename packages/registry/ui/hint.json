@@ -1,0 +1,116 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "hint",
+  "type": "registry:ui",
+  "title": "Hint",
+  "description": "A hint text component for form fields with icon, error, disabled states, and composed mode. Uses namespace exports: Hint.Root, Hint.Icon, Hint.Composed.",
+  "version": "3.0.0",
+  "migration": {
+    "guide": "v3 replaces the inline SVG default icon with RiInformationFill from @remixicon/react. Hint.Icon now defaults to RiInformationFill when no `as` prop is provided, so `<Hint.Icon />` works without passing an icon. Hint.DefaultIcon export has been removed."
+  },
+  "dependencies": ["@remixicon/react"],
+  "registryDependencies": [
+    "happly-ui-utils",
+    "polymorphic",
+    "recursive-clone-children",
+    "tv"
+  ],
+  "docs": {
+    "lead": "A hint text component for form fields with icon support, error/disabled states, and a composed shorthand. Defaults to RiInformationFill icon.",
+    "usage": "import * as Hint from \"@/components/ui/hint\"\n\n<Hint.Root>\n  <Hint.Icon />\n  This is a hint text.\n</Hint.Root>",
+    "examples": [
+      {
+        "title": "Demo",
+        "description": "Hint with default icon and text.",
+        "code": "<Hint.Root>\n  <Hint.Icon />\n  This is a hint text to help user.\n</Hint.Root>",
+        "stories": ["Demo"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Hint in disabled state.",
+        "code": "<Hint.Root disabled>\n  <Hint.Icon />\n  This is a hint text to help user.\n</Hint.Root>",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "Has Error",
+        "description": "Hint in error state.",
+        "code": "<Hint.Root hasError>\n  <Hint.Icon />\n  This is a hint text to help user.\n</Hint.Root>",
+        "stories": ["HasError"]
+      },
+      {
+        "title": "Custom Icon",
+        "description": "Hint with a custom icon via the `as` prop.",
+        "code": "<Hint.Root>\n  <Hint.Icon as={RiAlertFill} />\n  This hint uses a custom icon.\n</Hint.Root>",
+        "stories": ["CustomIcon"]
+      },
+      {
+        "title": "Composed",
+        "description": "Props-driven hint with default icon, error, and disabled states.",
+        "code": "<Hint.Composed>This is a hint with default icon.</Hint.Composed>\n\n<Hint.Composed icon={RiAlertFill}>\n  This is a hint with custom icon.\n</Hint.Composed>\n\n<Hint.Composed hasError>This hint has an error.</Hint.Composed>\n\n<Hint.Composed disabled>This hint is disabled.</Hint.Composed>",
+        "stories": ["Composed"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Hint.Root",
+        "description": "The root hint container.",
+        "props": [
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Show error styling"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Show disabled styling"
+          }
+        ]
+      },
+      {
+        "name": "Hint.Icon",
+        "description": "Icon displayed before the hint text. Defaults to RiInformationFill.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "default": "RiInformationFill",
+            "description": "The icon component to render"
+          }
+        ]
+      },
+      {
+        "name": "Hint.Composed",
+        "description": "Props-driven hint with a built-in default icon. Pass custom icon via the icon prop.",
+        "props": [
+          {
+            "name": "icon",
+            "type": "React.ElementType",
+            "default": "RiInformationFill",
+            "description": "Custom icon component. Defaults to RiInformationFill."
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Show error styling"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Show disabled styling"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/hint.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

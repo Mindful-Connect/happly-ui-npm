@@ -1,0 +1,98 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "status-badge",
+  "type": "registry:ui",
+  "title": "Status Badge",
+  "description": "A compact status indicator badge with icon or dot variants and semantic status colors (completed, pending, failed, disabled). Uses namespace exports: StatusBadge.Root, StatusBadge.Icon, StatusBadge.Dot.",
+  "version": "1.0.0",
+  "dependencies": ["@radix-ui/react-slot"],
+  "registryDependencies": [
+    "tv",
+    "polymorphic",
+    "recursive-clone-children"
+  ],
+  "docs": {
+    "lead": "A compact status indicator badge with icon or dot variants and semantic status colors.",
+    "usage": "import * as StatusBadge from \"@/components/ui/status-badge\"\n\n<StatusBadge.Root status=\"completed\">\n  <StatusBadge.Dot />\n  Badge\n</StatusBadge.Root>",
+    "examples": [
+      {
+        "title": "Completed",
+        "description": "Completed status badge in stroke and light variants, with icon and dot.",
+        "code": "<StatusBadge.Root status=\"completed\">\n  <StatusBadge.Icon as={RiCheckboxCircleFill} />\n  Badge\n</StatusBadge.Root>",
+        "stories": ["Completed"]
+      },
+      {
+        "title": "Pending",
+        "description": "Pending status badge in stroke and light variants, with icon and dot.",
+        "code": "<StatusBadge.Root status=\"pending\">\n  <StatusBadge.Icon as={RiAlertFill} />\n  Badge\n</StatusBadge.Root>",
+        "stories": ["Pending"]
+      },
+      {
+        "title": "Failed",
+        "description": "Failed status badge in stroke and light variants, with icon and dot.",
+        "code": "<StatusBadge.Root status=\"failed\">\n  <StatusBadge.Icon as={RiErrorWarningFill} />\n  Badge\n</StatusBadge.Root>",
+        "stories": ["Failed"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Disabled status badge in stroke and light variants, with icon and dot.",
+        "code": "<StatusBadge.Root status=\"disabled\">\n  <StatusBadge.Icon as={RiForbidFill} />\n  Badge\n</StatusBadge.Root>",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "AsChild",
+        "description": "Renders the badge as a child element (e.g. a button) using Radix Slot.",
+        "code": "<StatusBadge.Root asChild>\n  <button type=\"button\">\n    <StatusBadge.Icon as={RiForbidFill} />\n    Badge\n  </button>\n</StatusBadge.Root>",
+        "stories": ["AsChild"]
+      }
+    ],
+    "api": [
+      {
+        "name": "StatusBadge.Root",
+        "description": "The main status badge container.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'stroke' | 'light'",
+            "default": "'stroke'",
+            "description": "The visual variant of the badge"
+          },
+          {
+            "name": "status",
+            "type": "'completed' | 'pending' | 'failed' | 'disabled'",
+            "default": "'disabled'",
+            "description": "The semantic status color"
+          },
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render as child element using Radix Slot"
+          }
+        ]
+      },
+      {
+        "name": "StatusBadge.Icon",
+        "description": "Renders a polymorphic icon inside the badge.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "description": "The icon component to render"
+          }
+        ]
+      },
+      {
+        "name": "StatusBadge.Dot",
+        "description": "Renders a small colored dot indicator inside the badge.",
+        "props": []
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/status-badge.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

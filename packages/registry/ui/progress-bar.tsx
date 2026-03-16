@@ -1,70 +1,64 @@
+'use client';
+
 import * as React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '@/lib/happly-ui-utils';
 
-const progressBarVariants = cva(
-  'relative w-full overflow-hidden rounded-full bg-ds-neutral-200 h-[6px]',
-  {
-    variants: {
-      variant: {
-        neutral: '',
-        primary: '',
+import { tv, type VariantProps } from '@/lib/tv';
+
+export const progressBarVariants = tv({
+  slots: {
+    root: 'h-1.5 w-full rounded-full bg-bg-soft-200',
+    progress: 'h-full rounded-full transition-all duration-300 ease-out',
+  },
+  variants: {
+    color: {
+      blue: {
+        progress: 'bg-information-base',
+      },
+      red: {
+        progress: 'bg-error-base',
+      },
+      orange: {
+        progress: 'bg-warning-base',
+      },
+      green: {
+        progress: 'bg-success-base',
+      },
+      primary: {
+        progress: 'bg-primary-base',
       },
     },
-    defaultVariants: {
-      variant: 'neutral',
-    },
-  }
-);
+  },
+  defaultVariants: {
+    color: 'blue',
+  },
+});
 
-const progressIndicatorVariants = cva(
-  'h-full flex-1 rounded-full transition-all duration-300 ease-in-out',
-  {
-    variants: {
-      variant: {
-        neutral: 'bg-ds-neutral-800',
-        primary: 'bg-primaryColor',
-      },
-    },
-    defaultVariants: {
-      variant: 'neutral',
-    },
-  }
-);
+type ProgressBarRootProps = React.HTMLAttributes<HTMLDivElement> &
+  VariantProps<typeof progressBarVariants> & {
+    value?: number;
+    max?: number;
+  };
 
-export interface ProgressBarProps
-  extends
-    React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof progressBarVariants> {
-  /**
-   * Numeric progress value between 0 and 100.
-   */
-  progress?: number;
-}
-
-const ProgressBar = React.forwardRef<HTMLDivElement, ProgressBarProps>(
-  ({ className, variant, progress = 0, ...props }, ref) => {
-    // Ensure progress is between 0 and 100
-    const clampedProgress = Math.min(100, Math.max(0, progress));
+const ProgressBarRoot = React.forwardRef<HTMLDivElement, ProgressBarRootProps>(
+  ({ className, color, value = 0, max = 100, ...rest }, forwardedRef) => {
+    const { root, progress } = progressBarVariants({ color });
+    const safeValue = Math.min(max, Math.max(value, 0));
 
     return (
-      <div
-        ref={ref}
-        role='progressbar'
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={clampedProgress}
-        className={cn(progressBarVariants({ variant }), className)}
-        {...props}
-      >
+      <div ref={forwardedRef} className={root({ class: className })} {...rest}>
         <div
-          className={cn(progressIndicatorVariants({ variant }))}
-          style={{ width: `${clampedProgress}%` }}
+          className={progress()}
+          style={{
+            width: `${(safeValue / max) * 100}%`,
+          }}
+          aria-valuenow={value}
+          aria-valuemax={max}
+          role='progressbar'
         />
       </div>
     );
-  }
+  },
 );
-ProgressBar.displayName = 'ProgressBar';
+ProgressBarRoot.displayName = 'ProgressBarRoot';
 
-export { ProgressBar, progressBarVariants };
+export { ProgressBarRoot as Root };

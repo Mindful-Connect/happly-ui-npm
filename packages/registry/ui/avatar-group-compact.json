@@ -1,0 +1,68 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "avatar-group-compact",
+  "type": "registry:ui",
+  "title": "Avatar Group Compact",
+  "description": "A compact avatar group component with pill-shaped container, overlapping avatar stack, and overflow count. Uses namespace exports: AvatarGroupCompact.Root, AvatarGroupCompact.Stack, AvatarGroupCompact.Overflow.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": [
+    "tv",
+    "recursive-clone-children",
+    "avatar"
+  ],
+  "docs": {
+    "lead": "A compact avatar group component with pill-shaped container, overlapping avatar stack, and overflow count.",
+    "usage": "import * as AvatarGroupCompact from \"@/components/ui/avatar-group-compact\"\nimport * as Avatar from \"@/components/ui/avatar\"\n\n<AvatarGroupCompact.Root>\n  <AvatarGroupCompact.Stack>\n    <Avatar.Root>\n      <Avatar.Image src=\"/path/to/image.png\" />\n    </Avatar.Root>\n  </AvatarGroupCompact.Stack>\n  <AvatarGroupCompact.Overflow>+3</AvatarGroupCompact.Overflow>\n</AvatarGroupCompact.Root>",
+    "examples": [
+      {
+        "title": "Variants",
+        "description": "The default variant with shadow and the stroke variant with a ring border around the container.",
+        "code": "<AvatarGroupCompact.Root>\n  <AvatarGroupCompact.Stack>\n    <Avatar.Root>\n      <Avatar.Image src=\"/path/to/image.png\" />\n    </Avatar.Root>\n  </AvatarGroupCompact.Stack>\n  <AvatarGroupCompact.Overflow>+9</AvatarGroupCompact.Overflow>\n</AvatarGroupCompact.Root>\n\n<AvatarGroupCompact.Root variant=\"stroke\">\n  ...\n</AvatarGroupCompact.Root>",
+        "stories": ["Variants"]
+      },
+      {
+        "title": "Size",
+        "description": "Compact avatar groups come in 3 sizes: 40 (default), 32, and 24.",
+        "code": "<AvatarGroupCompact.Root size=\"32\">\n  <AvatarGroupCompact.Stack>\n    <Avatar.Root>\n      <Avatar.Image src=\"/path/to/image.png\" />\n    </Avatar.Root>\n  </AvatarGroupCompact.Stack>\n  <AvatarGroupCompact.Overflow>+9</AvatarGroupCompact.Overflow>\n</AvatarGroupCompact.Root>",
+        "stories": ["Size"]
+      }
+    ],
+    "api": [
+      {
+        "name": "AvatarGroupCompact.Root",
+        "description": "The main pill-shaped container with shadow and optional stroke border.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'default' | 'stroke'",
+            "default": "'default'",
+            "description": "The visual style"
+          },
+          {
+            "name": "size",
+            "type": "'40' | '32' | '24'",
+            "default": "'40'",
+            "description": "The size of the avatars and overflow text. Propagated to child components."
+          }
+        ]
+      },
+      {
+        "name": "AvatarGroupCompact.Stack",
+        "description": "Container for the overlapping avatar stack.",
+        "props": []
+      },
+      {
+        "name": "AvatarGroupCompact.Overflow",
+        "description": "Text element showing the count of additional avatars.",
+        "props": []
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/avatar-group-compact.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

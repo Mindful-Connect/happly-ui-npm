@@ -3,29 +3,204 @@
   "name": "select",
   "type": "registry:ui",
   "title": "Select",
-  "description": "A customizable select component based on Radix UI, supporting various sizes and display variants.",
+  "description": "A select component with multiple variants, sizes, scroll area, and item icons. Uses namespace exports: Select.Root, Select.Trigger, Select.Value, Select.Content, Select.Item, Select.ItemIcon, Select.Group, Select.GroupLabel, Select.Separator, Select.TriggerIcon.",
+  "version": "2.0.0",
+  "migration": {
+    "guide": "API changed: now uses namespace exports `import * as Select from ...`. Uses tv (tailwind-variants) instead of cva. Uses @remixicon/react instead of react-icons. Removed class-variance-authority dependency. Removed usePortal prop from Content."
+  },
   "dependencies": [
     "@radix-ui/react-select",
     "@radix-ui/react-scroll-area",
     "@radix-ui/react-slot",
-    "class-variance-authority",
-    "react-icons"
+    "@remixicon/react"
   ],
-  "registryDependencies": ["happly-ui-utils"],
+  "registryDependencies": [
+    "happly-ui-utils",
+    "polymorphic",
+    "tv"
+  ],
   "docs": {
-    "lead": "A customizable select component based on Radix UI, supporting various sizes and display variants.",
-    "usage": "import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\n<Select>\n  <SelectTrigger className=\"w-[180px]\">\n    <SelectValue placeholder=\"Theme\" />\n  </SelectTrigger>\n  <SelectContent>\n    <SelectItem value=\"light\">Light</SelectItem>\n    <SelectItem value=\"dark\">Dark</SelectItem>\n    <SelectItem value=\"system\">System</SelectItem>\n  </SelectContent>\n</Select>",
+    "lead": "A select component with multiple variants, sizes, scroll area, and item icons.",
+    "usage": "import * as Select from \"@/components/ui/select\"\n\n<Select.Root>\n  <Select.Trigger>\n    <Select.Value placeholder=\"Select...\" />\n  </Select.Trigger>\n  <Select.Content>\n    <Select.Item value=\"one\">Option One</Select.Item>\n    <Select.Item value=\"two\">Option Two</Select.Item>\n  </Select.Content>\n</Select.Root>",
     "examples": [
       {
-        "title": "Showcase",
-        "description": "Select component usage with sizes, variants and states.",
-        "code": "import { Select } from \"@/components/ui/select\"\n...",
-        "preview": [
+        "title": "Default",
+        "description": "Basic select with text options.",
+        "code": "<Select.Root>\n  <Select.Trigger>\n    <Select.Value placeholder=\"Select your favorite fruit...\" />\n  </Select.Trigger>\n  <Select.Content>\n    <Select.Item value=\"apple\">Apple</Select.Item>\n    <Select.Item value=\"banana\">Banana</Select.Item>\n  </Select.Content>\n</Select.Root>",
+        "stories": ["Demo"]
+      },
+      {
+        "title": "With Label and Hint",
+        "description": "Select with a label and hint text.",
+        "code": "<FormField.Root\n  label=\"Fruit\"\n  htmlFor=\"fruit\"\n  hint=\"This is a hint text to help user.\"\n>\n  <Select.Root>\n    <Select.Trigger id=\"fruit\">\n      <Select.Value placeholder=\"Select your favorite fruit...\" />\n    </Select.Trigger>\n    <Select.Content>\n      <Select.Item value=\"apple\">Apple</Select.Item>\n      <Select.Item value=\"banana\">Banana</Select.Item>\n    </Select.Content>\n  </Select.Root>\n</FormField.Root>",
+        "stories": ["WithLabelHint"]
+      },
+      {
+        "title": "With Icons",
+        "description": "Select items with leading icons.",
+        "code": "<Select.Root defaultValue=\"utility-payment\">\n  <Select.Trigger>\n    <Select.Value placeholder=\"Select a payment...\" />\n  </Select.Trigger>\n  <Select.Content>\n    <Select.Item value=\"utility-payment\">\n      <Select.ItemIcon as={RiFlashlightLine} />\n      Utility Payment\n    </Select.Item>\n  </Select.Content>\n</Select.Root>",
+        "stories": ["WithIcons"]
+      },
+      {
+        "title": "Sizes",
+        "description": "Medium, small, and xsmall size variants.",
+        "code": "<Select.Root size=\"medium\">...</Select.Root>\n<Select.Root size=\"small\">...</Select.Root>\n<Select.Root size=\"xsmall\">...</Select.Root>",
+        "stories": ["Sizes"]
+      },
+      {
+        "title": "With Country Flags",
+        "description": "Select items with background-image flag icons.",
+        "code": "<Select.Item value=\"us\">\n  <Select.ItemIcon style={{ backgroundImage: 'url(/flags/US.svg)' }} />\n  United States\n</Select.Item>",
+        "stories": ["WithCountryFlags"]
+      },
+      {
+        "title": "With Users",
+        "description": "Select items with avatars and user details.",
+        "code": "<Select.Item value=\"sophia\">\n  <Select.ItemIcon as={Avatar.Root} size=\"20\" color=\"yellow\">\n    <Avatar.Image src=\"/avatar.png\" />\n  </Select.ItemIcon>\n  Sophia Williams\n</Select.Item>",
+        "stories": ["WithUsers"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Disabled select states with placeholder and filled values.",
+        "code": "<Select.Root disabled>\n  <Select.Trigger>\n    <Select.Value placeholder=\"Select...\" />\n  </Select.Trigger>\n  <Select.Content>...</Select.Content>\n</Select.Root>",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "Compact",
+        "description": "Compact variant with auto-width trigger.",
+        "code": "<Select.Root variant=\"compact\" defaultValue=\"25\">\n  <Select.Trigger>\n    <Select.Value />\n  </Select.Trigger>\n  <Select.Content align=\"center\">\n    <Select.Item value=\"25\">25</Select.Item>\n  </Select.Content>\n</Select.Root>",
+        "stories": ["Compact"]
+      },
+      {
+        "title": "Compact with Country Flags",
+        "description": "Compact select showing only icon in trigger.",
+        "code": "<Select.Root variant=\"compact\">\n  <Select.Trigger>\n    <Select.Value placeholder={<Select.TriggerIcon as={RiGlobalLine} />} />\n  </Select.Trigger>\n  <Select.Content align=\"center\">...</Select.Content>\n</Select.Root>",
+        "stories": ["CompactCountry"]
+      },
+      {
+        "title": "Compact Sizes",
+        "description": "All compact sizes with icons and text.",
+        "code": "<Select.Root variant=\"compact\" size=\"medium\">...</Select.Root>\n<Select.Root variant=\"compact\" size=\"small\">...</Select.Root>\n<Select.Root variant=\"compact\" size=\"xsmall\">...</Select.Root>",
+        "stories": ["CompactSizes"]
+      },
+      {
+        "title": "Inline",
+        "description": "Inline variant for embedding within text or controls.",
+        "code": "<Select.Root variant=\"inline\">\n  <Select.Trigger>\n    <Select.Value placeholder=\"Select\" />\n  </Select.Trigger>\n  <Select.Content>...</Select.Content>\n</Select.Root>",
+        "stories": ["InlineCountry"]
+      },
+      {
+        "title": "Input with Inline Select",
+        "description": "Inline select inside an input wrapper.",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Input placeholder=\"Placeholder...\" />\n    <Select.Root variant=\"inline\" defaultValue=\"view\">\n      <Select.Trigger>\n        <Select.Value />\n      </Select.Trigger>\n      <Select.Content>...</Select.Content>\n    </Select.Root>\n  </Input.Wrapper>\n</Input.Root>",
+        "stories": ["InputWithInlineSelect"]
+      },
+      {
+        "title": "With Input (compactForInput)",
+        "description": "CompactForInput variant as an input affix.",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.InlineAffix>&euro;</Input.InlineAffix>\n    <Input.Input placeholder=\"0.00\" />\n  </Input.Wrapper>\n  <Select.Root variant=\"compactForInput\" defaultValue=\"EUR\">\n    <Select.Trigger>\n      <Select.Value />\n    </Select.Trigger>\n    <Select.Content>...</Select.Content>\n  </Select.Root>\n</Input.Root>",
+        "stories": ["WithInput"]
+      },
+      {
+        "title": "With Input Sizes",
+        "description": "CompactForInput across medium, small, and xsmall input sizes.",
+        "code": "<Input.Root size=\"medium\">\n  <Input.Wrapper>...</Input.Wrapper>\n  <Select.Root variant=\"compactForInput\" size=\"medium\">...</Select.Root>\n</Input.Root>",
+        "stories": ["WithInputSizes"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Select.Root",
+        "description": "The root select container. Provides context for variant, size, and error state.",
+        "props": [
           {
-            "component": "select",
-            "props": {}
+            "name": "variant",
+            "type": "'default' | 'compact' | 'compactForInput' | 'inline'",
+            "default": "'default'",
+            "description": "Display variant"
+          },
+          {
+            "name": "size",
+            "type": "'medium' | 'small' | 'xsmall'",
+            "default": "'medium'",
+            "description": "Size variant"
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Show error styling"
           }
         ]
+      },
+      {
+        "name": "Select.Trigger",
+        "description": "The trigger button with auto arrow icon.",
+        "props": []
+      },
+      {
+        "name": "Select.Value",
+        "description": "Displays the selected value or placeholder.",
+        "props": [
+          {
+            "name": "placeholder",
+            "type": "ReactNode",
+            "description": "Placeholder content when no value is selected (can be text or JSX)"
+          }
+        ]
+      },
+      {
+        "name": "Select.Content",
+        "description": "The dropdown content with scroll area.",
+        "props": []
+      },
+      {
+        "name": "Select.Item",
+        "description": "An individual select option with check indicator.",
+        "props": [
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The value of this item"
+          }
+        ]
+      },
+      {
+        "name": "Select.ItemIcon",
+        "description": "Icon displayed in a select item. Polymorphic — use `as` to render a custom component.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "description": "The icon component to render"
+          }
+        ]
+      },
+      {
+        "name": "Select.TriggerIcon",
+        "description": "Icon displayed inside the trigger. Polymorphic — use `as` to render a custom component.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "description": "The icon component to render"
+          }
+        ]
+      },
+      {
+        "name": "Select.Group",
+        "description": "Groups related items together. Wraps Radix Select.Group.",
+        "props": []
+      },
+      {
+        "name": "Select.GroupLabel",
+        "description": "Label for a group of items. Wraps Radix Select.Label.",
+        "props": []
+      },
+      {
+        "name": "Select.Separator",
+        "description": "Visual separator between items or groups. Wraps Radix Select.Separator.",
+        "props": []
       }
     ]
   },

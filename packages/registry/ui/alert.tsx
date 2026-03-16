@@ -1,373 +1,298 @@
-import { cn } from '@/lib/happly-ui-utils';
-import { Slot } from '@radix-ui/react-slot';
-import { cva, type VariantProps } from 'class-variance-authority';
+'use client';
+
 import * as React from 'react';
-import {
-  RiAlertFill,
-  RiCheckboxCircleFill,
-  RiCloseLine,
-  RiErrorWarningFill,
-  RiInformationFill,
-  RiSparklingFill,
-} from 'react-icons/ri';
+import { RiCloseLine } from '@remixicon/react';
 
-import { AlertStatus, AlertStyle, AlertVariant } from '@/lib/alert-utils';
+import type { PolymorphicComponentProps } from '@/lib/polymorphic';
+import { recursiveCloneChildren } from '@/lib/recursive-clone-children';
+import { tv, type ClassValue, type VariantProps } from '@/lib/tv';
 
-// =============================================================================
-// Variant Definitions
-// =============================================================================
+const ALERT_ROOT_NAME = 'AlertRoot';
+const ALERT_ICON_NAME = 'AlertIcon';
+const ALERT_CLOSE_ICON_NAME = 'AlertCloseIcon';
 
-const alertVariants = cva('relative flex items-start text-sm', {
+export const alertVariants = tv({
+  slots: {
+    root: 'w-full',
+    wrapper: [
+      'grid w-full auto-cols-auto grid-flow-col grid-cols-[auto,minmax(0,1fr)] items-start',
+      'transition duration-200 ease-out',
+    ],
+    icon: 'shrink-0',
+    closeIcon: '',
+  },
   variants: {
     variant: {
-      // Error variants
-      errorFilled: 'bg-ds-error-base text-white',
-      errorLight: 'bg-ds-error-light text-ds-neutral-950',
-      errorLighter: 'bg-ds-error-lighter text-ds-neutral-950',
-      errorOutline:
-        'border border-ds-neutral-200 text-ds-neutral-950 [&_.alert-title]:-mt-[1px]',
-
-      // Warning variants
-      warningFilled: 'bg-ds-warning-base text-white',
-      warningLight: 'bg-ds-warning-light text-ds-neutral-950',
-      warningLighter: 'bg-ds-warning-lighter text-ds-neutral-950',
-      warningOutline:
-        'border border-ds-neutral-200 text-ds-neutral-950 [&_.alert-title]:-mt-[1px]',
-
-      // Success variants
-      successFilled: 'bg-ds-success-base text-white',
-      successLight: 'bg-ds-success-light text-ds-neutral-950',
-      successLighter: 'bg-ds-success-lighter text-ds-neutral-950',
-      successOutline:
-        'border border-ds-neutral-200 text-ds-neutral-950 [&_.alert-title]:-mt-[1px]',
-
-      // Info variants
-      infoFilled: 'bg-ds-information-base text-white',
-      infoLight: 'bg-ds-information-light text-ds-neutral-950',
-      infoLighter: 'bg-ds-information-lighter text-ds-neutral-950',
-      infoOutline:
-        'border border-ds-neutral-200 text-ds-neutral-950 [&_.alert-title]:-mt-[1px]',
-
-      // Feature variants
-      featureFilled: 'bg-ds-feature-base text-white',
-      featureLight: 'bg-ds-feature-light text-ds-neutral-950',
-      featureLighter: 'bg-ds-feature-lighter text-ds-neutral-950',
-      featureOutline:
-        'border border-ds-neutral-200 text-ds-neutral-950 [&_.alert-title]:-mt-[1px]',
-
-      // Special variants
-      infoPrimaryFilled: 'bg-primaryColor text-primaryColorText',
-      infoDarkFilled: 'bg-ds-strong-950 text-white',
+      filled: {
+        root: 'text-static-white',
+        closeIcon: 'text-static-white opacity-[.72]',
+      },
+      light: {
+        root: 'text-text-strong-950',
+        closeIcon: 'text-text-strong-950 opacity-40',
+      },
+      lighter: {
+        root: 'text-text-strong-950',
+        closeIcon: 'text-text-strong-950 opacity-40',
+      },
+      stroke: {
+        root: 'bg-bg-white-0 text-text-strong-950 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200',
+        closeIcon: 'text-text-strong-950 opacity-40',
+      },
+    },
+    status: {
+      error: {},
+      warning: {},
+      success: {},
+      information: {},
+      feature: {},
     },
     size: {
-      // Large: 14px padding, 12px icon gap, 4px title-desc gap, 10px to actions
-      md: 'px-[14px] py-[14px] gap-x-3 rounded-[12px] [&_.alert-title]:mb-1 [&_.alert-title]:font-medium [&_.alert-description]:opacity-[0.72] [&_.alert-actions]:mt-2.5',
-      sm: 'min-h-9 px-2.5 py-2 gap-x-2 rounded-[8px] [&_.alert-description]:hidden [&_.alert-actions]:hidden [&_.alert-title]:-mt-[1px]',
-      xs: 'py-0 items-center min-h-8 px-2 py-2 gap-x-2 text-xs rounded-[8px] [&_.alert-title]:-mt-[1px] [&_.alert-description]:hidden [&_.alert-actions]:hidden',
+      xsmall: {
+        root: 'rounded-lg p-2 text-paragraph-xs',
+        wrapper: 'gap-2',
+        icon: 'size-4',
+        closeIcon: 'size-4',
+      },
+      small: {
+        root: 'rounded-lg px-2.5 py-2 text-paragraph-sm',
+        wrapper: 'gap-2',
+        icon: 'size-5',
+        closeIcon: 'size-5',
+      },
+      large: {
+        root: 'rounded-xl p-3.5 pb-4 text-paragraph-sm',
+        wrapper: 'items-start gap-3',
+        icon: 'size-5',
+        closeIcon: 'size-5',
+      },
     },
   },
+  compoundVariants: [
+    //#region filled
+    {
+      variant: 'filled',
+      status: 'error',
+      class: {
+        root: 'bg-error-base',
+      },
+    },
+    {
+      variant: 'filled',
+      status: 'warning',
+      class: {
+        root: 'bg-warning-base',
+      },
+    },
+    {
+      variant: 'filled',
+      status: 'success',
+      class: {
+        root: 'bg-success-base',
+      },
+    },
+    {
+      variant: 'filled',
+      status: 'information',
+      class: {
+        root: 'bg-information-base',
+      },
+    },
+    {
+      variant: 'filled',
+      status: 'feature',
+      class: {
+        root: 'bg-faded-base',
+      },
+    },
+    //#endregion
+
+    //#region light
+    {
+      variant: 'light',
+      status: 'error',
+      class: {
+        root: 'bg-error-light',
+      },
+    },
+    {
+      variant: 'light',
+      status: 'warning',
+      class: {
+        root: 'bg-warning-light',
+      },
+    },
+    {
+      variant: 'light',
+      status: 'success',
+      class: {
+        root: 'bg-success-light',
+      },
+    },
+    {
+      variant: 'light',
+      status: 'information',
+      class: {
+        root: 'bg-information-light',
+      },
+    },
+    {
+      variant: 'light',
+      status: 'feature',
+      class: {
+        root: 'bg-faded-light',
+      },
+    },
+    //#endregion
+
+    //#region lighter
+    {
+      variant: 'lighter',
+      status: 'error',
+      class: {
+        root: 'bg-error-lighter',
+      },
+    },
+    {
+      variant: 'lighter',
+      status: 'warning',
+      class: {
+        root: 'bg-warning-lighter',
+      },
+    },
+    {
+      variant: 'lighter',
+      status: 'success',
+      class: {
+        root: 'bg-success-lighter',
+      },
+    },
+    {
+      variant: 'lighter',
+      status: 'information',
+      class: {
+        root: 'bg-information-lighter',
+      },
+    },
+    {
+      variant: 'lighter',
+      status: 'feature',
+      class: {
+        root: 'bg-faded-lighter',
+      },
+    },
+    //#endregion
+
+    //#region light, lighter, stroke
+    {
+      variant: ['light', 'lighter', 'stroke'],
+      status: 'error',
+      class: {
+        icon: 'text-error-base',
+      },
+    },
+    {
+      variant: ['light', 'lighter', 'stroke'],
+      status: 'warning',
+      class: {
+        icon: 'text-warning-base',
+      },
+    },
+    {
+      variant: ['light', 'lighter', 'stroke'],
+      status: 'success',
+      class: {
+        icon: 'text-success-base',
+      },
+    },
+    {
+      variant: ['light', 'lighter', 'stroke'],
+      status: 'information',
+      class: {
+        icon: 'text-information-base',
+      },
+    },
+    {
+      variant: ['light', 'lighter', 'stroke'],
+      status: 'feature',
+      class: {
+        icon: 'text-faded-base',
+      },
+    },
+    //#endregion
+  ],
   defaultVariants: {
-    variant: 'warningLighter',
-    size: 'sm',
+    size: 'small',
+    variant: 'filled',
+    status: 'information',
   },
 });
 
-const alertLinkVariants = cva(
-  [
-    'inline-flex items-center justify-center whitespace-nowrap outline-none',
-    'transition duration-200 ease-out',
-    'underline-offset-[3px]',
-    'hover:underline',
-    'focus:outline-none focus-visible:underline',
-    'disabled:pointer-events-none disabled:opacity-50',
-  ],
-  {
-    variants: {
-      variant: {
-        default: 'opacity-100',
-        primary: 'text-primaryColor/80',
-        underline: 'underline opacity-100',
-      },
-      size: {
-        sm: 'text-xs',
-        md: 'text-sm',
-      },
-    },
-    defaultVariants: {
-      variant: 'default',
-      size: 'md',
-    },
-  }
-);
+type AlertSharedProps = VariantProps<typeof alertVariants>;
 
-// =============================================================================
-// Helper Functions
-// =============================================================================
-
-function getStatusFromVariant(variant: string | null | undefined): AlertStatus {
-  if (!variant) return 'warning';
-  if (variant.includes('error')) return 'error';
-  if (variant.includes('warning')) return 'warning';
-  if (variant.includes('success')) return 'success';
-  if (variant.includes('info')) return 'info';
-  if (variant.includes('feature')) return 'feature';
-  return 'warning';
-}
-
-function isFilledVariant(variant: string | null | undefined): boolean {
-  return variant?.includes('Filled') ?? false;
-}
-
-function isOutlineVariant(variant: string | null | undefined): boolean {
-  return variant?.includes('Outline') ?? false;
-}
-
-// =============================================================================
-// Icon Components
-// =============================================================================
-
-const STATUS_ICONS: Record<
-  AlertStatus,
-  React.ComponentType<{ className?: string }>
-> = {
-  error: RiErrorWarningFill,
-  warning: RiAlertFill,
-  success: RiCheckboxCircleFill,
-  info: RiInformationFill,
-  feature: RiSparklingFill,
-};
-
-const STATUS_COLORS: Record<AlertStatus, string> = {
-  error: 'text-ds-error-base',
-  warning: 'text-ds-warning-base',
-  success: 'text-ds-success-base',
-  info: 'text-ds-information-base',
-  feature: 'text-ds-feature-base',
-};
-
-function AlertIcon({
-  variant,
-  size,
-}: {
-  variant: string | null | undefined;
-  size: string;
-}) {
-  const status = getStatusFromVariant(variant);
-  const isFilled = isFilledVariant(variant);
-  const isOutline = isOutlineVariant(variant);
-  const Icon = STATUS_ICONS[status];
-
-  const iconSize = size === 'xs' ? 'h-4 w-4' : 'h-5 w-5';
-  const iconColor = isFilled ? 'text-white' : STATUS_COLORS[status];
-
-  return (
-    <div
-      className={cn(
-        'flex shrink-0 items-center justify-center',
-        isOutline && size !== 'md' && '-mt-[1px]'
-      )}
-    >
-      <Icon className={cn(iconSize, iconColor)} />
-    </div>
-  );
-}
-
-function DismissIcon({ isFilled }: { isFilled: boolean }) {
-  return (
-    <RiCloseLine
-      className={cn(
-        'h-5 w-5 transition-opacity duration-75',
-        isFilled
-          ? 'opacity-70 hover:opacity-100'
-          : 'opacity-40 hover:opacity-75'
-      )}
-    />
-  );
-}
-
-// =============================================================================
-// Alert Components
-// =============================================================================
-
-type AlertProps = React.HTMLAttributes<HTMLDivElement> &
-  VariantProps<typeof alertVariants> & {
-    dismissButton?: boolean;
-    onDismiss?: () => void;
+export type AlertProps = VariantProps<typeof alertVariants> &
+  React.HTMLAttributes<HTMLDivElement> & {
+    wrapperClassName?: ClassValue;
   };
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+const AlertRoot = React.forwardRef<HTMLDivElement, AlertProps>(
   (
-    {
-      className,
-      variant = 'warningLighter',
-      size = 'sm',
-      dismissButton,
-      onDismiss,
-      children,
-      ...props
-    },
-    ref
+    { children, className, wrapperClassName, size, variant, status, ...rest },
+    forwardedRef,
   ) => {
-    const isFilled = isFilledVariant(variant);
-    const isOutline = isOutlineVariant(variant);
+    const uniqueId = React.useId();
+    const { root, wrapper } = alertVariants({ size, variant, status });
+
+    const sharedProps: AlertSharedProps = {
+      size,
+      variant,
+      status,
+    };
+
+    const extendedChildren = recursiveCloneChildren(
+      children as React.ReactElement[],
+      sharedProps,
+      [ALERT_ICON_NAME, ALERT_CLOSE_ICON_NAME],
+      uniqueId,
+    );
 
     return (
-      <div
-        ref={ref}
-        role='alert'
-        className={cn(alertVariants({ variant, size }), className)}
-        {...props}
-      >
-        <AlertIcon variant={variant} size={size as string} />
-
-        <div
-          className={cn(
-            'alert-content flex w-full leading-tight',
-            size === 'md' && 'flex-col'
-          )}
-        >
-          {children}
+      <div ref={forwardedRef} className={root({ class: className })} {...rest}>
+        <div className={wrapper({ class: wrapperClassName })}>
+          {extendedChildren}
         </div>
-
-        {dismissButton && (
-          <button
-            type='button'
-            className={cn('dismiss-button ml-auto', isOutline && '-mt-[1px]')}
-            onClick={onDismiss}
-          >
-            <DismissIcon isFilled={isFilled} />
-          </button>
-        )}
       </div>
     );
-  }
+  },
 );
-Alert.displayName = 'Alert';
+AlertRoot.displayName = ALERT_ROOT_NAME;
 
-const AlertTitle = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
-  <h5
-    ref={ref}
-    className={cn('alert-title line-clamp-1', className)}
-    {...props}
-  />
-));
-AlertTitle.displayName = 'AlertTitle';
+function AlertIcon<T extends React.ElementType>({
+  size,
+  variant,
+  status,
+  className,
+  as,
+}: PolymorphicComponentProps<T, AlertSharedProps>) {
+  const Component = as || 'div';
+  const { icon } = alertVariants({ size, variant, status });
 
-const AlertDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn('alert-description text-sm [&_p]:leading-relaxed', className)}
-    {...props}
-  />
-));
-AlertDescription.displayName = 'AlertDescription';
-
-type AlertActionsProps = React.HTMLAttributes<HTMLDivElement> & {
-  separator?: React.ReactNode;
-};
-
-const AlertActions = React.forwardRef<HTMLDivElement, AlertActionsProps>(
-  ({ className, separator, children, ...props }, ref) => {
-    const childArray = React.Children.toArray(children);
-
-    return (
-      <div
-        ref={ref}
-        className={cn('alert-actions flex items-center gap-2', className)}
-        {...props}
-      >
-        {childArray.map((child, index) => (
-          <React.Fragment key={index}>
-            {child}
-            {separator && index < childArray.length - 1 && (
-              <span className='text-current opacity-[0.48]'>{separator}</span>
-            )}
-          </React.Fragment>
-        ))}
-      </div>
-    );
-  }
-);
-AlertActions.displayName = 'AlertActions';
-
-type AlertLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> &
-  VariantProps<typeof alertLinkVariants> & {
-    asChild?: boolean;
-  };
-
-const AlertLink = React.forwardRef<HTMLAnchorElement, AlertLinkProps>(
-  ({ className, variant, size, asChild, ...props }, ref) => {
-    const Comp = asChild ? Slot : 'a';
-    return (
-      <Comp
-        ref={ref}
-        className={cn(alertLinkVariants({ variant, size }), className)}
-        {...props}
-      />
-    );
-  }
-);
-AlertLink.displayName = 'AlertLink';
-
-type AlertButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
-  VariantProps<typeof alertLinkVariants>;
-
-const AlertButton = React.forwardRef<HTMLButtonElement, AlertButtonProps>(
-  ({ className, variant, size, ...props }, ref) => (
-    <button
-      ref={ref}
-      className={cn(alertLinkVariants({ variant, size }), className)}
-      {...props}
-    />
-  )
-);
-AlertButton.displayName = 'AlertButton';
-
-// =============================================================================
-// Utility Function for Alerts.tsx
-// =============================================================================
-
-export function getAlertVariant(
-  type: AlertStatus | undefined,
-  style: AlertStyle = 'light'
-): AlertVariant {
-  const typeMap: Record<AlertStatus, string> = {
-    success: 'success',
-    error: 'error',
-    info: 'info',
-    warning: 'warning',
-    feature: 'feature',
-  };
-  const styleMap: Record<AlertStyle, string> = {
-    filled: 'Filled',
-    light: 'Light',
-    lighter: 'Lighter',
-    outline: 'Outline',
-  };
-
-  const alertType = typeMap[type ?? 'error'] ?? 'error';
-  const alertStyle = styleMap[style ?? 'lighter'] ?? 'Lighter';
-
-  return `${alertType}${alertStyle}` as AlertVariant;
+  return <Component className={icon({ class: className })} />;
 }
+AlertIcon.displayName = ALERT_ICON_NAME;
 
-// =============================================================================
-// Exports
-// =============================================================================
+function AlertCloseIcon<T extends React.ElementType>({
+  size,
+  variant,
+  status,
+  className,
+  as,
+}: PolymorphicComponentProps<T, AlertSharedProps>) {
+  const Component = as || RiCloseLine;
+  const { closeIcon } = alertVariants({ size, variant, status });
 
-export {
-  Alert,
-  AlertTitle,
-  AlertDescription,
-  AlertActions,
-  AlertLink,
-  AlertButton,
-  alertVariants,
-  alertLinkVariants,
-};
+  return <Component className={closeIcon({ class: className })} />;
+}
+AlertCloseIcon.displayName = ALERT_CLOSE_ICON_NAME;
+
+export { AlertRoot as Root, AlertIcon as Icon, AlertCloseIcon as CloseIcon };

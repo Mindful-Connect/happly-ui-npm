@@ -9,7 +9,9 @@
     "dev": "bun run --filter './packages/*' dev",
     "build:registry": "bun run scripts/build-registry.ts",
     "clean": "rm -rf packages/*/dist packages/*/.turbo",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "storybook": "bun run --cwd packages/registry storybook",
+    "build-storybook": "bun run --cwd packages/registry build-storybook"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -22,8 +24,12 @@
     "@radix-ui/react-scroll-area": "^1.2.10",
     "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-slot": "^1.2.4",
+    "@storybook/react": "^10.2.14",
+    "@storybook/react-vite": "^10.2.14",
+    "@tailwindcss/vite": "^4.2.1",
     "@types/bun": "latest",
     "@types/google.maps": "^3.58.1",
+    "@types/marked": "^6.0.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@uppy/aws-s3": "^5.1.0",
@@ -41,6 +47,7 @@
     "globals": "^17.3.0",
     "libphonenumber-js": "^1.12.37",
     "lucide-react": "^0.574.0",
+    "marked": "^17.0.4",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "react": "^19.2.4",
@@ -48,13 +55,19 @@
     "react-dom": "^19.2.4",
     "react-icons": "^5.5.0",
     "react-international-phone": "^4.7.0",
+    "storybook": "^10.2.14",
     "tailwind-merge": "^2.2.1",
     "tailwind-variants": "^3.2.2",
+    "tailwindcss": "^4.2.1",
     "typescript": "^5.7.0",
     "typescript-eslint": "^8.55.0",
     "use-debounce": "^10.1.0",
     "zod": "^3.25.56"
   },
   "module": "index.ts",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "react-hook-form": "^7.71.2"
+  }
 }

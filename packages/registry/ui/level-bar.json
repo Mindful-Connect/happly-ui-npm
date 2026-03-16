@@ -1,0 +1,59 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "level-bar",
+  "type": "registry:ui",
+  "title": "Level Bar",
+  "description": "A segmented level indicator for displaying strength, progress, or multi-step status.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": ["tv", "happly-ui-utils"],
+  "docs": {
+    "lead": "A segmented level indicator for displaying strength, progress, or multi-step status. Useful for password strength, form validation, or multi-step progress.",
+    "usage": "import { LevelBar } from \"@/components/ui/level-bar\"\n\n<LevelBar level={2} levels={3} />",
+    "examples": [
+      {
+        "title": "Levels",
+        "description": "Level bar at each level from 0 to 3.",
+        "code": "<LevelBar level={0} />\n<LevelBar level={1} />\n<LevelBar level={2} />\n<LevelBar level={3} />",
+        "stories": ["Levels"]
+      },
+      {
+        "title": "Custom Segments",
+        "description": "A level bar with 5 segments and custom colors.",
+        "code": "<LevelBar level={3} levels={5} levelColors={{ 1: 'text-error-base', 2: 'text-error-base', 3: 'text-warning-base', 4: 'text-warning-base', 5: 'text-success-base' }} />",
+        "stories": ["CustomSegments"]
+      }
+    ],
+    "api": [
+      {
+        "name": "LevelBar",
+        "description": "The level bar component.",
+        "props": [
+          {
+            "name": "level",
+            "type": "number",
+            "description": "Current level (0 to levels)"
+          },
+          {
+            "name": "levels",
+            "type": "number",
+            "default": "3",
+            "description": "Total number of segments"
+          },
+          {
+            "name": "levelColors",
+            "type": "Record<number, string>",
+            "default": "{ 1: 'text-error-base', 2: 'text-warning-base', 3: 'text-success-base' }",
+            "description": "Color class per level"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/level-bar.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

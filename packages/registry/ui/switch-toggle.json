@@ -1,0 +1,151 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "switch-toggle",
+  "type": "registry:ui",
+  "title": "Switch Toggle",
+  "description": "A tab-based switch toggle with animated floating background indicator. Includes a composed SwitchToggle.Group for quick usage. Uses Radix Tabs with namespace exports.",
+  "version": "1.0.0",
+  "dependencies": [
+    "@radix-ui/react-slot",
+    "@radix-ui/react-tabs",
+    "merge-refs"
+  ],
+  "registryDependencies": [
+    "use-tab-observer",
+    "utils"
+  ],
+  "docs": {
+    "lead": "A tab-based switch toggle with an animated floating background indicator. Built on Radix Tabs for full accessibility.",
+    "usage": "import * as SwitchToggle from \"@/components/ui/switch-toggle\"\n\n<SwitchToggle.Root defaultValue=\"option1\">\n  <SwitchToggle.List>\n    <SwitchToggle.Trigger value=\"option1\">Option 1</SwitchToggle.Trigger>\n    <SwitchToggle.Trigger value=\"option2\">Option 2</SwitchToggle.Trigger>\n  </SwitchToggle.List>\n  <SwitchToggle.Content value=\"option1\">Content 1</SwitchToggle.Content>\n  <SwitchToggle.Content value=\"option2\">Content 2</SwitchToggle.Content>\n</SwitchToggle.Root>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Rounded switch toggle with icons and text labels for a theme switcher.",
+        "code": "<SwitchToggle.Root defaultValue='system'>\n  <SwitchToggle.List>\n    <SwitchToggle.Trigger value='light'>\n      <RiSunLine className='size-5 shrink-0' />\n      Light\n    </SwitchToggle.Trigger>\n    <SwitchToggle.Trigger value='dark'>\n      <RiMoonLine className='size-5 shrink-0' />\n      Dark\n    </SwitchToggle.Trigger>\n    <SwitchToggle.Trigger value='system'>\n      <RiEqualizer3Fill className='size-5 shrink-0' />\n      System\n    </SwitchToggle.Trigger>\n  </SwitchToggle.List>\n</SwitchToggle.Root>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Icon Only (Rounded)",
+        "description": "Compact rounded variant with icon-only triggers, ideal for tight layouts.",
+        "code": "<SwitchToggle.Root defaultValue='system'>\n  <SwitchToggle.List className='w-fit gap-2 rounded-full' floatingBgClassName='rounded-full'>\n    <SwitchToggle.Trigger value='light' className='aspect-square h-9'>\n      <RiSunLine className='size-6' />\n    </SwitchToggle.Trigger>\n    <SwitchToggle.Trigger value='dark' className='aspect-square h-9'>\n      <RiMoonLine className='size-6' />\n    </SwitchToggle.Trigger>\n    <SwitchToggle.Trigger value='system' className='aspect-square h-9'>\n      <RiEqualizer3Fill className='size-6' />\n    </SwitchToggle.Trigger>\n  </SwitchToggle.List>\n</SwitchToggle.Root>",
+        "stories": ["Rounded"]
+      },
+      {
+        "title": "Group (Composed)",
+        "description": "Composed group component with items as props, including icons.",
+        "code": "const items = [\n  { value: 'light', label: 'Light', icon: RiSunLine },\n  { value: 'dark', label: 'Dark', icon: RiMoonLine },\n  { value: 'system', label: 'System', icon: RiEqualizer3Fill },\n];\n\n<SwitchToggle.Group defaultValue='system' items={items} />",
+        "stories": ["GroupDefault"]
+      },
+      {
+        "title": "Group Text Only",
+        "description": "Composed group with text-only items, no icons.",
+        "code": "const items = [\n  { value: 'daily', label: 'Daily' },\n  { value: 'weekly', label: 'Weekly' },\n  { value: 'monthly', label: 'Monthly' },\n];\n\n<SwitchToggle.Group defaultValue='weekly' items={items} />",
+        "stories": ["GroupTextOnly"]
+      }
+    ],
+    "api": [
+      {
+        "name": "SwitchToggle.Root",
+        "description": "The root container. Wraps Radix Tabs.Root.",
+        "props": [
+          {
+            "name": "defaultValue",
+            "type": "string",
+            "description": "The default active tab value (uncontrolled)"
+          },
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The controlled active tab value"
+          },
+          {
+            "name": "onValueChange",
+            "type": "(value: string) => void",
+            "description": "Callback when the active tab changes"
+          }
+        ]
+      },
+      {
+        "name": "SwitchToggle.List",
+        "description": "The tab list container with animated floating background indicator.",
+        "props": [
+          {
+            "name": "floatingBgClassName",
+            "type": "string",
+            "description": "Additional classes for the floating background indicator element"
+          }
+        ]
+      },
+      {
+        "name": "SwitchToggle.Trigger",
+        "description": "An individual tab trigger button.",
+        "props": [
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The unique value for this tab trigger"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disables the trigger"
+          }
+        ]
+      },
+      {
+        "name": "SwitchToggle.Content",
+        "description": "The content panel displayed when its corresponding trigger is active.",
+        "props": [
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The value matching the trigger this content belongs to"
+          }
+        ]
+      },
+      {
+        "name": "SwitchToggle.Group",
+        "description": "Composed switch toggle that renders triggers from an items array. Handles icon rendering automatically.",
+        "props": [
+          {
+            "name": "items",
+            "type": "SwitchToggleGroupItem[]",
+            "description": "Array of items with value, label, and optional icon"
+          },
+          {
+            "name": "listClassName",
+            "type": "string",
+            "description": "Additional classes for the List container"
+          },
+          {
+            "name": "floatingBgClassName",
+            "type": "string",
+            "description": "Additional classes for the floating background indicator"
+          },
+          {
+            "name": "defaultValue",
+            "type": "string",
+            "description": "The default active tab value (uncontrolled)"
+          },
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The controlled active tab value"
+          },
+          {
+            "name": "onValueChange",
+            "type": "(value: string) => void",
+            "description": "Callback when the active tab changes"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/switch-toggle.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

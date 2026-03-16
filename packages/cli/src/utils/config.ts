@@ -104,6 +104,12 @@ export function getComponentPath(
         'happly-ui',
         finalFileName
       );
+    case 'registry:style':
+      return path.join(
+        srcPrefix + config.aliases.ui.replace('@/', ''),
+        'styles',
+        finalFileName
+      );
     default:
       return path.join(
         srcPrefix + config.aliases.ui.replace('@/', ''),
