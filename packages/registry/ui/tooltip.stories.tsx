@@ -156,7 +156,7 @@ export const HTMLContent = {
           className='max-w-[272px]'
         >
           <div className='flex gap-3'>
-            <RiGlobalLine className='size-5 shrink-0 text-text-sub-600' />
+            <RiGlobalLine className='w-5 h-5 shrink-0 text-text-sub-600' />
             <div>
               <div className='text-text-strong-950'>Content Title</div>
               <div className='mt-1 text-paragraph-xs text-text-sub-600'>

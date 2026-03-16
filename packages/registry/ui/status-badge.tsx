@@ -17,12 +17,12 @@ export const statusBadgeVariants = tv({
       'inline-flex h-6 items-center justify-center gap-2 whitespace-nowrap px-2 text-label-xs',
       'has-[>.dot]:gap-1.5',
     ],
-    icon: '-mx-1 size-4',
+    icon: '-mx-1 w-4 h-4',
     dot: [
       // base
-      'dot -mx-1 flex size-4 items-center justify-center',
+      'dot -mx-1 flex w-4 h-4 items-center justify-center',
       // before
-      'before:size-1.5 before:rounded-full before:bg-current',
+      'before:w-1.5 before:h-1.5 before:rounded-full before:bg-current',
     ],
   },
   variants: {

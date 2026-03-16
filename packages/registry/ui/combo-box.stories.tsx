@@ -507,7 +507,7 @@ function CompoundCustomItemsItems() {
             />
             {option.icon && (
               <div
-                className='size-6 shrink-0 rounded-full bg-cover bg-center bg-no-repeat'
+                className='w-6 h-6 shrink-0 rounded-full bg-cover bg-center bg-no-repeat'
                 style={{ backgroundImage: `url(${option.icon})` }}
               />
             )}

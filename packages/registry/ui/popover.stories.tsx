@@ -60,8 +60,8 @@ export const Demo = {
           </CompactButton.Root>
         </Popover.Close>
 
-        <div className='flex size-12 shrink-0 items-center justify-center rounded-full bg-bg-white-0 shadow-regular-xs ring-1 ring-inset ring-stroke-soft-200'>
-          <RiUser6Line className='size-6 text-text-sub-600' />
+        <div className='flex w-12 h-12 shrink-0 items-center justify-center rounded-full bg-bg-white-0 shadow-regular-xs ring-1 ring-inset ring-stroke-soft-200'>
+          <RiUser6Line className='w-6 h-6 text-text-sub-600' />
         </div>
 
         <div className='mt-4'>
@@ -114,8 +114,8 @@ export const Position = {
             </CompactButton.Root>
           </Popover.Close>
 
-          <div className='flex size-12 shrink-0 items-center justify-center rounded-full bg-bg-white-0 shadow-regular-xs ring-1 ring-inset ring-stroke-soft-200'>
-            <RiUser6Line className='size-6 text-text-sub-600' />
+          <div className='flex w-12 h-12 shrink-0 items-center justify-center rounded-full bg-bg-white-0 shadow-regular-xs ring-1 ring-inset ring-stroke-soft-200'>
+            <RiUser6Line className='w-6 h-6 text-text-sub-600' />
           </div>
 
           <div className='mt-4'>
@@ -163,8 +163,8 @@ export const Position = {
             </CompactButton.Root>
           </Popover.Close>
 
-          <div className='flex size-12 shrink-0 items-center justify-center rounded-full bg-bg-white-0 shadow-regular-xs ring-1 ring-inset ring-stroke-soft-200'>
-            <RiUser6Line className='size-6 text-text-sub-600' />
+          <div className='flex w-12 h-12 shrink-0 items-center justify-center rounded-full bg-bg-white-0 shadow-regular-xs ring-1 ring-inset ring-stroke-soft-200'>
+            <RiUser6Line className='w-6 h-6 text-text-sub-600' />
           </div>
 
           <div className='mt-4'>
@@ -212,8 +212,8 @@ export const Position = {
             </CompactButton.Root>
           </Popover.Close>
 
-          <div className='flex size-12 shrink-0 items-center justify-center rounded-full bg-bg-white-0 shadow-regular-xs ring-1 ring-inset ring-stroke-soft-200'>
-            <RiUser6Line className='size-6 text-text-sub-600' />
+          <div className='flex w-12 h-12 shrink-0 items-center justify-center rounded-full bg-bg-white-0 shadow-regular-xs ring-1 ring-inset ring-stroke-soft-200'>
+            <RiUser6Line className='w-6 h-6 text-text-sub-600' />
           </div>
 
           <div className='mt-4'>

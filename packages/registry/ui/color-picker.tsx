@@ -74,7 +74,7 @@ function ColorThumb({ className, ...props }: AriaColorThumbProps) {
     <AriaColorThumb
       className={composeRenderProps(className, (className) =>
         cn(
-          'z-50 size-3 rounded-full ring-2 ring-stroke-white-0',
+          'z-50 w-3 h-3 rounded-full ring-2 ring-stroke-white-0',
           className,
         ),
       )}
@@ -119,7 +119,7 @@ function ColorSwatch({ className, style, ...props }: AriaColorSwatchProps) {
     <AriaColorSwatch
       className={composeRenderProps(className, (className) =>
         cn(
-          'size-4 rounded-full border-stroke-white-0 group-data-[selected=true]/swatch-item:border-2 group-data-[selected=true]/swatch-item:ring-[1.5px]',
+          'w-4 h-4 rounded-full border-stroke-white-0 group-data-[selected=true]/swatch-item:border-2 group-data-[selected=true]/swatch-item:ring-[1.5px]',
           className,
         ),
       )}

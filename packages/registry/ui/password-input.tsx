@@ -70,9 +70,9 @@ const PasswordInputRoot = React.forwardRef<HTMLInputElement, PasswordInputProps>
               tabIndex={-1}
             >
               {visible ? (
-                <HideIcon className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+                <HideIcon className='w-5 h-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
               ) : (
-                <ShowIcon className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+                <ShowIcon className='w-5 h-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
               )}
             </button>
           </Input.Wrapper>
@@ -90,9 +90,9 @@ const PasswordInputRoot = React.forwardRef<HTMLInputElement, PasswordInputProps>
                 className='flex items-center gap-1.5 text-paragraph-xs text-text-sub-600'
               >
                 {c.met ? (
-                  <RiCheckboxCircleFill className='size-4 shrink-0 text-success-base' />
+                  <RiCheckboxCircleFill className='w-4 h-4 shrink-0 text-success-base' />
                 ) : (
-                  <RiCloseCircleFill className='size-4 shrink-0 text-text-soft-400' />
+                  <RiCloseCircleFill className='w-4 h-4 shrink-0 text-text-soft-400' />
                 )}
                 {c.label}
               </div>

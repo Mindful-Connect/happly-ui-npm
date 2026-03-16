@@ -12,10 +12,10 @@ const fileFormatIconVariants = tv({
   variants: {
     size: {
       medium: {
-        root: 'size-10',
+        root: 'w-10 h-10',
       },
       small: {
-        root: 'size-8',
+        root: 'w-8 h-8',
       },
     },
     color: {

@@ -56,7 +56,7 @@ const RadioGroupItem = React.forwardRef<
     <RadioGroupPrimitive.Item
       ref={forwardedRef}
       className={cn(
-        'group/radio relative size-5 shrink-0 outline-none focus:outline-none',
+        'group/radio relative w-5 h-5 shrink-0 outline-none focus:outline-none',
         className,
       )}
       {...rest}

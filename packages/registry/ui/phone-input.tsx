@@ -175,7 +175,7 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
             {activeCountry && (
               <div className='flex items-center gap-2'>
                 <div
-                  className='size-5 shrink-0 rounded-full bg-cover bg-center bg-no-repeat group-disabled/trigger:opacity-[.48]'
+                  className='w-5 h-5 shrink-0 rounded-full bg-cover bg-center bg-no-repeat group-disabled/trigger:opacity-[.48]'
                   style={{
                     backgroundImage: `url(${FLAG_URL}/${activeCountryIso2}.svg)`,
                   }}

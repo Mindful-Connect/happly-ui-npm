@@ -21,13 +21,13 @@
       {
         "title": "Default",
         "description": "Rounded switch toggle with icons and text labels for a theme switcher.",
-        "code": "<SwitchToggle.Root defaultValue='system'>\n  <SwitchToggle.List>\n    <SwitchToggle.Trigger value='light'>\n      <RiSunLine className='size-5 shrink-0' />\n      Light\n    </SwitchToggle.Trigger>\n    <SwitchToggle.Trigger value='dark'>\n      <RiMoonLine className='size-5 shrink-0' />\n      Dark\n    </SwitchToggle.Trigger>\n    <SwitchToggle.Trigger value='system'>\n      <RiEqualizer3Fill className='size-5 shrink-0' />\n      System\n    </SwitchToggle.Trigger>\n  </SwitchToggle.List>\n</SwitchToggle.Root>",
+        "code": "<SwitchToggle.Root defaultValue='system'>\n  <SwitchToggle.List>\n    <SwitchToggle.Trigger value='light'>\n      <RiSunLine className='w-5 h-5 shrink-0' />\n      Light\n    </SwitchToggle.Trigger>\n    <SwitchToggle.Trigger value='dark'>\n      <RiMoonLine className='w-5 h-5 shrink-0' />\n      Dark\n    </SwitchToggle.Trigger>\n    <SwitchToggle.Trigger value='system'>\n      <RiEqualizer3Fill className='w-5 h-5 shrink-0' />\n      System\n    </SwitchToggle.Trigger>\n  </SwitchToggle.List>\n</SwitchToggle.Root>",
         "stories": ["Default"]
       },
       {
         "title": "Icon Only (Rounded)",
         "description": "Compact rounded variant with icon-only triggers, ideal for tight layouts.",
-        "code": "<SwitchToggle.Root defaultValue='system'>\n  <SwitchToggle.List className='w-fit gap-2 rounded-full' floatingBgClassName='rounded-full'>\n    <SwitchToggle.Trigger value='light' className='aspect-square h-9'>\n      <RiSunLine className='size-6' />\n    </SwitchToggle.Trigger>\n    <SwitchToggle.Trigger value='dark' className='aspect-square h-9'>\n      <RiMoonLine className='size-6' />\n    </SwitchToggle.Trigger>\n    <SwitchToggle.Trigger value='system' className='aspect-square h-9'>\n      <RiEqualizer3Fill className='size-6' />\n    </SwitchToggle.Trigger>\n  </SwitchToggle.List>\n</SwitchToggle.Root>",
+        "code": "<SwitchToggle.Root defaultValue='system'>\n  <SwitchToggle.List className='w-fit gap-2 rounded-full' floatingBgClassName='rounded-full'>\n    <SwitchToggle.Trigger value='light' className='aspect-square h-9'>\n      <RiSunLine className='w-6 h-6' />\n    </SwitchToggle.Trigger>\n    <SwitchToggle.Trigger value='dark' className='aspect-square h-9'>\n      <RiMoonLine className='w-6 h-6' />\n    </SwitchToggle.Trigger>\n    <SwitchToggle.Trigger value='system' className='aspect-square h-9'>\n      <RiEqualizer3Fill className='w-6 h-6' />\n    </SwitchToggle.Trigger>\n  </SwitchToggle.List>\n</SwitchToggle.Root>",
         "stories": ["Rounded"]
       },
       {

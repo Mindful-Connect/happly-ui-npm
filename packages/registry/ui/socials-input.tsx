@@ -548,7 +548,7 @@ export default function SocialsInput({
                   onClick={handleConfirmEdit}
                   className='shrink-0 text-text-sub-600 transition duration-200 ease-out hover:text-success-base'
                 >
-                  <RiCheckLine className='size-5' />
+                  <RiCheckLine className='w-5 h-5' />
                 </button>
               </Input.Wrapper>
             </Input.Root>

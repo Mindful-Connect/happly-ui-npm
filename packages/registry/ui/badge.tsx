@@ -21,20 +21,20 @@ export const badgeVariants = tv({
       'dot',
       'flex items-center justify-center',
       // before
-      'before:size-1 before:rounded-full before:bg-current',
+      'before:w-1 before:h-1 before:rounded-full before:bg-current',
     ],
   },
   variants: {
     size: {
       small: {
         root: 'h-5 gap-0.5 px-2 text-subheading-2xs',
-        icon: 'size-3',
-        dot: 'size-4',
+        icon: 'w-3 h-3',
+        dot: 'w-4 h-4',
       },
       medium: {
         root: 'h-6 gap-0.5 px-2 text-label-xs',
-        icon: 'size-4',
-        dot: 'size-4',
+        icon: 'w-4 h-4',
+        dot: 'w-4 h-4',
       },
     },
     variant: {

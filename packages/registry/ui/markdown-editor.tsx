@@ -277,7 +277,7 @@ const ToolbarButton = React.forwardRef<HTMLButtonElement, ToolbarButtonProps>(
         type='button'
         disabled={disabled}
         className={cn(
-          'flex size-7 items-center justify-center rounded-md text-text-sub-600 outline-none',
+          'flex w-7 h-7 items-center justify-center rounded-md text-text-sub-600 outline-none',
           'transition duration-200 ease-out',
           'hover:bg-bg-soft-200 hover:text-text-strong-950',
           'focus-visible:ring-2 focus-visible:ring-stroke-strong-950',
@@ -619,7 +619,7 @@ function ComposedSingle({
               aria-label={label}
               disabled={disabled || previewing}
             >
-              <Icon className='size-5' />
+              <Icon className='w-5 h-5' />
             </ToolbarButton>
           ))}
           <ToolbarButton
@@ -629,9 +629,9 @@ function ComposedSingle({
             active={previewing}
           >
             {previewing ? (
-              <RiEditLine className='size-5' />
+              <RiEditLine className='w-5 h-5' />
             ) : (
-              <RiEyeLine className='size-5' />
+              <RiEyeLine className='w-5 h-5' />
             )}
           </ToolbarButton>
         </ToolbarGroup>
@@ -741,7 +741,7 @@ function ComposedMulti({
               aria-label={label}
               disabled={disabled || previewing}
             >
-              <Icon className='size-5' />
+              <Icon className='w-5 h-5' />
             </ToolbarButton>
           ))}
           <ToolbarButton
@@ -751,9 +751,9 @@ function ComposedMulti({
             active={previewing}
           >
             {previewing ? (
-              <RiEditLine className='size-5' />
+              <RiEditLine className='w-5 h-5' />
             ) : (
-              <RiEyeLine className='size-5' />
+              <RiEyeLine className='w-5 h-5' />
             )}
           </ToolbarButton>
         </ToolbarGroup>

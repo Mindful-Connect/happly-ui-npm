@@ -318,7 +318,7 @@ function FileUploadIcon<T extends React.ElementType>({
 }: PolymorphicComponentProps<T>) {
   const Component = as || 'div';
 
-  return <Component className={cn('size-6 text-text-sub-600', className)} {...rest} />;
+  return <Component className={cn('w-6 h-6 text-text-sub-600', className)} {...rest} />;
 }
 FileUploadIcon.displayName = 'FileUploadIcon';
 

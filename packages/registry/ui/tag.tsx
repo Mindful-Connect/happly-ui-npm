@@ -22,17 +22,17 @@ export const tagVariants = tv({
     ],
     icon: [
       // base
-      '-mx-1 size-4 shrink-0 text-text-soft-400 transition duration-200 ease-out',
+      '-mx-1 w-4 h-4 shrink-0 text-text-soft-400 transition duration-200 ease-out',
       // hover
       'group-hover/tag:text-text-sub-600',
     ],
     dismissButton: [
       // base
-      'group/dismiss-button -ml-1.5 -mr-1 size-4 shrink-0',
+      'group/dismiss-button -ml-1.5 -mr-1 w-4 h-4 shrink-0',
       // focus
       'focus:outline-none',
     ],
-    dismissIcon: 'size-4 text-text-soft-400 transition duration-200 ease-out',
+    dismissIcon: 'w-4 h-4 text-text-soft-400 transition duration-200 ease-out',
   },
   variants: {
     variant: {

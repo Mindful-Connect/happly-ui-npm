@@ -86,7 +86,7 @@ const FileCardVideo = React.forwardRef<
     <div ref={forwardedRef} className={cn('relative h-full w-full', className)} {...rest}>
       <img src={src} alt={alt} className='h-full w-full object-cover' />
       <div className='absolute inset-0 flex items-center justify-center'>
-        <RiVideoFill className='size-8 text-text-soft-400' />
+        <RiVideoFill className='w-8 h-8 text-text-soft-400' />
       </div>
       {children}
     </div>
@@ -107,7 +107,7 @@ const FileCardAudio = React.forwardRef<
       {...rest}
     >
       <div className='flex items-center justify-center rounded-full bg-white/40 p-2.5'>
-        <RiVolumeUpFill className='size-8 text-text-sub-600' />
+        <RiVolumeUpFill className='w-8 h-8 text-text-sub-600' />
       </div>
     </div>
   );
@@ -244,10 +244,10 @@ const FileCardStatus = React.forwardRef<HTMLDivElement, FileCardStatusProps>(
         {...rest}
       >
         {status === 'uploading' && (
-          <RiLoader2Fill className='size-4 shrink-0 animate-spin text-text-sub-600' />
+          <RiLoader2Fill className='w-4 h-4 shrink-0 animate-spin text-text-sub-600' />
         )}
         {status === 'failed' && (
-          <RiErrorWarningFill className='size-4 shrink-0 text-error-base' />
+          <RiErrorWarningFill className='w-4 h-4 shrink-0 text-error-base' />
         )}
         <span className='text-paragraph-xs text-text-strong-950'>{children}</span>
       </div>
@@ -340,7 +340,7 @@ const FileCardDownloadButton = React.forwardRef<
       )}
       {...rest}
     >
-      <RiDownloadLine className='size-5' />
+      <RiDownloadLine className='w-5 h-5' />
     </button>
   );
 });
@@ -363,7 +363,7 @@ const FileCardCloseButton = React.forwardRef<
       )}
       {...rest}
     >
-      <RiCloseLine className='size-5' />
+      <RiCloseLine className='w-5 h-5' />
     </button>
   );
 });
@@ -514,13 +514,13 @@ const FileCardCompactStatus = React.forwardRef<HTMLDivElement, CompactStatusProp
         {...rest}
       >
         {status === 'uploading' && (
-          <RiLoader2Fill className='size-4 shrink-0 animate-spin text-text-sub-600' />
+          <RiLoader2Fill className='w-4 h-4 shrink-0 animate-spin text-text-sub-600' />
         )}
         {status === 'completed' && (
-          <RiCheckboxCircleFill className='size-4 shrink-0 text-success-base' />
+          <RiCheckboxCircleFill className='w-4 h-4 shrink-0 text-success-base' />
         )}
         {status === 'failed' && (
-          <RiErrorWarningFill className='size-4 shrink-0 text-error-base' />
+          <RiErrorWarningFill className='w-4 h-4 shrink-0 text-error-base' />
         )}
         <span className='text-paragraph-xs text-text-strong-950'>{children}</span>
       </div>
@@ -546,7 +546,7 @@ const FileCardDeleteButton = React.forwardRef<
       )}
       {...rest}
     >
-      <RiDeleteBinLine className='size-5' />
+      <RiDeleteBinLine className='w-5 h-5' />
     </button>
   );
 });

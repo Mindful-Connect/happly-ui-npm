@@ -62,7 +62,7 @@ const SwitchRoot = React.forwardRef<
         <SwitchPrimitives.Thumb
           className={cn(
             // base
-            'pointer-events-none relative block size-3',
+            'pointer-events-none relative block w-3 h-3',
             'transition-transform duration-200 ease-out',
             // checked
             'data-[state=checked]:translate-x-3',
@@ -76,7 +76,7 @@ const SwitchRoot = React.forwardRef<
               'group-active/switch:scale-[.833]',
             ],
             // disabled
-            disabled && ['size-2.5 rounded-full bg-bg-soft-200 shadow-none'],
+            disabled && ['w-2.5 h-2.5 rounded-full bg-bg-soft-200 shadow-none'],
           )}
           style={{
             ['--mask' as any]:

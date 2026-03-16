@@ -16,7 +16,7 @@
       {
         "title": "Demo",
         "description": "Keyboard shortcut with command icon and key label.",
-        "code": "<Kbd.Root>\n  <IconCmd className=\"size-2.5\" />\n  +K\n</Kbd.Root>",
+        "code": "<Kbd.Root>\n  <IconCmd className=\"w-2.5 h-2.5\" />\n  +K\n</Kbd.Root>",
         "stories": ["Demo"]
       }
     ],

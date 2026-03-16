@@ -7,11 +7,11 @@ const keyIconVariants = tv({
   base: 'flex shrink-0 items-center justify-center overflow-hidden rounded-full',
   variants: {
     size: {
-      sm: 'size-8 p-1.5 [&_svg]:size-5',
-      md: 'size-10 p-2.5 [&_svg]:size-5',
-      lg: 'size-12 p-3 [&_svg]:size-6',
-      xl: 'size-14 p-3.5 [&_svg]:size-7',
-      '2xl': 'size-16 p-4 [&_svg]:size-8',
+      sm: 'w-8 h-8 p-1.5 [&_svg]:w-5 h-5',
+      md: 'w-10 h-10 p-2.5 [&_svg]:w-5 h-5',
+      lg: 'w-12 h-12 p-3 [&_svg]:w-6 h-6',
+      xl: 'w-14 h-14 p-3.5 [&_svg]:w-7 h-7',
+      '2xl': 'w-16 h-16 p-4 [&_svg]:w-8 h-8',
     },
     style: {
       stroke: 'bg-bg-white-0 ring-1 ring-inset ring-stroke-soft-200 shadow-regular-xs',

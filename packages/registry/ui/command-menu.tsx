@@ -155,7 +155,7 @@ function CommandMenuItemIcon<T extends React.ElementType>({
 
   return (
     <Component
-      className={cn('size-5 shrink-0 text-text-sub-600', className)}
+      className={cn('w-5 h-5 shrink-0 text-text-sub-600', className)}
       {...rest}
     />
   );
@@ -183,7 +183,7 @@ function CommandMenuFooterKeyBox({
   return (
     <div
       className={cn(
-        'flex size-5 shrink-0 items-center justify-center rounded bg-bg-weak-50 text-text-sub-600 ring-1 ring-inset ring-stroke-soft-200',
+        'flex w-5 h-5 shrink-0 items-center justify-center rounded bg-bg-weak-50 text-text-sub-600 ring-1 ring-inset ring-stroke-soft-200',
         className,
       )}
       {...rest}

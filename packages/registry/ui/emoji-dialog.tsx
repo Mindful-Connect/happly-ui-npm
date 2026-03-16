@@ -161,15 +161,15 @@ const EmojiDialogContent = React.forwardRef<
               <DialogPrimitive.Close
                 className={cn(
                   'absolute right-[34px] top-[34px] z-10',
-                  'flex size-8 items-center justify-center rounded-full',
+                  'flex w-8 h-8 items-center justify-center rounded-full',
                   'bg-bg-weak-50 text-text-sub-600',
                   'transition-colors hover:bg-neutral-100 hover:text-text-strong-950',
                   'focus:outline-none focus:ring-2 focus:ring-stroke-soft-200 focus:ring-offset-2',
                   'disabled:pointer-events-none',
                 )}
               >
-                <div className='flex size-6 items-center justify-center rounded-full border border-stroke-soft-200 bg-bg-white-0'>
-                  <RiCloseLine className='size-4' />
+                <div className='flex w-6 h-6 items-center justify-center rounded-full border border-stroke-soft-200 bg-bg-white-0'>
+                  <RiCloseLine className='w-4 h-4' />
                 </div>
                 <span className='sr-only'>Close</span>
               </DialogPrimitive.Close>
@@ -564,7 +564,7 @@ function AnimatedMemoji({
 }) {
   if (disableAnimations) {
     return (
-      <div className='relative z-10 flex size-28 items-center justify-center'>
+      <div className='relative z-10 flex w-28 h-28 items-center justify-center'>
         {children}
       </div>
     );
@@ -580,7 +580,7 @@ function AnimatedMemoji({
         type: 'spring',
         ...entrySpring,
       }}
-      className='relative z-10 flex size-28 items-center justify-center'
+      className='relative z-10 flex w-28 h-28 items-center justify-center'
     >
       <motion.div
         animate={{
@@ -594,7 +594,7 @@ function AnimatedMemoji({
           ease: 'easeInOut',
           times: [0, 0.25, 0.5, 0.75, 1],
         }}
-        className='size-full'
+        className='w-full h-full'
       >
         {children}
       </motion.div>
@@ -620,13 +620,13 @@ function FloatingMemoji({
       }}
     >
       <div
-        className='relative size-full overflow-hidden rounded-full'
+        className='relative w-full h-full overflow-hidden rounded-full'
         style={{ background: entry.gradient }}
       >
         <img
           src={getMemojiUrl(entry.memoji)}
           alt={entry.memoji.person}
-          className='absolute inset-0 size-full object-cover'
+          className='absolute inset-0 w-full h-full object-cover'
         />
       </div>
     </div>
@@ -675,7 +675,7 @@ const EmojiDialogEmojiArea = React.forwardRef<
     <img
       src={getMemojiUrl(memoji)}
       alt={memoji.person}
-      className='size-full object-contain'
+      className='w-full h-full object-contain'
     />
   ) : (
     avatarChildren
@@ -770,7 +770,7 @@ const EmojiDialogBubble = React.forwardRef<
         )}
       >
         {icon && (
-          <div className='flex size-8 shrink-0 items-center justify-center rounded-full bg-bg-white-0 text-text-strong-950 shadow-[0_15px_50px_0_rgba(0,0,0,0.15)] [&>*]:size-5'>
+          <div className='flex w-8 h-8 shrink-0 items-center justify-center rounded-full bg-bg-white-0 text-text-strong-950 shadow-[0_15px_50px_0_rgba(0,0,0,0.15)] [&>*]:w-5 h-5'>
             {icon}
           </div>
         )}
@@ -779,7 +779,7 @@ const EmojiDialogBubble = React.forwardRef<
       <div className='absolute -bottom-[3px] left-[55px]'>
         <div
           className={cn(
-            'size-2.5 rounded-[2px]',
+            'w-2.5 h-2.5 rounded-[2px]',
             bubbleVariants({ variant }),
           )}
           style={{

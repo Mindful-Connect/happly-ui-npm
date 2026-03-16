@@ -379,7 +379,7 @@ export const SquareRounded = {
 
       <Avatar.Root
         className='rounded-xl bg-[#EFEBFF] ring-[1.26px] ring-[rgba(14,18,27,0.1)]'
-        placeholder={<RiBuildingLine className='size-10 text-[#B8ACF6]' />}
+        placeholder={<RiBuildingLine className='w-10 h-10 text-[#B8ACF6]' />}
       />
     </div>
   ),
@@ -389,16 +389,16 @@ export const CustomPlaceholder = {
   render: () => (
     <div className='flex items-center gap-6'>
       <Avatar.Root
-        placeholder={<RiBuildingLine className='size-10' />}
+        placeholder={<RiBuildingLine className='w-10 h-10' />}
         color='primary'
       />
       <Avatar.Root
-        placeholder={<RiBuildingLine className='size-8' />}
+        placeholder={<RiBuildingLine className='w-8 h-8' />}
         color='primary'
         size='64'
       />
       <Avatar.Root
-        placeholder={<RiBuildingLine className='size-6' />}
+        placeholder={<RiBuildingLine className='w-6 h-6' />}
         color='primary'
         size='48'
       />

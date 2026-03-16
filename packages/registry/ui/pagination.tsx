@@ -19,7 +19,7 @@ export const paginationVariants = tv({
     item: 'flex items-center justify-center text-center text-label-sm text-text-sub-600 transition duration-200 ease-out',
     navButton:
       'flex items-center justify-center text-text-sub-600 transition duration-200 ease-out',
-    navIcon: 'size-5',
+    navIcon: 'w-5 h-5',
   },
   variants: {
     variant: {
@@ -33,7 +33,7 @@ export const paginationVariants = tv({
         ],
         navButton: [
           // base
-          'size-8 rounded-lg',
+          'w-8 h-8 rounded-lg',
           // hover
           'hover:bg-bg-weak-50',
         ],
@@ -48,7 +48,7 @@ export const paginationVariants = tv({
         ],
         navButton: [
           // base
-          'size-8 rounded-full',
+          'w-8 h-8 rounded-full',
           // hover
           'hover:bg-bg-weak-50',
         ],

@@ -84,7 +84,7 @@
       {
         "title": "With Button",
         "description": "Input with an action button alongside.",
-        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiLinksLine} />\n    <Input.Input placeholder=\"www.example.com\" />\n  </Input.Wrapper>\n  <button className=\"inline-flex h-10 items-center justify-center px-3.5\">\n    <RiFileCopyLine className=\"size-5\" />\n  </button>\n</Input.Root>",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiLinksLine} />\n    <Input.Input placeholder=\"www.example.com\" />\n  </Input.Wrapper>\n  <button className=\"inline-flex h-10 items-center justify-center px-3.5\">\n    <RiFileCopyLine className=\"w-5 h-5\" />\n  </button>\n</Input.Root>",
         "stories": ["WithButton"]
       },
       {

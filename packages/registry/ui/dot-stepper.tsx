@@ -25,11 +25,11 @@ export const dotStepperVariants = tv({
     size: {
       small: {
         root: 'gap-2.5',
-        item: 'size-2',
+        item: 'w-2 h-2',
       },
       xsmall: {
         root: 'gap-1.5',
-        item: 'size-1',
+        item: 'w-1 h-1',
       },
     },
   },
