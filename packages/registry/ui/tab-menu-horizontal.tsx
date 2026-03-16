@@ -43,7 +43,7 @@ export const tabMenuHorizontalVariants = tv({
     ],
     icon: 'size-5 shrink-0',
     counter:
-      'flex min-w-4 items-center justify-center rounded-full bg-error-base p-0.5 text-[11px] font-medium leading-3 text-static-white',
+      'flex min-w-4 aspect-square items-center justify-center rounded-full bg-error-base p-0.5 text-[11px] font-medium leading-3 text-static-white',
   },
   variants: {
     variant: {

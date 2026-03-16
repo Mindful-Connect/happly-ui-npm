@@ -101,7 +101,7 @@ export const Composed = {
 
 export const Grid = {
   render: () => (
-    <div className='grid grid-cols-3 gap-4'>
+    <div className='flex flex-wrap justify-center gap-4'>
       <PromotionalCard.Composed
         variant='filled'
         icon={RiSpotifyFill}

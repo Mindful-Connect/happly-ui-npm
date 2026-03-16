@@ -17,16 +17,16 @@ const PROMOTIONAL_CARD_LINK_NAME = 'PromotionalCardLink';
 export const promotionalCardVariants = tv({
   slots: {
     root: [
-      'relative h-[124px] w-80 overflow-hidden rounded-xl',
+      'relative h-full min-h-[137px] min-w-72 overflow-hidden rounded-2xl',
       'transition duration-200 ease-out',
     ],
-    icon: 'absolute left-4 top-4 size-8',
+    icon: 'absolute left-[15px] top-[15px] !size-8',
     decoration:
-      'pointer-events-none absolute -top-[70px] left-[calc(100%-88px)] size-[164px]',
-    content: 'absolute top-16 left-4 right-4 flex flex-col gap-1',
+      'pointer-events-none absolute -top-[71px] left-[calc(100%-88px)] !size-[163px] text-icon-strong-950',
+    content: 'absolute top-[63px] left-[15px] right-4 flex flex-col gap-1',
     title: 'text-label-sm text-text-strong-950 truncate',
     descriptionRow: 'flex items-center gap-1',
-    description: 'text-paragraph-xs text-text-sub-600 truncate',
+    description: 'text-paragraph-xs text-text-sub-600',
     link: [
       'text-label-xs text-text-sub-600 underline shrink-0',
       'transition duration-200 ease-out',
