@@ -530,7 +530,8 @@ export default function SocialsInput({
               hasError={!!errors[`${name}.${editingKey}`]}
               className='flex-1'
             >
-              <Input.Affix>https://</Input.Affix>
+              <Input.Affix>
+                <Input.Icon as={SOCIAL_CONFIGS[editingKey].icon} /></Input.Affix>
               <Input.Wrapper>
                 <Input.Input
                   autoFocus
