@@ -27,6 +27,7 @@ export type RegistryItemType =
   | 'registry:ui'
   | 'registry:hook'
   | 'registry:lib'
+  | 'registry:style'
   | 'registry:component'
   | 'registry:block';
 

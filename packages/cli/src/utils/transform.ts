@@ -9,6 +9,11 @@ export function transformComponent(
 ): string {
   let content = file.content;
 
+  // CSS files don't need import or TS transforms
+  if (file.type === 'registry:style' || file.path.endsWith('.css')) {
+    return content;
+  }
+
   // Transform import paths based on aliases
   content = transformImports(content, config);
 

@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import './prism.css';
 @import '../../../packages/registry/styles/happly-theme.css';
+@import '../../../packages/registry/styles/markdown-editor.css';
 
 @source "../../../packages/registry";
 

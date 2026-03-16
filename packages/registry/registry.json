@@ -247,7 +247,7 @@
       "name": "markdown-editor",
       "type": "registry:ui",
       "title": "Markdown Editor",
-      "description": "A markdown text editor with formatting toolbar, preview mode, and built-in switch toggle. Write markdown and preview rendered output. Compound or composed mode. Works with FormField."
+      "description": "A markdown text editor with formatting toolbar, preview mode, and built-in English/French language toggle. Supports single-language and multi-language modes with per-language value objects. Compound or composed mode. Works with FormField."
     },
     {
       "name": "memoji",

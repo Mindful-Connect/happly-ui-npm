@@ -6,10 +6,9 @@ import * as FormField from './form-field';
 
 export default { title: 'Form/Markdown Editor' };
 
-const LANG_ITEMS = [
-  { value: 'english', label: 'English' },
-  { value: 'french', label: 'French' },
-];
+// ---------------------------------------------------------------------------
+// Default — shows English/French toggle, manages {en: "", fr: ""} internally
+// ---------------------------------------------------------------------------
 
 export const Default = {
   render: () => (
@@ -21,65 +20,117 @@ export const Default = {
   ),
 };
 
-export const WithToggle = {
+// ---------------------------------------------------------------------------
+// Single language — no toggle, value is a plain string
+// ---------------------------------------------------------------------------
+
+export const SingleLanguage = {
   render: () => (
     <div className='w-full min-w-[560px]'>
       <MarkdownEditor.Composed
-        placeholder='Describe your ideal successor and transition structure...'
-        toggleItems={LANG_ITEMS}
-        defaultToggleValue='english'
+        toggleItems={false}
+        placeholder='Write in a single language...'
       />
     </div>
   ),
 };
 
-function ControlledToggleRender() {
-  const [lang, setLang] = React.useState('english');
-  const [values, setValues] = React.useState({
-    english: '',
-    french: '',
+// ---------------------------------------------------------------------------
+// Controlled multi-language — parent owns the {en, fr} object
+// ---------------------------------------------------------------------------
+
+function ControlledMultiRender() {
+  const [values, setValues] = React.useState<MarkdownEditor.LocalizedValue>({
+    en: 'Hello **world**',
+    fr: 'Bonjour **le monde**',
   });
 
   return (
-    <div className='w-full min-w-[560px]'>
+    <div className='w-full min-w-[560px] space-y-4'>
       <MarkdownEditor.Composed
-        placeholder={
-          lang === 'english'
-            ? 'Write in English...'
-            : 'Écrivez en français...'
-        }
-        toggleItems={LANG_ITEMS}
-        toggleValue={lang}
-        onToggleChange={setLang}
-        value={values[lang as keyof typeof values]}
-        onChange={(html) =>
-          setValues((prev) => ({ ...prev, [lang]: html }))
-        }
+        placeholder='Write here...'
+        value={values}
+        onChange={setValues}
       />
+      <pre className='rounded-lg bg-bg-soft-200 p-3 text-paragraph-xs'>
+        {JSON.stringify(values, null, 2)}
+      </pre>
     </div>
   );
 }
 
-export const ControlledToggle = {
-  render: () => <ControlledToggleRender />,
+export const ControlledMulti = {
+  render: () => <ControlledMultiRender />,
 };
 
+// ---------------------------------------------------------------------------
+// Custom toggle items
+// ---------------------------------------------------------------------------
+
+export const CustomToggle = {
+  render: () => (
+    <div className='w-full min-w-[560px]'>
+      <MarkdownEditor.Composed
+        placeholder='Editor with custom toggle items...'
+        toggleItems={[
+          { value: 'en', label: 'EN' },
+          { value: 'fr', label: 'FR' },
+          { value: 'es', label: 'ES' },
+        ]}
+        defaultToggleValue='en'
+      />
+    </div>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// Compound (manual wiring)
+// ---------------------------------------------------------------------------
+
 function CompoundRender() {
-  const editor = MarkdownEditor.useMarkdownEditorState({
-    placeholder: 'Write something with custom toolbar...',
-  });
+  const [previewing, setPreviewing] = React.useState(false);
+  const [value, setValue] = React.useState('');
+  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+  const format = MarkdownEditor.useMarkdownFormatting(textareaRef, setValue);
 
   return (
     <div className='w-full min-w-[560px]'>
-      <MarkdownEditor.Root editor={editor}>
+      <MarkdownEditor.Root previewing={previewing}>
         <MarkdownEditor.Toolbar>
-          <MarkdownEditor.DefaultToolbar />
+          <MarkdownEditor.ToolbarGroup>
+            <MarkdownEditor.ToolbarButton
+              onClick={() => format('bold')}
+              aria-label='Bold'
+              disabled={previewing}
+            >
+              B
+            </MarkdownEditor.ToolbarButton>
+            <MarkdownEditor.ToolbarButton
+              onClick={() => format('italic')}
+              aria-label='Italic'
+              disabled={previewing}
+            >
+              I
+            </MarkdownEditor.ToolbarButton>
+            <MarkdownEditor.ToolbarButton
+              onClick={() => setPreviewing((p) => !p)}
+              active={previewing}
+              aria-label={previewing ? 'Edit' : 'Preview'}
+            >
+              {previewing ? '✏️' : '👁'}
+            </MarkdownEditor.ToolbarButton>
+          </MarkdownEditor.ToolbarGroup>
           <MarkdownEditor.Toggle
-            items={LANG_ITEMS}
-            defaultValue='english'
+            items={MarkdownEditor.DEFAULT_TOGGLE_ITEMS}
+            defaultValue='en'
           />
         </MarkdownEditor.Toolbar>
-        <MarkdownEditor.Content />
+        <MarkdownEditor.Content
+          ref={textareaRef}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          placeholder='Write something with custom toolbar...'
+        />
       </MarkdownEditor.Root>
     </div>
   );
@@ -88,6 +139,10 @@ function CompoundRender() {
 export const Compound = {
   render: () => <CompoundRender />,
 };
+
+// ---------------------------------------------------------------------------
+// With FormField
+// ---------------------------------------------------------------------------
 
 export const WithFormField = {
   render: () => (
@@ -101,8 +156,6 @@ export const WithFormField = {
         <MarkdownEditor.Composed
           id='description'
           placeholder='Describe your ideal successor and transition structure...'
-          toggleItems={LANG_ITEMS}
-          defaultToggleValue='english'
         />
       </FormField.Root>
     </div>
@@ -122,8 +175,6 @@ export const WithError = {
           id='description'
           hasError
           placeholder='Describe your ideal successor and transition structure...'
-          toggleItems={LANG_ITEMS}
-          defaultToggleValue='english'
         />
       </FormField.Root>
     </div>
@@ -142,22 +193,53 @@ export const Disabled = {
           id='description'
           disabled
           placeholder='Describe your ideal successor and transition structure...'
-          toggleItems={LANG_ITEMS}
-          defaultToggleValue='english'
         />
       </FormField.Root>
     </div>
   ),
 };
 
+// ---------------------------------------------------------------------------
+// With default content (preview all markdown features)
+// ---------------------------------------------------------------------------
+
 function WithDefaultContentRender() {
+  const defaultValues = {
+    en: `# Heading 1
+## Heading 2
+
+This is **bold**, _italic_, and ~~strikethrough~~ text.
+
+- [x] Completed task
+- [ ] Pending task
+
+1. First item
+2. Second item
+3. Third item
+
+- Bullet one
+- Bullet two
+
+> This is a blockquote
+
+\`inline code\` and a [link](https://example.com)
+
+\`\`\`
+code block
+\`\`\``,
+    fr: `# Titre 1
+
+Ceci est du texte en **gras** et en _italique_.
+
+1. Premier élément
+2. Deuxième élément`,
+  };
+
   return (
     <div className='w-full min-w-[560px]'>
       <MarkdownEditor.Composed
-        defaultValue='<p>This is <strong>bold</strong> and <em>italic</em> text.</p><ul data-type="taskList"><li data-type="taskItem" data-checked="true"><label><input type="checkbox" checked><span></span></label><div>Completed task</div></li><li data-type="taskItem" data-checked="false"><label><input type="checkbox"><span></span></label><div>Pending task</div></li></ul>'
+        defaultValue={defaultValues}
         placeholder='Start editing...'
-        toggleItems={LANG_ITEMS}
-        defaultToggleValue='english'
       />
     </div>
   );
