@@ -12,7 +12,7 @@
   ],
   "registryDependencies": [
     "use-tab-observer",
-    "utils"
+    "happly-ui-utils"
   ],
   "docs": {
     "lead": "A tab-based switch toggle with an animated floating background indicator. Built on Radix Tabs for full accessibility.",
