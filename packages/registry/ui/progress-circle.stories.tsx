@@ -6,12 +6,12 @@ export const Playground = {
   args: {
     value: 50,
     max: 100,
-    size: '80',
+    size: 80,
   },
   argTypes: {
     value: { control: { type: 'range', min: 0, max: 100, step: 1 } },
     max: { control: 'number' },
-    size: { control: 'select', options: ['80', '72', '64', '56', '48', '44'] },
+    size: { control: { type: 'range', min: 24, max: 200, step: 4 } },
   },
   render: (args: any) => <ProgressCircle.Root {...args}>{args.value}%</ProgressCircle.Root>,
 };
@@ -19,70 +19,14 @@ export const Playground = {
 export const Sizes = {
   render: () => (
     <div className='flex flex-col items-center gap-6'>
-      <div className='flex gap-6'>
-        <ProgressCircle.Root value={0}>0%</ProgressCircle.Root>
-        <ProgressCircle.Root value={25}>25%</ProgressCircle.Root>
-        <ProgressCircle.Root value={50}>50%</ProgressCircle.Root>
-        <ProgressCircle.Root value={75}>75%</ProgressCircle.Root>
-        <ProgressCircle.Root value={100}>100%</ProgressCircle.Root>
-      </div>
-      <div className='flex gap-6'>
-        <ProgressCircle.Root size='72' value={0}>
-          0%
-        </ProgressCircle.Root>
-        <ProgressCircle.Root size='72' value={25}>
-          25%
-        </ProgressCircle.Root>
-        <ProgressCircle.Root size='72' value={50}>
-          50%
-        </ProgressCircle.Root>
-        <ProgressCircle.Root size='72' value={75}>
-          75%
-        </ProgressCircle.Root>
-        <ProgressCircle.Root size='72' value={100}>
-          100%
-        </ProgressCircle.Root>
-      </div>
-      <div className='flex gap-6'>
-        <ProgressCircle.Root size='64' value={0}>
-          0%
-        </ProgressCircle.Root>
-        <ProgressCircle.Root size='64' value={25}>
-          25%
-        </ProgressCircle.Root>
-        <ProgressCircle.Root size='64' value={50}>
-          50%
-        </ProgressCircle.Root>
-        <ProgressCircle.Root size='64' value={75}>
-          75%
-        </ProgressCircle.Root>
-        <ProgressCircle.Root size='64' value={100}>
-          100%
-        </ProgressCircle.Root>
-      </div>
-      <div className='flex gap-6'>
-        <ProgressCircle.Root size='56' value={0}>
-          0%
-        </ProgressCircle.Root>
-        <ProgressCircle.Root size='56' value={25}>
-          25%
-        </ProgressCircle.Root>
-        <ProgressCircle.Root size='56' value={50}>
-          50%
-        </ProgressCircle.Root>
-        <ProgressCircle.Root size='56' value={75}>
-          75%
-        </ProgressCircle.Root>
-        <ProgressCircle.Root size='56' value={100}>
-          100%
-        </ProgressCircle.Root>
-      </div>
-      <div className='flex gap-6'>
-        <ProgressCircle.Root size='48' value={0} />
-        <ProgressCircle.Root size='48' value={25} />
-        <ProgressCircle.Root size='48' value={50} />
-        <ProgressCircle.Root size='48' value={75} />
-        <ProgressCircle.Root size='48' value={100} />
+      <div className='flex items-center gap-6'>
+        <ProgressCircle.Root size={80} value={75}>75%</ProgressCircle.Root>
+        <ProgressCircle.Root size={72} value={75}>75%</ProgressCircle.Root>
+        <ProgressCircle.Root size={64} value={75}>75%</ProgressCircle.Root>
+        <ProgressCircle.Root size={56} value={75}>75%</ProgressCircle.Root>
+        <ProgressCircle.Root size={48} value={75} />
+        <ProgressCircle.Root size={36} value={75} />
+        <ProgressCircle.Root size={24} value={75} />
       </div>
     </div>
   ),

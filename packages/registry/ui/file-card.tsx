@@ -14,6 +14,7 @@ import { cn } from '@/lib/happly-ui-utils';
 import { tv, type VariantProps } from '@/lib/tv';
 import * as Button from '@/components/ui/button';
 import * as FileFormatIcon from '@/components/ui/file-format-icon';
+import { getFormatColor } from '@/components/ui/file-format-icon';
 
 // ─── Variants ────────────────────────────────────────────────────────────────
 
@@ -569,20 +570,6 @@ function getFileFormat(name: string): string {
   return ext;
 }
 
-function getFormatColor(format: string): 'red' | 'orange' | 'yellow' | 'green' | 'sky' | 'blue' | 'purple' | 'pink' | 'gray' {
-  const map: Record<string, 'red' | 'orange' | 'yellow' | 'green' | 'sky' | 'blue' | 'purple' | 'pink' | 'gray'> = {
-    PDF: 'red',
-    DOC: 'blue', DOCX: 'blue',
-    XLS: 'green', XLSX: 'green', CSV: 'green',
-    PPT: 'orange', PPTX: 'orange',
-    ZIP: 'purple', RAR: 'purple', '7Z': 'purple',
-    PNG: 'sky', JPG: 'sky', JPEG: 'sky', GIF: 'sky', WEBP: 'sky', SVG: 'sky',
-    MP4: 'pink', MOV: 'pink', AVI: 'pink', WEBM: 'pink',
-    MP3: 'yellow', WAV: 'yellow', OGG: 'yellow',
-    TXT: 'gray', JSON: 'gray', XML: 'gray',
-  };
-  return map[format] ?? 'gray';
-}
 
 function isImageType(type: string): boolean {
   return type.startsWith('image/');

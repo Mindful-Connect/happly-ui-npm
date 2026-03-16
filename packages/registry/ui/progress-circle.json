@@ -4,20 +4,22 @@
   "type": "registry:ui",
   "title": "Progress Circle",
   "description": "A circular progress indicator with SVG ring, multiple sizes, customizable color, and optional centered text content. Uses namespace exports: ProgressCircle.Root.",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "dependencies": [],
   "registryDependencies": [
-    "tv",
     "happly-ui-utils"
   ],
+  "migration": {
+    "guide": "v2.0.0: size prop changed from string union ('80' | '72' | etc.) to any number. Replace size=\"80\" with size={80}. The tv dependency is no longer needed."
+  },
   "docs": {
-    "lead": "A circular progress indicator with SVG ring, multiple sizes, customizable color, and optional centered text content.",
+    "lead": "A circular progress indicator with SVG ring, any pixel size, customizable color, and optional centered text content.",
     "usage": "import * as ProgressCircle from \"@/components/ui/progress-circle\"\n\n<ProgressCircle.Root value={75}>75%</ProgressCircle.Root>",
     "examples": [
       {
         "title": "Sizes",
-        "description": "Progress circles in all sizes (80, 72, 64, 56, 48) with percentage labels. Smaller sizes omit text.",
-        "code": "<ProgressCircle.Root value={50}>50%</ProgressCircle.Root>\n<ProgressCircle.Root size=\"56\" value={75}>75%</ProgressCircle.Root>\n<ProgressCircle.Root size=\"48\" value={100} />",
+        "description": "Progress circles at any pixel size. Stroke width scales proportionally.",
+        "code": "<ProgressCircle.Root size={80} value={75}>75%</ProgressCircle.Root>\n<ProgressCircle.Root size={56} value={75}>75%</ProgressCircle.Root>\n<ProgressCircle.Root size={36} value={75} />",
         "stories": ["Sizes"]
       }
     ],
@@ -28,8 +30,8 @@
         "props": [
           {
             "name": "size",
-            "type": "'80' | '72' | '64' | '56' | '48' | '44'",
-            "default": "'80'",
+            "type": "number",
+            "default": "80",
             "description": "The size of the circle in pixels"
           },
           {
