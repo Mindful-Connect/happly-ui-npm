@@ -77,7 +77,7 @@ function main() {
     'progress-bar',
     'progress-circle',
     'skeleton',
-    'smart-matching-ai',
+    'ai-orb',
     'status-badge',
     'table',
     'tag',

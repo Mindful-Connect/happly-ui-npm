@@ -16,8 +16,8 @@ export const infoCardVariants = tv({
       'relative overflow-clip rounded-2xl border border-stroke-soft-200/50 bg-bg-white-0/60 p-3',
     ],
     item: [
-      'flex flex-col gap-1.5 overflow-clip rounded-xl bg-white p-3',
-      'shadow-[0px_2px_5px_-1px_rgba(0,0,0,0.04),0px_12px_40px_-8px_rgba(0,0,0,0.08),0px_0px_0px_1px_var(--color-white),0px_0px_0px_1.5px_rgba(153,160,174,0.1)]',
+      'flex flex-col gap-1.5 overflow-clip rounded-xl bg-bg-white-0 p-3',
+      'shadow-[0px_2px_5px_-1px_rgba(0,0,0,0.04),0px_12px_40px_-8px_rgba(0,0,0,0.08),0px_0px_0px_1px_var(--color-bg-white-0),0px_0px_0px_1.5px_rgba(153,160,174,0.1)]',
     ],
     label: 'text-label-xs font-medium text-text-strong-950',
     value: 'flex items-center gap-1 text-label-xs text-text-sub-600',
