@@ -52,7 +52,7 @@ function PlaygroundRender(args: any) {
       </Button.Root>
       <CommandMenu.Dialog open={open} onOpenChange={setOpen}>
         <div className='group/cmd-input flex h-12 w-full items-center gap-2 bg-bg-white-0 px-5'>
-          <RiSearch2Line className='size-5 shrink-0 text-text-soft-400 transition duration-200 ease-out group-focus-within/cmd-input:text-primary-base' />
+          <RiSearch2Line className='w-5 h-5 shrink-0 text-text-soft-400 transition duration-200 ease-out group-focus-within/cmd-input:text-primary-base' />
           <CommandMenu.Input placeholder={args.placeholder} />
           <CompactButton.Root
             size='medium'
@@ -98,7 +98,7 @@ function DemoRender() {
       <CommandMenu.Dialog open={open} onOpenChange={setOpen}>
         {/* Input wrapper */}
         <div className='group/cmd-input flex h-12 w-full items-center gap-2 bg-bg-white-0 px-5'>
-            <RiSearch2Line className='size-5 shrink-0 text-text-soft-400 transition duration-200 ease-out group-focus-within/cmd-input:text-primary-base' />
+            <RiSearch2Line className='w-5 h-5 shrink-0 text-text-soft-400 transition duration-200 ease-out group-focus-within/cmd-input:text-primary-base' />
             <CommandMenu.Input placeholder='Search or jump to' />
             <Kbd.Root>
               {/* ⌘K */}
@@ -209,10 +209,10 @@ function DemoRender() {
             <div className='flex gap-3'>
               <div className='flex items-center gap-2'>
                 <CommandMenu.FooterKeyBox>
-                  <RiArrowUpLine className='size-4' />
+                  <RiArrowUpLine className='w-4 h-4' />
                 </CommandMenu.FooterKeyBox>
                 <CommandMenu.FooterKeyBox>
-                  <RiArrowDownLine className='size-4' />
+                  <RiArrowDownLine className='w-4 h-4' />
                 </CommandMenu.FooterKeyBox>
                 <span className='text-paragraph-xs text-text-sub-600'>
                   Navigate
@@ -220,7 +220,7 @@ function DemoRender() {
               </div>
               <div className='flex items-center gap-2'>
                 <CommandMenu.FooterKeyBox>
-                  <RiCornerDownLeftLine className='size-4' />
+                  <RiCornerDownLeftLine className='w-4 h-4' />
                 </CommandMenu.FooterKeyBox>
                 <span className='text-paragraph-xs text-text-sub-600'>
                   Select

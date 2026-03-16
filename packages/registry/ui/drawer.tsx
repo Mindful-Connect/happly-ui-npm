@@ -43,7 +43,7 @@ const DrawerContent = React.forwardRef<
           ref={forwardedRef}
           className={cn(
             // base
-            'size-full max-w-[400px] overflow-y-auto',
+            'w-full h-full max-w-[400px] overflow-y-auto',
             'border-l border-stroke-soft-200 bg-bg-white-0',
             // animation
             'data-[state=open]:duration-200 data-[state=open]:ease-out data-[state=open]:animate-in',
@@ -54,7 +54,7 @@ const DrawerContent = React.forwardRef<
           )}
           {...rest}
         >
-          <div className='relative flex size-full flex-col'>{children}</div>
+          <div className='relative flex w-full h-full flex-col'>{children}</div>
         </DialogPrimitive.Content>
       </DrawerOverlay>
     </DrawerPortal>

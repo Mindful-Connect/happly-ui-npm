@@ -26,7 +26,7 @@
       {
         "title": "With Simple Icons",
         "description": "Raw icons without KeyIcon wrapper.",
-        "code": "<RadioCard.Item value=\"card\">\n  <RiBankCardLine className=\"size-5 shrink-0 text-text-sub-600\" />\n  <RadioCard.Content>\n    <RadioCard.Title>Credit Card</RadioCard.Title>\n  </RadioCard.Content>\n  <RadioCard.Indicator />\n</RadioCard.Item>",
+        "code": "<RadioCard.Item value=\"card\">\n  <RiBankCardLine className=\"w-5 h-5 shrink-0 text-text-sub-600\" />\n  <RadioCard.Content>\n    <RadioCard.Title>Credit Card</RadioCard.Title>\n  </RadioCard.Content>\n  <RadioCard.Indicator />\n</RadioCard.Item>",
         "stories": ["WithSimpleIcons"]
       },
       {

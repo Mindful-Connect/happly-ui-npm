@@ -60,11 +60,11 @@ export const linkButtonVariants = tv({
     size: {
       medium: {
         root: 'h-5 gap-1 text-label-sm',
-        icon: 'size-5',
+        icon: 'w-5 h-5',
       },
       small: {
         root: 'h-4 gap-1 text-label-xs',
-        icon: 'size-4',
+        icon: 'w-4 h-4',
       },
     },
     underline: {

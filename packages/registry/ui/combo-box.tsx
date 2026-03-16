@@ -476,7 +476,7 @@ function ComboBoxItemIcon({
     return (
       <div
         className={cn(
-          'size-5 shrink-0 rounded-full bg-cover bg-center bg-no-repeat',
+          'w-5 h-5 shrink-0 rounded-full bg-cover bg-center bg-no-repeat',
           className,
         )}
         style={{ backgroundImage: `url(${as})` }}
@@ -488,7 +488,7 @@ function ComboBoxItemIcon({
   const Component = as || 'div';
   return (
     <Component
-      className={cn('text-text-sub-600 size-5 shrink-0', className)}
+      className={cn('text-text-sub-600 w-5 h-5 shrink-0', className)}
       {...rest}
     />
   );
@@ -511,14 +511,14 @@ function ComboBoxItemIndicator({
   return (
     <span
       className={cn(
-        'absolute top-1/2 right-2 flex size-5 shrink-0 -translate-y-1/2 items-center justify-center',
+        'absolute top-1/2 right-2 flex w-5 h-5 shrink-0 -translate-y-1/2 items-center justify-center',
         'transition duration-200 ease-out',
         selected ? 'opacity-100' : 'opacity-0',
         className,
       )}
     >
       {children ?? (
-        <RiCheckLine className='text-text-sub-600 size-5' />
+        <RiCheckLine className='text-text-sub-600 w-5 h-5' />
       )}
     </span>
   );

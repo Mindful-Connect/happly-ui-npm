@@ -177,7 +177,7 @@ function WithSimpleIconsRender() {
     <div className='w-[480px]'>
       <RadioCard.Root value={value} onValueChange={setValue}>
         <RadioCard.Item value='card'>
-          <RiBankCardLine className='size-5 shrink-0 text-text-sub-600' />
+          <RiBankCardLine className='w-5 h-5 shrink-0 text-text-sub-600' />
           <RadioCard.Content>
             <RadioCard.Title>Credit Card</RadioCard.Title>
             <RadioCard.Description>
@@ -188,7 +188,7 @@ function WithSimpleIconsRender() {
         </RadioCard.Item>
 
         <RadioCard.Item value='wallet'>
-          <RiWalletLine className='size-5 shrink-0 text-text-sub-600' />
+          <RiWalletLine className='w-5 h-5 shrink-0 text-text-sub-600' />
           <RadioCard.Content>
             <RadioCard.Title>Digital Wallet</RadioCard.Title>
             <RadioCard.Description>
@@ -199,7 +199,7 @@ function WithSimpleIconsRender() {
         </RadioCard.Item>
 
         <RadioCard.Item value='bank'>
-          <RiBankLine className='size-5 shrink-0 text-text-sub-600' />
+          <RiBankLine className='w-5 h-5 shrink-0 text-text-sub-600' />
           <RadioCard.Content>
             <RadioCard.Title>Bank Transfer</RadioCard.Title>
             <RadioCard.Description>

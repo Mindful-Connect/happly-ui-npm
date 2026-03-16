@@ -42,7 +42,7 @@ export const tabMenuHorizontalVariants = tv({
       'transition-colors duration-150 ease-out',
       'disabled:pointer-events-none disabled:opacity-50',
     ],
-    icon: 'size-5 shrink-0',
+    icon: 'w-5 h-5 shrink-0',
     counter: 'shrink-0',
   },
   variants: {

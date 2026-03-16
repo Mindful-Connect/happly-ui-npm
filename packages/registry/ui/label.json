@@ -57,7 +57,7 @@
       },
       {
         "name": "Label.InfoIcon",
-        "description": "Standalone info circle SVG icon with default size-5 and text-text-disabled-300 color. Override via className.",
+        "description": "Standalone info circle SVG icon with default w-5 h-5 and text-text-disabled-300 color. Override via className.",
         "props": []
       },
       {

@@ -49,8 +49,8 @@ function DemoRender() {
       </Modal.Trigger>
       <Modal.Content className='max-w-[440px]'>
         <Modal.Body className='flex items-start gap-4'>
-          <div className='flex size-10 shrink-0 items-center justify-center rounded-10 bg-success-lighter'>
-            <RiCheckboxCircleFill className='size-6 text-success-base' />
+          <div className='flex w-10 h-10 shrink-0 items-center justify-center rounded-10 bg-success-lighter'>
+            <RiCheckboxCircleFill className='w-6 h-6 text-success-base' />
           </div>
           <div className='space-y-1'>
             <div className='text-label-md text-text-strong-950'>
@@ -109,7 +109,7 @@ function WithHeaderRender() {
         <Modal.Body>
           <div className='space-y-5'>
             <div className='flex items-center gap-3.5'>
-              <div className='flex size-10 shrink-0 items-center justify-center rounded-full bg-bg-weak-50'>
+              <div className='flex w-10 h-10 shrink-0 items-center justify-center rounded-full bg-bg-weak-50'>
                 <span className='text-label-sm text-text-sub-600'>A</span>
               </div>
               <div className='flex-1 space-y-1'>
@@ -120,7 +120,7 @@ function WithHeaderRender() {
               </div>
             </div>
             <div className='flex items-center gap-3.5'>
-              <div className='flex size-10 shrink-0 items-center justify-center rounded-full bg-bg-weak-50'>
+              <div className='flex w-10 h-10 shrink-0 items-center justify-center rounded-full bg-bg-weak-50'>
                 <span className='text-label-sm text-text-sub-600'>B</span>
               </div>
               <div className='flex-1 space-y-1'>
@@ -133,7 +133,7 @@ function WithHeaderRender() {
               </div>
             </div>
             <div className='flex items-center gap-3.5'>
-              <div className='flex size-10 shrink-0 items-center justify-center rounded-full bg-bg-weak-50'>
+              <div className='flex w-10 h-10 shrink-0 items-center justify-center rounded-full bg-bg-weak-50'>
                 <span className='text-label-sm text-text-sub-600'>S</span>
               </div>
               <div className='flex-1 space-y-1'>

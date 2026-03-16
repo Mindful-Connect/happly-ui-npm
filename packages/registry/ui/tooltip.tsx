@@ -50,28 +50,28 @@ export const tooltipVariants = tv({
       size: 'xsmall',
       variant: 'dark',
       class: {
-        arrow: 'size-1.5',
+        arrow: 'w-1.5 h-1.5',
       },
     },
     {
       size: 'xsmall',
       variant: 'light',
       class: {
-        arrow: 'size-2',
+        arrow: 'w-2 h-2',
       },
     },
     {
       size: ['small', 'medium'],
       variant: 'dark',
       class: {
-        arrow: 'size-2',
+        arrow: 'w-2 h-2',
       },
     },
     {
       size: ['small', 'medium'],
       variant: 'light',
       class: {
-        arrow: 'size-2.5',
+        arrow: 'w-2.5 h-2.5',
       },
     },
   ],

@@ -69,7 +69,7 @@
       {
         "title": "Custom Placeholder",
         "description": "Pass a custom ReactNode via the placeholder prop to replace the default icon while keeping the avatar container styling.",
-        "code": "<Avatar.Root\n  placeholder={<RiBuildingLine className=\"size-10\" />}\n  color=\"primary\"\n/>\n<Avatar.Root\n  placeholder={<RiBuildingLine className=\"size-8\" />}\n  color=\"primary\"\n  size=\"64\"\n/>",
+        "code": "<Avatar.Root\n  placeholder={<RiBuildingLine className=\"w-10 h-10\" />}\n  color=\"primary\"\n/>\n<Avatar.Root\n  placeholder={<RiBuildingLine className=\"w-8 h-8\" />}\n  color=\"primary\"\n  size=\"64\"\n/>",
         "stories": ["CustomPlaceholder"]
       },
       {

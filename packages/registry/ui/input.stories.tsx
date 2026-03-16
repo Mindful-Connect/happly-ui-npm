@@ -198,7 +198,7 @@ export const WithKbd = {
           <Input.Icon as={RiSearch2Line} />
           <Input.Input placeholder='Search...' />
           <Kbd.Root>
-            <IconCmd className='size-2.5' />1
+            <IconCmd className='w-2.5 h-2.5' />1
           </Kbd.Root>
         </Input.Wrapper>
       </Input.Root>
@@ -227,9 +227,9 @@ function PasswordRender() {
               onClick={() => setShowPassword((s) => !s)}
             >
               {showPassword ? (
-                <RiEyeOffLine className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+                <RiEyeOffLine className='w-5 h-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
               ) : (
-                <RiEyeLine className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+                <RiEyeLine className='w-5 h-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
               )}
             </button>
           </Input.Wrapper>
@@ -364,9 +364,9 @@ function PasswordWithLevelRender() {
               onClick={() => setShowPassword((s) => !s)}
             >
               {showPassword ? (
-                <RiEyeOffLine className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+                <RiEyeOffLine className='w-5 h-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
               ) : (
-                <RiEyeLine className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+                <RiEyeLine className='w-5 h-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
               )}
             </button>
           </Input.Wrapper>
@@ -379,25 +379,25 @@ function PasswordWithLevelRender() {
           </div>
           <div className='flex items-center gap-1.5 text-paragraph-xs text-text-sub-600'>
             {criteria.uppercase ? (
-              <RiCheckboxCircleFill className='size-4 shrink-0 text-success-base' />
+              <RiCheckboxCircleFill className='w-4 h-4 shrink-0 text-success-base' />
             ) : (
-              <RiCloseCircleFill className='size-4 shrink-0 text-text-soft-400' />
+              <RiCloseCircleFill className='w-4 h-4 shrink-0 text-text-soft-400' />
             )}
             At least 1 uppercase
           </div>
           <div className='flex items-center gap-1.5 text-paragraph-xs text-text-sub-600'>
             {criteria.number ? (
-              <RiCheckboxCircleFill className='size-4 shrink-0 text-success-base' />
+              <RiCheckboxCircleFill className='w-4 h-4 shrink-0 text-success-base' />
             ) : (
-              <RiCloseCircleFill className='size-4 shrink-0 text-text-soft-400' />
+              <RiCloseCircleFill className='w-4 h-4 shrink-0 text-text-soft-400' />
             )}
             At least 1 number
           </div>
           <div className='flex items-center gap-1.5 text-paragraph-xs text-text-sub-600'>
             {criteria.length ? (
-              <RiCheckboxCircleFill className='size-4 shrink-0 text-success-base' />
+              <RiCheckboxCircleFill className='w-4 h-4 shrink-0 text-success-base' />
             ) : (
-              <RiCloseCircleFill className='size-4 shrink-0 text-text-soft-400' />
+              <RiCloseCircleFill className='w-4 h-4 shrink-0 text-text-soft-400' />
             )}
             At least 8 characters
           </div>
@@ -460,7 +460,7 @@ export const WithButton = {
               'focus-visible:bg-bg-weak-50 focus-visible:text-text-strong-950 focus-visible:ring-transparent',
             )}
           >
-            <RiFileCopyLine className='-mx-1 size-5 shrink-0' />
+            <RiFileCopyLine className='-mx-1 w-5 h-5 shrink-0' />
           </button>
         </Input.Root>
       </FormField.Root>
@@ -720,9 +720,9 @@ function CompositionRender() {
               onClick={() => setShowPassword((s) => !s)}
             >
               {showPassword ? (
-                <RiEyeOffLine className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+                <RiEyeOffLine className='w-5 h-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
               ) : (
-                <RiEyeLine className='size-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+                <RiEyeLine className='w-5 h-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
               )}
             </button>
           }

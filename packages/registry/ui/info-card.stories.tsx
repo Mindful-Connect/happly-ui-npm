@@ -14,7 +14,7 @@ export const Inline = {
         <InfoCard.Item>
           <InfoCard.Label>Submitted date</InfoCard.Label>
           <InfoCard.Value>
-            <RiTimeLine className="size-4" />
+            <RiTimeLine className="w-4 h-4" />
             <span>Jan 3, 2025</span>
           </InfoCard.Value>
         </InfoCard.Item>
@@ -39,7 +39,7 @@ export const InlineWithFullWidthItem = {
         <InfoCard.Item>
           <InfoCard.Label>Submitted date</InfoCard.Label>
           <InfoCard.Value>
-            <RiTimeLine className="size-4" />
+            <RiTimeLine className="w-4 h-4" />
             <span>Jan 3, 2025</span>
           </InfoCard.Value>
         </InfoCard.Item>
@@ -73,14 +73,14 @@ export const Grid2Columns = {
         <InfoCard.Item>
           <InfoCard.Label>Start date</InfoCard.Label>
           <InfoCard.Value>
-            <RiCalendarLine className="size-4" />
+            <RiCalendarLine className="w-4 h-4" />
             <span>Mar 1, 2025</span>
           </InfoCard.Value>
         </InfoCard.Item>
         <InfoCard.Item>
           <InfoCard.Label>End date</InfoCard.Label>
           <InfoCard.Value>
-            <RiCalendarLine className="size-4" />
+            <RiCalendarLine className="w-4 h-4" />
             <span>Jun 30, 2025</span>
           </InfoCard.Value>
         </InfoCard.Item>
@@ -159,7 +159,7 @@ export const Grid3Columns = {
         <InfoCard.Item>
           <InfoCard.Label>Deadline</InfoCard.Label>
           <InfoCard.Value>
-            <RiCalendarLine className="size-4" />
+            <RiCalendarLine className="w-4 h-4" />
             <span>Dec 31, 2025</span>
           </InfoCard.Value>
         </InfoCard.Item>

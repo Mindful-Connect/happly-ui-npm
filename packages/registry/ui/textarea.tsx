@@ -67,7 +67,7 @@ Textarea.displayName = 'Textarea';
 
 function ResizeHandle() {
   return (
-    <div className='pointer-events-none size-3 cursor-s-resize'>
+    <div className='pointer-events-none w-3 h-3 cursor-s-resize'>
       <svg
         width='12'
         height='12'

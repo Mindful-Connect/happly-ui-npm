@@ -83,7 +83,7 @@ const CheckboxRoot = React.forwardRef<
       ref={forwardedRef}
       checked={checked}
       className={cn(
-        'group/checkbox relative flex size-5 shrink-0 items-center justify-center outline-none',
+        'group/checkbox relative flex w-5 h-5 shrink-0 items-center justify-center outline-none',
         'focus:outline-none',
         className,
       )}

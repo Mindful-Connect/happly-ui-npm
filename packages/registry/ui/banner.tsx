@@ -16,8 +16,8 @@ export const bannerVariants = tv({
   slots: {
     root: 'relative grid h-11 w-full grid-cols-[1fr,auto,1fr] items-center justify-center gap-3 px-3',
     content: 'col-start-2 flex items-center justify-center gap-3',
-    icon: 'size-5 shrink-0',
-    closeButton: 'col-start-3 row-start-1 ml-auto size-5',
+    icon: 'w-5 h-5 shrink-0',
+    closeButton: 'col-start-3 row-start-1 ml-auto w-5 h-5',
   },
   variants: {
     variant: {

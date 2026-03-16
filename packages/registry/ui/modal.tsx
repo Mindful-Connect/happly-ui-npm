@@ -110,8 +110,8 @@ function ModalHeader({
       {children || (
         <>
           {Icon && (
-            <div className='flex size-10 shrink-0 items-center justify-center rounded-full bg-bg-white-0 ring-1 ring-inset ring-stroke-soft-200'>
-              <Icon className='size-5 text-text-sub-600' />
+            <div className='flex w-10 h-10 shrink-0 items-center justify-center rounded-full bg-bg-white-0 ring-1 ring-inset ring-stroke-soft-200'>
+              <Icon className='w-5 h-5 text-text-sub-600' />
             </div>
           )}
           {(title || description) && (

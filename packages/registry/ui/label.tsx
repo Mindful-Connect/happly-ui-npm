@@ -81,7 +81,7 @@ function LabelInfoIcon({
       viewBox='0 0 20 20'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
-      className={cn('size-5 text-text-disabled-300', className)}
+      className={cn('w-5 h-5 text-text-disabled-300', className)}
       {...rest}
     >
       <path

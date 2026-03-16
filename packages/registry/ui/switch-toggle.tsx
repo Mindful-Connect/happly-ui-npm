@@ -126,7 +126,7 @@ const SwitchToggleGroup = React.forwardRef<
             const Icon = item.icon;
             return (
               <SwitchToggleTrigger key={item.value} value={item.value}>
-                {Icon && <Icon className='size-5 shrink-0' />}
+                {Icon && <Icon className='w-5 h-5 shrink-0' />}
                 {item.label}
               </SwitchToggleTrigger>
             );

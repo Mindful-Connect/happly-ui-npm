@@ -20,7 +20,7 @@ export const avatarGroupVariants = tv({
     size: {
       '80': {
         root: '-space-x-4',
-        overflow: 'size-20 text-title-h5',
+        overflow: 'w-20 h-20 text-title-h5',
       },
       '72': {
         root: '-space-x-4',
@@ -28,31 +28,31 @@ export const avatarGroupVariants = tv({
       },
       '64': {
         root: '-space-x-4',
-        overflow: 'size-16 text-title-h5',
+        overflow: 'w-16 h-16 text-title-h5',
       },
       '56': {
         root: '-space-x-4',
-        overflow: 'size-14 text-title-h5',
+        overflow: 'w-14 h-14 text-title-h5',
       },
       '48': {
         root: '-space-x-3',
-        overflow: 'size-12 text-title-h6',
+        overflow: 'w-12 h-12 text-title-h6',
       },
       '40': {
         root: '-space-x-3',
-        overflow: 'size-10 text-label-md',
+        overflow: 'w-10 h-10 text-label-md',
       },
       '32': {
         root: '-space-x-1.5',
-        overflow: 'size-8 text-label-sm',
+        overflow: 'w-8 h-8 text-label-sm',
       },
       '24': {
         root: '-space-x-1',
-        overflow: 'size-6 text-label-xs',
+        overflow: 'w-6 h-6 text-label-xs',
       },
       '20': {
         root: '-space-x-1',
-        overflow: 'size-5 text-subheading-2xs',
+        overflow: 'w-5 h-5 text-subheading-2xs',
       },
     },
   },

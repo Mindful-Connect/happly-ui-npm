@@ -67,7 +67,7 @@ function MonthGrid({
           className={cn(navButtonClass, 'top-1/2 left-1.5 -translate-y-1/2')}
           onClick={onPrevYear}
         >
-          <RiArrowLeftSLine className='size-5' />
+          <RiArrowLeftSLine className='w-5 h-5' />
         </button>
         <button
           type='button'
@@ -81,7 +81,7 @@ function MonthGrid({
           className={cn(navButtonClass, 'top-1/2 right-1.5 -translate-y-1/2')}
           onClick={onNextYear}
         >
-          <RiArrowRightSLine className='size-5' />
+          <RiArrowRightSLine className='w-5 h-5' />
         </button>
       </div>
       <div className='grid grid-cols-4 gap-2'>
@@ -130,7 +130,7 @@ function YearGrid({
           className={cn(navButtonClass, 'top-1/2 left-1.5 -translate-y-1/2')}
           onClick={onPrevChunk}
         >
-          <RiArrowLeftSLine className='size-5' />
+          <RiArrowLeftSLine className='w-5 h-5' />
         </button>
         <span className='text-label-sm text-text-sub-600 select-none'>
           {startYear} – {endYear}
@@ -140,7 +140,7 @@ function YearGrid({
           className={cn(navButtonClass, 'top-1/2 right-1.5 -translate-y-1/2')}
           onClick={onNextChunk}
         >
-          <RiArrowRightSLine className='size-5' />
+          <RiArrowRightSLine className='w-5 h-5' />
         </button>
       </div>
       <div className='grid grid-cols-4 gap-2'>
@@ -296,11 +296,11 @@ function Calendar({
               table: 'w-full border-collapse',
               head_row: 'flex gap-2',
               head_cell:
-                'text-text-soft-400 text-label-sm uppercase size-10 flex items-center justify-center text-center select-none',
+                'text-text-soft-400 text-label-sm uppercase w-10 h-10 flex items-center justify-center text-center select-none',
               row: 'grid grid-flow-col auto-cols-auto w-full mt-2 gap-2',
               cell: cn(
                 // base
-                'group/cell relative size-10 shrink-0 select-none p-0',
+                'group/cell relative w-10 h-10 shrink-0 select-none p-0',
                 // range
                 '[&:has(.day-range-middle)]:bg-primary-alpha-10',
                 'first:[&:has([aria-selected])]:rounded-l-lg last:[&:has([aria-selected])]:rounded-r-lg',
@@ -322,7 +322,7 @@ function Calendar({
               ),
               day: cn(
                 // base
-                'flex size-10 shrink-0 items-center justify-center rounded-lg text-center text-label-sm text-text-sub-600 outline-none',
+                'flex w-10 h-10 shrink-0 items-center justify-center rounded-lg text-center text-label-sm text-text-sub-600 outline-none',
                 'transition duration-200 ease-out',
                 // hover
                 'hover:bg-bg-weak-50 hover:text-text-strong-950',
@@ -344,9 +344,9 @@ function Calendar({
               ...classNames,
             }}
             components={{
-              IconLeft: () => <RiArrowLeftSLine className='size-5' />,
+              IconLeft: () => <RiArrowLeftSLine className='w-5 h-5' />,
               IconRight: () => (
-                <RiArrowRightSLine className='size-5' />
+                <RiArrowRightSLine className='w-5 h-5' />
               ),
               CaptionLabel: ({
                 displayMonth: captionDate,

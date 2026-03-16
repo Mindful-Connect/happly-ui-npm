@@ -183,8 +183,8 @@ export const Demo = {
 
           <div className='space-y-2.5 px-5 py-3.5'>
             <TransactionItem>
-              <div className='flex size-10 shrink-0 items-center justify-center rounded-full bg-bg-white-0 shadow-regular-xs ring-1 ring-inset ring-stroke-soft-200'>
-                <RiShoppingCartLine className='size-5 text-text-sub-600' />
+              <div className='flex w-10 h-10 shrink-0 items-center justify-center rounded-full bg-bg-white-0 shadow-regular-xs ring-1 ring-inset ring-stroke-soft-200'>
+                <RiShoppingCartLine className='w-5 h-5 text-text-sub-600' />
               </div>
               <div className='min-w-0 flex-1 space-y-1'>
                 <div className='text-label-sm text-text-strong-950'>
@@ -204,8 +204,8 @@ export const Demo = {
               </div>
             </TransactionItem>
             <TransactionItem>
-              <div className='flex size-10 shrink-0 items-center justify-center rounded-full bg-bg-white-0 shadow-regular-xs ring-1 ring-inset ring-stroke-soft-200'>
-                <RiPieChartLine className='size-5 text-text-sub-600' />
+              <div className='flex w-10 h-10 shrink-0 items-center justify-center rounded-full bg-bg-white-0 shadow-regular-xs ring-1 ring-inset ring-stroke-soft-200'>
+                <RiPieChartLine className='w-5 h-5 text-text-sub-600' />
               </div>
               <div className='min-w-0 flex-1 space-y-1'>
                 <div className='text-label-sm text-text-strong-950'>
@@ -225,8 +225,8 @@ export const Demo = {
               </div>
             </TransactionItem>
             <TransactionItem>
-              <div className='flex size-10 shrink-0 items-center justify-center rounded-full bg-away-lighter'>
-                <RiLightbulbFlashFill className='size-5 text-away-base' />
+              <div className='flex w-10 h-10 shrink-0 items-center justify-center rounded-full bg-away-lighter'>
+                <RiLightbulbFlashFill className='w-5 h-5 text-away-base' />
               </div>
               <div className='min-w-0 flex-1 space-y-1'>
                 <div className='text-label-sm text-text-strong-950'>

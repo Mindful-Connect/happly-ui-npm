@@ -58,7 +58,7 @@ export const inputVariants = tv({
     ],
     icon: [
       // base
-      'flex size-5 shrink-0 select-none items-center justify-center',
+      'flex w-5 h-5 shrink-0 select-none items-center justify-center',
       'transition duration-200 ease-out',
       // placeholder state
       'group-has-[:placeholder-shown]:text-text-soft-400',

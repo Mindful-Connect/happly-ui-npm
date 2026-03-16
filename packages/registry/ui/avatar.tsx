@@ -25,38 +25,38 @@ export const avatarVariants = tv({
       'select-none text-center uppercase',
       'ring-1 ring-stroke-soft-200',
     ],
-    image: 'size-full overflow-hidden rounded-[inherit] object-cover',
+    image: 'w-full h-full overflow-hidden rounded-[inherit] object-cover',
     indicator:
-      'absolute flex size-8 items-center justify-center drop-shadow-[0_2px_4px_#1b1c1d0a]',
+      'absolute flex w-8 h-8 items-center justify-center drop-shadow-[0_2px_4px_#1b1c1d0a]',
   },
   variants: {
     size: {
       '80': {
-        root: 'size-20 text-title-h5',
+        root: 'w-20 h-20 text-title-h5',
       },
       '72': {
         root: 'size-[72px] text-title-h5',
       },
       '64': {
-        root: 'size-16 text-title-h5',
+        root: 'w-16 h-16 text-title-h5',
       },
       '56': {
-        root: 'size-14 text-label-lg',
+        root: 'w-14 h-14 text-label-lg',
       },
       '48': {
-        root: 'size-12 text-label-lg',
+        root: 'w-12 h-12 text-label-lg',
       },
       '40': {
-        root: 'size-10 text-label-md',
+        root: 'w-10 h-10 text-label-md',
       },
       '32': {
-        root: 'size-8 text-label-sm',
+        root: 'w-8 h-8 text-label-sm',
       },
       '24': {
-        root: 'size-6 text-label-xs',
+        root: 'w-6 h-6 text-label-xs',
       },
       '20': {
-        root: 'size-5 text-label-xs',
+        root: 'w-5 h-5 text-label-xs',
       },
     },
     color: {
@@ -257,7 +257,7 @@ function AvatarIndicator({
 AvatarIndicator.displayName = AVATAR_INDICATOR_NAME;
 
 export const avatarStatusVariants = tv({
-  base: 'box-content size-3 rounded-full border-4 border-bg-white-0',
+  base: 'box-content w-3 h-3 rounded-full border-4 border-bg-white-0',
   variants: {
     status: {
       online: 'bg-success-base',
@@ -300,7 +300,7 @@ const AvatarBrandLogo = React.forwardRef<
     <Component
       ref={forwardedRef}
       className={cn(
-        'box-content size-6 rounded-full border-2 border-bg-white-0',
+        'box-content w-6 h-6 rounded-full border-2 border-bg-white-0',
         className,
       )}
       {...rest}
@@ -316,7 +316,7 @@ function AvatarNotification({
   return (
     <div
       className={cn(
-        'box-content size-3 rounded-full border-2 border-bg-white-0 bg-error-base',
+        'box-content w-3 h-3 rounded-full border-2 border-bg-white-0 bg-error-base',
         className,
       )}
       {...rest}
