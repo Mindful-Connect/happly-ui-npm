@@ -225,7 +225,7 @@ const DEFAULT_LABELS: SocialsInputLabels = {
 // ─── Validation ──────────────────────────────────────────────────────
 
 const URL_REGEX =
-  /^(?:https:\/\/|zoommtg:\/\/)[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)$/;
+  /^(?:https:\/\/|zoommtg:\/\/)[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)$/;
 
 function validateURL(value: string) {
   return URL_REGEX.test(value);

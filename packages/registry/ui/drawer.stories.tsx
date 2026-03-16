@@ -4,7 +4,6 @@ import * as React from 'react';
 import {
   RiArrowRightSLine,
   RiHistoryLine,
-  RiHomeSmileFill,
   RiLightbulbFlashFill,
   RiPieChartLine,
   RiShoppingCartLine,

@@ -24,7 +24,7 @@ const logoUploadVariants = tv({
   },
 });
 
-const { root, preview, content, header, title, description, actions } =
+const { root, preview, content, title, description, actions } =
   logoUploadVariants();
 
 // ─── Types ───────────────────────────────────────────────────────────────────
