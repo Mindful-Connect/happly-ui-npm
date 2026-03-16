@@ -54,9 +54,13 @@ export function PrevNextLinks() {
   let pathname = usePathname();
   let allLinks = navigation.flatMap((section) =>
     section.links.flatMap((link) =>
-      'href' in link ? link : link.links ? link.links.flatMap((l: any) => ('href' in l ? l : l.links ? l.links : [])) : []
+      'href' in link
+        ? [link]
+        : link.links.flatMap((l: any) =>
+            'href' in l ? [l] : l.links ? l.links : []
+          )
     )
-  );
+  ) as { title: string; href: string }[];
   let linkIndex = allLinks.findIndex((link) => link.href === pathname);
   let previousPage = linkIndex > -1 ? allLinks[linkIndex - 1] : null;
   let nextPage = linkIndex > -1 ? allLinks[linkIndex + 1] : null;

@@ -28,6 +28,8 @@
       "@/lib/alert-utils": ["../packages/registry/lib/alert-utils"],
       "@/lib/tag-utils": ["../packages/registry/lib/tag-utils"],
       "@/lib/currency-input-utils": ["../packages/registry/lib/currency-input-utils"],
+      "@/lib/memoji": ["../packages/registry/lib/memoji"],
+      "@/hooks/*": ["../packages/registry/hooks/*"],
       "@/*": ["./src/*"]
     }
   },

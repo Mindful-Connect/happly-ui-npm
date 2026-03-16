@@ -189,6 +189,7 @@ type AccordionGroupProps = Omit<
   items: AccordionGroupItem[];
   variant?: VariantProps<typeof accordionItemVariants>['variant'];
   arrowPosition?: 'start' | 'end';
+  collapsible?: boolean;
 };
 
 const AccordionGroup = React.forwardRef<
@@ -203,7 +204,7 @@ const AccordionGroup = React.forwardRef<
       <AccordionRoot
         ref={forwardedRef}
         className={cn('space-y-6', className)}
-        {...rest}
+        {...(rest as any)}
       >
         {items.map((item) => {
           const hasIcon = !!item.icon;
