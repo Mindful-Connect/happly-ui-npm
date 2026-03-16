@@ -147,6 +147,10 @@
             "href": "/docs/components/label"
           },
           {
+            "title": "Markdown Editor",
+            "href": "/docs/components/markdown-editor"
+          },
+          {
             "title": "Radio",
             "href": "/docs/components/radio"
           },
@@ -338,10 +342,6 @@
           }
         ],
         "collapsed": false
-      },
-      {
-        "title": "Markdown Editor",
-        "href": "/docs/components/markdown-editor"
       }
     ]
   },

@@ -116,6 +116,7 @@ function main() {
     'hint',
     'input',
     'label',
+    'markdown-editor',
     'radio',
     'radio-card',
     'select',
