@@ -233,8 +233,10 @@ function TabMenuHorizontalCounter({
   count,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   variant: _variant,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  color: _color,
   ...rest
-}: TabMenuHorizontalCounterProps & { variant?: string }) {
+}: TabMenuHorizontalCounterProps & { variant?: string; color?: string }) {
   const { counter } = tabMenuHorizontalVariants();
 
   if (count <= 0) return null;
