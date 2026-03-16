@@ -1,43 +1,27 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/happly-ui-utils';
-import { tv, type VariantProps } from '@/lib/tv';
 
-const smartMatchingAiVariants = tv({
-  base: 'shrink-0',
-  variants: {
-    size: {
-      xs: 'size-6',
-      sm: 'size-8',
-      md: 'size-10',
-      lg: 'size-12',
-      xl: 'size-14',
-      '2xl': 'size-[112px]',
-    },
-  },
-  defaultVariants: {
-    size: 'md',
-  },
-});
-
-type SmartMatchingAiProps = React.SVGProps<SVGSVGElement> &
-  VariantProps<typeof smartMatchingAiVariants>;
+type SmartMatchingAiProps = Omit<React.SVGProps<SVGSVGElement>, 'width' | 'height'> & {
+  /** Size in pixels. Defaults to 40. */
+  size?: number;
+};
 
 const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps>(
-  ({ className, size, ...rest }, forwardedRef) => {
+  ({ className, size = 40, style, ...rest }, forwardedRef) => {
     const uid = React.useId().replace(/:/g, '');
 
     return (
       <svg
         ref={forwardedRef}
-        width='112'
-        height='112'
+        width={size}
+        height={size}
         viewBox='0 0 112 112'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
-        style={{ isolation: 'isolate' }}
+        style={{ isolation: 'isolate', ...style }}
         colorInterpolation='sRGB'
-        className={cn(smartMatchingAiVariants({ size }), className)}
+        className={cn('shrink-0', className)}
         {...rest}
       >
         <defs>
@@ -538,4 +522,4 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
 );
 SmartMatchingAiRoot.displayName = 'SmartMatchingAiRoot';
 
-export { SmartMatchingAiRoot as Root, smartMatchingAiVariants };
+export { SmartMatchingAiRoot as Root };

@@ -6,21 +6,21 @@
   "description": "A decorative AI indicator orb with rainbow gradient and sparkle icons.",
   "version": "1.0.0",
   "dependencies": [],
-  "registryDependencies": ["tv", "utils"],
+  "registryDependencies": ["utils"],
   "docs": {
     "lead": "A decorative SVG orb icon used to indicate AI-powered smart matching features. Renders consistently across all browsers using pure SVG gradients.",
-    "usage": "import * as SmartMatchingAi from \"@/components/ui/smart-matching-ai\"\n\n<SmartMatchingAi.Root />",
+    "usage": "import * as SmartMatchingAi from \"@/components/ui/smart-matching-ai\"\n\n<SmartMatchingAi.Root size={40} />",
     "examples": [
       {
         "title": "Default",
-        "description": "The default AI orb at full size (112px).",
-        "code": "<SmartMatchingAi.Root size=\"2xl\" />",
+        "description": "The AI orb at full size (112px).",
+        "code": "<SmartMatchingAi.Root size={112} />",
         "stories": ["Default"]
       },
       {
         "title": "Sizes",
-        "description": "All available size variants.",
-        "code": "<SmartMatchingAi.Root size=\"sm\" />",
+        "description": "Various sizes using pixel values.",
+        "code": "<SmartMatchingAi.Root size={48} />",
         "stories": ["Sizes"]
       }
     ],
@@ -31,9 +31,9 @@
         "props": [
           {
             "name": "size",
-            "type": "'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'",
-            "default": "'md'",
-            "description": "The size of the orb icon."
+            "type": "number",
+            "default": "40",
+            "description": "Size in pixels."
           }
         ]
       }
