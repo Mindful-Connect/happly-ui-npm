@@ -44,7 +44,7 @@
       {
         "title": "Grid",
         "description": "Multiple promotional cards in a grid layout.",
-        "code": "<div className=\"grid grid-cols-3 gap-4\">\n  <PromotionalCard.Composed variant=\"filled\" ... />\n</div>",
+        "code": "<div className=\"flex flex-wrap justify-center gap-4\">\n  <PromotionalCard.Composed variant=\"filled\" ... />\n</div>",
         "stories": ["Grid"]
       }
     ],
