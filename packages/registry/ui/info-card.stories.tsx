@@ -5,7 +5,7 @@ import * as Badge from './badge';
 import * as InfoCard from './info-card';
 import * as StatusBadge from './status-badge';
 
-export default { title: 'UI/Info Card' };
+export default { title: 'Cards/Info Card' };
 
 export const Inline = {
   render: () => (

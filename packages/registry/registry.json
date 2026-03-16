@@ -364,6 +364,12 @@
       "description": "A slider component with single and range modes, primary and neutral variants. Uses namespace exports: Slider.Root, Slider.Thumb."
     },
     {
+      "name": "smart-matching-ai",
+      "type": "registry:ui",
+      "title": "Smart Matching AI",
+      "description": "A decorative AI indicator orb with rainbow gradient and sparkle icons."
+    },
+    {
       "name": "socials-input",
       "type": "registry:ui",
       "title": "Socials Input",

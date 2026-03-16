@@ -71,13 +71,13 @@ function main() {
     'banner',
     'divider',
     'kbd',
-    'info-card',
     'info-grid',
     'key-icon',
     'level-bar',
     'progress-bar',
     'progress-circle',
     'skeleton',
+    'smart-matching-ai',
     'status-badge',
     'table',
     'tag',
@@ -153,6 +153,7 @@ function main() {
   ];
 
   const CARD_COMPONENTS = [
+    'info-card',
     'promotional-card',
   ];
 

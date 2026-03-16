@@ -69,10 +69,6 @@
             "href": "/docs/components/divider"
           },
           {
-            "title": "Info Card",
-            "href": "/docs/components/info-card"
-          },
-          {
             "title": "Info Grid",
             "href": "/docs/components/info-grid"
           },
@@ -99,6 +95,10 @@
           {
             "title": "Skeleton",
             "href": "/docs/components/skeleton"
+          },
+          {
+            "title": "Smart Matching AI",
+            "href": "/docs/components/smart-matching-ai"
           },
           {
             "title": "Status Badge",
@@ -326,6 +326,10 @@
       {
         "title": "Cards",
         "links": [
+          {
+            "title": "Info Card",
+            "href": "/docs/components/info-card"
+          },
           {
             "title": "Promotional Card",
             "href": "/docs/components/promotional-card"
