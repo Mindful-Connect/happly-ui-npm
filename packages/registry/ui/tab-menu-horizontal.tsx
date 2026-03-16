@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import type { PolymorphicComponentProps } from '@/lib/polymorphic';
 import { recursiveCloneChildren } from '@/lib/recursive-clone-children';
 import { tv, type VariantProps } from '@/lib/tv';
+import * as Badge from '@/components/ui/badge';
 
 const TAB_MENU_ROOT_NAME = 'TabMenuHorizontalRoot';
 const TAB_MENU_ITEM_NAME = 'TabMenuHorizontalItem';
@@ -42,8 +43,7 @@ export const tabMenuHorizontalVariants = tv({
       'disabled:pointer-events-none disabled:opacity-50',
     ],
     icon: 'size-5 shrink-0',
-    counter:
-      'flex min-w-4 aspect-square items-center justify-center rounded-full bg-error-base p-0.5 text-[11px] font-medium leading-3 text-static-white',
+    counter: 'shrink-0',
   },
   variants: {
     variant: {
@@ -231,16 +231,27 @@ type TabMenuHorizontalCounterProps = React.HTMLAttributes<HTMLSpanElement> & {
 function TabMenuHorizontalCounter({
   className,
   count,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  variant: _variant,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  color: _color,
   ...rest
-}: TabMenuHorizontalCounterProps) {
+}: TabMenuHorizontalCounterProps & { variant?: string; color?: string }) {
   const { counter } = tabMenuHorizontalVariants();
 
   if (count <= 0) return null;
 
   return (
-    <span className={counter({ class: className })} {...rest}>
+    <Badge.Root
+      variant="filled"
+      color="red"
+      size="small"
+      square
+      className={counter({ class: className })}
+      {...rest}
+    >
       {count > 99 ? '99+' : count}
-    </span>
+    </Badge.Root>
   );
 }
 TabMenuHorizontalCounter.displayName = TAB_MENU_COUNTER_NAME;

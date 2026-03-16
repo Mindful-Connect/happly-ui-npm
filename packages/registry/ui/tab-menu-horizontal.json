@@ -9,7 +9,8 @@
   "registryDependencies": [
     "tv",
     "polymorphic",
-    "recursive-clone-children"
+    "recursive-clone-children",
+    "badge"
   ],
   "docs": {
     "lead": "A horizontal pill-shaped tab menu with selected/unselected states. Supports neutral and primary variants, icons, number counter badges, and a composed shorthand.",
