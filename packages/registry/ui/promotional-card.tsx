@@ -17,7 +17,7 @@ const PROMOTIONAL_CARD_LINK_NAME = 'PromotionalCardLink';
 export const promotionalCardVariants = tv({
   slots: {
     root: [
-      'relative h-[137px] min-w-72 overflow-hidden rounded-2xl',
+      'relative h-full min-h-[137px] min-w-72 overflow-hidden rounded-2xl',
       'transition duration-200 ease-out',
     ],
     icon: 'absolute left-[15px] top-[15px] !size-8',
