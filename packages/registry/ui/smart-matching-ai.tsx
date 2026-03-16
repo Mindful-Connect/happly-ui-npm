@@ -353,7 +353,7 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
                 cy='96.5506'
                 r='35.8793'
                 transform='rotate(32.262 166.551 96.5506)'
-                fill='#53E0FF'
+                fill='#20D4FF'
               />
             </g>
             {/* Yellow — boosted from #FBD570 to compensate sRGB vs Display P3 */}
@@ -363,7 +363,7 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
                 cy='157.217'
                 r='35.8793'
                 transform='rotate(32.262 145.551 157.217)'
-                fill='#FFCF45'
+                fill='#FFBB00'
               />
             </g>
             {/* Red — boosted from #FF5D53 */}
@@ -373,7 +373,7 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
                 cy='145.551'
                 r='35.8793'
                 transform='rotate(32.262 96.5506 145.551)'
-                fill='#FF4538'
+                fill='#FF1A0A'
               />
             </g>
             {/* Blue */}
@@ -400,7 +400,7 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
                 cy='91.8839'
                 r='35.8793'
                 transform='rotate(32.262 161.883 91.8839)'
-                fill='#53E0FF'
+                fill='#20D4FF'
               />
             </g>
             <g filter={`url(#${uid}-rb2-f1)`}>
@@ -409,7 +409,7 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
                 cy='152.551'
                 r='35.8793'
                 transform='rotate(32.262 140.884 152.551)'
-                fill='#FFCF45'
+                fill='#FFBB00'
               />
             </g>
             <g filter={`url(#${uid}-rb2-f2)`}>
@@ -418,7 +418,7 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
                 cy='140.884'
                 r='35.8793'
                 transform='rotate(32.262 91.8839 140.884)'
-                fill='#FF4538'
+                fill='#FF1A0A'
               />
             </g>
             <g filter={`url(#${uid}-rb2-f3)`}>
