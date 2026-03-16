@@ -363,7 +363,7 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
                 cy='157.217'
                 r='35.8793'
                 transform='rotate(32.262 145.551 157.217)'
-                fill='#FFBB00'
+                fill='#FFE040'
               />
             </g>
             {/* Red — boosted from #FF5D53 */}
@@ -409,7 +409,7 @@ const SmartMatchingAiRoot = React.forwardRef<SVGSVGElement, SmartMatchingAiProps
                 cy='152.551'
                 r='35.8793'
                 transform='rotate(32.262 140.884 152.551)'
-                fill='#FFBB00'
+                fill='#FFE040'
               />
             </g>
             <g filter={`url(#${uid}-rb2-f2)`}>
