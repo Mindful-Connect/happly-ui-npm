@@ -111,19 +111,20 @@ export async function add(
     process.exit(1);
   }
 
-  // Check for existing files
+  // Check for existing files — only prompt for explicitly requested components,
+  // silently skip dependency files (e.g. happly-ui-utils) that already exist
+  const requestedNames = new Set(components);
   const existingFiles: string[] = [];
+  const skippableDeps = new Set<string>();
+
   for (const item of items) {
+    const isExplicit = requestedNames.has(item.name);
+
     for (const file of item.files) {
-      // Use the file's type if available, otherwise fallback to item's type
       const fileType = file.type || item.type;
 
       let fileName = path.basename(file.path);
-
-      // For library files, if the file is inside a subdirectory of lib, preserve it
       if (fileType === 'registry:lib') {
-        // file.path is like "lib/upload-file-input/constants.ts"
-        // We want "upload-file-input/constants.ts"
         if (file.path.startsWith('lib/')) {
           fileName = file.path.substring(4);
         }
@@ -135,13 +136,19 @@ export async function add(
         config,
         fileName
       );
+
       if (componentExists(cwd, targetPath)) {
-        existingFiles.push(targetPath);
+        if (isExplicit) {
+          existingFiles.push(targetPath);
+        } else {
+          // Auto-resolved dependency that already exists — skip silently
+          skippableDeps.add(targetPath);
+        }
       }
     }
   }
 
-  // Prompt for overwrite if files exist
+  // Prompt for overwrite only for explicitly requested components
   if (existingFiles.length > 0 && !options.overwrite && !options.yes) {
     logger.warn('The following files already exist:');
     existingFiles.forEach((f) => logger.log(`  ${f}`));
@@ -167,15 +174,10 @@ export async function add(
   try {
     for (const item of items) {
       for (const file of item.files) {
-        // Use the file's type if available, otherwise fallback to item's type
         const fileType = file.type || item.type;
 
         let fileName = path.basename(file.path);
-
-        // For library files, if the file is inside a subdirectory of lib, preserve it
         if (fileType === 'registry:lib') {
-          // file.path is like "lib/upload-file-input/constants.ts"
-          // We want "upload-file-input/constants.ts"
           if (file.path.startsWith('lib/')) {
             fileName = file.path.substring(4);
           }
@@ -187,6 +189,10 @@ export async function add(
           config,
           fileName
         );
+
+        // Skip dependency files that already exist
+        if (skippableDeps.has(targetPath)) continue;
+
         const transformedContent = transformComponent(file, config);
         await writeComponentFile(cwd, targetPath, transformedContent);
         writtenFiles.push(targetPath);

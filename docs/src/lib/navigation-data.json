@@ -97,10 +97,6 @@
             "href": "/docs/components/skeleton"
           },
           {
-            "title": "Smart Matching AI",
-            "href": "/docs/components/smart-matching-ai"
-          },
-          {
             "title": "Status Badge",
             "href": "/docs/components/status-badge"
           },
@@ -350,6 +346,10 @@
           }
         ],
         "collapsed": false
+      },
+      {
+        "title": "AI Orb",
+        "href": "/docs/components/ai-orb"
       }
     ]
   },

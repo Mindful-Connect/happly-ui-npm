@@ -10,6 +10,12 @@
       "description": "A collapsible accordion component with filled and stroke variants. Includes a composed Accordion.Group for quick usage. Built on Radix Accordion with namespace exports."
     },
     {
+      "name": "ai-orb",
+      "type": "registry:ui",
+      "title": "AI Orb",
+      "description": "A decorative AI indicator orb with rainbow gradient and sparkle icons."
+    },
+    {
       "name": "alert",
       "type": "registry:ui",
       "title": "Alert",
@@ -362,12 +368,6 @@
       "type": "registry:ui",
       "title": "Slider",
       "description": "A slider component with single and range modes, primary and neutral variants. Uses namespace exports: Slider.Root, Slider.Thumb."
-    },
-    {
-      "name": "smart-matching-ai",
-      "type": "registry:ui",
-      "title": "Smart Matching AI",
-      "description": "A decorative AI indicator orb with rainbow gradient and sparkle icons."
     },
     {
       "name": "socials-input",
