@@ -6,7 +6,7 @@
   "description": "An OTP/digit input component with configurable number of slots, error, and disabled states. Uses namespace exports: DigitInput.Root.",
   "version": "1.0.0",
   "dependencies": ["react-otp-input"],
-  "registryDependencies": ["happly-ui-utils"],
+  "registryDependencies": ["form-field-context", "happly-ui-utils"],
   "docs": {
     "lead": "An OTP/digit input component with configurable number of slots, error, and disabled states.",
     "usage": "import * as DigitInput from \"@/components/ui/digit-input\"\n\n<DigitInput.Root numInputs={4} onChange={setValue} value={value} />",

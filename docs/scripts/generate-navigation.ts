@@ -55,6 +55,18 @@ function main() {
     }))
     .sort((a, b) => a.title.localeCompare(b.title));
 
+  // Filter context libraries and generate navigation links
+  const contextLinks = registry.items
+    .filter(
+      (item) =>
+        item.type === 'registry:lib' && item.name.endsWith('-context')
+    )
+    .map((item) => ({
+      title: item.title,
+      href: `/docs/contexts/${item.name}`,
+    }))
+    .sort((a, b) => a.title.localeCompare(b.title));
+
   const ACTION_COMPONENTS = [
     'button',
     'button-group',
@@ -96,6 +108,7 @@ function main() {
 
   const FEEDBACK_COMPONENTS = [
     'alert',
+    'loader',
     'tooltip',
   ];
 
@@ -296,12 +309,20 @@ function main() {
           },
         ]
       : []),
+    ...(contextLinks.length > 0
+      ? [
+          {
+            title: 'Contexts',
+            links: contextLinks,
+          },
+        ]
+      : []),
   ];
 
   // Write to JSON file
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(navigation, null, 2));
   console.log(
-    `✓ Generated navigation data with ${componentLinks.length} components and ${hookLinks.length} hooks`
+    `✓ Generated navigation data with ${componentLinks.length} components, ${hookLinks.length} hooks, and ${contextLinks.length} contexts`
   );
   console.log(`  Output: ${OUTPUT_PATH}`);
 }

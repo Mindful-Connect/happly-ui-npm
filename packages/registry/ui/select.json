@@ -14,7 +14,12 @@
     "@radix-ui/react-slot",
     "@remixicon/react"
   ],
-  "registryDependencies": ["happly-ui-utils", "polymorphic", "tv"],
+  "registryDependencies": [
+    "form-field-context",
+    "happly-ui-utils",
+    "polymorphic",
+    "tv"
+  ],
   "docs": {
     "lead": "A select component with multiple variants, sizes, scroll area, and item icons.",
     "usage": "import * as Select from \"@/components/ui/select\"\n\n<Select.Root>\n  <Select.Trigger>\n    <Select.Value placeholder=\"Select...\" />\n  </Select.Trigger>\n  <Select.Content>\n    <Select.Item value=\"one\">Option One</Select.Item>\n    <Select.Item value=\"two\">Option Two</Select.Item>\n  </Select.Content>\n</Select.Root>",

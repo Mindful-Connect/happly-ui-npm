@@ -19,6 +19,7 @@ import * as SwitchToggle from '@/components/ui/switch-toggle';
 import type { SwitchToggleGroupItem } from '@/components/ui/switch-toggle';
 import * as Textarea from '@/components/ui/textarea';
 import * as Tooltip from '@/components/ui/tooltip';
+import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
 
 // ---------------------------------------------------------------------------
@@ -209,11 +210,15 @@ type MarkdownEditorRootProps = React.HTMLAttributes<HTMLDivElement> & {
 function MarkdownEditorRoot({
   className,
   children,
-  hasError = false,
-  disabled = false,
+  hasError: hasErrorProp = false,
+  disabled: disabledProp = false,
   previewing = false,
   ...rest
 }: MarkdownEditorRootProps) {
+  const formField = useFormField();
+  const hasError = hasErrorProp || formField.hasError;
+  const disabled = disabledProp || formField.disabled;
+
   const contextValue = React.useMemo<MarkdownEditorContextValue>(
     () => ({ hasError, disabled, previewing }),
     [hasError, disabled, previewing]

@@ -8,6 +8,7 @@ import { useDebounce } from 'use-debounce';
 
 import * as Input from './input';
 import * as Popover from './popover';
+import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
 
 // ─── Types ─────────────────────────────────────────────────
@@ -144,6 +145,9 @@ const LocationInputRoot = React.forwardRef<
     },
     forwardedRef
   ) => {
+    const formField = useFormField();
+    const resolvedHasError = hasError ?? formField.hasError;
+    const resolvedDisabled = disabled ?? formField.disabled;
     const [open, setOpen] = React.useState(false);
     const [search, setSearch] = React.useState(
       location?.formatted_address ?? ''
@@ -211,7 +215,7 @@ const LocationInputRoot = React.forwardRef<
       <Popover.Root open={open} onOpenChange={handleOpenChange}>
         <Popover.Anchor asChild>
           <div ref={anchorRef} className={className}>
-            <Input.Root size={size} hasError={hasError}>
+            <Input.Root size={size} hasError={resolvedHasError}>
               <Input.Wrapper>
                 <Input.Icon as={Icon} />
                 <Input.Input
@@ -225,12 +229,12 @@ const LocationInputRoot = React.forwardRef<
                     setSearch(e.target.value);
                   }}
                   onFocus={() => {
-                    if (!disabled && suggestions.length > 0) {
+                    if (!resolvedDisabled && suggestions.length > 0) {
                       handleOpenChange(true);
                     }
                   }}
                   placeholder={placeholder}
-                  disabled={disabled}
+                  disabled={resolvedDisabled}
                   {...rest}
                 />
               </Input.Wrapper>

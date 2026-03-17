@@ -44,14 +44,33 @@ export function getHooks(): RegistryItem[] {
 }
 
 /**
+ * Get all context libraries from the registry
+ */
+export function getContexts(): RegistryItem[] {
+  const registry = getRegistry();
+  return registry.items.filter(
+    (item) => item.type === 'registry:lib' && item.name.endsWith('-context')
+  );
+}
+
+/**
+ * Get all context names for static generation
+ */
+export function getAllContextNames(): string[] {
+  const contexts = getContexts();
+  return contexts.map((c) => c.name);
+}
+
+/**
  * Get a specific component's full data including files
  */
 export function getComponent(name: string): RegistryItemWithDocs | null {
-  // Try ui/ first, then hooks/
+  // Try ui/ first, then hooks/, then lib/
   const uiPath = path.join(REGISTRY_PATH, 'ui', `${name}.json`);
   const hookPath = path.join(REGISTRY_PATH, 'hooks', `${name}.json`);
+  const libPath = path.join(REGISTRY_PATH, 'lib', `${name}.json`);
 
-  const componentPath = fs.existsSync(uiPath) ? uiPath : fs.existsSync(hookPath) ? hookPath : null;
+  const componentPath = fs.existsSync(uiPath) ? uiPath : fs.existsSync(hookPath) ? hookPath : fs.existsSync(libPath) ? libPath : null;
 
   if (!componentPath) {
     return null;

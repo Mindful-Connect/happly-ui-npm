@@ -9,7 +9,12 @@
     "guide": "Button v2 is a full rewrite using tv (tailwind-variants) and compound components. Replace `<Button variant=\"primary\">` with `<Button.Root variant=\"primary\">`. Icons now use `<Button.Icon as={Icon} />` instead of the `icon` prop. A new `mode` prop replaces the old style variants. The `cva` and `happly-ui-utils` dependencies are no longer needed."
   },
   "dependencies": ["@radix-ui/react-slot"],
-  "registryDependencies": ["tv", "polymorphic", "recursive-clone-children", "loader"],
+  "registryDependencies": [
+    "tv",
+    "polymorphic",
+    "recursive-clone-children",
+    "loader"
+  ],
   "docs": {
     "lead": "A compound button component with variants, modes, sizes, and polymorphic icon support.",
     "usage": "import * as Button from \"@/components/ui/button\"\n\n<Button.Root variant=\"primary\" mode=\"filled\">\n  <Button.Icon as={MailIcon} />\n  Send Email\n</Button.Root>",

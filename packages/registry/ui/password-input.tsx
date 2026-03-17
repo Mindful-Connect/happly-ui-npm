@@ -9,6 +9,8 @@ import {
   RiLock2Line,
 } from '@remixicon/react';
 
+import { useFormField } from '@/lib/form-field-context';
+
 import * as Input from './input';
 import { LevelBar } from './level-bar';
 
@@ -47,10 +49,14 @@ const PasswordInputRoot = React.forwardRef<
       showStrength = false,
       criteria,
       criteriaLabel = 'Must contain at least;',
+      disabled,
       ...rest
     },
     forwardedRef
   ) => {
+    const formField = useFormField();
+    const resolvedHasError = hasError ?? formField.hasError;
+    const resolvedDisabled = disabled ?? formField.disabled;
     const [visible, setVisible] = React.useState(false);
 
     const metCount = criteria?.filter((c) => c.met).length ?? 0;
@@ -58,13 +64,14 @@ const PasswordInputRoot = React.forwardRef<
 
     return (
       <div className='flex flex-col gap-1'>
-        <Input.Root size={size} hasError={hasError}>
+        <Input.Root size={size} hasError={resolvedHasError}>
           <Input.Wrapper>
             <Input.Icon as={LeadingIcon} />
             <Input.Input
               ref={forwardedRef}
               type={visible ? 'text' : 'password'}
               placeholder={placeholder}
+              disabled={resolvedDisabled}
               {...rest}
             />
             <button

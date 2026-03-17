@@ -15,7 +15,12 @@
     "@radix-ui/react-scroll-area",
     "react-remove-scroll"
   ],
-  "registryDependencies": ["popover", "input", "happly-ui-utils"],
+  "registryDependencies": [
+    "form-field-context",
+    "popover",
+    "input",
+    "happly-ui-utils"
+  ],
   "docs": {
     "lead": "A Google Maps address autocomplete input with async search and place resolution.",
     "usage": "import * as LocationInput from \"@/components/ui/location-input\"\n\n<LocationInput.Root location={location} onLocationChange={setLocation} />",

@@ -18,6 +18,7 @@ import * as ComboBox from '@/components/ui/combo-box';
 import * as Hint from '@/components/ui/hint';
 import * as Input from '@/components/ui/input';
 import * as Tag from '@/components/ui/tag';
+import { useFormField } from '@/lib/form-field-context';
 
 // ─── Types ───────────────────────────────────────────────────────────
 
@@ -270,15 +271,16 @@ export default function SocialsInput({
   setFormValue,
   labels: labelsProp,
 }: SocialsInputProps) {
+  const formField = useFormField();
   const labels = { ...DEFAULT_LABELS, ...labelsProp };
 
   const [editingKey, setEditingKey] = useState<SocialKey | null>(null);
   const [editValue, setEditValue] = useState('');
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
 
-  // Error state: external prop or any internal validation error
+  // Error state: external prop, form field context, or any internal validation error
   const hasInternalError = Object.values(errors).some(Boolean);
-  const hasError = hasErrorProp || hasInternalError;
+  const hasError = hasErrorProp || formField.hasError || hasInternalError;
 
   // Resolve which socials to show
   const effectiveSocials =

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "form-field-context",
+  "type": "registry:lib",
+  "title": "Form Field Context",
+  "description": "Shared React context for FormField state (hasError, disabled, id, name). Used by input components to auto-read form field state.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "docs": {
+    "lead": "Shared React context that propagates FormField state (hasError, disabled, id, name) to child input components. Automatically installed with FormField and consumed by all input components.",
+    "usage": "import { useFormField } from \"@/lib/form-field-context\"\n\nfunction MyCustomInput({ hasError, ...props }) {\n  const formField = useFormField();\n  const resolvedHasError = hasError ?? formField.hasError;\n\n  return <input aria-invalid={resolvedHasError || undefined} {...props} />;\n}",
+    "api": [
+      {
+        "name": "useFormField",
+        "description": "Hook to access FormField context values. Returns default values when used outside a FormField.",
+        "props": []
+      },
+      {
+        "name": "FormFieldContext",
+        "description": "The React context object. Use FormFieldContext.Provider to wrap custom form field implementations.",
+        "props": [
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Whether the field has a validation error."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Whether the field is disabled."
+          },
+          {
+            "name": "id",
+            "type": "string",
+            "description": "The field ID, used for label/input association."
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "description": "The field name, used for react-hook-form integration."
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "lib/form-field-context.ts",
+      "type": "registry:lib"
+    }
+  ]
+}

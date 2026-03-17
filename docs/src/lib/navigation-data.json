@@ -277,6 +277,10 @@
             "href": "/docs/components/alert"
           },
           {
+            "title": "Loader",
+            "href": "/docs/components/loader"
+          },
+          {
             "title": "Tooltip",
             "href": "/docs/components/tooltip"
           }
@@ -350,10 +354,6 @@
           }
         ],
         "collapsed": false
-      },
-      {
-        "title": "Loader",
-        "href": "/docs/components/loader"
       }
     ]
   },
@@ -367,6 +367,15 @@
       {
         "title": "useTabObserver",
         "href": "/docs/hooks/use-tab-observer"
+      }
+    ]
+  },
+  {
+    "title": "Contexts",
+    "links": [
+      {
+        "title": "Form Field Context",
+        "href": "/docs/contexts/form-field-context"
       }
     ]
   }

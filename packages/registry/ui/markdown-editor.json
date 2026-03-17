@@ -7,6 +7,7 @@
   "version": "2.0.0",
   "dependencies": ["@remixicon/react", "marked"],
   "registryDependencies": [
+    "form-field-context",
     "switch-toggle",
     "textarea",
     "tooltip",

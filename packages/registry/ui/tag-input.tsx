@@ -2,6 +2,8 @@
 
 import * as React from 'react';
 
+import { useFormField } from '@/lib/form-field-context';
+
 import * as Input from './input';
 import * as Tag from './tag';
 
@@ -38,6 +40,9 @@ const TagInputRoot = React.forwardRef<HTMLInputElement, TagInputProps>(
     },
     forwardedRef
   ) => {
+    const formField = useFormField();
+    const resolvedHasError = hasError ?? formField.hasError;
+    const resolvedDisabled = disabled ?? formField.disabled;
     const [uncontrolledTags, setUncontrolledTags] =
       React.useState<string[]>(defaultValue);
     const [inputValue, setInputValue] = React.useState('');
@@ -88,7 +93,7 @@ const TagInputRoot = React.forwardRef<HTMLInputElement, TagInputProps>(
 
     return (
       <div className='flex flex-col gap-2'>
-        <Input.Root size={size} hasError={hasError}>
+        <Input.Root size={size} hasError={resolvedHasError}>
           <Input.Wrapper>
             <Input.Input
               ref={forwardedRef}
@@ -96,7 +101,7 @@ const TagInputRoot = React.forwardRef<HTMLInputElement, TagInputProps>(
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
-              disabled={disabled}
+              disabled={resolvedDisabled}
               {...rest}
             />
           </Input.Wrapper>
@@ -108,12 +113,12 @@ const TagInputRoot = React.forwardRef<HTMLInputElement, TagInputProps>(
               <Tag.Root
                 key={`${tag}-${index}`}
                 variant={tagVariant}
-                disabled={disabled}
+                disabled={resolvedDisabled}
               >
                 {tag}
                 <Tag.DismissButton
                   onClick={() => removeTag(index)}
-                  disabled={disabled}
+                  disabled={resolvedDisabled}
                 />
               </Tag.Root>
             ))}

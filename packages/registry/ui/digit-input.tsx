@@ -3,6 +3,7 @@
 import * as React from 'react';
 import OtpInput, { type OTPInputProps } from 'react-otp-input';
 
+import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
 
 type OtpOptions = Omit<OTPInputProps, 'renderInput'>;
@@ -19,14 +20,18 @@ function DigitInput({
   hasError,
   ...rest
 }: DigitInputProps) {
+  const formField = useFormField();
+  const resolvedHasError = hasError ?? formField.hasError;
+  const resolvedDisabled = disabled ?? formField.disabled;
+
   return (
     <OtpInput
       containerStyle={cn('flex w-full items-center gap-2.5', className)}
       skipDefaultStyles
       renderInput={(inputProps) => (
         <DigitInputSlot
-          disabled={disabled}
-          hasError={hasError}
+          disabled={resolvedDisabled}
+          hasError={resolvedHasError}
           {...inputProps}
         />
       )}

@@ -70,7 +70,7 @@ const LoaderRoot = React.forwardRef<HTMLDivElement, LoaderRootProps>(
         <span className='sr-only'>{label || 'Loading'}</span>
       </div>
     );
-  },
+  }
 );
 LoaderRoot.displayName = LOADER_ROOT_NAME;
 

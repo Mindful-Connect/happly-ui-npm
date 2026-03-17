@@ -181,7 +181,13 @@
       "name": "form-field",
       "type": "registry:ui",
       "title": "Form Field",
-      "description": "A smart form field wrapper with built-in label, hint, and error support. Props-driven or compound mode. Uses namespace exports: FormField.Root, FormField.Label, FormField.Hint, FormField.Error."
+      "description": "A smart form field wrapper with built-in label, hint, error, and react-hook-form integration. Props-driven or compound mode. Uses namespace exports: FormField.Root, FormField.Label, FormField.Hint, FormField.Error."
+    },
+    {
+      "name": "form-field-context",
+      "type": "registry:lib",
+      "title": "Form Field Context",
+      "description": "Shared React context for FormField state (hasError, disabled, id, name). Used by input components to auto-read form field state."
     },
     {
       "name": "happly-ui-utils",
