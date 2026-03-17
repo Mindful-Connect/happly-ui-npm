@@ -291,7 +291,7 @@ export const buttonVariants = tv({
           // base
           'bg-error-base text-static-white',
           // hover
-          'hover:bg-red-700',
+          'hover:bg-error-dark',
           // focus
           'focus-visible:shadow-button-error-focus',
         ],
@@ -305,7 +305,7 @@ export const buttonVariants = tv({
           // base
           'bg-bg-white-0 text-error-base ring-error-base',
           // hover
-          'hover:bg-red-alpha-10 hover:ring-transparent',
+          'hover:bg-error-alpha-10 hover:ring-transparent',
           // focus
           'focus-visible:shadow-button-error-focus',
         ],
@@ -317,7 +317,7 @@ export const buttonVariants = tv({
       class: {
         root: [
           // base
-          'bg-red-alpha-10 text-error-base ring-transparent',
+          'bg-error-alpha-10 text-error-base ring-transparent',
           // hover
           'hover:bg-bg-white-0 hover:ring-error-base',
           // focus
@@ -333,7 +333,7 @@ export const buttonVariants = tv({
           // base
           'bg-transparent text-error-base ring-transparent',
           // hover
-          'hover:bg-red-alpha-10',
+          'hover:bg-error-alpha-10',
           // focus
           'focus-visible:bg-bg-white-0 focus-visible:shadow-button-error-focus focus-visible:ring-error-base',
         ],
