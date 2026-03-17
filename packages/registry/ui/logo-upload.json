@@ -9,6 +9,7 @@
   "registryDependencies": [
     "avatar",
     "button",
+    "loader",
     "tv",
     "happly-ui-utils",
     "use-file-upload"
@@ -28,6 +29,12 @@
         "description": "Shows the uploaded image in the avatar preview.",
         "code": "<LogoUpload.Root>\n  <LogoUpload.Preview file={file} />\n  <LogoUpload.Content>\n    <LogoUpload.Title>Business logo</LogoUpload.Title>\n    <LogoUpload.Description>\n      <p>Supports JPEG or PNG files (max 3MB).</p>\n    </LogoUpload.Description>\n    <LogoUpload.Actions>\n      <Button.Root variant=\"neutral\" mode=\"stroke\" size=\"xsmall\">Change</Button.Root>\n    </LogoUpload.Actions>\n  </LogoUpload.Content>\n</LogoUpload.Root>",
         "stories": ["WithLogo"]
+      },
+      {
+        "title": "Uploading",
+        "description": "While a file is uploading, the preview shows a spinner overlay. When a preview image is available, the image blurs behind the spinner.",
+        "code": "<LogoUpload.Root>\n  <LogoUpload.Preview file={uploadingFile} />\n  <LogoUpload.Content>\n    <LogoUpload.Title>Business logo</LogoUpload.Title>\n    <LogoUpload.Description>\n      <p>Uploading new-logo.png… 45%</p>\n    </LogoUpload.Description>\n  </LogoUpload.Content>\n</LogoUpload.Root>",
+        "stories": ["Uploading", "UploadingWithPreview"]
       },
       {
         "title": "Custom Preview",

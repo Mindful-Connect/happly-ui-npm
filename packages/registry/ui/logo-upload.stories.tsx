@@ -30,6 +30,16 @@ const mockUploadingFile: UploadFile = {
   status: 'uploading',
 };
 
+const mockUploadingWithPreview: UploadFile = {
+  id: '4',
+  name: 'new-logo.png',
+  size: 1200000,
+  type: 'image/png',
+  progress: 45,
+  status: 'uploading',
+  preview: 'https://placehold.co/200x200/e2e8f0/475569?text=Logo',
+};
+
 const mockFailedFile: UploadFile = {
   id: '3',
   name: 'bad-logo.png',
@@ -93,6 +103,24 @@ export const Uploading = {
     <div className='w-[480px]'>
       <LogoUpload.Root>
         <LogoUpload.Preview file={mockUploadingFile} />
+        <LogoUpload.Content>
+          <div className='flex flex-col gap-2'>
+            <LogoUpload.Title>Business logo</LogoUpload.Title>
+            <LogoUpload.Description>
+              <p>Uploading new-logo.png… 45%</p>
+            </LogoUpload.Description>
+          </div>
+        </LogoUpload.Content>
+      </LogoUpload.Root>
+    </div>
+  ),
+};
+
+export const UploadingWithPreview = {
+  render: () => (
+    <div className='w-[480px]'>
+      <LogoUpload.Root>
+        <LogoUpload.Preview file={mockUploadingWithPreview} />
         <LogoUpload.Content>
           <div className='flex flex-col gap-2'>
             <LogoUpload.Title>Business logo</LogoUpload.Title>

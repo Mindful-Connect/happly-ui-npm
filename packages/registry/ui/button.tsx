@@ -6,6 +6,7 @@ import { Slot } from '@radix-ui/react-slot';
 import type { PolymorphicComponentProps } from '@/lib/polymorphic';
 import { recursiveCloneChildren } from '@/lib/recursive-clone-children';
 import { tv, type VariantProps } from '@/lib/tv';
+import * as Loader from '@/components/ui/loader';
 
 const BUTTON_ROOT_NAME = 'ButtonRoot';
 const BUTTON_ICON_NAME = 'ButtonIcon';
@@ -40,30 +41,14 @@ function ButtonLoadingContent({
   return (
     <span className='relative inline-flex items-center gap-1.5 overflow-hidden'>
       {/* Spinner — delayed until exit completes */}
-      <svg
-        className='h-3.5 w-3.5 shrink-0'
+      <Loader.Root
+        size={14}
+        color='current'
         style={{
-          animation: `spin 0.7s linear infinite, btn-fade-in 200ms ease-out ${exitEndMs}ms forwards`,
+          animation: `btn-fade-in 200ms ease-out ${exitEndMs}ms forwards`,
           opacity: 0,
         }}
-        viewBox='0 0 16 16'
-        fill='none'
-      >
-        <circle
-          cx='8'
-          cy='8'
-          r='6'
-          stroke='currentColor'
-          strokeOpacity='0.2'
-          strokeWidth='2.5'
-        />
-        <path
-          d='M14 8a6 6 0 0 0-6-6'
-          stroke='currentColor'
-          strokeWidth='2.5'
-          strokeLinecap='round'
-        />
-      </svg>
+      />
 
       {/* Enter text (determines layout width) */}
       <span className='inline-flex'>

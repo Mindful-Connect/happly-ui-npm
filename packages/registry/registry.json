@@ -244,6 +244,12 @@
       "description": "A text-style button component with underline decoration, multiple variants, and polymorphic icon support. Uses namespace exports: LinkButton.Root, LinkButton.Icon."
     },
     {
+      "name": "loader",
+      "type": "registry:ui",
+      "title": "Loader",
+      "description": "A spinning loading indicator with configurable pixel size, stroke width, and color."
+    },
+    {
       "name": "location-input",
       "type": "registry:ui",
       "title": "Location Input",

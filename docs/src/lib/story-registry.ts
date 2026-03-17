@@ -38,8 +38,9 @@ import { default as keyIconMeta, Playground as keyIcon_Playground, Stroke as key
 import { default as labelMeta, Playground as label_Playground, Demo as label_Demo, Composed as label_Composed } from '@/components/ui/label.stories';
 import { default as levelBarMeta, Playground as levelBar_Playground, Levels as levelBar_Levels, CustomSegments as levelBar_CustomSegments } from '@/components/ui/level-bar.stories';
 import { default as linkButtonMeta, Playground as linkButton_Playground, Variants as linkButton_Variants, Sizes as linkButton_Sizes, Underline as linkButton_Underline, WithIcon as linkButton_WithIcon, Disabled as linkButton_Disabled, AsChild as linkButton_AsChild } from '@/components/ui/link-button.stories';
+import { default as loaderMeta, Playground as loader_Playground, Sizes as loader_Sizes, Colors as loader_Colors, Inline as loader_Inline, CustomStroke as loader_CustomStroke } from '@/components/ui/loader.stories';
 import { default as locationInputMeta, Playground as locationInput_Playground, Default as locationInput_Default } from '@/components/ui/location-input.stories';
-import { default as logoUploadMeta, Default as logoUpload_Default, WithLogo as logoUpload_WithLogo, Uploading as logoUpload_Uploading, Failed as logoUpload_Failed, CustomPreview as logoUpload_CustomPreview, UserAvatar as logoUpload_UserAvatar, Composed as logoUpload_Composed, WithFormField as logoUpload_WithFormField, ComposedWithLogo as logoUpload_ComposedWithLogo } from '@/components/ui/logo-upload.stories';
+import { default as logoUploadMeta, Default as logoUpload_Default, WithLogo as logoUpload_WithLogo, Uploading as logoUpload_Uploading, UploadingWithPreview as logoUpload_UploadingWithPreview, Failed as logoUpload_Failed, CustomPreview as logoUpload_CustomPreview, UserAvatar as logoUpload_UserAvatar, Composed as logoUpload_Composed, WithFormField as logoUpload_WithFormField, ComposedWithLogo as logoUpload_ComposedWithLogo } from '@/components/ui/logo-upload.stories';
 import { default as markdownEditorMeta, Default as markdownEditor_Default, SingleLanguage as markdownEditor_SingleLanguage, ControlledMulti as markdownEditor_ControlledMulti, CustomToggle as markdownEditor_CustomToggle, Compound as markdownEditor_Compound, WithFormField as markdownEditor_WithFormField, WithError as markdownEditor_WithError, Disabled as markdownEditor_Disabled, WithDefaultContent as markdownEditor_WithDefaultContent } from '@/components/ui/markdown-editor.stories';
 import { default as modalMeta, Playground as modal_Playground, Demo as modal_Demo, WithHeader as modal_WithHeader } from '@/components/ui/modal.stories';
 import { default as paginationMeta, Playground as pagination_Playground, Demo as pagination_Demo, Rounded as pagination_Rounded, Group as pagination_Group, AsLink as pagination_AsLink } from '@/components/ui/pagination.stories';
@@ -493,6 +494,16 @@ export const storyRegistry: Record<string, {
     'AsChild': linkButton_AsChild
     }
   },
+  'loader': {
+    meta: loaderMeta,
+    stories: {
+    'Playground': loader_Playground,
+    'Sizes': loader_Sizes,
+    'Colors': loader_Colors,
+    'Inline': loader_Inline,
+    'CustomStroke': loader_CustomStroke
+    }
+  },
   'location-input': {
     meta: locationInputMeta,
     stories: {
@@ -506,6 +517,7 @@ export const storyRegistry: Record<string, {
     'Default': logoUpload_Default,
     'WithLogo': logoUpload_WithLogo,
     'Uploading': logoUpload_Uploading,
+    'UploadingWithPreview': logoUpload_UploadingWithPreview,
     'Failed': logoUpload_Failed,
     'CustomPreview': logoUpload_CustomPreview,
     'UserAvatar': logoUpload_UserAvatar,
