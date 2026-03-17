@@ -37,7 +37,7 @@ function LabelAsterisk({
   return (
     <span
       className={cn(
-        'text-error-base',
+        'ml-px text-error-base',
         // disabled
         'group-aria-disabled:text-text-disabled-300',
         className,
@@ -60,7 +60,7 @@ function LabelSub({
   return (
     <span
       className={cn(
-        'text-paragraph-sm text-text-sub-600',
+        'ml-px text-paragraph-sm text-text-sub-600',
         // disabled
         'group-aria-disabled:text-text-disabled-300',
         className,
@@ -105,7 +105,7 @@ function LabelInfo({
     <Tooltip.Provider>
       <Tooltip.Root>
         <Tooltip.Trigger asChild>
-          <button type='button' className='inline-flex align-middle'>
+          <button type='button' className='ml-px inline-flex align-middle'>
             <LabelInfoIcon className={iconClassName} />
           </button>
         </Tooltip.Trigger>

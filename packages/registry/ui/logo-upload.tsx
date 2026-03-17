@@ -79,7 +79,7 @@ function LogoUploadPreview({
       {hasImage ? (
         <Avatar.Root
           className={cn(
-            'text-title-h5 size-[111px] rounded-xl',
+            'text-title-h5 size-[88px] @[350px]:size-[111px] rounded-xl',
             avatarClassName
           )}
         >
@@ -95,7 +95,7 @@ function LogoUploadPreview({
           placeholderType={placeholderType}
           placeholder={placeholder}
           className={cn(
-            'text-title-h5 size-[111px] rounded-xl',
+            'text-title-h5 size-[88px] @[350px]:size-[111px] rounded-xl',
             avatarClassName
           )}
         />
