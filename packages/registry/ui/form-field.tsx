@@ -1,27 +1,36 @@
 'use client';
 
 import * as React from 'react';
+import { useFormContext, type FieldError } from 'react-hook-form';
 
 import * as Hint from '@/components/ui/hint';
 import * as Label from '@/components/ui/label';
+import {
+  FormFieldContext,
+  useFormField,
+  type FormFieldContextValue,
+} from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
 
-type FormFieldContextValue = {
-  hasError: boolean;
-  disabled: boolean;
-  id?: string;
-};
+function useFormContextSafe() {
+  try {
+    return useFormContext();
+  } catch {
+    return null;
+  }
+}
 
-const FormFieldContext = React.createContext<FormFieldContextValue>({
-  hasError: false,
-  disabled: false,
-});
-
-function useFormField() {
-  return React.useContext(FormFieldContext);
+function getFieldError(
+  errors: Record<string, any>,
+  name: string
+): FieldError | undefined {
+  return name.split('.').reduce((obj, key) => obj?.[key], errors) as
+    | FieldError
+    | undefined;
 }
 
 type FormFieldRootProps = React.HTMLAttributes<HTMLDivElement> & {
+  name?: string;
   label?: React.ReactNode;
   htmlFor?: string;
   required?: boolean;
@@ -37,6 +46,7 @@ type FormFieldRootProps = React.HTMLAttributes<HTMLDivElement> & {
 function FormFieldRoot({
   className,
   children,
+  name,
   label,
   htmlFor,
   required,
@@ -49,11 +59,22 @@ function FormFieldRoot({
   disabled,
   ...rest
 }: FormFieldRootProps) {
-  const computedHasError = hasError || !!error;
+  const form = useFormContextSafe();
+
+  const fieldError =
+    name && form ? getFieldError(form.formState.errors, name) : undefined;
+  const resolvedError = error ?? fieldError?.message;
+  const computedHasError = hasError || !!resolvedError;
+  const resolvedId = htmlFor ?? name;
 
   const contextValue = React.useMemo<FormFieldContextValue>(
-    () => ({ hasError: computedHasError, disabled: !!disabled, id: htmlFor }),
-    [computedHasError, disabled, htmlFor]
+    () => ({
+      hasError: computedHasError,
+      disabled: !!disabled,
+      id: resolvedId,
+      name,
+    }),
+    [computedHasError, disabled, resolvedId, name]
   );
 
   return (
@@ -61,7 +82,7 @@ function FormFieldRoot({
       <div className={cn('flex flex-col gap-2', className)} {...rest}>
         {label && (
           <Label.Composed
-            htmlFor={htmlFor}
+            htmlFor={resolvedId}
             required={required}
             sub={labelSub}
             subParens={labelSubParens}
@@ -72,8 +93,8 @@ function FormFieldRoot({
           </Label.Composed>
         )}
         {children}
-        {error && <FormFieldError>{error}</FormFieldError>}
-        {hint && !error && (
+        {resolvedError && <FormFieldError>{resolvedError}</FormFieldError>}
+        {hint && !resolvedError && (
           <Hint.Composed hasError={computedHasError} disabled={disabled}>
             {hint}
           </Hint.Composed>

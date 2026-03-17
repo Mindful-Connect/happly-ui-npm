@@ -8,6 +8,8 @@ import {
   parseCountry,
 } from 'react-international-phone';
 
+import { useFormField } from '@/lib/form-field-context';
+
 import * as Input from './input';
 import * as Select from './select';
 
@@ -83,6 +85,9 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
     },
     forwardedRef
   ) => {
+    const formField = useFormField();
+    const resolvedHasError = hasError ?? formField.hasError;
+    const resolvedDisabled = disabled ?? formField.disabled;
     const [uncontrolledCountry, setUncontrolledCountry] =
       React.useState<CountryIso2>(defaultCountry);
     const [displayValue, setDisplayValue] = React.useState('');
@@ -163,12 +168,12 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
     );
 
     return (
-      <Input.Root size={size} hasError={hasError}>
+      <Input.Root size={size} hasError={resolvedHasError}>
         <Select.Root
           variant='compactForInput'
           value={activeCountryIso2}
           onValueChange={handleCountryChange}
-          disabled={disabled}
+          disabled={resolvedDisabled}
         >
           <Select.Trigger>
             {activeCountry && (
@@ -220,7 +225,7 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
             placeholder={placeholder}
             value={displayValue}
             onChange={handleInputChange}
-            disabled={disabled}
+            disabled={resolvedDisabled}
             {...rest}
           />
         </Input.Wrapper>

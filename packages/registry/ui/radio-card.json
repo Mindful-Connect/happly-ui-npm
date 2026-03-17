@@ -6,7 +6,12 @@
   "description": "A composable radio input styled as a card. Compose with Title, Description, Content, Indicator, KeyIcon, and Badge sub-components.",
   "version": "1.0.0",
   "dependencies": ["@radix-ui/react-radio-group"],
-  "registryDependencies": ["radio", "tv", "happly-ui-utils"],
+  "registryDependencies": [
+    "form-field-context",
+    "radio",
+    "tv",
+    "happly-ui-utils"
+  ],
   "docs": {
     "lead": "A composable radio input styled as a card. Arrange titles, descriptions, icons, and badges however you want.",
     "usage": "import { RadioCard } from \"@/components/ui/radio-card\"\n\n<RadioCard.Root value={value} onValueChange={setValue}>\n  <RadioCard\n    value=\"opt1\"\n    title=\"Option 1\"\n    description=\"Description\"\n  />\n</RadioCard.Root>",

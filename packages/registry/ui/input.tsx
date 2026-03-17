@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 
+import { useFormField } from '@/lib/form-field-context';
 import type { PolymorphicComponentProps } from '@/lib/polymorphic';
 import { recursiveCloneChildren } from '@/lib/recursive-clone-children';
 import { tv, type VariantProps } from '@/lib/tv';
@@ -159,17 +160,19 @@ function InputRoot({
   InputSharedProps & {
     asChild?: boolean;
   }) {
+  const formField = useFormField();
+  const resolvedHasError = hasError ?? formField.hasError;
   const uniqueId = React.useId();
   const Component = asChild ? Slot : 'div';
 
   const { root } = inputVariants({
     size,
-    hasError,
+    hasError: resolvedHasError,
   });
 
   const sharedProps: InputSharedProps = {
     size,
-    hasError,
+    hasError: resolvedHasError,
   };
 
   const extendedChildren = recursiveCloneChildren(
@@ -187,7 +190,11 @@ function InputRoot({
   );
 
   return (
-    <Component className={root({ class: className })} {...rest}>
+    <Component
+      className={root({ class: className })}
+      aria-invalid={resolvedHasError || undefined}
+      {...rest}
+    >
       {extendedChildren}
     </Component>
   );

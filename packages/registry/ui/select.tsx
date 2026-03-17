@@ -6,6 +6,7 @@ import * as SelectPrimitives from '@radix-ui/react-select';
 import { Slottable } from '@radix-ui/react-slot';
 import { RiArrowDownSLine, RiCheckLine } from '@remixicon/react';
 
+import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
 import type { PolymorphicComponentProps } from '@/lib/polymorphic';
 import { tv, type VariantProps } from '@/lib/tv';
@@ -237,8 +238,13 @@ const SelectRoot = ({
   hasError,
   ...rest
 }: React.ComponentProps<typeof SelectPrimitives.Root> & SelectContextType) => {
+  const formField = useFormField();
+  const resolvedHasError = hasError ?? formField.hasError;
+
   return (
-    <SelectContext.Provider value={{ size, variant, hasError }}>
+    <SelectContext.Provider
+      value={{ size, variant, hasError: resolvedHasError }}
+    >
       <SelectPrimitives.Root {...rest} />
     </SelectContext.Provider>
   );
@@ -273,6 +279,7 @@ const SelectTrigger = React.forwardRef<
     <SelectPrimitives.Trigger
       ref={forwardedRef}
       className={triggerRoot({ class: className })}
+      aria-invalid={hasError || undefined}
       {...rest}
     >
       <Slottable>{children}</Slottable>

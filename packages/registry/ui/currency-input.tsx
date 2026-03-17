@@ -2,6 +2,8 @@
 
 import * as React from 'react';
 
+import { useFormField } from '@/lib/form-field-context';
+
 import * as Input from './input';
 import * as Select from './select';
 
@@ -69,6 +71,9 @@ const CurrencyInputRoot = React.forwardRef<
     },
     forwardedRef
   ) => {
+    const formField = useFormField();
+    const resolvedHasError = hasError ?? formField.hasError;
+    const resolvedDisabled = disabled ?? formField.disabled;
     const [uncontrolledCurrency, setUncontrolledCurrency] =
       React.useState(defaultCurrency);
 
@@ -99,7 +104,7 @@ const CurrencyInputRoot = React.forwardRef<
     );
 
     return (
-      <Input.Root size={size} hasError={hasError}>
+      <Input.Root size={size} hasError={resolvedHasError}>
         <Input.Wrapper>
           <Input.InlineAffix>{symbol}</Input.InlineAffix>
           <Input.Input
@@ -108,7 +113,7 @@ const CurrencyInputRoot = React.forwardRef<
             placeholder={placeholder}
             value={value}
             onChange={handleInputChange}
-            disabled={disabled}
+            disabled={resolvedDisabled}
             {...rest}
           />
         </Input.Wrapper>
@@ -116,7 +121,7 @@ const CurrencyInputRoot = React.forwardRef<
           variant='compactForInput'
           value={activeCurrency}
           onValueChange={handleCurrencyChange}
-          disabled={disabled}
+          disabled={resolvedDisabled}
         >
           <Select.Trigger>
             <Select.Value />

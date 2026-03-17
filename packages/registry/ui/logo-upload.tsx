@@ -86,8 +86,8 @@ function LogoUploadPreview({
     <div
       className={preview({
         class: cn(
-          'relative overflow-hidden rounded-xl ring-1 ring-stroke-soft-200',
-          className,
+          'ring-stroke-soft-200 relative overflow-hidden rounded-xl ring-1',
+          className
         ),
       })}
       {...rest}

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RiMailLine, RiUser6Line } from '@remixicon/react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import * as Button from './button';
@@ -53,12 +53,9 @@ export const Playground = {
         disabled={args.disabled}
       >
         <Input.Composed
-          id='playground-email'
           leadingIcon={RiMailLine}
           type='email'
           placeholder={args.placeholder}
-          hasError={!!args.error}
-          disabled={args.disabled}
         />
       </FormField.Root>
     </div>
@@ -126,11 +123,9 @@ export const WithError = {
         error='Please enter a valid email address.'
       >
         <Input.Composed
-          id='error-email'
           leadingIcon={RiMailLine}
           type='email'
           placeholder='hello@example.com'
-          hasError
         />
       </FormField.Root>
     </div>
@@ -148,11 +143,9 @@ export const Disabled = {
         disabled
       >
         <Input.Composed
-          id='disabled-email'
           leadingIcon={RiMailLine}
           type='email'
           placeholder='hello@example.com'
-          disabled
         />
       </FormField.Root>
     </div>
@@ -166,7 +159,7 @@ export const CompoundMode = {
         <FormField.Label required sub='Required' subParens>
           Email Address
         </FormField.Label>
-        <Input.Root hasError>
+        <Input.Root>
           <Input.Wrapper>
             <Input.Icon as={RiMailLine} />
             <Input.Input
@@ -203,136 +196,112 @@ const signUpSchema = z
 type SignUpFormValues = z.infer<typeof signUpSchema>;
 
 function FormValidationRender() {
+  const methods = useForm<SignUpFormValues>({
+    resolver: zodResolver(signUpSchema),
+    mode: 'onTouched',
+  });
+
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors, isSubmitting },
-  } = useForm<SignUpFormValues>({
-    resolver: zodResolver(signUpSchema),
-    mode: 'onTouched',
-  });
+    formState: { isSubmitting },
+  } = methods;
 
   const onSubmit = (data: SignUpFormValues) => {
     alert(JSON.stringify(data, null, 2));
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className='flex w-[360px] flex-col gap-5'
-      noValidate
-    >
-      <FormField.Root
-        label='Full Name'
-        htmlFor='signup-name'
-        required
-        hint='Your first and last name.'
-        error={errors.fullName?.message}
+    <FormProvider {...methods}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className='flex w-[360px] flex-col gap-5'
+        noValidate
       >
-        <Input.Composed
-          id='signup-name'
-          leadingIcon={RiUser6Line}
-          placeholder='John Doe'
-          hasError={!!errors.fullName}
-          {...register('fullName')}
+        <FormField.Root
+          name='fullName'
+          label='Full Name'
+          required
+          hint='Your first and last name.'
+        >
+          <Input.Composed
+            leadingIcon={RiUser6Line}
+            placeholder='John Doe'
+            {...register('fullName')}
+          />
+        </FormField.Root>
+
+        <FormField.Root
+          name='email'
+          label='Email Address'
+          required
+          hint="We'll never share your email."
+        >
+          <Input.Composed
+            leadingIcon={RiMailLine}
+            type='email'
+            placeholder='hello@example.com'
+            {...register('email')}
+          />
+        </FormField.Root>
+
+        <Controller
+          control={control}
+          name='role'
+          render={({ field }) => (
+            <FormField.Root name='role' label='Role' required>
+              <Select.Root value={field.value} onValueChange={field.onChange}>
+                <Select.Trigger>
+                  <Select.Value placeholder='Select a role...' />
+                </Select.Trigger>
+                <Select.Content>
+                  <Select.Item value='developer'>Developer</Select.Item>
+                  <Select.Item value='designer'>Designer</Select.Item>
+                  <Select.Item value='manager'>Manager</Select.Item>
+                  <Select.Item value='other'>Other</Select.Item>
+                </Select.Content>
+              </Select.Root>
+            </FormField.Root>
+          )}
         />
-      </FormField.Root>
 
-      <FormField.Root
-        label='Email Address'
-        htmlFor='signup-email'
-        required
-        hint="We'll never share your email."
-        error={errors.email?.message}
-      >
-        <Input.Composed
-          id='signup-email'
-          leadingIcon={RiMailLine}
-          type='email'
-          placeholder='hello@example.com'
-          hasError={!!errors.email}
-          {...register('email')}
-        />
-      </FormField.Root>
+        <FormField.Root
+          name='password'
+          label='Password'
+          required
+          hint='Minimum 8 characters.'
+        >
+          <PasswordInput.Root {...register('password')} />
+        </FormField.Root>
 
-      <Controller
-        control={control}
-        name='role'
-        render={({ field }) => (
-          <FormField.Root
-            label='Role'
-            htmlFor='signup-role'
-            required
-            error={errors.role?.message}
-          >
-            <Select.Root
-              value={field.value}
-              onValueChange={field.onChange}
-              hasError={!!errors.role}
-            >
-              <Select.Trigger id='signup-role'>
-                <Select.Value placeholder='Select a role...' />
-              </Select.Trigger>
-              <Select.Content>
-                <Select.Item value='developer'>Developer</Select.Item>
-                <Select.Item value='designer'>Designer</Select.Item>
-                <Select.Item value='manager'>Manager</Select.Item>
-                <Select.Item value='other'>Other</Select.Item>
-              </Select.Content>
-            </Select.Root>
-          </FormField.Root>
-        )}
-      />
+        <FormField.Root
+          name='confirmPassword'
+          label='Confirm Password'
+          required
+        >
+          <PasswordInput.Root {...register('confirmPassword')} />
+        </FormField.Root>
 
-      <FormField.Root
-        label='Password'
-        htmlFor='signup-password'
-        required
-        hint='Minimum 8 characters.'
-        error={errors.password?.message}
-      >
-        <PasswordInput.Root
-          id='signup-password'
-          hasError={!!errors.password}
-          {...register('password')}
-        />
-      </FormField.Root>
+        <FormField.Root
+          name='bio'
+          label='Bio'
+          labelSub='Optional'
+          labelSubParens
+          hint='Tell us a bit about yourself.'
+        >
+          <Textarea.Root
+            simple
+            placeholder='A few words about you...'
+            {...register('bio')}
+          />
+        </FormField.Root>
 
-      <FormField.Root
-        label='Confirm Password'
-        htmlFor='signup-confirm'
-        required
-        error={errors.confirmPassword?.message}
-      >
-        <PasswordInput.Root
-          id='signup-confirm'
-          hasError={!!errors.confirmPassword}
-          {...register('confirmPassword')}
-        />
-      </FormField.Root>
-
-      <FormField.Root
-        label='Bio'
-        htmlFor='signup-bio'
-        labelSub='Optional'
-        labelSubParens
-        hint='Tell us a bit about yourself.'
-        error={errors.bio?.message}
-      >
-        <Textarea.Root
-          id='signup-bio'
-          simple
-          placeholder='A few words about you...'
-          hasError={!!errors.bio}
-          {...register('bio')}
-        />
-      </FormField.Root>
-
-      <Button.Root type='submit' disabled={isSubmitting}>
-        {isSubmitting ? 'Submitting...' : 'Create Account'}
-      </Button.Root>
-    </form>
+        <Button.Root type='submit' disabled={isSubmitting}>
+          {isSubmitting ? 'Submitting...' : 'Create Account'}
+        </Button.Root>
+      </form>
+    </FormProvider>
   );
 }
 

@@ -3,16 +3,21 @@
   "name": "form-field",
   "type": "registry:ui",
   "title": "Form Field",
-  "description": "A smart form field wrapper with built-in label, hint, and error support. Props-driven or compound mode. Uses namespace exports: FormField.Root, FormField.Label, FormField.Hint, FormField.Error.",
-  "version": "2.0.0",
+  "description": "A smart form field wrapper with built-in label, hint, error, and react-hook-form integration. Props-driven or compound mode. Uses namespace exports: FormField.Root, FormField.Label, FormField.Hint, FormField.Error.",
+  "version": "3.0.0",
   "migration": {
-    "guide": "v2 adds props-driven mode with label, hint, error, hasError, and disabled props on FormField.Root. New sub-components: FormField.Label, FormField.Hint, FormField.Error. Now requires label and hint as registryDependencies. Existing usage (children-only) is fully backward compatible."
+    "guide": "v3 adds automatic react-hook-form integration. Pass a `name` prop to auto-read errors from RHF's FormProvider context — no more manual `error={errors.x?.message}` or `hasError={!!errors.x}`. FormField.Root now auto-injects `hasError`, `disabled`, and `id` into direct children via cloneElement. Adds `react-hook-form` as a dependency. All v2 usage (manual error/hasError props) remains fully backward compatible."
   },
-  "dependencies": [],
-  "registryDependencies": ["happly-ui-utils", "label", "hint"],
+  "dependencies": ["react-hook-form"],
+  "registryDependencies": [
+    "happly-ui-utils",
+    "form-field-context",
+    "label",
+    "hint"
+  ],
   "docs": {
-    "lead": "A smart form field wrapper with built-in label, hint, and error support. Use props for common cases or compound sub-components for full control.",
-    "usage": "import * as FormField from \"@/components/ui/form-field\"\n\n<FormField.Root\n  label=\"Email Address\"\n  htmlFor=\"email\"\n  required\n  hint=\"This is a hint text.\"\n>\n  <Input.Composed id=\"email\" placeholder=\"hello@example.com\" />\n</FormField.Root>",
+    "lead": "A smart form field wrapper with built-in label, hint, error, and react-hook-form integration. Pass a `name` prop inside a FormProvider to auto-resolve errors — or use manual props for full control.",
+    "usage": "import * as FormField from \"@/components/ui/form-field\"\n\n// Automatic mode (with FormProvider)\n<FormField.Root name=\"email\" label=\"Email Address\" required hint=\"This is a hint text.\">\n  <Input.Composed placeholder=\"hello@example.com\" {...register('email')} />\n</FormField.Root>\n\n// Manual mode (without FormProvider)\n<FormField.Root label=\"Email Address\" error={error} hint=\"This is a hint text.\">\n  <Input.Composed placeholder=\"hello@example.com\" />\n</FormField.Root>",
     "examples": [
       {
         "title": "Demo",
@@ -23,13 +28,13 @@
       {
         "title": "With Error",
         "description": "Form field with error state. Error replaces hint and auto-sets hasError.",
-        "code": "<FormField.Root\n  label=\"Email Address\"\n  htmlFor=\"email\"\n  required\n  hint=\"This is a hint text.\"\n  error=\"Please enter a valid email address.\"\n>\n  <Input.Composed id=\"email\" leadingIcon={RiMailLine} hasError />\n</FormField.Root>",
+        "code": "<FormField.Root\n  label=\"Email Address\"\n  htmlFor=\"email\"\n  required\n  hint=\"This is a hint text.\"\n  error=\"Please enter a valid email address.\"\n>\n  <Input.Composed id=\"email\" leadingIcon={RiMailLine} />\n</FormField.Root>",
         "stories": ["WithError"]
       },
       {
         "title": "Disabled",
-        "description": "Disabled form field. Disabled state flows to label and hint.",
-        "code": "<FormField.Root\n  label=\"Email Address\"\n  htmlFor=\"email\"\n  required\n  hint=\"This is a hint text.\"\n  disabled\n>\n  <Input.Composed id=\"email\" leadingIcon={RiMailLine} disabled />\n</FormField.Root>",
+        "description": "Disabled form field. Disabled state auto-flows to children, label, and hint.",
+        "code": "<FormField.Root\n  label=\"Email Address\"\n  htmlFor=\"email\"\n  required\n  hint=\"This is a hint text.\"\n  disabled\n>\n  <Input.Composed id=\"email\" leadingIcon={RiMailLine} />\n</FormField.Root>",
         "stories": ["Disabled"]
       },
       {
@@ -40,16 +45,21 @@
       },
       {
         "title": "Form Validation",
-        "description": "Complete sign-up form with Zod validation via react-hook-form. Shows real-world usage with multiple input types, composed and compound inputs, and live error messages.",
-        "code": "const schema = z.object({\n  fullName: z.string().min(2, 'Name must be at least 2 characters.'),\n  email: z.string().email('Please enter a valid email address.'),\n  role: z.string().min(1, 'Please select a role.'),\n  password: z.string().min(8, 'Password must be at least 8 characters.'),\n  confirmPassword: z.string(),\n  bio: z.string().max(200).optional(),\n}).refine(d => d.password === d.confirmPassword, {\n  message: 'Passwords do not match.', path: ['confirmPassword'],\n});\n\nconst { register, handleSubmit, formState: { errors } } = useForm({\n  resolver: zodResolver(schema), mode: 'onTouched',\n});\n\n<FormField.Root\n  label=\"Email\" required\n  error={errors.email?.message}\n>\n  <Input.Composed hasError={!!errors.email} {...register('email')} />\n</FormField.Root>",
+        "description": "Complete sign-up form with automatic react-hook-form integration. Wrap with FormProvider and pass `name` — errors, hasError, disabled, and id are resolved automatically.",
+        "code": "const methods = useForm({ resolver: zodResolver(schema), mode: 'onTouched' });\n\n<FormProvider {...methods}>\n  <form onSubmit={methods.handleSubmit(onSubmit)}>\n    <FormField.Root name=\"email\" label=\"Email\" required>\n      <Input.Composed\n        leadingIcon={RiMailLine}\n        placeholder=\"hello@example.com\"\n        {...methods.register('email')}\n      />\n    </FormField.Root>\n  </form>\n</FormProvider>",
         "stories": ["FormValidation"]
       }
     ],
     "api": [
       {
         "name": "FormField.Root",
-        "description": "The root form field container. Provides context for hasError/disabled to sub-components.",
+        "description": "The root form field container. Auto-resolves errors from react-hook-form when `name` is provided inside a FormProvider. Auto-injects `hasError`, `disabled`, and `id` into direct children.",
         "props": [
+          {
+            "name": "name",
+            "type": "string",
+            "description": "Field name for react-hook-form integration. When inside a FormProvider, auto-reads errors from form state. Also used as the default `htmlFor`/`id`."
+          },
           {
             "name": "label",
             "type": "React.ReactNode",
@@ -58,7 +68,7 @@
           {
             "name": "htmlFor",
             "type": "string",
-            "description": "Links label to input via htmlFor/id. Also passed to sub-components via context."
+            "description": "Links label to input via htmlFor/id. Defaults to `name` when not provided."
           },
           {
             "name": "required",
@@ -84,19 +94,19 @@
           {
             "name": "error",
             "type": "React.ReactNode",
-            "description": "Error message. When truthy, replaces hint and sets hasError in context."
+            "description": "Error message. Overrides auto-resolved RHF error when provided."
           },
           {
             "name": "hasError",
             "type": "boolean",
             "default": "false",
-            "description": "Error state. Auto-set when error prop is truthy."
+            "description": "Error state. Auto-set when error is present (manual or RHF-resolved)."
           },
           {
             "name": "disabled",
             "type": "boolean",
             "default": "false",
-            "description": "Disabled state. Flows to label and hint via context."
+            "description": "Disabled state. Auto-injected into direct children, label, and hint."
           },
           {
             "name": "className",
@@ -145,7 +155,7 @@
       },
       {
         "name": "useFormField",
-        "description": "Hook to access FormField context (hasError, disabled, id) from custom child components.",
+        "description": "Hook to access FormField context (hasError, disabled, id, name) from custom child components.",
         "props": []
       }
     ]

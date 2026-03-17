@@ -4,6 +4,7 @@ import * as React from 'react';
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 
 import * as Radio from './radio';
+import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
 import { tv, type VariantProps } from '@/lib/tv';
 
@@ -102,7 +103,9 @@ const RadioCardRoot = React.forwardRef<
     },
     forwardedRef
   ) => {
-    const { root } = radioCardVariants({ hasError, variant });
+    const formField = useFormField();
+    const resolvedHasError = hasError ?? formField.hasError;
+    const { root } = radioCardVariants({ hasError: resolvedHasError, variant });
 
     const handleValueChange = React.useCallback(
       (newValue: string) => {
@@ -113,7 +116,13 @@ const RadioCardRoot = React.forwardRef<
 
     return (
       <RadioCardContext.Provider
-        value={{ hasError, variant, allowDeselect, onValueChange, value }}
+        value={{
+          hasError: resolvedHasError,
+          variant,
+          allowDeselect,
+          onValueChange,
+          value,
+        }}
       >
         <Radio.Group
           variant={variant === 'primary' ? 'primary' : 'neutral'}

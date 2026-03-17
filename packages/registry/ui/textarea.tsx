@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 
+import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
 
 const Textarea = React.forwardRef<
@@ -106,14 +107,22 @@ const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     { containerClassName, children, hasError, simple, ...rest },
     forwardedRef
   ) => {
+    const formField = useFormField();
+    const resolvedHasError = hasError ?? formField.hasError;
     if (simple) {
       return (
-        <Textarea ref={forwardedRef} simple hasError={hasError} {...rest} />
+        <Textarea
+          ref={forwardedRef}
+          simple
+          hasError={resolvedHasError}
+          {...rest}
+        />
       );
     }
 
     return (
       <div
+        aria-invalid={resolvedHasError || undefined}
         className={cn(
           [
             // base
@@ -125,13 +134,13 @@ const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             // disabled
             'has-[[disabled]]:bg-bg-weak-50 has-[[disabled]]:pointer-events-none has-[[disabled]]:ring-transparent',
           ],
-          !hasError && [
+          !resolvedHasError && [
             // hover
             'hover:[&:not(:focus-within)]:ring-transparent',
             // focus
             'focus-within:shadow-button-important-focus focus-within:ring-stroke-strong-950',
           ],
-          hasError && [
+          resolvedHasError && [
             // base
             'ring-error-base',
             // focus
@@ -142,7 +151,11 @@ const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       >
         <div className='grid'>
           <div className='pointer-events-none relative z-10 flex flex-col gap-2 [grid-area:1/1]'>
-            <Textarea ref={forwardedRef} hasError={hasError} {...rest} />
+            <Textarea
+              ref={forwardedRef}
+              hasError={resolvedHasError}
+              {...rest}
+            />
             <div className='pointer-events-none flex items-center justify-end gap-1.5 pr-2.5 pl-3'>
               {children}
               <ResizeHandle />

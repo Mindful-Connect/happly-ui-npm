@@ -5,7 +5,7 @@
   "title": "Phone Input",
   "description": "A phone input component with country selection and formatting.",
   "dependencies": ["react-international-phone", "libphonenumber-js"],
-  "registryDependencies": ["input", "select"],
+  "registryDependencies": ["form-field-context", "input", "select"],
   "docs": {
     "lead": "A phone input component with country selection and automatic formatting.",
     "usage": "import * as PhoneInput from \"@/components/ui/phone-input\"\n\n<PhoneInput.Root onValueChange={(e164) => console.log(e164)} />",

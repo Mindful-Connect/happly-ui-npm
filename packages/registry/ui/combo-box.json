@@ -13,7 +13,13 @@
     "@radix-ui/react-scroll-area",
     "react-remove-scroll"
   ],
-  "registryDependencies": ["popover", "input", "tag", "happly-ui-utils"],
+  "registryDependencies": [
+    "form-field-context",
+    "popover",
+    "input",
+    "tag",
+    "happly-ui-utils"
+  ],
   "docs": {
     "lead": "A searchable multi-select combo box with compound components. Use ComboBox.Composed for the simple flat-props API, or compose with Root, SearchTrigger, Content, Item, and Tags for full control over item rendering and tag display.",
     "usage": "import * as ComboBox from \"@/components/ui/combo-box\"\n\n// Simple usage\n<ComboBox.Composed\n  options={options}\n  value={selected}\n  onValueChange={setSelected}\n/>\n\n// Compound usage\n<ComboBox.Root options={options} value={selected} onValueChange={setSelected}>\n  <ComboBox.SearchTrigger />\n  <ComboBox.Content />\n  <ComboBox.Tags />\n</ComboBox.Root>",

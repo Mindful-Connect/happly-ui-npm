@@ -286,11 +286,7 @@ export const LoadingInteractive = {
         <LoadingButton variant='neutral' mode='stroke'>
           Learn More
         </LoadingButton>
-        <LoadingButton
-          variant='neutral'
-          mode='filled'
-          loadingText='Submitting'
-        >
+        <LoadingButton variant='neutral' mode='filled' loadingText='Submitting'>
           Submit for review
         </LoadingButton>
       </div>

@@ -8,6 +8,7 @@ import { RemoveScroll } from 'react-remove-scroll';
 import * as Input from '@/components/ui/input';
 import * as Popover from '@/components/ui/popover';
 import * as Tag from '@/components/ui/tag';
+import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
 
 // ─── Types ─────────────────────────────────────────────────
@@ -115,14 +116,17 @@ function ComboBoxRoot({
   name,
   max = Infinity,
   min = 0,
-  disabled = false,
-  hasError = false,
+  disabled: disabledProp = false,
+  hasError: hasErrorProp = false,
   size = 'medium',
   preview = false,
   onOpenChange: onOpenChangeProp,
   className,
   children,
 }: ComboBoxRootProps) {
+  const formField = useFormField();
+  const hasError = hasErrorProp || formField.hasError;
+  const disabled = disabledProp || formField.disabled;
   // Controlled / uncontrolled value
   const [internalValue, setInternalValue] = React.useState(defaultValue);
   const value = valueProp ?? internalValue;
