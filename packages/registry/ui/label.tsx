@@ -106,7 +106,9 @@ function LabelInfo({
             <LabelInfoIcon className={iconClassName} />
           </button>
         </Tooltip.Trigger>
-        <Tooltip.Content size='xsmall'>{children}</Tooltip.Content>
+        <Tooltip.Content size='xsmall' className='max-w-64 text-wrap'>
+          {children}
+        </Tooltip.Content>
       </Tooltip.Root>
     </Tooltip.Provider>
   );

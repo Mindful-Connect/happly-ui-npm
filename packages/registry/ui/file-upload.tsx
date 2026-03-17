@@ -596,6 +596,7 @@ const FileUploadRoot = React.forwardRef<
     return (
       <Component
         ref={forwardedRef}
+        {...rest}
         className={cn(
           'border-stroke-sub-300 bg-bg-white-0 flex w-full cursor-pointer flex-col items-center gap-5 rounded-xl border border-dashed p-8 text-center',
           'transition duration-200 ease-out',
@@ -607,7 +608,6 @@ const FileUploadRoot = React.forwardRef<
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        {...rest}
       />
     );
   }

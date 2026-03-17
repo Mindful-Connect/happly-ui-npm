@@ -228,7 +228,7 @@ function MarkdownEditorRoot({
     <MarkdownEditorContext.Provider value={contextValue}>
       <div
         className={cn(
-          'bg-bg-weak-50 flex w-full flex-col gap-2 rounded-2xl p-2',
+          '@container/mde bg-bg-weak-50 flex w-full flex-col gap-2 rounded-2xl p-2',
           disabled && 'pointer-events-none opacity-50',
           className
         )}
@@ -252,7 +252,7 @@ function Toolbar({ className, children, ...rest }: ToolbarProps) {
     <Tooltip.Provider delayDuration={300}>
       <div
         className={cn(
-          'flex items-center justify-between py-1 pr-2 pl-3',
+          'flex flex-wrap items-center justify-center gap-2 px-2 py-1 @[450px]/mde:justify-between',
           className
         )}
         role='toolbar'
@@ -331,10 +331,12 @@ type ToggleProps = Omit<
 
 function Toggle({ listClassName, ...props }: ToggleProps) {
   return (
-    <SwitchToggle.Group
-      listClassName={cn('bg-bg-soft-200', listClassName)}
-      {...props}
-    />
+    <div className='w-full @[450px]/mde:w-auto'>
+      <SwitchToggle.Group
+        listClassName={cn('bg-bg-soft-200', listClassName)}
+        {...props}
+      />
+    </div>
   );
 }
 Toggle.displayName = 'MarkdownEditorToggle';
@@ -360,6 +362,7 @@ const Content = React.forwardRef<HTMLTextAreaElement, ContentProps>(
       hasError: hasErrorProp,
       height = '200px',
       value = '',
+      onChange,
       ...rest
     },
     forwardedRef
@@ -370,6 +373,33 @@ const Content = React.forwardRef<HTMLTextAreaElement, ContentProps>(
       previewing,
     } = useMarkdownEditorContext();
     const hasError = hasErrorProp ?? contextHasError;
+
+    const internalRef = React.useRef<HTMLTextAreaElement | null>(null);
+    const lastValueRef = React.useRef(value);
+
+    // Sync external value → DOM only when it differs from what the
+    // textarea already contains (avoids cursor reset during typing).
+    React.useLayoutEffect(() => {
+      const el = internalRef.current;
+      if (el && el.value !== value) {
+        el.value = value;
+      }
+      lastValueRef.current = value;
+    }, [value]);
+
+    const mergedRef = React.useCallback(
+      (node: HTMLTextAreaElement | null) => {
+        internalRef.current = node;
+        if (typeof forwardedRef === 'function') {
+          forwardedRef(node);
+        } else if (forwardedRef) {
+          (
+            forwardedRef as React.MutableRefObject<HTMLTextAreaElement | null>
+          ).current = node;
+        }
+      },
+      [forwardedRef]
+    );
 
     if (previewing) {
       return (
@@ -390,13 +420,14 @@ const Content = React.forwardRef<HTMLTextAreaElement, ContentProps>(
 
     return (
       <Textarea.Root
-        ref={forwardedRef}
+        ref={mergedRef}
         simple
         hasError={hasError}
         disabled={disabled}
-        value={value}
+        defaultValue={value}
+        onChange={onChange}
         className={cn(
-          'hover:!bg-bg-white-0 hover:!ring-stroke-soft-200',
+          'thin-scrollbar hover:!bg-bg-white-0 hover:!ring-stroke-soft-200',
           className
         )}
         style={{ minHeight: height }}
@@ -591,19 +622,24 @@ function ComposedSingle({
 
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
+  const latestRef = React.useRef({ isControlled, onChange });
+  latestRef.current = { isControlled, onChange };
+
   const handleChange = React.useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const v = e.target.value;
-      if (!isControlled) setInternalValue(v);
-      onChange?.(v);
+      if (!latestRef.current.isControlled) setInternalValue(v);
+      latestRef.current.onChange?.(v);
     },
-    [isControlled, onChange]
+    []
   );
 
-  const format = useMarkdownFormatting(textareaRef, (v) => {
-    if (!isControlled) setInternalValue(v);
-    onChange?.(v);
-  });
+  const formatCallback = React.useCallback((v: string) => {
+    if (!latestRef.current.isControlled) setInternalValue(v);
+    latestRef.current.onChange?.(v);
+  }, []);
+
+  const format = useMarkdownFormatting(textareaRef, formatCallback);
 
   return (
     <MarkdownEditorRoot
@@ -699,15 +735,29 @@ function ComposedMulti({
 
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
-  const updateValue = React.useCallback(
-    (newText: string) => {
-      const next = { ...values, [activeLang]: newText };
-      if (!isControlled) setInternalValues(next);
-      onChange?.(next);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [activeLang, values, isControlled, onChange]
-  );
+  const latestRef = React.useRef({
+    values,
+    activeLang,
+    isControlled,
+    onChange,
+    controlledLang,
+    onToggleChange,
+  });
+  latestRef.current = {
+    values,
+    activeLang,
+    isControlled,
+    onChange,
+    controlledLang,
+    onToggleChange,
+  };
+
+  const updateValue = React.useCallback((newText: string) => {
+    const { values, activeLang, isControlled, onChange } = latestRef.current;
+    const next = { ...values, [activeLang]: newText };
+    if (!isControlled) setInternalValues(next);
+    onChange?.(next);
+  }, []);
 
   const handleChange = React.useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -718,10 +768,11 @@ function ComposedMulti({
 
   const handleLangChange = React.useCallback(
     (lang: string) => {
+      const { controlledLang, onToggleChange } = latestRef.current;
       if (!controlledLang) setInternalLang(lang);
       onToggleChange?.(lang);
     },
-    [controlledLang, onToggleChange]
+    []
   );
 
   const format = useMarkdownFormatting(textareaRef, updateValue);
