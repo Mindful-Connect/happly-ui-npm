@@ -372,7 +372,7 @@ const ComboBoxSearchTrigger = React.forwardRef<
         : undefined;
 
     const input = (
-      <div ref={anchorRef}>
+      <div ref={anchorRef as React.RefObject<HTMLDivElement>}>
         <Input.Root
           size={ctx.size}
           hasError={ctx.hasError}
