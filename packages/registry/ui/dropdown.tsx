@@ -26,7 +26,7 @@ const DropdownContent = React.forwardRef<
       ref={forwardedRef}
       sideOffset={sideOffset}
       className={cn(
-        'z-50 w-[300px] overflow-hidden rounded-2xl bg-bg-white-0 p-2 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200',
+        'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 z-50 w-[300px] overflow-hidden rounded-2xl p-2 ring-1 ring-inset',
         'flex flex-col gap-1',
         // origin
         'data-[side=bottom]:origin-top data-[side=left]:origin-right data-[side=right]:origin-left data-[side=top]:origin-bottom',
@@ -35,7 +35,7 @@ const DropdownContent = React.forwardRef<
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
         'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
         'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-        className,
+        className
       )}
       {...rest}
     />
@@ -53,7 +53,7 @@ const DropdownItem = React.forwardRef<
     ref={forwardedRef}
     className={cn(
       // base
-      'group/item relative cursor-pointer select-none rounded-lg p-2 text-paragraph-sm text-text-strong-950 outline-none',
+      'group/item text-paragraph-sm text-text-strong-950 relative cursor-pointer rounded-lg p-2 outline-none select-none',
       'flex items-center gap-2',
       'transition duration-200 ease-out',
       // hover
@@ -63,7 +63,7 @@ const DropdownItem = React.forwardRef<
       // disabled
       'data-[disabled]:text-text-disabled-300',
       inset && 'pl-9',
-      className,
+      className
     )}
     {...rest}
   />
@@ -81,10 +81,10 @@ function DropdownItemIcon<T extends React.ElementType>({
     <Component
       className={cn(
         // base
-        'w-5 h-5 text-text-sub-600',
+        'text-text-sub-600 h-5 w-5',
         // disabled
         'group-has-[[data-disabled]]:text-text-disabled-300',
-        className,
+        className
       )}
       {...rest}
     />
@@ -111,8 +111,8 @@ const DropdownLabel = React.forwardRef<
   <DropdownMenuPrimitive.Label
     ref={forwardedRef}
     className={cn(
-      'px-2 py-1 text-subheading-xs uppercase text-text-soft-400',
-      className,
+      'text-subheading-xs text-text-soft-400 px-2 py-1 uppercase',
+      className
     )}
     {...rest}
   />
@@ -129,7 +129,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
     ref={forwardedRef}
     className={cn(
       // base
-      'group/item relative cursor-pointer select-none rounded-lg p-2 text-paragraph-sm text-text-strong-950 outline-0',
+      'group/item text-paragraph-sm text-text-strong-950 relative cursor-pointer rounded-lg p-2 outline-0 select-none',
       'flex items-center gap-2',
       'transition duration-200 ease-out',
       // hover
@@ -137,7 +137,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
       // disabled
       'data-[disabled]:text-text-disabled-300',
       inset && 'pl-9',
-      className,
+      className
     )}
     {...rest}
   >
@@ -155,14 +155,14 @@ const DropdownMenuSubContent = React.forwardRef<
   <DropdownMenuPrimitive.SubContent
     ref={forwardedRef}
     className={cn(
-      'z-50 w-max overflow-hidden rounded-2xl bg-bg-white-0 p-2 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200',
+      'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 z-50 w-max overflow-hidden rounded-2xl p-2 ring-1 ring-inset',
       'flex flex-col gap-1',
       // animation
       'data-[state=open]:animate-in data-[state=open]:fade-in-0',
       'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
       'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
       'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-      className,
+      className
     )}
     {...rest}
   />

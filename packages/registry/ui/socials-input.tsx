@@ -292,17 +292,15 @@ export default function SocialsInput({
 
   // Keys already in formValue that map to a known social config
   const addedKeys = (Object.keys(formValue) as SocialKey[]).filter(
-    (key) => key in SOCIAL_CONFIGS,
+    (key) => key in SOCIAL_CONFIGS
   );
 
   // Socials not yet added — these are the ComboBox options
-  const remainingOptions = socials.filter(
-    (s) => !addedKeys.includes(s.key),
-  );
+  const remainingOptions = socials.filter((s) => !addedKeys.includes(s.key));
 
   // Saved socials (have a non-empty URL)
   const savedEntries = addedKeys.filter(
-    (key) => formValue[key] && SOCIAL_CONFIGS[key],
+    (key) => formValue[key] && SOCIAL_CONFIGS[key]
   );
 
   // ComboBox options — only platforms not yet added
@@ -353,7 +351,7 @@ export default function SocialsInput({
 
     if (key !== 'calendar') {
       const isValidDomain = config.domains.some((domain) =>
-        url.includes(domain),
+        url.includes(domain)
       );
       if (!isValidDomain) {
         setErrors((prev) => ({
@@ -399,9 +397,9 @@ export default function SocialsInput({
   }
 
   function handleComboBoxValueChange(values: string[]) {
-    const newKey = values.find(
-      (v) => !addedKeys.includes(v as SocialKey),
-    ) as SocialKey | undefined;
+    const newKey = values.find((v) => !addedKeys.includes(v as SocialKey)) as
+      | SocialKey
+      | undefined;
     if (newKey) {
       handleSelectSocial(newKey);
     }
@@ -512,9 +510,7 @@ export default function SocialsInput({
                 <Tag.Icon as={config.icon} />
                 <span>{displayName}</span>
                 {!readOnly && (
-                  <Tag.DismissButton
-                    onClick={() => handleRemoveSocial(key)}
-                  />
+                  <Tag.DismissButton onClick={() => handleRemoveSocial(key)} />
                 )}
               </Tag.Root>
             );
@@ -531,7 +527,8 @@ export default function SocialsInput({
               className='flex-1'
             >
               <Input.Affix>
-                <Input.Icon as={SOCIAL_CONFIGS[editingKey].icon} /></Input.Affix>
+                <Input.Icon as={SOCIAL_CONFIGS[editingKey].icon} />
+              </Input.Affix>
               <Input.Wrapper>
                 <Input.Input
                   autoFocus
@@ -546,9 +543,9 @@ export default function SocialsInput({
                   type='button'
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={handleConfirmEdit}
-                  className='shrink-0 text-text-sub-600 transition duration-200 ease-out hover:text-success-base'
+                  className='text-text-sub-600 hover:text-success-base shrink-0 transition duration-200 ease-out'
                 >
-                  <RiCheckLine className='w-5 h-5' />
+                  <RiCheckLine className='h-5 w-5' />
                 </button>
               </Input.Wrapper>
             </Input.Root>
@@ -559,16 +556,14 @@ export default function SocialsInput({
               size='medium'
               onMouseDown={(e) => e.preventDefault()}
               onClick={handleCancelEdit}
-              className='shrink-0 px-0 w-10'
+              className='w-10 shrink-0 px-0'
             >
               <Button.Icon as={RiCloseLine} />
             </Button.Root>
           </div>
 
           {errors[`${name}.${editingKey}`] && (
-            <Hint.Root hasError>
-              {errors[`${name}.${editingKey}`]}
-            </Hint.Root>
+            <Hint.Root hasError>{errors[`${name}.${editingKey}`]}</Hint.Root>
           )}
         </div>
       )}

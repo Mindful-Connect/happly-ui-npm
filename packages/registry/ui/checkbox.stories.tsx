@@ -104,7 +104,7 @@ function WithLabelExtendedRender() {
         <div className='flex items-center gap-2'>
           <Checkbox.Root id={`${uniqueId}-c1`} />
           <Label.Root
-            className='flex-1 gap-1 text-paragraph-sm'
+            className='text-paragraph-sm flex-1 gap-1'
             htmlFor={`${uniqueId}-c1`}
           >
             Label
@@ -118,7 +118,7 @@ function WithLabelExtendedRender() {
         <div className='flex items-center gap-2'>
           <Checkbox.Root id={`${uniqueId}-c2`} defaultChecked />
           <Label.Root
-            className='flex-1 gap-1 text-paragraph-sm'
+            className='text-paragraph-sm flex-1 gap-1'
             htmlFor={`${uniqueId}-c2`}
           >
             Label
@@ -145,15 +145,11 @@ function WithLabelExtendedRender() {
                   NEW
                 </Badge.Root>
               </div>
-              <div className='mt-1 text-paragraph-xs text-text-sub-600'>
+              <div className='text-paragraph-xs text-text-sub-600 mt-1'>
                 Insert the checkbox description here.
               </div>
             </LabelPrimitives.Root>
-            <LinkButton.Root
-              variant='primary'
-              size='small'
-              className='mt-2.5'
-            >
+            <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
               Link Button
             </LinkButton.Root>
           </div>
@@ -175,15 +171,11 @@ function WithLabelExtendedRender() {
                   NEW
                 </Badge.Root>
               </div>
-              <div className='mt-1 text-paragraph-xs text-text-sub-600'>
+              <div className='text-paragraph-xs text-text-sub-600 mt-1'>
                 Insert the checkbox description here.
               </div>
             </LabelPrimitives.Root>
-            <LinkButton.Root
-              variant='primary'
-              size='small'
-              className='mt-2.5'
-            >
+            <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
               Link Button
             </LinkButton.Root>
           </div>
@@ -193,7 +185,7 @@ function WithLabelExtendedRender() {
       <div className='flex flex-col gap-12'>
         <div className='flex items-center gap-2'>
           <Label.Root
-            className='flex-1 gap-1 text-paragraph-sm'
+            className='text-paragraph-sm flex-1 gap-1'
             htmlFor={`${uniqueId}-c5`}
           >
             Label
@@ -207,7 +199,7 @@ function WithLabelExtendedRender() {
 
         <div className='flex items-center gap-2'>
           <Label.Root
-            className='flex-1 gap-1 text-paragraph-sm'
+            className='text-paragraph-sm flex-1 gap-1'
             htmlFor={`${uniqueId}-c6`}
           >
             Label
@@ -234,15 +226,11 @@ function WithLabelExtendedRender() {
                   NEW
                 </Badge.Root>
               </div>
-              <div className='mt-1 text-paragraph-xs text-text-sub-600'>
+              <div className='text-paragraph-xs text-text-sub-600 mt-1'>
                 Insert the checkbox description here.
               </div>
             </LabelPrimitives.Root>
-            <LinkButton.Root
-              variant='primary'
-              size='small'
-              className='mt-2.5'
-            >
+            <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
               Link Button
             </LinkButton.Root>
           </div>
@@ -264,15 +252,11 @@ function WithLabelExtendedRender() {
                   NEW
                 </Badge.Root>
               </div>
-              <div className='mt-1 text-paragraph-xs text-text-sub-600'>
+              <div className='text-paragraph-xs text-text-sub-600 mt-1'>
                 Insert the checkbox description here.
               </div>
             </LabelPrimitives.Root>
-            <LinkButton.Root
-              variant='primary'
-              size='small'
-              className='mt-2.5'
-            >
+            <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
               Link Button
             </LinkButton.Root>
           </div>
@@ -291,11 +275,17 @@ function WithFormFieldRender() {
   const uniqueId = React.useId();
 
   return (
-    <FormField.Root label='Notifications' hint='Choose how you want to be notified.'>
+    <FormField.Root
+      label='Notifications'
+      hint='Choose how you want to be notified.'
+    >
       <div className='flex flex-col gap-3'>
         <div className='flex items-center gap-2'>
           <Checkbox.Root id={`${uniqueId}-email`} defaultChecked />
-          <Label.Root htmlFor={`${uniqueId}-email`} className='text-paragraph-sm'>
+          <Label.Root
+            htmlFor={`${uniqueId}-email`}
+            className='text-paragraph-sm'
+          >
             Email notifications
           </Label.Root>
         </div>
@@ -307,7 +297,10 @@ function WithFormFieldRender() {
         </div>
         <div className='flex items-center gap-2'>
           <Checkbox.Root id={`${uniqueId}-push`} />
-          <Label.Root htmlFor={`${uniqueId}-push`} className='text-paragraph-sm'>
+          <Label.Root
+            htmlFor={`${uniqueId}-push`}
+            className='text-paragraph-sm'
+          >
             Push notifications
           </Label.Root>
         </div>

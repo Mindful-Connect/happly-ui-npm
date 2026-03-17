@@ -13,15 +13,15 @@ export const Default = {
       <SwitchToggle.Root defaultValue='system'>
         <SwitchToggle.List>
           <SwitchToggle.Trigger value='light'>
-            <RiSunLine className='w-5 h-5 shrink-0' />
+            <RiSunLine className='h-5 w-5 shrink-0' />
             Light
           </SwitchToggle.Trigger>
           <SwitchToggle.Trigger value='dark'>
-            <RiMoonLine className='w-5 h-5 shrink-0' />
+            <RiMoonLine className='h-5 w-5 shrink-0' />
             Dark
           </SwitchToggle.Trigger>
           <SwitchToggle.Trigger value='system'>
-            <RiEqualizer3Fill className='w-5 h-5 shrink-0' />
+            <RiEqualizer3Fill className='h-5 w-5 shrink-0' />
             System
           </SwitchToggle.Trigger>
         </SwitchToggle.List>
@@ -38,13 +38,13 @@ export const Rounded = {
         floatingBgClassName='rounded-full'
       >
         <SwitchToggle.Trigger value='light' className='aspect-square h-9'>
-          <RiSunLine className='w-6 h-6' />
+          <RiSunLine className='h-6 w-6' />
         </SwitchToggle.Trigger>
         <SwitchToggle.Trigger value='dark' className='aspect-square h-9'>
-          <RiMoonLine className='w-6 h-6' />
+          <RiMoonLine className='h-6 w-6' />
         </SwitchToggle.Trigger>
         <SwitchToggle.Trigger value='system' className='aspect-square h-9'>
-          <RiEqualizer3Fill className='w-6 h-6' />
+          <RiEqualizer3Fill className='h-6 w-6' />
         </SwitchToggle.Trigger>
       </SwitchToggle.List>
     </SwitchToggle.Root>
@@ -68,10 +68,7 @@ const textOnlyItems: SwitchToggle.SwitchToggleGroupItem[] = [
 export const GroupDefault = {
   render: () => (
     <div className='w-full max-w-sm'>
-      <SwitchToggle.Group
-        defaultValue='system'
-        items={themeItems}
-      />
+      <SwitchToggle.Group defaultValue='system' items={themeItems} />
     </div>
   ),
 };
@@ -79,10 +76,7 @@ export const GroupDefault = {
 export const GroupTextOnly = {
   render: () => (
     <div className='w-full max-w-sm'>
-      <SwitchToggle.Group
-        defaultValue='weekly'
-        items={textOnlyItems}
-      />
+      <SwitchToggle.Group defaultValue='weekly' items={textOnlyItems} />
     </div>
   ),
 };

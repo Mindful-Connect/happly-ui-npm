@@ -16,13 +16,13 @@ const Textarea = React.forwardRef<
       className={cn(
         [
           // base
-          'block w-full resize-none border-none text-paragraph-sm text-text-strong-950 shadow-none outline-none ring-0',
+          'text-paragraph-sm text-text-strong-950 block w-full resize-none border-none shadow-none ring-0 outline-none',
           !simple && [
-            'pointer-events-auto h-full min-h-[82px] bg-transparent pl-3 pr-2.5 pt-2.5',
+            'pointer-events-auto h-full min-h-[82px] bg-transparent pt-2.5 pr-2.5 pl-3',
           ],
           simple && [
-            'min-h-28 rounded-xl bg-bg-white-0 px-3 py-2.5 shadow-regular-xs',
-            'ring-1 ring-inset ring-stroke-soft-200',
+            'bg-bg-white-0 shadow-regular-xs min-h-28 rounded-xl px-3 py-2.5',
+            'ring-stroke-soft-200 ring-1 ring-inset',
             'transition duration-200 ease-out',
             // hover
             'hover:[&:not(:focus)]:bg-bg-weak-50',
@@ -42,7 +42,7 @@ const Textarea = React.forwardRef<
           ],
           !disabled && [
             // placeholder
-            'placeholder:select-none placeholder:text-text-soft-400 placeholder:transition placeholder:duration-200 placeholder:ease-out',
+            'placeholder:text-text-soft-400 placeholder:transition placeholder:duration-200 placeholder:ease-out placeholder:select-none',
             // hover placeholder
             'group-hover/textarea:placeholder:text-text-sub-600',
             // focus
@@ -55,7 +55,7 @@ const Textarea = React.forwardRef<
             'text-text-disabled-300 placeholder:text-text-disabled-300',
           ],
         ],
-        className,
+        className
       )}
       ref={forwardedRef}
       disabled={disabled}
@@ -67,7 +67,7 @@ Textarea.displayName = 'Textarea';
 
 function ResizeHandle() {
   return (
-    <div className='pointer-events-none w-3 h-3 cursor-s-resize'>
+    <div className='pointer-events-none h-3 w-3 cursor-s-resize'>
       <svg
         width='12'
         height='12'
@@ -104,7 +104,7 @@ type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> &
 const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
     { containerClassName, children, hasError, simple, ...rest },
-    forwardedRef,
+    forwardedRef
   ) => {
     if (simple) {
       return (
@@ -117,13 +117,13 @@ const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         className={cn(
           [
             // base
-            'group/textarea relative flex w-full flex-col rounded-xl bg-bg-white-0 pb-2.5 shadow-regular-xs',
-            'ring-1 ring-inset ring-stroke-soft-200',
+            'group/textarea bg-bg-white-0 shadow-regular-xs relative flex w-full flex-col rounded-xl pb-2.5',
+            'ring-stroke-soft-200 ring-1 ring-inset',
             'transition duration-200 ease-out',
             // hover
             'hover:[&:not(:focus-within)]:bg-bg-weak-50',
             // disabled
-            'has-[[disabled]]:pointer-events-none has-[[disabled]]:bg-bg-weak-50 has-[[disabled]]:ring-transparent',
+            'has-[[disabled]]:bg-bg-weak-50 has-[[disabled]]:pointer-events-none has-[[disabled]]:ring-transparent',
           ],
           !hasError && [
             // hover
@@ -137,13 +137,13 @@ const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             // focus
             'focus-within:shadow-button-error-focus focus-within:ring-error-base',
           ],
-          containerClassName,
+          containerClassName
         )}
       >
         <div className='grid'>
           <div className='pointer-events-none relative z-10 flex flex-col gap-2 [grid-area:1/1]'>
             <Textarea ref={forwardedRef} hasError={hasError} {...rest} />
-            <div className='pointer-events-none flex items-center justify-end gap-1.5 pl-3 pr-2.5'>
+            <div className='pointer-events-none flex items-center justify-end gap-1.5 pr-2.5 pl-3'>
               {children}
               <ResizeHandle />
             </div>
@@ -152,7 +152,7 @@ const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         </div>
       </div>
     );
-  },
+  }
 );
 TextareaRoot.displayName = 'TextareaRoot';
 
@@ -177,7 +177,7 @@ function CharCounter({
         {
           'text-error-base': isError,
         },
-        className,
+        className
       )}
     >
       {current}/{max}

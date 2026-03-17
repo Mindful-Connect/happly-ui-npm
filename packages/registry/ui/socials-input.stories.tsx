@@ -5,12 +5,17 @@ import * as FormField from './form-field';
 import SocialsInput from './socials-input';
 import type { SocialKey } from './socials-input';
 
-export default { title: 'Form/Composed Inputs/Socials Input', component: SocialsInput };
+export default {
+  title: 'Form/Composed Inputs/Socials Input',
+  component: SocialsInput,
+};
 
 export const Default = {
   render: () => {
     function SocialsInputDemo() {
-      const [values, setValues] = useState<Partial<Record<SocialKey, string>>>({});
+      const [values, setValues] = useState<Partial<Record<SocialKey, string>>>(
+        {}
+      );
       return (
         <div className='w-[480px]'>
           <SocialsInput
@@ -50,7 +55,9 @@ export const WithExistingValues = {
 export const AllSocials = {
   render: () => {
     function SocialsInputAll() {
-      const [values, setValues] = useState<Partial<Record<SocialKey, string>>>({});
+      const [values, setValues] = useState<Partial<Record<SocialKey, string>>>(
+        {}
+      );
       return (
         <div className='w-[480px]'>
           <SocialsInput
@@ -69,7 +76,9 @@ export const AllSocials = {
 export const CustomSocials = {
   render: () => {
     function SocialsInputCustom() {
-      const [values, setValues] = useState<Partial<Record<SocialKey, string>>>({});
+      const [values, setValues] = useState<Partial<Record<SocialKey, string>>>(
+        {}
+      );
       const socials: SocialKey[] = ['instagram', 'x-twitter', 'tiktok'];
       return (
         <div className='w-[480px]'>
@@ -105,7 +114,9 @@ export const ReadOnly = {
 };
 
 function WithFormFieldRender() {
-  const [formValue, setFormValue] = useState<Partial<Record<SocialKey, string>>>({});
+  const [formValue, setFormValue] = useState<
+    Partial<Record<SocialKey, string>>
+  >({});
   return (
     <div className='w-[400px]'>
       <FormField.Root
@@ -115,7 +126,11 @@ function WithFormFieldRender() {
         labelInfo='Add your social media profiles.'
         hint='Add at least one social media profile.'
       >
-        <SocialsInput name='socials' formValue={formValue} setFormValue={setFormValue} />
+        <SocialsInput
+          name='socials'
+          formValue={formValue}
+          setFormValue={setFormValue}
+        />
       </FormField.Root>
     </div>
   );
@@ -126,7 +141,9 @@ export const WithFormField = {
 };
 
 function ErrorStateRender() {
-  const [formValue, setFormValue] = useState<Partial<Record<SocialKey, string>>>({});
+  const [formValue, setFormValue] = useState<
+    Partial<Record<SocialKey, string>>
+  >({});
   return (
     <div className='w-[400px]'>
       <FormField.Root
@@ -134,7 +151,11 @@ function ErrorStateRender() {
         required
         error='Please add at least one social media profile.'
       >
-        <SocialsInput name='socials-error' formValue={formValue} setFormValue={setFormValue} />
+        <SocialsInput
+          name='socials-error'
+          formValue={formValue}
+          setFormValue={setFormValue}
+        />
       </FormField.Root>
     </div>
   );
@@ -147,7 +168,9 @@ export const ErrorState = {
 export const CustomLabels = {
   render: () => {
     function SocialsInputLabels() {
-      const [values, setValues] = useState<Partial<Record<SocialKey, string>>>({});
+      const [values, setValues] = useState<Partial<Record<SocialKey, string>>>(
+        {}
+      );
       return (
         <div className='w-[480px]'>
           <SocialsInput

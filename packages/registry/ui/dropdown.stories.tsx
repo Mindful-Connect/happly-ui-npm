@@ -77,7 +77,7 @@ export const Demo = {
           <Avatar.Root size='40' />
           <div className='flex-1'>
             <div className='text-label-sm text-text-strong-950'>Wei Chen</div>
-            <div className='mt-1 text-paragraph-xs text-text-sub-600'>
+            <div className='text-paragraph-xs text-text-sub-600 mt-1'>
               wei@alignui.com
             </div>
           </div>
@@ -111,7 +111,7 @@ export const Demo = {
             Logout
           </Dropdown.Item>
         </Dropdown.Group>
-        <div className='p-2 text-paragraph-sm text-text-soft-400'>
+        <div className='text-paragraph-sm text-text-soft-400 p-2'>
           v.1.5.69 · Terms & Conditions
         </div>
       </Dropdown.Content>

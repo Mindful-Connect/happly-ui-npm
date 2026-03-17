@@ -1,7 +1,10 @@
 import * as CompactButton from './compact-button';
 import { RiAddLine } from '@remixicon/react';
 
-export default { title: 'Actions/Compact Button', component: CompactButton.Root };
+export default {
+  title: 'Actions/Compact Button',
+  component: CompactButton.Root,
+};
 
 export const Playground = {
   args: {
@@ -11,7 +14,10 @@ export const Playground = {
     disabled: false,
   },
   argTypes: {
-    variant: { control: 'select', options: ['stroke', 'ghost', 'white', 'modifiable'] },
+    variant: {
+      control: 'select',
+      options: ['stroke', 'ghost', 'white', 'modifiable'],
+    },
     size: { control: 'select', options: ['large', 'medium'] },
     fullRadius: { control: 'boolean' },
     disabled: { control: 'boolean' },

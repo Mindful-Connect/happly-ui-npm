@@ -148,7 +148,7 @@ function TabMenuHorizontalRoot({
     children as React.ReactElement[],
     sharedProps,
     [TAB_MENU_ITEM_NAME],
-    uniqueId,
+    uniqueId
   );
 
   const maskImage = buildMaskImage(canScrollLeft, canScrollRight);
@@ -174,7 +174,10 @@ TabMenuHorizontalRoot.displayName = TAB_MENU_ROOT_NAME;
 
 type TabMenuHorizontalItemProps = TabMenuHorizontalSharedProps &
   VariantProps<typeof tabMenuHorizontalVariants> &
-  Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onDrag' | 'onDragStart' | 'onDragEnd' | 'onAnimationStart'>;
+  Omit<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    'onDrag' | 'onDragStart' | 'onDragEnd' | 'onAnimationStart'
+  >;
 
 const TabMenuHorizontalItem = React.forwardRef<
   HTMLButtonElement,
@@ -189,7 +192,7 @@ const TabMenuHorizontalItem = React.forwardRef<
     children as React.ReactElement[],
     sharedProps,
     [TAB_MENU_ICON_NAME, TAB_MENU_COUNTER_NAME],
-    uniqueId,
+    uniqueId
   );
 
   return (
@@ -243,9 +246,9 @@ function TabMenuHorizontalCounter({
 
   return (
     <Badge.Root
-      variant="filled"
-      color="red"
-      size="small"
+      variant='filled'
+      color='red'
+      size='small'
       square
       className={counter({ class: className })}
       {...rest}

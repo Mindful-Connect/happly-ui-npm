@@ -350,6 +350,10 @@
           }
         ],
         "collapsed": false
+      },
+      {
+        "title": "Loader",
+        "href": "/docs/components/loader"
       }
     ]
   },

@@ -1,14 +1,20 @@
 import * as AvatarGroup from './avatar-group';
 import * as Avatar from './avatar';
 
-export default { title: 'Displaying Data/Avatar Group', component: AvatarGroup.Root };
+export default {
+  title: 'Displaying Data/Avatar Group',
+  component: AvatarGroup.Root,
+};
 
 export const Playground = {
   args: {
     size: '80',
   },
   argTypes: {
-    size: { control: 'select', options: ['80', '72', '64', '56', '48', '40', '32', '24', '20'] },
+    size: {
+      control: 'select',
+      options: ['80', '72', '64', '56', '48', '40', '32', '24', '20'],
+    },
   },
   render: (args: any) => (
     <AvatarGroup.Root {...args}>

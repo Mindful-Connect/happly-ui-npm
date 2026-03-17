@@ -5,14 +5,8 @@
   "title": "Link Button",
   "description": "A text-style button component with underline decoration, multiple variants, and polymorphic icon support. Uses namespace exports: LinkButton.Root, LinkButton.Icon.",
   "version": "1.0.0",
-  "dependencies": [
-    "@radix-ui/react-slot"
-  ],
-  "registryDependencies": [
-    "tv",
-    "polymorphic",
-    "recursive-clone-children"
-  ],
+  "dependencies": ["@radix-ui/react-slot"],
+  "registryDependencies": ["tv", "polymorphic", "recursive-clone-children"],
   "docs": {
     "lead": "A text-style button component with underline decoration, multiple variants, and polymorphic icon support.",
     "usage": "import * as LinkButton from \"@/components/ui/link-button\"\n\n<LinkButton.Root variant=\"gray\">\n  Link Button\n</LinkButton.Root>",

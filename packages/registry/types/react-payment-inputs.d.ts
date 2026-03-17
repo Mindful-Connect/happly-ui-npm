@@ -1,7 +1,11 @@
 declare module 'react-payment-inputs' {
   export function usePaymentInputs(): {
-    getCardNumberProps: (props?: Record<string, unknown>) => Record<string, unknown>;
-    getExpiryDateProps: (props?: Record<string, unknown>) => Record<string, unknown>;
+    getCardNumberProps: (
+      props?: Record<string, unknown>
+    ) => Record<string, unknown>;
+    getExpiryDateProps: (
+      props?: Record<string, unknown>
+    ) => Record<string, unknown>;
     getCVCProps: (props?: Record<string, unknown>) => Record<string, unknown>;
     meta: {
       cardType?: {

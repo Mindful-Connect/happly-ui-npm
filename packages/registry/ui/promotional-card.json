@@ -5,14 +5,8 @@
   "title": "Promotional Card",
   "description": "A compact card for promotional content with icon, decorative background, title, description, and optional link. Uses namespace exports: PromotionalCard.Root, PromotionalCard.Icon, PromotionalCard.Decoration, PromotionalCard.Content, PromotionalCard.Title, PromotionalCard.Description, PromotionalCard.Link, PromotionalCard.Composed.",
   "version": "1.0.0",
-  "dependencies": [
-    "@radix-ui/react-slot"
-  ],
-  "registryDependencies": [
-    "tv",
-    "polymorphic",
-    "recursive-clone-children"
-  ],
+  "dependencies": ["@radix-ui/react-slot"],
+  "registryDependencies": ["tv", "polymorphic", "recursive-clone-children"],
   "docs": {
     "lead": "A compact card for promotional content with an icon, decorative background element, title, description, and optional link. Supports stroke and filled variants.",
     "usage": "import * as PromotionalCard from \"@/components/ui/promotional-card\"\n\n<PromotionalCard.Root>\n  <PromotionalCard.Icon as={RiFilter3Line} />\n  <PromotionalCard.Decoration as={RiFilter3Line} />\n  <PromotionalCard.Content>\n    <PromotionalCard.Title>Let me filter</PromotionalCard.Title>\n    <PromotionalCard.Description>Apply filter based on what you exactly need</PromotionalCard.Description>\n  </PromotionalCard.Content>\n</PromotionalCard.Root>",

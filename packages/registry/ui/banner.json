@@ -5,14 +5,8 @@
   "title": "Banner",
   "description": "A full-width banner component for alerts and announcements with multiple variants, statuses, and polymorphic icon support. Uses namespace exports: Banner.Root, Banner.Content, Banner.Icon, Banner.CloseButton.",
   "version": "1.0.0",
-  "dependencies": [
-    "@radix-ui/react-slot"
-  ],
-  "registryDependencies": [
-    "tv",
-    "polymorphic",
-    "recursive-clone-children"
-  ],
+  "dependencies": ["@radix-ui/react-slot"],
+  "registryDependencies": ["tv", "polymorphic", "recursive-clone-children"],
   "docs": {
     "lead": "A full-width banner component for alerts and announcements with multiple variants, statuses, and polymorphic icon support.",
     "usage": "import * as Banner from \"@/components/ui/banner\"\n\n<Banner.Root variant=\"filled\" status=\"error\">\n  <Banner.Content>\n    <Banner.Icon as={RiErrorWarningFill} />\n    <span>Alert title</span>\n  </Banner.Content>\n  <Banner.CloseButton>\n    <RiCloseLine className=\"w-5 h-5\" />\n  </Banner.CloseButton>\n</Banner.Root>",

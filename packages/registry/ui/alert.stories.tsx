@@ -18,8 +18,14 @@ export const Playground = {
     size: 'small',
   },
   argTypes: {
-    variant: { control: 'select', options: ['filled', 'light', 'lighter', 'stroke'] },
-    status: { control: 'select', options: ['error', 'warning', 'success', 'information', 'feature'] },
+    variant: {
+      control: 'select',
+      options: ['filled', 'light', 'lighter', 'stroke'],
+    },
+    status: {
+      control: 'select',
+      options: ['error', 'warning', 'success', 'information', 'feature'],
+    },
     size: { control: 'select', options: ['xsmall', 'small', 'large'] },
   },
   render: (args: any) => (

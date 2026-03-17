@@ -67,7 +67,9 @@ type UppyBody = Record<string, unknown>;
 
 // ─── Hook ───────────────────────────────────────────────────────────────────
 
-export function useFileUpload(options: UseFileUploadOptions): UseFileUploadReturn {
+export function useFileUpload(
+  options: UseFileUploadOptions
+): UseFileUploadReturn {
   const {
     endpoint,
     baseUrl = '',
@@ -110,7 +112,15 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
       onUploadError,
       onFileRemove,
     };
-  }, [headers, providerId, assetType, acl, onUploadSuccess, onUploadError, onFileRemove]);
+  }, [
+    headers,
+    providerId,
+    assetType,
+    acl,
+    onUploadSuccess,
+    onUploadError,
+    onFileRemove,
+  ]);
 
   // Create Uppy instance
   const [uppy] = React.useState(() => {
@@ -124,10 +134,17 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
     });
 
     uppyInstance.use(XHRUpload, {
-      endpoint: async (file: UppyFile<UppyMeta, UppyBody> | UppyFile<UppyMeta, UppyBody>[]) => {
+      endpoint: async (
+        file: UppyFile<UppyMeta, UppyBody> | UppyFile<UppyMeta, UppyBody>[]
+      ) => {
         if (Array.isArray(file)) throw new Error('Bundling not supported');
 
-        const { headers: getHeaders, providerId: pid, assetType: at, acl: a } = latestPropsRef.current;
+        const {
+          headers: getHeaders,
+          providerId: pid,
+          assetType: at,
+          acl: a,
+        } = latestPropsRef.current;
         const authHeaders = getHeaders?.() ?? {};
 
         const preSignedResponse = await fetch(`${baseUrl}${endpoint}`, {
@@ -203,7 +220,7 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
 
     const onUploadProgress = (
       file: UppyFile<UppyMeta, UppyBody> | undefined,
-      progress: { bytesTotal: number | null; bytesUploaded: number },
+      progress: { bytesTotal: number | null; bytesUploaded: number }
     ) => {
       if (!file) return;
       const pct = progress.bytesTotal
@@ -211,12 +228,12 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
         : 0;
 
       setFiles((prev) =>
-        prev.map((f) => (f.id === file.id ? { ...f, progress: pct } : f)),
+        prev.map((f) => (f.id === file.id ? { ...f, progress: pct } : f))
       );
     };
 
     const onUploadSuccess = (
-      file: UppyFile<UppyMeta, UppyBody> | undefined,
+      file: UppyFile<UppyMeta, UppyBody> | undefined
     ) => {
       if (!file) return;
 
@@ -232,13 +249,13 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
           };
           latestPropsRef.current.onUploadSuccess?.(updated);
           return updated;
-        }),
+        })
       );
     };
 
     const onUploadError = (
       file: UppyFile<UppyMeta, UppyBody> | undefined,
-      error: { name: string; message: string; details?: string },
+      error: { name: string; message: string; details?: string }
     ) => {
       if (!file) return;
 
@@ -250,23 +267,30 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
             status: 'failed',
             error: error?.message ?? 'Upload failed',
           };
-          latestPropsRef.current.onUploadError?.(updated, new Error(error.message));
+          latestPropsRef.current.onUploadError?.(
+            updated,
+            new Error(error.message)
+          );
           return updated;
-        }),
+        })
       );
     };
 
     const onRestrictionFailed = (
       file: UppyFile<UppyMeta, UppyBody> | undefined,
-      error: Error,
+      error: Error
     ) => {
       if (!file) return;
 
       setFiles((prev) =>
         prev.map((f) => {
           if (f.id !== file.id) return f;
-          return { ...f, status: 'failed' as const, error: error?.message ?? 'File not allowed' };
-        }),
+          return {
+            ...f,
+            status: 'failed' as const,
+            error: error?.message ?? 'File not allowed',
+          };
+        })
       );
     };
 
@@ -301,6 +325,18 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
 
   const addFiles = React.useCallback(
     (newFiles: File[]) => {
+      // When maxFiles is 1, clear existing files so the new one can replace it
+      const currentFiles = uppy.getFiles();
+      if (maxFiles === 1 && currentFiles.length > 0) {
+        currentFiles.forEach((f) => {
+          const existing = files.find((ef) => ef.id === f.id);
+          if (existing?.preview) URL.revokeObjectURL(existing.preview);
+          uppy.removeFile(f.id);
+        });
+        rawFilesRef.current.clear();
+        setFiles([]);
+      }
+
       newFiles.forEach((file) => {
         try {
           const added = uppy.addFile({
@@ -321,7 +357,7 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
         inputRef.current.value = '';
       }
     },
-    [uppy],
+    [uppy, maxFiles, files]
   );
 
   const removeFile = React.useCallback(
@@ -340,7 +376,7 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
 
       if (file) latestPropsRef.current.onFileRemove?.(file);
     },
-    [files, uppy],
+    [files, uppy]
   );
 
   const retryFile = React.useCallback(
@@ -371,7 +407,7 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
         console.error('useFileUpload: retry error', err);
       }
     },
-    [uppy],
+    [uppy]
   );
 
   const clearFiles = React.useCallback(() => {
@@ -401,7 +437,7 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
         }
       },
     }),
-    [maxFiles, allowedFileTypes, addFiles],
+    [maxFiles, allowedFileTypes, addFiles]
   );
 
   const getRootProps = React.useCallback(
@@ -432,7 +468,7 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
         }
       },
     }),
-    [addFiles],
+    [addFiles]
   );
 
   const isUploading = files.some((f) => f.status === 'uploading');
@@ -451,4 +487,9 @@ export function useFileUpload(options: UseFileUploadOptions): UseFileUploadRetur
   };
 }
 
-export type { UploadFile, UploadFileStatus, UseFileUploadOptions, UseFileUploadReturn };
+export type {
+  UploadFile,
+  UploadFileStatus,
+  UseFileUploadOptions,
+  UseFileUploadReturn,
+};

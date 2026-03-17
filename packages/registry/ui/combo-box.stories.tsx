@@ -105,11 +105,7 @@ export const Default = {
 };
 
 function WithPreselectedValuesRender() {
-  const [value, setValue] = React.useState<string[]>([
-    'ai',
-    'product',
-    'saas',
-  ]);
+  const [value, setValue] = React.useState<string[]>(['ai', 'product', 'saas']);
 
   return (
     <div className='w-[300px]'>
@@ -152,7 +148,7 @@ function FormSubmissionRender() {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         alert(
-          `Form submitted with tags: ${formData.getAll('tags').join(', ')}`,
+          `Form submitted with tags: ${formData.getAll('tags').join(', ')}`
         );
       }}
     >
@@ -253,7 +249,11 @@ function SelectionConstraintsRender() {
         </FormField.Root>
       </div>
       <div className='w-[300px]'>
-        <FormField.Root label='Min 1, Max 3' labelSub='1–3 required' labelSubParens>
+        <FormField.Root
+          label='Min 1, Max 3'
+          labelSub='1–3 required'
+          labelSubParens
+        >
           <ComboBox.Composed
             options={SECTOR_OPTIONS}
             value={rangeVal}
@@ -275,7 +275,7 @@ function TagVariantsRender() {
   const [gray, setGray] = React.useState<string[]>(['ai', 'saas']);
   const [stroke, setStroke] = React.useState<string[]>(['ai', 'saas']);
   const [all, setAll] = React.useState<string[]>(
-    TAG_OPTIONS.map((o) => o.value),
+    TAG_OPTIONS.map((o) => o.value)
   );
 
   return (
@@ -416,10 +416,26 @@ const ICON_OPTIONS = [
 ];
 
 const FLAG_OPTIONS = [
-  { value: 'us', label: 'United States', icon: 'https://mindful-connect.github.io/circle-flags/flags/us.svg' },
-  { value: 'de', label: 'Germany', icon: 'https://mindful-connect.github.io/circle-flags/flags/de.svg' },
-  { value: 'fr', label: 'France', icon: 'https://mindful-connect.github.io/circle-flags/flags/fr.svg' },
-  { value: 'tr', label: 'Turkey', icon: 'https://mindful-connect.github.io/circle-flags/flags/tr.svg' },
+  {
+    value: 'us',
+    label: 'United States',
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/us.svg',
+  },
+  {
+    value: 'de',
+    label: 'Germany',
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/de.svg',
+  },
+  {
+    value: 'fr',
+    label: 'France',
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/fr.svg',
+  },
+  {
+    value: 'tr',
+    label: 'Turkey',
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/tr.svg',
+  },
 ];
 
 function WithIconsRender() {
@@ -507,7 +523,7 @@ function CompoundCustomItemsItems() {
             />
             {option.icon && (
               <div
-                className='w-6 h-6 shrink-0 rounded-full bg-cover bg-center bg-no-repeat'
+                className='h-6 w-6 shrink-0 rounded-full bg-cover bg-center bg-no-repeat'
                 style={{ backgroundImage: `url(${option.icon})` }}
               />
             )}
@@ -573,10 +589,7 @@ function CompoundCustomTagsTags() {
 }
 
 function CompoundCustomTagsRender() {
-  const [value, setValue] = React.useState<string[]>([
-    'alice',
-    'bob',
-  ]);
+  const [value, setValue] = React.useState<string[]>(['alice', 'bob']);
 
   return (
     <div className='w-[320px]'>

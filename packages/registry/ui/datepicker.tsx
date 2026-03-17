@@ -36,7 +36,7 @@ const gridCellClass = cn(
   'flex items-center justify-center rounded-lg text-label-sm text-text-sub-600 outline-none',
   'transition duration-200 ease-out cursor-pointer select-none',
   'hover:bg-bg-weak-50 hover:text-text-strong-950',
-  'focus:outline-none focus-visible:bg-bg-weak-50 focus-visible:text-text-strong-950',
+  'focus:outline-none focus-visible:bg-bg-weak-50 focus-visible:text-text-strong-950'
 );
 
 const gridCellActiveClass =
@@ -61,17 +61,17 @@ function MonthGrid({
 }) {
   return (
     <div className='w-[368px] space-y-2 p-5'>
-      <div className='relative flex h-9 items-center justify-center rounded-lg bg-bg-weak-50'>
+      <div className='bg-bg-weak-50 relative flex h-9 items-center justify-center rounded-lg'>
         <button
           type='button'
           className={cn(navButtonClass, 'top-1/2 left-1.5 -translate-y-1/2')}
           onClick={onPrevYear}
         >
-          <RiArrowLeftSLine className='w-5 h-5' />
+          <RiArrowLeftSLine className='h-5 w-5' />
         </button>
         <button
           type='button'
-          className='text-label-sm text-text-sub-600 cursor-pointer select-none transition-colors hover:text-text-strong-950'
+          className='text-label-sm text-text-sub-600 hover:text-text-strong-950 cursor-pointer transition-colors select-none'
           onClick={onClickCaption}
         >
           {displayYear}
@@ -81,7 +81,7 @@ function MonthGrid({
           className={cn(navButtonClass, 'top-1/2 right-1.5 -translate-y-1/2')}
           onClick={onNextYear}
         >
-          <RiArrowRightSLine className='w-5 h-5' />
+          <RiArrowRightSLine className='h-5 w-5' />
         </button>
       </div>
       <div className='grid grid-cols-4 gap-2'>
@@ -94,7 +94,7 @@ function MonthGrid({
               'h-10',
               i === currentMonth &&
                 displayYear === currentYear &&
-                gridCellActiveClass,
+                gridCellActiveClass
             )}
             onClick={() => onSelectMonth(i)}
           >
@@ -124,13 +124,13 @@ function YearGrid({
 
   return (
     <div className='w-[368px] space-y-2 p-5'>
-      <div className='relative flex h-9 items-center justify-center rounded-lg bg-bg-weak-50'>
+      <div className='bg-bg-weak-50 relative flex h-9 items-center justify-center rounded-lg'>
         <button
           type='button'
           className={cn(navButtonClass, 'top-1/2 left-1.5 -translate-y-1/2')}
           onClick={onPrevChunk}
         >
-          <RiArrowLeftSLine className='w-5 h-5' />
+          <RiArrowLeftSLine className='h-5 w-5' />
         </button>
         <span className='text-label-sm text-text-sub-600 select-none'>
           {startYear} – {endYear}
@@ -140,7 +140,7 @@ function YearGrid({
           className={cn(navButtonClass, 'top-1/2 right-1.5 -translate-y-1/2')}
           onClick={onNextChunk}
         >
-          <RiArrowRightSLine className='w-5 h-5' />
+          <RiArrowRightSLine className='h-5 w-5' />
         </button>
       </div>
       <div className='grid grid-cols-4 gap-2'>
@@ -151,7 +151,7 @@ function YearGrid({
             className={cn(
               gridCellClass,
               'h-10',
-              year === currentYear && gridCellActiveClass,
+              year === currentYear && gridCellActiveClass
             )}
             onClick={() => onSelectYear(year)}
           >
@@ -173,7 +173,7 @@ function Calendar({
 }: CalendarProps) {
   const [view, setView] = React.useState<CalendarView>('days');
   const [internalMonth, setInternalMonth] = React.useState(
-    () => defaultMonth ?? new Date(),
+    () => defaultMonth ?? new Date()
   );
 
   const displayMonth = controlledMonth ?? internalMonth;
@@ -185,7 +185,7 @@ function Calendar({
         setInternalMonth(date);
       }
     },
-    [controlledMonth, onMonthChange],
+    [controlledMonth, onMonthChange]
   );
 
   const [yearGridStart, setYearGridStart] = React.useState(() => {
@@ -213,7 +213,7 @@ function Calendar({
 
   const contentRef = React.useRef<HTMLDivElement>(null);
   const [animatedHeight, setAnimatedHeight] = React.useState<number | 'auto'>(
-    'auto',
+    'auto'
   );
 
   React.useLayoutEffect(() => {
@@ -263,8 +263,7 @@ function Calendar({
             }}
             onClickCaption={() => {
               setYearGridStart(
-                displayMonth.getFullYear() -
-                  (displayMonth.getFullYear() % 12),
+                displayMonth.getFullYear() - (displayMonth.getFullYear() % 12)
               );
               setView('years');
             }}
@@ -318,7 +317,7 @@ function Calendar({
                 // start
                 '[&:has(.day-range-start)]:before:block [&:has(.day-range-start)]:before:w-3',
                 // end
-                '[&:has(.day-range-end):not(:first-child)]:before:!block [&:has(.day-range-end)]:before:left-0 [&:has(.day-range-end)]:before:right-auto',
+                '[&:has(.day-range-end):not(:first-child)]:before:!block [&:has(.day-range-end)]:before:left-0 [&:has(.day-range-end)]:before:right-auto'
               ),
               day: cn(
                 // base
@@ -329,7 +328,7 @@ function Calendar({
                 // selected
                 'aria-[selected]:bg-primary-base aria-[selected]:text-static-white',
                 // focus visible
-                'focus:outline-none focus-visible:bg-bg-weak-50 focus-visible:text-text-strong-950',
+                'focus:outline-none focus-visible:bg-bg-weak-50 focus-visible:text-text-strong-950'
               ),
               day_range_start: 'day-range-start',
               day_range_end: 'day-range-end',
@@ -344,10 +343,8 @@ function Calendar({
               ...classNames,
             }}
             components={{
-              IconLeft: () => <RiArrowLeftSLine className='w-5 h-5' />,
-              IconRight: () => (
-                <RiArrowRightSLine className='w-5 h-5' />
-              ),
+              IconLeft: () => <RiArrowLeftSLine className='h-5 w-5' />,
+              IconRight: () => <RiArrowRightSLine className='h-5 w-5' />,
               CaptionLabel: ({
                 displayMonth: captionDate,
               }: {
@@ -361,7 +358,7 @@ function Calendar({
                   <button
                     type='button'
                     onClick={handleCaptionClick}
-                    className='text-label-sm text-text-sub-600 cursor-pointer select-none transition-colors hover:text-text-strong-950'
+                    className='text-label-sm text-text-sub-600 hover:text-text-strong-950 cursor-pointer transition-colors select-none'
                   >
                     {label}
                   </button>

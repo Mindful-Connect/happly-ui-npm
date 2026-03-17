@@ -183,7 +183,7 @@ function InputRoot({
       INPUT_INLINE_AFFIX_NAME,
     ],
     uniqueId,
-    asChild,
+    asChild
   );
 
   return (
@@ -229,7 +229,7 @@ const InputEl = React.forwardRef<
 >(
   (
     { className, type = 'text', size, hasError, asChild, ...rest },
-    forwardedRef,
+    forwardedRef
   ) => {
     const Component = asChild ? Slot : 'input';
 
@@ -246,7 +246,7 @@ const InputEl = React.forwardRef<
         {...rest}
       />
     );
-  },
+  }
 );
 InputEl.displayName = INPUT_EL_NAME;
 
@@ -330,7 +330,7 @@ const InputComposed = React.forwardRef<HTMLInputElement, InputProps>(
       inlineTrailingNode,
       ...rest
     },
-    forwardedRef,
+    forwardedRef
   ) => {
     return (
       <InputRoot size={size} hasError={hasError}>
@@ -345,7 +345,7 @@ const InputComposed = React.forwardRef<HTMLInputElement, InputProps>(
         {trailingNode}
       </InputRoot>
     );
-  },
+  }
 );
 InputComposed.displayName = 'InputComposed';
 

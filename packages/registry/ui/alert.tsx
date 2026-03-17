@@ -238,7 +238,7 @@ export type AlertProps = VariantProps<typeof alertVariants> &
 const AlertRoot = React.forwardRef<HTMLDivElement, AlertProps>(
   (
     { children, className, wrapperClassName, size, variant, status, ...rest },
-    forwardedRef,
+    forwardedRef
   ) => {
     const uniqueId = React.useId();
     const { root, wrapper } = alertVariants({ size, variant, status });
@@ -253,7 +253,7 @@ const AlertRoot = React.forwardRef<HTMLDivElement, AlertProps>(
       children as React.ReactElement[],
       sharedProps,
       [ALERT_ICON_NAME, ALERT_CLOSE_ICON_NAME],
-      uniqueId,
+      uniqueId
     );
 
     return (
@@ -263,7 +263,7 @@ const AlertRoot = React.forwardRef<HTMLDivElement, AlertProps>(
         </div>
       </div>
     );
-  },
+  }
 );
 AlertRoot.displayName = ALERT_ROOT_NAME;
 

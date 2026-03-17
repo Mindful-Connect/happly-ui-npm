@@ -5,15 +5,8 @@
   "title": "Accordion",
   "description": "A collapsible accordion component with filled and stroke variants. Includes a composed Accordion.Group for quick usage. Built on Radix Accordion with namespace exports.",
   "version": "1.0.0",
-  "dependencies": [
-    "@radix-ui/react-accordion",
-    "@remixicon/react"
-  ],
-  "registryDependencies": [
-    "tv",
-    "polymorphic",
-    "happly-ui-utils"
-  ],
+  "dependencies": ["@radix-ui/react-accordion", "@remixicon/react"],
+  "registryDependencies": ["tv", "polymorphic", "happly-ui-utils"],
   "docs": {
     "lead": "A collapsible accordion component with filled and stroke variants. Built on Radix Accordion for full accessibility.",
     "usage": "import * as Accordion from \"@/components/ui/accordion\"\n\n<Accordion.Root type=\"single\" collapsible>\n  <Accordion.Item value=\"a\">\n    <Accordion.Trigger>\n      <Accordion.Icon as={Icon} />\n      Title\n      <Accordion.Arrow />\n    </Accordion.Trigger>\n    <Accordion.Content>Content</Accordion.Content>\n  </Accordion.Item>\n</Accordion.Root>",

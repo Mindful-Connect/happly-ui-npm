@@ -11,7 +11,17 @@ export const Playground = {
     children: 'OR',
   },
   argTypes: {
-    variant: { control: 'select', options: ['line', 'line-spacing', 'line-text', 'content', 'text', 'solid-text'] },
+    variant: {
+      control: 'select',
+      options: [
+        'line',
+        'line-spacing',
+        'line-text',
+        'content',
+        'text',
+        'solid-text',
+      ],
+    },
     children: { control: 'text' },
   },
   render: (args: any) => (

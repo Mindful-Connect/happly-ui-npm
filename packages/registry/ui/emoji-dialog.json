@@ -10,11 +10,7 @@
     "@remixicon/react",
     "framer-motion"
   ],
-  "registryDependencies": [
-    "tv",
-    "happly-ui-utils",
-    "memoji"
-  ],
+  "registryDependencies": ["tv", "happly-ui-utils", "memoji"],
   "docs": {
     "lead": "A styled modal dialog with built-in memoji avatars, animated glassmorphism circle, speech bubbles, and a decorative grid background pattern.",
     "usage": "import * as EmojiDialog from \"@/components/ui/emoji-dialog\"\n\n<EmojiDialog.Root>\n  <EmojiDialog.Trigger>Open</EmojiDialog.Trigger>\n  <EmojiDialog.Content>\n    <EmojiDialog.EmojiArea memoji={{ gender: 'female', person: 'angela', skinTone: 'black', posture: 'happy-1' }}>\n      <EmojiDialog.Bubble>Hello!</EmojiDialog.Bubble>\n    </EmojiDialog.EmojiArea>\n    <EmojiDialog.Header>\n      <EmojiDialog.Title>Welcome</EmojiDialog.Title>\n      <EmojiDialog.Description>Dialog description</EmojiDialog.Description>\n    </EmojiDialog.Header>\n    <EmojiDialog.Footer>\n      <EmojiDialog.Close>Cancel</EmojiDialog.Close>\n    </EmojiDialog.Footer>\n  </EmojiDialog.Content>\n</EmojiDialog.Root>",

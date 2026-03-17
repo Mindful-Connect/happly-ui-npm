@@ -13,9 +13,7 @@ export default { title: 'Form/Markdown Editor' };
 export const Default = {
   render: () => (
     <div className='w-full min-w-[560px]'>
-      <MarkdownEditor.Composed
-        placeholder='Describe your ideal successor and transition structure...'
-      />
+      <MarkdownEditor.Composed placeholder='Describe your ideal successor and transition structure...' />
     </div>
   ),
 };
@@ -52,7 +50,7 @@ function ControlledMultiRender() {
         value={values}
         onChange={setValues}
       />
-      <pre className='rounded-lg bg-bg-soft-200 p-3 text-paragraph-xs'>
+      <pre className='bg-bg-soft-200 text-paragraph-xs rounded-lg p-3'>
         {JSON.stringify(values, null, 2)}
       </pre>
     </div>

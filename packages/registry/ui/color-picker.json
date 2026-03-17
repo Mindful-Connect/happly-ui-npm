@@ -5,12 +5,8 @@
   "title": "Color Picker",
   "description": "A color picker with area, sliders, swatches, eye dropper, and field inputs. Uses namespace exports: ColorPicker.Root, ColorPicker.Area, ColorPicker.Slider, ColorPicker.SliderTrack, ColorPicker.Thumb, ColorPicker.Field, ColorPicker.Swatch, ColorPicker.SwatchPicker, ColorPicker.SwatchPickerItem, ColorPicker.EyeDropperButton.",
   "version": "1.0.0",
-  "dependencies": [
-    "react-aria-components"
-  ],
-  "registryDependencies": [
-    "happly-ui-utils"
-  ],
+  "dependencies": ["react-aria-components"],
+  "registryDependencies": ["happly-ui-utils"],
   "docs": {
     "lead": "A color picker with area, sliders, swatches, eye dropper, and field inputs.",
     "usage": "import * as ColorPicker from \"@/components/ui/color-picker\"\nimport { parseColor } from 'react-aria-components'\n\nconst [color, setColor] = React.useState(parseColor('hsl(228, 100%, 60%)'))\n\n<ColorPicker.Root value={color} onChange={setColor}>\n  <ColorPicker.Area colorSpace=\"hsl\" xChannel=\"saturation\" yChannel=\"lightness\">\n    <ColorPicker.Thumb />\n  </ColorPicker.Area>\n  <ColorPicker.Slider colorSpace=\"hsl\" channel=\"hue\">\n    <ColorPicker.SliderTrack>\n      <ColorPicker.Thumb />\n    </ColorPicker.SliderTrack>\n  </ColorPicker.Slider>\n</ColorPicker.Root>",

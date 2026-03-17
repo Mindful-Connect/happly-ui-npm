@@ -77,9 +77,7 @@ export const PopoverDemo = {
 function ApprovalDemoRender() {
   const [open, setOpen] = React.useState(false);
   const [date, setDate] = React.useState<Date | undefined>(undefined);
-  const [tempDate, setTempDate] = React.useState<Date | undefined>(
-    undefined,
-  );
+  const [tempDate, setTempDate] = React.useState<Date | undefined>(undefined);
 
   const handleOpenChange = (isOpen: boolean) => {
     if (isOpen) {
@@ -111,7 +109,7 @@ function ApprovalDemoRender() {
           selected={tempDate}
           onSelect={setTempDate}
         />
-        <div className='flex items-center justify-between gap-4 border-t border-stroke-soft-200 p-4 py-5'>
+        <div className='border-stroke-soft-200 flex items-center justify-between gap-4 border-t p-4 py-5'>
           <Popover.Close unstyled asChild>
             <Button.Root
               variant='neutral'

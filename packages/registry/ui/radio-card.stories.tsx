@@ -88,9 +88,7 @@ function DefaultRender() {
         <RadioCard.Item value='personal'>
           <RadioCard.Content>
             <RadioCard.Title>Personal</RadioCard.Title>
-            <RadioCard.Description>
-              For individual use
-            </RadioCard.Description>
+            <RadioCard.Description>For individual use</RadioCard.Description>
           </RadioCard.Content>
           <RadioCard.Indicator />
         </RadioCard.Item>
@@ -98,9 +96,7 @@ function DefaultRender() {
         <RadioCard.Item value='team'>
           <RadioCard.Content>
             <RadioCard.Title>Team</RadioCard.Title>
-            <RadioCard.Description>
-              For small teams
-            </RadioCard.Description>
+            <RadioCard.Description>For small teams</RadioCard.Description>
           </RadioCard.Content>
           <RadioCard.Indicator />
         </RadioCard.Item>
@@ -133,9 +129,7 @@ function WithKeyIconsRender() {
           <KeyIcon.Root icon={<RiBankCardLine />} />
           <RadioCard.Content>
             <RadioCard.Title>Credit Card</RadioCard.Title>
-            <RadioCard.Description>
-              Pay with credit card
-            </RadioCard.Description>
+            <RadioCard.Description>Pay with credit card</RadioCard.Description>
           </RadioCard.Content>
           <RadioCard.Indicator />
         </RadioCard.Item>
@@ -155,9 +149,7 @@ function WithKeyIconsRender() {
           <KeyIcon.Root icon={<RiBankLine />} />
           <RadioCard.Content>
             <RadioCard.Title>Bank Transfer</RadioCard.Title>
-            <RadioCard.Description>
-              Direct bank transfer
-            </RadioCard.Description>
+            <RadioCard.Description>Direct bank transfer</RadioCard.Description>
           </RadioCard.Content>
           <RadioCard.Indicator />
         </RadioCard.Item>
@@ -177,18 +169,16 @@ function WithSimpleIconsRender() {
     <div className='w-[480px]'>
       <RadioCard.Root value={value} onValueChange={setValue}>
         <RadioCard.Item value='card'>
-          <RiBankCardLine className='w-5 h-5 shrink-0 text-text-sub-600' />
+          <RiBankCardLine className='text-text-sub-600 h-5 w-5 shrink-0' />
           <RadioCard.Content>
             <RadioCard.Title>Credit Card</RadioCard.Title>
-            <RadioCard.Description>
-              Pay with credit card
-            </RadioCard.Description>
+            <RadioCard.Description>Pay with credit card</RadioCard.Description>
           </RadioCard.Content>
           <RadioCard.Indicator />
         </RadioCard.Item>
 
         <RadioCard.Item value='wallet'>
-          <RiWalletLine className='w-5 h-5 shrink-0 text-text-sub-600' />
+          <RiWalletLine className='text-text-sub-600 h-5 w-5 shrink-0' />
           <RadioCard.Content>
             <RadioCard.Title>Digital Wallet</RadioCard.Title>
             <RadioCard.Description>
@@ -199,12 +189,10 @@ function WithSimpleIconsRender() {
         </RadioCard.Item>
 
         <RadioCard.Item value='bank'>
-          <RiBankLine className='w-5 h-5 shrink-0 text-text-sub-600' />
+          <RiBankLine className='text-text-sub-600 h-5 w-5 shrink-0' />
           <RadioCard.Content>
             <RadioCard.Title>Bank Transfer</RadioCard.Title>
-            <RadioCard.Description>
-              Direct bank transfer
-            </RadioCard.Description>
+            <RadioCard.Description>Direct bank transfer</RadioCard.Description>
           </RadioCard.Content>
           <RadioCard.Indicator />
         </RadioCard.Item>
@@ -298,17 +286,11 @@ function AllowDeselectRender() {
 
   return (
     <div className='w-[480px]'>
-      <RadioCard.Root
-        value={value}
-        onValueChange={setValue}
-        allowDeselect
-      >
+      <RadioCard.Root value={value} onValueChange={setValue} allowDeselect>
         <RadioCard.Item value='personal'>
           <RadioCard.Content>
             <RadioCard.Title>Personal</RadioCard.Title>
-            <RadioCard.Description>
-              For individual use
-            </RadioCard.Description>
+            <RadioCard.Description>For individual use</RadioCard.Description>
           </RadioCard.Content>
           <RadioCard.Indicator />
         </RadioCard.Item>
@@ -316,9 +298,7 @@ function AllowDeselectRender() {
         <RadioCard.Item value='team'>
           <RadioCard.Content>
             <RadioCard.Title>Team</RadioCard.Title>
-            <RadioCard.Description>
-              For small teams
-            </RadioCard.Description>
+            <RadioCard.Description>For small teams</RadioCard.Description>
           </RadioCard.Content>
           <RadioCard.Indicator />
         </RadioCard.Item>
@@ -338,9 +318,7 @@ export const Disabled = {
         <RadioCard.Item value='personal' disabled>
           <RadioCard.Content>
             <RadioCard.Title>Personal</RadioCard.Title>
-            <RadioCard.Description>
-              For individual use
-            </RadioCard.Description>
+            <RadioCard.Description>For individual use</RadioCard.Description>
           </RadioCard.Content>
           <RadioCard.Indicator />
         </RadioCard.Item>
@@ -348,9 +326,7 @@ export const Disabled = {
         <RadioCard.Item value='team' disabled>
           <RadioCard.Content>
             <RadioCard.Title>Team</RadioCard.Title>
-            <RadioCard.Description>
-              For small teams
-            </RadioCard.Description>
+            <RadioCard.Description>For small teams</RadioCard.Description>
           </RadioCard.Content>
           <RadioCard.Indicator />
         </RadioCard.Item>
@@ -364,17 +340,11 @@ function ErrorStateRender() {
 
   return (
     <div className='w-[480px]'>
-      <RadioCard.Root
-        value={value}
-        onValueChange={setValue}
-        hasError
-      >
+      <RadioCard.Root value={value} onValueChange={setValue} hasError>
         <RadioCard.Item value='personal'>
           <RadioCard.Content>
             <RadioCard.Title>Personal</RadioCard.Title>
-            <RadioCard.Description>
-              For individual use
-            </RadioCard.Description>
+            <RadioCard.Description>For individual use</RadioCard.Description>
           </RadioCard.Content>
           <RadioCard.Indicator />
         </RadioCard.Item>
@@ -382,9 +352,7 @@ function ErrorStateRender() {
         <RadioCard.Item value='team'>
           <RadioCard.Content>
             <RadioCard.Title>Team</RadioCard.Title>
-            <RadioCard.Description>
-              For small teams
-            </RadioCard.Description>
+            <RadioCard.Description>For small teams</RadioCard.Description>
           </RadioCard.Content>
           <RadioCard.Indicator />
         </RadioCard.Item>
@@ -440,11 +408,7 @@ function PrimaryVariantRender() {
 
   return (
     <div className='w-[480px]'>
-      <RadioCard.Root
-        value={value}
-        onValueChange={setValue}
-        variant='primary'
-      >
+      <RadioCard.Root value={value} onValueChange={setValue} variant='primary'>
         <RadioCard.Item value='small'>
           <RadioCard.Content>
             <RadioCard.Title>Small</RadioCard.Title>
@@ -479,14 +443,16 @@ function WithFormFieldRender() {
 
   return (
     <div className='w-[480px]'>
-      <FormField.Root label='Select Plan' required hint='Choose the plan that works for you.'>
+      <FormField.Root
+        label='Select Plan'
+        required
+        hint='Choose the plan that works for you.'
+      >
         <RadioCard.Root value={value} onValueChange={setValue}>
           <RadioCard.Item value='personal'>
             <RadioCard.Content>
               <RadioCard.Title>Personal</RadioCard.Title>
-              <RadioCard.Description>
-                For individual use
-              </RadioCard.Description>
+              <RadioCard.Description>For individual use</RadioCard.Description>
             </RadioCard.Content>
             <RadioCard.Indicator />
           </RadioCard.Item>
@@ -494,9 +460,7 @@ function WithFormFieldRender() {
           <RadioCard.Item value='team'>
             <RadioCard.Content>
               <RadioCard.Title>Team</RadioCard.Title>
-              <RadioCard.Description>
-                For small teams
-              </RadioCard.Description>
+              <RadioCard.Description>For small teams</RadioCard.Description>
             </RadioCard.Content>
             <RadioCard.Indicator />
           </RadioCard.Item>

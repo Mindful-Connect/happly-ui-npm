@@ -36,7 +36,7 @@ const TagInputRoot = React.forwardRef<HTMLInputElement, TagInputProps>(
       disabled,
       ...rest
     },
-    forwardedRef,
+    forwardedRef
   ) => {
     const [uncontrolledTags, setUncontrolledTags] =
       React.useState<string[]>(defaultValue);
@@ -52,7 +52,7 @@ const TagInputRoot = React.forwardRef<HTMLInputElement, TagInputProps>(
         }
         onValueChange?.(newTags);
       },
-      [isControlled, onValueChange],
+      [isControlled, onValueChange]
     );
 
     const addTag = React.useCallback(
@@ -64,14 +64,14 @@ const TagInputRoot = React.forwardRef<HTMLInputElement, TagInputProps>(
         setTags([...tags, trimmed]);
         setInputValue('');
       },
-      [tags, setTags, allowDuplicates, maxTags],
+      [tags, setTags, allowDuplicates, maxTags]
     );
 
     const removeTag = React.useCallback(
       (index: number) => {
         setTags(tags.filter((_, i) => i !== index));
       },
-      [tags, setTags],
+      [tags, setTags]
     );
 
     const handleKeyDown = React.useCallback(
@@ -79,15 +79,11 @@ const TagInputRoot = React.forwardRef<HTMLInputElement, TagInputProps>(
         if (triggerKeys.includes(e.key) && inputValue.trim()) {
           e.preventDefault();
           addTag(inputValue);
-        } else if (
-          e.key === 'Backspace' &&
-          !inputValue &&
-          tags.length > 0
-        ) {
+        } else if (e.key === 'Backspace' && !inputValue && tags.length > 0) {
           removeTag(tags.length - 1);
         }
       },
-      [triggerKeys, inputValue, addTag, tags.length, removeTag],
+      [triggerKeys, inputValue, addTag, tags.length, removeTag]
     );
 
     return (
@@ -109,7 +105,11 @@ const TagInputRoot = React.forwardRef<HTMLInputElement, TagInputProps>(
         {tags.length > 0 && (
           <div className='flex flex-wrap gap-2'>
             {tags.map((tag, index) => (
-              <Tag.Root key={`${tag}-${index}`} variant={tagVariant} disabled={disabled}>
+              <Tag.Root
+                key={`${tag}-${index}`}
+                variant={tagVariant}
+                disabled={disabled}
+              >
                 {tag}
                 <Tag.DismissButton
                   onClick={() => removeTag(index)}
@@ -121,7 +121,7 @@ const TagInputRoot = React.forwardRef<HTMLInputElement, TagInputProps>(
         )}
       </div>
     );
-  },
+  }
 );
 TagInputRoot.displayName = 'TagInputRoot';
 

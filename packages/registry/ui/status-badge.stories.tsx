@@ -7,7 +7,10 @@ import {
 
 import * as StatusBadge from './status-badge';
 
-export default { title: 'Displaying Data/Status Badge', component: StatusBadge.Root };
+export default {
+  title: 'Displaying Data/Status Badge',
+  component: StatusBadge.Root,
+};
 
 export const Playground = {
   args: {
@@ -18,7 +21,10 @@ export const Playground = {
   argTypes: {
     children: { control: 'text' },
     variant: { control: 'select', options: ['stroke', 'light'] },
-    status: { control: 'select', options: ['completed', 'pending', 'failed', 'disabled'] },
+    status: {
+      control: 'select',
+      options: ['completed', 'pending', 'failed', 'disabled'],
+    },
   },
   render: (args: any) => (
     <StatusBadge.Root {...args}>

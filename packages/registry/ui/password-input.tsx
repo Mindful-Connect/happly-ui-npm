@@ -32,7 +32,10 @@ type PasswordInputProps = Omit<
   criteriaLabel?: string;
 };
 
-const PasswordInputRoot = React.forwardRef<HTMLInputElement, PasswordInputProps>(
+const PasswordInputRoot = React.forwardRef<
+  HTMLInputElement,
+  PasswordInputProps
+>(
   (
     {
       size,
@@ -46,7 +49,7 @@ const PasswordInputRoot = React.forwardRef<HTMLInputElement, PasswordInputProps>
       criteriaLabel = 'Must contain at least;',
       ...rest
     },
-    forwardedRef,
+    forwardedRef
   ) => {
     const [visible, setVisible] = React.useState(false);
 
@@ -70,9 +73,9 @@ const PasswordInputRoot = React.forwardRef<HTMLInputElement, PasswordInputProps>
               tabIndex={-1}
             >
               {visible ? (
-                <HideIcon className='w-5 h-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+                <HideIcon className='text-text-soft-400 group-has-[disabled]:text-text-disabled-300 h-5 w-5' />
               ) : (
-                <ShowIcon className='w-5 h-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+                <ShowIcon className='text-text-soft-400 group-has-[disabled]:text-text-disabled-300 h-5 w-5' />
               )}
             </button>
           </Input.Wrapper>
@@ -87,12 +90,12 @@ const PasswordInputRoot = React.forwardRef<HTMLInputElement, PasswordInputProps>
             {criteria.map((c) => (
               <div
                 key={c.key}
-                className='flex items-center gap-1.5 text-paragraph-xs text-text-sub-600'
+                className='text-paragraph-xs text-text-sub-600 flex items-center gap-1.5'
               >
                 {c.met ? (
-                  <RiCheckboxCircleFill className='w-4 h-4 shrink-0 text-success-base' />
+                  <RiCheckboxCircleFill className='text-success-base h-4 w-4 shrink-0' />
                 ) : (
-                  <RiCloseCircleFill className='w-4 h-4 shrink-0 text-text-soft-400' />
+                  <RiCloseCircleFill className='text-text-soft-400 h-4 w-4 shrink-0' />
                 )}
                 {c.label}
               </div>
@@ -101,7 +104,7 @@ const PasswordInputRoot = React.forwardRef<HTMLInputElement, PasswordInputProps>
         )}
       </div>
     );
-  },
+  }
 );
 PasswordInputRoot.displayName = 'PasswordInputRoot';
 

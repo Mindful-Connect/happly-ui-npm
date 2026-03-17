@@ -13,9 +13,24 @@ type CurrencyOption = {
 };
 
 const defaultCurrencies: CurrencyOption[] = [
-  { code: 'CAD', symbol: '$', label: 'CAD', icon: 'https://mindful-connect.github.io/circle-flags/flags/ca.svg' },
-  { code: 'USD', symbol: '$', label: 'USD', icon: 'https://mindful-connect.github.io/circle-flags/flags/us.svg' },
-  { code: 'EUR', symbol: '€', label: 'EUR', icon: 'https://mindful-connect.github.io/circle-flags/flags/eu.svg' },
+  {
+    code: 'CAD',
+    symbol: '$',
+    label: 'CAD',
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/ca.svg',
+  },
+  {
+    code: 'USD',
+    symbol: '$',
+    label: 'USD',
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/us.svg',
+  },
+  {
+    code: 'EUR',
+    symbol: '€',
+    label: 'EUR',
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/eu.svg',
+  },
 ];
 
 type CurrencyInputProps = Omit<
@@ -33,7 +48,10 @@ type CurrencyInputProps = Omit<
   hasError?: boolean;
 };
 
-const CurrencyInputRoot = React.forwardRef<HTMLInputElement, CurrencyInputProps>(
+const CurrencyInputRoot = React.forwardRef<
+  HTMLInputElement,
+  CurrencyInputProps
+>(
   (
     {
       value,
@@ -49,7 +67,7 @@ const CurrencyInputRoot = React.forwardRef<HTMLInputElement, CurrencyInputProps>
       disabled,
       ...rest
     },
-    forwardedRef,
+    forwardedRef
   ) => {
     const [uncontrolledCurrency, setUncontrolledCurrency] =
       React.useState(defaultCurrency);
@@ -69,7 +87,7 @@ const CurrencyInputRoot = React.forwardRef<HTMLInputElement, CurrencyInputProps>
         }
         onCurrencyChange?.(code);
       },
-      [isCurrencyControlled, onCurrencyChange],
+      [isCurrencyControlled, onCurrencyChange]
     );
 
     const handleInputChange = React.useCallback(
@@ -77,7 +95,7 @@ const CurrencyInputRoot = React.forwardRef<HTMLInputElement, CurrencyInputProps>
         const val = e.target.value.replace(/[^0-9.]/g, '');
         onValueChange?.(val);
       },
-      [onValueChange],
+      [onValueChange]
     );
 
     return (
@@ -120,7 +138,7 @@ const CurrencyInputRoot = React.forwardRef<HTMLInputElement, CurrencyInputProps>
         </Select.Root>
       </Input.Root>
     );
-  },
+  }
 );
 CurrencyInputRoot.displayName = 'CurrencyInputRoot';
 

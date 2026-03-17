@@ -5,14 +5,8 @@
   "title": "Dropdown",
   "description": "A dropdown menu component built on Radix UI with items, groups, labels, sub-menus, and directional animations. Uses namespace exports: Dropdown.Root, Dropdown.Trigger, Dropdown.Content, Dropdown.Item, Dropdown.ItemIcon, Dropdown.Group, Dropdown.Label, Dropdown.MenuSub, Dropdown.MenuSubTrigger, Dropdown.MenuSubContent.",
   "version": "1.0.0",
-  "dependencies": [
-    "@radix-ui/react-dropdown-menu",
-    "@remixicon/react"
-  ],
-  "registryDependencies": [
-    "happly-ui-utils",
-    "polymorphic"
-  ],
+  "dependencies": ["@radix-ui/react-dropdown-menu", "@remixicon/react"],
+  "registryDependencies": ["happly-ui-utils", "polymorphic"],
   "docs": {
     "lead": "A dropdown menu component with items, groups, sub-menus, and directional slide animations.",
     "usage": "import * as Dropdown from \"@/components/ui/dropdown\"\n\n<Dropdown.Root>\n  <Dropdown.Trigger>Open</Dropdown.Trigger>\n  <Dropdown.Content>\n    <Dropdown.Item>Item</Dropdown.Item>\n  </Dropdown.Content>\n</Dropdown.Root>",

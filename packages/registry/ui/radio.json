@@ -5,12 +5,8 @@
   "title": "Radio",
   "description": "A radio group component with animated SVG indicator and primary/neutral variants. Uses namespace exports: Radio.Group, Radio.Item.",
   "version": "1.0.0",
-  "dependencies": [
-    "@radix-ui/react-radio-group"
-  ],
-  "registryDependencies": [
-    "happly-ui-utils"
-  ],
+  "dependencies": ["@radix-ui/react-radio-group"],
+  "registryDependencies": ["happly-ui-utils"],
   "docs": {
     "lead": "A radio group component with animated SVG indicator and primary/neutral color variants.",
     "usage": "import * as Radio from \"@/components/ui/radio\"\n\n<Radio.Group defaultValue=\"r1\">\n  <Radio.Item value=\"r1\" />\n  <Radio.Item value=\"r2\" />\n</Radio.Group>",

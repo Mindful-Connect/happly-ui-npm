@@ -34,12 +34,7 @@ function LevelBar({
 } & React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn(
-        root(),
-        levelColors[1],
-        className,
-        levelColors[level],
-      )}
+      className={cn(root(), levelColors[1], className, levelColors[level])}
       {...rest}
     >
       {Array.from({ length: levels }, (_, i) => (

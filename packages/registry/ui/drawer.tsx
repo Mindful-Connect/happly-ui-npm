@@ -21,10 +21,10 @@ const DrawerOverlay = React.forwardRef<
       ref={forwardedRef}
       className={cn(
         // base
-        'fixed inset-0 z-50 grid grid-cols-1 place-items-end overflow-hidden bg-overlay backdrop-blur-[10px]',
+        'bg-overlay fixed inset-0 z-50 grid grid-cols-1 place-items-end overflow-hidden backdrop-blur-[10px]',
         // animation
         'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-        className,
+        className
       )}
       {...rest}
     />
@@ -43,18 +43,18 @@ const DrawerContent = React.forwardRef<
           ref={forwardedRef}
           className={cn(
             // base
-            'w-full h-full max-w-[400px] overflow-y-auto',
-            'border-l border-stroke-soft-200 bg-bg-white-0',
+            'h-full w-full max-w-[400px] overflow-y-auto',
+            'border-stroke-soft-200 bg-bg-white-0 border-l',
             // animation
-            'data-[state=open]:duration-200 data-[state=open]:ease-out data-[state=open]:animate-in',
-            'data-[state=closed]:duration-200 data-[state=closed]:ease-in data-[state=closed]:animate-out',
+            'data-[state=open]:animate-in data-[state=open]:duration-200 data-[state=open]:ease-out',
+            'data-[state=closed]:animate-out data-[state=closed]:duration-200 data-[state=closed]:ease-in',
             'data-[state=open]:slide-in-from-right-full',
             'data-[state=closed]:slide-out-to-right-full',
-            className,
+            className
           )}
           {...rest}
         >
-          <div className='relative flex w-full h-full flex-col'>{children}</div>
+          <div className='relative flex h-full w-full flex-col'>{children}</div>
         </DialogPrimitive.Content>
       </DrawerOverlay>
     </DrawerPortal>
@@ -73,8 +73,8 @@ function DrawerHeader({
   return (
     <div
       className={cn(
-        'flex items-center gap-3 border-stroke-soft-200 p-5',
-        className,
+        'border-stroke-soft-200 flex items-center gap-3 p-5',
+        className
       )}
       {...rest}
     >
@@ -99,7 +99,7 @@ const DrawerTitle = React.forwardRef<
   return (
     <DialogPrimitive.Title
       ref={forwardedRef}
-      className={cn('flex-1 text-label-lg text-text-strong-950', className)}
+      className={cn('text-label-lg text-text-strong-950 flex-1', className)}
       {...rest}
     />
   );
@@ -126,8 +126,8 @@ function DrawerFooter({
   return (
     <div
       className={cn(
-        'flex items-center gap-4 border-stroke-soft-200 p-5',
-        className,
+        'border-stroke-soft-200 flex items-center gap-4 p-5',
+        className
       )}
       {...rest}
     />

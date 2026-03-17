@@ -19,8 +19,21 @@ export const Playground = {
     status: 'information',
   },
   argTypes: {
-    variant: { control: 'select', options: ['filled', 'light', 'lighter', 'stroke'] },
-    status: { control: 'select', options: ['error', 'warning', 'success', 'information', 'feature', 'primary'] },
+    variant: {
+      control: 'select',
+      options: ['filled', 'light', 'lighter', 'stroke'],
+    },
+    status: {
+      control: 'select',
+      options: [
+        'error',
+        'warning',
+        'success',
+        'information',
+        'feature',
+        'primary',
+      ],
+    },
   },
   render: (args: any) => (
     <Banner.Root {...args}>
@@ -31,7 +44,7 @@ export const Playground = {
         <span className='text-paragraph-sm'>Insert your description here.</span>
       </Banner.Content>
       <Banner.CloseButton>
-        <RiCloseLine className='w-5 h-5' />
+        <RiCloseLine className='h-5 w-5' />
       </Banner.CloseButton>
     </Banner.Root>
   ),
@@ -53,7 +66,7 @@ export const Error = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
@@ -70,7 +83,7 @@ export const Error = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
@@ -87,7 +100,7 @@ export const Error = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
@@ -104,7 +117,7 @@ export const Error = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
     </div>
@@ -127,7 +140,7 @@ export const Warning = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
@@ -144,7 +157,7 @@ export const Warning = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
@@ -161,7 +174,7 @@ export const Warning = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
@@ -178,7 +191,7 @@ export const Warning = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
     </div>
@@ -201,7 +214,7 @@ export const Success = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
@@ -218,7 +231,7 @@ export const Success = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
@@ -235,7 +248,7 @@ export const Success = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
@@ -252,7 +265,7 @@ export const Success = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
     </div>
@@ -275,7 +288,7 @@ export const Information = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
@@ -292,7 +305,7 @@ export const Information = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
@@ -309,7 +322,7 @@ export const Information = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
@@ -326,7 +339,7 @@ export const Information = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
     </div>
@@ -349,7 +362,7 @@ export const Feature = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
@@ -366,7 +379,7 @@ export const Feature = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
@@ -383,7 +396,7 @@ export const Feature = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
@@ -400,7 +413,7 @@ export const Feature = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
     </div>
@@ -423,7 +436,7 @@ export const Primary = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
@@ -440,7 +453,7 @@ export const Primary = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
@@ -457,7 +470,7 @@ export const Primary = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
@@ -474,7 +487,7 @@ export const Primary = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='w-5 h-5' />
+          <RiCloseLine className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
     </div>

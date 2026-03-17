@@ -9,9 +9,7 @@
     "guide": "API changed: import as namespace `import * as Textarea from ...`, use `<Textarea.Root>` with children for `<Textarea.CharCounter>`. Old named export `{ Textarea }` removed. New sub-component: `Textarea.CharCounter`. New props: `simple` (renders without container), `hasError`, `containerClassName`. Built-in resize handle in non-simple mode."
   },
   "dependencies": [],
-  "registryDependencies": [
-    "happly-ui-utils"
-  ],
+  "registryDependencies": ["happly-ui-utils"],
   "docs": {
     "lead": "A textarea component with character counter, resize handle, error state, and simple mode.",
     "usage": "import * as Textarea from \"@/components/ui/textarea\"\n\n<Textarea.Root placeholder=\"Jot down your thoughts...\">\n  <Textarea.CharCounter current={78} max={200} />\n</Textarea.Root>",

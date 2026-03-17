@@ -10,10 +10,7 @@
     "@radix-ui/react-tabs",
     "merge-refs"
   ],
-  "registryDependencies": [
-    "use-tab-observer",
-    "happly-ui-utils"
-  ],
+  "registryDependencies": ["use-tab-observer", "happly-ui-utils"],
   "docs": {
     "lead": "A tab-based switch toggle with an animated floating background indicator. Built on Radix Tabs for full accessibility.",
     "usage": "import * as SwitchToggle from \"@/components/ui/switch-toggle\"\n\n<SwitchToggle.Root defaultValue=\"option1\">\n  <SwitchToggle.List>\n    <SwitchToggle.Trigger value=\"option1\">Option 1</SwitchToggle.Trigger>\n    <SwitchToggle.Trigger value=\"option2\">Option 2</SwitchToggle.Trigger>\n  </SwitchToggle.List>\n  <SwitchToggle.Content value=\"option1\">Content 1</SwitchToggle.Content>\n  <SwitchToggle.Content value=\"option2\">Content 2</SwitchToggle.Content>\n</SwitchToggle.Root>",

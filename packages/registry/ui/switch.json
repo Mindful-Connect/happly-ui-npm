@@ -5,12 +5,8 @@
   "title": "Switch",
   "description": "A toggle switch component with primary and neutral variants. Uses namespace exports: Switch.Root.",
   "version": "1.0.0",
-  "dependencies": [
-    "@radix-ui/react-switch"
-  ],
-  "registryDependencies": [
-    "happly-ui-utils"
-  ],
+  "dependencies": ["@radix-ui/react-switch"],
+  "registryDependencies": ["happly-ui-utils"],
   "docs": {
     "lead": "A toggle switch component with smooth transitions and primary/neutral color variants.",
     "usage": "import * as Switch from \"@/components/ui/switch\"\n\n<Switch.Root />",

@@ -54,7 +54,7 @@ const formatNorthAmericanNationalNumber = (digits: string): string => {
 
 const formatNationalDigits = (
   digits: string,
-  countryCode: CountryCode,
+  countryCode: CountryCode
 ): string => {
   if (!digits) return '';
   if (countryCode === 'US' || countryCode === 'CA') {
@@ -81,7 +81,7 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
       disabled,
       ...rest
     },
-    forwardedRef,
+    forwardedRef
   ) => {
     const [uncontrolledCountry, setUncontrolledCountry] =
       React.useState<CountryIso2>(defaultCountry);
@@ -106,8 +106,7 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
           if (!isCountryControlled) setUncontrolledCountry(countryIso2);
           onCountryChange?.(countryIso2);
         }
-        const cc = (parsed.country ??
-          countryIso2.toUpperCase()) as CountryCode;
+        const cc = (parsed.country ?? countryIso2.toUpperCase()) as CountryCode;
         setDisplayValue(formatNationalDigits(parsed.nationalNumber, cc));
       } else if (!value || value === `+${activeCountry?.dialCode ?? ''}`) {
         setDisplayValue('');
@@ -133,7 +132,7 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
           onValueChange?.(e164);
         }
       },
-      [displayValue, isCountryControlled, onCountryChange, onValueChange],
+      [displayValue, isCountryControlled, onCountryChange, onValueChange]
     );
 
     const handleInputChange = React.useCallback(
@@ -151,16 +150,16 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
         lastEmittedRef.current = e164;
         onValueChange?.(e164);
       },
-      [activeCountryIso2, activeCountry?.dialCode, onValueChange],
+      [activeCountryIso2, activeCountry?.dialCode, onValueChange]
     );
 
     const preferred = React.useMemo(
       () => allCountries.filter((c) => preferredCountries.includes(c.iso2)),
-      [preferredCountries],
+      [preferredCountries]
     );
     const others = React.useMemo(
       () => allCountries.filter((c) => !preferredCountries.includes(c.iso2)),
-      [preferredCountries],
+      [preferredCountries]
     );
 
     return (
@@ -175,7 +174,7 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
             {activeCountry && (
               <div className='flex items-center gap-2'>
                 <div
-                  className='w-5 h-5 shrink-0 rounded-full bg-cover bg-center bg-no-repeat group-disabled/trigger:opacity-[.48]'
+                  className='h-5 w-5 shrink-0 rounded-full bg-cover bg-center bg-no-repeat group-disabled/trigger:opacity-[.48]'
                   style={{
                     backgroundImage: `url(${FLAG_URL}/${activeCountryIso2}.svg)`,
                   }}
@@ -197,7 +196,7 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
               </Select.Item>
             ))}
             {preferred.length > 0 && others.length > 0 && (
-              <Select.Separator className='mx-2 my-1 h-px bg-stroke-soft-200' />
+              <Select.Separator className='bg-stroke-soft-200 mx-2 my-1 h-px' />
             )}
             {others.map((c) => (
               <Select.Item key={c.iso2} value={c.iso2}>
@@ -227,7 +226,7 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
         </Input.Wrapper>
       </Input.Root>
     );
-  },
+  }
 );
 PhoneInputRoot.displayName = 'PhoneInputRoot';
 

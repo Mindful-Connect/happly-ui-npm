@@ -46,12 +46,12 @@ const DigitInputSlot = React.forwardRef<
     <input
       ref={forwardedRef}
       className={cn(
-        'h-16 w-full min-w-0 rounded-10 bg-bg-white-0 text-center text-title-h5 text-text-strong-950 shadow-regular-xs outline-none ring-1 ring-inset ring-stroke-soft-200',
+        'rounded-10 bg-bg-white-0 text-title-h5 text-text-strong-950 shadow-regular-xs ring-stroke-soft-200 h-16 w-full min-w-0 text-center ring-1 outline-none ring-inset',
         'transition duration-200 ease-out',
         // hover
         'hover:bg-bg-weak-50 hover:shadow-none hover:ring-transparent',
         // focus
-        'focus:shadow-button-important-focus focus:outline-none focus:ring-stroke-strong-950',
+        'focus:shadow-button-important-focus focus:ring-stroke-strong-950 focus:outline-none',
         // selection
         'selection:bg-none',
         // disabled
@@ -60,7 +60,7 @@ const DigitInputSlot = React.forwardRef<
           'ring-error-base hover:ring-error-base focus:ring-error-base focus:shadow-button-error-focus':
             hasError,
         },
-        className,
+        className
       )}
       {...rest}
     />

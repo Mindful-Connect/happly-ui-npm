@@ -10,10 +10,7 @@
     "@radix-ui/react-visually-hidden",
     "@remixicon/react"
   ],
-  "registryDependencies": [
-    "happly-ui-utils",
-    "compact-button"
-  ],
+  "registryDependencies": ["happly-ui-utils", "compact-button"],
   "docs": {
     "lead": "A modal dialog component with overlay backdrop, optional header with icon, body, and footer sections.",
     "usage": "import * as Modal from \"@/components/ui/modal\"\n\n<Modal.Root>\n  <Modal.Trigger>Open</Modal.Trigger>\n  <Modal.Content>\n    <Modal.Body>Content</Modal.Body>\n    <Modal.Footer>\n      <Modal.Close>Cancel</Modal.Close>\n    </Modal.Footer>\n  </Modal.Content>\n</Modal.Root>",

@@ -31,10 +31,14 @@ const FileCardRoot = React.forwardRef<HTMLDivElement, FileCardRootProps>(
   ({ className, ...rest }, forwardedRef) => {
     return (
       <div className='@container w-full'>
-        <div ref={forwardedRef} className={cn(fileCardVariants(), className)} {...rest} />
+        <div
+          ref={forwardedRef}
+          className={cn(fileCardVariants(), className)}
+          {...rest}
+        />
       </div>
     );
-  },
+  }
 );
 FileCardRoot.displayName = 'FileCardRoot';
 
@@ -48,8 +52,8 @@ const FileCardThumbnail = React.forwardRef<
     <div
       ref={forwardedRef}
       className={cn(
-        'flex h-[104px] w-full shrink-0 items-center justify-center overflow-clip bg-bg-weak-50 @sm:w-44',
-        className,
+        'bg-bg-weak-50 flex h-[104px] w-full shrink-0 items-center justify-center overflow-clip @sm:w-44',
+        className
       )}
       {...rest}
     >
@@ -83,10 +87,14 @@ const FileCardVideo = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement> & { src: string; alt?: string }
 >(({ className, src, alt = '', children, ...rest }, forwardedRef) => {
   return (
-    <div ref={forwardedRef} className={cn('relative h-full w-full', className)} {...rest}>
+    <div
+      ref={forwardedRef}
+      className={cn('relative h-full w-full', className)}
+      {...rest}
+    >
       <img src={src} alt={alt} className='h-full w-full object-cover' />
       <div className='absolute inset-0 flex items-center justify-center'>
-        <RiVideoFill className='w-8 h-8 text-text-soft-400' />
+        <RiVideoFill className='text-text-soft-400 h-8 w-8' />
       </div>
       {children}
     </div>
@@ -103,11 +111,14 @@ const FileCardAudio = React.forwardRef<
   return (
     <div
       ref={forwardedRef}
-      className={cn('flex h-full w-full items-center justify-center bg-bg-weak-50', className)}
+      className={cn(
+        'bg-bg-weak-50 flex h-full w-full items-center justify-center',
+        className
+      )}
       {...rest}
     >
       <div className='flex items-center justify-center rounded-full bg-white/40 p-2.5'>
-        <RiVolumeUpFill className='w-8 h-8 text-text-sub-600' />
+        <RiVolumeUpFill className='text-text-sub-600 h-8 w-8' />
       </div>
     </div>
   );
@@ -124,8 +135,8 @@ const FileCardContent = React.forwardRef<
     <div
       ref={forwardedRef}
       className={cn(
-        'flex min-w-0 flex-1 items-center gap-4 self-stretch pl-5 pr-6 py-4',
-        className,
+        'flex min-w-0 flex-1 items-center gap-4 self-stretch py-4 pr-6 pl-5',
+        className
       )}
       {...rest}
     />
@@ -142,7 +153,10 @@ const FileCardBody = React.forwardRef<
   return (
     <div
       ref={forwardedRef}
-      className={cn('flex min-w-0 flex-1 flex-col justify-center gap-1', className)}
+      className={cn(
+        'flex min-w-0 flex-1 flex-col justify-center gap-1',
+        className
+      )}
       {...rest}
     />
   );
@@ -158,7 +172,10 @@ const FileCardUploadBody = React.forwardRef<
   return (
     <div
       ref={forwardedRef}
-      className={cn('flex min-w-0 flex-1 flex-col justify-center gap-3', className)}
+      className={cn(
+        'flex min-w-0 flex-1 flex-col justify-center gap-3',
+        className
+      )}
       {...rest}
     />
   );
@@ -190,7 +207,7 @@ const FileCardName = React.forwardRef<
   return (
     <p
       ref={forwardedRef}
-      className={cn('truncate text-label-sm text-text-strong-950', className)}
+      className={cn('text-label-sm text-text-strong-950 truncate', className)}
       {...rest}
     />
   );
@@ -206,7 +223,7 @@ const FileCardMeta = React.forwardRef<
   return (
     <p
       ref={forwardedRef}
-      className={cn('truncate text-paragraph-xs text-text-sub-600', className)}
+      className={cn('text-paragraph-xs text-text-sub-600 truncate', className)}
       {...rest}
     />
   );
@@ -222,7 +239,7 @@ const FileCardHint = React.forwardRef<
   return (
     <p
       ref={forwardedRef}
-      className={cn('truncate text-paragraph-xs text-text-soft-400', className)}
+      className={cn('text-paragraph-xs text-text-soft-400 truncate', className)}
       {...rest}
     />
   );
@@ -244,15 +261,17 @@ const FileCardStatus = React.forwardRef<HTMLDivElement, FileCardStatusProps>(
         {...rest}
       >
         {status === 'uploading' && (
-          <RiLoader2Fill className='w-4 h-4 shrink-0 animate-spin text-text-sub-600' />
+          <RiLoader2Fill className='text-text-sub-600 h-4 w-4 shrink-0 animate-spin' />
         )}
         {status === 'failed' && (
-          <RiErrorWarningFill className='w-4 h-4 shrink-0 text-error-base' />
+          <RiErrorWarningFill className='text-error-base h-4 w-4 shrink-0' />
         )}
-        <span className='text-paragraph-xs text-text-strong-950'>{children}</span>
+        <span className='text-paragraph-xs text-text-strong-950'>
+          {children}
+        </span>
       </div>
     );
-  },
+  }
 );
 FileCardStatus.displayName = 'FileCardStatus';
 
@@ -263,27 +282,31 @@ type FileCardProgressProps = React.HTMLAttributes<HTMLDivElement> & {
   max?: number;
 };
 
-const FileCardProgress = React.forwardRef<HTMLDivElement, FileCardProgressProps>(
-  ({ className, value = 0, max = 100, ...rest }, forwardedRef) => {
-    const safeValue = Math.min(max, Math.max(value, 0));
+const FileCardProgress = React.forwardRef<
+  HTMLDivElement,
+  FileCardProgressProps
+>(({ className, value = 0, max = 100, ...rest }, forwardedRef) => {
+  const safeValue = Math.min(max, Math.max(value, 0));
 
-    return (
+  return (
+    <div
+      ref={forwardedRef}
+      className={cn(
+        'bg-bg-soft-200 h-1.5 w-full overflow-clip rounded-full',
+        className
+      )}
+      {...rest}
+    >
       <div
-        ref={forwardedRef}
-        className={cn('h-1.5 w-full overflow-clip rounded-full bg-bg-soft-200', className)}
-        {...rest}
-      >
-        <div
-          className='h-full rounded-full bg-information-base transition-all duration-300 ease-out'
-          style={{ width: `${(safeValue / max) * 100}%` }}
-          role='progressbar'
-          aria-valuenow={safeValue}
-          aria-valuemax={max}
-        />
-      </div>
-    );
-  },
-);
+        className='bg-information-base h-full rounded-full transition-all duration-300 ease-out'
+        style={{ width: `${(safeValue / max) * 100}%` }}
+        role='progressbar'
+        aria-valuenow={safeValue}
+        aria-valuemax={max}
+      />
+    </div>
+  );
+});
 FileCardProgress.displayName = 'FileCardProgress';
 
 // ─── Actions ─────────────────────────────────────────────────────────────────
@@ -334,13 +357,13 @@ const FileCardDownloadButton = React.forwardRef<
       ref={forwardedRef}
       type='button'
       className={cn(
-        'flex shrink-0 items-center justify-center rounded-md p-0.5 text-text-sub-600',
-        'transition duration-200 ease-out hover:text-text-strong-950',
-        className,
+        'text-text-sub-600 flex shrink-0 items-center justify-center rounded-md p-0.5',
+        'hover:text-text-strong-950 transition duration-200 ease-out',
+        className
       )}
       {...rest}
     >
-      <RiDownloadLine className='w-5 h-5' />
+      <RiDownloadLine className='h-5 w-5' />
     </button>
   );
 });
@@ -357,13 +380,13 @@ const FileCardCloseButton = React.forwardRef<
       ref={forwardedRef}
       type='button'
       className={cn(
-        'flex shrink-0 items-center justify-center rounded-md p-0.5 text-text-sub-600',
-        'transition duration-200 ease-out hover:text-text-strong-950',
-        className,
+        'text-text-sub-600 flex shrink-0 items-center justify-center rounded-md p-0.5',
+        'hover:text-text-strong-950 transition duration-200 ease-out',
+        className
       )}
       {...rest}
     >
-      <RiCloseLine className='w-5 h-5' />
+      <RiCloseLine className='h-5 w-5' />
     </button>
   );
 });
@@ -380,9 +403,9 @@ const FileCardRetryLink = React.forwardRef<
       ref={forwardedRef}
       type='button'
       className={cn(
-        'self-start text-label-sm text-error-base underline decoration-solid',
-        'transition duration-200 ease-out hover:text-error-dark',
-        className,
+        'text-label-sm text-error-base self-start underline decoration-solid',
+        'hover:text-error-dark transition duration-200 ease-out',
+        className
       )}
       {...rest}
     >
@@ -418,11 +441,15 @@ type CompactRootProps = React.HTMLAttributes<HTMLDivElement> & {
 const FileCardCompactRoot = React.forwardRef<HTMLDivElement, CompactRootProps>(
   ({ className, error, children, ...rest }, forwardedRef) => {
     return (
-      <div ref={forwardedRef} className={cn(compactRootVariants({ error }), className)} {...rest}>
+      <div
+        ref={forwardedRef}
+        className={cn(compactRootVariants({ error }), className)}
+        {...rest}
+      >
         {children}
       </div>
     );
-  },
+  }
 );
 FileCardCompactRoot.displayName = 'FileCardCompactRoot';
 
@@ -451,7 +478,10 @@ const FileCardCompactBody = React.forwardRef<
   return (
     <div
       ref={forwardedRef}
-      className={cn('flex min-w-0 flex-1 flex-col items-start gap-1', className)}
+      className={cn(
+        'flex min-w-0 flex-1 flex-col items-start gap-1',
+        className
+      )}
       {...rest}
     />
   );
@@ -467,7 +497,10 @@ const FileCardCompactErrorBody = React.forwardRef<
   return (
     <div
       ref={forwardedRef}
-      className={cn('flex min-w-0 flex-1 flex-col items-start gap-2', className)}
+      className={cn(
+        'flex min-w-0 flex-1 flex-col items-start gap-2',
+        className
+      )}
       {...rest}
     />
   );
@@ -494,7 +527,11 @@ FileCardCompactDescription.displayName = 'FileCardCompactDescription';
 
 function FileCardDot({ className }: { className?: string }) {
   return (
-    <span className={cn('shrink-0 text-paragraph-xs text-text-sub-600', className)}>∙</span>
+    <span
+      className={cn('text-paragraph-xs text-text-sub-600 shrink-0', className)}
+    >
+      ∙
+    </span>
   );
 }
 FileCardDot.displayName = 'FileCardDot';
@@ -505,28 +542,29 @@ type CompactStatusProps = React.HTMLAttributes<HTMLDivElement> & {
   status: 'uploading' | 'completed' | 'failed';
 };
 
-const FileCardCompactStatus = React.forwardRef<HTMLDivElement, CompactStatusProps>(
-  ({ className, status, children, ...rest }, forwardedRef) => {
-    return (
-      <div
-        ref={forwardedRef}
-        className={cn('flex shrink-0 items-start gap-1', className)}
-        {...rest}
-      >
-        {status === 'uploading' && (
-          <RiLoader2Fill className='w-4 h-4 shrink-0 animate-spin text-text-sub-600' />
-        )}
-        {status === 'completed' && (
-          <RiCheckboxCircleFill className='w-4 h-4 shrink-0 text-success-base' />
-        )}
-        {status === 'failed' && (
-          <RiErrorWarningFill className='w-4 h-4 shrink-0 text-error-base' />
-        )}
-        <span className='text-paragraph-xs text-text-strong-950'>{children}</span>
-      </div>
-    );
-  },
-);
+const FileCardCompactStatus = React.forwardRef<
+  HTMLDivElement,
+  CompactStatusProps
+>(({ className, status, children, ...rest }, forwardedRef) => {
+  return (
+    <div
+      ref={forwardedRef}
+      className={cn('flex shrink-0 items-start gap-1', className)}
+      {...rest}
+    >
+      {status === 'uploading' && (
+        <RiLoader2Fill className='text-text-sub-600 h-4 w-4 shrink-0 animate-spin' />
+      )}
+      {status === 'completed' && (
+        <RiCheckboxCircleFill className='text-success-base h-4 w-4 shrink-0' />
+      )}
+      {status === 'failed' && (
+        <RiErrorWarningFill className='text-error-base h-4 w-4 shrink-0' />
+      )}
+      <span className='text-paragraph-xs text-text-strong-950'>{children}</span>
+    </div>
+  );
+});
 FileCardCompactStatus.displayName = 'FileCardCompactStatus';
 
 // ─── Delete Button ──────────────────────────────────────────────────────────
@@ -540,13 +578,13 @@ const FileCardDeleteButton = React.forwardRef<
       ref={forwardedRef}
       type='button'
       className={cn(
-        'flex shrink-0 items-center justify-center rounded-md p-0.5 text-text-sub-600',
-        'transition duration-200 ease-out hover:text-text-strong-950',
-        className,
+        'text-text-sub-600 flex shrink-0 items-center justify-center rounded-md p-0.5',
+        'hover:text-text-strong-950 transition duration-200 ease-out',
+        className
       )}
       {...rest}
     >
-      <RiDeleteBinLine className='w-5 h-5' />
+      <RiDeleteBinLine className='h-5 w-5' />
     </button>
   );
 });
@@ -569,7 +607,6 @@ function getFileFormat(name: string): string {
   const ext = name.split('.').pop()?.toUpperCase() ?? '';
   return ext;
 }
-
 
 function isImageType(type: string): boolean {
   return type.startsWith('image/');
@@ -599,7 +636,15 @@ interface FileCardItemProps {
   className?: string;
 }
 
-function FileCardItem({ file, variant = 'default', onRemove, onRetry, onClose, onDownload, className }: FileCardItemProps) {
+function FileCardItem({
+  file,
+  variant = 'default',
+  onRemove,
+  onRetry,
+  onClose,
+  onDownload,
+  className,
+}: FileCardItemProps) {
   const format = getFileFormat(file.name);
   const color = getFormatColor(format);
   const size = formatFileSize(file.size);
@@ -618,7 +663,9 @@ function FileCardItem({ file, variant = 'default', onRemove, onRetry, onClose, o
                 <FileCardCompactDescription>
                   <FileCardMeta>{size}</FileCardMeta>
                   <FileCardDot />
-                  <FileCardCompactStatus status='failed'>Failed</FileCardCompactStatus>
+                  <FileCardCompactStatus status='failed'>
+                    Failed
+                  </FileCardCompactStatus>
                 </FileCardCompactDescription>
               </FileCardCompactBody>
               {onRetry && <FileCardRetryLink onClick={onRetry} />}
@@ -637,17 +684,25 @@ function FileCardItem({ file, variant = 'default', onRemove, onRetry, onClose, o
             <FileCardName>{file.name}</FileCardName>
             <FileCardCompactDescription>
               <FileCardMeta>
-                {isActive ? `${formatFileSize(Math.round(file.size * file.progress / 100))} of ${size}` : size}
+                {isActive
+                  ? `${formatFileSize(Math.round((file.size * file.progress) / 100))} of ${size}`
+                  : size}
               </FileCardMeta>
               <FileCardDot />
-              <FileCardCompactStatus status={file.status === 'completed' ? 'completed' : 'uploading'}>
+              <FileCardCompactStatus
+                status={file.status === 'completed' ? 'completed' : 'uploading'}
+              >
                 {file.status === 'completed' ? 'Completed' : 'Uploading...'}
               </FileCardCompactStatus>
             </FileCardCompactDescription>
           </FileCardCompactBody>
           {isActive && onClose && <FileCardCloseButton onClick={onClose} />}
-          {file.status === 'completed' && onDownload && <FileCardDownloadButton onClick={onDownload} />}
-          {file.status === 'completed' && onRemove && <FileCardDeleteButton onClick={onRemove} />}
+          {file.status === 'completed' && onDownload && (
+            <FileCardDownloadButton onClick={onDownload} />
+          )}
+          {file.status === 'completed' && onRemove && (
+            <FileCardDeleteButton onClick={onRemove} />
+          )}
         </FileCardCompactContent>
         {isActive && <FileCardProgress value={file.progress} />}
       </FileCardCompactRoot>
@@ -705,7 +760,9 @@ function FileCardItem({ file, variant = 'default', onRemove, onRetry, onClose, o
 
   return (
     <FileCardRoot className={className}>
-      <FileCardThumbnail className={isImage && thumbnailSrc ? 'bg-transparent' : undefined}>
+      <FileCardThumbnail
+        className={isImage && thumbnailSrc ? 'bg-transparent' : undefined}
+      >
         {isImage && thumbnailSrc ? (
           <FileCardImage src={thumbnailSrc} alt={file.name} />
         ) : (

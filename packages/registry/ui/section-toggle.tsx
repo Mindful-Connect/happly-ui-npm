@@ -19,9 +19,9 @@ function SectionToggleRoot({
   return (
     <div
       className={cn(
-        'overflow-hidden rounded-2xl border border-stroke-soft-200 p-2 shadow-regular-xs transition-colors duration-200',
-        open ? 'bg-bg-weak-50' : 'cursor-pointer bg-bg-white-0',
-        className,
+        'border-stroke-soft-200 shadow-regular-xs overflow-hidden rounded-2xl border p-2 transition-colors duration-200',
+        open ? 'bg-bg-weak-50' : 'bg-bg-white-0 cursor-pointer',
+        className
       )}
       {...rest}
     >
@@ -48,13 +48,14 @@ function SectionToggleHeader({
       className={cn(
         'flex items-start gap-3.5',
         open ? 'px-2 pt-2' : 'p-2',
-        className,
+        className
       )}
-      {...(!open && onOpenChange && {
-        role: 'button',
-        tabIndex: 0,
-        onClick: () => onOpenChange(true),
-      })}
+      {...(!open &&
+        onOpenChange && {
+          role: 'button',
+          tabIndex: 0,
+          onClick: () => onOpenChange(true),
+        })}
       {...rest}
     >
       {children}
@@ -69,7 +70,10 @@ function SectionToggleTextGroup({
   ...rest
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn('flex min-w-0 flex-1 flex-col gap-1', className)} {...rest}>
+    <div
+      className={cn('flex min-w-0 flex-1 flex-col gap-1', className)}
+      {...rest}
+    >
       {children}
     </div>
   );

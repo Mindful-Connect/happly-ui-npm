@@ -106,7 +106,7 @@ function PaginationRoot({
       PAGINATION_NAV_ICON_NAME,
     ],
     uniqueId,
-    asChild,
+    asChild
   );
 
   return (
@@ -126,7 +126,7 @@ type PaginationItemProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
 const PaginationItem = React.forwardRef<HTMLButtonElement, PaginationItemProps>(
   (
     { asChild, children, className, variant, current, ...rest },
-    forwardedRef,
+    forwardedRef
   ) => {
     const Component = asChild ? Slot : 'button';
     const { item } = paginationVariants({ variant });
@@ -142,7 +142,7 @@ const PaginationItem = React.forwardRef<HTMLButtonElement, PaginationItemProps>(
         {children}
       </Component>
     );
-  },
+  }
 );
 PaginationItem.displayName = PAGINATION_ITEM_NAME;
 

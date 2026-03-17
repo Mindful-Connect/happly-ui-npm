@@ -1,6 +1,9 @@
 import * as FileUpload from './file-upload';
 
-export default { title: 'Form/File Upload/File Upload', component: FileUpload.Root };
+export default {
+  title: 'Form/File Upload/File Upload',
+  component: FileUpload.Root,
+};
 
 export const Document = {
   render: () => (
@@ -9,21 +12,15 @@ export const Document = {
 };
 
 export const Image = {
-  render: () => (
-    <FileUpload.Dropzone type='image' className='min-w-[480px]' />
-  ),
+  render: () => <FileUpload.Dropzone type='image' className='min-w-[480px]' />,
 };
 
 export const Video = {
-  render: () => (
-    <FileUpload.Dropzone type='video' className='min-w-[480px]' />
-  ),
+  render: () => <FileUpload.Dropzone type='video' className='min-w-[480px]' />,
 };
 
 export const Audio = {
-  render: () => (
-    <FileUpload.Dropzone type='audio' className='min-w-[480px]' />
-  ),
+  render: () => <FileUpload.Dropzone type='audio' className='min-w-[480px]' />,
 };
 
 export const Attachment = {

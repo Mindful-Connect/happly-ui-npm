@@ -18,10 +18,10 @@ export const Playground = {
         <Section.Description>{args.description}</Section.Description>
       </Section.Header>
       <Section.Content>
-        <div className='h-10 rounded-[10px] border border-stroke-soft-200 bg-bg-white-0 px-3 py-2.5 text-paragraph-sm text-text-soft-400 shadow-regular-xs'>
+        <div className='border-stroke-soft-200 bg-bg-white-0 text-paragraph-sm text-text-soft-400 shadow-regular-xs h-10 rounded-[10px] border px-3 py-2.5'>
           Content field 1
         </div>
-        <div className='h-10 rounded-[10px] border border-stroke-soft-200 bg-bg-white-0 px-3 py-2.5 text-paragraph-sm text-text-soft-400 shadow-regular-xs'>
+        <div className='border-stroke-soft-200 bg-bg-white-0 text-paragraph-sm text-text-soft-400 shadow-regular-xs h-10 rounded-[10px] border px-3 py-2.5'>
           Content field 2
         </div>
       </Section.Content>
@@ -40,16 +40,16 @@ export const Default = {
         </Section.Description>
       </Section.Header>
       <Section.Content>
-        <div className='h-10 rounded-[10px] border border-stroke-soft-200 bg-bg-white-0 px-3 py-2.5 text-paragraph-sm text-text-soft-400 shadow-regular-xs'>
+        <div className='border-stroke-soft-200 bg-bg-white-0 text-paragraph-sm text-text-soft-400 shadow-regular-xs h-10 rounded-[10px] border px-3 py-2.5'>
           E.g., Prairie Coffee Co.
         </div>
-        <div className='h-10 rounded-[10px] border border-stroke-soft-200 bg-bg-white-0 px-3 py-2.5 text-paragraph-sm text-text-soft-400 shadow-regular-xs'>
+        <div className='border-stroke-soft-200 bg-bg-white-0 text-paragraph-sm text-text-soft-400 shadow-regular-xs h-10 rounded-[10px] border px-3 py-2.5'>
           Select a category
         </div>
-        <div className='h-10 rounded-[10px] border border-stroke-soft-200 bg-bg-white-0 px-3 py-2.5 text-paragraph-sm text-text-soft-400 shadow-regular-xs'>
+        <div className='border-stroke-soft-200 bg-bg-white-0 text-paragraph-sm text-text-soft-400 shadow-regular-xs h-10 rounded-[10px] border px-3 py-2.5'>
           Where is the business located?
         </div>
-        <div className='h-10 rounded-[10px] border border-stroke-soft-200 bg-bg-white-0 px-3 py-2.5 text-paragraph-sm text-text-soft-400 shadow-regular-xs'>
+        <div className='border-stroke-soft-200 bg-bg-white-0 text-paragraph-sm text-text-soft-400 shadow-regular-xs h-10 rounded-[10px] border px-3 py-2.5'>
           What year was the business founded?
         </div>
       </Section.Content>
@@ -65,10 +65,10 @@ export const WithCustomHeaderWidth = {
         <Section.Description>Narrower left column.</Section.Description>
       </Section.Header>
       <Section.Content>
-        <div className='h-10 rounded-[10px] border border-stroke-soft-200 bg-bg-white-0 px-3 py-2.5 text-paragraph-sm text-text-soft-400 shadow-regular-xs'>
+        <div className='border-stroke-soft-200 bg-bg-white-0 text-paragraph-sm text-text-soft-400 shadow-regular-xs h-10 rounded-[10px] border px-3 py-2.5'>
           Content area
         </div>
-        <div className='h-10 rounded-[10px] border border-stroke-soft-200 bg-bg-white-0 px-3 py-2.5 text-paragraph-sm text-text-soft-400 shadow-regular-xs'>
+        <div className='border-stroke-soft-200 bg-bg-white-0 text-paragraph-sm text-text-soft-400 shadow-regular-xs h-10 rounded-[10px] border px-3 py-2.5'>
           Another field
         </div>
       </Section.Content>
@@ -83,13 +83,13 @@ export const Composed = {
       title='Enter your business details'
       description='Share the key details about your business so buyers can understand the opportunity.'
     >
-      <div className='h-10 rounded-[10px] border border-stroke-soft-200 bg-bg-white-0 px-3 py-2.5 text-paragraph-sm text-text-soft-400 shadow-regular-xs'>
+      <div className='border-stroke-soft-200 bg-bg-white-0 text-paragraph-sm text-text-soft-400 shadow-regular-xs h-10 rounded-[10px] border px-3 py-2.5'>
         E.g., Prairie Coffee Co.
       </div>
-      <div className='h-10 rounded-[10px] border border-stroke-soft-200 bg-bg-white-0 px-3 py-2.5 text-paragraph-sm text-text-soft-400 shadow-regular-xs'>
+      <div className='border-stroke-soft-200 bg-bg-white-0 text-paragraph-sm text-text-soft-400 shadow-regular-xs h-10 rounded-[10px] border px-3 py-2.5'>
         Select a category
       </div>
-      <div className='h-10 rounded-[10px] border border-stroke-soft-200 bg-bg-white-0 px-3 py-2.5 text-paragraph-sm text-text-soft-400 shadow-regular-xs'>
+      <div className='border-stroke-soft-200 bg-bg-white-0 text-paragraph-sm text-text-soft-400 shadow-regular-xs h-10 rounded-[10px] border px-3 py-2.5'>
         Where is the business located?
       </div>
     </Section.Composed>

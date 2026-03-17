@@ -8,9 +8,7 @@
   "migration": {
     "guide": "API changed: now uses compound component pattern with namespace exports. Import as `import * as Input from ...`. Use `<Input.Root>` with `<Input.Wrapper>` and `<Input.Input>` children. Old flat `<Input>` component removed. Uses tv (tailwind-variants) instead of manual class config. Uses recursiveCloneChildren for prop propagation."
   },
-  "dependencies": [
-    "@radix-ui/react-slot"
-  ],
+  "dependencies": ["@radix-ui/react-slot"],
   "registryDependencies": [
     "happly-ui-utils",
     "polymorphic",

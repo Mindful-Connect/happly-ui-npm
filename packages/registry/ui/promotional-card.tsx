@@ -86,7 +86,7 @@ const PromotionalCardRoot = React.forwardRef<
     sharedProps,
     [PROMOTIONAL_CARD_DECORATION_NAME],
     uniqueId,
-    asChild,
+    asChild
   );
 
   return (
@@ -162,13 +162,9 @@ function PromotionalCardDescription({
 }
 PromotionalCardDescription.displayName = PROMOTIONAL_CARD_DESCRIPTION_NAME;
 
-type PromotionalCardLinkProps =
-  React.AnchorHTMLAttributes<HTMLAnchorElement>;
+type PromotionalCardLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
-function PromotionalCardLink({
-  className,
-  ...rest
-}: PromotionalCardLinkProps) {
+function PromotionalCardLink({ className, ...rest }: PromotionalCardLinkProps) {
   const { link } = promotionalCardVariants();
 
   return <a className={link({ class: className })} {...rest} />;
@@ -192,7 +188,7 @@ const PromotionalCardComposed = React.forwardRef<
 >(
   (
     { icon, decorationIcon, title, description, linkText, linkHref, ...rest },
-    ref,
+    ref
   ) => {
     const DecorationComponent = decorationIcon ?? icon;
 
@@ -217,7 +213,7 @@ const PromotionalCardComposed = React.forwardRef<
         </PromotionalCardContent>
       </PromotionalCardRoot>
     );
-  },
+  }
 );
 PromotionalCardComposed.displayName = 'PromotionalCardComposed';
 

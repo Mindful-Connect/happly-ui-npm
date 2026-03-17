@@ -31,13 +31,18 @@ export const Playground = {
           <Drawer.Title>Drawer Title</Drawer.Title>
         </Drawer.Header>
         <Drawer.Body>
-          <div className='flex h-full items-center justify-center text-center text-paragraph-sm text-text-sub-600'>
+          <div className='text-paragraph-sm text-text-sub-600 flex h-full items-center justify-center text-center'>
             Drawer body content goes here.
           </div>
         </Drawer.Body>
         <Drawer.Footer className='border-t'>
           <Drawer.Close asChild>
-            <Button.Root variant='neutral' mode='stroke' size='medium' className='w-full'>
+            <Button.Root
+              variant='neutral'
+              mode='stroke'
+              size='medium'
+              className='w-full'
+            >
               Close
             </Button.Root>
           </Drawer.Close>
@@ -55,7 +60,7 @@ const TransactionItem = React.forwardRef<
     <button
       type='button'
       ref={forwardedRef}
-      className='flex w-full items-center gap-3 rounded-xl py-2 text-left transition-all duration-200 ease-out hover:bg-bg-weak-50 hover:px-3'
+      className='hover:bg-bg-weak-50 flex w-full items-center gap-3 rounded-xl py-2 text-left transition-all duration-200 ease-out hover:px-3'
       {...rest}
     >
       {children}
@@ -106,7 +111,7 @@ export const Basic = {
           <Drawer.Title>Drawer Title</Drawer.Title>
         </Drawer.Header>
         <Drawer.Body>
-          <div className='flex h-full items-center justify-center text-center text-paragraph-sm text-text-sub-600'>
+          <div className='text-paragraph-sm text-text-sub-600 flex h-full items-center justify-center text-center'>
             Drawer Body Content
           </div>
         </Drawer.Body>
@@ -161,7 +166,7 @@ export const Demo = {
 
           <div className='space-y-3 p-5'>
             <div className='space-y-1'>
-              <div className='text-subheading-xs uppercase text-text-soft-400'>
+              <div className='text-subheading-xs text-text-soft-400 uppercase'>
                 Email Address
               </div>
               <div className='text-label-sm text-text-strong-950'>
@@ -170,7 +175,7 @@ export const Demo = {
             </div>
             <Divider.Root variant='line-spacing' />
             <div className='space-y-1'>
-              <div className='text-subheading-xs uppercase text-text-soft-400'>
+              <div className='text-subheading-xs text-text-soft-400 uppercase'>
                 Phone number
               </div>
               <div className='text-label-sm text-text-strong-950'>
@@ -183,14 +188,14 @@ export const Demo = {
 
           <div className='space-y-2.5 px-5 py-3.5'>
             <TransactionItem>
-              <div className='flex w-10 h-10 shrink-0 items-center justify-center rounded-full bg-bg-white-0 shadow-regular-xs ring-1 ring-inset ring-stroke-soft-200'>
-                <RiShoppingCartLine className='w-5 h-5 text-text-sub-600' />
+              <div className='bg-bg-white-0 shadow-regular-xs ring-stroke-soft-200 flex h-10 w-10 shrink-0 items-center justify-center rounded-full ring-1 ring-inset'>
+                <RiShoppingCartLine className='text-text-sub-600 h-5 w-5' />
               </div>
               <div className='min-w-0 flex-1 space-y-1'>
                 <div className='text-label-sm text-text-strong-950'>
                   Grocery Shopping
                 </div>
-                <div className='truncate text-paragraph-xs text-text-sub-600'>
+                <div className='text-paragraph-xs text-text-sub-600 truncate'>
                   Purchase of monthly groceries.
                 </div>
               </div>
@@ -204,14 +209,14 @@ export const Demo = {
               </div>
             </TransactionItem>
             <TransactionItem>
-              <div className='flex w-10 h-10 shrink-0 items-center justify-center rounded-full bg-bg-white-0 shadow-regular-xs ring-1 ring-inset ring-stroke-soft-200'>
-                <RiPieChartLine className='w-5 h-5 text-text-sub-600' />
+              <div className='bg-bg-white-0 shadow-regular-xs ring-stroke-soft-200 flex h-10 w-10 shrink-0 items-center justify-center rounded-full ring-1 ring-inset'>
+                <RiPieChartLine className='text-text-sub-600 h-5 w-5' />
               </div>
               <div className='min-w-0 flex-1 space-y-1'>
                 <div className='text-label-sm text-text-strong-950'>
                   Stock Dividend
                 </div>
-                <div className='truncate text-paragraph-xs text-text-sub-600'>
+                <div className='text-paragraph-xs text-text-sub-600 truncate'>
                   Payment from stock investments.
                 </div>
               </div>
@@ -225,14 +230,14 @@ export const Demo = {
               </div>
             </TransactionItem>
             <TransactionItem>
-              <div className='flex w-10 h-10 shrink-0 items-center justify-center rounded-full bg-away-lighter'>
-                <RiLightbulbFlashFill className='w-5 h-5 text-away-base' />
+              <div className='bg-away-lighter flex h-10 w-10 shrink-0 items-center justify-center rounded-full'>
+                <RiLightbulbFlashFill className='text-away-base h-5 w-5' />
               </div>
               <div className='min-w-0 flex-1 space-y-1'>
                 <div className='text-label-sm text-text-strong-950'>
                   Electricity Bills
                 </div>
-                <div className='truncate text-paragraph-xs text-text-sub-600'>
+                <div className='text-paragraph-xs text-text-sub-600 truncate'>
                   Payment for electricity bills.
                 </div>
               </div>

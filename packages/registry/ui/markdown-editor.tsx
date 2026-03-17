@@ -44,7 +44,7 @@ const INLINE_FORMATS: Record<string, { prefix: string; suffix: string }> = {
 function applyFormat(
   textarea: HTMLTextAreaElement,
   action: FormatAction,
-  onChange?: (value: string) => void,
+  onChange?: (value: string) => void
 ) {
   const { selectionStart: start, selectionEnd: end, value } = textarea;
   const selected = value.slice(start, end);
@@ -53,7 +53,7 @@ function applyFormat(
   if (inline) {
     const before = value.slice(
       Math.max(0, start - inline.prefix.length),
-      start,
+      start
     );
     const after = value.slice(end, end + inline.suffix.length);
 
@@ -111,11 +111,11 @@ function applyFormat(
 function setNativeValue(
   textarea: HTMLTextAreaElement,
   value: string,
-  onChange?: (value: string) => void,
+  onChange?: (value: string) => void
 ) {
   const nativeSetter = Object.getOwnPropertyDescriptor(
     HTMLTextAreaElement.prototype,
-    'value',
+    'value'
   )?.set;
   nativeSetter?.call(textarea, value);
   textarea.dispatchEvent(new Event('input', { bubbles: true }));
@@ -151,7 +151,7 @@ function toggleNumberedPrefix(block: string) {
 
 function useMarkdownFormatting(
   textareaRef: React.RefObject<HTMLTextAreaElement | null>,
-  onChange?: (value: string) => void,
+  onChange?: (value: string) => void
 ) {
   return React.useCallback(
     (action: FormatAction) => {
@@ -159,7 +159,7 @@ function useMarkdownFormatting(
       if (!textarea) return;
       applyFormat(textarea, action, onChange);
     },
-    [textareaRef, onChange],
+    [textareaRef, onChange]
   );
 }
 
@@ -186,12 +186,11 @@ type MarkdownEditorContextValue = {
   previewing: boolean;
 };
 
-const MarkdownEditorContext =
-  React.createContext<MarkdownEditorContextValue>({
-    hasError: false,
-    disabled: false,
-    previewing: false,
-  });
+const MarkdownEditorContext = React.createContext<MarkdownEditorContextValue>({
+  hasError: false,
+  disabled: false,
+  previewing: false,
+});
 
 function useMarkdownEditorContext() {
   return React.useContext(MarkdownEditorContext);
@@ -217,16 +216,16 @@ function MarkdownEditorRoot({
 }: MarkdownEditorRootProps) {
   const contextValue = React.useMemo<MarkdownEditorContextValue>(
     () => ({ hasError, disabled, previewing }),
-    [hasError, disabled, previewing],
+    [hasError, disabled, previewing]
   );
 
   return (
     <MarkdownEditorContext.Provider value={contextValue}>
       <div
         className={cn(
-          'flex w-full flex-col gap-2 rounded-2xl bg-bg-weak-50 p-2',
+          'bg-bg-weak-50 flex w-full flex-col gap-2 rounded-2xl p-2',
           disabled && 'pointer-events-none opacity-50',
-          className,
+          className
         )}
         {...rest}
       >
@@ -248,8 +247,8 @@ function Toolbar({ className, children, ...rest }: ToolbarProps) {
     <Tooltip.Provider delayDuration={300}>
       <div
         className={cn(
-          'flex items-center justify-between pl-3 pr-2 py-1',
-          className,
+          'flex items-center justify-between py-1 pr-2 pl-3',
+          className
         )}
         role='toolbar'
         aria-label='Formatting options'
@@ -277,13 +276,13 @@ const ToolbarButton = React.forwardRef<HTMLButtonElement, ToolbarButtonProps>(
         type='button'
         disabled={disabled}
         className={cn(
-          'flex w-7 h-7 items-center justify-center rounded-md text-text-sub-600 outline-none',
+          'text-text-sub-600 flex h-7 w-7 items-center justify-center rounded-md outline-none',
           'transition duration-200 ease-out',
           'hover:bg-bg-soft-200 hover:text-text-strong-950',
-          'focus-visible:ring-2 focus-visible:ring-stroke-strong-950',
+          'focus-visible:ring-stroke-strong-950 focus-visible:ring-2',
           active && 'bg-bg-soft-200 text-text-strong-950',
-          'disabled:pointer-events-none disabled:text-text-disabled-300',
-          className,
+          'disabled:text-text-disabled-300 disabled:pointer-events-none',
+          className
         )}
         {...rest}
       >
@@ -301,7 +300,7 @@ const ToolbarButton = React.forwardRef<HTMLButtonElement, ToolbarButtonProps>(
         </Tooltip.Content>
       </Tooltip.Root>
     );
-  },
+  }
 );
 ToolbarButton.displayName = 'MarkdownEditorToolbarButton';
 
@@ -358,7 +357,7 @@ const Content = React.forwardRef<HTMLTextAreaElement, ContentProps>(
       value = '',
       ...rest
     },
-    forwardedRef,
+    forwardedRef
   ) => {
     const {
       hasError: contextHasError,
@@ -372,11 +371,11 @@ const Content = React.forwardRef<HTMLTextAreaElement, ContentProps>(
         <div
           className={cn(
             'markdown-editor-preview',
-            'w-full overflow-y-auto rounded-xl bg-bg-white-0 px-3 py-2.5 shadow-regular-xs',
-            'ring-1 ring-inset ring-stroke-soft-200',
+            'bg-bg-white-0 shadow-regular-xs w-full overflow-y-auto rounded-xl px-3 py-2.5',
+            'ring-stroke-soft-200 ring-1 ring-inset',
             'text-paragraph-sm text-text-strong-950',
             disabled && 'bg-bg-white-0/80 ring-transparent',
-            className,
+            className
           )}
           style={{ minHeight: height }}
           dangerouslySetInnerHTML={{ __html: renderMarkdown(value) }}
@@ -393,13 +392,13 @@ const Content = React.forwardRef<HTMLTextAreaElement, ContentProps>(
         value={value}
         className={cn(
           'hover:!bg-bg-white-0 hover:!ring-stroke-soft-200',
-          className,
+          className
         )}
         style={{ minHeight: height }}
         {...rest}
       />
     );
-  },
+  }
 );
 Content.displayName = 'MarkdownEditorContent';
 
@@ -540,7 +539,7 @@ Composed.displayName = 'MarkdownEditorComposed';
 
 /** Strip out props that belong to Composed so only textarea-safe props remain */
 function filterTextareaProps(
-  props: Record<string, unknown>,
+  props: Record<string, unknown>
 ): Record<string, unknown> {
   const {
     value: _v,
@@ -580,7 +579,7 @@ function ComposedSingle({
 }: ComposedSingleProps & { toggleItems: false }) {
   const [previewing, setPreviewing] = React.useState(false);
   const [internalValue, setInternalValue] = React.useState(
-    controlledValue ?? defaultValue,
+    controlledValue ?? defaultValue
   );
   const isControlled = controlledValue !== undefined;
   const value = isControlled ? controlledValue : internalValue;
@@ -593,7 +592,7 @@ function ComposedSingle({
       if (!isControlled) setInternalValue(v);
       onChange?.(v);
     },
-    [isControlled, onChange],
+    [isControlled, onChange]
   );
 
   const format = useMarkdownFormatting(textareaRef, (v) => {
@@ -619,7 +618,7 @@ function ComposedSingle({
               aria-label={label}
               disabled={disabled || previewing}
             >
-              <Icon className='w-5 h-5' />
+              <Icon className='h-5 w-5' />
             </ToolbarButton>
           ))}
           <ToolbarButton
@@ -629,9 +628,9 @@ function ComposedSingle({
             active={previewing}
           >
             {previewing ? (
-              <RiEditLine className='w-5 h-5' />
+              <RiEditLine className='h-5 w-5' />
             ) : (
-              <RiEyeLine className='w-5 h-5' />
+              <RiEyeLine className='h-5 w-5' />
             )}
           </ToolbarButton>
         </ToolbarGroup>
@@ -672,10 +671,9 @@ function ComposedMulti({
 
   // Build initial values object from toggle items
   const buildEmpty = React.useCallback(
-    () =>
-      Object.fromEntries(items.map((i) => [i.value, ''])) as LocalizedValue,
+    () => Object.fromEntries(items.map((i) => [i.value, ''])) as LocalizedValue,
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [items.map((i) => i.value).join(',')],
+    [items.map((i) => i.value).join(',')]
   );
 
   const [previewing, setPreviewing] = React.useState(false);
@@ -683,7 +681,7 @@ function ComposedMulti({
     () => ({
       ...buildEmpty(),
       ...defaultValues,
-    }),
+    })
   );
   const [internalLang, setInternalLang] = React.useState(defaultToggleValue);
 
@@ -703,14 +701,14 @@ function ComposedMulti({
       onChange?.(next);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [activeLang, values, isControlled, onChange],
+    [activeLang, values, isControlled, onChange]
   );
 
   const handleChange = React.useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       updateValue(e.target.value);
     },
-    [updateValue],
+    [updateValue]
   );
 
   const handleLangChange = React.useCallback(
@@ -718,7 +716,7 @@ function ComposedMulti({
       if (!controlledLang) setInternalLang(lang);
       onToggleChange?.(lang);
     },
-    [controlledLang, onToggleChange],
+    [controlledLang, onToggleChange]
   );
 
   const format = useMarkdownFormatting(textareaRef, updateValue);
@@ -741,7 +739,7 @@ function ComposedMulti({
               aria-label={label}
               disabled={disabled || previewing}
             >
-              <Icon className='w-5 h-5' />
+              <Icon className='h-5 w-5' />
             </ToolbarButton>
           ))}
           <ToolbarButton
@@ -751,9 +749,9 @@ function ComposedMulti({
             active={previewing}
           >
             {previewing ? (
-              <RiEditLine className='w-5 h-5' />
+              <RiEditLine className='h-5 w-5' />
             ) : (
-              <RiEyeLine className='w-5 h-5' />
+              <RiEyeLine className='h-5 w-5' />
             )}
           </ToolbarButton>
         </ToolbarGroup>

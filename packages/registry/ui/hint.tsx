@@ -55,7 +55,7 @@ function HintRoot({
     children as React.ReactElement[],
     sharedProps,
     [HINT_ICON_NAME],
-    uniqueId,
+    uniqueId
   );
 
   return (
@@ -102,8 +102,4 @@ function HintComposed({
 }
 HintComposed.displayName = 'HintComposed';
 
-export {
-  HintRoot as Root,
-  HintIcon as Icon,
-  HintComposed as Composed,
-};
+export { HintRoot as Root, HintIcon as Icon, HintComposed as Composed };

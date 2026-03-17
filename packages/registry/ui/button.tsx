@@ -6,16 +6,114 @@ import { Slot } from '@radix-ui/react-slot';
 import type { PolymorphicComponentProps } from '@/lib/polymorphic';
 import { recursiveCloneChildren } from '@/lib/recursive-clone-children';
 import { tv, type VariantProps } from '@/lib/tv';
+import * as Loader from '@/components/ui/loader';
 
 const BUTTON_ROOT_NAME = 'ButtonRoot';
 const BUTTON_ICON_NAME = 'ButtonIcon';
+
+function extractText(node: React.ReactNode): string {
+  if (typeof node === 'string') return node;
+  if (typeof node === 'number') return String(node);
+  if (Array.isArray(node)) return node.map(extractText).join('');
+  if (React.isValidElement(node) && node.props) {
+    return extractText((node.props as { children?: React.ReactNode }).children);
+  }
+  return '';
+}
+
+const LETTER_DELAY = 40;
+const LETTER_DURATION = 300;
+
+function ButtonLoadingContent({
+  children,
+  loadingText = 'Loading',
+}: {
+  children: React.ReactNode;
+  loadingText?: string;
+}) {
+  const text = extractText(children);
+  const exitLetters = text.split('');
+  const loadingLetters = loadingText.split('');
+  const exitEndMs = exitLetters.length * LETTER_DELAY + LETTER_DURATION;
+  const enterEndMs =
+    exitEndMs + loadingLetters.length * LETTER_DELAY + LETTER_DURATION;
+
+  return (
+    <span className='relative inline-flex items-center gap-1.5 overflow-hidden'>
+      {/* Spinner — delayed until exit completes */}
+      <Loader.Root
+        size={14}
+        color='current'
+        style={{
+          animation: `btn-fade-in 200ms ease-out ${exitEndMs}ms forwards`,
+          opacity: 0,
+        }}
+      />
+
+      {/* Enter text (determines layout width) */}
+      <span className='inline-flex'>
+        {loadingLetters.map((letter, i) => (
+          <span
+            key={i}
+            className='inline-block'
+            style={{
+              animation: `btn-letter-in ${LETTER_DURATION}ms ease-out ${exitEndMs + i * LETTER_DELAY}ms forwards`,
+              opacity: 0,
+            }}
+          >
+            {letter}
+          </span>
+        ))}
+        <span
+          style={{
+            animation: `btn-dot-1 2s ease-in-out ${enterEndMs}ms infinite`,
+            opacity: 0,
+          }}
+        >
+          .
+        </span>
+        <span
+          style={{
+            animation: `btn-dot-2 2s ease-in-out ${enterEndMs}ms infinite`,
+            opacity: 0,
+          }}
+        >
+          .
+        </span>
+        <span
+          style={{
+            animation: `btn-dot-3 2s ease-in-out ${enterEndMs}ms infinite`,
+            opacity: 0,
+          }}
+        >
+          .
+        </span>
+      </span>
+
+      {/* Exit text (absolute overlay, animates away) */}
+      <span className='absolute inset-0 inline-flex items-center justify-center'>
+        {exitLetters.map((letter, i) => (
+          <span
+            key={i}
+            className='inline-block'
+            style={{
+              animation: `btn-letter-out ${LETTER_DURATION}ms ease-in ${i * LETTER_DELAY}ms forwards`,
+            }}
+          >
+            {letter === ' ' ? '\u00A0' : letter}
+          </span>
+        ))}
+      </span>
+    </span>
+  );
+}
 
 export const buttonVariants = tv({
   slots: {
     root: [
       // base
       'group relative inline-flex items-center justify-center whitespace-nowrap outline-none',
-      'transition duration-200 ease-out',
+      'transition-all duration-300 ease-out [interpolate-size:allow-keywords]',
       // focus
       'focus:outline-none',
       // disabled
@@ -374,11 +472,23 @@ type ButtonRootProps = VariantProps<typeof buttonVariants> &
   React.ButtonHTMLAttributes<HTMLButtonElement> & {
     asChild?: boolean;
     loading?: boolean;
+    loadingText?: string;
   };
 
 const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
   (
-    { children, variant, mode, size, asChild, loading, className, disabled, ...rest },
+    {
+      children,
+      variant,
+      mode,
+      size,
+      asChild,
+      loading,
+      loadingText,
+      className,
+      disabled,
+      ...rest
+    },
     forwardedRef
   ) => {
     const uniqueId = React.useId();
@@ -403,16 +513,20 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
       <Component
         ref={forwardedRef}
         className={root({
-          class: [loading && 'pointer-events-none bg-bg-weak-50 text-text-disabled-300 ring-transparent shadow-none', className],
+          class: [
+            loading &&
+              'bg-bg-weak-50 text-text-disabled-300 pointer-events-none shadow-none ring-transparent',
+            className,
+          ],
         })}
         disabled={disabled}
         aria-disabled={loading || undefined}
         {...rest}
       >
         {loading ? (
-          <span className='animate-pulse'>
-            Loading...
-          </span>
+          <ButtonLoadingContent loadingText={loadingText}>
+            {children}
+          </ButtonLoadingContent>
         ) : (
           extendedChildren
         )}
@@ -445,7 +559,7 @@ type ButtonComposedProps = React.ComponentPropsWithoutRef<typeof ButtonRoot> & {
 const ButtonComposed = React.forwardRef<HTMLButtonElement, ButtonComposedProps>(
   (
     { children, leadingIcon: LeadingIcon, trailingIcon: TrailingIcon, ...rest },
-    forwardedRef,
+    forwardedRef
   ) => {
     return (
       <ButtonRoot ref={forwardedRef} {...rest}>
@@ -454,7 +568,7 @@ const ButtonComposed = React.forwardRef<HTMLButtonElement, ButtonComposedProps>(
         {TrailingIcon && <ButtonIcon as={TrailingIcon} />}
       </ButtonRoot>
     );
-  },
+  }
 );
 ButtonComposed.displayName = 'ButtonComposed';
 

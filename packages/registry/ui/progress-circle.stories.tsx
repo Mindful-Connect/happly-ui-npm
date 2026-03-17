@@ -1,6 +1,9 @@
 import * as ProgressCircle from './progress-circle';
 
-export default { title: 'Displaying Data/Progress Circle', component: ProgressCircle.Root };
+export default {
+  title: 'Displaying Data/Progress Circle',
+  component: ProgressCircle.Root,
+};
 
 export const Playground = {
   args: {
@@ -13,7 +16,9 @@ export const Playground = {
     max: { control: 'number' },
     size: { control: 'select', options: ['80', '72', '64', '56', '48', '44'] },
   },
-  render: (args: any) => <ProgressCircle.Root {...args}>{args.value}%</ProgressCircle.Root>,
+  render: (args: any) => (
+    <ProgressCircle.Root {...args}>{args.value}%</ProgressCircle.Root>
+  ),
 };
 
 export const Sizes = {

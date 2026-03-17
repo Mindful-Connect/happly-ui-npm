@@ -156,10 +156,10 @@ export const HTMLContent = {
           className='max-w-[272px]'
         >
           <div className='flex gap-3'>
-            <RiGlobalLine className='w-5 h-5 shrink-0 text-text-sub-600' />
+            <RiGlobalLine className='text-text-sub-600 h-5 w-5 shrink-0' />
             <div>
               <div className='text-text-strong-950'>Content Title</div>
-              <div className='mt-1 text-paragraph-xs text-text-sub-600'>
+              <div className='text-paragraph-xs text-text-sub-600 mt-1'>
                 Insert tooltip description here. It would look much better as
                 three lines of text.
               </div>

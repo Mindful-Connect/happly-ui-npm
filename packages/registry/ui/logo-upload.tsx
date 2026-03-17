@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import * as Avatar from '@/components/ui/avatar';
 import * as Button from '@/components/ui/button';
+import * as Loader from '@/components/ui/loader';
 import { cn } from '@/lib/happly-ui-utils';
 import { tv, type VariantProps } from '@/lib/tv';
 import type { UploadFile } from '@/hooks/use-file-upload';
@@ -74,32 +75,53 @@ function LogoUploadPreview({
     (file.status === 'completed' || file.preview) &&
     (file.url || file.preview);
 
+  const isUploading = file?.status === 'uploading';
+
+  const avatarClasses = cn(
+    'text-title-h5 size-[88px] rounded-xl @[350px]:size-[111px]',
+    avatarClassName
+  );
+
   return (
-    <div className={preview({ class: className })} {...rest}>
-      {hasImage ? (
-        <Avatar.Root
-          className={cn(
-            'text-title-h5 size-[88px] @[350px]:size-[111px] rounded-xl',
-            avatarClassName
-          )}
-        >
-          <Avatar.Image
-            src={file.url ?? file.preview}
-            alt='Logo'
-            className='rounded-xl object-cover'
+    <div
+      className={preview({
+        class: cn(
+          'relative overflow-hidden rounded-xl ring-1 ring-stroke-soft-200',
+          className,
+        ),
+      })}
+      {...rest}
+    >
+      <div
+        className='transition-all duration-300'
+        style={{
+          opacity: isUploading ? 0.4 : 1,
+          filter: isUploading ? 'blur(4px)' : 'none',
+        }}
+      >
+        {hasImage ? (
+          <Avatar.Root className={avatarClasses}>
+            <Avatar.Image
+              src={file.url ?? file.preview}
+              alt='Logo'
+              className='rounded-xl object-cover'
+            />
+          </Avatar.Root>
+        ) : (
+          <Avatar.Root
+            color={avatarColor}
+            placeholderType={placeholderType}
+            placeholder={placeholder}
+            className={avatarClasses}
           />
-        </Avatar.Root>
-      ) : (
-        <Avatar.Root
-          color={avatarColor}
-          placeholderType={placeholderType}
-          placeholder={placeholder}
-          className={cn(
-            'text-title-h5 size-[88px] @[350px]:size-[111px] rounded-xl',
-            avatarClassName
-          )}
-        />
-      )}
+        )}
+      </div>
+      <div
+        className='pointer-events-none absolute inset-0 flex items-center justify-center transition-opacity duration-300'
+        style={{ opacity: isUploading ? 1 : 0 }}
+      >
+        <Loader.Root size={32} color='primary' />
+      </div>
     </div>
   );
 }
@@ -168,6 +190,7 @@ function LogoUploadItem({
         </div>
         <LogoUploadActions>
           <Button.Root
+            type='button'
             variant='neutral'
             mode='stroke'
             size='xsmall'

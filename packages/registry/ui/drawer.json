@@ -5,14 +5,8 @@
   "title": "Drawer",
   "description": "A slide-in drawer panel built on Radix UI Dialog with overlay, header, body, and footer sections. Uses namespace exports: Drawer.Root, Drawer.Trigger, Drawer.Content, Drawer.Header, Drawer.Title, Drawer.Body, Drawer.Footer, Drawer.Close.",
   "version": "1.0.0",
-  "dependencies": [
-    "@radix-ui/react-dialog",
-    "@remixicon/react"
-  ],
-  "registryDependencies": [
-    "happly-ui-utils",
-    "compact-button"
-  ],
+  "dependencies": ["@radix-ui/react-dialog", "@remixicon/react"],
+  "registryDependencies": ["happly-ui-utils", "compact-button"],
   "docs": {
     "lead": "A slide-in drawer panel with overlay backdrop, header with close button, body, and footer sections.",
     "usage": "import * as Drawer from \"@/components/ui/drawer\"\n\n<Drawer.Root>\n  <Drawer.Trigger>Open</Drawer.Trigger>\n  <Drawer.Content>\n    <Drawer.Header>\n      <Drawer.Title>Title</Drawer.Title>\n    </Drawer.Header>\n    <Drawer.Body>Content</Drawer.Body>\n    <Drawer.Footer>Footer</Drawer.Footer>\n  </Drawer.Content>\n</Drawer.Root>",

@@ -101,7 +101,7 @@ export const WithImage = {
           as='img'
           src='https://cdn.simpleicons.org/apple'
           alt='Apple'
-          className='-mx-1 w-4 h-4 shrink-0 rounded-full object-contain'
+          className='-mx-1 h-4 w-4 shrink-0 rounded-full object-contain'
         />
         Apple
       </Tag.Root>
@@ -111,7 +111,7 @@ export const WithImage = {
           as='img'
           src='https://cdn.simpleicons.org/figma'
           alt='Figma'
-          className='-mx-1 w-4 h-4 shrink-0 rounded-full object-contain'
+          className='-mx-1 h-4 w-4 shrink-0 rounded-full object-contain'
         />
         Figma
       </Tag.Root>

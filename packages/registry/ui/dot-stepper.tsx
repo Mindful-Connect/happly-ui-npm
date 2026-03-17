@@ -65,7 +65,7 @@ function DotStepperRoot({
     sharedProps,
     [DOT_STEPPER_ITEM_NAME],
     uniqueId,
-    asChild,
+    asChild
   );
 
   return (
@@ -96,7 +96,7 @@ const DotStepperItem = React.forwardRef<HTMLButtonElement, DotStepperItemProps>(
         {...rest}
       />
     );
-  },
+  }
 );
 DotStepperItem.displayName = DOT_STEPPER_ITEM_NAME;
 

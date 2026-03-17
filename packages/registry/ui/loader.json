@@ -1,0 +1,78 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "loader",
+  "type": "registry:ui",
+  "title": "Loader",
+  "description": "A spinning loading indicator with configurable pixel size, stroke width, and color.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": ["tv"],
+  "docs": {
+    "lead": "A spinning loading indicator with configurable pixel size, stroke width, and color.",
+    "usage": "import * as Loader from \"@/components/ui/loader\"\n\n<Loader.Root size={24} />",
+    "examples": [
+      {
+        "title": "Sizes",
+        "description": "Pass any pixel value to the size prop for precise control.",
+        "code": "<Loader.Root size={14} />\n<Loader.Root size={20} />\n<Loader.Root size={24} />\n<Loader.Root size={32} />\n<Loader.Root size={48} />",
+        "stories": ["Sizes"]
+      },
+      {
+        "title": "Colors",
+        "description": "Supports all semantic color tokens. Use 'current' to inherit from the parent text color.",
+        "code": "<Loader.Root color=\"primary\" />\n<Loader.Root color=\"neutral\" />\n<Loader.Root color=\"error\" />\n<Loader.Root color=\"success\" />\n<Loader.Root color=\"warning\" />\n<Loader.Root color=\"white\" />",
+        "stories": ["Colors"]
+      },
+      {
+        "title": "Inline",
+        "description": "Use a small size with the 'current' color to place loaders inline with text.",
+        "code": "<p className=\"flex items-center gap-2\">\n  <Loader.Root size={14} color=\"current\" />\n  Fetching results...\n</p>",
+        "stories": ["Inline"]
+      },
+      {
+        "title": "Custom Stroke Width",
+        "description": "Override the auto-calculated stroke width for thinner or thicker arcs.",
+        "code": "<Loader.Root size={32} strokeWidth={2} />\n<Loader.Root size={32} strokeWidth={4} />\n<Loader.Root size={32} strokeWidth={6} />",
+        "stories": ["CustomStroke"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Loader.Root",
+        "description": "The loader component.",
+        "props": [
+          {
+            "name": "size",
+            "type": "number",
+            "default": "24",
+            "description": "The size of the loader in pixels"
+          },
+          {
+            "name": "strokeWidth",
+            "type": "number",
+            "default": "size / 8",
+            "description": "The stroke width of the spinner arcs. Auto-calculated from size if not provided."
+          },
+          {
+            "name": "color",
+            "type": "'primary' | 'neutral' | 'white' | 'error' | 'success' | 'warning' | 'current'",
+            "default": "'primary'",
+            "description": "The color of the loader. Use 'current' to inherit from parent text color."
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "default": "'Loading'",
+            "description": "Accessible label for screen readers"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/loader.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

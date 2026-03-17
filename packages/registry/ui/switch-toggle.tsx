@@ -30,8 +30,8 @@ const SwitchToggleList = React.forwardRef<
     <TabsPrimitive.List
       ref={mergeRefs(forwardedRef, listRef)}
       className={cn(
-        'relative isolate grid w-full auto-cols-fr grid-flow-col gap-1 rounded-full bg-bg-weak-50 p-1',
-        className,
+        'bg-bg-weak-50 relative isolate grid w-full auto-cols-fr grid-flow-col gap-1 rounded-full p-1',
+        className
       )}
       {...rest}
     >
@@ -40,11 +40,11 @@ const SwitchToggleList = React.forwardRef<
       {/* floating bg */}
       <div
         className={cn(
-          'absolute inset-y-1 left-0 -z-10 rounded-full bg-bg-white-0 shadow-toggle-switch transition-transform duration-300',
+          'bg-bg-white-0 shadow-toggle-switch absolute inset-y-1 left-0 -z-10 rounded-full transition-transform duration-300',
           {
             hidden: !mounted,
           },
-          floatingBgClassName,
+          floatingBgClassName
         )}
         style={{
           transform: `translate3d(${lineStyle.left}px, 0, 0)`,
@@ -68,14 +68,14 @@ const SwitchToggleTrigger = React.forwardRef<
       className={cn(
         // base
         'peer',
-        'relative z-10 h-7 whitespace-nowrap rounded-full px-3 text-label-sm text-text-soft-400 outline-none',
+        'text-label-sm text-text-soft-400 relative z-10 h-7 rounded-full px-3 whitespace-nowrap outline-none',
         'flex items-center justify-center gap-1.5',
         'transition duration-300 ease-out',
         // focus
         'focus:outline-none',
         // active
         'data-[state=active]:text-text-strong-950',
-        className,
+        className
       )}
       {...rest}
     />
@@ -111,31 +111,26 @@ type SwitchToggleGroupProps = Omit<
 const SwitchToggleGroup = React.forwardRef<
   React.ComponentRef<typeof TabsPrimitive.Root>,
   SwitchToggleGroupProps
->(
-  (
-    { items, listClassName, floatingBgClassName, ...rest },
-    forwardedRef,
-  ) => {
-    return (
-      <SwitchToggleRoot ref={forwardedRef} {...rest}>
-        <SwitchToggleList
-          className={listClassName}
-          floatingBgClassName={floatingBgClassName}
-        >
-          {items.map((item) => {
-            const Icon = item.icon;
-            return (
-              <SwitchToggleTrigger key={item.value} value={item.value}>
-                {Icon && <Icon className='w-5 h-5 shrink-0' />}
-                {item.label}
-              </SwitchToggleTrigger>
-            );
-          })}
-        </SwitchToggleList>
-      </SwitchToggleRoot>
-    );
-  },
-);
+>(({ items, listClassName, floatingBgClassName, ...rest }, forwardedRef) => {
+  return (
+    <SwitchToggleRoot ref={forwardedRef} {...rest}>
+      <SwitchToggleList
+        className={listClassName}
+        floatingBgClassName={floatingBgClassName}
+      >
+        {items.map((item) => {
+          const Icon = item.icon;
+          return (
+            <SwitchToggleTrigger key={item.value} value={item.value}>
+              {Icon && <Icon className='h-5 w-5 shrink-0' />}
+              {item.label}
+            </SwitchToggleTrigger>
+          );
+        })}
+      </SwitchToggleList>
+    </SwitchToggleRoot>
+  );
+});
 SwitchToggleGroup.displayName = SWITCH_TOGGLE_GROUP_NAME;
 
 export {

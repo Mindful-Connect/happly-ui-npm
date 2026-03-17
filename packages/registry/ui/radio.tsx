@@ -23,12 +23,8 @@ const INDICATOR_CLASSES = {
 } as const;
 
 const OUTER_CLASSES = {
-  primary: [
-    'group-focus/radio:fill-primary-base',
-  ],
-  neutral: [
-    'group-focus/radio:fill-text-strong-950',
-  ],
+  primary: ['group-focus/radio:fill-primary-base'],
+  neutral: ['group-focus/radio:fill-text-strong-950'],
 } as const;
 
 const RadioGroup = React.forwardRef<
@@ -56,8 +52,8 @@ const RadioGroupItem = React.forwardRef<
     <RadioGroupPrimitive.Item
       ref={forwardedRef}
       className={cn(
-        'group/radio relative w-5 h-5 shrink-0 outline-none focus:outline-none',
-        className,
+        'group/radio relative h-5 w-5 shrink-0 outline-none focus:outline-none',
+        className
       )}
       {...rest}
     >
@@ -67,7 +63,7 @@ const RadioGroupItem = React.forwardRef<
         viewBox='0 0 20 20'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
-        className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'
+        className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
       >
         <circle
           cx='10'
@@ -82,7 +78,7 @@ const RadioGroupItem = React.forwardRef<
             // disabled
             'group-disabled/radio:fill-bg-soft-200',
             // checked
-            'group-data-[state=checked]/radio:fill-bg-white-0',
+            'group-data-[state=checked]/radio:fill-bg-white-0'
           )}
         />
         <g filter={`url(#${filterId})`}>
@@ -93,7 +89,7 @@ const RadioGroupItem = React.forwardRef<
             className={cn(
               'fill-bg-white-0',
               // disabled
-              'group-disabled/radio:hidden',
+              'group-disabled/radio:hidden'
             )}
           />
         </g>
@@ -142,7 +138,7 @@ const RadioGroupItem = React.forwardRef<
           viewBox='0 0 20 20'
           fill='none'
           xmlns='http://www.w3.org/2000/svg'
-          className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'
+          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
         >
           <circle
             cx='10'
@@ -154,7 +150,7 @@ const RadioGroupItem = React.forwardRef<
               // variant
               indicatorClasses,
               // disabled
-              'group-disabled/radio:stroke-bg-soft-200',
+              'group-disabled/radio:stroke-bg-soft-200'
             )}
           />
         </svg>

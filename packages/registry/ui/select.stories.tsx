@@ -35,13 +35,21 @@ export const Playground = {
   },
   argTypes: {
     size: { control: 'select', options: ['medium', 'small', 'xsmall'] },
-    variant: { control: 'select', options: ['default', 'compact', 'compactForInput', 'inline'] },
+    variant: {
+      control: 'select',
+      options: ['default', 'compact', 'compactForInput', 'inline'],
+    },
     disabled: { control: 'boolean' },
     hasError: { control: 'boolean' },
   },
   render: (args: any) => (
-    <div className='w-full min-w-[300px] max-w-[300px]'>
-      <Select.Root size={args.size} variant={args.variant} disabled={args.disabled} hasError={args.hasError}>
+    <div className='w-full max-w-[300px] min-w-[300px]'>
+      <Select.Root
+        size={args.size}
+        variant={args.variant}
+        disabled={args.disabled}
+        hasError={args.hasError}
+      >
         <Select.Trigger>
           <Select.Value placeholder='Select an option...' />
         </Select.Trigger>
@@ -65,30 +73,89 @@ const fruits = [
 ];
 
 const payments = [
-  { icon: RiFlashlightLine, value: 'utility-payment', label: 'Utility Payment' },
+  {
+    icon: RiFlashlightLine,
+    value: 'utility-payment',
+    label: 'Utility Payment',
+  },
   { icon: RiHome4Line, value: 'rent-payment', label: 'Rent Payment' },
   { icon: RiHandCoinLine, value: 'donation', label: 'Donation' },
-  { icon: RiFileList2Line, value: 'tax-payment', label: 'Tax Payment', disabled: true },
+  {
+    icon: RiFileList2Line,
+    value: 'tax-payment',
+    label: 'Tax Payment',
+    disabled: true,
+  },
   { icon: RiBuildingLine, value: 'tuition-fee', label: 'Tuition Fee' },
   { icon: RiSmartphoneLine, value: 'phone-bill', label: 'Phone Bill' },
 ];
 
 const countries = [
-  { icon: 'https://mindful-connect.github.io/circle-flags/flags/us.svg', value: 'us', label: 'United States' },
-  { icon: 'https://mindful-connect.github.io/circle-flags/flags/de.svg', value: 'germany', label: 'Germany' },
-  { icon: 'https://mindful-connect.github.io/circle-flags/flags/fr.svg', value: 'france', label: 'France', disabled: true },
-  { icon: 'https://mindful-connect.github.io/circle-flags/flags/tr.svg', value: 'turkey', label: 'Turkey' },
-  { icon: 'https://mindful-connect.github.io/circle-flags/flags/dk.svg', value: 'denmark', label: 'Denmark' },
-  { icon: 'https://mindful-connect.github.io/circle-flags/flags/fi.svg', value: 'finland', label: 'Finland' },
+  {
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/us.svg',
+    value: 'us',
+    label: 'United States',
+  },
+  {
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/de.svg',
+    value: 'germany',
+    label: 'Germany',
+  },
+  {
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/fr.svg',
+    value: 'france',
+    label: 'France',
+    disabled: true,
+  },
+  {
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/tr.svg',
+    value: 'turkey',
+    label: 'Turkey',
+  },
+  {
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/dk.svg',
+    value: 'denmark',
+    label: 'Denmark',
+  },
+  {
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/fi.svg',
+    value: 'finland',
+    label: 'Finland',
+  },
 ];
 
 const countriesShort = [
-  { icon: 'https://mindful-connect.github.io/circle-flags/flags/us.svg', value: 'us', label: 'US' },
-  { icon: 'https://mindful-connect.github.io/circle-flags/flags/de.svg', value: 'de', label: 'DE' },
-  { icon: 'https://mindful-connect.github.io/circle-flags/flags/fr.svg', value: 'fr', label: 'FR', disabled: true },
-  { icon: 'https://mindful-connect.github.io/circle-flags/flags/tr.svg', value: 'tr', label: 'TR' },
-  { icon: 'https://mindful-connect.github.io/circle-flags/flags/dk.svg', value: 'dk', label: 'DK' },
-  { icon: 'https://mindful-connect.github.io/circle-flags/flags/fi.svg', value: 'fi', label: 'FI' },
+  {
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/us.svg',
+    value: 'us',
+    label: 'US',
+  },
+  {
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/de.svg',
+    value: 'de',
+    label: 'DE',
+  },
+  {
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/fr.svg',
+    value: 'fr',
+    label: 'FR',
+    disabled: true,
+  },
+  {
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/tr.svg',
+    value: 'tr',
+    label: 'TR',
+  },
+  {
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/dk.svg',
+    value: 'dk',
+    label: 'DK',
+  },
+  {
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/fi.svg',
+    value: 'fi',
+    label: 'FI',
+  },
 ];
 
 const pages = [
@@ -99,23 +166,71 @@ const pages = [
 ];
 
 const currencies = [
-  { icon: 'https://mindful-connect.github.io/circle-flags/flags/eu.svg', value: 'EUR', label: 'EUR' },
-  { icon: 'https://mindful-connect.github.io/circle-flags/flags/us.svg', value: 'USD', label: 'USD' },
-  { icon: 'https://mindful-connect.github.io/circle-flags/flags/tr.svg', value: 'TRY', label: 'TRY' },
+  {
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/eu.svg',
+    value: 'EUR',
+    label: 'EUR',
+  },
+  {
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/us.svg',
+    value: 'USD',
+    label: 'USD',
+  },
+  {
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/tr.svg',
+    value: 'TRY',
+    label: 'TRY',
+  },
 ];
 
 const users = [
-  { image: 'https://i.pravatar.cc/160?img=1', color: 'yellow' as const, value: 'sophia-williams', name: 'Sophia Williams', handle: '@sophia' },
-  { image: 'https://i.pravatar.cc/160?img=3', color: 'blue' as const, value: 'arthur-taylor', name: 'Arthur Taylor', handle: '@arthur' },
-  { image: 'https://i.pravatar.cc/160?img=5', color: 'gray' as const, value: 'james-brown', name: 'James Brown', handle: '@james' },
-  { image: 'https://i.pravatar.cc/160?img=7', color: 'sky' as const, value: 'emma-wright', name: 'Emma Wright', handle: '@emma' },
-  { image: 'https://i.pravatar.cc/160?img=9', color: 'purple' as const, value: 'matthew-johnson', name: 'Matthew Johnson', handle: '@matthew' },
-  { image: 'https://i.pravatar.cc/160?img=12', color: 'red' as const, value: 'laura-perez', name: 'Laura Perez', handle: '@laura' },
+  {
+    image: 'https://i.pravatar.cc/160?img=1',
+    color: 'yellow' as const,
+    value: 'sophia-williams',
+    name: 'Sophia Williams',
+    handle: '@sophia',
+  },
+  {
+    image: 'https://i.pravatar.cc/160?img=3',
+    color: 'blue' as const,
+    value: 'arthur-taylor',
+    name: 'Arthur Taylor',
+    handle: '@arthur',
+  },
+  {
+    image: 'https://i.pravatar.cc/160?img=5',
+    color: 'gray' as const,
+    value: 'james-brown',
+    name: 'James Brown',
+    handle: '@james',
+  },
+  {
+    image: 'https://i.pravatar.cc/160?img=7',
+    color: 'sky' as const,
+    value: 'emma-wright',
+    name: 'Emma Wright',
+    handle: '@emma',
+  },
+  {
+    image: 'https://i.pravatar.cc/160?img=9',
+    color: 'purple' as const,
+    value: 'matthew-johnson',
+    name: 'Matthew Johnson',
+    handle: '@matthew',
+  },
+  {
+    image: 'https://i.pravatar.cc/160?img=12',
+    color: 'red' as const,
+    value: 'laura-perez',
+    name: 'Laura Perez',
+    handle: '@laura',
+  },
 ];
 
 export const Demo = {
   render: () => (
-    <div className='w-full min-w-[300px] max-w-[300px]'>
+    <div className='w-full max-w-[300px] min-w-[300px]'>
       <Select.Root>
         <Select.Trigger>
           <Select.Value placeholder='Select your favorite fruit...' />
@@ -134,7 +249,7 @@ export const Demo = {
 
 export const WithLabelHint = {
   render: () => (
-    <div className='w-full min-w-[300px] max-w-[300px]'>
+    <div className='w-full max-w-[300px] min-w-[300px]'>
       <FormField.Root
         label='Fruit'
         htmlFor='fruit'
@@ -159,7 +274,7 @@ export const WithLabelHint = {
 
 export const WithIcons = {
   render: () => (
-    <div className='w-full min-w-[300px] max-w-[300px]'>
+    <div className='w-full max-w-[300px] min-w-[300px]'>
       <Select.Root defaultValue='utility-payment'>
         <Select.Trigger>
           <Select.Value placeholder='Select a payment...' />
@@ -183,7 +298,7 @@ export const WithIcons = {
 
 export const Sizes = {
   render: () => (
-    <div className='w-full min-w-[300px] max-w-[300px] space-y-6'>
+    <div className='w-full max-w-[300px] min-w-[300px] space-y-6'>
       <Select.Root defaultValue='utility-payment'>
         <Select.Trigger>
           <Select.Value placeholder='Select a payment...' />
@@ -243,7 +358,7 @@ export const Sizes = {
 
 export const WithCountryFlags = {
   render: () => (
-    <div className='w-full min-w-[300px] max-w-[300px]'>
+    <div className='w-full max-w-[300px] min-w-[300px]'>
       <Select.Root>
         <Select.Trigger>
           <Select.Value
@@ -275,7 +390,7 @@ export const WithCountryFlags = {
 
 export const WithUsers = {
   render: () => (
-    <div className='w-full min-w-[300px] max-w-[300px]'>
+    <div className='w-full max-w-[300px] min-w-[300px]'>
       <Select.Root>
         <Select.Trigger>
           <Select.Value placeholder='Select a user...' />
@@ -302,7 +417,7 @@ export const WithUsers = {
 
 export const Disabled = {
   render: () => (
-    <div className='w-full min-w-[300px] max-w-[300px] space-y-6'>
+    <div className='w-full max-w-[300px] min-w-[300px] space-y-6'>
       <Select.Root disabled>
         <Select.Trigger>
           <Select.Value
@@ -383,9 +498,7 @@ export const CompactCountry = {
             value={item.value}
             disabled={item.disabled}
           >
-            <Select.ItemIcon
-              style={{ backgroundImage: `url(${item.icon})` }}
-            />
+            <Select.ItemIcon style={{ backgroundImage: `url(${item.icon})` }} />
             <span className='group-has-[&]/trigger:hidden'>{item.label}</span>
           </Select.Item>
         ))}
@@ -534,9 +647,7 @@ export const InlineCountry = {
             value={item.value}
             disabled={item.disabled}
           >
-            <Select.ItemIcon
-              style={{ backgroundImage: `url(${item.icon})` }}
-            />
+            <Select.ItemIcon style={{ backgroundImage: `url(${item.icon})` }} />
             {item.label}
           </Select.Item>
         ))}
@@ -553,7 +664,7 @@ export const InputWithInlineSelect = {
     ];
 
     return (
-      <div className='w-full min-w-[300px] max-w-[300px]'>
+      <div className='w-full max-w-[300px] min-w-[300px]'>
         <Input.Root>
           <Input.Wrapper>
             <Input.Icon as={RiUser6Line} />
@@ -580,7 +691,7 @@ export const InputWithInlineSelect = {
 
 export const WithInput = {
   render: () => (
-    <div className='w-full min-w-[300px] max-w-[300px]'>
+    <div className='w-full max-w-[300px] min-w-[300px]'>
       <Input.Root>
         <Input.Wrapper>
           <Input.InlineAffix>&euro;</Input.InlineAffix>
@@ -633,7 +744,7 @@ export const WithInputSizes = {
     }
 
     return (
-      <div className='flex w-full min-w-[300px] max-w-[300px] flex-col gap-6'>
+      <div className='flex w-full max-w-[300px] min-w-[300px] flex-col gap-6'>
         <Input.Root size='medium'>
           <Input.Wrapper>
             <Input.InlineAffix>&euro;</Input.InlineAffix>

@@ -4,7 +4,10 @@ import { useState } from 'react';
 import * as LocationInput from './location-input';
 import type { LocationRequest } from './location-input';
 
-export default { title: 'Form/Composed Inputs/Location Input', component: LocationInput.Root };
+export default {
+  title: 'Form/Composed Inputs/Location Input',
+  component: LocationInput.Root,
+};
 
 function PlaygroundRender(args: any) {
   const [location, setLocation] = useState<LocationRequest>(null);

@@ -6,9 +6,7 @@
   "description": "A keyboard key indicator component for displaying keyboard shortcuts. Uses namespace export: Kbd.Root.",
   "version": "1.0.0",
   "dependencies": [],
-  "registryDependencies": [
-    "happly-ui-utils"
-  ],
+  "registryDependencies": ["happly-ui-utils"],
   "docs": {
     "lead": "A keyboard key indicator component for displaying keyboard shortcuts inline.",
     "usage": "import * as Kbd from \"@/components/ui/kbd\"\n\n<Kbd.Root>⌘+K</Kbd.Root>",

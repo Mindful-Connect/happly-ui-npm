@@ -5,9 +5,7 @@
   "title": "Badge",
   "description": "A compound badge component with variants, colors, sizes, dot indicators, and polymorphic icon support. Uses namespace exports: Badge.Root, Badge.Icon, Badge.Dot.",
   "version": "2.2.0",
-  "dependencies": [
-    "@radix-ui/react-slot"
-  ],
+  "dependencies": ["@radix-ui/react-slot"],
   "registryDependencies": [
     "tv",
     "happly-ui-utils",

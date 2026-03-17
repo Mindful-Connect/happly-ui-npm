@@ -8,13 +8,8 @@
   "migration": {
     "guide": "v4 adds `Label.Composed` — a props-driven wrapper that renders Root, Asterisk, Sub, and Info via props (required, sub, info). No breaking changes from v3."
   },
-  "dependencies": [
-    "@radix-ui/react-label"
-  ],
-  "registryDependencies": [
-    "happly-ui-utils",
-    "tooltip"
-  ],
+  "dependencies": ["@radix-ui/react-label"],
+  "registryDependencies": ["happly-ui-utils", "tooltip"],
   "docs": {
     "lead": "A label component with required asterisk indicator, optional sub-text, info tooltip, and a composed shorthand for common usage.",
     "usage": "import * as Label from \"@/components/ui/label\"\n\n<Label.Composed required sub=\"(Optional)\" info=\"Helpful tooltip\">\n  Field Name\n</Label.Composed>",

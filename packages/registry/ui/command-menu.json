@@ -5,16 +5,8 @@
   "title": "Command Menu",
   "description": "A command menu component built on cmdk and Modal with search input, grouped items, and keyboard navigation footer. Uses namespace exports: CommandMenu.Dialog, CommandMenu.Input, CommandMenu.List, CommandMenu.Group, CommandMenu.Item, CommandMenu.ItemIcon, CommandMenu.Footer, CommandMenu.FooterKeyBox.",
   "version": "1.0.0",
-  "dependencies": [
-    "cmdk",
-    "@radix-ui/react-dialog"
-  ],
-  "registryDependencies": [
-    "happly-ui-utils",
-    "polymorphic",
-    "tv",
-    "modal"
-  ],
+  "dependencies": ["cmdk", "@radix-ui/react-dialog"],
+  "registryDependencies": ["happly-ui-utils", "polymorphic", "tv", "modal"],
   "docs": {
     "lead": "A command menu component with search input, grouped items, and keyboard navigation hints.",
     "usage": "import * as CommandMenu from \"@/components/ui/command-menu\"\n\n<CommandMenu.Dialog open={open} onOpenChange={setOpen}>\n  <CommandMenu.Input placeholder=\"Search...\" />\n  <CommandMenu.List>\n    <CommandMenu.Group heading=\"Results\">\n      <CommandMenu.Item>Item</CommandMenu.Item>\n    </CommandMenu.Group>\n  </CommandMenu.List>\n  <CommandMenu.Footer>Footer</CommandMenu.Footer>\n</CommandMenu.Dialog>",

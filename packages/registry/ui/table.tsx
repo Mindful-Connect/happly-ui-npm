@@ -33,8 +33,8 @@ const TableHead = React.forwardRef<
     <th
       ref={forwardedRef}
       className={cn(
-        'bg-bg-weak-50 px-3 py-2 text-left text-paragraph-sm text-text-sub-600 first:rounded-l-lg last:rounded-r-lg',
-        className,
+        'bg-bg-weak-50 text-paragraph-sm text-text-sub-600 px-3 py-2 text-left first:rounded-l-lg last:rounded-r-lg',
+        className
       )}
       {...rest}
     />
@@ -104,8 +104,8 @@ const TableCell = React.forwardRef<
     <td
       ref={forwardedRef}
       className={cn(
-        'h-16 px-3 transition duration-200 ease-out first:rounded-l-xl last:rounded-r-xl group-hover/row:bg-bg-weak-50',
-        className,
+        'group-hover/row:bg-bg-weak-50 h-16 px-3 transition duration-200 ease-out first:rounded-l-xl last:rounded-r-xl',
+        className
       )}
       {...rest}
     />
@@ -119,7 +119,7 @@ const TableCaption = React.forwardRef<
 >(({ className, ...rest }, forwardedRef) => (
   <caption
     ref={forwardedRef}
-    className={cn('mt-4 text-paragraph-sm text-text-sub-600', className)}
+    className={cn('text-paragraph-sm text-text-sub-600 mt-4', className)}
     {...rest}
   />
 ));

@@ -58,10 +58,10 @@ function normalizeAddress(address: string): string {
 
 function resolvePlace(
   placeId: string,
-  callback: (location: NonNullable<LocationRequest>) => void,
+  callback: (location: NonNullable<LocationRequest>) => void
 ) {
   const placesService = new window.google.maps.places.PlacesService(
-    document.createElement('div'),
+    document.createElement('div')
   );
   placesService.getDetails(
     {
@@ -71,8 +71,13 @@ function resolvePlace(
     (place: PlaceResult | null, status: string) => {
       if (status !== 'OK' || !place) return;
 
-      const get = (type: string, field: 'long_name' | 'short_name' = 'long_name') =>
-        place.address_components?.find((c) => c.types.includes(type))?.[field] ?? '';
+      const get = (
+        type: string,
+        field: 'long_name' | 'short_name' = 'long_name'
+      ) =>
+        place.address_components?.find((c) => c.types.includes(type))?.[
+          field
+        ] ?? '';
 
       const streetNumber = get('street_number');
       const route = get('route');
@@ -94,7 +99,7 @@ function resolvePlace(
         latitude: place.geometry?.location?.lat() ?? 0,
         longitude: place.geometry?.location?.lng() ?? 0,
       });
-    },
+    }
   );
 }
 
@@ -120,7 +125,10 @@ type LocationInputProps = Omit<
   countryRestrictions?: string[];
 };
 
-const LocationInputRoot = React.forwardRef<HTMLInputElement, LocationInputProps>(
+const LocationInputRoot = React.forwardRef<
+  HTMLInputElement,
+  LocationInputProps
+>(
   (
     {
       location,
@@ -134,15 +142,19 @@ const LocationInputRoot = React.forwardRef<HTMLInputElement, LocationInputProps>
       className,
       ...rest
     },
-    forwardedRef,
+    forwardedRef
   ) => {
     const [open, setOpen] = React.useState(false);
-    const [search, setSearch] = React.useState(location?.formatted_address ?? '');
+    const [search, setSearch] = React.useState(
+      location?.formatted_address ?? ''
+    );
     const [suggestions, setSuggestions] = React.useState<Suggestion[]>([]);
     const [anchorWidth, setAnchorWidth] = React.useState(0);
     const anchorRef = React.useRef<HTMLDivElement>(null);
     const searchActiveRef = React.useRef(false);
-    const countryRestrictionsKey = (countryRestrictions ?? DEFAULT_COUNTRY_RESTRICTIONS).join(',');
+    const countryRestrictionsKey = (
+      countryRestrictions ?? DEFAULT_COUNTRY_RESTRICTIONS
+    ).join(',');
 
     const [debouncedSearch] = useDebounce(search, 500, {
       leading: false,
@@ -253,12 +265,14 @@ const LocationInputRoot = React.forwardRef<HTMLInputElement, LocationInputProps>
                       <div
                         key={suggestion.place_id}
                         role='option'
-                        aria-selected={location?.place_id === suggestion.place_id}
+                        aria-selected={
+                          location?.place_id === suggestion.place_id
+                        }
                         onClick={() => handleSelect(suggestion)}
                         className={cn(
                           'rounded-10 text-paragraph-sm text-text-strong-950 flex w-full cursor-pointer items-center gap-2 p-2 text-left select-none',
                           'transition duration-200 ease-out',
-                          'hover:bg-bg-weak-50',
+                          'hover:bg-bg-weak-50'
                         )}
                         title={suggestion.description}
                       >
@@ -278,7 +292,7 @@ const LocationInputRoot = React.forwardRef<HTMLInputElement, LocationInputProps>
         )}
       </Popover.Root>
     );
-  },
+  }
 );
 LocationInputRoot.displayName = 'LocationInputRoot';
 

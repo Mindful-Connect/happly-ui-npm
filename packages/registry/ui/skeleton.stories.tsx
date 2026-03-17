@@ -14,9 +14,9 @@ export const Default = {
 
 export const Card = {
   render: () => (
-    <div className='flex w-80 flex-col gap-4 rounded-2xl border border-stroke-soft-200 p-5'>
+    <div className='border-stroke-soft-200 flex w-80 flex-col gap-4 rounded-2xl border p-5'>
       <div className='flex items-center gap-3'>
-        <Skeleton.Root variant='circular' className='w-10 h-10' />
+        <Skeleton.Root variant='circular' className='h-10 w-10' />
         <div className='flex flex-1 flex-col gap-2'>
           <Skeleton.Root className='h-4 w-1/2' />
           <Skeleton.Root className='h-3 w-1/3' />
@@ -34,9 +34,9 @@ export const Card = {
 export const Circular = {
   render: () => (
     <div className='flex items-center gap-4'>
-      <Skeleton.Root variant='circular' className='w-8 h-8' />
-      <Skeleton.Root variant='circular' className='w-10 h-10' />
-      <Skeleton.Root variant='circular' className='w-12 h-12' />
+      <Skeleton.Root variant='circular' className='h-8 w-8' />
+      <Skeleton.Root variant='circular' className='h-10 w-10' />
+      <Skeleton.Root variant='circular' className='h-12 w-12' />
     </div>
   ),
 };

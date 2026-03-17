@@ -1,7 +1,10 @@
 import * as FileFormatIcon from './file-format-icon';
 import * as FileCard from './file-card';
 
-export default { title: 'Form/File Upload/File Card', component: FileCard.Root };
+export default {
+  title: 'Form/File Upload/File Card',
+  component: FileCard.Root,
+};
 
 // ─── Default Variant: Upload States ─────────────────────────────────────────
 
@@ -173,7 +176,9 @@ export const Compact = {
             <FileCard.CompactDescription>
               <FileCard.Meta>0 KB of 120 KB</FileCard.Meta>
               <FileCard.Dot />
-              <FileCard.CompactStatus status='uploading'>Uploading...</FileCard.CompactStatus>
+              <FileCard.CompactStatus status='uploading'>
+                Uploading...
+              </FileCard.CompactStatus>
             </FileCard.CompactDescription>
           </FileCard.CompactBody>
           <FileCard.CloseButton />
@@ -189,7 +194,9 @@ export const Compact = {
             <FileCard.CompactDescription>
               <FileCard.Meta>0 KB of 120 KB</FileCard.Meta>
               <FileCard.Dot />
-              <FileCard.CompactStatus status='completed'>Completed</FileCard.CompactStatus>
+              <FileCard.CompactStatus status='completed'>
+                Completed
+              </FileCard.CompactStatus>
             </FileCard.CompactDescription>
           </FileCard.CompactBody>
           <FileCard.DeleteButton />
@@ -205,7 +212,9 @@ export const Compact = {
               <FileCard.CompactDescription>
                 <FileCard.Meta>0 KB of 120 KB</FileCard.Meta>
                 <FileCard.Dot />
-                <FileCard.CompactStatus status='failed'>Failed</FileCard.CompactStatus>
+                <FileCard.CompactStatus status='failed'>
+                  Failed
+                </FileCard.CompactStatus>
               </FileCard.CompactDescription>
             </FileCard.CompactBody>
             <FileCard.RetryLink />
@@ -268,7 +277,8 @@ export const Item = {
           type: 'image/jpeg',
           progress: 100,
           status: 'completed',
-          preview: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=352&h=208&fit=crop',
+          preview:
+            'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=352&h=208&fit=crop',
         }}
         onRemove={() => {}}
       />
@@ -301,7 +311,8 @@ export const ItemDownload = {
           type: 'image/jpeg',
           progress: 100,
           status: 'completed',
-          preview: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=352&h=208&fit=crop',
+          preview:
+            'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=352&h=208&fit=crop',
         }}
         onDownload={() => {}}
       />

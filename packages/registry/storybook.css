@@ -1,8 +1,8 @@
 @import 'tailwindcss';
 @import './styles/happly-theme.css';
 
-@source "./ui";
-@source "./lib";
+@source './ui';
+@source './lib';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
