@@ -4,13 +4,12 @@
   "type": "registry:ui",
   "title": "Location Input",
   "description": "A Google Maps address autocomplete input with Popover dropdown.",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "migration": {
-    "guide": "v2 replaces @headlessui/react with Radix Popover + Input primitives for consistent styling. Import changed from `{ LocationInput }` to `* as LocationInput` with `LocationInput.Root`. The `setLocation` prop is now `onLocationChange`. The `icon` prop accepts a React component (ElementType) instead of a ReactElement. New props: `size`, `hasError`, `disabled`, `countryRestrictions`, `apiKey`."
+    "guide": "v2.1 removes the built-in Google Maps loader — the consuming app must call `setOptions()` and `importLibrary('places')` once at startup (e.g. in a global provider). The `apiKey` prop has been removed. The component now syncs its internal search text when the `location` prop changes externally (e.g. form reset). When used inside a `FormField.Root` with a `name` prop, validation is triggered automatically on blur. `hasError` is read from form field context if not provided."
   },
   "dependencies": [
     "use-debounce",
-    "@googlemaps/js-api-loader",
     "@remixicon/react",
     "@radix-ui/react-scroll-area",
     "react-remove-scroll"
@@ -23,29 +22,46 @@
   ],
   "docs": {
     "lead": "A Google Maps address autocomplete input with async search and place resolution.",
-    "usage": "import * as LocationInput from \"@/components/ui/location-input\"\n\n<LocationInput.Root location={location} onLocationChange={setLocation} />",
+    "setup": "The consuming app must load the Google Maps Places library once at startup before using this component:\n\n```ts\nimport { setOptions, importLibrary } from '@googlemaps/js-api-loader';\n\nsetOptions({ key: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || '' });\nimportLibrary('places').catch(() => {});\n```\n\nPlace this at module level (e.g. in a global context provider) so it runs exactly once.",
+    "usage": "import * as LocationInput from \"@/components/ui/location-input\"\n\nconst [location, setLocation] = useState<LocationRequest>(null)\n\n<LocationInput.Root\n  location={location}\n  onLocationChange={setLocation}\n  placeholder=\"Search address...\"\n/>",
     "examples": [
       {
         "title": "Default",
-        "description": "Default location input.",
-        "code": "<LocationInput.Root location={location} onLocationChange={setLocation} />",
+        "description": "Basic location input with default settings.",
+        "code": "const [location, setLocation] = useState<LocationRequest>(null)\n\n<LocationInput.Root\n  location={location}\n  onLocationChange={setLocation}\n/>",
         "stories": ["Default"]
+      },
+      {
+        "title": "With React Hook Form",
+        "description": "Used inside a FormField.Root with automatic error handling and validation on blur.",
+        "code": "const { setValue, watch } = useFormContext()\n\n<FormField.Root name=\"location\" label=\"Location\" required>\n  <LocationInput.Root\n    location={\n      watch('location')\n        ? { formatted_address: watch('location') } as LocationRequest\n        : null\n    }\n    onLocationChange={(loc) =>\n      setValue('location', loc?.formatted_address ?? '', {\n        shouldValidate: true,\n      })\n    }\n  />\n</FormField.Root>"
+      },
+      {
+        "title": "Custom Country Restrictions",
+        "description": "Restrict autocomplete to specific countries.",
+        "code": "<LocationInput.Root\n  location={location}\n  onLocationChange={setLocation}\n  countryRestrictions={['ca', 'us']}\n/>"
+      },
+      {
+        "title": "With Error State",
+        "description": "Manually set error state.",
+        "code": "<LocationInput.Root\n  location={location}\n  onLocationChange={setLocation}\n  hasError\n/>"
       }
     ],
     "api": [
       {
         "name": "LocationInput.Root",
-        "description": "Google Maps address autocomplete input.",
+        "description": "Google Maps address autocomplete input. Reads `hasError` and `onBlur` from FormField context when available.",
         "props": [
           {
             "name": "location",
             "type": "LocationRequest",
-            "description": "The current location object."
+            "required": true,
+            "description": "The current location object. Pass `null` for empty state. The component syncs its internal search text when this prop changes (e.g. on form reset)."
           },
           {
             "name": "onLocationChange",
             "type": "(location: LocationRequest) => void",
-            "description": "Callback when location updates."
+            "description": "Callback when a location is selected or cleared."
           },
           {
             "name": "placeholder",
@@ -69,26 +85,28 @@
             "name": "hasError",
             "type": "boolean",
             "default": "false",
-            "description": "Error state."
+            "description": "Error state. Automatically read from FormField context if not provided."
           },
           {
             "name": "disabled",
             "type": "boolean",
             "default": "false",
-            "description": "Disabled state."
+            "description": "Disabled state. Automatically read from FormField context if not provided."
           },
           {
             "name": "countryRestrictions",
             "type": "string[]",
             "default": "['ca', 'us', 'fr']",
-            "description": "ISO 3166-1 alpha-2 country codes for autocomplete."
-          },
-          {
-            "name": "apiKey",
-            "type": "string",
-            "description": "Google Maps API key. Defaults to NEXT_PUBLIC_GOOGLE_API_KEY."
+            "description": "ISO 3166-1 alpha-2 country codes for autocomplete restrictions."
           }
         ]
+      }
+    ],
+    "types": [
+      {
+        "name": "LocationRequest",
+        "description": "The resolved location object returned by `onLocationChange`, or `null` when cleared.",
+        "definition": "{\n  place_id: string;\n  city?: string | null;\n  region?: string | null;\n  country: string;\n  address: string;\n  formatted_address: string;\n  latitude: number;\n  longitude: number;\n} | null"
       }
     ]
   },

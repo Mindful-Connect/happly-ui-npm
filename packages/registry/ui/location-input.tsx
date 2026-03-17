@@ -160,6 +160,11 @@ const LocationInputRoot = React.forwardRef<
       countryRestrictions ?? DEFAULT_COUNTRY_RESTRICTIONS
     ).join(',');
 
+    // Sync search text when location prop changes externally (e.g. form reset)
+    React.useEffect(() => {
+      setSearch(location?.formatted_address ?? '');
+    }, [location?.formatted_address]);
+
     const [debouncedSearch] = useDebounce(search, 500, {
       leading: false,
       trailing: true,
