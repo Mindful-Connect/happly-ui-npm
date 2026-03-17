@@ -5,7 +5,6 @@ import { RiMapPinLine } from '@remixicon/react';
 import * as ScrollAreaPrimitives from '@radix-ui/react-scroll-area';
 import { RemoveScroll } from 'react-remove-scroll';
 import { useDebounce } from 'use-debounce';
-import { Loader } from '@googlemaps/js-api-loader';
 
 import * as Input from './input';
 import * as Popover from './popover';
@@ -99,6 +98,8 @@ function resolvePlace(
   );
 }
 
+const DEFAULT_COUNTRY_RESTRICTIONS = ['ca', 'us', 'fr'];
+
 // ─── LocationInput ─────────────────────────────────────────
 
 type LocationInputProps = Omit<
@@ -117,8 +118,6 @@ type LocationInputProps = Omit<
   hasError?: boolean;
   /** Country restrictions for autocomplete (ISO 3166-1 alpha-2 codes) */
   countryRestrictions?: string[];
-  /** Google Maps API key — defaults to NEXT_PUBLIC_GOOGLE_API_KEY env var */
-  apiKey?: string;
 };
 
 const LocationInputRoot = React.forwardRef<HTMLInputElement, LocationInputProps>(
@@ -131,8 +130,7 @@ const LocationInputRoot = React.forwardRef<HTMLInputElement, LocationInputProps>
       size,
       hasError,
       disabled,
-      countryRestrictions = ['ca', 'us', 'fr'],
-      apiKey,
+      countryRestrictions,
       className,
       ...rest
     },
@@ -144,6 +142,7 @@ const LocationInputRoot = React.forwardRef<HTMLInputElement, LocationInputProps>
     const [anchorWidth, setAnchorWidth] = React.useState(0);
     const anchorRef = React.useRef<HTMLDivElement>(null);
     const searchActiveRef = React.useRef(false);
+    const countryRestrictionsKey = (countryRestrictions ?? DEFAULT_COUNTRY_RESTRICTIONS).join(',');
 
     const [debouncedSearch] = useDebounce(search, 500, {
       leading: false,
@@ -157,39 +156,35 @@ const LocationInputRoot = React.forwardRef<HTMLInputElement, LocationInputProps>
       setOpen(newOpen);
     }
 
-    // Load Google Maps script
-    React.useEffect(() => {
-      const loader = new Loader({
-        apiKey: apiKey || process.env.NEXT_PUBLIC_GOOGLE_API_KEY || '',
-        version: 'weekly',
-        libraries: ['places'],
-      });
-      loader.load().then(() => {});
-    }, [apiKey]);
+    const onLocationChangeRef = React.useRef(onLocationChange);
+    onLocationChangeRef.current = onLocationChange;
 
     // Fetch suggestions on debounced search change
     React.useEffect(() => {
       if (!searchActiveRef.current) return;
+      if (!window.google?.maps?.places) return;
 
       if (debouncedSearch.length < 3) {
         setSuggestions([]);
-        if (debouncedSearch.length === 0) onLocationChange?.(null);
+        if (debouncedSearch.length === 0) onLocationChangeRef.current?.(null);
         return;
       }
 
+      const countries = countryRestrictionsKey.split(',');
       const autocompleteService =
         new window.google.maps.places.AutocompleteService();
       autocompleteService
         .getPlacePredictions({
           input: debouncedSearch,
-          componentRestrictions: { country: countryRestrictions },
+          componentRestrictions: { country: countries },
           types: ['address'],
         })
         .then(({ predictions }) => {
           setSuggestions(predictions);
           if (predictions.length > 0) handleOpenChange(true);
-        });
-    }, [debouncedSearch, countryRestrictions, onLocationChange]);
+        })
+        .catch(() => {});
+    }, [debouncedSearch, countryRestrictionsKey]);
 
     function handleSelect(suggestion: Suggestion) {
       resolvePlace(suggestion.place_id, (resolved) => {

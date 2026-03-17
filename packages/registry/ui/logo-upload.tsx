@@ -13,7 +13,10 @@ import type { UploadFile } from '@/hooks/use-file-upload';
 const logoUploadVariants = tv({
   slots: {
     root: [
-      'flex items-center gap-5 rounded-2xl border border-stroke-soft-200 bg-bg-white-0 p-4',
+      '@container rounded-2xl border border-stroke-soft-200 bg-bg-white-0',
+    ],
+    inner: [
+      'flex flex-col items-start gap-5 p-4 @[350px]:flex-row @[350px]:items-center',
     ],
     preview: 'shrink-0',
     content: 'flex min-w-0 flex-1 flex-col gap-4',
@@ -24,7 +27,7 @@ const logoUploadVariants = tv({
   },
 });
 
-const { root, preview, content, title, description, actions } =
+const { root, inner, preview, content, title, description, actions } =
   logoUploadVariants();
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -49,8 +52,12 @@ type LogoUploadActionsProps = React.HTMLAttributes<HTMLDivElement>;
 
 // ─── Components ──────────────────────────────────────────────────────────────
 
-function LogoUploadRoot({ className, ...rest }: LogoUploadRootProps) {
-  return <div className={root({ class: className })} {...rest} />;
+function LogoUploadRoot({ className, children, ...rest }: LogoUploadRootProps) {
+  return (
+    <div className={root({ class: className })} {...rest}>
+      <div className={inner()}>{children}</div>
+    </div>
+  );
 }
 
 function LogoUploadPreview({
@@ -63,16 +70,23 @@ function LogoUploadPreview({
   ...rest
 }: LogoUploadPreviewProps) {
   const hasImage =
-    file && (file.status === 'completed' || file.preview) && (file.url || file.preview);
+    file &&
+    (file.status === 'completed' || file.preview) &&
+    (file.url || file.preview);
 
   return (
     <div className={preview({ class: className })} {...rest}>
       {hasImage ? (
-        <Avatar.Root className={cn('size-[111px] rounded-xl text-title-h5', avatarClassName)}>
+        <Avatar.Root
+          className={cn(
+            'text-title-h5 size-[111px] rounded-xl',
+            avatarClassName
+          )}
+        >
           <Avatar.Image
             src={file.url ?? file.preview}
-            alt="Logo"
-            className="rounded-xl object-cover"
+            alt='Logo'
+            className='rounded-xl object-cover'
           />
         </Avatar.Root>
       ) : (
@@ -80,7 +94,10 @@ function LogoUploadPreview({
           color={avatarColor}
           placeholderType={placeholderType}
           placeholder={placeholder}
-          className={cn('size-[111px] rounded-xl text-title-h5', avatarClassName)}
+          className={cn(
+            'text-title-h5 size-[111px] rounded-xl',
+            avatarClassName
+          )}
         />
       )}
     </div>
@@ -143,7 +160,7 @@ function LogoUploadItem({
         placeholder={placeholder}
       />
       <LogoUploadContent>
-        <div className="flex flex-col gap-2">
+        <div className='flex flex-col gap-2'>
           <LogoUploadTitle>{label}</LogoUploadTitle>
           {descriptionContent && (
             <LogoUploadDescription>{descriptionContent}</LogoUploadDescription>
@@ -151,9 +168,9 @@ function LogoUploadItem({
         </div>
         <LogoUploadActions>
           <Button.Root
-            variant="neutral"
-            mode="stroke"
-            size="xsmall"
+            variant='neutral'
+            mode='stroke'
+            size='xsmall'
             onClick={onButtonClick}
           >
             {buttonLabel}

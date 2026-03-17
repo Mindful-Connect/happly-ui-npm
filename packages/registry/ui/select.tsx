@@ -23,6 +23,9 @@ export const selectVariants = tv({
       // focus
       'focus:shadow-button-important-focus focus:outline-none focus:ring-stroke-strong-950',
       'focus:text-text-strong-950 data-[placeholder]:focus:text-text-strong-950',
+      // open (maintain focus appearance when dropdown is open and DOM focus moves to content)
+      'data-[state=open]:shadow-button-important-focus data-[state=open]:ring-stroke-strong-950',
+      'data-[state=open]:text-text-strong-950 data-[placeholder]:data-[state=open]:text-text-strong-950',
       // disabled
       'disabled:pointer-events-none disabled:bg-bg-weak-50 disabled:text-text-disabled-300 disabled:shadow-none disabled:ring-transparent data-[placeholder]:disabled:text-text-disabled-300',
       // placeholder state
@@ -43,7 +46,7 @@ export const selectVariants = tv({
       // disabled
       'group-disabled/trigger:text-text-disabled-300 group-data-[placeholder]/trigger:group-disabled/trigger:text-text-disabled-300',
       // open
-      'group-data-[state=open]/trigger:rotate-180',
+      'group-data-[state=open]/trigger:rotate-180 group-data-[state=open]/trigger:text-text-strong-950',
     ],
     triggerIcon: [
       // base
@@ -82,6 +85,8 @@ export const selectVariants = tv({
           'w-auto rounded-none shadow-none ring-0',
           // focus
           'focus:bg-bg-weak-50 focus:shadow-none focus:ring-0 focus:ring-transparent',
+          // open
+          'data-[state=open]:bg-bg-weak-50 data-[state=open]:shadow-none data-[state=open]:ring-0 data-[state=open]:ring-transparent',
         ],
       },
       inline: {
@@ -91,9 +96,9 @@ export const selectVariants = tv({
           // hover
           'hover:bg-transparent hover:text-text-strong-950',
           // focus
-          'focus:shadow-none',
+          'focus:shadow-none focus:ring-0 focus:text-text-strong-950 focus:underline focus:underline-offset-2 focus:decoration-stroke-strong-950',
           // open
-          'data-[state=open]:text-text-strong-950',
+          'data-[state=open]:shadow-none data-[state=open]:ring-0 data-[state=open]:text-text-strong-950 data-[state=open]:underline data-[state=open]:underline-offset-2 data-[state=open]:decoration-stroke-strong-950',
         ],
         triggerIcon: [
           // base
@@ -122,6 +127,8 @@ export const selectVariants = tv({
           'ring-error-base',
           // focus
           'focus:shadow-button-error-focus focus:ring-error-base',
+          // open
+          'data-[state=open]:shadow-button-error-focus data-[state=open]:ring-error-base',
         ],
       },
     },
@@ -132,7 +139,7 @@ export const selectVariants = tv({
       size: 'medium',
       variant: 'default',
       class: {
-        triggerRoot: 'h-10 min-h-10 gap-2 rounded-10 pl-3 pr-2.5',
+        triggerRoot: 'h-10 min-h-10 gap-2 rounded-[0.625rem] pl-3 pr-2.5',
       },
     },
     {
@@ -154,9 +161,8 @@ export const selectVariants = tv({
       size: 'medium',
       variant: 'compact',
       class: {
-        triggerRoot: 'h-10 gap-1 rounded-10 pl-3 pr-2.5',
+        triggerRoot: 'h-10 gap-1 rounded-[0.625rem] pl-3 pr-2.5',
         triggerIcon: '-ml-0.5',
-        selectItemIcon: 'group-has-[&]/trigger:-ml-0.5',
       },
     },
     {
@@ -165,7 +171,6 @@ export const selectVariants = tv({
       class: {
         triggerRoot: 'h-9 gap-1 rounded-lg pl-3 pr-2',
         triggerIcon: '-ml-0.5',
-        selectItemIcon: 'group-has-[&]/trigger:-ml-0.5',
       },
     },
     {
@@ -174,8 +179,7 @@ export const selectVariants = tv({
       class: {
         triggerRoot: 'h-8 gap-0.5 rounded-lg pl-2.5 pr-1.5',
         triggerIcon: '-ml-0.5 w-4 h-4',
-        selectItemIcon:
-          'w-4 h-4 bg-[length:1rem] group-has-[&]/trigger:-ml-0.5',
+        selectItemIcon: 'w-4 h-4 bg-[length:1rem]',
       },
     },
     // compactForInput
@@ -307,16 +311,16 @@ const SelectContent = React.forwardRef<
       collisionPadding = 8,
       ...rest
     },
-    forwardedRef,
+    forwardedRef
   ) => (
     <SelectPrimitives.Portal>
       <SelectPrimitives.Content
         ref={forwardedRef}
         className={cn(
           // base
-          'relative z-50 overflow-hidden rounded-2xl bg-bg-white-0 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200',
+          'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 relative z-50 overflow-hidden rounded-2xl ring-1 ring-inset',
           // widths
-          'min-w-[var(--radix-select-trigger-width)] max-w-[max(var(--radix-select-trigger-width),320px)]',
+          'max-w-[max(var(--radix-select-trigger-width),320px)] min-w-[var(--radix-select-trigger-width)]',
           // heights
           'max-h-[var(--radix-select-content-available-height)]',
           // animation
@@ -324,7 +328,7 @@ const SelectContent = React.forwardRef<
           'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
           'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
           'data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2',
-          className,
+          className
         )}
         sideOffset={sideOffset}
         position={position}
@@ -341,12 +345,12 @@ const SelectContent = React.forwardRef<
             </ScrollAreaPrimitives.Viewport>
           </SelectPrimitives.Viewport>
           <ScrollAreaPrimitives.Scrollbar orientation='vertical'>
-            <ScrollAreaPrimitives.Thumb className='!w-1 rounded bg-bg-soft-200' />
+            <ScrollAreaPrimitives.Thumb className='bg-bg-soft-200 !w-1 rounded' />
           </ScrollAreaPrimitives.Scrollbar>
         </ScrollAreaPrimitives.Root>
       </SelectPrimitives.Content>
     </SelectPrimitives.Portal>
-  ),
+  )
 );
 SelectContent.displayName = 'SelectContent';
 
@@ -361,16 +365,16 @@ const SelectItem = React.forwardRef<
       ref={forwardedRef}
       className={cn(
         // base
-        'group relative cursor-pointer select-none rounded-lg p-2 pr-9 text-paragraph-sm text-text-strong-950',
+        'group text-paragraph-sm text-text-strong-950 relative cursor-pointer rounded-lg p-2 pr-9 select-none',
         'flex items-center gap-2 transition duration-200 ease-out',
         // disabled
-        'data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled-300',
+        'data-[disabled]:text-text-disabled-300 data-[disabled]:pointer-events-none',
         // hover, focus
-        'data-[highlighted]:bg-bg-weak-50 data-[highlighted]:outline-0',
+        'data-[highlighted]:bg-bg-weak-50 outline-none',
         {
           'gap-1.5 pr-[34px]': size === 'xsmall',
         },
-        className,
+        className
       )}
       {...rest}
     >
@@ -380,10 +384,10 @@ const SelectItem = React.forwardRef<
             // base
             'flex flex-1 items-center gap-2',
             // disabled
-            'group-disabled:text-text-disabled-300',
+            'group-data-[disabled]:text-text-disabled-300',
             {
               'gap-1.5': size === 'xsmall',
-            },
+            }
           )}
         >
           {typeof children === 'string' ? (
@@ -394,7 +398,7 @@ const SelectItem = React.forwardRef<
         </span>
       </SelectPrimitives.ItemText>
       <SelectPrimitives.ItemIndicator asChild>
-        <RiCheckLine className='absolute right-2 top-1/2 w-5 h-5 shrink-0 -translate-y-1/2 text-text-sub-600' />
+        <RiCheckLine className='text-text-sub-600 absolute top-1/2 right-2 h-5 w-5 shrink-0 -translate-y-1/2' />
       </SelectPrimitives.ItemIndicator>
     </SelectPrimitives.Item>
   );
