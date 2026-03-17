@@ -325,6 +325,18 @@ export function useFileUpload(
 
   const addFiles = React.useCallback(
     (newFiles: File[]) => {
+      // When maxFiles is 1, clear existing files so the new one can replace it
+      const currentFiles = uppy.getFiles();
+      if (maxFiles === 1 && currentFiles.length > 0) {
+        currentFiles.forEach((f) => {
+          const existing = files.find((ef) => ef.id === f.id);
+          if (existing?.preview) URL.revokeObjectURL(existing.preview);
+          uppy.removeFile(f.id);
+        });
+        rawFilesRef.current.clear();
+        setFiles([]);
+      }
+
       newFiles.forEach((file) => {
         try {
           const added = uppy.addFile({
@@ -345,7 +357,7 @@ export function useFileUpload(
         inputRef.current.value = '';
       }
     },
-    [uppy]
+    [uppy, maxFiles, files]
   );
 
   const removeFile = React.useCallback(
