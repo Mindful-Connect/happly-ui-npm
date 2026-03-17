@@ -58,7 +58,7 @@ function FormFieldRoot({
 
   return (
     <FormFieldContext.Provider value={contextValue}>
-      <div className={cn('flex flex-col gap-1', className)} {...rest}>
+      <div className={cn('flex flex-col gap-2', className)} {...rest}>
         {label && (
           <Label.Composed
             htmlFor={htmlFor}
