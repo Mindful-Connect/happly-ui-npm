@@ -241,11 +241,20 @@ const SelectRoot = ({
   const formField = useFormField();
   const resolvedHasError = hasError ?? formField.hasError;
 
+  const { onOpenChange, ...rootRest } = rest;
+  const handleOpenChange = React.useCallback(
+    (open: boolean) => {
+      onOpenChange?.(open);
+      if (!open) formField.onBlur?.();
+    },
+    [onOpenChange, formField.onBlur]
+  );
+
   return (
     <SelectContext.Provider
       value={{ size, variant, hasError: resolvedHasError }}
     >
-      <SelectPrimitives.Root {...rest} />
+      <SelectPrimitives.Root onOpenChange={handleOpenChange} {...rootRest} />
     </SelectContext.Provider>
   );
 };

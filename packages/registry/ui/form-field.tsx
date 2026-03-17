@@ -67,14 +67,21 @@ function FormFieldRoot({
   const computedHasError = hasError || !!resolvedError;
   const resolvedId = htmlFor ?? name;
 
+  const onBlur = React.useCallback(() => {
+    if (name && form) {
+      form.trigger(name);
+    }
+  }, [name, form]);
+
   const contextValue = React.useMemo<FormFieldContextValue>(
     () => ({
       hasError: computedHasError,
       disabled: !!disabled,
       id: resolvedId,
       name,
+      onBlur,
     }),
-    [computedHasError, disabled, resolvedId, name]
+    [computedHasError, disabled, resolvedId, name, onBlur]
   );
 
   return (

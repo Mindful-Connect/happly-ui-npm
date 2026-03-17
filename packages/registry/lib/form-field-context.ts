@@ -7,6 +7,8 @@ type FormFieldContextValue = {
   disabled: boolean;
   id?: string;
   name?: string;
+  /** Triggers validation for this field. No-op if not in a RHF context. */
+  onBlur?: () => void;
 };
 
 const FormFieldContext = React.createContext<FormFieldContextValue>({
