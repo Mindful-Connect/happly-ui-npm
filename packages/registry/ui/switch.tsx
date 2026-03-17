@@ -69,7 +69,6 @@ const SwitchRoot = React.forwardRef<
             !disabled && [
               // before
               'before:bg-static-white before:absolute before:inset-y-0 before:left-1/2 before:w-3 before:-translate-x-1/2 before:rounded-full',
-              'before:[mask:--mask]',
               // after
               'after:shadow-switch-thumb after:absolute after:inset-y-0 after:left-1/2 after:w-3 after:-translate-x-1/2 after:rounded-full',
               // pressed
@@ -78,10 +77,6 @@ const SwitchRoot = React.forwardRef<
             // disabled
             disabled && ['bg-bg-soft-200 h-2.5 w-2.5 rounded-full shadow-none']
           )}
-          style={{
-            ['--mask' as any]:
-              'radial-gradient(circle farthest-side at 50% 50%, #0000 1.95px, #000 2.05px 100%) 50% 50%/100% 100% no-repeat',
-          }}
         />
       </div>
     </SwitchPrimitives.Root>

@@ -228,7 +228,7 @@ function MarkdownEditorRoot({
     <MarkdownEditorContext.Provider value={contextValue}>
       <div
         className={cn(
-          'bg-bg-weak-50 flex w-full flex-col gap-2 rounded-2xl p-2',
+          '@container/mde bg-bg-weak-50 flex w-full flex-col gap-2 rounded-2xl p-2',
           disabled && 'pointer-events-none opacity-50',
           className
         )}
@@ -252,7 +252,7 @@ function Toolbar({ className, children, ...rest }: ToolbarProps) {
     <Tooltip.Provider delayDuration={300}>
       <div
         className={cn(
-          'flex items-center justify-between py-1 pr-2 pl-3',
+          'flex flex-wrap items-center justify-center gap-2 px-2 py-1 @[450px]/mde:justify-between',
           className
         )}
         role='toolbar'
@@ -331,10 +331,12 @@ type ToggleProps = Omit<
 
 function Toggle({ listClassName, ...props }: ToggleProps) {
   return (
-    <SwitchToggle.Group
-      listClassName={cn('bg-bg-soft-200', listClassName)}
-      {...props}
-    />
+    <div className='w-full @[450px]/mde:w-auto'>
+      <SwitchToggle.Group
+        listClassName={cn('bg-bg-soft-200', listClassName)}
+        {...props}
+      />
+    </div>
   );
 }
 Toggle.displayName = 'MarkdownEditorToggle';

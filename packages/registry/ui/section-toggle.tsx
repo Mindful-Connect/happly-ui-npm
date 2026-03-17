@@ -46,8 +46,7 @@ function SectionToggleHeader({
   return (
     <div
       className={cn(
-        'flex items-start gap-3.5',
-        open ? 'px-2 pt-2' : 'p-2',
+        'flex items-start gap-3.5 p-2',
         className
       )}
       {...(!open &&
@@ -129,7 +128,11 @@ function SectionToggleContent({
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: 'auto', opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.2, ease: 'easeInOut' }}
+          transition={{
+            duration: 0.2,
+            ease: 'easeInOut',
+            opacity: { duration: 0.1 },
+          }}
           className='overflow-hidden'
         >
           <div className={cn('pt-4', className)} {...rest}>
@@ -179,11 +182,15 @@ function SectionToggle({
             <SectionToggleDescription>{description}</SectionToggleDescription>
           )}
         </SectionToggleTextGroup>
-        <SwitchRoot
-          variant='neutral'
-          checked={open}
-          onCheckedChange={onOpenChange}
-        />
+        {/* Stop propagation to prevent Radix Switch's hidden input
+            synthetic click from bubbling to the header's onClick */}
+        <div onClick={(e) => e.stopPropagation()}>
+          <SwitchRoot
+            variant='neutral'
+            checked={open}
+            onCheckedChange={onOpenChange}
+          />
+        </div>
       </SectionToggleHeader>
       <SectionToggleContent open={open} className={contentClassName}>
         {children}

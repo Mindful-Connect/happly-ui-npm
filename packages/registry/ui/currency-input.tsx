@@ -2,10 +2,19 @@
 
 import * as React from 'react';
 
-import { useFormField } from '@/lib/form-field-context';
+import {
+  FormFieldContext,
+  useFormField,
+} from '@/lib/form-field-context';
 
 import * as Input from './input';
 import * as Select from './select';
+
+/** Empty context to isolate the currency Select from the parent FormField */
+const isolatedFormField = {
+  hasError: false,
+  disabled: false,
+};
 
 type CurrencyOption = {
   code: string;
@@ -113,34 +122,39 @@ const CurrencyInputRoot = React.forwardRef<
             placeholder={placeholder}
             value={value}
             onChange={handleInputChange}
+            onBlur={() => formField.onBlur?.()}
             disabled={resolvedDisabled}
             {...rest}
           />
         </Input.Wrapper>
-        <Select.Root
-          variant='compactForInput'
-          value={activeCurrency}
-          onValueChange={handleCurrencyChange}
-          disabled={resolvedDisabled}
-        >
-          <Select.Trigger>
-            <Select.Value />
-          </Select.Trigger>
-          <Select.Content>
-            {currencies.map((item) => (
-              <Select.Item key={item.code} value={item.code}>
-                {item.icon && (
-                  <Select.ItemIcon
-                    style={{
-                      backgroundImage: `url(${item.icon})`,
-                    }}
-                  />
-                )}
-                {item.label}
-              </Select.Item>
-            ))}
-          </Select.Content>
-        </Select.Root>
+        {/* Isolate the currency Select from the parent FormField so closing
+            the dropdown doesn't trigger validation on the amount field */}
+        <FormFieldContext.Provider value={isolatedFormField}>
+          <Select.Root
+            variant='compactForInput'
+            value={activeCurrency}
+            onValueChange={handleCurrencyChange}
+            disabled={resolvedDisabled}
+          >
+            <Select.Trigger>
+              <Select.Value />
+            </Select.Trigger>
+            <Select.Content>
+              {currencies.map((item) => (
+                <Select.Item key={item.code} value={item.code}>
+                  {item.icon && (
+                    <Select.ItemIcon
+                      style={{
+                        backgroundImage: `url(${item.icon})`,
+                      }}
+                    />
+                  )}
+                  {item.label}
+                </Select.Item>
+              ))}
+            </Select.Content>
+          </Select.Root>
+        </FormFieldContext.Provider>
       </Input.Root>
     );
   }
