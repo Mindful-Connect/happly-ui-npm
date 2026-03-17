@@ -160,7 +160,7 @@ const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
       placeholder,
       ...rest
     },
-    forwardedRef,
+    forwardedRef
   ) => {
     const uniqueId = React.useId();
     const Component = asChild ? Slot : 'div';
@@ -175,16 +175,28 @@ const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
     if (!children) {
       if (placeholder) {
         return (
-          <div ref={forwardedRef} className={root({ class: className })} {...rest}>
+          <div
+            ref={forwardedRef}
+            className={root({ class: className })}
+            {...rest}
+          >
             {placeholder}
           </div>
         );
       }
 
       return (
-        <div ref={forwardedRef} className={root({ class: className })} {...rest}>
+        <div
+          ref={forwardedRef}
+          className={root({ class: className })}
+          {...rest}
+        >
           <AvatarImage asChild>
-            {placeholderType === 'company' ? <IconEmptyCompany /> : <IconEmptyUser />}
+            {placeholderType === 'company' ? (
+              <IconEmptyCompany />
+            ) : (
+              <IconEmptyUser />
+            )}
           </AvatarImage>
         </div>
       );
@@ -195,7 +207,7 @@ const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
       sharedProps,
       [AVATAR_IMAGE_NAME, AVATAR_INDICATOR_NAME],
       uniqueId,
-      asChild,
+      asChild
     );
 
     return (
@@ -207,7 +219,7 @@ const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
         {extendedChildren}
       </Component>
     );
-  },
+  }
 );
 AvatarRoot.displayName = AVATAR_ROOT_NAME;
 
@@ -228,7 +240,7 @@ const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
         {...rest}
       />
     );
-  },
+  }
 );
 AvatarImage.displayName = AVATAR_IMAGE_NAME;
 
@@ -300,8 +312,8 @@ const AvatarBrandLogo = React.forwardRef<
     <Component
       ref={forwardedRef}
       className={cn(
-        'box-content w-6 h-6 rounded-full border-2 border-bg-white-0',
-        className,
+        'border-bg-white-0 box-content h-6 w-6 rounded-full border-2',
+        className
       )}
       {...rest}
     />
@@ -316,8 +328,8 @@ function AvatarNotification({
   return (
     <div
       className={cn(
-        'box-content w-3 h-3 rounded-full border-2 border-bg-white-0 bg-error-base',
-        className,
+        'border-bg-white-0 bg-error-base box-content h-3 w-3 rounded-full border-2',
+        className
       )}
       {...rest}
     />

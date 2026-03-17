@@ -378,7 +378,17 @@ type ButtonRootProps = VariantProps<typeof buttonVariants> &
 
 const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
   (
-    { children, variant, mode, size, asChild, loading, className, disabled, ...rest },
+    {
+      children,
+      variant,
+      mode,
+      size,
+      asChild,
+      loading,
+      className,
+      disabled,
+      ...rest
+    },
     forwardedRef
   ) => {
     const uniqueId = React.useId();
@@ -403,16 +413,18 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
       <Component
         ref={forwardedRef}
         className={root({
-          class: [loading && 'pointer-events-none bg-bg-weak-50 text-text-disabled-300 ring-transparent shadow-none', className],
+          class: [
+            loading &&
+              'bg-bg-weak-50 text-text-disabled-300 pointer-events-none shadow-none ring-transparent',
+            className,
+          ],
         })}
         disabled={disabled}
         aria-disabled={loading || undefined}
         {...rest}
       >
         {loading ? (
-          <span className='animate-pulse'>
-            Loading...
-          </span>
+          <span className='animate-pulse'>Loading...</span>
         ) : (
           extendedChildren
         )}
@@ -445,7 +457,7 @@ type ButtonComposedProps = React.ComponentPropsWithoutRef<typeof ButtonRoot> & {
 const ButtonComposed = React.forwardRef<HTMLButtonElement, ButtonComposedProps>(
   (
     { children, leadingIcon: LeadingIcon, trailingIcon: TrailingIcon, ...rest },
-    forwardedRef,
+    forwardedRef
   ) => {
     return (
       <ButtonRoot ref={forwardedRef} {...rest}>
@@ -454,7 +466,7 @@ const ButtonComposed = React.forwardRef<HTMLButtonElement, ButtonComposedProps>(
         {TrailingIcon && <ButtonIcon as={TrailingIcon} />}
       </ButtonRoot>
     );
-  },
+  }
 );
 ButtonComposed.displayName = 'ButtonComposed';
 

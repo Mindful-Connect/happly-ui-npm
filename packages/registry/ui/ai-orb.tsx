@@ -371,100 +371,101 @@ const AiOrbRoot = React.forwardRef<SVGSVGElement, AiOrbProps>(
 
           {/* ── Layer 3: Rainbow gradient 1 (normal blend) ── */}
           <g className={animated ? `${uid}-drift-a` : undefined}>
-          <g opacity='0.999' transform='translate(-68, -77.4)'>
-            {/* Cyan */}
-            <g filter={`url(#${uid}-rb1-f0)`}>
-              <circle
-                cx='166.551'
-                cy='96.5506'
-                r='35.8793'
-                transform='rotate(32.262 166.551 96.5506)'
-                fill='#20D4FF'
-              />
+            <g opacity='0.999' transform='translate(-68, -77.4)'>
+              {/* Cyan */}
+              <g filter={`url(#${uid}-rb1-f0)`}>
+                <circle
+                  cx='166.551'
+                  cy='96.5506'
+                  r='35.8793'
+                  transform='rotate(32.262 166.551 96.5506)'
+                  fill='#20D4FF'
+                />
+              </g>
+              {/* Yellow — boosted from #FBD570 to compensate sRGB vs Display P3 */}
+              <g filter={`url(#${uid}-rb1-f1)`}>
+                <circle
+                  cx='145.551'
+                  cy='157.217'
+                  r='35.8793'
+                  transform='rotate(32.262 145.551 157.217)'
+                  fill='#FFE040'
+                />
+              </g>
+              {/* Red — boosted from #FF5D53 */}
+              <g filter={`url(#${uid}-rb1-f2)`}>
+                <circle
+                  cx='96.5506'
+                  cy='145.551'
+                  r='35.8793'
+                  transform='rotate(32.262 96.5506 145.551)'
+                  fill='#FF1A0A'
+                />
+              </g>
+              {/* Blue */}
+              <g filter={`url(#${uid}-rb1-f3)`}>
+                <circle
+                  cx='110.551'
+                  cy='105.884'
+                  r='35.8793'
+                  transform='rotate(32.262 110.551 105.884)'
+                  fill='#536FFF'
+                />
+              </g>
             </g>
-            {/* Yellow — boosted from #FBD570 to compensate sRGB vs Display P3 */}
-            <g filter={`url(#${uid}-rb1-f1)`}>
-              <circle
-                cx='145.551'
-                cy='157.217'
-                r='35.8793'
-                transform='rotate(32.262 145.551 157.217)'
-                fill='#FFE040'
-              />
-            </g>
-            {/* Red — boosted from #FF5D53 */}
-            <g filter={`url(#${uid}-rb1-f2)`}>
-              <circle
-                cx='96.5506'
-                cy='145.551'
-                r='35.8793'
-                transform='rotate(32.262 96.5506 145.551)'
-                fill='#FF1A0A'
-              />
-            </g>
-            {/* Blue */}
-            <g filter={`url(#${uid}-rb1-f3)`}>
-              <circle
-                cx='110.551'
-                cy='105.884'
-                r='35.8793'
-                transform='rotate(32.262 110.551 105.884)'
-                fill='#536FFF'
-              />
-            </g>
-          </g>
-
           </g>
 
           {/* ── Layer 4: Rainbow gradient 2 (hard-light, 20% opacity, rotated 19.67°) ── */}
           <g className={animated ? `${uid}-drift-b` : undefined}>
-          <g
-            style={{ mixBlendMode: 'hard-light' }}
-            opacity='0.2'
-            transform='translate(56, 56) rotate(19.67) translate(-126.884, -122.218)'
-          >
-            <g filter={`url(#${uid}-rb2-f0)`}>
-              <circle
-                cx='161.883'
-                cy='91.8839'
-                r='35.8793'
-                transform='rotate(32.262 161.883 91.8839)'
-                fill='#20D4FF'
-              />
+            <g
+              style={{ mixBlendMode: 'hard-light' }}
+              opacity='0.2'
+              transform='translate(56, 56) rotate(19.67) translate(-126.884, -122.218)'
+            >
+              <g filter={`url(#${uid}-rb2-f0)`}>
+                <circle
+                  cx='161.883'
+                  cy='91.8839'
+                  r='35.8793'
+                  transform='rotate(32.262 161.883 91.8839)'
+                  fill='#20D4FF'
+                />
+              </g>
+              <g filter={`url(#${uid}-rb2-f1)`}>
+                <circle
+                  cx='140.884'
+                  cy='152.551'
+                  r='35.8793'
+                  transform='rotate(32.262 140.884 152.551)'
+                  fill='#FFE040'
+                />
+              </g>
+              <g filter={`url(#${uid}-rb2-f2)`}>
+                <circle
+                  cx='91.8839'
+                  cy='140.884'
+                  r='35.8793'
+                  transform='rotate(32.262 91.8839 140.884)'
+                  fill='#FF1A0A'
+                />
+              </g>
+              <g filter={`url(#${uid}-rb2-f3)`}>
+                <circle
+                  cx='105.883'
+                  cy='101.218'
+                  r='35.8793'
+                  transform='rotate(32.262 105.883 101.218)'
+                  fill='#536FFF'
+                />
+              </g>
             </g>
-            <g filter={`url(#${uid}-rb2-f1)`}>
-              <circle
-                cx='140.884'
-                cy='152.551'
-                r='35.8793'
-                transform='rotate(32.262 140.884 152.551)'
-                fill='#FFE040'
-              />
-            </g>
-            <g filter={`url(#${uid}-rb2-f2)`}>
-              <circle
-                cx='91.8839'
-                cy='140.884'
-                r='35.8793'
-                transform='rotate(32.262 91.8839 140.884)'
-                fill='#FF1A0A'
-              />
-            </g>
-            <g filter={`url(#${uid}-rb2-f3)`}>
-              <circle
-                cx='105.883'
-                cy='101.218'
-                r='35.8793'
-                transform='rotate(32.262 105.883 101.218)'
-                fill='#536FFF'
-              />
-            </g>
-          </g>
-
           </g>
 
           {/* ── Layer 5: Large sparkle star (color-dodge) ── */}
-          <g style={{ mixBlendMode: 'color-dodge' }} transform='translate(28.68, 42.25)'>
+          <g
+            style={{ mixBlendMode: 'color-dodge' }}
+            transform='translate(28.68, 42.25)'
+          >
             <g filter={`url(#${uid}-sp1-is)`}>
               <path
                 fillRule='evenodd'
@@ -490,7 +491,10 @@ const AiOrbRoot = React.forwardRef<SVGSVGElement, AiOrbProps>(
           </g>
 
           {/* ── Layer 6: Small sparkle star (color-dodge) ── */}
-          <g style={{ mixBlendMode: 'color-dodge' }} transform='translate(62.82, 35.04)'>
+          <g
+            style={{ mixBlendMode: 'color-dodge' }}
+            transform='translate(62.82, 35.04)'
+          >
             <g filter={`url(#${uid}-sp2-is)`}>
               <path
                 fillRule='evenodd'
@@ -516,7 +520,13 @@ const AiOrbRoot = React.forwardRef<SVGSVGElement, AiOrbProps>(
           </g>
 
           {/* ── Layer 7: Top glass highlight (plus-lighter) ── */}
-          <g style={{ mixBlendMode: 'plus-lighter' as React.CSSProperties['mixBlendMode'] }} transform='translate(-14, -17.5)'>
+          <g
+            style={{
+              mixBlendMode:
+                'plus-lighter' as React.CSSProperties['mixBlendMode'],
+            }}
+            transform='translate(-14, -17.5)'
+          >
             <g filter={`url(#${uid}-hl-top)`}>
               <path
                 d='M71.1667 25.6667C102.9 25.6667 115.5 65.3333 115.5 65.3333C115.5 65.3333 90.7505 36.0595 71.1667 35C51.0202 33.9101 25.6667 61.8333 25.6667 61.8333C25.6667 61.8333 39.4333 25.6667 71.1667 25.6667Z'
@@ -526,7 +536,13 @@ const AiOrbRoot = React.forwardRef<SVGSVGElement, AiOrbProps>(
           </g>
 
           {/* ── Layer 8: Bottom glass highlight (plus-lighter) ── */}
-          <g style={{ mixBlendMode: 'plus-lighter' as React.CSSProperties['mixBlendMode'] }} transform='translate(7, 51.34)'>
+          <g
+            style={{
+              mixBlendMode:
+                'plus-lighter' as React.CSSProperties['mixBlendMode'],
+            }}
+            transform='translate(7, 51.34)'
+          >
             <g filter={`url(#${uid}-hl-bot)`}>
               <path
                 d='M82.833 25.6667C78.1665 36.1666 60.2001 54.3664 25.6667 43.1667C36.1664 43.9443 62.2993 41.5329 82.833 25.6667Z'
@@ -580,7 +596,7 @@ const AiOrbRoot = React.forwardRef<SVGSVGElement, AiOrbProps>(
         </g>
       </svg>
     );
-  },
+  }
 );
 AiOrbRoot.displayName = 'AiOrbRoot';
 

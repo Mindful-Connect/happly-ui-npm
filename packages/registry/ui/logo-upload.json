@@ -6,7 +6,13 @@
   "description": "A compound component for uploading logos or profile images with avatar preview, powered by useFileUpload.",
   "version": "1.0.0",
   "dependencies": [],
-  "registryDependencies": ["avatar", "button", "tv", "happly-ui-utils", "use-file-upload"],
+  "registryDependencies": [
+    "avatar",
+    "button",
+    "tv",
+    "happly-ui-utils",
+    "use-file-upload"
+  ],
   "docs": {
     "lead": "A compound component for uploading logos or profile images. Shows a rounded avatar preview with placeholder, title, description, and action buttons. Designed to work with the useFileUpload hook.",
     "usage": "import * as LogoUpload from \"@/components/ui/logo-upload\"\nimport * as Button from \"@/components/ui/button\"\nimport { useFileUpload } from \"@/hooks/use-file-upload\"\n\nconst upload = useFileUpload({ ... })\nconst file = upload.files[0]\n\n<LogoUpload.Root>\n  <LogoUpload.Preview file={file} placeholderType=\"company\" />\n  <LogoUpload.Content>\n    <LogoUpload.Title>Business logo</LogoUpload.Title>\n    <LogoUpload.Description>\n      <p>Supports JPEG or PNG files (max 3MB).</p>\n    </LogoUpload.Description>\n    <LogoUpload.Actions>\n      <Button.Root variant=\"neutral\" mode=\"stroke\" size=\"xsmall\" onClick={upload.openFilePicker}>\n        Change\n      </Button.Root>\n      <input {...upload.getInputProps()} />\n    </LogoUpload.Actions>\n  </LogoUpload.Content>\n</LogoUpload.Root>",

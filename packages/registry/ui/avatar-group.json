@@ -6,11 +6,7 @@
   "description": "A compound component for displaying overlapping avatar stacks with an overflow indicator. Uses namespace exports: AvatarGroup.Root, AvatarGroup.Overflow.",
   "version": "1.0.0",
   "dependencies": [],
-  "registryDependencies": [
-    "tv",
-    "recursive-clone-children",
-    "avatar"
-  ],
+  "registryDependencies": ["tv", "recursive-clone-children", "avatar"],
   "docs": {
     "lead": "A compound component for displaying overlapping avatar stacks with an overflow indicator.",
     "usage": "import * as AvatarGroup from \"@/components/ui/avatar-group\"\nimport * as Avatar from \"@/components/ui/avatar\"\n\n<AvatarGroup.Root>\n  <Avatar.Root>\n    <Avatar.Image src=\"/path/to/image.png\" />\n  </Avatar.Root>\n  <AvatarGroup.Overflow>+3</AvatarGroup.Overflow>\n</AvatarGroup.Root>",

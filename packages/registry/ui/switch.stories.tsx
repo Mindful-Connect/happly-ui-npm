@@ -66,37 +66,25 @@ function WithLabelRender() {
     <div className='flex flex-col gap-3'>
       <div className='flex items-center gap-2'>
         <Switch.Root id={`${uniqueId}-s1`} />
-        <Label.Root
-          className='text-paragraph-sm'
-          htmlFor={`${uniqueId}-s1`}
-        >
+        <Label.Root className='text-paragraph-sm' htmlFor={`${uniqueId}-s1`}>
           SMS Verification
         </Label.Root>
       </div>
       <div className='flex items-center gap-2'>
         <Switch.Root id={`${uniqueId}-s2`} />
-        <Label.Root
-          className='text-paragraph-sm'
-          htmlFor={`${uniqueId}-s2`}
-        >
+        <Label.Root className='text-paragraph-sm' htmlFor={`${uniqueId}-s2`}>
           Authenticator App
         </Label.Root>
       </div>
       <div className='flex items-center gap-2'>
         <Switch.Root id={`${uniqueId}-s3`} disabled />
-        <Label.Root
-          className='text-paragraph-sm'
-          htmlFor={`${uniqueId}-s3`}
-        >
+        <Label.Root className='text-paragraph-sm' htmlFor={`${uniqueId}-s3`}>
           Disabled
         </Label.Root>
       </div>
       <div className='flex items-center gap-2'>
         <Switch.Root id={`${uniqueId}-s4`} disabled defaultChecked />
-        <Label.Root
-          className='text-paragraph-sm'
-          htmlFor={`${uniqueId}-s4`}
-        >
+        <Label.Root className='text-paragraph-sm' htmlFor={`${uniqueId}-s4`}>
           Disabled but default checked
         </Label.Root>
       </div>
@@ -117,7 +105,7 @@ function WithLabelExtendedRender() {
         <div className='flex items-center gap-2'>
           <Switch.Root id={`${uniqueId}-s1`} />
           <Label.Root
-            className='flex-1 gap-1 text-paragraph-sm'
+            className='text-paragraph-sm flex-1 gap-1'
             htmlFor={`${uniqueId}-s1`}
           >
             Label
@@ -131,7 +119,7 @@ function WithLabelExtendedRender() {
         <div className='flex items-center gap-2'>
           <Switch.Root id={`${uniqueId}-s2`} defaultChecked />
           <Label.Root
-            className='flex-1 gap-1 text-paragraph-sm'
+            className='text-paragraph-sm flex-1 gap-1'
             htmlFor={`${uniqueId}-s2`}
           >
             Label
@@ -158,15 +146,11 @@ function WithLabelExtendedRender() {
                   NEW
                 </Badge.Root>
               </div>
-              <div className='mt-1 text-paragraph-xs text-text-sub-600'>
+              <div className='text-paragraph-xs text-text-sub-600 mt-1'>
                 Insert the Switch description here.
               </div>
             </LabelPrimitives.Root>
-            <LinkButton.Root
-              variant='primary'
-              size='small'
-              className='mt-2.5'
-            >
+            <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
               Link Button
             </LinkButton.Root>
           </div>
@@ -188,15 +172,11 @@ function WithLabelExtendedRender() {
                   NEW
                 </Badge.Root>
               </div>
-              <div className='mt-1 text-paragraph-xs text-text-sub-600'>
+              <div className='text-paragraph-xs text-text-sub-600 mt-1'>
                 Insert the Switch description here.
               </div>
             </LabelPrimitives.Root>
-            <LinkButton.Root
-              variant='primary'
-              size='small'
-              className='mt-2.5'
-            >
+            <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
               Link Button
             </LinkButton.Root>
           </div>
@@ -206,7 +186,7 @@ function WithLabelExtendedRender() {
       <div className='flex flex-col gap-12'>
         <div className='flex items-center gap-2'>
           <Label.Root
-            className='flex-1 gap-1 text-paragraph-sm'
+            className='text-paragraph-sm flex-1 gap-1'
             htmlFor={`${uniqueId}-s5`}
           >
             Label
@@ -220,7 +200,7 @@ function WithLabelExtendedRender() {
 
         <div className='flex items-center gap-2'>
           <Label.Root
-            className='flex-1 gap-1 text-paragraph-sm'
+            className='text-paragraph-sm flex-1 gap-1'
             htmlFor={`${uniqueId}-s6`}
           >
             Label
@@ -247,15 +227,11 @@ function WithLabelExtendedRender() {
                   NEW
                 </Badge.Root>
               </div>
-              <div className='mt-1 text-paragraph-xs text-text-sub-600'>
+              <div className='text-paragraph-xs text-text-sub-600 mt-1'>
                 Insert the Switch description here.
               </div>
             </LabelPrimitives.Root>
-            <LinkButton.Root
-              variant='primary'
-              size='small'
-              className='mt-2.5'
-            >
+            <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
               Link Button
             </LinkButton.Root>
           </div>
@@ -277,15 +253,11 @@ function WithLabelExtendedRender() {
                   NEW
                 </Badge.Root>
               </div>
-              <div className='mt-1 text-paragraph-xs text-text-sub-600'>
+              <div className='text-paragraph-xs text-text-sub-600 mt-1'>
                 Insert the Switch description here.
               </div>
             </LabelPrimitives.Root>
-            <LinkButton.Root
-              variant='primary'
-              size='small'
-              className='mt-2.5'
-            >
+            <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
               Link Button
             </LinkButton.Root>
           </div>

@@ -35,7 +35,7 @@ function IconCmd(props: React.SVGProps<SVGSVGElement>) {
 export const Demo = {
   render: () => (
     <Kbd.Root>
-      <IconCmd className='w-2.5 h-2.5' />
+      <IconCmd className='h-2.5 w-2.5' />
       +K
     </Kbd.Root>
   ),

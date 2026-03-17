@@ -1,7 +1,10 @@
 import * as ProgressBar from './progress-bar';
 import * as LinkButton from './link-button';
 
-export default { title: 'Displaying Data/Progress Bar', component: ProgressBar.Root };
+export default {
+  title: 'Displaying Data/Progress Bar',
+  component: ProgressBar.Root,
+};
 
 export const Playground = {
   args: {
@@ -12,7 +15,10 @@ export const Playground = {
   argTypes: {
     value: { control: { type: 'range', min: 0, max: 100, step: 1 } },
     max: { control: 'number' },
-    color: { control: 'select', options: ['blue', 'red', 'orange', 'green', 'primary'] },
+    color: {
+      control: 'select',
+      options: ['blue', 'red', 'orange', 'green', 'primary'],
+    },
   },
   render: (args: any) => (
     <div className='w-96'>

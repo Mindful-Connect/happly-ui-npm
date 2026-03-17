@@ -55,7 +55,7 @@ function ControlledRender() {
         country={country as any}
         onCountryChange={(iso2) => setCountry(iso2)}
       />
-      <p className='mt-2 text-paragraph-xs text-text-sub-600'>
+      <p className='text-paragraph-xs text-text-sub-600 mt-2'>
         Value: {value || '—'} | Country: {country}
       </p>
     </div>
@@ -93,7 +93,7 @@ export const Disabled = {
 
 export const WithFormField = {
   render: () => (
-    <div className='w-full min-w-[300px] max-w-[300px]'>
+    <div className='w-full max-w-[300px] min-w-[300px]'>
       <FormField.Root
         label='Phone Number'
         htmlFor='phone'

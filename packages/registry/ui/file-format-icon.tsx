@@ -54,18 +54,38 @@ const fileFormatIconVariants = tv({
   },
 });
 
-type FormatColor = NonNullable<VariantProps<typeof fileFormatIconVariants>['color']>;
+type FormatColor = NonNullable<
+  VariantProps<typeof fileFormatIconVariants>['color']
+>;
 
 const FORMAT_COLOR_MAP: Record<string, FormatColor> = {
   PDF: 'red',
-  DOC: 'blue', DOCX: 'blue',
-  XLS: 'green', XLSX: 'green', CSV: 'green',
-  PPT: 'orange', PPTX: 'orange',
-  ZIP: 'purple', RAR: 'purple', '7Z': 'purple',
-  PNG: 'sky', JPG: 'sky', JPEG: 'sky', GIF: 'sky', WEBP: 'sky', SVG: 'sky',
-  MP4: 'pink', MOV: 'pink', AVI: 'pink', WEBM: 'pink',
-  MP3: 'yellow', WAV: 'yellow', OGG: 'yellow',
-  TXT: 'gray', JSON: 'gray', XML: 'gray',
+  DOC: 'blue',
+  DOCX: 'blue',
+  XLS: 'green',
+  XLSX: 'green',
+  CSV: 'green',
+  PPT: 'orange',
+  PPTX: 'orange',
+  ZIP: 'purple',
+  RAR: 'purple',
+  '7Z': 'purple',
+  PNG: 'sky',
+  JPG: 'sky',
+  JPEG: 'sky',
+  GIF: 'sky',
+  WEBP: 'sky',
+  SVG: 'sky',
+  MP4: 'pink',
+  MOV: 'pink',
+  AVI: 'pink',
+  WEBM: 'pink',
+  MP3: 'yellow',
+  WAV: 'yellow',
+  OGG: 'yellow',
+  TXT: 'gray',
+  JSON: 'gray',
+  XML: 'gray',
 };
 
 function getFormatColor(format: string): FormatColor {
@@ -80,8 +100,12 @@ type FileFormatIconProps = React.SVGProps<SVGSVGElement> &
 
 const FileFormatIconRoot = React.forwardRef<SVGSVGElement, FileFormatIconProps>(
   ({ format, className, color, size, ...rest }, forwardedRef) => {
-    const resolvedColor = color ?? (format ? getFormatColor(format) : undefined);
-    const { root, formatBox } = fileFormatIconVariants({ color: resolvedColor, size });
+    const resolvedColor =
+      color ?? (format ? getFormatColor(format) : undefined);
+    const { root, formatBox } = fileFormatIconVariants({
+      color: resolvedColor,
+      size,
+    });
 
     return (
       <svg
@@ -112,8 +136,13 @@ const FileFormatIconRoot = React.forwardRef<SVGSVGElement, FileFormatIconProps>(
         </foreignObject>
       </svg>
     );
-  },
+  }
 );
 FileFormatIconRoot.displayName = 'FileFormatIconRoot';
 
-export { FileFormatIconRoot as Root, fileFormatIconVariants, getFormatColor, FORMAT_COLOR_MAP };
+export {
+  FileFormatIconRoot as Root,
+  fileFormatIconVariants,
+  getFormatColor,
+  FORMAT_COLOR_MAP,
+};

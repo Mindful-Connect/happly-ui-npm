@@ -14,7 +14,8 @@ const keyIconVariants = tv({
       '2xl': 'w-16 h-16 p-4 [&_svg]:w-8 h-8',
     },
     style: {
-      stroke: 'bg-bg-white-0 ring-1 ring-inset ring-stroke-soft-200 shadow-regular-xs',
+      stroke:
+        'bg-bg-white-0 ring-1 ring-inset ring-stroke-soft-200 shadow-regular-xs',
       lighter: 'ring-1 ring-inset',
     },
     color: {
@@ -31,15 +32,47 @@ const keyIconVariants = tv({
   },
   compoundVariants: [
     // lighter color variants
-    { style: 'lighter', color: 'gray', class: 'bg-faded-lighter ring-stroke-soft-200' },
-    { style: 'lighter', color: 'blue', class: 'bg-information-lighter ring-blue-100' },
-    { style: 'lighter', color: 'orange', class: 'bg-warning-lighter ring-orange-100' },
+    {
+      style: 'lighter',
+      color: 'gray',
+      class: 'bg-faded-lighter ring-stroke-soft-200',
+    },
+    {
+      style: 'lighter',
+      color: 'blue',
+      class: 'bg-information-lighter ring-blue-100',
+    },
+    {
+      style: 'lighter',
+      color: 'orange',
+      class: 'bg-warning-lighter ring-orange-100',
+    },
     { style: 'lighter', color: 'red', class: 'bg-error-lighter ring-red-100' },
-    { style: 'lighter', color: 'green', class: 'bg-success-lighter ring-green-200' },
-    { style: 'lighter', color: 'yellow', class: 'bg-away-lighter ring-yellow-200' },
-    { style: 'lighter', color: 'purple', class: 'bg-feature-lighter ring-purple-100' },
-    { style: 'lighter', color: 'pink', class: 'bg-highlighted-lighter ring-pink-100' },
-    { style: 'lighter', color: 'teal', class: 'bg-verified-lighter ring-sky-200' },
+    {
+      style: 'lighter',
+      color: 'green',
+      class: 'bg-success-lighter ring-green-200',
+    },
+    {
+      style: 'lighter',
+      color: 'yellow',
+      class: 'bg-away-lighter ring-yellow-200',
+    },
+    {
+      style: 'lighter',
+      color: 'purple',
+      class: 'bg-feature-lighter ring-purple-100',
+    },
+    {
+      style: 'lighter',
+      color: 'pink',
+      class: 'bg-highlighted-lighter ring-pink-100',
+    },
+    {
+      style: 'lighter',
+      color: 'teal',
+      class: 'bg-verified-lighter ring-sky-200',
+    },
   ],
   defaultVariants: {
     size: 'md',
@@ -54,7 +87,10 @@ type KeyIconProps = React.ComponentPropsWithoutRef<'div'> &
   };
 
 const KeyIconRoot = React.forwardRef<HTMLDivElement, KeyIconProps>(
-  ({ className, size, style, color, icon, children, ...rest }, forwardedRef) => {
+  (
+    { className, size, style, color, icon, children, ...rest },
+    forwardedRef
+  ) => {
     return (
       <div
         ref={forwardedRef}
@@ -64,7 +100,7 @@ const KeyIconRoot = React.forwardRef<HTMLDivElement, KeyIconProps>(
         {icon ?? children}
       </div>
     );
-  },
+  }
 );
 KeyIconRoot.displayName = 'KeyIconRoot';
 

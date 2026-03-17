@@ -9,20 +9,20 @@ export default { title: 'Cards/Info Card' };
 
 export const Inline = {
   render: () => (
-    <div className="mx-auto w-full max-w-lg">
-      <InfoCard.Root layout="inline">
+    <div className='mx-auto w-full max-w-lg'>
+      <InfoCard.Root layout='inline'>
         <InfoCard.Item>
           <InfoCard.Label>Submitted date</InfoCard.Label>
           <InfoCard.Value>
-            <RiTimeLine className="w-4 h-4" />
+            <RiTimeLine className='h-4 w-4' />
             <span>Jan 3, 2025</span>
           </InfoCard.Value>
         </InfoCard.Item>
         <InfoCard.Item>
           <InfoCard.Label>Created by</InfoCard.Label>
           <InfoCard.Value>
-            <Avatar.Root size="20">
-              <Avatar.Image src="https://i.pravatar.cc/40?u=sean" />
+            <Avatar.Root size='20'>
+              <Avatar.Image src='https://i.pravatar.cc/40?u=sean' />
             </Avatar.Root>
             <span>Sean Muir</span>
           </InfoCard.Value>
@@ -34,20 +34,20 @@ export const Inline = {
 
 export const InlineWithFullWidthItem = {
   render: () => (
-    <div className="mx-auto w-full max-w-lg">
-      <InfoCard.Root layout="inline">
+    <div className='mx-auto w-full max-w-lg'>
+      <InfoCard.Root layout='inline'>
         <InfoCard.Item>
           <InfoCard.Label>Submitted date</InfoCard.Label>
           <InfoCard.Value>
-            <RiTimeLine className="w-4 h-4" />
+            <RiTimeLine className='h-4 w-4' />
             <span>Jan 3, 2025</span>
           </InfoCard.Value>
         </InfoCard.Item>
         <InfoCard.Item>
           <InfoCard.Label>Created by</InfoCard.Label>
           <InfoCard.Value>
-            <Avatar.Root size="20">
-              <Avatar.Image src="https://i.pravatar.cc/40?u=sean" />
+            <Avatar.Root size='20'>
+              <Avatar.Image src='https://i.pravatar.cc/40?u=sean' />
             </Avatar.Root>
             <span>Sean Muir</span>
           </InfoCard.Value>
@@ -55,7 +55,7 @@ export const InlineWithFullWidthItem = {
         <InfoCard.Item fullWidth>
           <InfoCard.Label>Publication status</InfoCard.Label>
           <InfoCard.Value>
-            <StatusBadge.Root status="pending">
+            <StatusBadge.Root status='pending'>
               <StatusBadge.Icon as={RiAlertFill} />
               Require changes
             </StatusBadge.Root>
@@ -68,26 +68,26 @@ export const InlineWithFullWidthItem = {
 
 export const Grid2Columns = {
   render: () => (
-    <div className="mx-auto w-full max-w-lg">
-      <InfoCard.Root layout="grid" columns={2}>
+    <div className='mx-auto w-full max-w-lg'>
+      <InfoCard.Root layout='grid' columns={2}>
         <InfoCard.Item>
           <InfoCard.Label>Start date</InfoCard.Label>
           <InfoCard.Value>
-            <RiCalendarLine className="w-4 h-4" />
+            <RiCalendarLine className='h-4 w-4' />
             <span>Mar 1, 2025</span>
           </InfoCard.Value>
         </InfoCard.Item>
         <InfoCard.Item>
           <InfoCard.Label>End date</InfoCard.Label>
           <InfoCard.Value>
-            <RiCalendarLine className="w-4 h-4" />
+            <RiCalendarLine className='h-4 w-4' />
             <span>Jun 30, 2025</span>
           </InfoCard.Value>
         </InfoCard.Item>
         <InfoCard.Item>
           <InfoCard.Label>Category</InfoCard.Label>
           <InfoCard.Value>
-            <Badge.Root variant="lighter" color="blue">
+            <Badge.Root variant='lighter' color='blue'>
               Technology
             </Badge.Root>
           </InfoCard.Value>
@@ -95,7 +95,7 @@ export const Grid2Columns = {
         <InfoCard.Item>
           <InfoCard.Label>Priority</InfoCard.Label>
           <InfoCard.Value>
-            <Badge.Root variant="lighter" color="red">
+            <Badge.Root variant='lighter' color='red'>
               High
             </Badge.Root>
           </InfoCard.Value>
@@ -107,8 +107,8 @@ export const Grid2Columns = {
 
 export const Stacked = {
   render: () => (
-    <div className="mx-auto w-full max-w-sm">
-      <InfoCard.Root layout="stack">
+    <div className='mx-auto w-full max-w-sm'>
+      <InfoCard.Root layout='stack'>
         <InfoCard.Item>
           <InfoCard.Label>Application ID</InfoCard.Label>
           <InfoCard.Value>
@@ -118,8 +118,8 @@ export const Stacked = {
         <InfoCard.Item>
           <InfoCard.Label>Applicant</InfoCard.Label>
           <InfoCard.Value>
-            <Avatar.Root size="20">
-              <Avatar.Image src="https://i.pravatar.cc/40?u=jane" />
+            <Avatar.Root size='20'>
+              <Avatar.Image src='https://i.pravatar.cc/40?u=jane' />
             </Avatar.Root>
             <span>Jane Cooper</span>
           </InfoCard.Value>
@@ -127,7 +127,7 @@ export const Stacked = {
         <InfoCard.Item>
           <InfoCard.Label>Status</InfoCard.Label>
           <InfoCard.Value>
-            <StatusBadge.Root status="completed" variant="light">
+            <StatusBadge.Root status='completed' variant='light'>
               <StatusBadge.Dot />
               Approved
             </StatusBadge.Root>
@@ -140,8 +140,8 @@ export const Stacked = {
 
 export const Grid3Columns = {
   render: () => (
-    <div className="mx-auto w-full max-w-2xl">
-      <InfoCard.Root layout="grid" columns={3}>
+    <div className='mx-auto w-full max-w-2xl'>
+      <InfoCard.Root layout='grid' columns={3}>
         <InfoCard.Item>
           <InfoCard.Label>Amount</InfoCard.Label>
           <InfoCard.Value>
@@ -151,15 +151,13 @@ export const Grid3Columns = {
         <InfoCard.Item>
           <InfoCard.Label>Duration</InfoCard.Label>
           <InfoCard.Value>
-            <Badge.Root variant="stroke">
-              12 months
-            </Badge.Root>
+            <Badge.Root variant='stroke'>12 months</Badge.Root>
           </InfoCard.Value>
         </InfoCard.Item>
         <InfoCard.Item>
           <InfoCard.Label>Deadline</InfoCard.Label>
           <InfoCard.Value>
-            <RiCalendarLine className="w-4 h-4" />
+            <RiCalendarLine className='h-4 w-4' />
             <span>Dec 31, 2025</span>
           </InfoCard.Value>
         </InfoCard.Item>

@@ -462,7 +462,10 @@ type BadgeGroupItem = {
   dot?: boolean;
 };
 
-type BadgeGroupProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
+type BadgeGroupProps = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'children'
+> & {
   items: BadgeGroupItem[];
   /** Maximum number of badges visible before collapsing. Shows all when omitted. */
   maxVisible?: number;
@@ -491,7 +494,7 @@ const BadgeGroup = React.forwardRef<HTMLDivElement, BadgeGroupProps>(
       className,
       ...rest
     },
-    forwardedRef,
+    forwardedRef
   ) => {
     const [expanded, setExpanded] = React.useState(false);
     const canCollapse = maxVisible != null && items.length > maxVisible;
@@ -525,8 +528,8 @@ const BadgeGroup = React.forwardRef<HTMLDivElement, BadgeGroupProps>(
             size={size}
           >
             <button
-              type="button"
-              className="cursor-pointer transition-opacity hover:opacity-70"
+              type='button'
+              className='cursor-pointer transition-opacity hover:opacity-70'
               onClick={() => setExpanded((prev) => !prev)}
             >
               {expanded ? 'Show less' : `+${hiddenCount} more`}
@@ -535,7 +538,7 @@ const BadgeGroup = React.forwardRef<HTMLDivElement, BadgeGroupProps>(
         )}
       </div>
     );
-  },
+  }
 );
 BadgeGroup.displayName = BADGE_GROUP_NAME;
 

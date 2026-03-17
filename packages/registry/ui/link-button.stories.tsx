@@ -12,15 +12,16 @@ export const Playground = {
     children: 'Link Button',
   },
   argTypes: {
-    variant: { control: 'select', options: ['gray', 'black', 'primary', 'error', 'modifiable'] },
+    variant: {
+      control: 'select',
+      options: ['gray', 'black', 'primary', 'error', 'modifiable'],
+    },
     size: { control: 'select', options: ['medium', 'small'] },
     underline: { control: 'boolean' },
     disabled: { control: 'boolean' },
     children: { control: 'text' },
   },
-  render: (args: any) => (
-    <LinkButton.Root {...args} />
-  ),
+  render: (args: any) => <LinkButton.Root {...args} />,
 };
 
 export const Variants = {

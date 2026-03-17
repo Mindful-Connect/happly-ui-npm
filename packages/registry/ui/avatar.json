@@ -5,9 +5,7 @@
   "title": "Avatar",
   "description": "A compound avatar component with image, text, placeholder, status indicator, brand logo, and notification support. Uses namespace exports: Avatar.Root, Avatar.Image, Avatar.Indicator, Avatar.Status, Avatar.BrandLogo, Avatar.Notification.",
   "version": "1.0.0",
-  "dependencies": [
-    "@radix-ui/react-slot"
-  ],
+  "dependencies": ["@radix-ui/react-slot"],
   "registryDependencies": [
     "tv",
     "happly-ui-utils",

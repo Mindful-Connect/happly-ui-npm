@@ -5,14 +5,8 @@
   "title": "Dot Stepper",
   "description": "A minimal dot-based stepper/pagination component with small and xsmall sizes. Supports asChild for Radix integration. Uses namespace exports: DotStepper.Root, DotStepper.Item.",
   "version": "1.0.0",
-  "dependencies": [
-    "@radix-ui/react-slot"
-  ],
-  "registryDependencies": [
-    "happly-ui-utils",
-    "recursive-clone-children",
-    "tv"
-  ],
+  "dependencies": ["@radix-ui/react-slot"],
+  "registryDependencies": ["happly-ui-utils", "recursive-clone-children", "tv"],
   "docs": {
     "lead": "A minimal dot-based stepper component with two sizes and active state highlighting for step navigation.",
     "usage": "import * as DotStepper from \"@/components/ui/dot-stepper\"\n\n<DotStepper.Root size=\"small\">\n  <DotStepper.Item active onClick={() => {}} />\n  <DotStepper.Item onClick={() => {}} />\n</DotStepper.Root>",

@@ -696,8 +696,7 @@
       0 1px 1px -0.5px rgba(23, 23, 23, 0),
       0 0 6px 0 rgba(255, 255, 255, 0.04) inset;
     --shadow-complex-10:
-      0 3px 3px -1.5px rgba(23, 23, 23, 0),
-      0 1px 1px -0.5px rgba(23, 23, 23, 0);
+      0 3px 3px -1.5px rgba(23, 23, 23, 0), 0 1px 1px -0.5px rgba(23, 23, 23, 0);
     --shadow-complex-11:
       0 -1px 1px -0.5px rgba(23, 23, 23, 0.04) inset,
       0 20px 20px -10px rgba(23, 23, 23, 0),
@@ -809,8 +808,7 @@
   --color-social-zendesk: #fff;
 
   --shadow-complex-12:
-    0 80px 80px -40px rgba(23, 23, 23, 0),
-    0 48px 48px -24px rgba(23, 23, 23, 0);
+    0 80px 80px -40px rgba(23, 23, 23, 0), 0 48px 48px -24px rgba(23, 23, 23, 0);
   --shadow-complex:
     0 20px 20px -10px rgba(23, 23, 23, 0), 0 10px 10px -5px rgba(23, 23, 23, 0),
     0 6px 6px -3px rgba(23, 23, 23, 0), 0 3px 3px -1.5px rgba(23, 23, 23, 0),
@@ -904,7 +902,7 @@
 }
 
 @property --radix-accordion-content-height {
-  syntax: "<length>";
+  syntax: '<length>';
   inherits: false;
   initial-value: 0px;
 }

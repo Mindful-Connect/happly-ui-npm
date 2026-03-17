@@ -52,7 +52,7 @@ function ControlledRender() {
         currency={currency}
         onCurrencyChange={setCurrency}
       />
-      <p className='mt-2 text-paragraph-xs text-text-sub-600'>
+      <p className='text-paragraph-xs text-text-sub-600 mt-2'>
         Amount: {amount || '—'} | Currency: {currency}
       </p>
     </div>
@@ -90,7 +90,7 @@ export const Disabled = {
 
 export const WithFormField = {
   render: () => (
-    <div className='w-full min-w-[300px] max-w-[300px]'>
+    <div className='w-full max-w-[300px] min-w-[300px]'>
       <FormField.Root
         label='Amount'
         htmlFor='amount'

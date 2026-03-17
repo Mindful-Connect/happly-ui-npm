@@ -48,7 +48,11 @@ function WithStrengthRender() {
   const [value, setValue] = React.useState('');
 
   const criteria: PasswordCriterion[] = [
-    { key: 'uppercase', label: 'At least 1 uppercase', met: /[A-Z]/.test(value) },
+    {
+      key: 'uppercase',
+      label: 'At least 1 uppercase',
+      met: /[A-Z]/.test(value),
+    },
     { key: 'number', label: 'At least 1 number', met: /[0-9]/.test(value) },
     { key: 'length', label: 'At least 8 characters', met: value.length >= 8 },
   ];
@@ -89,7 +93,7 @@ export const ErrorState = {
 
 export const WithFormField = {
   render: () => (
-    <div className='w-full min-w-[300px] max-w-[300px]'>
+    <div className='w-full max-w-[300px] min-w-[300px]'>
       <FormField.Root
         label='Password'
         htmlFor='password'

@@ -6,7 +6,12 @@
   "description": "A card component for displaying file state with thumbnail, progress, download, and actions.",
   "version": "1.0.0",
   "dependencies": ["@remixicon/react"],
-  "registryDependencies": ["tv", "happly-ui-utils", "button", "file-format-icon"],
+  "registryDependencies": [
+    "tv",
+    "happly-ui-utils",
+    "button",
+    "file-format-icon"
+  ],
   "docs": {
     "lead": "A compound card component for displaying files with thumbnails, upload progress, download actions, error states, and remove actions. Supports document, image, video, and audio file types. Includes a high-level Item preset for quick rendering from file state.",
     "usage": "import * as FileCard from \"@/components/ui/file-card\"\n\n<FileCard.Item\n  file={{ id: '1', name: 'file.pdf', size: 2621440, type: 'application/pdf', progress: 100, status: 'completed' }}\n  onDownload={() => {}}\n/>",

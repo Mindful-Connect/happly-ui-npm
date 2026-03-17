@@ -173,15 +173,14 @@ import { MyComponent } from './my-component';
 export default { title: 'UI/My Component', component: MyComponent };
 
 export const Default = {
-  render: () => (
-    <MyComponent variant="default">Example</MyComponent>
-  ),
+  render: () => <MyComponent variant='default'>Example</MyComponent>,
 };
 ```
 
 The `stories` field in the JSON references the export names (e.g., `"Default"` maps to `export const Default`). The docs site imports these render functions directly via a prebuild story registry.
 
 To regenerate the story registry after adding/renaming stories:
+
 ```bash
 bun run --cwd docs scripts/generate-story-registry.ts
 ```

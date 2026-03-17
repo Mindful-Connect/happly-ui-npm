@@ -179,7 +179,10 @@ export async function init(options: InitOptions): Promise<void> {
           'Existing shadcn design tokens detected. These will continue to work alongside HapplyUI tokens.'
         );
       }
-      if (existingCss.includes('--color-neutral-') || existingCss.includes('--color-primary-')) {
+      if (
+        existingCss.includes('--color-neutral-') ||
+        existingCss.includes('--color-primary-')
+      ) {
         logger.info(
           'Existing design system tokens detected. Your tokens will take precedence over happly-theme.css defaults.'
         );
@@ -239,9 +242,7 @@ export async function init(options: InitOptions): Promise<void> {
     installSpinner.succeed('Dependencies installed');
   } catch {
     installSpinner.fail('Failed to install dependencies');
-    logger.warn(
-      'Please install manually: clsx tailwind-merge'
-    );
+    logger.warn('Please install manually: clsx tailwind-merge');
   }
 
   logger.break();

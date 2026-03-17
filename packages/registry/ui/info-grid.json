@@ -6,11 +6,7 @@
   "description": "A configurable card-based grid layout with automatic dividers and corner rounding. Cells accept any children — compose with KeyIcon, Badge, or any custom content.",
   "version": "1.0.0",
   "dependencies": [],
-  "registryDependencies": [
-    "happly-ui-utils",
-    "tv",
-    "key-icon"
-  ],
+  "registryDependencies": ["happly-ui-utils", "tv", "key-icon"],
   "docs": {
     "lead": "A configurable card-based grid layout with automatic dividers and corner rounding. Only provides the structural shell (Root, Row, Cell) — compose cell content freely with KeyIcon, Badge, text, or any custom elements.",
     "usage": "import * as InfoGrid from \"@/components/ui/info-grid\"\nimport * as KeyIcon from \"@/components/ui/key-icon\"\n\n<InfoGrid.Root>\n  <InfoGrid.Row>\n    <InfoGrid.Cell>\n      <KeyIcon.Root icon={<RiHeartLine />} />\n      <div>\n        <p>Label</p>\n        <p>Any content here</p>\n      </div>\n    </InfoGrid.Cell>\n  </InfoGrid.Row>\n</InfoGrid.Root>",

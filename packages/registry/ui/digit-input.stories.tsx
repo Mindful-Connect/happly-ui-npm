@@ -11,7 +11,7 @@ function PlaygroundRender(args: any) {
   const [value, setValue] = React.useState('');
 
   return (
-    <div className='w-full min-w-[320px] max-w-96'>
+    <div className='w-full max-w-96 min-w-[320px]'>
       <DigitInput.Root
         numInputs={args.numInputs}
         disabled={args.disabled}
@@ -40,7 +40,7 @@ function DemoRender() {
   const [value, setValue] = React.useState('');
 
   return (
-    <div className='w-full min-w-[320px] max-w-96'>
+    <div className='w-full max-w-96 min-w-[320px]'>
       <DigitInput.Root
         numInputs={4}
         onChange={(v) => setValue(v)}
@@ -57,7 +57,7 @@ function HasErrorRender() {
   const [value, setValue] = React.useState('');
 
   return (
-    <div className='w-full min-w-[320px] max-w-96'>
+    <div className='w-full max-w-96 min-w-[320px]'>
       <DigitInput.Root
         hasError
         numInputs={4}
@@ -75,7 +75,7 @@ function DisabledRender() {
   const [value, setValue] = React.useState('');
 
   return (
-    <div className='w-full min-w-[320px] max-w-96'>
+    <div className='w-full max-w-96 min-w-[320px]'>
       <DigitInput.Root
         disabled
         numInputs={4}
@@ -93,7 +93,7 @@ function SquareRender() {
   const [value, setValue] = React.useState('');
 
   return (
-    <div className='w-full min-w-[320px] max-w-96'>
+    <div className='w-full max-w-96 min-w-[320px]'>
       <DigitInput.Root
         numInputs={4}
         onChange={(v) => setValue(v)}

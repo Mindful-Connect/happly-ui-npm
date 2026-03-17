@@ -62,7 +62,10 @@ export const Playground = {
     <div className='w-full max-w-[300px]'>
       <Input.Root size={args.size} hasError={args.hasError}>
         <Input.Wrapper>
-          <Input.Input placeholder={args.placeholder} disabled={args.disabled} />
+          <Input.Input
+            placeholder={args.placeholder}
+            disabled={args.disabled}
+          />
         </Input.Wrapper>
       </Input.Root>
     </div>
@@ -151,7 +154,7 @@ export const WithInlineAffix = {
 
 export const LabelAndHint = {
   render: () => (
-    <div className='w-full min-w-[300px] max-w-[300px]'>
+    <div className='w-full max-w-[300px] min-w-[300px]'>
       <FormField.Root
         label='Email Address'
         htmlFor='email'
@@ -198,7 +201,7 @@ export const WithKbd = {
           <Input.Icon as={RiSearch2Line} />
           <Input.Input placeholder='Search...' />
           <Kbd.Root>
-            <IconCmd className='w-2.5 h-2.5' />1
+            <IconCmd className='h-2.5 w-2.5' />1
           </Kbd.Root>
         </Input.Wrapper>
       </Input.Root>
@@ -222,14 +225,11 @@ function PasswordRender() {
               type={showPassword ? 'text' : 'password'}
               placeholder='••••••••••'
             />
-            <button
-              type='button'
-              onClick={() => setShowPassword((s) => !s)}
-            >
+            <button type='button' onClick={() => setShowPassword((s) => !s)}>
               {showPassword ? (
-                <RiEyeOffLine className='w-5 h-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+                <RiEyeOffLine className='text-text-soft-400 group-has-[disabled]:text-text-disabled-300 h-5 w-5' />
               ) : (
-                <RiEyeLine className='w-5 h-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+                <RiEyeLine className='text-text-soft-400 group-has-[disabled]:text-text-disabled-300 h-5 w-5' />
               )}
             </button>
           </Input.Wrapper>
@@ -271,7 +271,7 @@ function LevelBar({
         'relative flex gap-2 overflow-hidden rounded-full',
         levelColors[1],
         className,
-        levelColors[level],
+        levelColors[level]
       )}
       {...rest}
     >
@@ -299,14 +299,14 @@ function LevelBarItem({
 } & React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className='h-1 w-full rounded-full bg-bg-soft-200'
+      className='bg-bg-soft-200 h-1 w-full rounded-full'
       style={{
         clipPath: 'inset(0 round 99px)',
       }}
       {...rest}
     >
       <div
-        className='absolute left-0 top-0 h-full w-0 rounded-full bg-current duration-500 ease-out'
+        className='absolute top-0 left-0 h-full w-0 rounded-full bg-current duration-500 ease-out'
         style={{
           transitionProperty: 'width',
           width: `calc((100% / ${levels}) * ${level})`,
@@ -326,9 +326,7 @@ function PasswordWithLevelRender() {
     number: false,
   });
 
-  const handleNewPasswordChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleNewPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setNewPassword(value);
     setCriteria({
@@ -359,14 +357,11 @@ function PasswordWithLevelRender() {
               value={newPassword}
               onChange={handleNewPasswordChange}
             />
-            <button
-              type='button'
-              onClick={() => setShowPassword((s) => !s)}
-            >
+            <button type='button' onClick={() => setShowPassword((s) => !s)}>
               {showPassword ? (
-                <RiEyeOffLine className='w-5 h-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+                <RiEyeOffLine className='text-text-soft-400 group-has-[disabled]:text-text-disabled-300 h-5 w-5' />
               ) : (
-                <RiEyeLine className='w-5 h-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+                <RiEyeLine className='text-text-soft-400 group-has-[disabled]:text-text-disabled-300 h-5 w-5' />
               )}
             </button>
           </Input.Wrapper>
@@ -377,27 +372,27 @@ function PasswordWithLevelRender() {
           <div className='text-paragraph-xs text-text-sub-600'>
             Must contain at least;
           </div>
-          <div className='flex items-center gap-1.5 text-paragraph-xs text-text-sub-600'>
+          <div className='text-paragraph-xs text-text-sub-600 flex items-center gap-1.5'>
             {criteria.uppercase ? (
-              <RiCheckboxCircleFill className='w-4 h-4 shrink-0 text-success-base' />
+              <RiCheckboxCircleFill className='text-success-base h-4 w-4 shrink-0' />
             ) : (
-              <RiCloseCircleFill className='w-4 h-4 shrink-0 text-text-soft-400' />
+              <RiCloseCircleFill className='text-text-soft-400 h-4 w-4 shrink-0' />
             )}
             At least 1 uppercase
           </div>
-          <div className='flex items-center gap-1.5 text-paragraph-xs text-text-sub-600'>
+          <div className='text-paragraph-xs text-text-sub-600 flex items-center gap-1.5'>
             {criteria.number ? (
-              <RiCheckboxCircleFill className='w-4 h-4 shrink-0 text-success-base' />
+              <RiCheckboxCircleFill className='text-success-base h-4 w-4 shrink-0' />
             ) : (
-              <RiCloseCircleFill className='w-4 h-4 shrink-0 text-text-soft-400' />
+              <RiCloseCircleFill className='text-text-soft-400 h-4 w-4 shrink-0' />
             )}
             At least 1 number
           </div>
-          <div className='flex items-center gap-1.5 text-paragraph-xs text-text-sub-600'>
+          <div className='text-paragraph-xs text-text-sub-600 flex items-center gap-1.5'>
             {criteria.length ? (
-              <RiCheckboxCircleFill className='w-4 h-4 shrink-0 text-success-base' />
+              <RiCheckboxCircleFill className='text-success-base h-4 w-4 shrink-0' />
             ) : (
-              <RiCloseCircleFill className='w-4 h-4 shrink-0 text-text-soft-400' />
+              <RiCloseCircleFill className='text-text-soft-400 h-4 w-4 shrink-0' />
             )}
             At least 8 characters
           </div>
@@ -417,11 +412,7 @@ export const Disabled = {
       <Input.Root>
         <Input.Wrapper>
           <Input.Icon as={RiUser6Line} />
-          <Input.Input
-            type='text'
-            placeholder='Placeholder text...'
-            disabled
-          />
+          <Input.Input type='text' placeholder='Placeholder text...' disabled />
         </Input.Wrapper>
       </Input.Root>
     </div>
@@ -455,12 +446,12 @@ export const WithButton = {
           <button
             type='button'
             className={cn(
-              'inline-flex h-10 items-center justify-center gap-3 rounded-none bg-transparent px-3.5 text-label-sm text-text-sub-600 outline-none ring-1 ring-inset ring-transparent transition duration-200 ease-out',
+              'text-label-sm text-text-sub-600 inline-flex h-10 items-center justify-center gap-3 rounded-none bg-transparent px-3.5 ring-1 ring-transparent transition duration-200 ease-out outline-none ring-inset',
               'hover:bg-bg-weak-50 hover:text-text-strong-950',
-              'focus-visible:bg-bg-weak-50 focus-visible:text-text-strong-950 focus-visible:ring-transparent',
+              'focus-visible:bg-bg-weak-50 focus-visible:text-text-strong-950 focus-visible:ring-transparent'
             )}
           >
-            <RiFileCopyLine className='-mx-1 w-5 h-5 shrink-0' />
+            <RiFileCopyLine className='-mx-1 h-5 w-5 shrink-0' />
           </button>
         </Input.Root>
       </FormField.Root>
@@ -534,7 +525,7 @@ export const DateFieldStory = {
                 {(segment) => (
                   <ReactAriaDateSegment
                     segment={segment}
-                    className='flex items-center rounded p-0.5 text-paragraph-sm uppercase leading-none text-text-strong-950 caret-transparent outline-none focus:bg-bg-weak-50 focus:outline-none'
+                    className='text-paragraph-sm text-text-strong-950 focus:bg-bg-weak-50 flex items-center rounded p-0.5 leading-none uppercase caret-transparent outline-none focus:outline-none'
                   />
                 )}
               </ReactAriaDateInput>
@@ -591,9 +582,21 @@ export const PaymentInput = {
 };
 
 const currencies = [
-  { icon: 'https://mindful-connect.github.io/circle-flags/flags/eu.svg', value: 'EUR', label: 'EUR' },
-  { icon: 'https://mindful-connect.github.io/circle-flags/flags/us.svg', value: 'USD', label: 'USD' },
-  { icon: 'https://mindful-connect.github.io/circle-flags/flags/tr.svg', value: 'TRY', label: 'TRY' },
+  {
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/eu.svg',
+    value: 'EUR',
+    label: 'EUR',
+  },
+  {
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/us.svg',
+    value: 'USD',
+    label: 'USD',
+  },
+  {
+    icon: 'https://mindful-connect.github.io/circle-flags/flags/tr.svg',
+    value: 'TRY',
+    label: 'TRY',
+  },
 ];
 
 export const WithSelect = {
@@ -680,17 +683,11 @@ export const CounterInput = {
 
           <div className={inputRoot()}>
             <ReactAriaGroup className={inputWrapper()}>
-              <ReactAriaButton
-                slot='decrement'
-                className={compactButtonRoot()}
-              >
+              <ReactAriaButton slot='decrement' className={compactButtonRoot()}>
                 <RiSubtractLine className={compactButtonIcon()} />
               </ReactAriaButton>
               <ReactAriaInput className={input({ class: 'text-center' })} />
-              <ReactAriaButton
-                slot='increment'
-                className={compactButtonRoot()}
-              >
+              <ReactAriaButton slot='increment' className={compactButtonRoot()}>
                 <RiAddLine className={compactButtonIcon()} />
               </ReactAriaButton>
             </ReactAriaGroup>
@@ -715,14 +712,11 @@ function CompositionRender() {
           type={showPassword ? 'text' : 'password'}
           placeholder='••••••••••'
           inlineTrailingNode={
-            <button
-              type='button'
-              onClick={() => setShowPassword((s) => !s)}
-            >
+            <button type='button' onClick={() => setShowPassword((s) => !s)}>
               {showPassword ? (
-                <RiEyeOffLine className='w-5 h-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+                <RiEyeOffLine className='text-text-soft-400 group-has-[disabled]:text-text-disabled-300 h-5 w-5' />
               ) : (
-                <RiEyeLine className='w-5 h-5 text-text-soft-400 group-has-[disabled]:text-text-disabled-300' />
+                <RiEyeLine className='text-text-soft-400 group-has-[disabled]:text-text-disabled-300 h-5 w-5' />
               )}
             </button>
           }

@@ -8,14 +8,8 @@
   "migration": {
     "guide": "API changed: import as namespace `import * as Alert from ...`, use `<Alert.Root variant=\"filled\" status=\"error\">` instead of `<Alert variant=\"errorFilled\">`. Variant and status are now separate props. Sub-components: `Alert.Icon` (polymorphic), `Alert.CloseIcon`. Old `AlertTitle`, `AlertDescription`, `AlertActions`, `AlertLink`, `AlertButton` sub-components removed. Dependencies changed from `cva` + `react-icons` to `tv` + `@remixicon/react`. Old `alert-utils.ts` is no longer included."
   },
-  "dependencies": [
-    "@remixicon/react"
-  ],
-  "registryDependencies": [
-    "tv",
-    "polymorphic",
-    "recursive-clone-children"
-  ],
+  "dependencies": ["@remixicon/react"],
+  "registryDependencies": ["tv", "polymorphic", "recursive-clone-children"],
   "docs": {
     "lead": "A versatile alert component with multiple variants, status colors, and sizes for user notifications.",
     "usage": "import * as Alert from \"@/components/ui/alert\"\n\n<Alert.Root variant=\"filled\" status=\"error\">\n  <Alert.Icon as={RiErrorWarningFill} />\n  Insert your alert title here!\n</Alert.Root>",

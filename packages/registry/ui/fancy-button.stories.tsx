@@ -11,14 +11,15 @@ export const Playground = {
     children: 'Button',
   },
   argTypes: {
-    variant: { control: 'select', options: ['neutral', 'primary', 'error', 'basic'] },
+    variant: {
+      control: 'select',
+      options: ['neutral', 'primary', 'error', 'basic'],
+    },
     size: { control: 'select', options: ['medium', 'small', 'xsmall'] },
     disabled: { control: 'boolean' },
     children: { control: 'text' },
   },
-  render: (args: any) => (
-    <FancyButton.Root {...args} />
-  ),
+  render: (args: any) => <FancyButton.Root {...args} />,
 };
 
 export const Variants = {

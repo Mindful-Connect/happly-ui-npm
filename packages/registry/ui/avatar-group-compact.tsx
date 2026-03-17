@@ -68,7 +68,7 @@ function AvatarGroupCompactRoot({
     children as React.ReactElement[],
     sharedProps,
     [AVATAR_ROOT_NAME, AVATAR_GROUP_COMPACT_OVERFLOW_NAME],
-    uniqueId,
+    uniqueId
   );
 
   return (

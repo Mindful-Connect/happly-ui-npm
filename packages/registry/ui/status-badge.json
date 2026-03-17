@@ -6,11 +6,7 @@
   "description": "A compact status indicator badge with icon or dot variants and semantic status colors (completed, pending, failed, disabled). Uses namespace exports: StatusBadge.Root, StatusBadge.Icon, StatusBadge.Dot.",
   "version": "1.0.0",
   "dependencies": ["@radix-ui/react-slot"],
-  "registryDependencies": [
-    "tv",
-    "polymorphic",
-    "recursive-clone-children"
-  ],
+  "registryDependencies": ["tv", "polymorphic", "recursive-clone-children"],
   "docs": {
     "lead": "A compact status indicator badge with icon or dot variants and semantic status colors.",
     "usage": "import * as StatusBadge from \"@/components/ui/status-badge\"\n\n<StatusBadge.Root status=\"completed\">\n  <StatusBadge.Dot />\n  Badge\n</StatusBadge.Root>",

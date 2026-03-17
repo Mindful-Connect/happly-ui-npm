@@ -5,14 +5,8 @@
   "title": "Button Group",
   "description": "A compound button group component with sizes, icons, and toggle group support via asChild. Uses namespace exports: ButtonGroup.Root, ButtonGroup.Item, ButtonGroup.Icon.",
   "version": "1.0.0",
-  "dependencies": [
-    "@radix-ui/react-slot"
-  ],
-  "registryDependencies": [
-    "tv",
-    "polymorphic",
-    "recursive-clone-children"
-  ],
+  "dependencies": ["@radix-ui/react-slot"],
+  "registryDependencies": ["tv", "polymorphic", "recursive-clone-children"],
   "docs": {
     "lead": "A compound button group component with sizes, icons, and toggle group support via asChild.",
     "usage": "import * as ButtonGroup from \"@/components/ui/button-group\"\n\n<ButtonGroup.Root>\n  <ButtonGroup.Item>\n    <ButtonGroup.Icon as={GridIcon} />\n    Grid view\n  </ButtonGroup.Item>\n  <ButtonGroup.Item>List view</ButtonGroup.Item>\n</ButtonGroup.Root>",

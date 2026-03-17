@@ -75,9 +75,13 @@ const InfoCardRoot = React.forwardRef<HTMLDivElement, InfoCardRootProps>(
     const { root } = infoCardVariants({ layout, columns });
 
     return (
-      <div ref={forwardedRef} className={root({ class: className })} {...rest} />
+      <div
+        ref={forwardedRef}
+        className={root({ class: className })}
+        {...rest}
+      />
     );
-  },
+  }
 );
 InfoCardRoot.displayName = INFO_CARD_ROOT_NAME;
 
@@ -99,7 +103,7 @@ const InfoCardItem = React.forwardRef<HTMLDivElement, InfoCardItemProps>(
         {...rest}
       />
     );
-  },
+  }
 );
 InfoCardItem.displayName = INFO_CARD_ITEM_NAME;
 
@@ -111,7 +115,9 @@ const InfoCardLabel = React.forwardRef<
 >(({ className, ...rest }, forwardedRef) => {
   const { label } = infoCardVariants();
 
-  return <p ref={forwardedRef} className={label({ class: className })} {...rest} />;
+  return (
+    <p ref={forwardedRef} className={label({ class: className })} {...rest} />
+  );
 });
 InfoCardLabel.displayName = INFO_CARD_LABEL_NAME;
 
@@ -122,9 +128,13 @@ const InfoCardValue = React.forwardRef<HTMLDivElement, InfoCardValueProps>(
     const { value } = infoCardVariants();
 
     return (
-      <div ref={forwardedRef} className={value({ class: className })} {...rest} />
+      <div
+        ref={forwardedRef}
+        className={value({ class: className })}
+        {...rest}
+      />
     );
-  },
+  }
 );
 InfoCardValue.displayName = INFO_CARD_VALUE_NAME;
 

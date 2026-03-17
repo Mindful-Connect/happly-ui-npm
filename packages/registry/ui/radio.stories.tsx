@@ -21,7 +21,11 @@ export const Playground = {
     disabled: { control: 'boolean' },
   },
   render: (args: any) => (
-    <Radio.Group variant={args.variant} defaultValue='r1' className='flex gap-2'>
+    <Radio.Group
+      variant={args.variant}
+      defaultValue='r1'
+      className='flex gap-2'
+    >
       <Radio.Item value='r1' disabled={args.disabled} />
       <Radio.Item value='r2' disabled={args.disabled} />
       <Radio.Item value='r3' disabled={args.disabled} />
@@ -43,22 +47,14 @@ export const Variants = {
     <div className='flex flex-col gap-6'>
       <div className='flex flex-col gap-3'>
         <span className='text-subheading-xs text-text-sub-600'>Primary</span>
-        <Radio.Group
-          variant='primary'
-          defaultValue='p1'
-          className='flex gap-2'
-        >
+        <Radio.Group variant='primary' defaultValue='p1' className='flex gap-2'>
           <Radio.Item value='p1' />
           <Radio.Item value='p2' />
         </Radio.Group>
       </div>
       <div className='flex flex-col gap-3'>
         <span className='text-subheading-xs text-text-sub-600'>Neutral</span>
-        <Radio.Group
-          variant='neutral'
-          defaultValue='n1'
-          className='flex gap-2'
-        >
+        <Radio.Group variant='neutral' defaultValue='n1' className='flex gap-2'>
           <Radio.Item value='n1' />
           <Radio.Item value='n2' />
         </Radio.Group>
@@ -83,7 +79,7 @@ export const WithLabel = {
         <Radio.Item value='spam' id='l1' />
         <Label.Root
           htmlFor='l1'
-          className='flex-col gap-1 text-text-sub-600 group-has-[[data-state=checked]]/radio:text-text-strong-950'
+          className='text-text-sub-600 group-has-[[data-state=checked]]/radio:text-text-strong-950 flex-col gap-1'
         >
           Spam
         </Label.Root>
@@ -93,7 +89,7 @@ export const WithLabel = {
         <Radio.Item value='harrassment' id='l2' />
         <Label.Root
           htmlFor='l2'
-          className='flex-col gap-1 text-text-sub-600 group-has-[[data-state=checked]]/radio:text-text-strong-950'
+          className='text-text-sub-600 group-has-[[data-state=checked]]/radio:text-text-strong-950 flex-col gap-1'
         >
           Harrassment
         </Label.Root>
@@ -103,7 +99,7 @@ export const WithLabel = {
         <Radio.Item value='violation' id='l3' />
         <Label.Root
           htmlFor='l3'
-          className='flex-col gap-1 text-text-sub-600 group-has-[[data-state=checked]]/radio:text-text-strong-950'
+          className='text-text-sub-600 group-has-[[data-state=checked]]/radio:text-text-strong-950 flex-col gap-1'
         >
           Violation of Rules
         </Label.Root>
@@ -124,7 +120,7 @@ function WithLabelExtendedRender() {
         <div className='flex items-center gap-2'>
           <Radio.Item value={`${uniqueId}-r1`} id={`${uniqueId}-r1`} />
           <Label.Root
-            className='flex-1 gap-1 text-paragraph-sm'
+            className='text-paragraph-sm flex-1 gap-1'
             htmlFor={`${uniqueId}-r1`}
           >
             Label
@@ -151,15 +147,11 @@ function WithLabelExtendedRender() {
                   NEW
                 </Badge.Root>
               </div>
-              <div className='mt-1 text-paragraph-xs text-text-sub-600'>
+              <div className='text-paragraph-xs text-text-sub-600 mt-1'>
                 Insert the radio description here.
               </div>
             </LabelPrimitives.Root>
-            <LinkButton.Root
-              variant='primary'
-              size='small'
-              className='mt-2.5'
-            >
+            <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
               Link Button
             </LinkButton.Root>
           </div>
@@ -169,7 +161,7 @@ function WithLabelExtendedRender() {
       <div className='flex flex-col gap-12'>
         <div className='flex items-center gap-2'>
           <Label.Root
-            className='flex-1 gap-1 text-paragraph-sm'
+            className='text-paragraph-sm flex-1 gap-1'
             htmlFor={`${uniqueId}-r3`}
           >
             Label
@@ -196,15 +188,11 @@ function WithLabelExtendedRender() {
                   NEW
                 </Badge.Root>
               </div>
-              <div className='mt-1 text-paragraph-xs text-text-sub-600'>
+              <div className='text-paragraph-xs text-text-sub-600 mt-1'>
                 Insert the radio description here.
               </div>
             </LabelPrimitives.Root>
-            <LinkButton.Root
-              variant='primary'
-              size='small'
-              className='mt-2.5'
-            >
+            <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
               Link Button
             </LinkButton.Root>
           </div>
@@ -221,7 +209,11 @@ export const WithLabelExtended = {
 
 export const WithFormField = {
   render: () => (
-    <FormField.Root label='Report Reason' required hint='Select the reason for your report.'>
+    <FormField.Root
+      label='Report Reason'
+      required
+      hint='Select the reason for your report.'
+    >
       <Radio.Group defaultValue='spam' className='flex flex-col gap-3'>
         <div className='flex items-center gap-2'>
           <Radio.Item value='spam' id='report-spam' />

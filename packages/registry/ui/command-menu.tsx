@@ -28,14 +28,14 @@ const CommandMenuDialog = ({
         showClose={false}
         className={cn(
           'flex max-h-full max-w-[720px] flex-col overflow-hidden rounded-2xl',
-          className,
+          className
         )}
       >
         <Command
           className={cn(
-            'divide-y divide-stroke-soft-200',
+            'divide-stroke-soft-200 divide-y',
             'grid min-h-0 auto-cols-auto grid-flow-row',
-            '[&>[cmdk-label]+*]:!border-t-0',
+            '[&>[cmdk-label]+*]:!border-t-0'
           )}
         >
           {children}
@@ -54,7 +54,7 @@ const CommandMenuInput = React.forwardRef<
       ref={forwardedRef}
       className={cn(
         // base
-        'w-full border-none bg-transparent text-paragraph-sm text-text-strong-950 shadow-none outline-none ring-0',
+        'text-paragraph-sm text-text-strong-950 w-full border-none bg-transparent shadow-none ring-0 outline-none',
         'transition duration-200 ease-out',
         // placeholder
         'placeholder:[transition:inherit]',
@@ -63,7 +63,7 @@ const CommandMenuInput = React.forwardRef<
         'group-hover/cmd-input:placeholder:text-text-sub-600',
         // focus
         'focus:outline-none',
-        className,
+        className
       )}
       {...rest}
     />
@@ -80,9 +80,9 @@ const CommandMenuList = React.forwardRef<
       ref={forwardedRef}
       className={cn(
         'flex max-h-min min-h-0 flex-1 flex-col',
-        '[&>[cmdk-list-sizer]]:divide-y [&>[cmdk-list-sizer]]:divide-stroke-soft-200',
+        '[&>[cmdk-list-sizer]]:divide-stroke-soft-200 [&>[cmdk-list-sizer]]:divide-y',
         '[&>[cmdk-list-sizer]]:overflow-auto',
-        className,
+        className
       )}
       {...rest}
     />
@@ -102,7 +102,7 @@ const CommandMenuGroup = React.forwardRef<
         // heading
         '[&>[cmdk-group-heading]]:text-label-xs [&>[cmdk-group-heading]]:text-text-sub-600',
         '[&>[cmdk-group-heading]]:mb-2 [&>[cmdk-group-heading]]:px-3 [&>[cmdk-group-heading]]:pt-1',
-        className,
+        className
       )}
       {...rest}
     />
@@ -155,7 +155,7 @@ function CommandMenuItemIcon<T extends React.ElementType>({
 
   return (
     <Component
-      className={cn('w-5 h-5 shrink-0 text-text-sub-600', className)}
+      className={cn('text-text-sub-600 h-5 w-5 shrink-0', className)}
       {...rest}
     />
   );
@@ -169,7 +169,7 @@ function CommandMenuFooter({
     <div
       className={cn(
         'flex h-12 items-center justify-between gap-3 px-5',
-        className,
+        className
       )}
       {...rest}
     />
@@ -183,8 +183,8 @@ function CommandMenuFooterKeyBox({
   return (
     <div
       className={cn(
-        'flex w-5 h-5 shrink-0 items-center justify-center rounded bg-bg-weak-50 text-text-sub-600 ring-1 ring-inset ring-stroke-soft-200',
-        className,
+        'bg-bg-weak-50 text-text-sub-600 ring-stroke-soft-200 flex h-5 w-5 shrink-0 items-center justify-center rounded ring-1 ring-inset',
+        className
       )}
       {...rest}
     />

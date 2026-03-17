@@ -37,8 +37,9 @@ export const Playground = {
         showArrow={args.showArrow}
       >
         <div className='text-label-md text-text-strong-950'>Popover Title</div>
-        <p className='mt-1 text-paragraph-sm text-text-sub-600'>
-          This is the popover content. Adjust the controls to change position and appearance.
+        <p className='text-paragraph-sm text-text-sub-600 mt-1'>
+          This is the popover content. Adjust the controls to change position
+          and appearance.
         </p>
       </Popover.Content>
     </Popover.Root>
@@ -60,21 +61,21 @@ export const Demo = {
           </CompactButton.Root>
         </Popover.Close>
 
-        <div className='flex w-12 h-12 shrink-0 items-center justify-center rounded-full bg-bg-white-0 shadow-regular-xs ring-1 ring-inset ring-stroke-soft-200'>
-          <RiUser6Line className='w-6 h-6 text-text-sub-600' />
+        <div className='bg-bg-white-0 shadow-regular-xs ring-stroke-soft-200 flex h-12 w-12 shrink-0 items-center justify-center rounded-full ring-1 ring-inset'>
+          <RiUser6Line className='text-text-sub-600 h-6 w-6' />
         </div>
 
         <div className='mt-4'>
           <div className='text-label-md text-text-strong-950'>
             Insert Popover
           </div>
-          <p className='mt-1 text-paragraph-sm text-text-sub-600'>
+          <p className='text-paragraph-sm text-text-sub-600 mt-1'>
             Insert popover description here. It would look much better as three
             lines of text.
           </p>
         </div>
 
-        <div className='-mx-5 -mb-5 mt-5 flex items-center justify-between gap-9 border-t border-stroke-soft-200 px-5 py-4'>
+        <div className='border-stroke-soft-200 -mx-5 mt-5 -mb-5 flex items-center justify-between gap-9 border-t px-5 py-4'>
           <span className='text-paragraph-sm text-text-sub-600'>
             Step 1 of 4
           </span>
@@ -114,21 +115,21 @@ export const Position = {
             </CompactButton.Root>
           </Popover.Close>
 
-          <div className='flex w-12 h-12 shrink-0 items-center justify-center rounded-full bg-bg-white-0 shadow-regular-xs ring-1 ring-inset ring-stroke-soft-200'>
-            <RiUser6Line className='w-6 h-6 text-text-sub-600' />
+          <div className='bg-bg-white-0 shadow-regular-xs ring-stroke-soft-200 flex h-12 w-12 shrink-0 items-center justify-center rounded-full ring-1 ring-inset'>
+            <RiUser6Line className='text-text-sub-600 h-6 w-6' />
           </div>
 
           <div className='mt-4'>
             <div className='text-label-md text-text-strong-950'>
               Insert Popover
             </div>
-            <p className='mt-1 text-paragraph-sm text-text-sub-600'>
+            <p className='text-paragraph-sm text-text-sub-600 mt-1'>
               Insert popover description here. It would look much better as
               three lines of text.
             </p>
           </div>
 
-          <div className='-mx-5 -mb-5 mt-5 flex items-center justify-between gap-9 border-t border-stroke-soft-200 px-5 py-4'>
+          <div className='border-stroke-soft-200 -mx-5 mt-5 -mb-5 flex items-center justify-between gap-9 border-t px-5 py-4'>
             <span className='text-paragraph-sm text-text-sub-600'>
               Step 1 of 4
             </span>
@@ -163,21 +164,21 @@ export const Position = {
             </CompactButton.Root>
           </Popover.Close>
 
-          <div className='flex w-12 h-12 shrink-0 items-center justify-center rounded-full bg-bg-white-0 shadow-regular-xs ring-1 ring-inset ring-stroke-soft-200'>
-            <RiUser6Line className='w-6 h-6 text-text-sub-600' />
+          <div className='bg-bg-white-0 shadow-regular-xs ring-stroke-soft-200 flex h-12 w-12 shrink-0 items-center justify-center rounded-full ring-1 ring-inset'>
+            <RiUser6Line className='text-text-sub-600 h-6 w-6' />
           </div>
 
           <div className='mt-4'>
             <div className='text-label-md text-text-strong-950'>
               Insert Popover
             </div>
-            <p className='mt-1 text-paragraph-sm text-text-sub-600'>
+            <p className='text-paragraph-sm text-text-sub-600 mt-1'>
               Insert popover description here. It would look much better as
               three lines of text.
             </p>
           </div>
 
-          <div className='-mx-5 -mb-5 mt-5 flex items-center justify-between gap-9 border-t border-stroke-soft-200 px-5 py-4'>
+          <div className='border-stroke-soft-200 -mx-5 mt-5 -mb-5 flex items-center justify-between gap-9 border-t px-5 py-4'>
             <span className='text-paragraph-sm text-text-sub-600'>
               Step 1 of 4
             </span>
@@ -212,21 +213,21 @@ export const Position = {
             </CompactButton.Root>
           </Popover.Close>
 
-          <div className='flex w-12 h-12 shrink-0 items-center justify-center rounded-full bg-bg-white-0 shadow-regular-xs ring-1 ring-inset ring-stroke-soft-200'>
-            <RiUser6Line className='w-6 h-6 text-text-sub-600' />
+          <div className='bg-bg-white-0 shadow-regular-xs ring-stroke-soft-200 flex h-12 w-12 shrink-0 items-center justify-center rounded-full ring-1 ring-inset'>
+            <RiUser6Line className='text-text-sub-600 h-6 w-6' />
           </div>
 
           <div className='mt-4'>
             <div className='text-label-md text-text-strong-950'>
               Insert Popover
             </div>
-            <p className='mt-1 text-paragraph-sm text-text-sub-600'>
+            <p className='text-paragraph-sm text-text-sub-600 mt-1'>
               Insert popover description here. It would look much better as
               three lines of text.
             </p>
           </div>
 
-          <div className='-mx-5 -mb-5 mt-5 flex items-center justify-between gap-9 border-t border-stroke-soft-200 px-5 py-4'>
+          <div className='border-stroke-soft-200 -mx-5 mt-5 -mb-5 flex items-center justify-between gap-9 border-t px-5 py-4'>
             <span className='text-paragraph-sm text-text-sub-600'>
               Step 1 of 4
             </span>

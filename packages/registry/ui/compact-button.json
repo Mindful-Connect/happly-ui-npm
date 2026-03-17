@@ -5,14 +5,8 @@
   "title": "Compact Button",
   "description": "A small icon-only button component with variants, sizes, and optional full-radius. Uses namespace exports: CompactButton.Root, CompactButton.Icon.",
   "version": "1.0.0",
-  "dependencies": [
-    "@radix-ui/react-slot"
-  ],
-  "registryDependencies": [
-    "tv",
-    "polymorphic",
-    "recursive-clone-children"
-  ],
+  "dependencies": ["@radix-ui/react-slot"],
+  "registryDependencies": ["tv", "polymorphic", "recursive-clone-children"],
   "docs": {
     "lead": "A small icon-only button component with variants, sizes, and optional full-radius.",
     "usage": "import * as CompactButton from \"@/components/ui/compact-button\"\n\n<CompactButton.Root variant=\"stroke\">\n  <CompactButton.Icon as={RiAddLine} />\n</CompactButton.Root>",

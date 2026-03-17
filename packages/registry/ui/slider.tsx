@@ -29,12 +29,12 @@ const SliderRoot = React.forwardRef<
     <SliderPrimitive.Root
       ref={forwardedRef}
       className={cn(
-        'relative flex h-4 w-full touch-none select-none items-center',
-        className,
+        'relative flex h-4 w-full touch-none items-center select-none',
+        className
       )}
       {...rest}
     >
-      <SliderPrimitive.Track className='relative h-1.5 w-full overflow-hidden rounded-full bg-bg-soft-200'>
+      <SliderPrimitive.Track className='bg-bg-soft-200 relative h-1.5 w-full overflow-hidden rounded-full'>
         <SliderPrimitive.Range
           className={cn('absolute h-full', RANGE_CLASSES[variant])}
         />
@@ -56,12 +56,12 @@ const SliderThumb = React.forwardRef<
       ref={forwardedRef}
       className={cn(
         // base
-        'box-content block w-1.5 h-1.5 shrink-0 cursor-pointer rounded-full border-[5px] border-static-white shadow-toggle-switch outline-none',
+        'border-static-white shadow-toggle-switch box-content block h-1.5 w-1.5 shrink-0 cursor-pointer rounded-full border-[5px] outline-none',
         // focus
         'focus:outline-none',
         // variant
         THUMB_CLASSES[variant],
-        className,
+        className
       )}
       {...rest}
     />

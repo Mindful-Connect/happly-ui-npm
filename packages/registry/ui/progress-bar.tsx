@@ -57,7 +57,7 @@ const ProgressBarRoot = React.forwardRef<HTMLDivElement, ProgressBarRootProps>(
         />
       </div>
     );
-  },
+  }
 );
 ProgressBarRoot.displayName = 'ProgressBarRoot';
 

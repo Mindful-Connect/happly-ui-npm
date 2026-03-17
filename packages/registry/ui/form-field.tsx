@@ -53,7 +53,7 @@ function FormFieldRoot({
 
   const contextValue = React.useMemo<FormFieldContextValue>(
     () => ({ hasError: computedHasError, disabled: !!disabled, id: htmlFor }),
-    [computedHasError, disabled, htmlFor],
+    [computedHasError, disabled, htmlFor]
   );
 
   return (
@@ -99,7 +99,7 @@ const FormFieldLabel = React.forwardRef<HTMLLabelElement, FormFieldLabelProps>(
         {...props}
       />
     );
-  },
+  }
 );
 FormFieldLabel.displayName = 'FormFieldLabel';
 

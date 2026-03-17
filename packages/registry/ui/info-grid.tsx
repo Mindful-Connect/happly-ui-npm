@@ -43,7 +43,7 @@ const InfoGridRoot = React.forwardRef<HTMLDivElement, InfoGridRootProps>(
         {...rest}
       />
     );
-  },
+  }
 );
 InfoGridRoot.displayName = 'InfoGridRoot';
 
@@ -60,7 +60,7 @@ const InfoGridRow = React.forwardRef<HTMLDivElement, InfoGridRowProps>(
         {...rest}
       />
     );
-  },
+  }
 );
 InfoGridRow.displayName = 'InfoGridRow';
 
@@ -77,7 +77,7 @@ const InfoGridCell = React.forwardRef<HTMLDivElement, InfoGridCellProps>(
         {...rest}
       />
     );
-  },
+  }
 );
 InfoGridCell.displayName = 'InfoGridCell';
 
@@ -93,7 +93,10 @@ type InfoGridGroupRow = {
   items: InfoGridGroupItem[];
 };
 
-type InfoGridGroupProps = Omit<React.ComponentPropsWithoutRef<'div'>, 'children'> & {
+type InfoGridGroupProps = Omit<
+  React.ComponentPropsWithoutRef<'div'>,
+  'children'
+> & {
   rows: InfoGridGroupRow[];
 };
 
@@ -107,7 +110,9 @@ const InfoGridGroup = React.forwardRef<HTMLDivElement, InfoGridGroupProps>(
               <InfoGridCell key={cellIndex}>
                 <KeyIcon.Root icon={item.icon} />
                 <div className='flex flex-col items-start gap-1'>
-                  <p className='text-label-xs text-text-strong-950'>{item.label}</p>
+                  <p className='text-label-xs text-text-strong-950'>
+                    {item.label}
+                  </p>
                   {item.children}
                 </div>
               </InfoGridCell>
@@ -116,7 +121,7 @@ const InfoGridGroup = React.forwardRef<HTMLDivElement, InfoGridGroupProps>(
         ))}
       </InfoGridRoot>
     );
-  },
+  }
 );
 InfoGridGroup.displayName = 'InfoGridGroup';
 

@@ -20,7 +20,7 @@ const LabelRoot = React.forwardRef<
         'inline',
         // disabled
         'aria-disabled:text-text-disabled-300',
-        className,
+        className
       )}
       aria-disabled={disabled}
       {...rest}
@@ -37,10 +37,10 @@ function LabelAsterisk({
   return (
     <span
       className={cn(
-        'ml-px text-error-base',
+        'text-error-base ml-px',
         // disabled
         'group-aria-disabled:text-text-disabled-300',
-        className,
+        className
       )}
       {...rest}
     >
@@ -60,10 +60,10 @@ function LabelSub({
   return (
     <span
       className={cn(
-        'ml-px text-paragraph-sm text-text-sub-600',
+        'text-paragraph-sm text-text-sub-600 ml-px',
         // disabled
         'group-aria-disabled:text-text-disabled-300',
-        className,
+        className
       )}
       {...rest}
     >
@@ -72,16 +72,13 @@ function LabelSub({
   );
 }
 
-function LabelInfoIcon({
-  className,
-  ...rest
-}: React.SVGProps<SVGSVGElement>) {
+function LabelInfoIcon({ className, ...rest }: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox='0 0 20 20'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
-      className={cn('w-5 h-5 text-text-disabled-300', className)}
+      className={cn('text-text-disabled-300 h-5 w-5', className)}
       {...rest}
     >
       <path
@@ -131,7 +128,7 @@ const LabelComposed = React.forwardRef<
 >(
   (
     { children, required, sub, subParens, info, disabled, ...rest },
-    forwardedRef,
+    forwardedRef
   ) => {
     return (
       <LabelRoot ref={forwardedRef} disabled={disabled} {...rest}>
@@ -141,7 +138,7 @@ const LabelComposed = React.forwardRef<
         {info && <LabelInfo>{info}</LabelInfo>}
       </LabelRoot>
     );
-  },
+  }
 );
 LabelComposed.displayName = 'LabelComposed';
 

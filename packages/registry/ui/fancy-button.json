@@ -5,14 +5,8 @@
   "title": "Fancy Button",
   "description": "A compound button component with gradient overlay effects, multiple variants, and sizes. Uses namespace exports: FancyButton.Root, FancyButton.Icon.",
   "version": "1.0.0",
-  "dependencies": [
-    "@radix-ui/react-slot"
-  ],
-  "registryDependencies": [
-    "tv",
-    "polymorphic",
-    "recursive-clone-children"
-  ],
+  "dependencies": ["@radix-ui/react-slot"],
+  "registryDependencies": ["tv", "polymorphic", "recursive-clone-children"],
   "docs": {
     "lead": "A compound button component with gradient overlay effects, multiple variants, and sizes.",
     "usage": "import * as FancyButton from \"@/components/ui/fancy-button\"\n\n<FancyButton.Root variant=\"neutral\">\n  <FancyButton.Icon as={ArrowIcon} />\n  Button\n</FancyButton.Root>",

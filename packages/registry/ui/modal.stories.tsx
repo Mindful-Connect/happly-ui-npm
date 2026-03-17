@@ -20,13 +20,24 @@ export const Playground = {
       <Modal.Content showClose={args.showClose}>
         <Modal.Body>
           <div className='text-label-md text-text-strong-950'>Modal Title</div>
-          <div className='text-paragraph-sm text-text-sub-600'>Modal content goes here.</div>
+          <div className='text-paragraph-sm text-text-sub-600'>
+            Modal content goes here.
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Modal.Close asChild>
-            <Button.Root variant='neutral' mode='stroke' size='small' className='w-full'>Cancel</Button.Root>
+            <Button.Root
+              variant='neutral'
+              mode='stroke'
+              size='small'
+              className='w-full'
+            >
+              Cancel
+            </Button.Root>
           </Modal.Close>
-          <Button.Root size='small' className='w-full'>Confirm</Button.Root>
+          <Button.Root size='small' className='w-full'>
+            Confirm
+          </Button.Root>
         </Modal.Footer>
       </Modal.Content>
     </Modal.Root>
@@ -49,8 +60,8 @@ function DemoRender() {
       </Modal.Trigger>
       <Modal.Content className='max-w-[440px]'>
         <Modal.Body className='flex items-start gap-4'>
-          <div className='flex w-10 h-10 shrink-0 items-center justify-center rounded-10 bg-success-lighter'>
-            <RiCheckboxCircleFill className='w-6 h-6 text-success-base' />
+          <div className='rounded-10 bg-success-lighter flex h-10 w-10 shrink-0 items-center justify-center'>
+            <RiCheckboxCircleFill className='text-success-base h-6 w-6' />
           </div>
           <div className='space-y-1'>
             <div className='text-label-md text-text-strong-950'>
@@ -109,7 +120,7 @@ function WithHeaderRender() {
         <Modal.Body>
           <div className='space-y-5'>
             <div className='flex items-center gap-3.5'>
-              <div className='flex w-10 h-10 shrink-0 items-center justify-center rounded-full bg-bg-weak-50'>
+              <div className='bg-bg-weak-50 flex h-10 w-10 shrink-0 items-center justify-center rounded-full'>
                 <span className='text-label-sm text-text-sub-600'>A</span>
               </div>
               <div className='flex-1 space-y-1'>
@@ -120,20 +131,18 @@ function WithHeaderRender() {
               </div>
             </div>
             <div className='flex items-center gap-3.5'>
-              <div className='flex w-10 h-10 shrink-0 items-center justify-center rounded-full bg-bg-weak-50'>
+              <div className='bg-bg-weak-50 flex h-10 w-10 shrink-0 items-center justify-center rounded-full'>
                 <span className='text-label-sm text-text-sub-600'>B</span>
               </div>
               <div className='flex-1 space-y-1'>
-                <div className='text-label-sm text-text-strong-950'>
-                  Aurora
-                </div>
+                <div className='text-label-sm text-text-strong-950'>Aurora</div>
                 <div className='text-paragraph-xs text-text-sub-600'>
                   Allow Aurora to contact you.
                 </div>
               </div>
             </div>
             <div className='flex items-center gap-3.5'>
-              <div className='flex w-10 h-10 shrink-0 items-center justify-center rounded-full bg-bg-weak-50'>
+              <div className='bg-bg-weak-50 flex h-10 w-10 shrink-0 items-center justify-center rounded-full'>
                 <span className='text-label-sm text-text-sub-600'>S</span>
               </div>
               <div className='flex-1 space-y-1'>

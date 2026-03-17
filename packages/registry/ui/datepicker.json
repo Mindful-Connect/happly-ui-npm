@@ -14,10 +14,7 @@
     "framer-motion",
     "@remixicon/react"
   ],
-  "registryDependencies": [
-    "happly-ui-utils",
-    "compact-button"
-  ],
+  "registryDependencies": ["happly-ui-utils", "compact-button"],
   "docs": {
     "lead": "A calendar datepicker component with single date, range, and popover modes.",
     "usage": "import * as Datepicker from \"@/components/ui/datepicker\"\n\n<Datepicker.Calendar mode=\"single\" selected={date} onSelect={setDate} />",

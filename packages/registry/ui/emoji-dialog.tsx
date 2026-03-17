@@ -8,7 +8,13 @@ import { motion } from 'framer-motion';
 import { tv, type VariantProps } from '@/lib/tv';
 import { cn } from '@/lib/happly-ui-utils';
 import { getMemojiUrl, PERSONS, POSTURES } from '@/lib/memoji';
-import type { MemojiConfig, Gender, Person, SkinTone, Posture } from '@/lib/memoji';
+import type {
+  MemojiConfig,
+  Gender,
+  Person,
+  SkinTone,
+  Posture,
+} from '@/lib/memoji';
 
 // Animation spring configs
 const entrySpring = { stiffness: 180, damping: 22, mass: 0.6 };
@@ -16,49 +22,84 @@ const entrySpring = { stiffness: 180, damping: 22, mass: 0.6 };
 // 7 hardcoded floating satellite memojis
 const FLOATING_MEMOJIS = [
   {
-    memoji: { gender: 'female' as const, person: 'ezra' as const, skinTone: 'black' as const, posture: 'victory-22' as const },
+    memoji: {
+      gender: 'female' as const,
+      person: 'ezra' as const,
+      skinTone: 'black' as const,
+      posture: 'victory-22' as const,
+    },
     gradient: 'linear-gradient(135deg, #FFD6D6 0%, #FFBCBC 100%)',
     top: '9%',
     left: '5%',
     size: 49,
   },
   {
-    memoji: { gender: 'male' as const, person: 'chris' as const, skinTone: 'white' as const, posture: 'fisting-24' as const },
+    memoji: {
+      gender: 'male' as const,
+      person: 'chris' as const,
+      skinTone: 'white' as const,
+      posture: 'fisting-24' as const,
+    },
     gradient: 'linear-gradient(135deg, #E8DFF5 0%, #D5C8EE 100%)',
     top: '24%',
     left: '21%',
     size: 40,
   },
   {
-    memoji: { gender: 'male' as const, person: 'krishna' as const, skinTone: 'white' as const, posture: 'happy-1' as const },
+    memoji: {
+      gender: 'male' as const,
+      person: 'krishna' as const,
+      skinTone: 'white' as const,
+      posture: 'happy-1' as const,
+    },
     gradient: 'linear-gradient(135deg, #FFD6D6 0%, #FFBCBC 100%)',
     top: '58%',
     left: '5%',
     size: 32,
   },
   {
-    memoji: { gender: 'male' as const, person: 'donald' as const, skinTone: 'white' as const, posture: 'thinking-28' as const },
+    memoji: {
+      gender: 'male' as const,
+      person: 'donald' as const,
+      skinTone: 'white' as const,
+      posture: 'thinking-28' as const,
+    },
     gradient: 'linear-gradient(135deg, #C8F0E6 0%, #A8E6D4 100%)',
     top: '72%',
     left: '22%',
     size: 42,
   },
   {
-    memoji: { gender: 'male' as const, person: 'george' as const, skinTone: 'white' as const, posture: 'happy-1' as const },
+    memoji: {
+      gender: 'male' as const,
+      person: 'george' as const,
+      skinTone: 'white' as const,
+      posture: 'happy-1' as const,
+    },
     gradient: 'linear-gradient(135deg, #D6EAFF 0%, #BCD8FF 100%)',
     top: '11%',
     left: '74%',
     size: 31,
   },
   {
-    memoji: { gender: 'male' as const, person: 'mattew' as const, skinTone: 'white' as const, posture: 'like-20' as const },
+    memoji: {
+      gender: 'male' as const,
+      person: 'mattew' as const,
+      skinTone: 'white' as const,
+      posture: 'like-20' as const,
+    },
     gradient: 'linear-gradient(135deg, #FFE4CC 0%, #FFD4B0 100%)',
     top: '29%',
     left: '83%',
     size: 54,
   },
   {
-    memoji: { gender: 'female' as const, person: 'ishanvi' as const, skinTone: 'white' as const, posture: 'victory-22' as const },
+    memoji: {
+      gender: 'female' as const,
+      person: 'ishanvi' as const,
+      skinTone: 'white' as const,
+      posture: 'victory-22' as const,
+    },
     gradient: 'linear-gradient(135deg, #FFD6E8 0%, #FFBCD5 100%)',
     top: '70%',
     left: '73%',
@@ -103,10 +144,10 @@ const EmojiDialogOverlay = React.forwardRef<
     ref={forwardedRef}
     className={cn(
       // base
-      'fixed inset-0 z-50 flex flex-col items-center justify-center overflow-y-auto bg-overlay p-4 backdrop-blur-[10px]',
+      'bg-overlay fixed inset-0 z-50 flex flex-col items-center justify-center overflow-y-auto p-4 backdrop-blur-[10px]',
       // animation
       'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-      className,
+      className
     )}
     {...rest}
   />
@@ -136,7 +177,7 @@ const EmojiDialogContent = React.forwardRef<
       disableAnimations = false,
       ...rest
     },
-    forwardedRef,
+    forwardedRef
   ) => (
     <AnimationContext.Provider value={{ disableAnimations }}>
       <EmojiDialogPortal>
@@ -146,12 +187,12 @@ const EmojiDialogContent = React.forwardRef<
             className={cn(
               // base
               'relative flex w-[calc(100%-2rem)] max-w-[526px] flex-col gap-8 sm:w-full',
-              'overflow-hidden rounded-20 border border-stroke-soft-200 bg-bg-white-0 p-10 shadow-regular-md',
+              'rounded-20 border-stroke-soft-200 bg-bg-white-0 shadow-regular-md overflow-hidden border p-10',
               // animation
               'data-[state=open]:animate-in data-[state=closed]:animate-out',
               'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
               'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
-              className,
+              className
             )}
             {...rest}
           >
@@ -160,16 +201,16 @@ const EmojiDialogContent = React.forwardRef<
             {showClose && (
               <DialogPrimitive.Close
                 className={cn(
-                  'absolute right-[34px] top-[34px] z-10',
-                  'flex w-8 h-8 items-center justify-center rounded-full',
+                  'absolute top-[34px] right-[34px] z-10',
+                  'flex h-8 w-8 items-center justify-center rounded-full',
                   'bg-bg-weak-50 text-text-sub-600',
-                  'transition-colors hover:bg-neutral-100 hover:text-text-strong-950',
-                  'focus:outline-none focus:ring-2 focus:ring-stroke-soft-200 focus:ring-offset-2',
-                  'disabled:pointer-events-none',
+                  'hover:text-text-strong-950 transition-colors hover:bg-neutral-100',
+                  'focus:ring-stroke-soft-200 focus:ring-2 focus:ring-offset-2 focus:outline-none',
+                  'disabled:pointer-events-none'
                 )}
               >
-                <div className='flex w-6 h-6 items-center justify-center rounded-full border border-stroke-soft-200 bg-bg-white-0'>
-                  <RiCloseLine className='w-4 h-4' />
+                <div className='border-stroke-soft-200 bg-bg-white-0 flex h-6 w-6 items-center justify-center rounded-full border'>
+                  <RiCloseLine className='h-4 w-4' />
                 </div>
                 <span className='sr-only'>Close</span>
               </DialogPrimitive.Close>
@@ -178,7 +219,7 @@ const EmojiDialogContent = React.forwardRef<
         </EmojiDialogOverlay>
       </EmojiDialogPortal>
     </AnimationContext.Provider>
-  ),
+  )
 );
 EmojiDialogContent.displayName = 'EmojiDialogContent';
 
@@ -196,7 +237,7 @@ function EmojiDialogHeader({
       <div
         className={cn(
           'relative z-10 flex flex-col items-center gap-2 text-center',
-          className,
+          className
         )}
         {...rest}
       >
@@ -217,7 +258,7 @@ function EmojiDialogHeader({
       }}
       className={cn(
         'relative z-10 flex flex-col items-center gap-2 text-center',
-        className,
+        className
       )}
     >
       {children}
@@ -239,8 +280,8 @@ function EmojiDialogFooter({
     return (
       <div
         className={cn(
-          'relative z-10 flex w-full flex-col-reverse gap-4 [&>*]:flex-1 sm:flex-row',
-          className,
+          'relative z-10 flex w-full flex-col-reverse gap-4 sm:flex-row [&>*]:flex-1',
+          className
         )}
         {...rest}
       >
@@ -260,8 +301,8 @@ function EmojiDialogFooter({
         ...entrySpring,
       }}
       className={cn(
-        'relative z-10 flex w-full flex-col-reverse gap-4 [&>*]:flex-1 sm:flex-row',
-        className,
+        'relative z-10 flex w-full flex-col-reverse gap-4 sm:flex-row [&>*]:flex-1',
+        className
       )}
     >
       {children}
@@ -278,7 +319,7 @@ const EmojiDialogTitle = React.forwardRef<
 >(({ className, ...rest }, forwardedRef) => (
   <DialogPrimitive.Title
     ref={forwardedRef}
-    className={cn('text-center text-title-h6 text-text-strong-950', className)}
+    className={cn('text-title-h6 text-text-strong-950 text-center', className)}
     {...rest}
   />
 ));
@@ -298,7 +339,7 @@ const EmojiDialogDescription = React.forwardRef<
 >(({ className, children, lines, ...rest }, forwardedRef) => (
   <DialogPrimitive.Description
     ref={forwardedRef}
-    className={cn('text-center text-label-sm text-text-sub-600', className)}
+    className={cn('text-label-sm text-text-sub-600 text-center', className)}
     {...rest}
   >
     {lines
@@ -315,8 +356,7 @@ EmojiDialogDescription.displayName = 'EmojiDialogDescription';
 
 // --- Background ---
 
-interface EmojiDialogBackgroundProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+interface EmojiDialogBackgroundProps extends React.HTMLAttributes<HTMLDivElement> {
   opacity?: number;
 }
 
@@ -328,7 +368,7 @@ const EmojiDialogBackground = React.forwardRef<
     ref={forwardedRef}
     className={cn(
       'pointer-events-none absolute inset-0 z-0 overflow-hidden',
-      className,
+      className
     )}
     style={{
       backgroundImage: [
@@ -360,7 +400,7 @@ function GlassmorphismCircle({
       viewBox='0 0 182 182'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
-      className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'
+      className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
     >
       <defs>
         <filter
@@ -537,7 +577,7 @@ function GlassmorphismCircle({
         type: 'spring',
         ...entrySpring,
       }}
-      className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'
+      className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
     >
       <motion.div
         animate={{ rotate: [0, 3, 0, -3, 0] }}
@@ -564,7 +604,7 @@ function AnimatedMemoji({
 }) {
   if (disableAnimations) {
     return (
-      <div className='relative z-10 flex w-28 h-28 items-center justify-center'>
+      <div className='relative z-10 flex h-28 w-28 items-center justify-center'>
         {children}
       </div>
     );
@@ -580,7 +620,7 @@ function AnimatedMemoji({
         type: 'spring',
         ...entrySpring,
       }}
-      className='relative z-10 flex w-28 h-28 items-center justify-center'
+      className='relative z-10 flex h-28 w-28 items-center justify-center'
     >
       <motion.div
         animate={{
@@ -594,7 +634,7 @@ function AnimatedMemoji({
           ease: 'easeInOut',
           times: [0, 0.25, 0.5, 0.75, 1],
         }}
-        className='w-full h-full'
+        className='h-full w-full'
       >
         {children}
       </motion.div>
@@ -620,13 +660,13 @@ function FloatingMemoji({
       }}
     >
       <div
-        className='relative w-full h-full overflow-hidden rounded-full'
+        className='relative h-full w-full overflow-hidden rounded-full'
         style={{ background: entry.gradient }}
       >
         <img
           src={getMemojiUrl(entry.memoji)}
           alt={entry.memoji.person}
-          className='absolute inset-0 w-full h-full object-cover'
+          className='absolute inset-0 h-full w-full object-cover'
         />
       </div>
     </div>
@@ -635,8 +675,7 @@ function FloatingMemoji({
 
 // --- Emoji Area ---
 
-interface EmojiDialogEmojiAreaProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+interface EmojiDialogEmojiAreaProps extends React.HTMLAttributes<HTMLDivElement> {
   customContent?: boolean;
   memoji?: MemojiConfig;
   floatingMemojis?: boolean;
@@ -645,88 +684,103 @@ interface EmojiDialogEmojiAreaProps
 const EmojiDialogEmojiArea = React.forwardRef<
   HTMLDivElement,
   EmojiDialogEmojiAreaProps
->(({ className, children, customContent = false, memoji, floatingMemojis = false, ...rest }, forwardedRef) => {
-  const { disableAnimations } = useAnimationContext();
+>(
+  (
+    {
+      className,
+      children,
+      customContent = false,
+      memoji,
+      floatingMemojis = false,
+      ...rest
+    },
+    forwardedRef
+  ) => {
+    const { disableAnimations } = useAnimationContext();
 
-  const childArray = React.Children.toArray(children);
-  const bubbleChildren = childArray.filter(
-    (child) => React.isValidElement(child) && child.type === EmojiDialogBubble,
-  );
-  const avatarChildren = childArray.filter(
-    (child) => !React.isValidElement(child) || child.type !== EmojiDialogBubble,
-  );
+    const childArray = React.Children.toArray(children);
+    const bubbleChildren = childArray.filter(
+      (child) => React.isValidElement(child) && child.type === EmojiDialogBubble
+    );
+    const avatarChildren = childArray.filter(
+      (child) =>
+        !React.isValidElement(child) || child.type !== EmojiDialogBubble
+    );
 
-  if (customContent) {
+    if (customContent) {
+      return (
+        <div
+          ref={forwardedRef}
+          className={cn(
+            'relative z-10 flex h-[198px] w-full items-end justify-center',
+            className
+          )}
+          {...rest}
+        >
+          {children}
+        </div>
+      );
+    }
+
+    const avatarContent = memoji ? (
+      <img
+        src={getMemojiUrl(memoji)}
+        alt={memoji.person}
+        className='h-full w-full object-contain'
+      />
+    ) : (
+      avatarChildren
+    );
+
+    const floatingMemojisContent = floatingMemojis ? (
+      <div className='pointer-events-none absolute top-0 -right-10 bottom-0 -left-10 z-[5] overflow-visible'>
+        {FLOATING_MEMOJIS.map((entry, index) => (
+          <FloatingMemoji key={index} entry={entry} />
+        ))}
+        <div
+          className='absolute top-0 left-0 h-full w-[157px]'
+          style={{
+            background:
+              'linear-gradient(to right, white 0%, rgba(255,255,255,0) 100%)',
+          }}
+        />
+        <div
+          className='absolute top-0 right-0 h-full w-[157px]'
+          style={{
+            background:
+              'linear-gradient(to left, white 0%, rgba(255,255,255,0) 100%)',
+          }}
+        />
+      </div>
+    ) : null;
+
+    const containerContent = (
+      <>
+        <GlassmorphismCircle disableAnimations={disableAnimations} />
+        <AnimatedMemoji disableAnimations={disableAnimations}>
+          {avatarContent}
+        </AnimatedMemoji>
+      </>
+    );
+
     return (
       <div
         ref={forwardedRef}
         className={cn(
           'relative z-10 flex h-[198px] w-full items-end justify-center',
-          className,
+          className
         )}
         {...rest}
       >
-        {children}
+        {floatingMemojisContent}
+        <div className='relative flex h-[128px] w-[182px] items-center justify-center'>
+          {containerContent}
+        </div>
+        {bubbleChildren}
       </div>
     );
   }
-
-  const avatarContent = memoji ? (
-    <img
-      src={getMemojiUrl(memoji)}
-      alt={memoji.person}
-      className='w-full h-full object-contain'
-    />
-  ) : (
-    avatarChildren
-  );
-
-  const floatingMemojisContent = floatingMemojis ? (
-    <div className='pointer-events-none absolute -left-10 -right-10 bottom-0 top-0 z-[5] overflow-visible'>
-      {FLOATING_MEMOJIS.map((entry, index) => (
-        <FloatingMemoji key={index} entry={entry} />
-      ))}
-      <div
-        className='absolute left-0 top-0 h-full w-[157px]'
-        style={{
-          background: 'linear-gradient(to right, white 0%, rgba(255,255,255,0) 100%)',
-        }}
-      />
-      <div
-        className='absolute right-0 top-0 h-full w-[157px]'
-        style={{
-          background: 'linear-gradient(to left, white 0%, rgba(255,255,255,0) 100%)',
-        }}
-      />
-    </div>
-  ) : null;
-
-  const containerContent = (
-    <>
-      <GlassmorphismCircle disableAnimations={disableAnimations} />
-      <AnimatedMemoji disableAnimations={disableAnimations}>
-        {avatarContent}
-      </AnimatedMemoji>
-    </>
-  );
-
-  return (
-    <div
-      ref={forwardedRef}
-      className={cn(
-        'relative z-10 flex h-[198px] w-full items-end justify-center',
-        className,
-      )}
-      {...rest}
-    >
-      {floatingMemojisContent}
-      <div className='relative flex h-[128px] w-[182px] items-center justify-center'>
-        {containerContent}
-      </div>
-      {bubbleChildren}
-    </div>
-  );
-});
+);
 EmojiDialogEmojiArea.displayName = 'EmojiDialogEmojiArea';
 
 // --- Bubble ---
@@ -748,7 +802,8 @@ const bubbleVariants = tv({
 type BubbleVariant = 'secondary' | 'warning' | 'danger';
 
 interface EmojiDialogBubbleProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'>,
+  extends
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'children'>,
     VariantProps<typeof bubbleVariants> {
   icon?: React.ReactNode;
   children: React.ReactNode;
@@ -764,13 +819,13 @@ const EmojiDialogBubble = React.forwardRef<
     <>
       <div
         className={cn(
-          'flex items-center gap-2 whitespace-nowrap rounded-full py-1 pl-1 pr-3 text-label-xs text-static-white',
+          'text-label-xs text-static-white flex items-center gap-2 rounded-full py-1 pr-3 pl-1 whitespace-nowrap',
           'shadow-[0_4px_15px_rgba(0,0,0,0.1)]',
-          bubbleVariants({ variant }),
+          bubbleVariants({ variant })
         )}
       >
         {icon && (
-          <div className='flex w-8 h-8 shrink-0 items-center justify-center rounded-full bg-bg-white-0 text-text-strong-950 shadow-[0_15px_50px_0_rgba(0,0,0,0.15)] [&>*]:w-5 h-5'>
+          <div className='bg-bg-white-0 text-text-strong-950 flex h-5 h-8 w-8 shrink-0 items-center justify-center rounded-full shadow-[0_15px_50px_0_rgba(0,0,0,0.15)] [&>*]:w-5'>
             {icon}
           </div>
         )}
@@ -779,8 +834,8 @@ const EmojiDialogBubble = React.forwardRef<
       <div className='absolute -bottom-[3px] left-[55px]'>
         <div
           className={cn(
-            'w-2.5 h-2.5 rounded-[2px]',
-            bubbleVariants({ variant }),
+            'h-2.5 w-2.5 rounded-[2px]',
+            bubbleVariants({ variant })
           )}
           style={{
             transform: 'matrix(0.82, -0.57, 0.32, 0.95, 0, 0) rotate(-18deg)',
@@ -795,8 +850,8 @@ const EmojiDialogBubble = React.forwardRef<
       <div
         ref={forwardedRef}
         className={cn(
-          'absolute left-[38%] top-[17px] origin-bottom-left rotate-[18.286deg]',
-          className,
+          'absolute top-[17px] left-[38%] origin-bottom-left rotate-[18.286deg]',
+          className
         )}
       >
         {bubbleContent}
@@ -817,8 +872,8 @@ const EmojiDialogBubble = React.forwardRef<
         damping: 18,
       }}
       className={cn(
-        'absolute left-[38%] top-[17px] origin-bottom-left',
-        className,
+        'absolute top-[17px] left-[38%] origin-bottom-left',
+        className
       )}
     >
       <motion.div

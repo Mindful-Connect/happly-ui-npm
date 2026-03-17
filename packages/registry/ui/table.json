@@ -6,10 +6,7 @@
   "description": "A styled HTML table component with header, body, row dividers, and cell sub-components. Uses namespace exports: Table.Root, Table.Header, Table.Body, Table.Head, Table.Row, Table.RowDivider, Table.Cell, Table.Caption.",
   "version": "1.0.0",
   "dependencies": [],
-  "registryDependencies": [
-    "happly-ui-utils",
-    "divider"
-  ],
+  "registryDependencies": ["happly-ui-utils", "divider"],
   "docs": {
     "lead": "A styled HTML table component with header, body, row dividers, and cell sub-components. Works well with @tanstack/react-table for sorting, selection, and pagination.",
     "usage": "import * as Table from \"@/components/ui/table\"\n\n<Table.Root>\n  <Table.Header>\n    <Table.Row>\n      <Table.Head>Name</Table.Head>\n      <Table.Head>Email</Table.Head>\n    </Table.Row>\n  </Table.Header>\n  <Table.Body>\n    <Table.Row>\n      <Table.Cell>John</Table.Cell>\n      <Table.Cell>john@example.com</Table.Cell>\n    </Table.Row>\n  </Table.Body>\n</Table.Root>",

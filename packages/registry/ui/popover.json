@@ -8,13 +8,8 @@
   "migration": {
     "guide": "API changed: import as namespace `import * as Popover from ...`, use `<Popover.Root>`, `<Popover.Trigger>`, `<Popover.Content>`, `<Popover.Close>`. Old named exports `{ Popover, PopoverTrigger, PopoverContent, PopoverAnchor }` removed. `usePortal` prop removed (always uses portal). New props: `showArrow` (default true), `unstyled`. New sub-component: `Popover.Close` with absolute positioning."
   },
-  "dependencies": [
-    "@radix-ui/react-popover",
-    "@radix-ui/react-slot"
-  ],
-  "registryDependencies": [
-    "happly-ui-utils"
-  ],
+  "dependencies": ["@radix-ui/react-popover", "@radix-ui/react-slot"],
+  "registryDependencies": ["happly-ui-utils"],
   "docs": {
     "lead": "A popover component with arrow indicator, close button, and directional slide animations.",
     "usage": "import * as Popover from \"@/components/ui/popover\"\n\n<Popover.Root>\n  <Popover.Trigger>Open</Popover.Trigger>\n  <Popover.Content>\n    <Popover.Close />\n    Content here\n  </Popover.Content>\n</Popover.Root>",

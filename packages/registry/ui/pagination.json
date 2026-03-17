@@ -5,10 +5,7 @@
   "title": "Pagination",
   "description": "A pagination component with basic, rounded, and group variants. Supports asChild for link-based navigation. Uses namespace exports: Pagination.Root, Pagination.Item, Pagination.NavButton, Pagination.NavIcon.",
   "version": "1.0.0",
-  "dependencies": [
-    "@radix-ui/react-slot",
-    "@remixicon/react"
-  ],
+  "dependencies": ["@radix-ui/react-slot", "@remixicon/react"],
   "registryDependencies": [
     "happly-ui-utils",
     "polymorphic",

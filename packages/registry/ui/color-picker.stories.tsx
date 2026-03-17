@@ -20,12 +20,10 @@ import * as Select from './select';
 export default { title: 'Form/Color Picker', component: ColorPicker.Root };
 
 function PlaygroundRender(args: any) {
-  const [color, setColor] = React.useState(
-    parseColor(args.defaultColor),
-  );
+  const [color, setColor] = React.useState(parseColor(args.defaultColor));
 
   return (
-    <div className='flex w-[272px] flex-col gap-3 rounded-2xl bg-bg-white-0 p-4 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200'>
+    <div className='bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 flex w-[272px] flex-col gap-3 rounded-2xl p-4 ring-1 ring-inset'>
       <ColorPicker.Root value={color} onChange={setColor}>
         <ColorPicker.Area
           colorSpace='hsl'
@@ -67,7 +65,7 @@ function EyeDropperButton() {
       size='xsmall'
       variant='neutral'
       mode='stroke'
-      className='rounded-r-none focus-visible:z-10 hover:[&:not(:focus-within)]:!ring-stroke-soft-200'
+      className='hover:[&:not(:focus-within)]:!ring-stroke-soft-200 rounded-r-none focus-visible:z-10'
       asChild
     >
       <ColorPicker.EyeDropperButton>
@@ -145,7 +143,7 @@ function ColorPickerPanel() {
             {space === 'hex' ? (
               <Input.Root
                 size='xsmall'
-                className='flex-[3] overflow-visible rounded-none focus-within:z-10 hover:[&:not(:focus-within)]:before:!ring-stroke-soft-200'
+                className='hover:[&:not(:focus-within)]:before:!ring-stroke-soft-200 flex-[3] overflow-visible rounded-none focus-within:z-10'
                 asChild
               >
                 <ColorPicker.Field colorSpace='hsb'>
@@ -161,7 +159,7 @@ function ColorPickerPanel() {
                 <Input.Root
                   key={channel}
                   size='xsmall'
-                  className='flex-1 overflow-visible rounded-none focus-within:z-10 hover:[&:not(:focus-within)]:before:!ring-stroke-soft-200'
+                  className='hover:[&:not(:focus-within)]:before:!ring-stroke-soft-200 flex-1 overflow-visible rounded-none focus-within:z-10'
                   asChild
                 >
                   <ColorPicker.Field colorSpace={space} channel={channel}>
@@ -176,7 +174,7 @@ function ColorPickerPanel() {
             )}
             <Input.Root
               size='xsmall'
-              className='flex-1 overflow-visible rounded-l-none focus-within:z-10 hover:[&:not(:focus-within)]:before:!ring-stroke-soft-200'
+              className='hover:[&:not(:focus-within)]:before:!ring-stroke-soft-200 flex-1 overflow-visible rounded-l-none focus-within:z-10'
               asChild
             >
               <ColorPicker.Field channel='alpha'>
@@ -214,12 +212,10 @@ function ColorPickerPanel() {
 }
 
 function DemoRender() {
-  const [color, setColor] = React.useState(
-    parseColor('hsl(228, 100%, 60%)'),
-  );
+  const [color, setColor] = React.useState(parseColor('hsl(228, 100%, 60%)'));
 
   return (
-    <div className='flex w-[272px] flex-col gap-3 rounded-2xl bg-bg-white-0 p-4 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200'>
+    <div className='bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 flex w-[272px] flex-col gap-3 rounded-2xl p-4 ring-1 ring-inset'>
       <ColorPicker.Root value={color} onChange={setColor}>
         <ColorPickerPanel />
       </ColorPicker.Root>
@@ -232,9 +228,7 @@ export const Demo = {
 };
 
 function PopoverDemoRender() {
-  const [color, setColor] = React.useState(
-    parseColor('hsl(228, 100%, 60%)'),
-  );
+  const [color, setColor] = React.useState(parseColor('hsl(228, 100%, 60%)'));
 
   return (
     <ColorPicker.Root value={color} onChange={setColor}>
@@ -245,7 +239,7 @@ function PopoverDemoRender() {
             Pick Color
           </Button.Root>
         </Popover.Trigger>
-        <Popover.Content className='flex w-[272px] flex-col gap-3 rounded-2xl bg-bg-white-0 p-4 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200'>
+        <Popover.Content className='bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 flex w-[272px] flex-col gap-3 rounded-2xl p-4 ring-1 ring-inset'>
           <ColorPickerPanel />
         </Popover.Content>
       </Popover.Root>
@@ -258,13 +252,11 @@ export const PopoverDemo = {
 };
 
 function WithFormFieldRender() {
-  const [color, setColor] = React.useState(
-    parseColor('hsl(228, 100%, 60%)'),
-  );
+  const [color, setColor] = React.useState(parseColor('hsl(228, 100%, 60%)'));
 
   return (
     <FormField.Root label='Brand Color' hint='Choose your brand primary color.'>
-      <div className='flex w-[272px] flex-col gap-3 rounded-2xl bg-bg-white-0 p-4 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200'>
+      <div className='bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 flex w-[272px] flex-col gap-3 rounded-2xl p-4 ring-1 ring-inset'>
         <ColorPicker.Root value={color} onChange={setColor}>
           <ColorPicker.Area
             colorSpace='hsl'

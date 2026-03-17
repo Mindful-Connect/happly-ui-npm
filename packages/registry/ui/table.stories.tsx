@@ -130,10 +130,10 @@ type Data = {
 
 const getSortingIcon = (state: 'asc' | 'desc' | false) => {
   if (state === 'asc')
-    return <RiArrowUpSFill className='w-5 h-5 text-text-sub-600' />;
+    return <RiArrowUpSFill className='text-text-sub-600 h-5 w-5' />;
   if (state === 'desc')
-    return <RiArrowDownSFill className='w-5 h-5 text-text-sub-600' />;
-  return <RiExpandUpDownFill className='w-5 h-5 text-text-sub-600' />;
+    return <RiArrowDownSFill className='text-text-sub-600 h-5 w-5' />;
+  return <RiExpandUpDownFill className='text-text-sub-600 h-5 w-5' />;
 };
 
 const columns: ColumnDef<Data>[] = [
@@ -259,7 +259,7 @@ function DataTableDemo() {
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext(),
+                          header.getContext()
                         )}
                   </Table.Head>
                 );
@@ -276,7 +276,7 @@ function DataTableDemo() {
                     <Table.Cell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext(),
+                        cell.getContext()
                       )}
                     </Table.Cell>
                   ))}

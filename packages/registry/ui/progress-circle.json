@@ -6,10 +6,7 @@
   "description": "A circular progress indicator with SVG ring, multiple sizes, customizable color, and optional centered text content. Uses namespace exports: ProgressCircle.Root.",
   "version": "1.0.0",
   "dependencies": [],
-  "registryDependencies": [
-    "tv",
-    "happly-ui-utils"
-  ],
+  "registryDependencies": ["tv", "happly-ui-utils"],
   "docs": {
     "lead": "A circular progress indicator with SVG ring, multiple sizes, customizable color, and optional centered text content.",
     "usage": "import * as ProgressCircle from \"@/components/ui/progress-circle\"\n\n<ProgressCircle.Root value={75}>75%</ProgressCircle.Root>",

@@ -48,7 +48,10 @@ export const Playground = {
             posture: 'happy-1',
           }}
         >
-          <EmojiDialog.Bubble variant={args.bubbleVariant} icon={<RiSparklingLine />}>
+          <EmojiDialog.Bubble
+            variant={args.bubbleVariant}
+            icon={<RiSparklingLine />}
+          >
             Hello there!
           </EmojiDialog.Bubble>
         </EmojiDialog.EmojiArea>
@@ -286,7 +289,7 @@ export const WithFormContent = {
           <div className='flex flex-col gap-1.5'>
             <Label.Root htmlFor='invite-message'>
               Personal message
-              <span className='ml-1 text-text-soft-400'>(optional)</span>
+              <span className='text-text-soft-400 ml-1'>(optional)</span>
             </Label.Root>
             <Input.Root>
               <Input.Wrapper>
@@ -341,8 +344,8 @@ export const WithFloatingMemojis = {
         <EmojiDialog.Header>
           <EmojiDialog.Title>You&apos;re All Set!</EmojiDialog.Title>
           <EmojiDialog.Description>
-            Your team workspace has been created. Invite your teammates and start
-            collaborating.
+            Your team workspace has been created. Invite your teammates and
+            start collaborating.
           </EmojiDialog.Description>
         </EmojiDialog.Header>
         <EmojiDialog.Footer>

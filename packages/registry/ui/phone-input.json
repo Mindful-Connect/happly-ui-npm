@@ -4,10 +4,7 @@
   "type": "registry:ui",
   "title": "Phone Input",
   "description": "A phone input component with country selection and formatting.",
-  "dependencies": [
-    "react-international-phone",
-    "libphonenumber-js"
-  ],
+  "dependencies": ["react-international-phone", "libphonenumber-js"],
   "registryDependencies": ["input", "select"],
   "docs": {
     "lead": "A phone input component with country selection and automatic formatting.",

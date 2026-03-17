@@ -28,9 +28,7 @@ export const Filled = {
       <PromotionalCard.Icon as={RiSpotifyFill} />
       <PromotionalCard.Decoration as={RiSpotifyFill} />
       <PromotionalCard.Content>
-        <PromotionalCard.Title>
-          50% discount on Spotify
-        </PromotionalCard.Title>
+        <PromotionalCard.Title>50% discount on Spotify</PromotionalCard.Title>
         <div className='flex items-center gap-1'>
           <PromotionalCard.Description>
             For only $4.99 per month!
@@ -82,14 +80,12 @@ export const Composed = {
       <PromotionalCard.Composed
         variant='stroke'
         icon={RiFilter3Line}
-
         title='Let me filter'
         description='Apply filter based on what you exactly need'
       />
       <PromotionalCard.Composed
         variant='filled'
         icon={RiSpotifyFill}
-
         title='50% discount on Spotify'
         description='For only $4.99 per month!'
         linkText='Learn More'
@@ -105,7 +101,6 @@ export const Grid = {
       <PromotionalCard.Composed
         variant='filled'
         icon={RiSpotifyFill}
-
         title='50% discount on Spotify'
         description='For only $4.99 per month!'
         linkText='Learn More'
@@ -114,7 +109,6 @@ export const Grid = {
       <PromotionalCard.Composed
         variant='filled'
         icon={RiNetflixFill}
-
         title='50% discount on Netflix'
         description='For only $4.99 per month!'
         linkText='Learn More'
@@ -123,7 +117,6 @@ export const Grid = {
       <PromotionalCard.Composed
         variant='stroke'
         icon={RiFilter3Line}
-
         title='Let me filter'
         description='Apply filter based on what you exactly need'
       />

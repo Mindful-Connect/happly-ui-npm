@@ -85,11 +85,11 @@ const AccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={forwardedRef}
       className={cn(
-        'w-full text-left text-label-sm text-text-strong-950',
+        'text-label-sm text-text-strong-950 w-full text-left',
         'grid auto-cols-auto grid-flow-col grid-cols-[auto_minmax(0,1fr)] items-center gap-2.5',
         'p-3.5',
         'outline-none focus:outline-none',
-        className,
+        className
       )}
       {...rest}
     >
@@ -108,7 +108,7 @@ function AccordionIcon<T extends React.ElementType>({
 
   return (
     <Component
-      className={cn('w-5 h-5 text-text-sub-600', className)}
+      className={cn('text-text-sub-600 h-5 w-5', className)}
       {...rest}
     />
   );
@@ -130,19 +130,19 @@ function AccordionArrow({
     <span className='flex shrink-0'>
       <OpenIcon
         className={cn(
-          'w-5 h-5 text-text-soft-400',
+          'text-text-soft-400 h-5 w-5',
           'transition duration-200 ease-out',
           'group-hover/accordion:text-text-sub-600',
           'group-data-[state=open]/accordion:hidden',
-          className,
+          className
         )}
         {...rest}
       />
       <CloseIcon
         className={cn(
-          'w-5 h-5 text-text-sub-600',
+          'text-text-sub-600 h-5 w-5',
           'hidden group-data-[state=open]/accordion:block',
-          className,
+          className
         )}
         {...rest}
       />
@@ -158,13 +158,13 @@ const AccordionContent = React.forwardRef<
   return (
     <AccordionPrimitive.Content
       ref={forwardedRef}
-      className='overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down'
+      className='data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden'
       {...rest}
     >
       <div
         className={cn(
-          'px-3.5 pb-3.5 pt-1.5 text-paragraph-sm text-text-sub-600',
-          className,
+          'text-paragraph-sm text-text-sub-600 px-3.5 pt-1.5 pb-3.5',
+          className
         )}
       >
         {children}
@@ -199,7 +199,7 @@ const AccordionGroup = React.forwardRef<
 >(
   (
     { items, variant, arrowPosition = 'end', className, ...rest },
-    forwardedRef,
+    forwardedRef
   ) => {
     return (
       <AccordionRoot
@@ -213,7 +213,11 @@ const AccordionGroup = React.forwardRef<
             arrowPosition === 'start' || hasIcon ? 'pl-[30px]' : undefined;
 
           return (
-            <AccordionItem key={item.value} value={item.value} variant={variant}>
+            <AccordionItem
+              key={item.value}
+              value={item.value}
+              variant={variant}
+            >
               <AccordionTrigger>
                 {arrowPosition === 'start' && <AccordionArrow />}
                 {item.icon && <AccordionIcon as={item.icon} />}
@@ -228,7 +232,7 @@ const AccordionGroup = React.forwardRef<
         })}
       </AccordionRoot>
     );
-  },
+  }
 );
 AccordionGroup.displayName = ACCORDION_GROUP_NAME;
 

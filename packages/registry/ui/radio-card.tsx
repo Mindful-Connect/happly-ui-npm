@@ -100,7 +100,7 @@ const RadioCardRoot = React.forwardRef<
       value,
       ...rest
     },
-    forwardedRef,
+    forwardedRef
   ) => {
     const { root } = radioCardVariants({ hasError, variant });
 
@@ -108,7 +108,7 @@ const RadioCardRoot = React.forwardRef<
       (newValue: string) => {
         onValueChange?.(newValue);
       },
-      [onValueChange],
+      [onValueChange]
     );
 
     return (
@@ -127,7 +127,7 @@ const RadioCardRoot = React.forwardRef<
         </Radio.Group>
       </RadioCardContext.Provider>
     );
-  },
+  }
 );
 RadioCardRoot.displayName = 'RadioCardRoot';
 
@@ -139,9 +139,16 @@ type RadioCardItemProps = React.ComponentPropsWithoutRef<'label'> & {
 };
 
 const RadioCardItem = React.forwardRef<HTMLLabelElement, RadioCardItemProps>(
-  ({ className, children, value, disabled, onClick, ...rest }, forwardedRef) => {
-    const { hasError, allowDeselect, onValueChange, value: groupValue } =
-      React.useContext(RadioCardContext);
+  (
+    { className, children, value, disabled, onClick, ...rest },
+    forwardedRef
+  ) => {
+    const {
+      hasError,
+      allowDeselect,
+      onValueChange,
+      value: groupValue,
+    } = React.useContext(RadioCardContext);
     const { item } = radioCardVariants({ hasError });
 
     const handleClick = React.useCallback(
@@ -152,7 +159,7 @@ const RadioCardItem = React.forwardRef<HTMLLabelElement, RadioCardItemProps>(
           onValueChange?.('');
         }
       },
-      [allowDeselect, groupValue, value, onValueChange, onClick],
+      [allowDeselect, groupValue, value, onValueChange, onClick]
     );
 
     return (
@@ -167,7 +174,7 @@ const RadioCardItem = React.forwardRef<HTMLLabelElement, RadioCardItemProps>(
         </label>
       </RadioCardItemContext.Provider>
     );
-  },
+  }
 );
 RadioCardItem.displayName = 'RadioCardItem';
 
@@ -210,25 +217,26 @@ type RadioCardContentProps = React.ComponentPropsWithoutRef<'div'> & {
   inline?: boolean;
 };
 
-const RadioCardContent = React.forwardRef<HTMLDivElement, RadioCardContentProps>(
-  ({ className, inline, ...rest }, forwardedRef) => {
-    const { hasError } = React.useContext(RadioCardContext);
-    const { content } = radioCardVariants({ hasError });
+const RadioCardContent = React.forwardRef<
+  HTMLDivElement,
+  RadioCardContentProps
+>(({ className, inline, ...rest }, forwardedRef) => {
+  const { hasError } = React.useContext(RadioCardContext);
+  const { content } = radioCardVariants({ hasError });
 
-    return (
-      <div
-        ref={forwardedRef}
-        className={content({
-          class: cn(
-            inline ? 'flex-wrap items-center gap-x-1.5' : 'flex-col gap-1',
-            className,
-          ),
-        })}
-        {...rest}
-      />
-    );
-  },
-);
+  return (
+    <div
+      ref={forwardedRef}
+      className={content({
+        class: cn(
+          inline ? 'flex-wrap items-center gap-x-1.5' : 'flex-col gap-1',
+          className
+        ),
+      })}
+      {...rest}
+    />
+  );
+});
 RadioCardContent.displayName = 'RadioCardContent';
 
 // ─── Title ────────────────────────────────────────────────
@@ -240,7 +248,13 @@ const RadioCardTitle = React.forwardRef<
   const { hasError } = React.useContext(RadioCardContext);
   const { title } = radioCardVariants({ hasError });
 
-  return <span ref={forwardedRef} className={title({ class: className })} {...rest} />;
+  return (
+    <span
+      ref={forwardedRef}
+      className={title({ class: className })}
+      {...rest}
+    />
+  );
 });
 RadioCardTitle.displayName = 'RadioCardTitle';
 
@@ -254,7 +268,11 @@ const RadioCardDescription = React.forwardRef<
   const { description } = radioCardVariants({ hasError });
 
   return (
-    <p ref={forwardedRef} className={description({ class: className })} {...rest} />
+    <p
+      ref={forwardedRef}
+      className={description({ class: className })}
+      {...rest}
+    />
   );
 });
 RadioCardDescription.displayName = 'RadioCardDescription';
@@ -274,13 +292,21 @@ type RadioCardComposedProps = Omit<
   inline?: boolean;
 };
 
-const RadioCardComposed = React.forwardRef<HTMLLabelElement, RadioCardComposedProps>(
+const RadioCardComposed = React.forwardRef<
+  HTMLLabelElement,
+  RadioCardComposedProps
+>(
   (
     { title, description, icon, badge, inline, value, disabled, ...rest },
-    forwardedRef,
+    forwardedRef
   ) => {
     return (
-      <RadioCardItem ref={forwardedRef} value={value} disabled={disabled} {...rest}>
+      <RadioCardItem
+        ref={forwardedRef}
+        value={value}
+        disabled={disabled}
+        {...rest}
+      >
         {icon}
         <RadioCardContent inline={inline}>
           {badge ? (
@@ -298,7 +324,7 @@ const RadioCardComposed = React.forwardRef<HTMLLabelElement, RadioCardComposedPr
         <RadioCardIndicator />
       </RadioCardItem>
     );
-  },
+  }
 );
 RadioCardComposed.displayName = 'RadioCardComposed';
 

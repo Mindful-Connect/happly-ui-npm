@@ -15,9 +15,26 @@ export const Playground = {
   },
   argTypes: {
     children: { control: 'text' },
-    variant: { control: 'select', options: ['filled', 'light', 'lighter', 'stroke'] },
+    variant: {
+      control: 'select',
+      options: ['filled', 'light', 'lighter', 'stroke'],
+    },
     size: { control: 'select', options: ['small', 'medium'] },
-    color: { control: 'select', options: ['gray', 'blue', 'orange', 'red', 'green', 'yellow', 'purple', 'sky', 'pink', 'teal'] },
+    color: {
+      control: 'select',
+      options: [
+        'gray',
+        'blue',
+        'orange',
+        'red',
+        'green',
+        'yellow',
+        'purple',
+        'sky',
+        'pink',
+        'teal',
+      ],
+    },
     disabled: { control: 'boolean' },
     square: { control: 'boolean' },
   },
@@ -250,7 +267,7 @@ export const WithIcon = {
       </Badge.Root>
     </div>
   ),
-}
+};
 
 export const WithDot = {
   render: () => (
@@ -266,7 +283,7 @@ export const WithDot = {
       </Badge.Root>
     </div>
   ),
-}
+};
 
 export const Disabled = {
   render: () => (
@@ -292,7 +309,7 @@ export const Disabled = {
       </Badge.Root>
     </div>
   ),
-}
+};
 
 export const AsChild = {
   render: () => (
