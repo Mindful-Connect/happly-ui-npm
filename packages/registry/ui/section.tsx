@@ -12,8 +12,8 @@ function SectionRoot({
   return (
     <div
       className={cn(
-        'flex flex-col gap-6 rounded-3xl bg-bg-white-0 p-6 lg:flex-row lg:gap-[88px]',
-        className,
+        'bg-bg-white-0 flex flex-col gap-6 rounded-3xl p-5 lg:flex-row lg:gap-[88px] lg:p-6',
+        className
       )}
       {...rest}
     >
@@ -107,9 +107,7 @@ function Section({
     <SectionRoot className={className} {...rest}>
       <SectionHeader className={headerClassName}>
         <SectionTitle>{title}</SectionTitle>
-        {description && (
-          <SectionDescription>{description}</SectionDescription>
-        )}
+        {description && <SectionDescription>{description}</SectionDescription>}
       </SectionHeader>
       <SectionContent className={contentClassName}>{children}</SectionContent>
     </SectionRoot>

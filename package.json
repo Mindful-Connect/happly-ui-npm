@@ -11,7 +11,8 @@
     "clean": "rm -rf packages/*/dist packages/*/.turbo",
     "lint": "eslint .",
     "storybook": "bun run --cwd packages/registry storybook",
-    "build-storybook": "bun run --cwd packages/registry build-storybook"
+    "build-storybook": "bun run --cwd packages/registry build-storybook",
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
