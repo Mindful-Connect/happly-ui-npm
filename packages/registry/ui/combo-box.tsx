@@ -52,12 +52,15 @@ const ComboBoxContext = React.createContext<ComboBoxContextValue | null>(null);
 
 // Separate context for the anchor ref to avoid ESLint react-hooks/refs
 // false positives on the main context (which would flag all ctx.* accesses).
-const AnchorRefContext = React.createContext<React.RefObject<HTMLDivElement | null> | null>(null);
+const AnchorRefContext =
+  React.createContext<React.RefObject<HTMLDivElement | null> | null>(null);
 
 function useComboBoxContext() {
   const ctx = React.useContext(ComboBoxContext);
   if (!ctx) {
-    throw new Error('ComboBox compound components must be used within ComboBox.Root');
+    throw new Error(
+      'ComboBox compound components must be used within ComboBox.Root'
+    );
   }
   return ctx;
 }
@@ -65,7 +68,9 @@ function useComboBoxContext() {
 function useAnchorRef() {
   const ref = React.useContext(AnchorRefContext);
   if (!ref) {
-    throw new Error('ComboBox compound components must be used within ComboBox.Root');
+    throw new Error(
+      'ComboBox compound components must be used within ComboBox.Root'
+    );
   }
   return ref;
 }
@@ -129,7 +134,7 @@ function ComboBoxRoot({
         .filter(Boolean) as ComboBoxOption[];
       onValueChange?.(next, selectedOptions);
     },
-    [valueProp, onValueChange, options],
+    [valueProp, onValueChange, options]
   );
 
   const [open, setOpen] = React.useState(preview);
@@ -142,7 +147,7 @@ function ComboBoxRoot({
   const listboxId = `combobox-listbox-${instanceId}`;
   const getItemId = React.useCallback(
     (index: number) => `combobox-item-${instanceId}-${index}`,
-    [instanceId],
+    [instanceId]
   );
 
   const filteredOptions = React.useMemo(() => {
@@ -168,12 +173,12 @@ function ComboBoxRoot({
       }
       onOpenChangeProp?.(newOpen);
     },
-    [onOpenChangeProp],
+    [onOpenChangeProp]
   );
 
   const isSelected = React.useCallback(
     (optionValue: string) => value.includes(optionValue),
-    [value],
+    [value]
   );
 
   const toggle = React.useCallback(
@@ -188,7 +193,7 @@ function ComboBoxRoot({
         }
       }
     },
-    [isSelected, value, min, max, setValue],
+    [isSelected, value, min, max, setValue]
   );
 
   const remove = React.useCallback(
@@ -196,7 +201,7 @@ function ComboBoxRoot({
       if (disabled || value.length <= min) return;
       setValue(value.filter((v) => v !== optionValue));
     },
-    [disabled, value, min, setValue],
+    [disabled, value, min, setValue]
   );
 
   const removeAll = React.useCallback(() => {
@@ -255,7 +260,7 @@ function ComboBoxRoot({
       highlightedIndex,
       listboxId,
       getItemId,
-    ],
+    ]
   );
 
   return (
@@ -299,8 +304,13 @@ const ComboBoxSearchTrigger = React.forwardRef<
   ComboBoxSearchTriggerProps
 >(
   (
-    { leadingIcon = RiSearchLine, trailingIcon = RiArrowDownSLine, placeholder = 'Choose or search...', className },
-    forwardedRef,
+    {
+      leadingIcon = RiSearchLine,
+      trailingIcon = RiArrowDownSLine,
+      placeholder = 'Choose or search...',
+      className,
+    },
+    forwardedRef
   ) => {
     const ctx = useComboBoxContext();
     const anchorRef = useAnchorRef();
@@ -316,7 +326,7 @@ const ComboBoxSearchTrigger = React.forwardRef<
             ctx.setHighlightedIndex(0);
           } else if (count > 0) {
             ctx.setHighlightedIndex(
-              ctx.highlightedIndex < count - 1 ? ctx.highlightedIndex + 1 : 0,
+              ctx.highlightedIndex < count - 1 ? ctx.highlightedIndex + 1 : 0
             );
           }
           break;
@@ -325,7 +335,7 @@ const ComboBoxSearchTrigger = React.forwardRef<
           e.preventDefault();
           if (count > 0) {
             ctx.setHighlightedIndex(
-              ctx.highlightedIndex > 0 ? ctx.highlightedIndex - 1 : count - 1,
+              ctx.highlightedIndex > 0 ? ctx.highlightedIndex - 1 : count - 1
             );
           }
           break;
@@ -380,7 +390,9 @@ const ComboBoxSearchTrigger = React.forwardRef<
               aria-autocomplete='list'
               value={ctx.search}
               onChange={(e) => ctx.setSearch(e.target.value)}
-              onFocus={() => !ctx.disabled && !ctx.preview && ctx.handleOpenChange(true)}
+              onFocus={() =>
+                !ctx.disabled && !ctx.preview && ctx.handleOpenChange(true)
+              }
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
               disabled={ctx.disabled}
@@ -390,7 +402,7 @@ const ComboBoxSearchTrigger = React.forwardRef<
                 as={trailingIcon}
                 className={cn(
                   'transition duration-200 ease-out',
-                  ctx.open && 'rotate-180',
+                  ctx.open && 'rotate-180'
                 )}
               />
             )}
@@ -401,12 +413,8 @@ const ComboBoxSearchTrigger = React.forwardRef<
 
     if (ctx.preview) return input;
 
-    return (
-      <Popover.Anchor asChild>
-        {input}
-      </Popover.Anchor>
-    );
-  },
+    return <Popover.Anchor asChild>{input}</Popover.Anchor>;
+  }
 );
 ComboBoxSearchTrigger.displayName = 'ComboBoxSearchTrigger';
 
@@ -427,8 +435,9 @@ function ComboBoxContent({
   const ctx = useComboBoxContext();
   const anchorRef = useAnchorRef();
 
-  const items = children ?? (
-    ctx.filteredOptions.length === 0 ? (
+  const items =
+    children ??
+    (ctx.filteredOptions.length === 0 ? (
       <ComboBoxEmpty>{emptyMessage}</ComboBoxEmpty>
     ) : (
       <div className='flex flex-col gap-1'>
@@ -436,8 +445,7 @@ function ComboBoxContent({
           <ComboBoxItem key={option.value} value={option.value} index={index} />
         ))}
       </div>
-    )
-  );
+    ));
 
   const scrollArea = (
     <ScrollAreaPrimitives.Root type='auto'>
@@ -460,8 +468,8 @@ function ComboBoxContent({
     return (
       <div
         className={cn(
-          'border-stroke-soft-200 [--combobox-content-max-height:196px] overflow-hidden rounded-xl border',
-          className,
+          'border-stroke-soft-200 overflow-hidden rounded-xl border [--combobox-content-max-height:196px]',
+          className
         )}
       >
         {scrollArea}
@@ -482,11 +490,12 @@ function ComboBoxContent({
         }
       }}
       style={{ width: ctx.anchorWidth || undefined }}
-      className={cn('[--combobox-content-max-height:196px] overflow-hidden p-0', className)}
+      className={cn(
+        'overflow-hidden p-0 [--combobox-content-max-height:196px]',
+        className
+      )}
     >
-      <RemoveScroll allowPinchZoom>
-        {scrollArea}
-      </RemoveScroll>
+      <RemoveScroll allowPinchZoom>{scrollArea}</RemoveScroll>
     </Popover.Content>
   );
 }
@@ -526,7 +535,8 @@ function ComboBoxItem({
   // Resolve index: use explicit prop, or find from filtered options
   const resolvedIndex =
     index ?? ctx.filteredOptions.findIndex((o) => o.value === itemValue);
-  const isHighlighted = resolvedIndex >= 0 && resolvedIndex === ctx.highlightedIndex;
+  const isHighlighted =
+    resolvedIndex >= 0 && resolvedIndex === ctx.highlightedIndex;
 
   // Scroll into view when highlighted via keyboard
   React.useEffect(() => {
@@ -551,13 +561,13 @@ function ComboBoxItem({
         }
       }}
       className={cn(
-        'rounded-[0.625rem] text-paragraph-sm text-text-strong-950 relative flex w-full cursor-pointer items-center gap-2 p-2 text-left select-none',
-        'outline-none transition duration-200 ease-out',
+        'text-paragraph-sm text-text-strong-950 relative flex w-full cursor-pointer items-center gap-2 rounded-[0.625rem] p-2 text-left select-none',
+        'transition duration-200 ease-out outline-none',
         'hover:bg-bg-weak-50',
         isHighlighted && 'bg-bg-weak-50',
         isDisabled && 'text-text-disabled-300 pointer-events-none',
         showIndicator && 'pr-9',
-        className,
+        className
       )}
     >
       {children ?? (
@@ -580,17 +590,13 @@ type ComboBoxItemIconProps = {
   className?: string;
 } & React.HTMLAttributes<HTMLElement>;
 
-function ComboBoxItemIcon({
-  as,
-  className,
-  ...rest
-}: ComboBoxItemIconProps) {
+function ComboBoxItemIcon({ as, className, ...rest }: ComboBoxItemIconProps) {
   if (typeof as === 'string') {
     return (
       <div
         className={cn(
-          'w-5 h-5 shrink-0 rounded-full bg-cover bg-center bg-no-repeat',
-          className,
+          'h-5 w-5 shrink-0 rounded-full bg-cover bg-center bg-no-repeat',
+          className
         )}
         style={{ backgroundImage: `url(${as})` }}
         {...rest}
@@ -601,7 +607,7 @@ function ComboBoxItemIcon({
   const Component = as || 'div';
   return (
     <Component
-      className={cn('text-text-sub-600 w-5 h-5 shrink-0', className)}
+      className={cn('text-text-sub-600 h-5 w-5 shrink-0', className)}
       {...rest}
     />
   );
@@ -624,15 +630,13 @@ function ComboBoxItemIndicator({
   return (
     <span
       className={cn(
-        'absolute top-1/2 right-2 flex w-5 h-5 shrink-0 -translate-y-1/2 items-center justify-center',
+        'absolute top-1/2 right-2 flex h-5 w-5 shrink-0 -translate-y-1/2 items-center justify-center',
         'transition duration-200 ease-out',
         selected ? 'opacity-100' : 'opacity-0',
-        className,
+        className
       )}
     >
-      {children ?? (
-        <RiCheckLine className='text-text-sub-600 w-5 h-5' />
-      )}
+      {children ?? <RiCheckLine className='text-text-sub-600 h-5 w-5' />}
     </span>
   );
 }
@@ -650,7 +654,7 @@ function ComboBoxEmpty({ className, children }: ComboBoxEmptyProps) {
     <div
       className={cn(
         'text-paragraph-sm text-text-sub-600 py-6 text-center',
-        className,
+        className
       )}
     >
       {children ?? 'No results found.'}
@@ -679,7 +683,7 @@ function ComboBoxTags({
   if (ctx.preview || ctx.value.length === 0) return null;
 
   const selectedOptions = ctx.value.map(
-    (v) => ctx.options.find((o) => o.value === v) ?? { value: v, label: v },
+    (v) => ctx.options.find((o) => o.value === v) ?? { value: v, label: v }
   );
 
   const showSelectAll =
@@ -735,7 +739,10 @@ type ComboBoxComposedProps = Omit<ComboBoxRootProps, 'children'> & {
   tagVariant?: 'stroke' | 'gray';
 };
 
-const ComboBoxComposed = React.forwardRef<HTMLInputElement, ComboBoxComposedProps>(
+const ComboBoxComposed = React.forwardRef<
+  HTMLInputElement,
+  ComboBoxComposedProps
+>(
   (
     {
       icon,
@@ -745,7 +752,7 @@ const ComboBoxComposed = React.forwardRef<HTMLInputElement, ComboBoxComposedProp
       tagVariant,
       ...rootProps
     },
-    forwardedRef,
+    forwardedRef
   ) => {
     return (
       <ComboBoxRoot {...rootProps}>
@@ -758,7 +765,7 @@ const ComboBoxComposed = React.forwardRef<HTMLInputElement, ComboBoxComposedProp
         <ComboBoxTags variant={tagVariant} selectAllLabel={selectAllLabel} />
       </ComboBoxRoot>
     );
-  },
+  }
 );
 ComboBoxComposed.displayName = 'ComboBoxComposed';
 

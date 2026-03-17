@@ -311,16 +311,16 @@ const SelectContent = React.forwardRef<
       collisionPadding = 8,
       ...rest
     },
-    forwardedRef,
+    forwardedRef
   ) => (
     <SelectPrimitives.Portal>
       <SelectPrimitives.Content
         ref={forwardedRef}
         className={cn(
           // base
-          'relative z-50 overflow-hidden rounded-2xl bg-bg-white-0 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200',
+          'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 relative z-50 overflow-hidden rounded-2xl ring-1 ring-inset',
           // widths
-          'min-w-[var(--radix-select-trigger-width)] max-w-[max(var(--radix-select-trigger-width),320px)]',
+          'max-w-[max(var(--radix-select-trigger-width),320px)] min-w-[var(--radix-select-trigger-width)]',
           // heights
           'max-h-[var(--radix-select-content-available-height)]',
           // animation
@@ -328,7 +328,7 @@ const SelectContent = React.forwardRef<
           'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
           'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
           'data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2',
-          className,
+          className
         )}
         sideOffset={sideOffset}
         position={position}
@@ -345,12 +345,12 @@ const SelectContent = React.forwardRef<
             </ScrollAreaPrimitives.Viewport>
           </SelectPrimitives.Viewport>
           <ScrollAreaPrimitives.Scrollbar orientation='vertical'>
-            <ScrollAreaPrimitives.Thumb className='!w-1 rounded bg-bg-soft-200' />
+            <ScrollAreaPrimitives.Thumb className='bg-bg-soft-200 !w-1 rounded' />
           </ScrollAreaPrimitives.Scrollbar>
         </ScrollAreaPrimitives.Root>
       </SelectPrimitives.Content>
     </SelectPrimitives.Portal>
-  ),
+  )
 );
 SelectContent.displayName = 'SelectContent';
 
@@ -365,16 +365,16 @@ const SelectItem = React.forwardRef<
       ref={forwardedRef}
       className={cn(
         // base
-        'group relative cursor-pointer select-none rounded-lg p-2 pr-9 text-paragraph-sm text-text-strong-950',
+        'group text-paragraph-sm text-text-strong-950 relative cursor-pointer rounded-lg p-2 pr-9 select-none',
         'flex items-center gap-2 transition duration-200 ease-out',
         // disabled
-        'data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled-300',
+        'data-[disabled]:text-text-disabled-300 data-[disabled]:pointer-events-none',
         // hover, focus
-        'outline-none data-[highlighted]:bg-bg-weak-50',
+        'data-[highlighted]:bg-bg-weak-50 outline-none',
         {
           'gap-1.5 pr-[34px]': size === 'xsmall',
         },
-        className,
+        className
       )}
       {...rest}
     >
@@ -387,7 +387,7 @@ const SelectItem = React.forwardRef<
             'group-data-[disabled]:text-text-disabled-300',
             {
               'gap-1.5': size === 'xsmall',
-            },
+            }
           )}
         >
           {typeof children === 'string' ? (
@@ -398,7 +398,7 @@ const SelectItem = React.forwardRef<
         </span>
       </SelectPrimitives.ItemText>
       <SelectPrimitives.ItemIndicator asChild>
-        <RiCheckLine className='absolute right-2 top-1/2 w-5 h-5 shrink-0 -translate-y-1/2 text-text-sub-600' />
+        <RiCheckLine className='text-text-sub-600 absolute top-1/2 right-2 h-5 w-5 shrink-0 -translate-y-1/2' />
       </SelectPrimitives.ItemIndicator>
     </SelectPrimitives.Item>
   );
