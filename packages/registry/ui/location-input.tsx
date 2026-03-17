@@ -170,12 +170,15 @@ const LocationInputRoot = React.forwardRef<
       trailing: true,
     });
 
+    const selectingRef = React.useRef(false);
+
     function handleOpenChange(newOpen: boolean) {
       if (newOpen && anchorRef.current) {
         setAnchorWidth(anchorRef.current.offsetWidth);
       }
       setOpen(newOpen);
-      if (!newOpen) formField.onBlur?.();
+      if (!newOpen && !selectingRef.current) formField.onBlur?.();
+      selectingRef.current = false;
     }
 
     const onLocationChangeRef = React.useRef(onLocationChange);
@@ -212,6 +215,7 @@ const LocationInputRoot = React.forwardRef<
       resolvePlace(suggestion.place_id, (resolved) => {
         setSearch(suggestion.description);
         onLocationChange?.(resolved);
+        selectingRef.current = true;
         setOpen(false);
         searchActiveRef.current = false;
       });
@@ -239,7 +243,9 @@ const LocationInputRoot = React.forwardRef<
                       handleOpenChange(true);
                     }
                   }}
-                  onBlur={() => formField.onBlur?.()}
+                  onBlur={() => {
+                    if (!open) formField.onBlur?.();
+                  }}
                   placeholder={placeholder}
                   disabled={resolvedDisabled}
                   {...rest}
