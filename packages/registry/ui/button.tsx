@@ -10,12 +10,125 @@ import { tv, type VariantProps } from '@/lib/tv';
 const BUTTON_ROOT_NAME = 'ButtonRoot';
 const BUTTON_ICON_NAME = 'ButtonIcon';
 
+function extractText(node: React.ReactNode): string {
+  if (typeof node === 'string') return node;
+  if (typeof node === 'number') return String(node);
+  if (Array.isArray(node)) return node.map(extractText).join('');
+  if (React.isValidElement(node) && node.props) {
+    return extractText((node.props as { children?: React.ReactNode }).children);
+  }
+  return '';
+}
+
+const LETTER_DELAY = 40;
+const LETTER_DURATION = 300;
+
+function ButtonLoadingContent({
+  children,
+  loadingText = 'Loading',
+}: {
+  children: React.ReactNode;
+  loadingText?: string;
+}) {
+  const text = extractText(children);
+  const exitLetters = text.split('');
+  const loadingLetters = loadingText.split('');
+  const exitEndMs = exitLetters.length * LETTER_DELAY + LETTER_DURATION;
+  const enterEndMs =
+    exitEndMs + loadingLetters.length * LETTER_DELAY + LETTER_DURATION;
+
+  return (
+    <span className='relative inline-flex items-center gap-1.5 overflow-hidden'>
+      {/* Spinner — delayed until exit completes */}
+      <svg
+        className='h-3.5 w-3.5 shrink-0'
+        style={{
+          animation: `spin 0.7s linear infinite, btn-fade-in 200ms ease-out ${exitEndMs}ms forwards`,
+          opacity: 0,
+        }}
+        viewBox='0 0 16 16'
+        fill='none'
+      >
+        <circle
+          cx='8'
+          cy='8'
+          r='6'
+          stroke='currentColor'
+          strokeOpacity='0.2'
+          strokeWidth='2.5'
+        />
+        <path
+          d='M14 8a6 6 0 0 0-6-6'
+          stroke='currentColor'
+          strokeWidth='2.5'
+          strokeLinecap='round'
+        />
+      </svg>
+
+      {/* Enter text (determines layout width) */}
+      <span className='inline-flex'>
+        {loadingLetters.map((letter, i) => (
+          <span
+            key={i}
+            className='inline-block'
+            style={{
+              animation: `btn-letter-in ${LETTER_DURATION}ms ease-out ${exitEndMs + i * LETTER_DELAY}ms forwards`,
+              opacity: 0,
+            }}
+          >
+            {letter}
+          </span>
+        ))}
+        <span
+          style={{
+            animation: `btn-dot-1 2s ease-in-out ${enterEndMs}ms infinite`,
+            opacity: 0,
+          }}
+        >
+          .
+        </span>
+        <span
+          style={{
+            animation: `btn-dot-2 2s ease-in-out ${enterEndMs}ms infinite`,
+            opacity: 0,
+          }}
+        >
+          .
+        </span>
+        <span
+          style={{
+            animation: `btn-dot-3 2s ease-in-out ${enterEndMs}ms infinite`,
+            opacity: 0,
+          }}
+        >
+          .
+        </span>
+      </span>
+
+      {/* Exit text (absolute overlay, animates away) */}
+      <span className='absolute inset-0 inline-flex items-center justify-center'>
+        {exitLetters.map((letter, i) => (
+          <span
+            key={i}
+            className='inline-block'
+            style={{
+              animation: `btn-letter-out ${LETTER_DURATION}ms ease-in ${i * LETTER_DELAY}ms forwards`,
+            }}
+          >
+            {letter === ' ' ? '\u00A0' : letter}
+          </span>
+        ))}
+      </span>
+    </span>
+  );
+}
+
 export const buttonVariants = tv({
   slots: {
     root: [
       // base
       'group relative inline-flex items-center justify-center whitespace-nowrap outline-none',
-      'transition duration-200 ease-out',
+      'transition-all duration-300 ease-out [interpolate-size:allow-keywords]',
       // focus
       'focus:outline-none',
       // disabled
@@ -374,6 +487,7 @@ type ButtonRootProps = VariantProps<typeof buttonVariants> &
   React.ButtonHTMLAttributes<HTMLButtonElement> & {
     asChild?: boolean;
     loading?: boolean;
+    loadingText?: string;
   };
 
 const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
@@ -385,6 +499,7 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
       size,
       asChild,
       loading,
+      loadingText,
       className,
       disabled,
       ...rest
@@ -424,7 +539,9 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
         {...rest}
       >
         {loading ? (
-          <span className='animate-pulse'>Loading...</span>
+          <ButtonLoadingContent loadingText={loadingText}>
+            {children}
+          </ButtonLoadingContent>
         ) : (
           extendedChildren
         )}

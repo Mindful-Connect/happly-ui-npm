@@ -76,9 +76,15 @@
       },
       {
         "title": "Loading",
-        "description": "Use the loading prop to show a shimmer \"Loading...\" state. The button is automatically disabled while loading.",
+        "description": "Use the loading prop to trigger an animated transition. The original text wave-blurs out letter by letter, then a spinner and \"Loading...\" wave-blurs in with a continuous typewriter dot effect.",
         "code": "<Button.Root loading>Get Started</Button.Root>",
         "stories": ["Loading"]
+      },
+      {
+        "title": "Loading Interactive",
+        "description": "Click the button to see the full loading animation in action. The state resets after 3 seconds.",
+        "code": "<Button.Root loading={loading} onClick={handleClick}>\n  Get Started\n</Button.Root>",
+        "stories": ["LoadingInteractive"]
       },
       {
         "title": "Composed",
@@ -120,7 +126,13 @@
             "name": "loading",
             "type": "boolean",
             "default": "false",
-            "description": "Shows a shimmer \"Loading...\" state and disables the button"
+            "description": "Triggers an animated loading transition with a wave text effect, spinner, and typewriter dots"
+          },
+          {
+            "name": "loadingText",
+            "type": "string",
+            "default": "'Loading'",
+            "description": "Override the loading text displayed during the loading animation. The '...' dots are appended automatically."
           },
           {
             "name": "disabled",

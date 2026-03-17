@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   RiArrowLeftSLine,
   RiArrowRightSLine,
@@ -256,6 +257,45 @@ export const Loading = {
       </Button.Root>
     </div>
   ),
+};
+
+export const LoadingInteractive = {
+  render: () => {
+    const LoadingButton = ({
+      children,
+      ...props
+    }: React.ComponentPropsWithoutRef<typeof Button.Root>) => {
+      const [loading, setLoading] = useState(false);
+      return (
+        <Button.Root
+          loading={loading}
+          onClick={() => {
+            setLoading(true);
+            setTimeout(() => setLoading(false), 5000);
+          }}
+          {...props}
+        >
+          {children}
+        </Button.Root>
+      );
+    };
+
+    return (
+      <div className='flex flex-col items-center gap-4'>
+        <LoadingButton>Get Started</LoadingButton>
+        <LoadingButton variant='neutral' mode='stroke'>
+          Learn More
+        </LoadingButton>
+        <LoadingButton
+          variant='neutral'
+          mode='filled'
+          loadingText='Submitting'
+        >
+          Submit for review
+        </LoadingButton>
+      </div>
+    );
+  },
 };
 
 export const Composition = {
