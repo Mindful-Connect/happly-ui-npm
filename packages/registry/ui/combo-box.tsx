@@ -176,8 +176,9 @@ function ComboBoxRoot({
         setHighlightedIndex(-1);
       }
       onOpenChangeProp?.(newOpen);
+      if (!newOpen) formField.onBlur?.();
     },
-    [onOpenChangeProp]
+    [onOpenChangeProp, formField.onBlur]
   );
 
   const isSelected = React.useCallback(

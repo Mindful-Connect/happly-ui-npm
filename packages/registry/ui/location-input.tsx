@@ -170,6 +170,7 @@ const LocationInputRoot = React.forwardRef<
         setAnchorWidth(anchorRef.current.offsetWidth);
       }
       setOpen(newOpen);
+      if (!newOpen) formField.onBlur?.();
     }
 
     const onLocationChangeRef = React.useRef(onLocationChange);
@@ -233,6 +234,7 @@ const LocationInputRoot = React.forwardRef<
                       handleOpenChange(true);
                     }
                   }}
+                  onBlur={() => formField.onBlur?.()}
                   placeholder={placeholder}
                   disabled={resolvedDisabled}
                   {...rest}
