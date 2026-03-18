@@ -40,7 +40,7 @@ async function fetchOrRead(url: string): Promise<unknown> {
     return JSON.parse(content);
   }
 
-  const response = await fetch(url);
+  const response = await fetch(url, { signal: AbortSignal.timeout(10000) });
   if (!response.ok) {
     throw new Error(`Failed to fetch: ${response.statusText}`);
   }
@@ -70,7 +70,7 @@ export async function fetchOrReadRaw(url: string): Promise<string> {
     return readFile(localPath, 'utf-8');
   }
 
-  const response = await fetch(url);
+  const response = await fetch(url, { signal: AbortSignal.timeout(10000) });
   if (!response.ok) {
     throw new Error(`Failed to fetch: ${response.statusText}`);
   }
