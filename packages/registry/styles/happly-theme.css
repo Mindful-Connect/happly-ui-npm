@@ -942,10 +942,12 @@
   0% {
     transform: translateY(0);
     opacity: 1;
+    filter: blur(0px);
   }
   100% {
     transform: translateY(-80%);
     opacity: 0;
+    filter: blur(5px);
   }
 }
 
@@ -953,10 +955,12 @@
   0% {
     transform: translateY(60%);
     opacity: 0;
+    filter: blur(5px);
   }
   100% {
     transform: translateY(0);
     opacity: 1;
+    filter: blur(0px);
   }
 }
 
