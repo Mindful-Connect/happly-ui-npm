@@ -282,9 +282,11 @@ export const HAPPLY_THEME_V4 = `/* HapplyUI Design Tokens — https://ui.happly.
   --color-warning-alpha-10: var(--color-orange-alpha-10);
 
   --color-error-dark: var(--color-red-950);
+  --color-error-darker: var(--color-red-700);
   --color-error-base: var(--color-red-500);
   --color-error-light: var(--color-red-200);
   --color-error-lighter: var(--color-red-50);
+  --color-error-alpha-10: var(--color-red-alpha-10);
 
   --color-success-dark: var(--color-green-950);
   --color-success-darker: var(--color-green-700);
@@ -613,9 +615,11 @@ export const HAPPLY_THEME_V4 = `/* HapplyUI Design Tokens — https://ui.happly.
     --color-warning-lighter: var(--color-orange-alpha-16);
 
     --color-error-dark: var(--color-red-400);
+    --color-error-darker: var(--color-red-300);
     --color-error-base: var(--color-red-600);
     --color-error-light: var(--color-red-alpha-24);
     --color-error-lighter: var(--color-red-alpha-16);
+    --color-error-alpha-10: var(--color-red-alpha-10);
 
     --color-success-dark: var(--color-green-400);
     --color-success-base: var(--color-green-600);
@@ -949,6 +953,59 @@ export const HAPPLY_THEME_V4 = `/* HapplyUI Design Tokens — https://ui.happly.
   100% {
     background-position: -200% 0;
   }
+}
+
+@keyframes btn-letter-out {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+    filter: blur(0px);
+  }
+  100% {
+    transform: translateY(-80%);
+    opacity: 0;
+    filter: blur(5px);
+  }
+}
+
+@keyframes btn-letter-in {
+  0% {
+    transform: translateY(60%);
+    opacity: 0;
+    filter: blur(5px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes btn-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes btn-dot-1 {
+  0%, 15% { opacity: 0; }
+  20%, 85% { opacity: 1; }
+  92%, 100% { opacity: 0; }
+}
+
+@keyframes btn-dot-2 {
+  0%, 35% { opacity: 0; }
+  40%, 85% { opacity: 1; }
+  92%, 100% { opacity: 0; }
+}
+
+@keyframes btn-dot-3 {
+  0%, 55% { opacity: 0; }
+  60%, 85% { opacity: 1; }
+  92%, 100% { opacity: 0; }
 }
 
 /* HapplyUI Body Styles */
@@ -1312,9 +1369,11 @@ export const HAPPLY_THEME_V3 = `/* HapplyUI Design Tokens — https://ui.happly.
     --color-warning-lighter: var(--color-orange-alpha-16);
 
     --color-error-dark: var(--color-red-400);
+    --color-error-darker: var(--color-red-300);
     --color-error-base: var(--color-red-600);
     --color-error-light: var(--color-red-alpha-24);
     --color-error-lighter: var(--color-red-alpha-16);
+    --color-error-alpha-10: var(--color-red-alpha-10);
 
     --color-success-dark: var(--color-green-400);
     --color-success-base: var(--color-green-600);
@@ -1398,6 +1457,59 @@ export const HAPPLY_THEME_V3 = `/* HapplyUI Design Tokens — https://ui.happly.
   100% {
     background-position: -200% 0;
   }
+}
+
+@keyframes btn-letter-out {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+    filter: blur(0px);
+  }
+  100% {
+    transform: translateY(-80%);
+    opacity: 0;
+    filter: blur(5px);
+  }
+}
+
+@keyframes btn-letter-in {
+  0% {
+    transform: translateY(60%);
+    opacity: 0;
+    filter: blur(5px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes btn-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes btn-dot-1 {
+  0%, 15% { opacity: 0; }
+  20%, 85% { opacity: 1; }
+  92%, 100% { opacity: 0; }
+}
+
+@keyframes btn-dot-2 {
+  0%, 35% { opacity: 0; }
+  40%, 85% { opacity: 1; }
+  92%, 100% { opacity: 0; }
+}
+
+@keyframes btn-dot-3 {
+  0%, 55% { opacity: 0; }
+  60%, 85% { opacity: 1; }
+  92%, 100% { opacity: 0; }
 }
 
 body {
