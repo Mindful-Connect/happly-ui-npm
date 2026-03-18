@@ -40,6 +40,7 @@ const nextConfig = {
       '@/lib/currency-input-utils': path.resolve(registryLib, 'currency-input-utils'),
       '@/lib/memoji': path.resolve(registryLib, 'memoji'),
       '@/lib/form-field-context': path.resolve(registryLib, 'form-field-context'),
+      '@/lib/use-form-field-binding': path.resolve(registryLib, 'use-form-field-binding'),
       // Point @/hooks to registry hooks source
       '@/hooks': registryHooks,
       // Fix for headlessui 1.7.19 import error: transition/transition.js -> transitions/transition.js

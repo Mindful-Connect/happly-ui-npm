@@ -5,6 +5,7 @@ import OtpInput, { type OTPInputProps } from 'react-otp-input';
 
 import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
+import { useFormFieldBinding } from '@/lib/use-form-field-binding';
 
 type OtpOptions = Omit<OTPInputProps, 'renderInput'>;
 
@@ -18,14 +19,24 @@ function DigitInput({
   className,
   disabled,
   hasError,
+  value: valueProp,
+  onChange: onChangeProp,
   ...rest
 }: DigitInputProps) {
   const formField = useFormField();
   const resolvedHasError = hasError ?? formField.hasError;
   const resolvedDisabled = disabled ?? formField.disabled;
+  const binding = useFormFieldBinding<string>();
+
+  // Priority: explicit props > RHF binding > undefined
+  const resolvedValue =
+    valueProp !== undefined ? valueProp : (binding?.value ?? '');
+  const resolvedOnChange = onChangeProp ?? binding?.onChange;
 
   return (
     <OtpInput
+      value={resolvedValue}
+      onChange={resolvedOnChange}
       containerStyle={cn('flex w-full items-center gap-2.5', className)}
       skipDefaultStyles
       renderInput={(inputProps) => (

@@ -10,6 +10,7 @@ import * as Input from './input';
 import * as Popover from './popover';
 import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
+import { useFormFieldBinding } from '@/lib/use-form-field-binding';
 
 // ─── Types ─────────────────────────────────────────────────
 
@@ -112,8 +113,8 @@ type LocationInputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   'value' | 'size'
 > & {
-  /** Current location value */
-  location: LocationRequest;
+  /** Current location value (optional — auto-binds to RHF when inside FormField.Root) */
+  location?: LocationRequest;
   /** Callback when a location is selected or cleared */
   onLocationChange?: (location: LocationRequest) => void;
   /** Leading icon component */
@@ -132,8 +133,8 @@ const LocationInputRoot = React.forwardRef<
 >(
   (
     {
-      location,
-      onLocationChange,
+      location: locationProp,
+      onLocationChange: onLocationChangeProp,
       placeholder = 'Search address...',
       icon: Icon = RiMapPinLine,
       size,
@@ -148,6 +149,25 @@ const LocationInputRoot = React.forwardRef<
     const formField = useFormField();
     const resolvedHasError = hasError ?? formField.hasError;
     const resolvedDisabled = disabled ?? formField.disabled;
+
+    // Auto-bind: stores formatted_address string, wraps/unwraps LocationRequest
+    const binding = useFormFieldBinding<string>();
+
+    // Priority: explicit props > RHF binding > null
+    const location =
+      locationProp !== undefined
+        ? locationProp
+        : binding?.value
+          ? ({ formatted_address: binding.value } as LocationRequest)
+          : null;
+
+    const onLocationChange =
+      onLocationChangeProp ??
+      (binding
+        ? (loc: LocationRequest) =>
+            binding.onChange(loc?.formatted_address ?? '')
+        : undefined);
+
     const [open, setOpen] = React.useState(false);
     const [search, setSearch] = React.useState(
       location?.formatted_address ?? ''

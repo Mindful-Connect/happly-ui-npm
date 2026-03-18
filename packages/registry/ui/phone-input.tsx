@@ -9,6 +9,7 @@ import {
 } from 'react-international-phone';
 
 import { useFormField } from '@/lib/form-field-context';
+import { useFormFieldBinding } from '@/lib/use-form-field-binding';
 
 import * as Input from './input';
 import * as Select from './select';
@@ -43,6 +44,8 @@ type PhoneInputProps = Omit<
   preferredCountries?: CountryIso2[];
   size?: 'medium' | 'small' | 'xsmall';
   hasError?: boolean;
+  /** RHF field name for the country code (enables auto-binding for country) */
+  countryName?: string;
 };
 
 const formatNorthAmericanNationalNumber = (digits: string): string => {
@@ -71,8 +74,8 @@ const formatNationalDigits = (
 const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
   (
     {
-      value,
-      onValueChange,
+      value: valueProp,
+      onValueChange: onValueChangeProp,
       country: controlledCountry,
       defaultCountry = 'ca',
       onCountryChange,
@@ -81,6 +84,7 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
       hasError,
       placeholder = '(555) 000-0000',
       disabled,
+      countryName,
       ...rest
     },
     forwardedRef
@@ -88,6 +92,25 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
     const formField = useFormField();
     const resolvedHasError = hasError ?? formField.hasError;
     const resolvedDisabled = disabled ?? formField.disabled;
+
+    // Phone value binding (e164 string)
+    const phoneBinding = useFormFieldBinding<string>();
+
+    // Country binding: auto-bind to countryName if provided
+    const countryBinding = useFormFieldBinding<CountryIso2>(
+      countryName
+        ? {
+            name: countryName,
+            defaultValue: defaultCountry,
+            setValueOptions: { shouldValidate: false, shouldDirty: true },
+          }
+        : undefined
+    );
+
+    // Priority: explicit props > RHF binding > undefined
+    const value = valueProp !== undefined ? valueProp : phoneBinding?.value;
+    const onValueChange = onValueChangeProp ?? phoneBinding?.onChange;
+
     const [uncontrolledCountry, setUncontrolledCountry] =
       React.useState<CountryIso2>(defaultCountry);
     const [displayValue, setDisplayValue] = React.useState('');
@@ -96,7 +119,7 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
     const isCountryControlled = controlledCountry !== undefined;
     const activeCountryIso2 = isCountryControlled
       ? controlledCountry
-      : uncontrolledCountry;
+      : (countryBinding?.value ?? uncontrolledCountry);
     const activeCountry = findCountry(activeCountryIso2);
 
     // Sync display from external value prop
@@ -122,8 +145,13 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
     const handleCountryChange = React.useCallback(
       (iso2: string) => {
         const newIso2 = iso2 as CountryIso2;
-        if (!isCountryControlled) setUncontrolledCountry(newIso2);
-        onCountryChange?.(newIso2);
+        if (onCountryChange) {
+          onCountryChange(newIso2);
+        } else if (countryBinding) {
+          countryBinding.onChange(newIso2);
+        }
+        if (!isCountryControlled && !countryBinding)
+          setUncontrolledCountry(newIso2);
 
         const digits = displayValue.replace(/\D/g, '');
         const countryData = findCountry(newIso2);
@@ -137,7 +165,13 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
           onValueChange?.(e164);
         }
       },
-      [displayValue, isCountryControlled, onCountryChange, onValueChange]
+      [
+        displayValue,
+        isCountryControlled,
+        onCountryChange,
+        countryBinding,
+        onValueChange,
+      ]
     );
 
     const handleInputChange = React.useCallback(

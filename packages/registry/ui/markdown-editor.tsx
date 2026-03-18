@@ -21,6 +21,7 @@ import * as Textarea from '@/components/ui/textarea';
 import * as Tooltip from '@/components/ui/tooltip';
 import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
+import { useFormFieldBinding } from '@/lib/use-form-field-binding';
 
 // ---------------------------------------------------------------------------
 // Markdown formatting helpers
@@ -228,7 +229,7 @@ function MarkdownEditorRoot({
     <MarkdownEditorContext.Provider value={contextValue}>
       <div
         className={cn(
-          '@container/mde bg-bg-weak-50 flex w-full flex-col gap-2 rounded-2xl p-2',
+          'bg-bg-weak-50 @container/mde flex w-full flex-col gap-2 rounded-2xl p-2',
           disabled && 'pointer-events-none opacity-50',
           className
         )}
@@ -488,6 +489,8 @@ type ComposedBaseProps = Omit<
   contentClassName?: string;
   /** Height of the editor content area */
   height?: string;
+  /** Override the FormFieldContext name for RHF binding (useful for multi-lang parent paths) */
+  name?: string;
 };
 
 type ComposedSingleProps = ComposedBaseProps & {
@@ -531,6 +534,7 @@ function Composed(props: ComposedProps) {
     contentClassName,
     height,
     id,
+    name,
     ...rest
   } = props;
 
@@ -544,6 +548,7 @@ function Composed(props: ComposedProps) {
       contentClassName={contentClassName}
       height={height}
       id={id}
+      name={name}
       value={(rest as ComposedSingleProps).value}
       defaultValue={(rest as ComposedSingleProps).defaultValue}
       onChange={(rest as ComposedSingleProps).onChange}
@@ -559,6 +564,7 @@ function Composed(props: ComposedProps) {
       contentClassName={contentClassName}
       height={height}
       id={id}
+      name={name}
       toggleItems={(rest as ComposedMultiProps).toggleItems}
       value={(rest as ComposedMultiProps).value}
       defaultValue={(rest as ComposedMultiProps).defaultValue}
@@ -591,6 +597,7 @@ function filterTextareaProps(
     contentClassName: _coc,
     height: _h,
     id: _id,
+    name: _n,
     ...textarea
   } = props;
   return textarea;
@@ -605,20 +612,33 @@ function ComposedSingle({
   disabled,
   value: controlledValue,
   defaultValue = '',
-  onChange,
+  onChange: onChangeProp,
   containerClassName,
   contentClassName,
   height,
   id,
+  name: nameProp,
   toggleItems: _,
   ...textareaProps
-}: ComposedSingleProps & { toggleItems: false }) {
+}: ComposedSingleProps & { toggleItems: false; name?: string }) {
+  const binding = useFormFieldBinding<string>(
+    nameProp ? { name: nameProp } : undefined
+  );
+
+  // Priority: explicit props > RHF binding > internal state
+  const hasExplicitValue = controlledValue !== undefined;
+  const onChange = onChangeProp ?? binding?.onChange;
+
   const [previewing, setPreviewing] = React.useState(false);
   const [internalValue, setInternalValue] = React.useState(
     controlledValue ?? defaultValue
   );
-  const isControlled = controlledValue !== undefined;
-  const value = isControlled ? controlledValue : internalValue;
+  const isControlled = hasExplicitValue || (!!binding && !onChangeProp);
+  const value = hasExplicitValue
+    ? controlledValue
+    : binding && !onChangeProp
+      ? (binding.value ?? '')
+      : internalValue;
 
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
@@ -698,7 +718,7 @@ function ComposedMulti({
   toggleItems,
   value: controlledValues,
   defaultValue: defaultValues,
-  onChange,
+  onChange: onChangeProp,
   toggleValue: controlledLang,
   defaultToggleValue = 'en',
   onToggleChange,
@@ -706,8 +726,17 @@ function ComposedMulti({
   contentClassName,
   height,
   id,
+  name: nameProp,
   ...textareaProps
-}: ComposedMultiProps) {
+}: ComposedMultiProps & { name?: string }) {
+  const binding = useFormFieldBinding<LocalizedValue>(
+    nameProp ? { name: nameProp } : undefined
+  );
+
+  // Priority: explicit props > RHF binding > internal state
+  const hasExplicitValue = controlledValues !== undefined;
+  const onChange = onChangeProp ?? binding?.onChange;
+
   const items = toggleItems || DEFAULT_TOGGLE_ITEMS;
 
   // Build initial values object from toggle items
@@ -726,10 +755,12 @@ function ComposedMulti({
   );
   const [internalLang, setInternalLang] = React.useState(defaultToggleValue);
 
-  const isControlled = controlledValues !== undefined;
-  const values = isControlled
+  const isControlled = hasExplicitValue || (!!binding && !onChangeProp);
+  const values = hasExplicitValue
     ? { ...buildEmpty(), ...controlledValues }
-    : internalValues;
+    : binding && !onChangeProp
+      ? { ...buildEmpty(), ...(binding.value ?? {}) }
+      : internalValues;
   const activeLang = controlledLang ?? internalLang;
   const activeValue = values[activeLang] ?? '';
 
@@ -766,14 +797,11 @@ function ComposedMulti({
     [updateValue]
   );
 
-  const handleLangChange = React.useCallback(
-    (lang: string) => {
-      const { controlledLang, onToggleChange } = latestRef.current;
-      if (!controlledLang) setInternalLang(lang);
-      onToggleChange?.(lang);
-    },
-    []
-  );
+  const handleLangChange = React.useCallback((lang: string) => {
+    const { controlledLang, onToggleChange } = latestRef.current;
+    if (!controlledLang) setInternalLang(lang);
+    onToggleChange?.(lang);
+  }, []);
 
   const format = useMarkdownFormatting(textareaRef, updateValue);
 

@@ -30,6 +30,7 @@
       "@/lib/currency-input-utils": ["../packages/registry/lib/currency-input-utils"],
       "@/lib/memoji": ["../packages/registry/lib/memoji"],
       "@/lib/form-field-context": ["../packages/registry/lib/form-field-context"],
+      "@/lib/use-form-field-binding": ["../packages/registry/lib/use-form-field-binding"],
       "@/hooks/*": ["../packages/registry/hooks/*"],
       "@/*": ["./src/*"]
     }

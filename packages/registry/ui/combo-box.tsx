@@ -10,6 +10,7 @@ import * as Popover from '@/components/ui/popover';
 import * as Tag from '@/components/ui/tag';
 import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
+import { useFormFieldBinding } from '@/lib/use-form-field-binding';
 
 // ─── Types ─────────────────────────────────────────────────
 
@@ -127,18 +128,30 @@ function ComboBoxRoot({
   const formField = useFormField();
   const hasError = hasErrorProp || formField.hasError;
   const disabled = disabledProp || formField.disabled;
+  const binding = useFormFieldBinding<string[]>({ defaultValue: [] });
+
+  // Priority: explicit props > RHF binding > internal state
+  const hasExplicitValue = valueProp !== undefined;
+  const hasExplicitOnChange = onValueChange !== undefined;
+
   // Controlled / uncontrolled value
   const [internalValue, setInternalValue] = React.useState(defaultValue);
-  const value = valueProp ?? internalValue;
+  const value = hasExplicitValue
+    ? valueProp
+    : (binding?.value ?? internalValue);
   const setValue = React.useCallback(
     (next: string[]) => {
-      if (valueProp === undefined) setInternalValue(next);
-      const selectedOptions = next
-        .map((v) => options.find((o) => o.value === v))
-        .filter(Boolean) as ComboBoxOption[];
-      onValueChange?.(next, selectedOptions);
+      if (!hasExplicitValue && !binding) setInternalValue(next);
+      if (hasExplicitOnChange) {
+        const selectedOptions = next
+          .map((v) => options.find((o) => o.value === v))
+          .filter(Boolean) as ComboBoxOption[];
+        onValueChange?.(next, selectedOptions);
+      } else {
+        binding?.onChange(next);
+      }
     },
-    [valueProp, onValueChange, options]
+    [hasExplicitValue, hasExplicitOnChange, binding, onValueChange, options]
   );
 
   const [open, setOpen] = React.useState(preview);
@@ -280,8 +293,9 @@ function ComboBoxRoot({
             </Popover.Root>
           )}
 
-          {/* Hidden inputs for form submission */}
+          {/* Hidden inputs for native form submission (skip when RHF-bound) */}
           {name &&
+            !binding &&
             value.map((v) => (
               <input key={v} type='hidden' name={name} value={v} />
             ))}
