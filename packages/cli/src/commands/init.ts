@@ -14,26 +14,105 @@ import { installDependencies } from '../utils/install.js';
 import { updateTailwindConfig } from '../utils/transformers/tailwind.js';
 import { isNonInteractive, getAgentName } from '../utils/env.js';
 import type { HapplyConfig, InitOptions } from '../types/index.js';
-import { CONFIG_FILE } from '../types/index.js';
+import { CONFIG_FILE, REGISTRY_URL } from '../types/index.js';
 import { fetchThemeCSS } from '../utils/theme.js';
+import { fetchOrReadRaw, isLocalRegistry } from '../utils/registry.js';
 
 const HAPPLY_THEME_FILE = 'happly-theme.css';
 
-const UTILS_TEMPLATE = `import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+// Fallback templates used only when registry fetch fails
+const UTILS_FALLBACK = `import clsx, { type ClassValue } from 'clsx';
+import { extendTailwindMerge } from 'tailwind-merge';
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+export { type ClassValue } from 'clsx';
+
+const typographyConfig = {
+  title: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+  label: ['xl', 'lg', 'md', 'sm', 'xs', '2xs'],
+  paragraph: ['xl', 'lg', 'md', 'sm', 'xs'],
+  subheading: ['md', 'sm', 'xs', '2xs'],
+  doc: ['label', 'paragraph'],
+};
+
+const typographyPatterns = Object.entries(typographyConfig).flatMap(
+  ([category, sizes]) => sizes.map((size) => \`\${category}-\${size}\`)
+);
+
+export const twMergeConfig = {
+  extend: {
+    classGroups: {
+      'font-size': [
+        {
+          text: typographyPatterns,
+        },
+      ],
+    },
+  },
+};
+
+const customTwMerge = extendTailwindMerge(twMergeConfig);
+
+export function cn(...classes: ClassValue[]) {
+  return customTwMerge(clsx(...classes));
 }
+
+export type ObjectValues<T> = T[keyof T];
 `;
 
-const UTILS_JS_TEMPLATE = `import { clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+/**
+ * Fetch happly-ui-utils.ts from the registry, falling back to bundled template.
+ */
+async function fetchUtilsSource(registryUrl?: string): Promise<string> {
+  const baseUrl = registryUrl || REGISTRY_URL;
+  const filePath = 'lib/happly-ui-utils.ts';
 
-export function cn(...inputs) {
-  return twMerge(clsx(inputs));
+  const url = isLocalRegistry(baseUrl)
+    ? path.join(baseUrl.replace('file://', ''), filePath)
+    : `${baseUrl}/${filePath}`;
+
+  try {
+    return await fetchOrReadRaw(url);
+  } catch {
+    logger.warn(
+      'Could not fetch latest utils from registry, using bundled fallback.'
+    );
+    return UTILS_FALLBACK;
+  }
 }
-`;
+
+/**
+ * Strip TypeScript types for JavaScript projects (simplified transform).
+ */
+function stripTypes(content: string): string {
+  // Remove type-only imports
+  content = content.replace(
+    /import\s+type\s*\{[^}]*\}\s*from\s*['"][^'"]+['"];?\n?/g,
+    ''
+  );
+  // Remove type-only re-exports
+  content = content.replace(
+    /export\s+\{\s*type\s+\w+\s*\}\s*from\s*['"][^'"]+['"];?\n?/g,
+    ''
+  );
+  // Remove ", { type ClassValue }" from mixed imports
+  content = content.replace(/,\s*\{\s*type\s+\w+\s*\}/g, '');
+  // Remove type annotations from function parameters
+  content = content.replace(/:\s*\w+(\[\])?\s*(?=[,)])/g, '');
+  // Remove return type annotations
+  content = content.replace(/\):\s*\w+(\[\])?\s*(?=\s*[{=])/g, ')');
+  // Remove generic type parameters
+  content = content.replace(/<[A-Z]\w*(\s*extends\s*[^>]+)?>/g, '');
+  // Remove interface/type declarations and exports
+  content = content.replace(
+    /^(export\s+)?(interface|type)\s+\w+\s*[^{]*\{[^}]*\};?\n?/gm,
+    ''
+  );
+  // Remove 'as' type assertions
+  content = content.replace(/\s+as\s+\w+(\[\])?/g, '');
+  // Clean up multiple blank lines
+  content = content.replace(/\n{3,}/g, '\n\n');
+  return content;
+}
 
 export async function init(options: InitOptions): Promise<void> {
   const cwd = options.cwd || process.cwd();
@@ -130,11 +209,15 @@ export async function init(options: InitOptions): Promise<void> {
     await writeConfig(cwd, config);
     writeSpinner.text = `Created ${CONFIG_FILE}`;
 
-    // Write utils file
+    // Fetch and write utils file from registry
+    writeSpinner.text = 'Fetching latest utils...';
+    let utilsContent = await fetchUtilsSource(config.registry);
     const srcPrefix = config.srcDir ? 'src/' : '';
     const utilsPath = srcPrefix + config.aliases.utils.replace('@/', '');
-    const utilsContent = config.tsx ? UTILS_TEMPLATE : UTILS_JS_TEMPLATE;
     const utilsExt = config.tsx ? '.ts' : '.js';
+    if (!config.tsx) {
+      utilsContent = stripTypes(utilsContent);
+    }
     await writeComponentFile(cwd, `${utilsPath}${utilsExt}`, utilsContent);
     writeSpinner.text = `Created ${utilsPath}${utilsExt}`;
 

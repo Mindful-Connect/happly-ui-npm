@@ -1,5 +1,19 @@
 import { ReactNode, ElementType, RefObject } from 'react';
-import { ObjectValues, ApiFetch } from '@/lib/happly-ui-utils';
+import { ObjectValues } from '@/lib/happly-ui-utils';
+
+type ParamsOfFetch = Parameters<typeof fetch>;
+
+export type ApiFetch = (
+  input: ParamsOfFetch[0],
+  init?: ParamsOfFetch[1] &
+    (
+      | {
+          unauthenticated?: boolean;
+          noWorkspaceKey?: boolean;
+        }
+      | undefined
+    )
+) => ReturnType<typeof fetch>;
 import { AlertModel } from '@/lib/alert-utils';
 import { fileTypes, S3_ASSET_TYPE, ACL_TYPE } from './constants';
 
