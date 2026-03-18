@@ -149,12 +149,14 @@ export async function init(options: InitOptions): Promise<void> {
     );
 
     if (existsSync(themePath) && !useDefaults) {
+      writeSpinner.stop();
       const { overwriteTheme } = await prompts({
         type: 'confirm',
         name: 'overwriteTheme',
         message: `${HAPPLY_THEME_FILE} already exists. Overwrite?`,
         initial: true,
       });
+      writeSpinner.start();
 
       if (overwriteTheme) {
         await writeFile(themePath, themeContent, 'utf-8');
