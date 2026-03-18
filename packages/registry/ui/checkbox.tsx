@@ -3,7 +3,9 @@
 import * as React from 'react';
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 
+import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
+import { useFormFieldBinding } from '@/lib/use-form-field-binding';
 
 function IconCheck({ ...rest }: React.SVGProps<SVGSVGElement>) {
   return (
@@ -69,142 +71,164 @@ const CheckboxRoot = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> & {
     variant?: 'primary' | 'neutral';
   }
->(({ className, checked, variant = 'primary', ...rest }, forwardedRef) => {
-  const filterId = React.useId();
+>(
+  (
+    {
+      className,
+      checked: checkedProp,
+      onCheckedChange: onCheckedChangeProp,
+      variant = 'primary',
+      disabled: disabledProp,
+      ...rest
+    },
+    forwardedRef
+  ) => {
+    const formField = useFormField();
+    const binding = useFormFieldBinding<boolean>();
+    const disabled = disabledProp ?? formField.disabled;
 
-  // precalculated by .getTotalLength()
-  const TOTAL_LENGTH_CHECK = 11.313708305358887;
-  const TOTAL_LENGTH_INDETERMINATE = 8;
+    // Priority: explicit props > RHF binding > undefined (Radix uncontrolled)
+    const checked = checkedProp !== undefined ? checkedProp : binding?.value;
+    const onCheckedChange = onCheckedChangeProp ?? binding?.onChange;
 
-  const fills = FILL_CLASSES[variant];
+    const filterId = React.useId();
 
-  return (
-    <CheckboxPrimitive.Root
-      ref={forwardedRef}
-      checked={checked}
-      className={cn(
-        'group/checkbox relative flex h-5 w-5 shrink-0 items-center justify-center outline-none',
-        'focus:outline-none',
-        className
-      )}
-      {...rest}
-    >
-      <svg
-        width='20'
-        height='20'
-        viewBox='0 0 20 20'
-        fill='none'
-        xmlns='http://www.w3.org/2000/svg'
+    // precalculated by .getTotalLength()
+    const TOTAL_LENGTH_CHECK = 11.313708305358887;
+    const TOTAL_LENGTH_INDETERMINATE = 8;
+
+    const fills = FILL_CLASSES[variant];
+
+    return (
+      <CheckboxPrimitive.Root
+        ref={forwardedRef}
+        checked={checked}
+        onCheckedChange={onCheckedChange}
+        disabled={disabled}
+        className={cn(
+          'group/checkbox relative flex h-5 w-5 shrink-0 items-center justify-center outline-none',
+          'focus:outline-none',
+          className
+        )}
+        {...rest}
       >
-        <rect
-          x='2'
-          y='2'
-          width='16'
-          height='16'
-          rx='4'
-          className={cn(
-            'fill-bg-soft-200 transition duration-200 ease-out',
-            // hover
-            'group-hover/checkbox:fill-bg-sub-300',
-            // disabled
-            'group-disabled/checkbox:fill-bg-soft-200',
-            // disabled checked
-            'group-disabled/checkbox:group-data-[state=checked]/checkbox:fill-bg-soft-200',
-            'group-disabled/checkbox:group-data-[state=indeterminate]/checkbox:fill-bg-soft-200',
-            // variant-specific
-            fills.outer
-          )}
-        />
-        <g filter={`url(#${filterId})`}>
+        <svg
+          width='20'
+          height='20'
+          viewBox='0 0 20 20'
+          fill='none'
+          xmlns='http://www.w3.org/2000/svg'
+        >
           <rect
-            x='3.5'
-            y='3.5'
-            width='13'
-            height='13'
-            rx='2.6'
+            x='2'
+            y='2'
+            width='16'
+            height='16'
+            rx='4'
             className={cn(
-              'fill-bg-white-0 transition duration-200 ease-out',
+              'fill-bg-soft-200 transition duration-200 ease-out',
+              // hover
+              'group-hover/checkbox:fill-bg-sub-300',
               // disabled
-              'group-disabled/checkbox:hidden',
-              // checked
-              'group-data-[state=checked]/checkbox:opacity-0',
-              'group-data-[state=indeterminate]/checkbox:opacity-0'
+              'group-disabled/checkbox:fill-bg-soft-200',
+              // disabled checked
+              'group-disabled/checkbox:group-data-[state=checked]/checkbox:fill-bg-soft-200',
+              'group-disabled/checkbox:group-data-[state=indeterminate]/checkbox:fill-bg-soft-200',
+              // variant-specific
+              fills.outer
             )}
           />
-        </g>
-        <defs>
-          <filter
-            id={filterId}
-            x='1.5'
-            y='3.5'
-            width='17'
-            height='17'
-            filterUnits='userSpaceOnUse'
-            colorInterpolationFilters='sRGB'
-          >
-            <feFlood floodOpacity='0' result='BackgroundImageFix' />
-            <feColorMatrix
-              in='SourceAlpha'
-              type='matrix'
-              values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
-              result='hardAlpha'
+          <g filter={`url(#${filterId})`}>
+            <rect
+              x='3.5'
+              y='3.5'
+              width='13'
+              height='13'
+              rx='2.6'
+              className={cn(
+                'fill-bg-white-0 transition duration-200 ease-out',
+                // disabled
+                'group-disabled/checkbox:hidden',
+                // checked
+                'group-data-[state=checked]/checkbox:opacity-0',
+                'group-data-[state=indeterminate]/checkbox:opacity-0'
+              )}
             />
-            <feOffset dy='2' />
-            <feGaussianBlur stdDeviation='1' />
-            <feColorMatrix
-              type='matrix'
-              values='0 0 0 0 0.105882 0 0 0 0 0.109804 0 0 0 0 0.113725 0 0 0 0.12 0'
-            />
-            <feBlend
-              mode='normal'
-              in2='BackgroundImageFix'
-              result='effect1_dropShadow'
-            />
-            <feBlend
-              mode='normal'
-              in='SourceGraphic'
-              in2='effect1_dropShadow'
-              result='shape'
-            />
-          </filter>
-        </defs>
-      </svg>
-      <CheckboxPrimitive.Indicator
-        forceMount
-        className='[&_path]:transition-all [&_path]:duration-300 [&_path]:ease-out [&_svg]:opacity-0'
-      >
-        <IconCheck
-          className={cn(
-            'absolute top-1/2 left-1/2 shrink-0 -translate-x-1/2 -translate-y-1/2',
-            // checked
-            'group-data-[state=checked]/checkbox:opacity-100',
-            'group-data-[state=checked]/checkbox:[&>path]:[stroke-dashoffset:0]',
-            // path
-            '[&>path]:[stroke-dasharray:var(--total-length)] [&>path]:[stroke-dashoffset:var(--total-length)]',
-            'group-data-[state=indeterminate]/checkbox:invisible'
-          )}
-          style={{
-            ['--total-length' as any]: TOTAL_LENGTH_CHECK,
-          }}
-        />
-        <IconIndeterminate
-          className={cn(
-            'absolute top-1/2 left-1/2 shrink-0 -translate-x-1/2 -translate-y-1/2',
-            // indeterminate
-            'group-data-[state=indeterminate]/checkbox:opacity-100',
-            'group-data-[state=indeterminate]/checkbox:[&>path]:[stroke-dashoffset:0]',
-            // path
-            '[&>path]:[stroke-dasharray:var(--total-length)] [&>path]:[stroke-dashoffset:var(--total-length)]',
-            'invisible group-data-[state=indeterminate]/checkbox:visible'
-          )}
-          style={{
-            ['--total-length' as any]: TOTAL_LENGTH_INDETERMINATE,
-          }}
-        />
-      </CheckboxPrimitive.Indicator>
-    </CheckboxPrimitive.Root>
-  );
-});
+          </g>
+          <defs>
+            <filter
+              id={filterId}
+              x='1.5'
+              y='3.5'
+              width='17'
+              height='17'
+              filterUnits='userSpaceOnUse'
+              colorInterpolationFilters='sRGB'
+            >
+              <feFlood floodOpacity='0' result='BackgroundImageFix' />
+              <feColorMatrix
+                in='SourceAlpha'
+                type='matrix'
+                values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
+                result='hardAlpha'
+              />
+              <feOffset dy='2' />
+              <feGaussianBlur stdDeviation='1' />
+              <feColorMatrix
+                type='matrix'
+                values='0 0 0 0 0.105882 0 0 0 0 0.109804 0 0 0 0 0.113725 0 0 0 0.12 0'
+              />
+              <feBlend
+                mode='normal'
+                in2='BackgroundImageFix'
+                result='effect1_dropShadow'
+              />
+              <feBlend
+                mode='normal'
+                in='SourceGraphic'
+                in2='effect1_dropShadow'
+                result='shape'
+              />
+            </filter>
+          </defs>
+        </svg>
+        <CheckboxPrimitive.Indicator
+          forceMount
+          className='[&_path]:transition-all [&_path]:duration-300 [&_path]:ease-out [&_svg]:opacity-0'
+        >
+          <IconCheck
+            className={cn(
+              'absolute top-1/2 left-1/2 shrink-0 -translate-x-1/2 -translate-y-1/2',
+              // checked
+              'group-data-[state=checked]/checkbox:opacity-100',
+              'group-data-[state=checked]/checkbox:[&>path]:[stroke-dashoffset:0]',
+              // path
+              '[&>path]:[stroke-dasharray:var(--total-length)] [&>path]:[stroke-dashoffset:var(--total-length)]',
+              'group-data-[state=indeterminate]/checkbox:invisible'
+            )}
+            style={{
+              ['--total-length' as any]: TOTAL_LENGTH_CHECK,
+            }}
+          />
+          <IconIndeterminate
+            className={cn(
+              'absolute top-1/2 left-1/2 shrink-0 -translate-x-1/2 -translate-y-1/2',
+              // indeterminate
+              'group-data-[state=indeterminate]/checkbox:opacity-100',
+              'group-data-[state=indeterminate]/checkbox:[&>path]:[stroke-dashoffset:0]',
+              // path
+              '[&>path]:[stroke-dasharray:var(--total-length)] [&>path]:[stroke-dashoffset:var(--total-length)]',
+              'invisible group-data-[state=indeterminate]/checkbox:visible'
+            )}
+            style={{
+              ['--total-length' as any]: TOTAL_LENGTH_INDETERMINATE,
+            }}
+          />
+        </CheckboxPrimitive.Indicator>
+      </CheckboxPrimitive.Root>
+    );
+  }
+);
 CheckboxRoot.displayName = 'CheckboxRoot';
 
 export { CheckboxRoot as Root };

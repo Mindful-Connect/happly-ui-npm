@@ -19,6 +19,7 @@ import * as Hint from '@/components/ui/hint';
 import * as Input from '@/components/ui/input';
 import * as Tag from '@/components/ui/tag';
 import { useFormField } from '@/lib/form-field-context';
+import { useFormFieldBinding } from '@/lib/use-form-field-binding';
 
 // ─── Types ───────────────────────────────────────────────────────────
 
@@ -41,17 +42,17 @@ export interface SocialsInputLabels {
 
 export interface SocialsInputProps {
   /** Field name for form integration */
-  name: string;
+  name?: string;
   /** Whether the input is read-only */
   readOnly?: boolean;
   /** External error state (e.g. from form validation) */
   hasError?: boolean;
   /** Social platforms to show. Defaults to 6 main socials. Pass null for all. */
   availableSocials?: SocialKey[] | null;
-  /** Current form values: social key → URL */
-  formValue: Partial<Record<SocialKey, string>>;
-  /** Setter for the form values */
-  setFormValue: (value: Partial<Record<SocialKey, string>>) => void;
+  /** Current form values: social key → URL (optional — auto-binds to RHF when inside FormField.Root) */
+  formValue?: Partial<Record<SocialKey, string>>;
+  /** Setter for the form values (optional — auto-binds to RHF when inside FormField.Root) */
+  setFormValue?: (value: Partial<Record<SocialKey, string>>) => void;
   /** Override labels for i18n */
   labels?: Partial<SocialsInputLabels>;
 }
@@ -262,17 +263,27 @@ function SocialPickerItems() {
 
 // ─── Component ───────────────────────────────────────────────────────
 
+type SocialsValue = Partial<Record<SocialKey, string>>;
+
 export default function SocialsInput({
-  name,
+  name: nameProp,
   readOnly = false,
   hasError: hasErrorProp,
   availableSocials,
-  formValue,
-  setFormValue,
+  formValue: formValueProp,
+  setFormValue: setFormValueProp,
   labels: labelsProp,
 }: SocialsInputProps) {
   const formField = useFormField();
+  const binding = useFormFieldBinding<SocialsValue>(
+    nameProp ? { name: nameProp } : undefined
+  );
   const labels = { ...DEFAULT_LABELS, ...labelsProp };
+
+  // Priority: explicit props > RHF binding > empty
+  const formValue: SocialsValue = formValueProp ?? binding?.value ?? {};
+  const setFormValue = setFormValueProp ?? binding?.onChange ?? (() => {});
+  const name = nameProp ?? formField.name ?? 'socials';
 
   const [editingKey, setEditingKey] = useState<SocialKey | null>(null);
   const [editValue, setEditValue] = useState('');

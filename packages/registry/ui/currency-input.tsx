@@ -2,10 +2,8 @@
 
 import * as React from 'react';
 
-import {
-  FormFieldContext,
-  useFormField,
-} from '@/lib/form-field-context';
+import { FormFieldContext, useFormField } from '@/lib/form-field-context';
+import { useFormFieldBinding } from '@/lib/use-form-field-binding';
 
 import * as Input from './input';
 import * as Select from './select';
@@ -57,6 +55,10 @@ type CurrencyInputProps = Omit<
   currencySymbol?: string;
   size?: 'medium' | 'small' | 'xsmall';
   hasError?: boolean;
+  /** RHF field name for the currency code (enables auto-binding for currency) */
+  currencyName?: string;
+  /** When true (default), auto-binding stores numbers and displays strings */
+  valueAsNumber?: boolean;
 };
 
 const CurrencyInputRoot = React.forwardRef<
@@ -65,8 +67,8 @@ const CurrencyInputRoot = React.forwardRef<
 >(
   (
     {
-      value,
-      onValueChange,
+      value: valueProp,
+      onValueChange: onValueChangeProp,
       currency: controlledCurrency,
       defaultCurrency = 'CAD',
       onCurrencyChange,
@@ -76,6 +78,8 @@ const CurrencyInputRoot = React.forwardRef<
       hasError,
       placeholder = '0.00',
       disabled,
+      currencyName,
+      valueAsNumber = true,
       ...rest
     },
     forwardedRef
@@ -83,25 +87,54 @@ const CurrencyInputRoot = React.forwardRef<
     const formField = useFormField();
     const resolvedHasError = hasError ?? formField.hasError;
     const resolvedDisabled = disabled ?? formField.disabled;
+
+    // Amount binding: number ↔ string conversion when valueAsNumber
+    const amountBinding = useFormFieldBinding<string>(
+      valueAsNumber
+        ? {
+            parse: (stored: unknown) => (stored != null ? String(stored) : ''),
+            format: (val: string) => (val ? Number(val) : undefined),
+          }
+        : undefined
+    );
+
+    // Currency binding: auto-bind to currencyName if provided
+    const currencyBinding = useFormFieldBinding<string>(
+      currencyName
+        ? {
+            name: currencyName,
+            defaultValue: defaultCurrency,
+            setValueOptions: { shouldValidate: false, shouldDirty: true },
+          }
+        : undefined
+    );
+
+    // Priority: explicit props > RHF binding > internal state
+    const value = valueProp !== undefined ? valueProp : amountBinding?.value;
+    const onValueChange = onValueChangeProp ?? amountBinding?.onChange;
+
     const [uncontrolledCurrency, setUncontrolledCurrency] =
       React.useState(defaultCurrency);
 
     const isCurrencyControlled = controlledCurrency !== undefined;
     const activeCurrency = isCurrencyControlled
       ? controlledCurrency
-      : uncontrolledCurrency;
+      : (currencyBinding?.value ?? uncontrolledCurrency);
 
     const activeOption = currencies.find((c) => c.code === activeCurrency);
     const symbol = currencySymbol ?? activeOption?.symbol ?? '';
 
     const handleCurrencyChange = React.useCallback(
       (code: string) => {
-        if (!isCurrencyControlled) {
+        if (onCurrencyChange) {
+          onCurrencyChange(code);
+        } else if (currencyBinding) {
+          currencyBinding.onChange(code);
+        } else {
           setUncontrolledCurrency(code);
         }
-        onCurrencyChange?.(code);
       },
-      [isCurrencyControlled, onCurrencyChange]
+      [onCurrencyChange, currencyBinding]
     );
 
     const handleInputChange = React.useCallback(

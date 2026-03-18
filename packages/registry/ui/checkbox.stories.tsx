@@ -104,7 +104,7 @@ function WithLabelExtendedRender() {
         <div className='flex items-center gap-2'>
           <Checkbox.Root id={`${uniqueId}-c1`} />
           <Label.Root
-            className='text-paragraph-sm flex-1 gap-1'
+            className='text-paragraph-sm inline-flex flex-1 items-center gap-1'
             htmlFor={`${uniqueId}-c1`}
           >
             Label
@@ -118,7 +118,7 @@ function WithLabelExtendedRender() {
         <div className='flex items-center gap-2'>
           <Checkbox.Root id={`${uniqueId}-c2`} defaultChecked />
           <Label.Root
-            className='text-paragraph-sm flex-1 gap-1'
+            className='text-paragraph-sm inline-flex flex-1 items-center gap-1'
             htmlFor={`${uniqueId}-c2`}
           >
             Label
@@ -185,7 +185,7 @@ function WithLabelExtendedRender() {
       <div className='flex flex-col gap-12'>
         <div className='flex items-center gap-2'>
           <Label.Root
-            className='text-paragraph-sm flex-1 gap-1'
+            className='text-paragraph-sm inline-flex flex-1 items-center gap-1'
             htmlFor={`${uniqueId}-c5`}
           >
             Label
@@ -199,7 +199,7 @@ function WithLabelExtendedRender() {
 
         <div className='flex items-center gap-2'>
           <Label.Root
-            className='text-paragraph-sm flex-1 gap-1'
+            className='text-paragraph-sm inline-flex flex-1 items-center gap-1'
             htmlFor={`${uniqueId}-c6`}
           >
             Label

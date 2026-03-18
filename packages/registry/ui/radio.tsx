@@ -3,7 +3,9 @@
 import * as React from 'react';
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 
+import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
+import { useFormFieldBinding } from '@/lib/use-form-field-binding';
 
 type RadioVariant = 'primary' | 'neutral';
 
@@ -32,11 +34,38 @@ const RadioGroup = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root> & {
     variant?: RadioVariant;
   }
->(({ variant = 'primary', ...rest }, forwardedRef) => (
-  <RadioContext.Provider value={variant}>
-    <RadioGroupPrimitive.Root ref={forwardedRef} {...rest} />
-  </RadioContext.Provider>
-));
+>(
+  (
+    {
+      variant = 'primary',
+      value: valueProp,
+      onValueChange: onValueChangeProp,
+      disabled: disabledProp,
+      ...rest
+    },
+    forwardedRef
+  ) => {
+    const formField = useFormField();
+    const binding = useFormFieldBinding<string>();
+    const disabled = disabledProp ?? formField.disabled;
+
+    // Priority: explicit props > RHF binding > undefined (Radix uncontrolled)
+    const value = valueProp !== undefined ? valueProp : binding?.value;
+    const onValueChange = onValueChangeProp ?? binding?.onChange;
+
+    return (
+      <RadioContext.Provider value={variant}>
+        <RadioGroupPrimitive.Root
+          ref={forwardedRef}
+          value={value}
+          onValueChange={onValueChange}
+          disabled={disabled}
+          {...rest}
+        />
+      </RadioContext.Provider>
+    );
+  }
+);
 RadioGroup.displayName = 'RadioGroup';
 
 const RadioGroupItem = React.forwardRef<

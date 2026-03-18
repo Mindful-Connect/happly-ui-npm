@@ -6,6 +6,7 @@ import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import * as Radio from './radio';
 import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
+import { useFormFieldBinding } from '@/lib/use-form-field-binding';
 import { tv, type VariantProps } from '@/lib/tv';
 
 const radioCardVariants = tv({
@@ -97,8 +98,8 @@ const RadioCardRoot = React.forwardRef<
       hasError,
       variant = 'neutral',
       allowDeselect,
-      onValueChange,
-      value,
+      onValueChange: onValueChangeProp,
+      value: valueProp,
       ...rest
     },
     forwardedRef
@@ -106,12 +107,17 @@ const RadioCardRoot = React.forwardRef<
     const formField = useFormField();
     const resolvedHasError = hasError ?? formField.hasError;
     const { root } = radioCardVariants({ hasError: resolvedHasError, variant });
+    const binding = useFormFieldBinding<string>();
+
+    // Priority: explicit props > RHF binding > undefined
+    const resolvedValue = valueProp !== undefined ? valueProp : binding?.value;
+    const resolvedOnValueChange = onValueChangeProp ?? binding?.onChange;
 
     const handleValueChange = React.useCallback(
       (newValue: string) => {
-        onValueChange?.(newValue);
+        resolvedOnValueChange?.(newValue);
       },
-      [onValueChange]
+      [resolvedOnValueChange]
     );
 
     return (
@@ -120,15 +126,15 @@ const RadioCardRoot = React.forwardRef<
           hasError: resolvedHasError,
           variant,
           allowDeselect,
-          onValueChange,
-          value,
+          onValueChange: resolvedOnValueChange,
+          value: resolvedValue,
         }}
       >
         <Radio.Group
           variant={variant === 'primary' ? 'primary' : 'neutral'}
           ref={forwardedRef}
           className={root({ class: className })}
-          value={value}
+          value={resolvedValue}
           onValueChange={handleValueChange}
           {...rest}
         >

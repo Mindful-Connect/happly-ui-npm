@@ -190,6 +190,12 @@
       "description": "Shared React context for FormField state (hasError, disabled, id, name). Used by input components to auto-read form field state."
     },
     {
+      "name": "use-form-field-binding",
+      "type": "registry:lib",
+      "title": "useFormFieldBinding",
+      "description": "Hook that auto-binds happly-ui components to React Hook Form via FormFieldContext. Eliminates manual watch/setValue wiring."
+    },
+    {
       "name": "happly-ui-utils",
       "type": "registry:lib",
       "title": "Happly UI Utils",

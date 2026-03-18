@@ -3,6 +3,7 @@
 import * as React from 'react';
 
 import { useFormField } from '@/lib/form-field-context';
+import { useFormFieldBinding } from '@/lib/use-form-field-binding';
 
 import * as Input from './input';
 import * as Tag from './tag';
@@ -43,21 +44,30 @@ const TagInputRoot = React.forwardRef<HTMLInputElement, TagInputProps>(
     const formField = useFormField();
     const resolvedHasError = hasError ?? formField.hasError;
     const resolvedDisabled = disabled ?? formField.disabled;
+    const binding = useFormFieldBinding<string[]>({ defaultValue: [] });
+
     const [uncontrolledTags, setUncontrolledTags] =
       React.useState<string[]>(defaultValue);
     const [inputValue, setInputValue] = React.useState('');
 
-    const isControlled = controlledValue !== undefined;
-    const tags = isControlled ? controlledValue : uncontrolledTags;
+    // Priority: explicit props > RHF binding > internal state
+    const hasExplicitValue = controlledValue !== undefined;
+    const tags = hasExplicitValue
+      ? controlledValue
+      : (binding?.value ?? uncontrolledTags);
 
     const setTags = React.useCallback(
       (newTags: string[]) => {
-        if (!isControlled) {
+        if (!hasExplicitValue && !binding) {
           setUncontrolledTags(newTags);
         }
-        onValueChange?.(newTags);
+        if (onValueChange) {
+          onValueChange(newTags);
+        } else {
+          binding?.onChange(newTags);
+        }
       },
-      [isControlled, onValueChange]
+      [hasExplicitValue, binding, onValueChange]
     );
 
     const addTag = React.useCallback(

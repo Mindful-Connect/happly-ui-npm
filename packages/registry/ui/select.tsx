@@ -8,6 +8,7 @@ import { RiArrowDownSLine, RiCheckLine } from '@remixicon/react';
 
 import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
+import { useFormFieldBinding } from '@/lib/use-form-field-binding';
 import type { PolymorphicComponentProps } from '@/lib/polymorphic';
 import { tv, type VariantProps } from '@/lib/tv';
 
@@ -236,10 +237,17 @@ const SelectRoot = ({
   size = 'medium',
   variant = 'default',
   hasError,
+  value: valueProp,
+  onValueChange: onValueChangeProp,
   ...rest
 }: React.ComponentProps<typeof SelectPrimitives.Root> & SelectContextType) => {
   const formField = useFormField();
   const resolvedHasError = hasError ?? formField.hasError;
+  const binding = useFormFieldBinding<string>();
+
+  // Priority: explicit props > RHF binding > undefined (Radix uncontrolled)
+  const resolvedValue = valueProp !== undefined ? valueProp : binding?.value;
+  const resolvedOnValueChange = onValueChangeProp ?? binding?.onChange;
 
   const { onOpenChange, ...rootRest } = rest;
   const handleOpenChange = React.useCallback(
@@ -254,7 +262,12 @@ const SelectRoot = ({
     <SelectContext.Provider
       value={{ size, variant, hasError: resolvedHasError }}
     >
-      <SelectPrimitives.Root onOpenChange={handleOpenChange} {...rootRest} />
+      <SelectPrimitives.Root
+        value={resolvedValue}
+        onValueChange={resolvedOnValueChange}
+        onOpenChange={handleOpenChange}
+        {...rootRest}
+      />
     </SelectContext.Provider>
   );
 };

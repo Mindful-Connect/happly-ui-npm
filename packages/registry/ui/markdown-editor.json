@@ -8,6 +8,7 @@
   "dependencies": ["@remixicon/react", "marked"],
   "registryDependencies": [
     "form-field-context",
+    "use-form-field-binding",
     "switch-toggle",
     "textarea",
     "tooltip",

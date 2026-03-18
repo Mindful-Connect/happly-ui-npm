@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useFormContext, type FieldError } from 'react-hook-form';
+import { type FieldError } from 'react-hook-form';
 
 import * as Hint from '@/components/ui/hint';
 import * as Label from '@/components/ui/label';
@@ -11,14 +11,7 @@ import {
   type FormFieldContextValue,
 } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
-
-function useFormContextSafe() {
-  try {
-    return useFormContext();
-  } catch {
-    return null;
-  }
-}
+import { useFormContextSafe } from '@/lib/use-form-field-binding';
 
 function getFieldError(
   errors: Record<string, any>,

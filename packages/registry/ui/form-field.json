@@ -12,6 +12,7 @@
   "registryDependencies": [
     "happly-ui-utils",
     "form-field-context",
+    "use-form-field-binding",
     "label",
     "hint"
   ],

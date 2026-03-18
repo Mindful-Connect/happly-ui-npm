@@ -6,7 +6,7 @@
   "description": "An animated checkbox component built on Radix UI with check and indeterminate states, primary and neutral variants. Uses namespace exports: Checkbox.Root.",
   "version": "1.0.0",
   "dependencies": ["@radix-ui/react-checkbox"],
-  "registryDependencies": ["happly-ui-utils"],
+  "registryDependencies": ["form-field-context", "use-form-field-binding", "happly-ui-utils"],
   "docs": {
     "lead": "An animated checkbox with check and indeterminate states, SVG stroke animation, and primary/neutral color variants.",
     "usage": "import * as Checkbox from \"@/components/ui/checkbox\"\n\n<Checkbox.Root />",
