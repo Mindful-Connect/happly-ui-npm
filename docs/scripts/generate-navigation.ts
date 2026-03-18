@@ -109,6 +109,7 @@ function main() {
 
   const FEEDBACK_COMPONENTS = [
     'alert',
+    'empty-state',
     'loader',
     'tooltip',
   ];

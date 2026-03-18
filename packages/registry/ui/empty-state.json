@@ -1,0 +1,142 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "empty-state",
+  "type": "registry:ui",
+  "title": "Empty State",
+  "description": "A centered placeholder for empty listing pages with an opinionated icon, text, and optional actions. Uses namespace exports: EmptyState.Root, EmptyState.Icon, EmptyState.Title, EmptyState.Description, EmptyState.Actions, EmptyState.Composed.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": ["tv", "key-icon"],
+  "docs": {
+    "lead": "A centered placeholder for empty listing pages. The Icon subcomponent renders a stroke KeyIcon with soft-400 text and a deep shadow. Supports an optional dashed border, three sizes, and a composed shorthand.",
+    "usage": "import * as EmptyState from \"@/components/ui/empty-state\"\n\n<EmptyState.Root bordered>\n  <EmptyState.Icon icon={<RiInboxLine />} />\n  <EmptyState.Description>\n    You don't have any items yet\n  </EmptyState.Description>\n</EmptyState.Root>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Bordered empty state with icon, description, and an action button.",
+        "code": "<EmptyState.Root bordered>\n  <EmptyState.Icon icon={<RiUploadCloud2Line />} />\n  <EmptyState.Description>\n    You don't have any folder or file uploaded yet\n  </EmptyState.Description>\n  <EmptyState.Actions>\n    <Button.Root size=\"xsmall\" variant=\"neutral\" mode=\"stroke\">\n      <Button.Icon as={RiAddLine} />\n      Add your first resource\n    </Button.Root>\n  </EmptyState.Actions>\n</EmptyState.Root>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "With Title",
+        "description": "Empty state with both a title and description.",
+        "code": "<EmptyState.Root bordered>\n  <EmptyState.Icon icon={<RiInboxLine />} />\n  <EmptyState.Title>No items yet</EmptyState.Title>\n  <EmptyState.Description>Get started by adding your first one.</EmptyState.Description>\n</EmptyState.Root>",
+        "stories": ["WithTitle"]
+      },
+      {
+        "title": "Search — No Results",
+        "description": "Empty state for search results with no action button.",
+        "code": "<EmptyState.Root bordered>\n  <EmptyState.Icon icon={<RiSearchLine />} />\n  <EmptyState.Title>No results found</EmptyState.Title>\n  <EmptyState.Description>Try different keywords or remove some filters.</EmptyState.Description>\n</EmptyState.Root>",
+        "stories": ["SearchNoResults"]
+      },
+      {
+        "title": "No Files",
+        "description": "File upload empty state with a single action.",
+        "stories": ["NoFiles"]
+      },
+      {
+        "title": "Multiple Actions",
+        "description": "Secondary stroke button paired with a primary filled button.",
+        "stories": ["WithMultipleActions"]
+      },
+      {
+        "title": "Unbounded",
+        "description": "Without dashed border — useful inside existing cards or tables.",
+        "stories": ["Unbounded"]
+      },
+      {
+        "title": "Sizes",
+        "description": "Three sizes: sm, md (default), and lg. Icon size scales automatically.",
+        "code": "<EmptyState.Root size=\"lg\" bordered>\n  <EmptyState.Icon size=\"xl\" icon={<RiFileList3Line />} />\n  ...\n</EmptyState.Root>",
+        "stories": ["Sizes"]
+      },
+      {
+        "title": "Composed",
+        "description": "Shorthand version — icon size auto-maps from the root size.",
+        "code": "<EmptyState.Composed\n  bordered\n  icon={<RiUploadCloud2Line />}\n  description=\"You don't have any items yet\"\n  actions={<Button.Root size=\"xsmall\" variant=\"neutral\" mode=\"stroke\">Add item</Button.Root>}\n/>",
+        "stories": ["Composed"]
+      }
+    ],
+    "api": [
+      {
+        "name": "EmptyState.Root",
+        "description": "Centered flex container for the empty state content.",
+        "props": [
+          {
+            "name": "size",
+            "type": "'sm' | 'md' | 'lg'",
+            "default": "'md'",
+            "description": "Controls padding and text sizes"
+          },
+          {
+            "name": "bordered",
+            "type": "boolean",
+            "default": "false",
+            "description": "Adds a dashed border container"
+          }
+        ]
+      },
+      {
+        "name": "EmptyState.Icon",
+        "description": "Renders a stroke KeyIcon with text-text-soft-400 and shadow-regular-deep.",
+        "props": [
+          {
+            "name": "icon",
+            "type": "React.ReactNode",
+            "description": "The icon element to display"
+          },
+          {
+            "name": "size",
+            "type": "'sm' | 'md' | 'lg' | 'xl' | '2xl'",
+            "default": "'lg'",
+            "description": "KeyIcon size"
+          }
+        ]
+      },
+      {
+        "name": "EmptyState.Title",
+        "description": "Optional heading text in text-sub-600."
+      },
+      {
+        "name": "EmptyState.Description",
+        "description": "Subdued description text in text-soft-400, max-width constrained."
+      },
+      {
+        "name": "EmptyState.Actions",
+        "description": "Horizontal flex container for action buttons."
+      },
+      {
+        "name": "EmptyState.Composed",
+        "description": "Opinionated shorthand. Icon size auto-maps from root size (sm→md, md→lg, lg→xl). Accepts all Root props.",
+        "props": [
+          {
+            "name": "icon",
+            "type": "React.ReactNode",
+            "description": "Icon element rendered inside EmptyState.Icon"
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "description": "Heading text"
+          },
+          {
+            "name": "description",
+            "type": "string",
+            "description": "Description text"
+          },
+          {
+            "name": "actions",
+            "type": "React.ReactNode",
+            "description": "Action buttons"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/empty-state.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}
