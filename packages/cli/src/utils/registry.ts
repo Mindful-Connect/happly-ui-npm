@@ -18,7 +18,7 @@ function getRegistryUrl(config?: HapplyConfig): string {
 /**
  * Check if registry is a local path
  */
-function isLocalRegistry(registry: string): boolean {
+export function isLocalRegistry(registry: string): boolean {
   return (
     registry.startsWith('/') ||
     registry.startsWith('./') ||
@@ -61,7 +61,7 @@ export async function fetchRegistryIndex(
   return fetchOrRead(url) as Promise<RegistryIndex>;
 }
 
-async function fetchOrReadRaw(url: string): Promise<string> {
+export async function fetchOrReadRaw(url: string): Promise<string> {
   if (isLocalRegistry(url)) {
     const localPath = url.replace('file://', '');
     if (!existsSync(localPath)) {

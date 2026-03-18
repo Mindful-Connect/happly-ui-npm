@@ -15,10 +15,7 @@ import { updateTailwindConfig } from '../utils/transformers/tailwind.js';
 import { isNonInteractive, getAgentName } from '../utils/env.js';
 import type { HapplyConfig, InitOptions } from '../types/index.js';
 import { CONFIG_FILE } from '../types/index.js';
-import {
-  HAPPLY_THEME_V4,
-  HAPPLY_THEME_V3,
-} from '../utils/templates/happly-theme.js';
+import { fetchThemeCSS } from '../utils/theme.js';
 
 const HAPPLY_THEME_FILE = 'happly-theme.css';
 
@@ -141,12 +138,15 @@ export async function init(options: InitOptions): Promise<void> {
     await writeComponentFile(cwd, `${utilsPath}${utilsExt}`, utilsContent);
     writeSpinner.text = `Created ${utilsPath}${utilsExt}`;
 
-    // Write happly-theme.css
+    // Fetch and write happly-theme.css
     const cssPath = config.tailwind.css;
     const cssDir = path.dirname(path.join(cwd, cssPath));
     const themePath = path.join(cssDir, HAPPLY_THEME_FILE);
-    const themeContent =
-      projectInfo.tailwindVersion === 4 ? HAPPLY_THEME_V4 : HAPPLY_THEME_V3;
+    writeSpinner.text = 'Fetching latest design tokens...';
+    const themeContent = await fetchThemeCSS(
+      projectInfo.tailwindVersion,
+      config.registry
+    );
 
     if (existsSync(themePath) && !useDefaults) {
       const { overwriteTheme } = await prompts({
