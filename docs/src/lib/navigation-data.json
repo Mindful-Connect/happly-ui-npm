@@ -281,6 +281,10 @@
             "href": "/docs/components/alert"
           },
           {
+            "title": "Empty State",
+            "href": "/docs/components/empty-state"
+          },
+          {
             "title": "Loader",
             "href": "/docs/components/loader"
           },

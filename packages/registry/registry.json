@@ -154,6 +154,12 @@
       "description": "An animated modal dialog with memoji avatars, glassmorphism circle, speech bubbles, and decorative grid background. Uses namespace exports: EmojiDialog.Root, EmojiDialog.Content, EmojiDialog.EmojiArea, EmojiDialog.Bubble, EmojiDialog.Header, EmojiDialog.Title, EmojiDialog.Description, EmojiDialog.Footer."
     },
     {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "Empty State",
+      "description": "A centered placeholder for empty listing pages with an opinionated icon, text, and optional actions. Uses namespace exports: EmptyState.Root, EmptyState.Icon, EmptyState.Title, EmptyState.Description, EmptyState.Actions, EmptyState.Composed."
+    },
+    {
       "name": "fancy-button",
       "type": "registry:ui",
       "title": "Fancy Button",
