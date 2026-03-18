@@ -291,7 +291,7 @@ export const buttonVariants = tv({
           // base
           'bg-error-base text-static-white',
           // hover
-          'hover:bg-error-dark',
+          'hover:bg-error-darker',
           // focus
           'focus-visible:shadow-button-error-focus',
         ],
