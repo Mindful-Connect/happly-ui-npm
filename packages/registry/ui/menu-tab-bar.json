@@ -1,0 +1,138 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "menu-tab-bar",
+  "type": "registry:ui",
+  "title": "Menu Tab Bar",
+  "description": "An underline-style horizontal tab bar with icon support. Uses namespace exports: MenuTabBar.Root, MenuTabBar.Item, MenuTabBar.Icon, MenuTabBar.Composed.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": [
+    "tv",
+    "happly-ui-utils",
+    "polymorphic",
+    "recursive-clone-children"
+  ],
+  "docs": {
+    "lead": "An underline-style horizontal tab bar with optional leading icons and a smoothly animated underline indicator. Supports neutral and primary variants.",
+    "usage": "import * as MenuTabBar from \"@/components/ui/menu-tab-bar\"\n\n<MenuTabBar.Root>\n  <MenuTabBar.Item selected>\n    <MenuTabBar.Icon as={RiBriefcaseLine} />\n    <span>Overview</span>\n  </MenuTabBar.Item>\n  <MenuTabBar.Item>\n    <span>Details</span>\n  </MenuTabBar.Item>\n</MenuTabBar.Root>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Underline tab bar with icons matching the Figma design.",
+        "code": "<MenuTabBar.Root>\n  <MenuTabBar.Item selected>\n    <MenuTabBar.Icon as={RiBriefcaseLine} />\n    <span>Business overview</span>\n  </MenuTabBar.Item>\n  <MenuTabBar.Item>\n    <MenuTabBar.Icon as={RiBarChartBoxLine} />\n    <span>Financial overview</span>\n  </MenuTabBar.Item>\n</MenuTabBar.Root>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Primary",
+        "description": "Primary variant with brand-colored underline and selected text.",
+        "code": "<MenuTabBar.Root variant=\"primary\">\n  <MenuTabBar.Item selected>\n    <MenuTabBar.Icon as={RiBriefcaseLine} />\n    <span>Business overview</span>\n  </MenuTabBar.Item>\n</MenuTabBar.Root>",
+        "stories": ["Primary"]
+      },
+      {
+        "title": "Without Icons",
+        "description": "Text-only tabs without leading icons.",
+        "code": "<MenuTabBar.Root>\n  <MenuTabBar.Item selected>\n    <span>Overview</span>\n  </MenuTabBar.Item>\n  <MenuTabBar.Item>\n    <span>Details</span>\n  </MenuTabBar.Item>\n</MenuTabBar.Root>",
+        "stories": ["WithoutIcons"]
+      },
+      {
+        "title": "Composed",
+        "description": "Shorthand composed version with controlled value.",
+        "code": "<MenuTabBar.Composed\n  value={value}\n  onValueChange={setValue}\n  items={[\n    { label: 'Home', value: 'home', icon: RiHome5Line },\n    { label: 'Profile', value: 'profile', icon: RiUserLine },\n  ]}\n/>",
+        "stories": ["Composed"]
+      },
+      {
+        "title": "Scroll To Section",
+        "description": "Clicking a tab smooth-scrolls to the corresponding section by ID.",
+        "code": "<MenuTabBar.Item scrollTo=\"business\" selected>\n  <span>Business overview</span>\n</MenuTabBar.Item>\n\n<div id=\"business\">...</div>",
+        "stories": ["ScrollToSection"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Individual tabs can be disabled.",
+        "code": "<MenuTabBar.Item disabled>\n  <span>Disabled</span>\n</MenuTabBar.Item>",
+        "stories": ["Disabled"]
+      }
+    ],
+    "api": [
+      {
+        "name": "MenuTabBar.Root",
+        "description": "Container for tab items with bottom border, tablist role, and animated underline indicator.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'neutral' | 'primary'",
+            "default": "'neutral'",
+            "description": "Color scheme for the selected tab and underline indicator"
+          },
+          {
+            "name": "scrollMargin",
+            "type": "number",
+            "default": "16",
+            "description": "Extra pixels below the auto-detected offset. The component already accounts for sticky headers by measuring its own bottom edge."
+          }
+        ]
+      },
+      {
+        "name": "MenuTabBar.Item",
+        "description": "Individual tab button with underline indicator when selected.",
+        "props": [
+          {
+            "name": "selected",
+            "type": "boolean",
+            "default": "false",
+            "description": "Whether this tab is currently selected"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "description": "Disables the tab"
+          },
+          {
+            "name": "scrollTo",
+            "type": "string",
+            "description": "Element ID to smooth-scroll to when clicked"
+          }
+        ]
+      },
+      {
+        "name": "MenuTabBar.Icon",
+        "description": "Polymorphic 16px icon inside a tab item.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "default": "'div'",
+            "description": "The element or component to render as"
+          }
+        ]
+      },
+      {
+        "name": "MenuTabBar.Composed",
+        "description": "Shorthand controlled tab bar. Accepts all Root props.",
+        "props": [
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The currently selected tab value"
+          },
+          {
+            "name": "onValueChange",
+            "type": "(value: string) => void",
+            "description": "Callback when a tab is clicked"
+          },
+          {
+            "name": "items",
+            "type": "{ label: string; value: string; disabled?: boolean; icon?: React.ElementType }[]",
+            "description": "Array of tab definitions"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/menu-tab-bar.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

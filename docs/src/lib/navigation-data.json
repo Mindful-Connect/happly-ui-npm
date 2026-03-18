@@ -245,6 +245,10 @@
             "href": "/docs/components/dot-stepper"
           },
           {
+            "title": "Menu Tab Bar",
+            "href": "/docs/components/menu-tab-bar"
+          },
+          {
             "title": "Pagination",
             "href": "/docs/components/pagination"
           }
