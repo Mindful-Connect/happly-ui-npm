@@ -6,7 +6,7 @@
   "description": "A tag input component with controlled/uncontrolled pattern, add-on-Enter, remove-on-dismiss, backspace-to-delete-last.",
   "version": "1.0.0",
   "dependencies": [],
-  "registryDependencies": ["form-field-context", "input", "tag"],
+  "registryDependencies": ["form-field-context", "use-form-field-binding", "input", "tag"],
   "docs": {
     "lead": "A tag input component with controlled/uncontrolled pattern. Add tags on Enter, remove on dismiss or Backspace.",
     "usage": "import * as TagInput from \"@/components/ui/tag-input\"\n\n<TagInput.Root defaultValue={['Berlin', 'London']} />",

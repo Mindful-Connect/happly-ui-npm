@@ -16,6 +16,7 @@
   ],
   "registryDependencies": [
     "form-field-context",
+    "use-form-field-binding",
     "happly-ui-utils",
     "polymorphic",
     "tv"

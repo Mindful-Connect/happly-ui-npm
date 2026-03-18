@@ -6,7 +6,7 @@
   "description": "A slider component with single and range modes, primary and neutral variants. Uses namespace exports: Slider.Root, Slider.Thumb.",
   "version": "1.0.0",
   "dependencies": ["@radix-ui/react-slider"],
-  "registryDependencies": ["happly-ui-utils"],
+  "registryDependencies": ["form-field-context", "use-form-field-binding", "happly-ui-utils"],
   "docs": {
     "lead": "A slider component with single and range modes, primary and neutral color variants.",
     "usage": "import * as Slider from \"@/components/ui/slider\"\n\n<Slider.Root defaultValue={[33]} max={100} step={1}>\n  <Slider.Thumb />\n</Slider.Root>",

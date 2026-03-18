@@ -15,6 +15,7 @@
   ],
   "registryDependencies": [
     "form-field-context",
+    "use-form-field-binding",
     "popover",
     "input",
     "tag",
