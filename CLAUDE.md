@@ -249,28 +249,35 @@ packages/registry/ui/button.json         ← metadata, references story names
 
 ### Design Tokens
 
-Design tokens are defined in **three** places that must be kept in sync:
+The CLI fetches theme CSS **from the registry at runtime** (not from hardcoded templates). This means pushing token changes to the `production` branch makes them available to all users immediately — no CLI republish needed.
+
+Design tokens are defined in these files:
 
 | File | Purpose | When Used |
 |------|---------|-----------|
-| `packages/registry/styles/happly-theme.css` | Source of truth for Storybook (Tailwind v4 `@theme` syntax) | Storybook dev/build |
-| `packages/cli/src/utils/templates/happly-theme.ts` | CLI templates written during `happlyui init` | User project initialization |
+| `packages/registry/styles/happly-theme.css` | **V4 theme** — Tailwind v4 `@theme` syntax (source of truth for Storybook + CLI fetch) | Storybook, V4 user projects |
+| `packages/registry/styles/happly-theme-v3.css` | **V3 theme** — `:root {}` CSS custom properties (fetched by CLI for V3 projects) | V3 user projects |
+| `packages/cli/src/utils/templates/happly-theme.ts` | **Offline fallback only** — bundled copies of V4/V3 themes used when fetch fails | CLI offline/network failure |
 | `packages/cli/src/utils/templates/tokens.ts` | Tailwind v3 plugin tokens (typography, shadows, colors) | V3 projects via `tailwind.config.js` extend |
 
 **When adding or changing a design token (color, shadow, keyframe, etc.):**
 
-1. Update `packages/registry/styles/happly-theme.css` (Storybook source of truth)
-2. Update **both** `HAPPLY_THEME_V4` and `HAPPLY_THEME_V3` templates in `packages/cli/src/utils/templates/happly-theme.ts`
+1. Update `packages/registry/styles/happly-theme.css` (V4 — uses `@theme {}` block)
+2. Update `packages/registry/styles/happly-theme-v3.css` (V3 — uses `:root {}` block)
+   - **Both files must be kept in sync** — same colors, semantic tokens, dark mode overrides, and keyframes
    - V4 uses `@theme {}` block — tokens, shadows, keyframes all go inside it
    - V3 uses `:root {}` block — only CSS custom properties (colors); shadows/typography/keyframes go as raw `@keyframes` blocks outside `:root`
-   - Both templates must include dark mode overrides (V4: `@media (prefers-color-scheme: dark)` + `.dark` class; V3: same pattern)
-   - Both templates include `@keyframes` animations at the bottom (button loading, accordion, shimmer, etc.)
-3. If the token is a new Tailwind class name (e.g., new shadow or color), also add it to `packages/cli/src/utils/templates/tokens.ts` so the V3 Tailwind plugin registers it
-4. Rebuild and type-check the CLI: `cd packages/cli && bun run typecheck`
+   - Both must include dark mode overrides (`@media (prefers-color-scheme: dark)` + `.dark` class)
+   - Both include `@keyframes` animations at the bottom (button loading, accordion, shimmer, etc.)
+3. Update the fallback templates in `packages/cli/src/utils/templates/happly-theme.ts` (`HAPPLY_THEME_V4` and `HAPPLY_THEME_V3`) to match the registry CSS files
+4. If the token is a new Tailwind class name (e.g., new shadow or color), also add it to `packages/cli/src/utils/templates/tokens.ts` so the V3 Tailwind plugin registers it
+5. Rebuild and type-check the CLI: `cd packages/cli && bun run typecheck`
 
-**Key differences between V3 and V4 templates:**
+**Key differences between V3 and V4:**
 - V4: All tokens in `@theme {}` block, keyframes like `spin`/`ping`/`pulse`/`bounce` must be defined (not auto-included)
 - V3: Colors as CSS custom properties in `:root {}`, shadows/typography injected via Tailwind plugin from `tokens.ts` (not as CSS vars), standard keyframes (`spin`/`ping`/`pulse`/`bounce`) are already provided by Tailwind v3 base styles
+
+**Runtime fetch flow:** The CLI (`packages/cli/src/utils/theme.ts`) fetches from `{registryUrl}/styles/happly-theme.css` (V4) or `{registryUrl}/styles/happly-theme-v3.css` (V3). If the fetch fails, it falls back to the bundled templates in `happly-theme.ts`.
 
 - **Docs tokens**: `docs/src/styles/tailwind.css` — extends shared tokens with docs-specific fonts and plugins
 

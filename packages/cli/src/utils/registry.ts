@@ -18,7 +18,7 @@ function getRegistryUrl(config?: HapplyConfig): string {
 /**
  * Check if registry is a local path
  */
-function isLocalRegistry(registry: string): boolean {
+export function isLocalRegistry(registry: string): boolean {
   return (
     registry.startsWith('/') ||
     registry.startsWith('./') ||
@@ -40,7 +40,7 @@ async function fetchOrRead(url: string): Promise<unknown> {
     return JSON.parse(content);
   }
 
-  const response = await fetch(url);
+  const response = await fetch(url, { signal: AbortSignal.timeout(10000) });
   if (!response.ok) {
     throw new Error(`Failed to fetch: ${response.statusText}`);
   }
@@ -61,7 +61,7 @@ export async function fetchRegistryIndex(
   return fetchOrRead(url) as Promise<RegistryIndex>;
 }
 
-async function fetchOrReadRaw(url: string): Promise<string> {
+export async function fetchOrReadRaw(url: string): Promise<string> {
   if (isLocalRegistry(url)) {
     const localPath = url.replace('file://', '');
     if (!existsSync(localPath)) {
@@ -70,7 +70,7 @@ async function fetchOrReadRaw(url: string): Promise<string> {
     return readFile(localPath, 'utf-8');
   }
 
-  const response = await fetch(url);
+  const response = await fetch(url, { signal: AbortSignal.timeout(10000) });
   if (!response.ok) {
     throw new Error(`Failed to fetch: ${response.statusText}`);
   }
