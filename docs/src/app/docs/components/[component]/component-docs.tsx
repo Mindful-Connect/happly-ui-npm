@@ -38,8 +38,6 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
     'custom-input-wrapper',
     'dialog',
     'popover',
-    'key-icon',
-    'alert',
   ];
   const isSupportComponent = supportComponents.includes(name);
 

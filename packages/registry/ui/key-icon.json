@@ -27,6 +27,12 @@
         "stories": ["Lighter"]
       },
       {
+        "title": "Filled Style",
+        "description": "Solid background with white icon for high emphasis.",
+        "code": "<KeyIcon.Root style=\"filled\" color=\"blue\" icon={<RiSearchLine />} />",
+        "stories": ["Filled"]
+      },
+      {
         "title": "Sizes",
         "description": "Available sizes from sm (32px) to 2xl (64px).",
         "code": "<KeyIcon.Root size=\"lg\" icon={<RiHomeLine />} />",
@@ -57,15 +63,15 @@
           },
           {
             "name": "style",
-            "type": "'stroke' | 'lighter'",
+            "type": "'stroke' | 'lighter' | 'filled'",
             "default": "'stroke'",
             "description": "Visual style variant."
           },
           {
             "name": "color",
-            "type": "'gray' | 'blue' | 'orange' | 'red' | 'green' | 'yellow' | 'purple' | 'pink' | 'teal'",
+            "type": "'gray' | 'blue' | 'orange' | 'red' | 'green' | 'yellow' | 'purple' | 'pink' | 'teal' | 'primary'",
             "default": "'gray'",
-            "description": "Semantic color. Only affects the lighter style."
+            "description": "Semantic color. Affects the lighter and filled styles."
           }
         ]
       }
