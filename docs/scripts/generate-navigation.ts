@@ -97,6 +97,7 @@ function main() {
 
   const NAVIGATION_COMPONENTS = [
     'dot-stepper',
+    'menu-tab-bar',
     'pagination',
   ];
 

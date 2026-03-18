@@ -28,13 +28,13 @@ import { default as fancyButtonMeta, Playground as fancyButton_Playground, Varia
 import { default as fileCardMeta, UploadStates as fileCard_UploadStates, CompletedMediaTypes as fileCard_CompletedMediaTypes, Download as fileCard_Download, Compact as fileCard_Compact, Item as fileCard_Item, ItemDownload as fileCard_ItemDownload, ItemCompact as fileCard_ItemCompact } from '@/components/ui/file-card.stories';
 import { default as fileFormatIconMeta, Default as fileFormatIcon_Default, Colors as fileFormatIcon_Colors, Sizes as fileFormatIcon_Sizes } from '@/components/ui/file-format-icon.stories';
 import { default as fileUploadMeta, Document as fileUpload_Document, Image as fileUpload_Image, Video as fileUpload_Video, Audio as fileUpload_Audio, Attachment as fileUpload_Attachment, CustomOverrides as fileUpload_CustomOverrides, Dragging as fileUpload_Dragging } from '@/components/ui/file-upload.stories';
-import { default as formFieldMeta, Playground as formField_Playground, Demo as formField_Demo, WithError as formField_WithError, Disabled as formField_Disabled, CompoundMode as formField_CompoundMode, FormValidation as formField_FormValidation } from '@/components/ui/form-field.stories';
+import { default as formFieldMeta, Playground as formField_Playground, Demo as formField_Demo, WithError as formField_WithError, Disabled as formField_Disabled, CompoundMode as formField_CompoundMode, FormValidation as formField_FormValidation, AutoBindingShowcase as formField_AutoBindingShowcase } from '@/components/ui/form-field.stories';
 import { default as hintMeta, Playground as hint_Playground, Demo as hint_Demo, Disabled as hint_Disabled, HasError as hint_HasError, CustomIcon as hint_CustomIcon, Composed as hint_Composed } from '@/components/ui/hint.stories';
 import { default as infoCardMeta, Inline as infoCard_Inline, InlineWithFullWidthItem as infoCard_InlineWithFullWidthItem, Grid2Columns as infoCard_Grid2Columns, Stacked as infoCard_Stacked, Grid3Columns as infoCard_Grid3Columns } from '@/components/ui/info-card.stories';
 import { default as infoGridMeta, BusinessProfile as infoGrid_BusinessProfile, FinancialData as infoGrid_FinancialData, TwoColumns as infoGrid_TwoColumns, MobileResponsive as infoGrid_MobileResponsive, ComposedGroup as infoGrid_ComposedGroup } from '@/components/ui/info-grid.stories';
 import { default as inputMeta, Playground as input_Playground, WithIcon as input_WithIcon, Sizes as input_Sizes, WithAffix as input_WithAffix, WithInlineAffix as input_WithInlineAffix, LabelAndHint as input_LabelAndHint, WithKbd as input_WithKbd, Password as input_Password, PasswordWithLevel as input_PasswordWithLevel, Disabled as input_Disabled, ErrorState as input_ErrorState, WithButton as input_WithButton, WithTags as input_WithTags, DateFieldStory as input_DateFieldStory, PaymentInput as input_PaymentInput, WithSelect as input_WithSelect, WithInlineSelect as input_WithInlineSelect, CounterInput as input_CounterInput, Composition as input_Composition } from '@/components/ui/input.stories';
 import { default as kbdMeta, Playground as kbd_Playground, Demo as kbd_Demo } from '@/components/ui/kbd.stories';
-import { default as keyIconMeta, Playground as keyIcon_Playground, Stroke as keyIcon_Stroke, Lighter as keyIcon_Lighter, Sizes as keyIcon_Sizes, Colors as keyIcon_Colors } from '@/components/ui/key-icon.stories';
+import { default as keyIconMeta, Playground as keyIcon_Playground, Stroke as keyIcon_Stroke, Lighter as keyIcon_Lighter, Filled as keyIcon_Filled, Sizes as keyIcon_Sizes, Colors as keyIcon_Colors } from '@/components/ui/key-icon.stories';
 import { default as labelMeta, Playground as label_Playground, Demo as label_Demo, Composed as label_Composed } from '@/components/ui/label.stories';
 import { default as levelBarMeta, Playground as levelBar_Playground, Levels as levelBar_Levels, CustomSegments as levelBar_CustomSegments } from '@/components/ui/level-bar.stories';
 import { default as linkButtonMeta, Playground as linkButton_Playground, Variants as linkButton_Variants, Sizes as linkButton_Sizes, Underline as linkButton_Underline, WithIcon as linkButton_WithIcon, Disabled as linkButton_Disabled, AsChild as linkButton_AsChild } from '@/components/ui/link-button.stories';
@@ -42,6 +42,7 @@ import { default as loaderMeta, Playground as loader_Playground, Sizes as loader
 import { default as locationInputMeta, Playground as locationInput_Playground, Default as locationInput_Default } from '@/components/ui/location-input.stories';
 import { default as logoUploadMeta, Default as logoUpload_Default, WithLogo as logoUpload_WithLogo, Uploading as logoUpload_Uploading, UploadingWithPreview as logoUpload_UploadingWithPreview, Failed as logoUpload_Failed, CustomPreview as logoUpload_CustomPreview, UserAvatar as logoUpload_UserAvatar, Composed as logoUpload_Composed, WithFormField as logoUpload_WithFormField, ComposedWithLogo as logoUpload_ComposedWithLogo } from '@/components/ui/logo-upload.stories';
 import { default as markdownEditorMeta, Default as markdownEditor_Default, SingleLanguage as markdownEditor_SingleLanguage, ControlledMulti as markdownEditor_ControlledMulti, CustomToggle as markdownEditor_CustomToggle, Compound as markdownEditor_Compound, WithFormField as markdownEditor_WithFormField, WithError as markdownEditor_WithError, Disabled as markdownEditor_Disabled, WithDefaultContent as markdownEditor_WithDefaultContent } from '@/components/ui/markdown-editor.stories';
+import { default as menuTabBarMeta, Default as menuTabBar_Default, Primary as menuTabBar_Primary, WithoutIcons as menuTabBar_WithoutIcons, Composed as menuTabBar_Composed, ScrollToSection as menuTabBar_ScrollToSection, Disabled as menuTabBar_Disabled } from '@/components/ui/menu-tab-bar.stories';
 import { default as modalMeta, Playground as modal_Playground, Demo as modal_Demo, WithHeader as modal_WithHeader } from '@/components/ui/modal.stories';
 import { default as paginationMeta, Playground as pagination_Playground, Demo as pagination_Demo, Rounded as pagination_Rounded, Group as pagination_Group, AsLink as pagination_AsLink } from '@/components/ui/pagination.stories';
 import { default as passwordInputMeta, Playground as passwordInput_Playground, Default as passwordInput_Default, WithStrength as passwordInput_WithStrength, Sizes as passwordInput_Sizes, ErrorState as passwordInput_ErrorState, WithFormField as passwordInput_WithFormField } from '@/components/ui/password-input.stories';
@@ -391,7 +392,8 @@ export const storyRegistry: Record<string, {
     'WithError': formField_WithError,
     'Disabled': formField_Disabled,
     'CompoundMode': formField_CompoundMode,
-    'FormValidation': formField_FormValidation
+    'FormValidation': formField_FormValidation,
+    'AutoBindingShowcase': formField_AutoBindingShowcase
     }
   },
   'hint': {
@@ -462,6 +464,7 @@ export const storyRegistry: Record<string, {
     'Playground': keyIcon_Playground,
     'Stroke': keyIcon_Stroke,
     'Lighter': keyIcon_Lighter,
+    'Filled': keyIcon_Filled,
     'Sizes': keyIcon_Sizes,
     'Colors': keyIcon_Colors
     }
@@ -538,6 +541,17 @@ export const storyRegistry: Record<string, {
     'WithError': markdownEditor_WithError,
     'Disabled': markdownEditor_Disabled,
     'WithDefaultContent': markdownEditor_WithDefaultContent
+    }
+  },
+  'menu-tab-bar': {
+    meta: menuTabBarMeta,
+    stories: {
+    'Default': menuTabBar_Default,
+    'Primary': menuTabBar_Primary,
+    'WithoutIcons': menuTabBar_WithoutIcons,
+    'Composed': menuTabBar_Composed,
+    'ScrollToSection': menuTabBar_ScrollToSection,
+    'Disabled': menuTabBar_Disabled
     }
   },
   'modal': {

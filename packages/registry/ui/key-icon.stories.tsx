@@ -24,7 +24,10 @@ export const Playground = {
   },
   argTypes: {
     size: { control: 'select', options: ['sm', 'md', 'lg', 'xl', '2xl'] },
-    style: { control: 'select', options: ['stroke', 'lighter'] },
+    style: {
+      control: 'select',
+      options: ['stroke', 'lighter', 'filled'],
+    },
     color: {
       control: 'select',
       options: [
@@ -37,6 +40,7 @@ export const Playground = {
         'purple',
         'pink',
         'teal',
+        'primary',
       ],
     },
   },
@@ -75,6 +79,36 @@ export const Lighter = {
         icon={<RiNotification3Line />}
       />
       <KeyIcon.Root style='lighter' color='teal' icon={<RiSettings3Line />} />
+      <KeyIcon.Root
+        style='lighter'
+        color='primary'
+        icon={<RiStarLine />}
+      />
+    </div>
+  ),
+};
+
+export const Filled = {
+  render: () => (
+    <div className='flex flex-wrap items-end gap-4'>
+      <KeyIcon.Root style='filled' color='gray' icon={<RiHome2Line />} />
+      <KeyIcon.Root style='filled' color='blue' icon={<RiSearchLine />} />
+      <KeyIcon.Root
+        style='filled'
+        color='orange'
+        icon={<RiFlashlightLine />}
+      />
+      <KeyIcon.Root style='filled' color='red' icon={<RiHeartLine />} />
+      <KeyIcon.Root style='filled' color='green' icon={<RiCheckLine />} />
+      <KeyIcon.Root style='filled' color='yellow' icon={<RiStarLine />} />
+      <KeyIcon.Root style='filled' color='purple' icon={<RiUser3Line />} />
+      <KeyIcon.Root
+        style='filled'
+        color='pink'
+        icon={<RiNotification3Line />}
+      />
+      <KeyIcon.Root style='filled' color='teal' icon={<RiSettings3Line />} />
+      <KeyIcon.Root style='filled' color='primary' icon={<RiStarLine />} />
     </div>
   ),
 };
@@ -91,6 +125,12 @@ export const Sizes = {
           <KeyIcon.Root
             size={size}
             style='lighter'
+            color='blue'
+            icon={<RiHome2Line />}
+          />
+          <KeyIcon.Root
+            size={size}
+            style='filled'
             color='blue'
             icon={<RiHome2Line />}
           />
@@ -114,6 +154,7 @@ export const Colors = {
           'purple',
           'pink',
           'teal',
+          'primary',
         ] as const
       ).map((color) => (
         <div key={color} className='flex items-center gap-4'>
@@ -129,6 +170,12 @@ export const Colors = {
           <KeyIcon.Root
             size='lg'
             style='lighter'
+            color={color}
+            icon={<RiStarLine />}
+          />
+          <KeyIcon.Root
+            size='lg'
+            style='filled'
             color={color}
             icon={<RiStarLine />}
           />

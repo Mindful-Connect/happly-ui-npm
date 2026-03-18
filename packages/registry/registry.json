@@ -190,12 +190,6 @@
       "description": "Shared React context for FormField state (hasError, disabled, id, name). Used by input components to auto-read form field state."
     },
     {
-      "name": "use-form-field-binding",
-      "type": "registry:lib",
-      "title": "useFormFieldBinding",
-      "description": "Hook that auto-binds happly-ui components to React Hook Form via FormFieldContext. Eliminates manual watch/setValue wiring."
-    },
-    {
       "name": "happly-ui-utils",
       "type": "registry:lib",
       "title": "Happly UI Utils",
@@ -284,6 +278,12 @@
       "type": "registry:lib",
       "title": "Memoji",
       "description": "Memoji types, constants, and URL helper for rendering Happly memoji avatars."
+    },
+    {
+      "name": "menu-tab-bar",
+      "type": "registry:ui",
+      "title": "Menu Tab Bar",
+      "description": "An underline-style horizontal tab bar with icon support. Uses namespace exports: MenuTabBar.Root, MenuTabBar.Item, MenuTabBar.Icon, MenuTabBar.Composed."
     },
     {
       "name": "modal",
@@ -464,6 +464,12 @@
       "type": "registry:hook",
       "title": "useFileUpload",
       "description": "Hook for managing file uploads with presigned URLs, progress tracking, and file state."
+    },
+    {
+      "name": "use-form-field-binding",
+      "type": "registry:lib",
+      "title": "useFormFieldBinding",
+      "description": "Hook that auto-binds happly-ui components to React Hook Form via FormFieldContext. Eliminates manual watch/setValue wiring."
     },
     {
       "name": "use-tab-observer",
