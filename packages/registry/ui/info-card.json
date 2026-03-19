@@ -5,7 +5,7 @@
   "title": "Info Card",
   "description": "A reusable section for displaying labeled detail items in flexible layouts (inline, grid, stack, wrap).",
   "version": "1.0.0",
-  "dependencies": [],
+  "dependencies": ["@remixicon/react"],
   "registryDependencies": ["tv", "happly-ui-utils"],
   "docs": {
     "lead": "Display labeled key-value detail items within a section card. Supports inline, grid, stacked, and wrapped layouts. Each item has a label and a custom-rendered value as children. The value container defaults to text-label-xs and text-sub-600 styling.",
@@ -34,6 +34,18 @@
         "description": "Items stacked vertically, each taking full width. Uses Avatar and StatusBadge.",
         "code": "import * as Avatar from '@/components/ui/avatar'\nimport * as InfoCard from '@/components/ui/info-card'\nimport * as StatusBadge from '@/components/ui/status-badge'\n\n<InfoCard.Root layout=\"stack\">\n  <InfoCard.Item>\n    <InfoCard.Label>Application ID</InfoCard.Label>\n    <InfoCard.Value>\n      <span>#APP-2025-0142</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Applicant</InfoCard.Label>\n    <InfoCard.Value>\n      <Avatar.Root size=\"20\">\n        <Avatar.Image src=\"avatar.jpg\" />\n      </Avatar.Root>\n      <span>Jane Cooper</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Status</InfoCard.Label>\n    <InfoCard.Value>\n      <StatusBadge.Root status=\"completed\" variant=\"light\">\n        <StatusBadge.Dot />\n        Approved\n      </StatusBadge.Root>\n    </InfoCard.Value>\n  </InfoCard.Item>\n</InfoCard.Root>",
         "stories": ["Stacked"]
+      },
+      {
+        "title": "With Action",
+        "description": "Inline layout with a default action button. The action renders as a square button with an arrow icon.",
+        "code": "import { RiTimeLine } from '@remixicon/react'\nimport * as Avatar from '@/components/ui/avatar'\nimport * as InfoCard from '@/components/ui/info-card'\n\n<InfoCard.Root layout=\"inline\">\n  <InfoCard.Item>\n    <InfoCard.Label>Submitted date</InfoCard.Label>\n    <InfoCard.Value>\n      <RiTimeLine className=\"w-4 h-4\" />\n      <span>Jan 3, 2025</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Created by</InfoCard.Label>\n    <InfoCard.Value>\n      <Avatar.Root size=\"20\">\n        <Avatar.Image src=\"avatar.jpg\" />\n      </Avatar.Root>\n      <span>Sean Muir</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Action className=\"h-[66px] @sm:w-[66px]\" />\n</InfoCard.Root>",
+        "stories": ["WithAction"]
+      },
+      {
+        "title": "With Custom Action",
+        "description": "Action button with a custom icon. Pass children to override the default arrow icon.",
+        "code": "import { RiExternalLinkLine } from '@remixicon/react'\nimport * as InfoCard from '@/components/ui/info-card'\nimport * as StatusBadge from '@/components/ui/status-badge'\n\n<InfoCard.Root layout=\"inline\">\n  <InfoCard.Item>\n    <InfoCard.Label>Application ID</InfoCard.Label>\n    <InfoCard.Value>\n      <span>#APP-2025-0142</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Status</InfoCard.Label>\n    <InfoCard.Value>\n      <StatusBadge.Root status=\"completed\" variant=\"light\">\n        <StatusBadge.Dot />\n        Approved\n      </StatusBadge.Root>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Action className=\"h-[66px] @sm:w-[66px]\">\n    <RiExternalLinkLine className=\"size-5 text-icon-sub-600\" />\n  </InfoCard.Action>\n</InfoCard.Root>",
+        "stories": ["WithCustomAction"]
       },
       {
         "title": "Grid (3 Columns)",
@@ -80,6 +92,10 @@
       {
         "name": "InfoCard.Value",
         "description": "The value container for custom-rendered content. Defaults to text-label-xs and text-text-sub-600 styling."
+      },
+      {
+        "name": "InfoCard.Action",
+        "description": "A square action button styled like an info card item. Stretches to match sibling item height and maintains a square aspect ratio. Renders a default RiArrowRightUpLine icon that can be overridden via children. Full-width on small containers, square on larger ones."
       }
     ]
   },

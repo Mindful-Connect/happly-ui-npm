@@ -1,4 +1,9 @@
-import { RiAlertFill, RiCalendarLine, RiTimeLine } from '@remixicon/react';
+import {
+  RiAlertFill,
+  RiCalendarLine,
+  RiExternalLinkLine,
+  RiTimeLine,
+} from '@remixicon/react';
 
 import * as Avatar from './avatar';
 import * as Badge from './badge';
@@ -9,7 +14,7 @@ export default { title: 'Cards/Info Card' };
 
 export const Inline = {
   render: () => (
-    <div className='mx-auto w-full max-w-lg'>
+    <div className='w-full'>
       <InfoCard.Root layout='inline'>
         <InfoCard.Item>
           <InfoCard.Label>Submitted date</InfoCard.Label>
@@ -34,7 +39,7 @@ export const Inline = {
 
 export const InlineWithFullWidthItem = {
   render: () => (
-    <div className='mx-auto w-full max-w-lg'>
+    <div className='w-full'>
       <InfoCard.Root layout='inline'>
         <InfoCard.Item>
           <InfoCard.Label>Submitted date</InfoCard.Label>
@@ -68,7 +73,7 @@ export const InlineWithFullWidthItem = {
 
 export const Grid2Columns = {
   render: () => (
-    <div className='mx-auto w-full max-w-lg'>
+    <div className='w-full'>
       <InfoCard.Root layout='grid' columns={2}>
         <InfoCard.Item>
           <InfoCard.Label>Start date</InfoCard.Label>
@@ -107,7 +112,7 @@ export const Grid2Columns = {
 
 export const Stacked = {
   render: () => (
-    <div className='mx-auto w-full max-w-sm'>
+    <div className='w-full'>
       <InfoCard.Root layout='stack'>
         <InfoCard.Item>
           <InfoCard.Label>Application ID</InfoCard.Label>
@@ -138,9 +143,62 @@ export const Stacked = {
   ),
 };
 
+export const WithAction = {
+  render: () => (
+    <div className='w-full'>
+      <InfoCard.Root layout='inline'>
+        <InfoCard.Item>
+          <InfoCard.Label>Submitted date</InfoCard.Label>
+          <InfoCard.Value>
+            <RiTimeLine className='h-4 w-4' />
+            <span>Jan 3, 2025</span>
+          </InfoCard.Value>
+        </InfoCard.Item>
+        <InfoCard.Item>
+          <InfoCard.Label>Created by</InfoCard.Label>
+          <InfoCard.Value>
+            <Avatar.Root size='20'>
+              <Avatar.Image src='https://i.pravatar.cc/40?u=sean' />
+            </Avatar.Root>
+            <span>Sean Muir</span>
+          </InfoCard.Value>
+        </InfoCard.Item>
+        <InfoCard.Action className='h-[66px] @sm:w-[66px]' />
+      </InfoCard.Root>
+    </div>
+  ),
+};
+
+export const WithCustomAction = {
+  render: () => (
+    <div className='w-full'>
+      <InfoCard.Root layout='inline'>
+        <InfoCard.Item>
+          <InfoCard.Label>Application ID</InfoCard.Label>
+          <InfoCard.Value>
+            <span>#APP-2025-0142</span>
+          </InfoCard.Value>
+        </InfoCard.Item>
+        <InfoCard.Item>
+          <InfoCard.Label>Status</InfoCard.Label>
+          <InfoCard.Value>
+            <StatusBadge.Root status='completed' variant='light'>
+              <StatusBadge.Dot />
+              Approved
+            </StatusBadge.Root>
+          </InfoCard.Value>
+        </InfoCard.Item>
+        <InfoCard.Action className='h-[66px] @sm:w-[66px]'>
+          <RiExternalLinkLine className='size-5 text-icon-sub-600' />
+        </InfoCard.Action>
+      </InfoCard.Root>
+    </div>
+  ),
+};
+
 export const Grid3Columns = {
   render: () => (
-    <div className='mx-auto w-full max-w-2xl'>
+    <div className='w-full'>
       <InfoCard.Root layout='grid' columns={3}>
         <InfoCard.Item>
           <InfoCard.Label>Amount</InfoCard.Label>
