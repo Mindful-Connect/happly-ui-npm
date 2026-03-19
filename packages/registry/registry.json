@@ -406,6 +406,12 @@
       "description": "A compact status indicator badge with icon or dot variants and semantic status colors (completed, pending, failed, disabled). Uses namespace exports: StatusBadge.Root, StatusBadge.Icon, StatusBadge.Dot."
     },
     {
+      "name": "status-indicator",
+      "type": "registry:ui",
+      "title": "Status Indicator",
+      "description": "A versatile status indicator for avatars supporting top (verified, pin, favorite, add, remove, notification) and bottom (online, offline, busy, away, company) positions."
+    },
+    {
       "name": "switch",
       "type": "registry:ui",
       "title": "Switch",

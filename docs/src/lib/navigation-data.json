@@ -362,6 +362,10 @@
           }
         ],
         "collapsed": false
+      },
+      {
+        "title": "Status Indicator",
+        "href": "/docs/components/status-indicator"
       }
     ]
   },
