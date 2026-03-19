@@ -31,7 +31,7 @@
       "name": "avatar",
       "type": "registry:ui",
       "title": "Avatar",
-      "description": "A compound avatar component with image, text, placeholder, status indicator, brand logo, and notification support. Uses namespace exports: Avatar.Root, Avatar.Image, Avatar.Indicator, Avatar.Status, Avatar.BrandLogo, Avatar.Notification."
+      "description": "A compound avatar component with image, text, placeholder, and indicator positioning. Uses namespace exports: Avatar.Root, Avatar.Image, Avatar.Indicator. Pair with status-indicator for status dots, verified badges, and more."
     },
     {
       "name": "avatar-empty-icons",
