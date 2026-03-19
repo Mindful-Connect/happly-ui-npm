@@ -1,10 +1,7 @@
 import path from 'path';
 import { REGISTRY_URL } from '../types/index.js';
 import { fetchOrReadRaw, isLocalRegistry } from './registry.js';
-import {
-  HAPPLY_THEME_V4,
-  HAPPLY_THEME_V3,
-} from './templates/happly-theme.js';
+import { HAPPLY_THEME_V4, HAPPLY_THEME_V3 } from './templates/happly-theme.js';
 import { logger } from './logger.js';
 
 /**
@@ -17,8 +14,7 @@ export async function fetchThemeCSS(
   const baseUrl = registryUrl || REGISTRY_URL;
   const fileName =
     tailwindVersion === 4 ? 'happly-theme.css' : 'happly-theme-v3.css';
-  const fallback =
-    tailwindVersion === 4 ? HAPPLY_THEME_V4 : HAPPLY_THEME_V3;
+  const fallback = tailwindVersion === 4 ? HAPPLY_THEME_V4 : HAPPLY_THEME_V3;
 
   const url = isLocalRegistry(baseUrl)
     ? path.join(baseUrl.replace('file://', ''), 'styles', fileName)

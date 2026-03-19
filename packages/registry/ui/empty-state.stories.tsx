@@ -114,7 +114,7 @@ export const WithMultipleActions = {
 
 export const Unbounded = {
   render: () => (
-    <div className='rounded-xl border border-stroke-soft-200 bg-bg-white-0 p-5'>
+    <div className='border-stroke-soft-200 bg-bg-white-0 rounded-xl border p-5'>
       <EmptyState.Root>
         <EmptyState.Icon icon={<RiCalendarLine />} />
         <div className='flex flex-col items-center gap-1'>

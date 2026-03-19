@@ -131,7 +131,7 @@ export const ScrollToSection = {
 
     return (
       <div>
-        <MenuTabBar.Root className='sticky top-0 z-10 bg-bg-white-0'>
+        <MenuTabBar.Root className='bg-bg-white-0 sticky top-0 z-10'>
           <MenuTabBar.Item
             selected={selected === 'business'}
             scrollTo='business'

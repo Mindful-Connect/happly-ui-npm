@@ -189,6 +189,33 @@ export const WithActionNotification = {
             <span>Sean Muir</span>
           </InfoCard.Value>
         </InfoCard.Item>
+        <InfoCard.Item>
+          <InfoCard.Label>Created by</InfoCard.Label>
+          <InfoCard.Value>
+            <Avatar.Root size='20'>
+              <Avatar.Image src='https://i.pravatar.cc/40?u=sean' />
+            </Avatar.Root>
+            <span>Sean Muir</span>
+          </InfoCard.Value>
+        </InfoCard.Item>
+        <InfoCard.Item>
+          <InfoCard.Label>Created by</InfoCard.Label>
+          <InfoCard.Value>
+            <Avatar.Root size='20'>
+              <Avatar.Image src='https://i.pravatar.cc/40?u=sean' />
+            </Avatar.Root>
+            <span>Sean Muir</span>
+          </InfoCard.Value>
+        </InfoCard.Item>
+        <InfoCard.Item>
+          <InfoCard.Label>Created by</InfoCard.Label>
+          <InfoCard.Value>
+            <Avatar.Root size='20'>
+              <Avatar.Image src='https://i.pravatar.cc/40?u=sean' />
+            </Avatar.Root>
+            <span>Sean Muir</span>
+          </InfoCard.Value>
+        </InfoCard.Item>
         <InfoCard.Action notification />
       </InfoCard.Root>
     </div>
@@ -215,8 +242,74 @@ export const WithCustomAction = {
           </InfoCard.Value>
         </InfoCard.Item>
         <InfoCard.Action className='h-[70px] @sm:w-[70px]'>
-          <RiExternalLinkLine className='size-5 text-icon-sub-600' />
+          <RiExternalLinkLine className='text-icon-sub-600 size-5' />
         </InfoCard.Action>
+      </InfoCard.Root>
+    </div>
+  ),
+};
+
+export const InlineManyItems = {
+  render: () => (
+    <div className='w-full'>
+      <InfoCard.Root layout='inline'>
+        <InfoCard.Item>
+          <InfoCard.Label>Submitted date</InfoCard.Label>
+          <InfoCard.Value>
+            <RiTimeLine className='h-4 w-4' />
+            <span>Jan 3, 2025</span>
+          </InfoCard.Value>
+        </InfoCard.Item>
+        <InfoCard.Item>
+          <InfoCard.Label>Created by</InfoCard.Label>
+          <InfoCard.Value>
+            <Avatar.Root size='20'>
+              <Avatar.Image src='https://i.pravatar.cc/40?u=sean' />
+            </Avatar.Root>
+            <span>Sean Muir</span>
+          </InfoCard.Value>
+        </InfoCard.Item>
+        <InfoCard.Item>
+          <InfoCard.Label>Category</InfoCard.Label>
+          <InfoCard.Value>
+            <Badge.Root variant='lighter' color='blue'>
+              Technology
+            </Badge.Root>
+          </InfoCard.Value>
+        </InfoCard.Item>
+        <InfoCard.Item>
+          <InfoCard.Label>Priority</InfoCard.Label>
+          <InfoCard.Value>
+            <Badge.Root variant='lighter' color='red'>
+              High
+            </Badge.Root>
+          </InfoCard.Value>
+        </InfoCard.Item>
+        <InfoCard.Item>
+          <InfoCard.Label>Status</InfoCard.Label>
+          <InfoCard.Value>
+            <StatusBadge.Root status='completed' variant='light'>
+              <StatusBadge.Dot />
+              Approved
+            </StatusBadge.Root>
+          </InfoCard.Value>
+        </InfoCard.Item>
+        <InfoCard.Item>
+          <InfoCard.Label>Deadline</InfoCard.Label>
+          <InfoCard.Value>
+            <RiCalendarLine className='h-4 w-4' />
+            <span>Dec 31, 2025</span>
+          </InfoCard.Value>
+        </InfoCard.Item>
+        <InfoCard.Item>
+          <InfoCard.Label>Assignee</InfoCard.Label>
+          <InfoCard.Value>
+            <Avatar.Root size='20'>
+              <Avatar.Image src='https://i.pravatar.cc/40?u=jane' />
+            </Avatar.Root>
+            <span>Jane Cooper</span>
+          </InfoCard.Value>
+        </InfoCard.Item>
       </InfoCard.Root>
     </div>
   ),

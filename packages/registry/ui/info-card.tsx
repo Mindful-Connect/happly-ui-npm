@@ -28,7 +28,7 @@ export const infoCardVariants = tv({
       'flex items-center justify-center overflow-visible rounded-xl bg-bg-white-0 p-3',
       'shadow-[0px_2px_5px_-1px_rgba(0,0,0,0.04),0px_12px_40px_-8px_rgba(0,0,0,0.08),0px_0px_0px_1px_var(--color-bg-white-0),0px_0px_0px_1.5px_rgba(153,160,174,0.1)]',
       'transition-colors hover:bg-bg-weak-50 cursor-pointer',
-      '@sm:aspect-square',
+      '@sm:aspect-square @sm:self-center',
     ],
     label: 'text-label-xs font-medium text-text-strong-950',
     value: 'flex items-center gap-1 text-label-xs text-text-sub-600',
@@ -36,7 +36,7 @@ export const infoCardVariants = tv({
   variants: {
     layout: {
       inline: {
-        root: '@sm:grid @sm:grid-cols-[var(--_info-card-cols)]',
+        root: ['@sm:flex-row @sm:flex-wrap', '@sm:[&>div]:flex-[1_0_10rem]'],
       },
       grid: {
         root: '@sm:grid',
@@ -79,34 +79,12 @@ type InfoCardRootProps = React.HTMLAttributes<HTMLDivElement> &
   VariantProps<typeof infoCardVariants>;
 
 const InfoCardRoot = React.forwardRef<HTMLDivElement, InfoCardRootProps>(
-  ({ layout, columns, className, children, style, ...rest }, forwardedRef) => {
+  ({ layout, columns, className, children, ...rest }, forwardedRef) => {
     const { root } = infoCardVariants({ layout, columns });
-
-    const resolvedLayout = layout ?? 'inline';
-    let gridStyle = style;
-
-    if (resolvedLayout === 'inline') {
-      const childArray = React.Children.toArray(children);
-      const hasAction = childArray.some(
-        (child) =>
-          React.isValidElement(child) &&
-          (child.type as any).displayName === INFO_CARD_ACTION_NAME
-      );
-      const itemCount = childArray.length - (hasAction ? 1 : 0);
-      const cols =
-        'minmax(0,1fr) '.repeat(itemCount).trim() +
-        (hasAction ? ' auto' : '');
-
-      gridStyle = { ...style, '--_info-card-cols': cols } as React.CSSProperties;
-    }
 
     return (
       <div ref={forwardedRef} className='@container'>
-        <div
-          className={root({ class: className })}
-          style={gridStyle}
-          {...rest}
-        >
+        <div className={root({ class: className })} {...rest}>
           {children}
         </div>
       </div>
@@ -121,15 +99,14 @@ type InfoCardItemProps = React.HTMLAttributes<HTMLDivElement> & {
 };
 
 const InfoCardItem = React.forwardRef<HTMLDivElement, InfoCardItemProps>(
-  ({ fullWidth, className, ...rest }, forwardedRef) => {
+  ({ fullWidth, className, style, ...rest }, forwardedRef) => {
     const { item } = infoCardVariants();
 
     return (
       <div
         ref={forwardedRef}
-        className={item({
-          class: cn(fullWidth && 'w-full flex-none', className),
-        })}
+        className={item({ class: className })}
+        style={fullWidth ? { ...style, flex: '1 0 100%' } : style}
         {...rest}
       />
     );
@@ -188,7 +165,7 @@ const InfoCardAction = React.forwardRef<
   const { action } = infoCardVariants();
   const cls = action({ class: cn('relative', className) });
   const content = children ?? (
-    <RiArrowRightUpLine className='size-5 text-icon-sub-600' />
+    <RiArrowRightUpLine className='text-icon-sub-600 size-5' />
   );
 
   if (href) {

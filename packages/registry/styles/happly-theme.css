@@ -432,8 +432,7 @@
   --shadow-regular-sm: 0 2px 4px #1b1c1d0a;
   --shadow-regular-md: 0 16px 32px -12px #0e121b1a;
   --shadow-regular-deep:
-    0 0 0 1px rgba(14, 18, 27, 0.04),
-    0 1px 1px 0.5px rgba(14, 18, 27, 0.04),
+    0 0 0 1px rgba(14, 18, 27, 0.04), 0 1px 1px 0.5px rgba(14, 18, 27, 0.04),
     0 3px 3px -1.5px rgba(14, 18, 27, 0.02),
     0 6px 6px -3px rgba(14, 18, 27, 0.04),
     0 12px 12px -6px rgba(14, 18, 27, 0.04),

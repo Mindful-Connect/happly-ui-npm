@@ -23,7 +23,8 @@ export const statusIndicatorVariants = tv({
       favorite: 'box-content size-6 border-2 border-bg-white-0 bg-success-base',
       add: 'box-content size-6 border-2 border-bg-white-0 bg-faded-dark',
       remove: 'box-content size-6 border-2 border-bg-white-0 bg-error-base',
-      notification: 'box-content size-3 border-2 border-bg-white-0 bg-error-base',
+      notification:
+        'box-content size-3 border-2 border-bg-white-0 bg-error-base',
       online: 'box-content size-3 border-4 border-bg-white-0 bg-success-base',
       offline: 'box-content size-3 border-4 border-bg-white-0 bg-faded-base',
       busy: 'box-content size-3 border-4 border-bg-white-0 bg-error-base',
@@ -40,10 +41,10 @@ type StatusIndicatorRootProps = React.HTMLAttributes<HTMLDivElement> &
   VariantProps<typeof statusIndicatorVariants>;
 
 const topIcons: Record<string, React.ReactNode> = {
-  pin: <RiPushpinFill className='size-3.5 text-text-white-0' />,
-  favorite: <RiStarFill className='size-3.5 text-text-white-0' />,
-  add: <RiAddLine className='size-3.5 text-text-white-0' />,
-  remove: <RiCloseLine className='size-3.5 text-text-white-0' />,
+  pin: <RiPushpinFill className='text-text-white-0 size-3.5' />,
+  favorite: <RiStarFill className='text-text-white-0 size-3.5' />,
+  add: <RiAddLine className='text-text-white-0 size-3.5' />,
+  remove: <RiCloseLine className='text-text-white-0 size-3.5' />,
 };
 
 function VerifiedBadge() {

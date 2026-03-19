@@ -114,11 +114,11 @@ const InfoGridGroup = React.forwardRef<HTMLDivElement, InfoGridGroupProps>(
             className={
               row.columns
                 ? cn(
-                  '@lg:grid',
-                  row.columns === 2 && '@lg:grid-cols-2',
-                  row.columns === 3 && '@lg:grid-cols-3',
-                  row.columns === 4 && '@lg:grid-cols-4'
-                )
+                    '@lg:grid',
+                    row.columns === 2 && '@lg:grid-cols-2',
+                    row.columns === 3 && '@lg:grid-cols-3',
+                    row.columns === 4 && '@lg:grid-cols-4'
+                  )
                 : undefined
             }
           >
@@ -128,14 +128,14 @@ const InfoGridGroup = React.forwardRef<HTMLDivElement, InfoGridGroupProps>(
                 className={
                   item.span && item.span > 1
                     ? cn(
-                      item.span === 2 && '@lg:col-span-2',
-                      item.span === 3 && '@lg:col-span-3'
-                    )
+                        item.span === 2 && '@lg:col-span-2',
+                        item.span === 3 && '@lg:col-span-3'
+                      )
                     : undefined
                 }
               >
                 <KeyIcon.Root icon={item.icon} />
-                <div className='flex flex-col items-start gap-1 text-paragraph-sm text-text-sub-600'>
+                <div className='text-paragraph-sm text-text-sub-600 flex flex-col items-start gap-1'>
                   <p className='text-label-xs text-text-strong-950'>
                     {item.label}
                   </p>

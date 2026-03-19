@@ -246,15 +246,7 @@ type MenuTabBarItemProps = MenuTabBarSharedProps &
 
 const MenuTabBarItem = React.forwardRef<HTMLButtonElement, MenuTabBarItemProps>(
   (
-    {
-      children,
-      className,
-      variant,
-      selected,
-      scrollTo,
-      onClick,
-      ...rest
-    },
+    { children, className, variant, selected, scrollTo, onClick, ...rest },
     ref
   ) => {
     const uniqueId = React.useId();
@@ -314,7 +306,8 @@ const MenuTabBarItem = React.forwardRef<HTMLButtonElement, MenuTabBarItemProps>(
 );
 MenuTabBarItem.displayName = MENU_TAB_BAR_ITEM_NAME;
 
-type MenuTabBarIconProps = MenuTabBarSharedProps & React.HTMLAttributes<HTMLDivElement>;
+type MenuTabBarIconProps = MenuTabBarSharedProps &
+  React.HTMLAttributes<HTMLDivElement>;
 
 function MenuTabBarIcon<T extends React.ElementType>({
   className,
