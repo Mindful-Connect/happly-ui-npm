@@ -3,18 +3,19 @@
   "name": "avatar",
   "type": "registry:ui",
   "title": "Avatar",
-  "description": "A compound avatar component with image, text, placeholder, status indicator, brand logo, and notification support. Uses namespace exports: Avatar.Root, Avatar.Image, Avatar.Indicator, Avatar.Status, Avatar.BrandLogo, Avatar.Notification.",
+  "description": "A compound avatar component with image, text, placeholder, and indicator positioning. Uses namespace exports: Avatar.Root, Avatar.Image, Avatar.Indicator. Pair with status-indicator for status dots, verified badges, and more.",
   "version": "1.0.0",
   "dependencies": ["@radix-ui/react-slot"],
   "registryDependencies": [
     "tv",
     "happly-ui-utils",
     "recursive-clone-children",
+    "status-indicator",
     "avatar-empty-icons"
   ],
   "docs": {
-    "lead": "A compound avatar component with image, text, placeholder, status indicator, brand logo, and notification support.",
-    "usage": "import * as Avatar from \"@/components/ui/avatar\"\n\n<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n</Avatar.Root>",
+    "lead": "A compound avatar component with image, text, placeholder, and indicator positioning. Pair with StatusIndicator for status dots, verified badges, and more.",
+    "usage": "import * as Avatar from \"@/components/ui/avatar\"\nimport * as StatusIndicator from \"@/components/ui/status-indicator\"\n\n<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n  <Avatar.Indicator>\n    <StatusIndicator.Root status=\"online\" />\n  </Avatar.Indicator>\n</Avatar.Root>",
     "examples": [
       {
         "title": "Color",
@@ -42,27 +43,33 @@
       },
       {
         "title": "Status",
-        "description": "Show user status (online, offline, busy, away) using Avatar.Indicator and Avatar.Status.",
-        "code": "<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n  <Avatar.Indicator>\n    <Avatar.Status status=\"online\" />\n  </Avatar.Indicator>\n</Avatar.Root>",
+        "description": "Show user status (online, offline, busy, away) using Avatar.Indicator and StatusIndicator.",
+        "code": "import * as StatusIndicator from '@/components/ui/status-indicator'\n\n<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n  <Avatar.Indicator>\n    <StatusIndicator.Root status=\"online\" />\n  </Avatar.Indicator>\n</Avatar.Root>",
         "stories": ["Status"]
       },
       {
         "title": "Notification",
-        "description": "Show a notification dot using Avatar.Indicator with position='top' and Avatar.Notification.",
-        "code": "<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n  <Avatar.Indicator position=\"top\">\n    <Avatar.Notification />\n  </Avatar.Indicator>\n</Avatar.Root>",
+        "description": "Show a notification dot using Avatar.Indicator with position='top' and StatusIndicator.",
+        "code": "import * as StatusIndicator from '@/components/ui/status-indicator'\n\n<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n  <Avatar.Indicator position=\"top\">\n    <StatusIndicator.Root status=\"notification\" />\n  </Avatar.Indicator>\n</Avatar.Root>",
         "stories": ["Notification"]
       },
       {
         "title": "Brand Logo",
-        "description": "Show a brand logo using Avatar.Indicator with position='bottom' and Avatar.BrandLogo.",
-        "code": "<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n  <Avatar.Indicator position=\"bottom\">\n    <Avatar.BrandLogo src=\"/path/to/logo.svg\" />\n  </Avatar.Indicator>\n</Avatar.Root>",
+        "description": "Show a brand logo using Avatar.Indicator and StatusIndicator company variant with children.",
+        "code": "import * as StatusIndicator from '@/components/ui/status-indicator'\n\n<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n  <Avatar.Indicator position=\"bottom\">\n    <StatusIndicator.Root status=\"company\">\n      <img src=\"/path/to/logo.svg\" className=\"h-full w-full rounded-full object-cover\" />\n    </StatusIndicator.Root>\n  </Avatar.Indicator>\n</Avatar.Root>",
         "stories": ["BrandLogo"]
       },
       {
         "title": "Verified Badge",
-        "description": "Use the built-in Avatar.VerifiedIcon inside Avatar.Indicator for a verified badge overlay.",
-        "code": "<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n  <Avatar.Indicator position=\"top\">\n    <Avatar.VerifiedIcon />\n  </Avatar.Indicator>\n</Avatar.Root>",
-        "stories": ["IndicatorCustomSVG"]
+        "description": "Show a verified badge using Avatar.Indicator and StatusIndicator verified variant.",
+        "code": "import * as StatusIndicator from '@/components/ui/status-indicator'\n\n<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n  <Avatar.Indicator position=\"top\">\n    <StatusIndicator.Root status=\"verified\" />\n  </Avatar.Indicator>\n</Avatar.Root>",
+        "stories": ["Verified"]
+      },
+      {
+        "title": "Top Indicators",
+        "description": "All top-position status indicators: verified, pin, favorite, add, remove, and notification.",
+        "code": "import * as StatusIndicator from '@/components/ui/status-indicator'\n\n<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n  <Avatar.Indicator position=\"top\">\n    <StatusIndicator.Root status=\"pin\" />\n  </Avatar.Indicator>\n</Avatar.Root>",
+        "stories": ["TopIndicators"]
       },
       {
         "title": "Custom Placeholder",
@@ -138,7 +145,7 @@
       },
       {
         "name": "Avatar.Indicator",
-        "description": "Positioned container for status, notification, or brand logo overlays.",
+        "description": "Positioned container for StatusIndicator overlays. Automatically scales based on avatar size.",
         "props": [
           {
             "name": "position",
@@ -147,45 +154,6 @@
             "description": "The position of the indicator"
           }
         ]
-      },
-      {
-        "name": "Avatar.Status",
-        "description": "A colored dot indicating user status.",
-        "props": [
-          {
-            "name": "status",
-            "type": "'online' | 'offline' | 'busy' | 'away'",
-            "default": "'online'",
-            "description": "The status type"
-          }
-        ]
-      },
-      {
-        "name": "Avatar.BrandLogo",
-        "description": "A small circular brand logo overlay.",
-        "props": [
-          {
-            "name": "src",
-            "type": "string",
-            "description": "The logo image source URL"
-          },
-          {
-            "name": "asChild",
-            "type": "boolean",
-            "default": "false",
-            "description": "Renders as child element using Radix Slot"
-          }
-        ]
-      },
-      {
-        "name": "Avatar.Notification",
-        "description": "A small red notification dot.",
-        "props": []
-      },
-      {
-        "name": "Avatar.VerifiedIcon",
-        "description": "A blue verified badge SVG icon for use inside Avatar.Indicator.",
-        "props": []
       }
     ]
   },

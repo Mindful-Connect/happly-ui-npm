@@ -6,7 +6,7 @@ import { default as aiOrbMeta, Default as aiOrb_Default, Animated as aiOrb_Anima
 import { default as alertMeta, Playground as alert_Playground, Filled as alert_Filled, Light as alert_Light, Lighter as alert_Lighter, Stroke as alert_Stroke, Sizes as alert_Sizes } from '@/components/ui/alert.stories';
 import { default as avatarGroupCompactMeta, Playground as avatarGroupCompact_Playground, Variants as avatarGroupCompact_Variants, Size as avatarGroupCompact_Size } from '@/components/ui/avatar-group-compact.stories';
 import { default as avatarGroupMeta, Playground as avatarGroup_Playground, Size as avatarGroup_Size } from '@/components/ui/avatar-group.stories';
-import { default as avatarMeta, Playground as avatar_Playground, Color as avatar_Color, Size as avatar_Size, Text as avatar_Text, Placeholder as avatar_Placeholder, Status as avatar_Status, Notification as avatar_Notification, BrandLogo as avatar_BrandLogo, IndicatorCustomSVG as avatar_IndicatorCustomSVG, SquareRounded as avatar_SquareRounded, CustomPlaceholder as avatar_CustomPlaceholder, AsLink as avatar_AsLink } from '@/components/ui/avatar.stories';
+import { default as avatarMeta, Playground as avatar_Playground, Color as avatar_Color, Size as avatar_Size, Text as avatar_Text, Placeholder as avatar_Placeholder, Status as avatar_Status, Notification as avatar_Notification, BrandLogo as avatar_BrandLogo, Verified as avatar_Verified, TopIndicators as avatar_TopIndicators, SquareRounded as avatar_SquareRounded, CustomPlaceholder as avatar_CustomPlaceholder, AsLink as avatar_AsLink } from '@/components/ui/avatar.stories';
 import { default as badgeMeta, Playground as badge_Playground, BadgeFilled as badge_BadgeFilled, BadgeLight as badge_BadgeLight, BadgeLighter as badge_BadgeLighter, BadgeStroke as badge_BadgeStroke, BadgeColors as badge_BadgeColors, Size as badge_Size, Square as badge_Square, WithIcon as badge_WithIcon, WithDot as badge_WithDot, Disabled as badge_Disabled, AsChild as badge_AsChild, GroupDefault as badge_GroupDefault, Group as badge_Group, GroupExpanded as badge_GroupExpanded } from '@/components/ui/badge.stories';
 import { default as bannerMeta, Playground as banner_Playground, Error as banner_Error, Warning as banner_Warning, Success as banner_Success, Information as banner_Information, Feature as banner_Feature, Primary as banner_Primary } from '@/components/ui/banner.stories';
 import { default as buttonGroupMeta, Playground as buttonGroup_Playground, Default as buttonGroup_Default, Sizes as buttonGroup_Sizes } from '@/components/ui/button-group.stories';
@@ -31,7 +31,7 @@ import { default as fileFormatIconMeta, Default as fileFormatIcon_Default, Color
 import { default as fileUploadMeta, Document as fileUpload_Document, Image as fileUpload_Image, Video as fileUpload_Video, Audio as fileUpload_Audio, Attachment as fileUpload_Attachment, CustomOverrides as fileUpload_CustomOverrides, Dragging as fileUpload_Dragging } from '@/components/ui/file-upload.stories';
 import { default as formFieldMeta, Playground as formField_Playground, Demo as formField_Demo, WithError as formField_WithError, Disabled as formField_Disabled, CompoundMode as formField_CompoundMode, FormValidation as formField_FormValidation, AutoBindingShowcase as formField_AutoBindingShowcase } from '@/components/ui/form-field.stories';
 import { default as hintMeta, Playground as hint_Playground, Demo as hint_Demo, Disabled as hint_Disabled, HasError as hint_HasError, CustomIcon as hint_CustomIcon, Composed as hint_Composed } from '@/components/ui/hint.stories';
-import { default as infoCardMeta, Inline as infoCard_Inline, InlineWithFullWidthItem as infoCard_InlineWithFullWidthItem, Grid2Columns as infoCard_Grid2Columns, Stacked as infoCard_Stacked, Grid3Columns as infoCard_Grid3Columns } from '@/components/ui/info-card.stories';
+import { default as infoCardMeta, Inline as infoCard_Inline, InlineWithFullWidthItem as infoCard_InlineWithFullWidthItem, Grid2Columns as infoCard_Grid2Columns, Stacked as infoCard_Stacked, WithAction as infoCard_WithAction, WithActionNotification as infoCard_WithActionNotification, WithCustomAction as infoCard_WithCustomAction, Glow as infoCard_Glow, Grid3Columns as infoCard_Grid3Columns } from '@/components/ui/info-card.stories';
 import { default as infoGridMeta, BusinessProfile as infoGrid_BusinessProfile, FinancialData as infoGrid_FinancialData, TwoColumns as infoGrid_TwoColumns, MobileResponsive as infoGrid_MobileResponsive, ComposedGroup as infoGrid_ComposedGroup } from '@/components/ui/info-grid.stories';
 import { default as inputMeta, Playground as input_Playground, WithIcon as input_WithIcon, Sizes as input_Sizes, WithAffix as input_WithAffix, WithInlineAffix as input_WithInlineAffix, LabelAndHint as input_LabelAndHint, WithKbd as input_WithKbd, Password as input_Password, PasswordWithLevel as input_PasswordWithLevel, Disabled as input_Disabled, ErrorState as input_ErrorState, WithButton as input_WithButton, WithTags as input_WithTags, DateFieldStory as input_DateFieldStory, PaymentInput as input_PaymentInput, WithSelect as input_WithSelect, WithInlineSelect as input_WithInlineSelect, CounterInput as input_CounterInput, Composition as input_Composition } from '@/components/ui/input.stories';
 import { default as kbdMeta, Playground as kbd_Playground, Demo as kbd_Demo } from '@/components/ui/kbd.stories';
@@ -61,6 +61,7 @@ import { default as skeletonMeta, Default as skeleton_Default, Card as skeleton_
 import { default as sliderMeta, Playground as slider_Playground, Demo as slider_Demo, Variants as slider_Variants, Range as slider_Range, WithTooltip as slider_WithTooltip, WithFormField as slider_WithFormField } from '@/components/ui/slider.stories';
 import { default as socialsInputMeta, Default as socialsInput_Default, WithExistingValues as socialsInput_WithExistingValues, AllSocials as socialsInput_AllSocials, CustomSocials as socialsInput_CustomSocials, ReadOnly as socialsInput_ReadOnly, WithFormField as socialsInput_WithFormField, ErrorState as socialsInput_ErrorState, CustomLabels as socialsInput_CustomLabels } from '@/components/ui/socials-input.stories';
 import { default as statusBadgeMeta, Playground as statusBadge_Playground, Completed as statusBadge_Completed, Pending as statusBadge_Pending, Failed as statusBadge_Failed, Disabled as statusBadge_Disabled, AsChild as statusBadge_AsChild } from '@/components/ui/status-badge.stories';
+import { default as statusIndicatorMeta, TopVariants as statusIndicator_TopVariants, BottomVariants as statusIndicator_BottomVariants } from '@/components/ui/status-indicator.stories';
 import { default as switchToggleMeta, Default as switchToggle_Default, Rounded as switchToggle_Rounded, GroupDefault as switchToggle_GroupDefault, GroupTextOnly as switchToggle_GroupTextOnly } from '@/components/ui/switch-toggle.stories';
 import { default as switchMeta, Playground as switch_Playground, Demo as switch_Demo, Variants as switch_Variants, Disabled as switch_Disabled, WithLabel as switch_WithLabel, WithLabelExtended as switch_WithLabelExtended, WithFormField as switch_WithFormField } from '@/components/ui/switch.stories';
 import { default as tabMenuHorizontalMeta, Default as tabMenuHorizontal_Default, Primary as tabMenuHorizontal_Primary, WithIcons as tabMenuHorizontal_WithIcons, WithCounter as tabMenuHorizontal_WithCounter, Composed as tabMenuHorizontal_Composed, Overflow as tabMenuHorizontal_Overflow, Disabled as tabMenuHorizontal_Disabled } from '@/components/ui/tab-menu-horizontal.stories';
@@ -134,7 +135,8 @@ export const storyRegistry: Record<string, {
     'Status': avatar_Status,
     'Notification': avatar_Notification,
     'BrandLogo': avatar_BrandLogo,
-    'IndicatorCustomSVG': avatar_IndicatorCustomSVG,
+    'Verified': avatar_Verified,
+    'TopIndicators': avatar_TopIndicators,
     'SquareRounded': avatar_SquareRounded,
     'CustomPlaceholder': avatar_CustomPlaceholder,
     'AsLink': avatar_AsLink
@@ -428,6 +430,10 @@ export const storyRegistry: Record<string, {
     'InlineWithFullWidthItem': infoCard_InlineWithFullWidthItem,
     'Grid2Columns': infoCard_Grid2Columns,
     'Stacked': infoCard_Stacked,
+    'WithAction': infoCard_WithAction,
+    'WithActionNotification': infoCard_WithActionNotification,
+    'WithCustomAction': infoCard_WithCustomAction,
+    'Glow': infoCard_Glow,
     'Grid3Columns': infoCard_Grid3Columns
     }
   },
@@ -751,6 +757,13 @@ export const storyRegistry: Record<string, {
     'Failed': statusBadge_Failed,
     'Disabled': statusBadge_Disabled,
     'AsChild': statusBadge_AsChild
+    }
+  },
+  'status-indicator': {
+    meta: statusIndicatorMeta,
+    stories: {
+    'TopVariants': statusIndicator_TopVariants,
+    'BottomVariants': statusIndicator_BottomVariants
     }
   },
   'switch-toggle': {

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "status-indicator",
+  "type": "registry:ui",
+  "title": "Status Indicator",
+  "description": "A versatile status indicator for avatars supporting top (verified, pin, favorite, add, remove, notification) and bottom (online, offline, busy, away, company) positions.",
+  "version": "1.0.0",
+  "dependencies": ["@remixicon/react"],
+  "registryDependencies": ["tv", "happly-ui-utils"],
+  "docs": {
+    "lead": "Status indicators designed for avatar corners. Top-position variants include verified badge, pin, favorite, add, remove, and notification. Bottom-position variants include online, offline, busy, away, and company logo.",
+    "usage": "import * as StatusIndicator from \"@/components/ui/status-indicator\"\n\n<StatusIndicator.Root status=\"online\" />",
+    "examples": [
+      {
+        "title": "Top Variants",
+        "description": "Status indicators for the top-right corner: verified badge, pin, favorite, add, remove, and notification.",
+        "code": "import * as StatusIndicator from '@/components/ui/status-indicator'\n\n<StatusIndicator.Root status=\"verified\" />\n<StatusIndicator.Root status=\"pin\" />\n<StatusIndicator.Root status=\"favorite\" />\n<StatusIndicator.Root status=\"add\" />\n<StatusIndicator.Root status=\"remove\" />\n<StatusIndicator.Root status=\"notification\" />",
+        "stories": ["TopVariants"]
+      },
+      {
+        "title": "Bottom Variants",
+        "description": "Status indicators for the bottom-right corner: online, offline, busy, away, and company. The company variant accepts children for a custom logo.",
+        "code": "import * as StatusIndicator from '@/components/ui/status-indicator'\n\n<StatusIndicator.Root status=\"online\" />\n<StatusIndicator.Root status=\"offline\" />\n<StatusIndicator.Root status=\"busy\" />\n<StatusIndicator.Root status=\"away\" />\n<StatusIndicator.Root status=\"company\">\n  <img src=\"logo.png\" className=\"h-full w-full rounded-full object-cover\" />\n</StatusIndicator.Root>",
+        "stories": ["BottomVariants"]
+      }
+    ],
+    "api": [
+      {
+        "name": "StatusIndicator.Root",
+        "description": "The status indicator element. Renders a default icon based on the status variant. Pass children to override the default content (useful for company logos).",
+        "props": [
+          {
+            "name": "status",
+            "type": "'verified' | 'pin' | 'favorite' | 'add' | 'remove' | 'notification' | 'online' | 'offline' | 'busy' | 'away' | 'company'",
+            "default": "'online'",
+            "description": "The type of status indicator to display."
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/status-indicator.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

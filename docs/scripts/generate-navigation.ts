@@ -91,6 +91,7 @@ function main() {
     'skeleton',
     'ai-orb',
     'status-badge',
+    'status-indicator',
     'table',
     'tag',
   ];

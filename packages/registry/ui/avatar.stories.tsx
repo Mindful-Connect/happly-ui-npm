@@ -1,6 +1,7 @@
 import { RiBuildingLine } from '@remixicon/react';
 
 import * as Avatar from './avatar';
+import * as StatusIndicator from './status-indicator';
 
 export default { title: 'Displaying Data/Avatar', component: Avatar.Root };
 
@@ -110,35 +111,28 @@ export const Status = {
       <Avatar.Root>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator>
-          <Avatar.Status status='online' />
+          <StatusIndicator.Root status='online' />
         </Avatar.Indicator>
       </Avatar.Root>
 
       <Avatar.Root>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator>
-          <Avatar.Status status='offline' />
+          <StatusIndicator.Root status='offline' />
         </Avatar.Indicator>
       </Avatar.Root>
 
       <Avatar.Root>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator>
-          <Avatar.Status status='busy' />
+          <StatusIndicator.Root status='busy' />
         </Avatar.Indicator>
       </Avatar.Root>
 
       <Avatar.Root>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator>
-          <Avatar.Status status='away' />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator>
-          <Avatar.Status className='bg-blue-400' />
+          <StatusIndicator.Root status='away' />
         </Avatar.Indicator>
       </Avatar.Root>
     </div>
@@ -148,68 +142,16 @@ export const Status = {
 export const Notification = {
   render: () => (
     <div className='flex w-full max-w-96 flex-wrap items-center justify-center gap-6'>
-      <Avatar.Root>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='top'>
-          <Avatar.Notification />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='72'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='top'>
-          <Avatar.Notification />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='64'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='top'>
-          <Avatar.Notification />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='56'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='top'>
-          <Avatar.Notification />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='48'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='top'>
-          <Avatar.Notification />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='40'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='top'>
-          <Avatar.Notification />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='32'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='top'>
-          <Avatar.Notification />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='24'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='top'>
-          <Avatar.Notification />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='20'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='top'>
-          <Avatar.Notification />
-        </Avatar.Indicator>
-      </Avatar.Root>
+      {(['80', '72', '64', '56', '48', '40', '32', '24', '20'] as const).map(
+        (size) => (
+          <Avatar.Root key={size} size={size}>
+            <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
+            <Avatar.Indicator position='top'>
+              <StatusIndicator.Root status='notification' />
+            </Avatar.Indicator>
+          </Avatar.Root>
+        )
+      )}
     </div>
   ),
 };
@@ -217,135 +159,85 @@ export const Notification = {
 export const BrandLogo = {
   render: () => (
     <div className='flex w-full max-w-96 flex-wrap items-center justify-center gap-6'>
-      <Avatar.Root>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='bottom'>
-          <Avatar.BrandLogo src='https://i.pravatar.cc/48?img=3' />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='72'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='bottom'>
-          <Avatar.BrandLogo src='https://i.pravatar.cc/48?img=3' />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='64'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='bottom'>
-          <Avatar.BrandLogo src='https://i.pravatar.cc/48?img=3' />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='56'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='bottom'>
-          <Avatar.BrandLogo src='https://i.pravatar.cc/48?img=3' />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='48'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='bottom'>
-          <Avatar.BrandLogo src='https://i.pravatar.cc/48?img=3' />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='40'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='bottom'>
-          <Avatar.BrandLogo src='https://i.pravatar.cc/48?img=3' />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='32'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='bottom'>
-          <Avatar.BrandLogo src='https://i.pravatar.cc/48?img=3' />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='24'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='bottom'>
-          <Avatar.BrandLogo src='https://i.pravatar.cc/48?img=3' />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='20'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='bottom'>
-          <Avatar.BrandLogo src='https://i.pravatar.cc/48?img=3' />
-        </Avatar.Indicator>
-      </Avatar.Root>
+      {(['80', '72', '64', '56', '48', '40', '32', '24', '20'] as const).map(
+        (size) => (
+          <Avatar.Root key={size} size={size}>
+            <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
+            <Avatar.Indicator position='bottom'>
+              <StatusIndicator.Root status='company'>
+                <img
+                  src='https://i.pravatar.cc/48?img=3'
+                  alt=''
+                  className='h-full w-full rounded-full object-cover'
+                />
+              </StatusIndicator.Root>
+            </Avatar.Indicator>
+          </Avatar.Root>
+        )
+      )}
     </div>
   ),
 };
 
-export const IndicatorCustomSVG = {
+export const Verified = {
+  render: () => (
+    <div className='flex w-full max-w-96 flex-wrap items-center justify-center gap-6'>
+      {(['80', '72', '64', '56', '48', '40', '32', '24', '20'] as const).map(
+        (size) => (
+          <Avatar.Root key={size} size={size}>
+            <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
+            <Avatar.Indicator position='top'>
+              <StatusIndicator.Root status='verified' />
+            </Avatar.Indicator>
+          </Avatar.Root>
+        )
+      )}
+    </div>
+  ),
+};
+
+export const TopIndicators = {
   render: () => (
     <div className='flex w-full max-w-96 flex-wrap items-center justify-center gap-6'>
       <Avatar.Root>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator position='top'>
-          <Avatar.VerifiedIcon />
+          <StatusIndicator.Root status='verified' />
         </Avatar.Indicator>
       </Avatar.Root>
 
-      <Avatar.Root size='72'>
+      <Avatar.Root>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator position='top'>
-          <Avatar.VerifiedIcon />
+          <StatusIndicator.Root status='pin' />
         </Avatar.Indicator>
       </Avatar.Root>
 
-      <Avatar.Root size='64'>
+      <Avatar.Root>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator position='top'>
-          <Avatar.VerifiedIcon />
+          <StatusIndicator.Root status='favorite' />
         </Avatar.Indicator>
       </Avatar.Root>
 
-      <Avatar.Root size='56'>
+      <Avatar.Root>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator position='top'>
-          <Avatar.VerifiedIcon />
+          <StatusIndicator.Root status='add' />
         </Avatar.Indicator>
       </Avatar.Root>
 
-      <Avatar.Root size='48'>
+      <Avatar.Root>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator position='top'>
-          <Avatar.VerifiedIcon />
+          <StatusIndicator.Root status='remove' />
         </Avatar.Indicator>
       </Avatar.Root>
 
-      <Avatar.Root size='40'>
+      <Avatar.Root>
         <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
         <Avatar.Indicator position='top'>
-          <Avatar.VerifiedIcon />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='32'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='top'>
-          <Avatar.VerifiedIcon />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='24'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='top'>
-          <Avatar.VerifiedIcon />
-        </Avatar.Indicator>
-      </Avatar.Root>
-
-      <Avatar.Root size='20'>
-        <Avatar.Image src='https://i.pravatar.cc/160?img=5' />
-        <Avatar.Indicator position='top'>
-          <Avatar.VerifiedIcon />
+          <StatusIndicator.Root status='notification' />
         </Avatar.Indicator>
       </Avatar.Root>
     </div>

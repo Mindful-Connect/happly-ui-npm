@@ -105,6 +105,10 @@
             "href": "/docs/components/status-badge"
           },
           {
+            "title": "Status Indicator",
+            "href": "/docs/components/status-indicator"
+          },
+          {
             "title": "Table",
             "href": "/docs/components/table"
           },
