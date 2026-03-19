@@ -373,6 +373,10 @@
     "title": "Hooks",
     "links": [
       {
+        "title": "useFileDownload",
+        "href": "/docs/hooks/use-file-download"
+      },
+      {
         "title": "useFileUpload",
         "href": "/docs/hooks/use-file-upload"
       },

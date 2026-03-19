@@ -1,0 +1,84 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "use-file-download",
+  "type": "registry:hook",
+  "title": "useFileDownload",
+  "description": "Hook for downloading private files via signed URLs with loading state and abort support.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": [],
+  "docs": {
+    "lead": "A React hook that downloads private files by fetching a signed URL from your API, then streaming the file as a blob to trigger a browser download with a controlled filename. Includes abort support, loading state, and error handling.",
+    "usage": "import { useFileDownload } from \"@/hooks/use-file-download\"\n\nconst { download, isDownloading } = useFileDownload({\n  endpoint: '/api/assets/url',\n  headers: () => ({ Authorization: `Bearer ${token}` }),\n})",
+    "examples": [
+      {
+        "title": "Download Button",
+        "description": "Trigger a file download from a button click using a storage key.",
+        "code": "import { useFileDownload } from \"@/hooks/use-file-download\"\n\nfunction DownloadButton({ fileKey, fileName }: { fileKey: string; fileName: string }) {\n  const { download, isDownloading, error } = useFileDownload({\n    endpoint: '/api/assets/url',\n    headers: () => ({ Authorization: `Bearer ${token}` }),\n  })\n\n  return (\n    <>\n      <button onClick={() => download(fileKey, fileName)} disabled={isDownloading}>\n        {isDownloading ? 'Downloading…' : 'Download'}\n      </button>\n      {error && <p className=\"text-error-base text-sm\">{error.message}</p>}\n    </>\n  )\n}",
+        "stories": []
+      },
+      {
+        "title": "File List with Active Key Tracking",
+        "description": "Show which file is currently downloading in a list using activeKey.",
+        "code": "import { useFileDownload } from \"@/hooks/use-file-download\"\n\nfunction FileList({ files }: { files: { key: string; name: string }[] }) {\n  const { download, isDownloading, activeKey } = useFileDownload({\n    endpoint: '/api/assets/url',\n    baseUrl: process.env.NEXT_PUBLIC_API_URL,\n    headers: () => ({\n      Authorization: `Bearer ${token}`,\n      'X-Workspace-Id': workspaceId,\n    }),\n  })\n\n  return (\n    <ul>\n      {files.map((file) => (\n        <li key={file.key} className=\"flex items-center gap-2\">\n          <span>{file.name}</span>\n          <button\n            onClick={() => download(file.key, file.name)}\n            disabled={isDownloading}\n          >\n            {activeKey === file.key ? 'Downloading…' : 'Download'}\n          </button>\n        </li>\n      ))}\n    </ul>\n  )\n}",
+        "stories": []
+      }
+    ],
+    "api": [
+      {
+        "name": "useFileDownload Options",
+        "description": "Configuration options passed to the hook.",
+        "props": [
+          {
+            "name": "endpoint",
+            "type": "string",
+            "description": "API endpoint path that accepts POST { key } and returns { data: { url } } with a signed download URL."
+          },
+          {
+            "name": "baseUrl",
+            "type": "string",
+            "default": "''",
+            "description": "Base URL prepended to the endpoint."
+          },
+          {
+            "name": "headers",
+            "type": "() => Record<string, string>",
+            "description": "Function returning headers for the signed-URL request (e.g. auth tokens, workspace keys). Called on each download."
+          }
+        ]
+      },
+      {
+        "name": "useFileDownload Return Value",
+        "description": "The object returned by the hook.",
+        "props": [
+          {
+            "name": "download",
+            "type": "(key: string, fileName?: string) => Promise<void>",
+            "description": "Initiate a download for the given storage key. Optionally specify the filename for the saved file."
+          },
+          {
+            "name": "isDownloading",
+            "type": "boolean",
+            "description": "True while a download is in progress."
+          },
+          {
+            "name": "activeKey",
+            "type": "string | null",
+            "description": "The storage key currently being downloaded, or null when idle. Useful for showing per-item loading states in a list."
+          },
+          {
+            "name": "error",
+            "type": "Error | null",
+            "description": "The last download error, or null. Reset on each new download call."
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "hooks/use-file-download.ts",
+      "type": "registry:hook"
+    }
+  ]
+}
