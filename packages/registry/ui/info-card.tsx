@@ -24,9 +24,10 @@ export const infoCardVariants = tv({
       'shadow-[0px_2px_5px_-1px_rgba(0,0,0,0.04),0px_12px_40px_-8px_rgba(0,0,0,0.08),0px_0px_0px_1px_var(--color-bg-white-0),0px_0px_0px_1.5px_rgba(153,160,174,0.1)]',
     ],
     action: [
-      'flex items-center justify-center overflow-clip rounded-xl bg-bg-white-0 p-3 shrink-0',
+      'flex items-center justify-center overflow-clip rounded-xl bg-bg-white-0 p-3',
       'shadow-[0px_2px_5px_-1px_rgba(0,0,0,0.04),0px_12px_40px_-8px_rgba(0,0,0,0.08),0px_0px_0px_1px_var(--color-bg-white-0),0px_0px_0px_1.5px_rgba(153,160,174,0.1)]',
       'transition-colors hover:bg-bg-weak-50 cursor-pointer',
+      '@sm:aspect-square',
     ],
     label: 'text-label-xs font-medium text-text-strong-950',
     value: 'flex items-center gap-1 text-label-xs text-text-sub-600',
@@ -34,8 +35,7 @@ export const infoCardVariants = tv({
   variants: {
     layout: {
       inline: {
-        root: '@sm:flex-row @sm:flex-wrap',
-        item: '@sm:flex-1 @sm:min-w-0',
+        root: '@sm:grid @sm:grid-cols-[var(--_info-card-cols)]',
       },
       grid: {
         root: '@sm:grid',
@@ -78,12 +78,36 @@ type InfoCardRootProps = React.HTMLAttributes<HTMLDivElement> &
   VariantProps<typeof infoCardVariants>;
 
 const InfoCardRoot = React.forwardRef<HTMLDivElement, InfoCardRootProps>(
-  ({ layout, columns, className, ...rest }, forwardedRef) => {
+  ({ layout, columns, className, children, style, ...rest }, forwardedRef) => {
     const { root } = infoCardVariants({ layout, columns });
+
+    const resolvedLayout = layout ?? 'inline';
+    let gridStyle = style;
+
+    if (resolvedLayout === 'inline') {
+      const childArray = React.Children.toArray(children);
+      const hasAction = childArray.some(
+        (child) =>
+          React.isValidElement(child) &&
+          (child.type as any).displayName === INFO_CARD_ACTION_NAME
+      );
+      const itemCount = childArray.length - (hasAction ? 1 : 0);
+      const cols =
+        'minmax(0,1fr) '.repeat(itemCount).trim() +
+        (hasAction ? ' auto' : '');
+
+      gridStyle = { ...style, '--_info-card-cols': cols } as React.CSSProperties;
+    }
 
     return (
       <div ref={forwardedRef} className='@container'>
-        <div className={root({ class: className })} {...rest} />
+        <div
+          className={root({ class: className })}
+          style={gridStyle}
+          {...rest}
+        >
+          {children}
+        </div>
       </div>
     );
   }
@@ -143,25 +167,44 @@ const InfoCardValue = React.forwardRef<HTMLDivElement, InfoCardValueProps>(
 );
 InfoCardValue.displayName = INFO_CARD_VALUE_NAME;
 
-type InfoCardActionProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
+type InfoCardActionProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+  React.AnchorHTMLAttributes<HTMLAnchorElement> & {
+    href?: string;
+  };
 
-const InfoCardAction = React.forwardRef<HTMLButtonElement, InfoCardActionProps>(
-  ({ className, children, ...rest }, forwardedRef) => {
-    const { action } = infoCardVariants();
+const InfoCardAction = React.forwardRef<
+  HTMLButtonElement | HTMLAnchorElement,
+  InfoCardActionProps
+>(({ className, children, href, ...rest }, forwardedRef) => {
+  const { action } = infoCardVariants();
+  const cls = action({ class: className });
+  const content = children ?? (
+    <RiArrowRightUpLine className='size-5 text-icon-sub-600' />
+  );
 
+  if (href) {
     return (
-      <button
-        ref={forwardedRef}
-        className={action({ class: className })}
-        {...rest}
+      <a
+        ref={forwardedRef as React.Ref<HTMLAnchorElement>}
+        href={href}
+        className={cls}
+        {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
-        {children ?? (
-          <RiArrowRightUpLine className='size-5 text-icon-sub-600' />
-        )}
-      </button>
+        {content}
+      </a>
     );
   }
-);
+
+  return (
+    <button
+      ref={forwardedRef as React.Ref<HTMLButtonElement>}
+      className={cls}
+      {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+    >
+      {content}
+    </button>
+  );
+});
 InfoCardAction.displayName = INFO_CARD_ACTION_NAME;
 
 export {

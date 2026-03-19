@@ -163,7 +163,7 @@ export const WithAction = {
             <span>Sean Muir</span>
           </InfoCard.Value>
         </InfoCard.Item>
-        <InfoCard.Action className='h-[66px] @sm:w-[66px]' />
+        <InfoCard.Action />
       </InfoCard.Root>
     </div>
   ),
@@ -188,7 +188,7 @@ export const WithCustomAction = {
             </StatusBadge.Root>
           </InfoCard.Value>
         </InfoCard.Item>
-        <InfoCard.Action className='h-[66px] @sm:w-[66px]'>
+        <InfoCard.Action className='h-[70px] @sm:w-[70px]'>
           <RiExternalLinkLine className='size-5 text-icon-sub-600' />
         </InfoCard.Action>
       </InfoCard.Root>
