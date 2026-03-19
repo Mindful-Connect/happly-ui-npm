@@ -8,6 +8,24 @@ import { useFormFieldBinding } from '@/lib/use-form-field-binding';
 import * as Input from './input';
 import * as Select from './select';
 
+/**
+ * Format a numeric string with thousands separators.
+ * Keeps the decimal portion as-is to avoid interfering while typing.
+ */
+function formatDisplay(raw: string): string {
+  if (!raw) return '';
+  const [intPart, ...decParts] = raw.split('.');
+  const formatted = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return decParts.length > 0 ? `${formatted}.${decParts.join('')}` : formatted;
+}
+
+/**
+ * Strip formatting characters to get a clean numeric string.
+ */
+function stripFormatting(val: string): string {
+  return val.replace(/[^0-9.]/g, '');
+}
+
 /** Empty context to isolate the currency Select from the parent FormField */
 const isolatedFormField = {
   hasError: false,
@@ -137,10 +155,19 @@ const CurrencyInputRoot = React.forwardRef<
       [onCurrencyChange, currencyBinding]
     );
 
+    const displayValue = React.useMemo(
+      () => formatDisplay(value ?? ''),
+      [value]
+    );
+
     const handleInputChange = React.useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
-        const val = e.target.value.replace(/[^0-9.]/g, '');
-        onValueChange?.(val);
+        const raw = stripFormatting(e.target.value);
+        // Prevent multiple decimal points
+        const parts = raw.split('.');
+        const cleaned =
+          parts.length > 2 ? `${parts[0]}.${parts.slice(1).join('')}` : raw;
+        onValueChange?.(cleaned);
       },
       [onValueChange]
     );
@@ -153,7 +180,7 @@ const CurrencyInputRoot = React.forwardRef<
             ref={forwardedRef}
             inputMode='decimal'
             placeholder={placeholder}
-            value={value}
+            value={displayValue}
             onChange={handleInputChange}
             onBlur={() => formField.onBlur?.()}
             disabled={resolvedDisabled}

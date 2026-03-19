@@ -45,10 +45,7 @@ function SectionToggleHeader({
 }: SectionToggleHeaderProps) {
   return (
     <div
-      className={cn(
-        'flex items-start gap-3.5 p-2',
-        className
-      )}
+      className={cn('flex items-start gap-3.5 p-2', className)}
       {...(!open &&
         onOpenChange && {
           role: 'button',

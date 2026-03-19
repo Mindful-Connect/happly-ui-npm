@@ -15,17 +15,19 @@ const infoGridRootVariants = tv({
 
 const infoGridRowVariants = tv({
   base: [
-    'flex w-full items-stretch',
+    'flex w-full flex-col @lg:flex-row @lg:items-stretch',
     // all rows except the first get a top divider
-    'not-first:border-t not-first:border-stroke-soft-200',
+    '[&:not(:first-child)]:border-t [&:not(:first-child)]:border-stroke-soft-200',
   ],
 });
 
 const infoGridCellVariants = tv({
   base: [
     'flex min-w-0 flex-1 flex-col gap-3 p-5',
-    // all cells except the last in a row get a right divider
-    'not-last:border-r not-last:border-stroke-soft-200',
+    // stacked (small): bottom border on all cells except last
+    '[&:not(:last-child)]:border-b [&:not(:last-child)]:border-stroke-soft-200',
+    // row (large): right border instead, remove bottom border
+    '@lg:[&:not(:last-child)]:border-b-0 @lg:[&:not(:last-child)]:border-r @lg:[&:not(:last-child)]:border-stroke-soft-200',
   ],
   variants: {},
 });
@@ -35,13 +37,11 @@ const infoGridCellVariants = tv({
 type InfoGridRootProps = React.ComponentPropsWithoutRef<'div'>;
 
 const InfoGridRoot = React.forwardRef<HTMLDivElement, InfoGridRootProps>(
-  ({ className, ...rest }, forwardedRef) => {
+  ({ className, children, ...rest }, forwardedRef) => {
     return (
-      <div
-        ref={forwardedRef}
-        className={cn(infoGridRootVariants(), className)}
-        {...rest}
-      />
+      <div ref={forwardedRef} className='@container' {...rest}>
+        <div className={cn(infoGridRootVariants(), className)}>{children}</div>
+      </div>
     );
   }
 );
@@ -87,10 +87,14 @@ type InfoGridGroupItem = {
   icon: React.ReactNode;
   label: React.ReactNode;
   children: React.ReactNode;
+  /** Number of grid columns this item should span. Defaults to 1. */
+  span?: number;
 };
 
 type InfoGridGroupRow = {
   items: InfoGridGroupItem[];
+  /** Total number of grid columns for this row. When set, the row uses CSS grid instead of flex. */
+  columns?: number;
 };
 
 type InfoGridGroupProps = Omit<
@@ -105,11 +109,33 @@ const InfoGridGroup = React.forwardRef<HTMLDivElement, InfoGridGroupProps>(
     return (
       <InfoGridRoot ref={forwardedRef} {...rest}>
         {rows.map((row, rowIndex) => (
-          <InfoGridRow key={rowIndex}>
+          <InfoGridRow
+            key={rowIndex}
+            className={
+              row.columns
+                ? cn(
+                    '@lg:grid',
+                    row.columns === 2 && '@lg:grid-cols-2',
+                    row.columns === 3 && '@lg:grid-cols-3',
+                    row.columns === 4 && '@lg:grid-cols-4'
+                  )
+                : undefined
+            }
+          >
             {row.items.map((item, cellIndex) => (
-              <InfoGridCell key={cellIndex}>
+              <InfoGridCell
+                key={cellIndex}
+                className={
+                  item.span && item.span > 1
+                    ? cn(
+                        item.span === 2 && '@lg:col-span-2',
+                        item.span === 3 && '@lg:col-span-3'
+                      )
+                    : undefined
+                }
+              >
                 <KeyIcon.Root icon={item.icon} />
-                <div className='flex flex-col items-start gap-1'>
+                <div className='text-paragraph-sm text-text-sub-600 flex flex-col items-start gap-1'>
                   <p className='text-label-xs text-text-strong-950'>
                     {item.label}
                   </p>

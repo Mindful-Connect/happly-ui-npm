@@ -472,6 +472,12 @@
       "description": "Tailwind Variants wrapper with cn() for class merging."
     },
     {
+      "name": "use-file-download",
+      "type": "registry:hook",
+      "title": "useFileDownload",
+      "description": "Hook for downloading private files via signed URLs with loading state and abort support."
+    },
+    {
       "name": "use-file-upload",
       "type": "registry:hook",
       "title": "useFileUpload",

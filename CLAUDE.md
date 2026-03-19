@@ -253,12 +253,12 @@ The CLI fetches theme CSS **from the registry at runtime** (not from hardcoded t
 
 Design tokens are defined in these files:
 
-| File | Purpose | When Used |
-|------|---------|-----------|
-| `packages/registry/styles/happly-theme.css` | **V4 theme** — Tailwind v4 `@theme` syntax (source of truth for Storybook + CLI fetch) | Storybook, V4 user projects |
-| `packages/registry/styles/happly-theme-v3.css` | **V3 theme** — `:root {}` CSS custom properties (fetched by CLI for V3 projects) | V3 user projects |
-| `packages/cli/src/utils/templates/happly-theme.ts` | **Offline fallback only** — bundled copies of V4/V3 themes used when fetch fails | CLI offline/network failure |
-| `packages/cli/src/utils/templates/tokens.ts` | Tailwind v3 plugin tokens (typography, shadows, colors) | V3 projects via `tailwind.config.js` extend |
+| File                                               | Purpose                                                                                | When Used                                   |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `packages/registry/styles/happly-theme.css`        | **V4 theme** — Tailwind v4 `@theme` syntax (source of truth for Storybook + CLI fetch) | Storybook, V4 user projects                 |
+| `packages/registry/styles/happly-theme-v3.css`     | **V3 theme** — `:root {}` CSS custom properties (fetched by CLI for V3 projects)       | V3 user projects                            |
+| `packages/cli/src/utils/templates/happly-theme.ts` | **Offline fallback only** — bundled copies of V4/V3 themes used when fetch fails       | CLI offline/network failure                 |
+| `packages/cli/src/utils/templates/tokens.ts`       | Tailwind v3 plugin tokens (typography, shadows, colors)                                | V3 projects via `tailwind.config.js` extend |
 
 **When adding or changing a design token (color, shadow, keyframe, etc.):**
 
@@ -274,6 +274,7 @@ Design tokens are defined in these files:
 5. Rebuild and type-check the CLI: `cd packages/cli && bun run typecheck`
 
 **Key differences between V3 and V4:**
+
 - V4: All tokens in `@theme {}` block, keyframes like `spin`/`ping`/`pulse`/`bounce` must be defined (not auto-included)
 - V3: Colors as CSS custom properties in `:root {}`, shadows/typography injected via Tailwind plugin from `tokens.ts` (not as CSS vars), standard keyframes (`spin`/`ping`/`pulse`/`bounce`) are already provided by Tailwind v3 base styles
 

@@ -79,11 +79,7 @@ export const Lighter = {
         icon={<RiNotification3Line />}
       />
       <KeyIcon.Root style='lighter' color='teal' icon={<RiSettings3Line />} />
-      <KeyIcon.Root
-        style='lighter'
-        color='primary'
-        icon={<RiStarLine />}
-      />
+      <KeyIcon.Root style='lighter' color='primary' icon={<RiStarLine />} />
     </div>
   ),
 };
@@ -93,11 +89,7 @@ export const Filled = {
     <div className='flex flex-wrap items-end gap-4'>
       <KeyIcon.Root style='filled' color='gray' icon={<RiHome2Line />} />
       <KeyIcon.Root style='filled' color='blue' icon={<RiSearchLine />} />
-      <KeyIcon.Root
-        style='filled'
-        color='orange'
-        icon={<RiFlashlightLine />}
-      />
+      <KeyIcon.Root style='filled' color='orange' icon={<RiFlashlightLine />} />
       <KeyIcon.Root style='filled' color='red' icon={<RiHeartLine />} />
       <KeyIcon.Root style='filled' color='green' icon={<RiCheckLine />} />
       <KeyIcon.Root style='filled' color='yellow' icon={<RiStarLine />} />

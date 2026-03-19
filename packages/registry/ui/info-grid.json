@@ -8,7 +8,7 @@
   "dependencies": [],
   "registryDependencies": ["happly-ui-utils", "tv", "key-icon"],
   "docs": {
-    "lead": "A configurable card-based grid layout with automatic dividers and corner rounding. Only provides the structural shell (Root, Row, Cell) — compose cell content freely with KeyIcon, Badge, text, or any custom elements.",
+    "lead": "A responsive card-based grid layout with container queries, automatic dividers, and corner rounding. Cells stack vertically on small containers and flow horizontally at @lg. Compose cell content freely with KeyIcon, Badge, text, or any custom elements.",
     "usage": "import * as InfoGrid from \"@/components/ui/info-grid\"\nimport * as KeyIcon from \"@/components/ui/key-icon\"\n\n<InfoGrid.Root>\n  <InfoGrid.Row>\n    <InfoGrid.Cell>\n      <KeyIcon.Root icon={<RiHeartLine />} />\n      <div>\n        <p>Label</p>\n        <p>Any content here</p>\n      </div>\n    </InfoGrid.Cell>\n  </InfoGrid.Row>\n</InfoGrid.Root>",
     "examples": [
       {
@@ -37,41 +37,41 @@
       },
       {
         "title": "Composed Group",
-        "description": "A composed version that renders the grid from a rows array with KeyIcon, label, and children per cell.",
-        "code": "<InfoGrid.Group rows={[\n  {\n    items: [\n      { icon: <RiHeartLine />, label: 'Category', children: <p>SaaS</p> },\n    ],\n  },\n  {\n    items: [\n      { icon: <RiSuitcaseLine />, label: 'Business name', children: <p>Happly</p> },\n      { icon: <RiMapPinLine />, label: 'Location', children: <p>Vancouver, BC</p> },\n    ],\n  },\n]} />",
+        "description": "A composed version that renders the grid from a rows array with KeyIcon, label, and children per cell. Supports `columns` per row for CSS grid layout and `span` per item.",
+        "code": "<InfoGrid.Group rows={[\n  {\n    items: [\n      { icon: <RiHeartLine />, label: 'Category', children: <p>SaaS</p> },\n    ],\n  },\n  {\n    columns: 3,\n    items: [\n      { icon: <RiSuitcaseLine />, label: 'Business name', children: <p>Happly</p> },\n      { icon: <RiMapPinLine />, label: 'Location', children: <p>Vancouver, BC</p>, span: 2 },\n    ],\n  },\n]} />",
         "stories": ["ComposedGroup"]
       }
     ],
     "api": [
       {
         "name": "InfoGrid.Root",
-        "description": "The card container with rounded corners, border, and shadow. Uses overflow-hidden so corner cells clip automatically.",
+        "description": "The card container with rounded corners, border, and shadow. Wraps content in a @container for responsive row/cell behavior.",
         "props": [
           {
             "name": "className",
             "type": "string",
-            "description": "Additional class names (e.g. max-w-[960px])"
+            "description": "Additional class names applied to the inner card element (e.g. max-w-[960px])"
           }
         ]
       },
       {
         "name": "InfoGrid.Row",
-        "description": "A horizontal row of cells. Automatically adds a top divider for all rows except the first.",
+        "description": "A responsive row of cells. Stacks vertically on small containers and switches to a horizontal layout at @lg. Automatically adds a top divider for all rows except the first.",
         "props": []
       },
       {
         "name": "InfoGrid.Cell",
-        "description": "An individual cell. Automatically adds a right divider for all cells except the last in a row. Place any content as children — KeyIcon, badges, tags, text, or custom elements.",
+        "description": "An individual cell. When stacked (small), adds a bottom divider between cells. When horizontal (@lg), adds a right divider instead. Place any content as children — KeyIcon, badges, tags, text, or custom elements.",
         "props": []
       },
       {
         "name": "InfoGrid.Group",
-        "description": "A composed component that renders a complete grid from an array of row definitions. Each row contains items with a KeyIcon, label, and children.",
+        "description": "A composed component that renders a complete grid from an array of row definitions. Each row contains items with a KeyIcon, label, and children. Supports CSS grid columns and cell spanning.",
         "props": [
           {
             "name": "rows",
             "type": "InfoGridGroupRow[]",
-            "description": "Array of row definitions. Each row has `items` with `icon`, `label`, and `children`."
+            "description": "Array of row definitions. Each row has `items` (with `icon`, `label`, `children`, and optional `span`) and an optional `columns` number to enable CSS grid layout."
           }
         ]
       }
