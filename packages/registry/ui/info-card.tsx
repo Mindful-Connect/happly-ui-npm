@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import { RiArrowRightUpLine } from '@remixicon/react';
 
+import { Root as StatusIndicator } from '@/components/ui/status-indicator';
 import { cn } from '@/lib/happly-ui-utils';
 import { tv, type VariantProps } from '@/lib/tv';
 
@@ -24,7 +25,7 @@ export const infoCardVariants = tv({
       'shadow-[0px_2px_5px_-1px_rgba(0,0,0,0.04),0px_12px_40px_-8px_rgba(0,0,0,0.08),0px_0px_0px_1px_var(--color-bg-white-0),0px_0px_0px_1.5px_rgba(153,160,174,0.1)]',
     ],
     action: [
-      'flex items-center justify-center overflow-clip rounded-xl bg-bg-white-0 p-3',
+      'flex items-center justify-center overflow-visible rounded-xl bg-bg-white-0 p-3',
       'shadow-[0px_2px_5px_-1px_rgba(0,0,0,0.04),0px_12px_40px_-8px_rgba(0,0,0,0.08),0px_0px_0px_1px_var(--color-bg-white-0),0px_0px_0px_1.5px_rgba(153,160,174,0.1)]',
       'transition-colors hover:bg-bg-weak-50 cursor-pointer',
       '@sm:aspect-square',
@@ -170,14 +171,22 @@ InfoCardValue.displayName = INFO_CARD_VALUE_NAME;
 type InfoCardActionProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   React.AnchorHTMLAttributes<HTMLAnchorElement> & {
     href?: string;
+    /** Show a notification dot in the top-right corner. */
+    notification?: boolean;
   };
+
+const ActionNotification = () => (
+  <span className='absolute -top-1 -right-1'>
+    <StatusIndicator status='notification' />
+  </span>
+);
 
 const InfoCardAction = React.forwardRef<
   HTMLButtonElement | HTMLAnchorElement,
   InfoCardActionProps
->(({ className, children, href, ...rest }, forwardedRef) => {
+>(({ className, children, href, notification, ...rest }, forwardedRef) => {
   const { action } = infoCardVariants();
-  const cls = action({ class: className });
+  const cls = action({ class: cn('relative', className) });
   const content = children ?? (
     <RiArrowRightUpLine className='size-5 text-icon-sub-600' />
   );
@@ -191,6 +200,7 @@ const InfoCardAction = React.forwardRef<
         {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         {content}
+        {notification && <ActionNotification />}
       </a>
     );
   }
@@ -202,6 +212,7 @@ const InfoCardAction = React.forwardRef<
       {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
     >
       {content}
+      {notification && <ActionNotification />}
     </button>
   );
 });

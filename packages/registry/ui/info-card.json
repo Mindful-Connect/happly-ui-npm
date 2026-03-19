@@ -6,7 +6,7 @@
   "description": "A reusable section for displaying labeled detail items in flexible layouts (inline, grid, stack, wrap).",
   "version": "1.0.0",
   "dependencies": ["@remixicon/react"],
-  "registryDependencies": ["tv", "happly-ui-utils"],
+  "registryDependencies": ["tv", "happly-ui-utils", "status-indicator"],
   "docs": {
     "lead": "Display labeled key-value detail items within a section card. Supports inline, grid, stacked, and wrapped layouts. Each item has a label and a custom-rendered value as children. The value container defaults to text-label-xs and text-sub-600 styling.",
     "usage": "import * as InfoCard from \"@/components/ui/info-card\"\n\n<InfoCard.Root layout=\"inline\">\n  <InfoCard.Item>\n    <InfoCard.Label>Label</InfoCard.Label>\n    <InfoCard.Value>Value content</InfoCard.Value>\n  </InfoCard.Item>\n</InfoCard.Root>",
@@ -40,6 +40,12 @@
         "description": "Inline layout with a default action button. The action renders as a square button with an arrow icon.",
         "code": "import { RiTimeLine } from '@remixicon/react'\nimport * as Avatar from '@/components/ui/avatar'\nimport * as InfoCard from '@/components/ui/info-card'\n\n<InfoCard.Root layout=\"inline\">\n  <InfoCard.Item>\n    <InfoCard.Label>Submitted date</InfoCard.Label>\n    <InfoCard.Value>\n      <RiTimeLine className=\"w-4 h-4\" />\n      <span>Jan 3, 2025</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Created by</InfoCard.Label>\n    <InfoCard.Value>\n      <Avatar.Root size=\"20\">\n        <Avatar.Image src=\"avatar.jpg\" />\n      </Avatar.Root>\n      <span>Sean Muir</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Action />\n</InfoCard.Root>",
         "stories": ["WithAction"]
+      },
+      {
+        "title": "Action with Notification",
+        "description": "Action button with a notification dot in the top-right corner. Uses the StatusIndicator component internally.",
+        "code": "import { RiTimeLine } from '@remixicon/react'\nimport * as Avatar from '@/components/ui/avatar'\nimport * as InfoCard from '@/components/ui/info-card'\n\n<InfoCard.Root layout=\"inline\">\n  <InfoCard.Item>\n    <InfoCard.Label>Submitted date</InfoCard.Label>\n    <InfoCard.Value>\n      <RiTimeLine className=\"w-4 h-4\" />\n      <span>Jan 3, 2025</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Created by</InfoCard.Label>\n    <InfoCard.Value>\n      <Avatar.Root size=\"20\">\n        <Avatar.Image src=\"avatar.jpg\" />\n      </Avatar.Root>\n      <span>Sean Muir</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Action notification />\n</InfoCard.Root>",
+        "stories": ["WithActionNotification"]
       },
       {
         "title": "With Custom Action",
@@ -102,6 +108,12 @@
             "type": "string",
             "default": "-",
             "description": "When provided, renders as an anchor tag instead of a button."
+          },
+          {
+            "name": "notification",
+            "type": "boolean",
+            "default": "false",
+            "description": "Show a notification dot in the top-right corner."
           }
         ]
       }

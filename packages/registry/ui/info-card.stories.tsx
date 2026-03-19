@@ -169,6 +169,32 @@ export const WithAction = {
   ),
 };
 
+export const WithActionNotification = {
+  render: () => (
+    <div className='w-full'>
+      <InfoCard.Root layout='inline'>
+        <InfoCard.Item>
+          <InfoCard.Label>Submitted date</InfoCard.Label>
+          <InfoCard.Value>
+            <RiTimeLine className='h-4 w-4' />
+            <span>Jan 3, 2025</span>
+          </InfoCard.Value>
+        </InfoCard.Item>
+        <InfoCard.Item>
+          <InfoCard.Label>Created by</InfoCard.Label>
+          <InfoCard.Value>
+            <Avatar.Root size='20'>
+              <Avatar.Image src='https://i.pravatar.cc/40?u=sean' />
+            </Avatar.Root>
+            <span>Sean Muir</span>
+          </InfoCard.Value>
+        </InfoCard.Item>
+        <InfoCard.Action notification />
+      </InfoCard.Root>
+    </div>
+  ),
+};
+
 export const WithCustomAction = {
   render: () => (
     <div className='w-full'>
