@@ -11,9 +11,38 @@ const MENU_TAB_BAR_ROOT_NAME = 'MenuTabBarRoot';
 const MENU_TAB_BAR_ITEM_NAME = 'MenuTabBarItem';
 const MENU_TAB_BAR_ICON_NAME = 'MenuTabBarIcon';
 
+const FADE_SIZE = 24;
+
+type MenuTabBarContextValue = {
+  rootRef: React.RefObject<HTMLDivElement | null>;
+  scrollMargin: number;
+};
+
+const MenuTabBarContext = React.createContext<MenuTabBarContextValue | null>(
+  null
+);
+
+function buildMaskImage(canScrollLeft: boolean, canScrollRight: boolean) {
+  if (!canScrollLeft && !canScrollRight) return 'none';
+
+  const left = canScrollLeft
+    ? `linear-gradient(to right, transparent, black ${FADE_SIZE}px)`
+    : 'linear-gradient(black, black)';
+  const right = canScrollRight
+    ? `linear-gradient(to left, transparent, black ${FADE_SIZE}px)`
+    : 'linear-gradient(black, black)';
+
+  return `${left}, ${right}`;
+}
+
+const maskCompositeStyle = {
+  maskComposite: 'intersect',
+  WebkitMaskComposite: 'source-in',
+} as React.CSSProperties;
+
 export const menuTabBarVariants = tv({
   slots: {
-    root: 'relative flex items-center gap-8 border-b border-stroke-soft-200 px-6',
+    root: 'relative flex items-center gap-8 overflow-x-auto border-b border-stroke-soft-200 px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
     item: [
       'relative flex shrink-0 cursor-pointer items-center justify-center gap-[3px] pb-3.5 text-label-xs',
       'transition-colors duration-300 ease-out',
@@ -63,8 +92,6 @@ export const menuTabBarVariants = tv({
 
 type MenuTabBarSharedProps = {
   variant?: VariantProps<typeof menuTabBarVariants>['variant'];
-  rootRef?: React.RefObject<HTMLDivElement | null>;
-  scrollMargin?: number;
 };
 
 type MenuTabBarRootProps = Pick<
@@ -93,6 +120,15 @@ function MenuTabBarRoot({
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = React.useState(false);
   const [lineStyle, setLineStyle] = React.useState({ width: 0, left: 0 });
+  const [canScrollLeft, setCanScrollLeft] = React.useState(false);
+  const [canScrollRight, setCanScrollRight] = React.useState(false);
+
+  const updateScrollState = React.useCallback(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 0);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 1);
+  }, []);
 
   const updateIndicator = React.useCallback(() => {
     const container = containerRef.current;
@@ -107,7 +143,7 @@ function MenuTabBarRoot({
       const tabRect = activeTab.getBoundingClientRect();
       setLineStyle({
         width: tabRect.width,
-        left: tabRect.left - containerRect.left,
+        left: tabRect.left - containerRect.left + container.scrollLeft,
       });
     }
   }, []);
@@ -118,10 +154,15 @@ function MenuTabBarRoot({
     const container = containerRef.current;
     if (!container) return;
 
-    const resizeObserver = new ResizeObserver(updateIndicator);
+    const update = () => {
+      updateIndicator();
+      updateScrollState();
+    };
+
+    const resizeObserver = new ResizeObserver(update);
     resizeObserver.observe(container);
 
-    const mutationObserver = new MutationObserver(updateIndicator);
+    const mutationObserver = new MutationObserver(update);
     mutationObserver.observe(container, {
       childList: true,
       subtree: true,
@@ -129,18 +170,21 @@ function MenuTabBarRoot({
       attributeFilter: ['aria-selected'],
     });
 
-    updateIndicator();
+    update();
 
     return () => {
       resizeObserver.disconnect();
       mutationObserver.disconnect();
     };
-  }, [updateIndicator]);
+  }, [updateIndicator, updateScrollState]);
+
+  const handleScroll = React.useCallback(() => {
+    updateScrollState();
+    updateIndicator();
+  }, [updateScrollState, updateIndicator]);
 
   const sharedProps: MenuTabBarSharedProps = {
     variant,
-    rootRef: containerRef,
-    scrollMargin,
   };
 
   const extendedChildren = recursiveCloneChildren(
@@ -150,30 +194,45 @@ function MenuTabBarRoot({
     uniqueId
   );
 
-  return (
-    <div
-      ref={containerRef}
-      role='tablist'
-      className={root({ class: className })}
-      {...rest}
-    >
-      {extendedChildren}
+  const maskImage = buildMaskImage(canScrollLeft, canScrollRight);
 
-      {/* sliding indicator */}
+  const ctxValue = React.useMemo<MenuTabBarContextValue>(
+    () => ({ rootRef: containerRef, scrollMargin }),
+    [scrollMargin]
+  );
+
+  return (
+    <MenuTabBarContext.Provider value={ctxValue}>
       <div
-        className={cn(indicator(), {
-          hidden: !mounted,
-          'bg-text-strong-950': variant !== 'primary',
-          'bg-primary-base': variant === 'primary',
-        })}
-        style={{
-          width: `${lineStyle.width}px`,
-          transform: `translateX(${lineStyle.left}px)`,
-          transitionTimingFunction: 'cubic-bezier(0.65, 0, 0.35, 1)',
-        }}
-        aria-hidden='true'
-      />
-    </div>
+        ref={containerRef}
+        role='tablist'
+        className={root({ class: className })}
+        onScroll={handleScroll}
+        style={
+          maskImage !== 'none'
+            ? { maskImage, WebkitMaskImage: maskImage, ...maskCompositeStyle }
+            : undefined
+        }
+        {...rest}
+      >
+        {extendedChildren}
+
+        {/* sliding indicator */}
+        <div
+          className={cn(indicator(), {
+            hidden: !mounted,
+            'bg-text-strong-950': variant !== 'primary',
+            'bg-primary-base': variant === 'primary',
+          })}
+          style={{
+            width: `${lineStyle.width}px`,
+            transform: `translateX(${lineStyle.left}px)`,
+            transitionTimingFunction: 'cubic-bezier(0.65, 0, 0.35, 1)',
+          }}
+          aria-hidden='true'
+        />
+      </div>
+    </MenuTabBarContext.Provider>
   );
 }
 MenuTabBarRoot.displayName = MENU_TAB_BAR_ROOT_NAME;
@@ -185,10 +244,7 @@ type MenuTabBarItemProps = MenuTabBarSharedProps &
     scrollTo?: string;
   };
 
-const MenuTabBarItem = React.forwardRef<
-  HTMLButtonElement,
-  MenuTabBarItemProps
->(
+const MenuTabBarItem = React.forwardRef<HTMLButtonElement, MenuTabBarItemProps>(
   (
     {
       children,
@@ -196,20 +252,17 @@ const MenuTabBarItem = React.forwardRef<
       variant,
       selected,
       scrollTo,
-      rootRef,
-      scrollMargin = 16,
       onClick,
       ...rest
     },
     ref
   ) => {
     const uniqueId = React.useId();
+    const ctx = React.useContext(MenuTabBarContext);
     const { item } = menuTabBarVariants({ variant, selected });
 
     const sharedProps: MenuTabBarSharedProps = {
       variant,
-      rootRef,
-      scrollMargin,
     };
 
     const extendedChildren = recursiveCloneChildren(
@@ -224,24 +277,24 @@ const MenuTabBarItem = React.forwardRef<
         if (scrollTo) {
           const target = document.getElementById(scrollTo);
           if (target) {
-            // Auto-detect offset from the tab bar's bottom edge.
-            // This accounts for any sticky headers above it.
-            const barBottom = rootRef?.current
-              ? rootRef.current.getBoundingClientRect().bottom
+            const barBottom = ctx?.rootRef.current
+              ? ctx.rootRef.current.getBoundingClientRect().bottom
               : 0;
+
+            const margin = ctx?.scrollMargin ?? 16;
 
             const top =
               target.getBoundingClientRect().top +
               window.scrollY -
               barBottom -
-              scrollMargin;
+              margin;
 
             window.scrollTo({ top, behavior: 'smooth' });
           }
         }
         onClick?.(e);
       },
-      [scrollTo, rootRef, scrollMargin, onClick]
+      [scrollTo, ctx, onClick]
     );
 
     return (
@@ -261,8 +314,7 @@ const MenuTabBarItem = React.forwardRef<
 );
 MenuTabBarItem.displayName = MENU_TAB_BAR_ITEM_NAME;
 
-type MenuTabBarIconProps = MenuTabBarSharedProps &
-  React.HTMLAttributes<HTMLDivElement>;
+type MenuTabBarIconProps = MenuTabBarSharedProps & React.HTMLAttributes<HTMLDivElement>;
 
 function MenuTabBarIcon<T extends React.ElementType>({
   className,
