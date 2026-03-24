@@ -25,10 +25,9 @@ export const infoCardVariants = tv({
       'shadow-[0px_2px_5px_-1px_rgba(0,0,0,0.04),0px_12px_40px_-8px_rgba(0,0,0,0.08),0px_0px_0px_1px_var(--color-bg-white-0),0px_0px_0px_1.5px_rgba(153,160,174,0.1)]',
     ],
     action: [
-      'flex items-center justify-center overflow-visible rounded-xl bg-bg-white-0 p-3',
+      'flex items-center justify-center overflow-visible rounded-xl bg-bg-white-0 px-3 py-4',
       'shadow-[0px_2px_5px_-1px_rgba(0,0,0,0.04),0px_12px_40px_-8px_rgba(0,0,0,0.08),0px_0px_0px_1px_var(--color-bg-white-0),0px_0px_0px_1.5px_rgba(153,160,174,0.1)]',
       'transition-colors hover:bg-bg-weak-50 cursor-pointer',
-      '@sm:aspect-square @sm:self-center',
     ],
     label: 'text-label-xs font-medium text-text-strong-950',
     value: 'flex items-center gap-1 text-label-xs text-text-sub-600',
@@ -36,7 +35,7 @@ export const infoCardVariants = tv({
   variants: {
     layout: {
       inline: {
-        root: ['@sm:flex-row @sm:flex-wrap', '@sm:[&>div]:flex-[1_0_10rem]'],
+        root: 'flex-row flex-wrap items-stretch',
       },
       grid: {
         root: '@sm:grid',
@@ -76,15 +75,50 @@ export const infoCardVariants = tv({
 });
 
 type InfoCardRootProps = React.HTMLAttributes<HTMLDivElement> &
-  VariantProps<typeof infoCardVariants>;
+  VariantProps<typeof infoCardVariants> & {
+  /** Minimum width for each item before wrapping (inline layout). Defaults to 120px. */
+  minItemWidth?: string;
+};
 
 const InfoCardRoot = React.forwardRef<HTMLDivElement, InfoCardRootProps>(
-  ({ layout, columns, className, children, ...rest }, forwardedRef) => {
+  (
+    { layout, columns, className, children, style, minItemWidth, ...rest },
+    forwardedRef
+  ) => {
     const { root } = infoCardVariants({ layout, columns });
+
+    const resolvedLayout = layout ?? 'inline';
+
+    if (resolvedLayout === 'inline') {
+      const itemBasis = minItemWidth ?? '120px';
+      const sizedChildren = React.Children.map(children, (child) => {
+        if (!React.isValidElement(child)) return child;
+        const isAction =
+          (child.type as any).displayName === INFO_CARD_ACTION_NAME;
+        return React.cloneElement(child as React.ReactElement<any>, {
+          style: {
+            flex: isAction ? `1 0 ${itemBasis}` : `1 1 ${itemBasis}`,
+            ...(child.props as any).style,
+          },
+        });
+      });
+
+      return (
+        <div ref={forwardedRef} className='@container'>
+          <div
+            className={root({ class: className })}
+            style={style}
+            {...rest}
+          >
+            {sizedChildren}
+          </div>
+        </div>
+      );
+    }
 
     return (
       <div ref={forwardedRef} className='@container'>
-        <div className={root({ class: className })} {...rest}>
+        <div className={root({ class: className })} style={style} {...rest}>
           {children}
         </div>
       </div>
@@ -99,14 +133,15 @@ type InfoCardItemProps = React.HTMLAttributes<HTMLDivElement> & {
 };
 
 const InfoCardItem = React.forwardRef<HTMLDivElement, InfoCardItemProps>(
-  ({ fullWidth, className, style, ...rest }, forwardedRef) => {
+  ({ fullWidth, className, ...rest }, forwardedRef) => {
     const { item } = infoCardVariants();
 
     return (
       <div
         ref={forwardedRef}
-        className={item({ class: className })}
-        style={fullWidth ? { ...style, flex: '1 0 100%' } : style}
+        className={item({
+          class: cn(fullWidth && 'w-full flex-none', className),
+        })}
         {...rest}
       />
     );
@@ -147,13 +182,13 @@ InfoCardValue.displayName = INFO_CARD_VALUE_NAME;
 
 type InfoCardActionProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   React.AnchorHTMLAttributes<HTMLAnchorElement> & {
-    href?: string;
-    /** Show a notification dot in the top-right corner. */
-    notification?: boolean;
-  };
+  href?: string;
+  /** Show a notification dot in the top-right corner. */
+  notification?: boolean;
+};
 
 const ActionNotification = () => (
-  <span className='absolute -top-1 -right-1'>
+  <span className='absolute -right-1 -top-1'>
     <StatusIndicator status='notification' />
   </span>
 );
