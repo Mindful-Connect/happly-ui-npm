@@ -3,32 +3,91 @@
   "name": "dropdown",
   "type": "registry:ui",
   "title": "Dropdown",
-  "description": "A dropdown menu component built on Radix UI with items, groups, labels, sub-menus, and directional animations. Uses namespace exports: Dropdown.Root, Dropdown.Trigger, Dropdown.Content, Dropdown.Item, Dropdown.ItemIcon, Dropdown.Group, Dropdown.Label, Dropdown.MenuSub, Dropdown.MenuSubTrigger, Dropdown.MenuSubContent.",
-  "version": "1.0.0",
+  "description": "A dropdown menu component built on Radix UI with items, groups, labels, sub-menus, error variants, and a composed shorthand. Uses namespace exports: Dropdown.Root, Dropdown.Trigger, Dropdown.Content, Dropdown.Item, Dropdown.Composed.",
+  "version": "1.1.0",
   "dependencies": ["@radix-ui/react-dropdown-menu", "@remixicon/react"],
   "registryDependencies": ["happly-ui-utils", "polymorphic"],
   "docs": {
-    "lead": "A dropdown menu component with items, groups, sub-menus, and directional slide animations.",
-    "usage": "import * as Dropdown from \"@/components/ui/dropdown\"\n\n<Dropdown.Root>\n  <Dropdown.Trigger>Open</Dropdown.Trigger>\n  <Dropdown.Content>\n    <Dropdown.Item>Item</Dropdown.Item>\n  </Dropdown.Content>\n</Dropdown.Root>",
+    "lead": "A dropdown menu component with items, groups, sub-menus, error variants, and a composed shorthand for common patterns.",
+    "usage": "import * as Dropdown from \"@/components/ui/dropdown\"\n\n<Dropdown.Root>\n  <Dropdown.Trigger asChild>\n    <button>Open</button>\n  </Dropdown.Trigger>\n  <Dropdown.Content>\n    <Dropdown.Item>Item</Dropdown.Item>\n  </Dropdown.Content>\n</Dropdown.Root>",
     "examples": [
       {
-        "title": "Demo",
-        "description": "Dropdown with user profile, menu items, and footer.",
-        "code": "<Dropdown.Root>\n  <Dropdown.Trigger asChild>\n    <Button.Root>Open Dropdown</Button.Root>\n  </Dropdown.Trigger>\n  <Dropdown.Content align=\"start\">\n    <Dropdown.Group>\n      <Dropdown.Item>\n        <Dropdown.ItemIcon as={RiPulseLine} />\n        Activity\n      </Dropdown.Item>\n    </Dropdown.Group>\n  </Dropdown.Content>\n</Dropdown.Root>",
-        "stories": ["Demo"]
+        "title": "Default",
+        "description": "Basic dropdown with icon items.",
+        "code": "<Dropdown.Root>\n  <Dropdown.Trigger asChild>\n    <Button.Root variant=\"neutral\" mode=\"stroke\">\n      Open Dropdown\n    </Button.Root>\n  </Dropdown.Trigger>\n  <Dropdown.Content align=\"start\">\n    <Dropdown.Group>\n      <Dropdown.Item>\n        <Dropdown.ItemIcon as={RiSettings2Line} />\n        Settings\n      </Dropdown.Item>\n      <Dropdown.Item>\n        <Dropdown.ItemIcon as={RiAddLine} />\n        Add Item\n      </Dropdown.Item>\n      <Dropdown.Item>\n        <Dropdown.ItemIcon as={RiLogoutBoxRLine} />\n        Logout\n      </Dropdown.Item>\n    </Dropdown.Group>\n  </Dropdown.Content>\n</Dropdown.Root>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "With Groups",
+        "description": "Grouped items with labels and a divider between sections.",
+        "code": "<Dropdown.Root>\n  <Dropdown.Trigger asChild>\n    <Button.Root variant=\"neutral\" mode=\"stroke\">\n      Open Dropdown\n    </Button.Root>\n  </Dropdown.Trigger>\n  <Dropdown.Content align=\"start\">\n    <Dropdown.Group>\n      <Dropdown.Label>Account</Dropdown.Label>\n      <Dropdown.Item>\n        <Dropdown.ItemIcon as={RiPulseLine} />\n        Activity\n      </Dropdown.Item>\n      <Dropdown.Item>\n        <Dropdown.ItemIcon as={RiSettings2Line} />\n        Settings\n      </Dropdown.Item>\n    </Dropdown.Group>\n    <Divider.Root variant=\"line-spacing\" />\n    <Dropdown.Group>\n      <Dropdown.Label>Actions</Dropdown.Label>\n      <Dropdown.Item>\n        <Dropdown.ItemIcon as={RiAddLine} />\n        Add Account\n      </Dropdown.Item>\n      <Dropdown.Item variant=\"error\">\n        <Dropdown.ItemIcon as={RiLogoutBoxRLine} />\n        Logout\n      </Dropdown.Item>\n    </Dropdown.Group>\n  </Dropdown.Content>\n</Dropdown.Root>",
+        "stories": ["WithGroups"]
+      },
+      {
+        "title": "With Header and Footer",
+        "description": "Dropdown with a user profile header, menu groups, and footer text.",
+        "code": "<Dropdown.Root>\n  <Dropdown.Trigger asChild>\n    <Button.Root variant=\"neutral\" mode=\"stroke\">\n      Open Dropdown\n    </Button.Root>\n  </Dropdown.Trigger>\n  <Dropdown.Content align=\"start\">\n    <div className=\"flex items-center gap-3 p-2\">\n      <Avatar.Root size=\"40\" />\n      <div className=\"flex-1\">\n        <div className=\"text-label-sm text-text-strong-950\">Wei Chen</div>\n        <div className=\"text-paragraph-xs text-text-sub-600 mt-1\">wei@alignui.com</div>\n      </div>\n      <Badge.Root variant=\"light\" color=\"green\" size=\"medium\">PRO</Badge.Root>\n    </div>\n    <Divider.Root variant=\"line-spacing\" />\n    <Dropdown.Group>\n      <Dropdown.Item>\n        <Dropdown.ItemIcon as={RiPulseLine} />\n        Activity\n      </Dropdown.Item>\n      <Dropdown.Item>\n        <Dropdown.ItemIcon as={RiLayoutGridLine} />\n        Integrations\n      </Dropdown.Item>\n      <Dropdown.Item>\n        <Dropdown.ItemIcon as={RiSettings2Line} />\n        Settings\n      </Dropdown.Item>\n    </Dropdown.Group>\n    <Divider.Root variant=\"line-spacing\" />\n    <Dropdown.Group>\n      <Dropdown.Item>\n        <Dropdown.ItemIcon as={RiAddLine} />\n        Add Account\n      </Dropdown.Item>\n      <Dropdown.Item>\n        <Dropdown.ItemIcon as={RiLogoutBoxRLine} />\n        Logout\n      </Dropdown.Item>\n    </Dropdown.Group>\n    <div className=\"text-paragraph-sm text-text-soft-400 p-2\">\n      v.1.5.69 · Terms & Conditions\n    </div>\n  </Dropdown.Content>\n</Dropdown.Root>",
+        "stories": ["WithHeaderAndFooter"]
+      },
+      {
+        "title": "With Error Item",
+        "description": "Dropdown with a destructive action styled in error red, separated from other items.",
+        "code": "<Dropdown.Root>\n  <Dropdown.Trigger asChild>\n    <Button.Root variant=\"neutral\" mode=\"stroke\">Actions</Button.Root>\n  </Dropdown.Trigger>\n  <Dropdown.Content align=\"start\">\n    <Dropdown.Group>\n      <Dropdown.Item>\n        <Dropdown.ItemIcon as={RiPencilLine} />\n        Edit\n      </Dropdown.Item>\n      <Dropdown.Item>\n        <Dropdown.ItemIcon as={RiSettings2Line} />\n        Settings\n      </Dropdown.Item>\n    </Dropdown.Group>\n    <Divider.Root variant=\"line-spacing\" />\n    <Dropdown.Group>\n      <Dropdown.Item variant=\"error\">\n        <Dropdown.ItemIcon as={RiDeleteBinLine} />\n        Delete\n      </Dropdown.Item>\n    </Dropdown.Group>\n  </Dropdown.Content>\n</Dropdown.Root>",
+        "stories": ["WithErrorItem"]
+      },
+      {
+        "title": "With Disabled Items",
+        "description": "Dropdown with a disabled item that cannot be selected.",
+        "code": "<Dropdown.Root>\n  <Dropdown.Trigger asChild>\n    <Button.Root variant=\"neutral\" mode=\"stroke\">\n      Open Dropdown\n    </Button.Root>\n  </Dropdown.Trigger>\n  <Dropdown.Content align=\"start\">\n    <Dropdown.Group>\n      <Dropdown.Item>\n        <Dropdown.ItemIcon as={RiPencilLine} />\n        Edit\n      </Dropdown.Item>\n      <Dropdown.Item disabled>\n        <Dropdown.ItemIcon as={RiRocketLine} />\n        Publish (unavailable)\n      </Dropdown.Item>\n      <Dropdown.Item>\n        <Dropdown.ItemIcon as={RiSettings2Line} />\n        Settings\n      </Dropdown.Item>\n    </Dropdown.Group>\n  </Dropdown.Content>\n</Dropdown.Root>",
+        "stories": ["WithDisabledItems"]
       },
       {
         "title": "Sub Menu",
         "description": "Dropdown with nested sub-menus for hierarchical navigation.",
-        "code": "<Dropdown.MenuSub>\n  <Dropdown.MenuSubTrigger>\n    <Dropdown.ItemIcon as={RiFileList2Line} />\n    Template Options\n  </Dropdown.MenuSubTrigger>\n  <Dropdown.MenuSubContent>\n    <Dropdown.Item>Draft Post</Dropdown.Item>\n    <Dropdown.Item>Publish Now</Dropdown.Item>\n  </Dropdown.MenuSubContent>\n</Dropdown.MenuSub>",
+        "code": "<Dropdown.Root>\n  <Dropdown.Trigger asChild>\n    <Button.Root variant=\"neutral\" mode=\"stroke\">Open</Button.Root>\n  </Dropdown.Trigger>\n  <Dropdown.Content align=\"start\">\n    <Dropdown.Group>\n      <Dropdown.Item>\n        <Dropdown.ItemIcon as={RiAddLine} />\n        New post creation\n      </Dropdown.Item>\n      <Dropdown.MenuSub>\n        <Dropdown.MenuSubTrigger>\n          <Dropdown.ItemIcon as={RiFileList2Line} />\n          Template Options\n        </Dropdown.MenuSubTrigger>\n        <Dropdown.MenuSubContent>\n          <Dropdown.Item>\n            <Dropdown.ItemIcon as={RiPencilLine} />\n            Draft Post\n          </Dropdown.Item>\n          <Dropdown.Item>\n            <Dropdown.ItemIcon as={RiRocketLine} />\n            Publish Now\n          </Dropdown.Item>\n          <Dropdown.Item>\n            <Dropdown.ItemIcon as={RiCalendar2Line} />\n            Schedule Post\n          </Dropdown.Item>\n        </Dropdown.MenuSubContent>\n      </Dropdown.MenuSub>\n    </Dropdown.Group>\n  </Dropdown.Content>\n</Dropdown.Root>",
         "stories": ["SubMenu"]
+      },
+      {
+        "title": "Composed",
+        "description": "The composed shorthand renders a full dropdown from a groups array. Separators are added between groups automatically.",
+        "code": "<Dropdown.Composed\n  groups={[\n    {\n      items: [\n        { label: 'Activity', icon: RiPulseLine, onSelect: () => console.log('Activity') },\n        { label: 'Integrations', icon: RiLayoutGridLine, onSelect: () => console.log('Integrations') },\n        { label: 'Settings', icon: RiSettings2Line, onSelect: () => console.log('Settings') },\n      ],\n    },\n    {\n      items: [\n        { label: 'Add Account', icon: RiAddLine },\n        { label: 'Logout', icon: RiLogoutBoxRLine, variant: 'error' },\n      ],\n    },\n  ]}\n>\n  <Button.Root variant=\"neutral\" mode=\"stroke\">\n    Open Composed\n  </Button.Root>\n</Dropdown.Composed>",
+        "stories": ["Composed"]
+      },
+      {
+        "title": "Composed with Header & Footer",
+        "description": "Composed dropdown with a user profile header and footer text.",
+        "code": "<Dropdown.Composed\n  groups={[\n    {\n      items: [\n        { label: 'Activity', icon: RiPulseLine },\n        { label: 'Integrations', icon: RiLayoutGridLine },\n        { label: 'Settings', icon: RiSettings2Line },\n      ],\n    },\n    {\n      items: [\n        { label: 'Add Account', icon: RiAddLine },\n        { label: 'Logout', icon: RiLogoutBoxRLine, variant: 'error' },\n      ],\n    },\n  ]}\n  header={\n    <>\n      <div className=\"flex items-center gap-3 p-2\">\n        <Avatar.Root size=\"40\" />\n        <div className=\"flex-1\">\n          <div className=\"text-label-sm text-text-strong-950\">Wei Chen</div>\n          <div className=\"text-paragraph-xs text-text-sub-600 mt-1\">wei@alignui.com</div>\n        </div>\n        <Badge.Root variant=\"light\" color=\"green\" size=\"medium\">PRO</Badge.Root>\n      </div>\n      <Divider.Root variant=\"line-spacing\" />\n    </>\n  }\n  footer={\n    <div className=\"text-paragraph-sm text-text-soft-400 p-2\">\n      v.1.5.69 · Terms & Conditions\n    </div>\n  }\n>\n  <Button.Root variant=\"neutral\" mode=\"stroke\">\n    Profile Menu\n  </Button.Root>\n</Dropdown.Composed>",
+        "stories": ["ComposedWithHeaderFooter"]
+      },
+      {
+        "title": "Composed with Labels",
+        "description": "Composed dropdown with group labels for section headings.",
+        "code": "<Dropdown.Composed\n  groups={[\n    {\n      label: 'Account',\n      items: [\n        { label: 'Activity', icon: RiPulseLine },\n        { label: 'Settings', icon: RiSettings2Line },\n      ],\n    },\n    {\n      label: 'Danger zone',\n      items: [\n        { label: 'Delete account', icon: RiDeleteBinLine, variant: 'error' },\n      ],\n    },\n  ]}\n>\n  <Button.Root variant=\"neutral\" mode=\"stroke\">\n    Account\n  </Button.Root>\n</Dropdown.Composed>",
+        "stories": ["ComposedWithLabels"]
+      },
+      {
+        "title": "Composed with Links",
+        "description": "Composed dropdown with href items that render as anchor tags.",
+        "code": "<Dropdown.Composed\n  groups={[\n    {\n      items: [\n        { label: 'Dashboard', icon: RiLayoutGridLine, href: '#dashboard' },\n        { label: 'Settings', icon: RiSettings2Line, href: '#settings' },\n        { label: 'Documentation', icon: RiGlobeLine, href: 'https://example.com' },\n      ],\n    },\n  ]}\n>\n  <Button.Root variant=\"neutral\" mode=\"stroke\">\n    Navigation\n  </Button.Root>\n</Dropdown.Composed>",
+        "stories": ["ComposedWithLinks"]
       }
     ],
     "api": [
       {
         "name": "Dropdown.Root",
         "description": "The root dropdown container. Passes through Radix DropdownMenu.Root props.",
-        "props": []
+        "props": [
+          {
+            "name": "open",
+            "type": "boolean",
+            "description": "Controlled open state"
+          },
+          {
+            "name": "onOpenChange",
+            "type": "(open: boolean) => void",
+            "description": "Callback when open state changes"
+          }
+        ]
       },
       {
         "name": "Dropdown.Trigger",
@@ -71,16 +130,33 @@
         "description": "A selectable dropdown menu item.",
         "props": [
           {
+            "name": "variant",
+            "type": "'default' | 'error'",
+            "default": "'default'",
+            "description": "Visual variant. Error renders text and icon in red."
+          },
+          {
             "name": "inset",
             "type": "boolean",
             "default": "false",
             "description": "Add left padding for alignment with icon items"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disables the item"
+          },
+          {
+            "name": "onSelect",
+            "type": "() => void",
+            "description": "Called when the item is selected"
           }
         ]
       },
       {
         "name": "Dropdown.ItemIcon",
-        "description": "Icon displayed inside a dropdown item.",
+        "description": "Polymorphic icon displayed inside a dropdown item. Inherits error color from variant.",
         "props": [
           {
             "name": "as",
@@ -96,7 +172,7 @@
       },
       {
         "name": "Dropdown.Label",
-        "description": "A label for a group of dropdown items.",
+        "description": "An uppercase label for a group of dropdown items.",
         "props": []
       },
       {
@@ -120,6 +196,63 @@
         "name": "Dropdown.MenuSubContent",
         "description": "The sub-menu content panel.",
         "props": []
+      },
+      {
+        "name": "Dropdown.Composed",
+        "description": "A composed shorthand that renders a full dropdown from a groups array. Handles trigger, content, items, separators, icons, and variants automatically.",
+        "props": [
+          {
+            "name": "children",
+            "type": "React.ReactNode",
+            "description": "The trigger element. Rendered via asChild."
+          },
+          {
+            "name": "groups",
+            "type": "DropdownMenuGroup[]",
+            "description": "Array of menu groups. Each group has an optional label and an items array. Each item has label, optional icon, variant, disabled, onSelect, and href."
+          },
+          {
+            "name": "align",
+            "type": "'start' | 'center' | 'end'",
+            "default": "'start'",
+            "description": "Content alignment relative to trigger"
+          },
+          {
+            "name": "side",
+            "type": "'top' | 'right' | 'bottom' | 'left'",
+            "description": "Content side relative to trigger"
+          },
+          {
+            "name": "sideOffset",
+            "type": "number",
+            "description": "Distance in pixels from the trigger"
+          },
+          {
+            "name": "contentClassName",
+            "type": "string",
+            "description": "Additional className for the content panel"
+          },
+          {
+            "name": "header",
+            "type": "React.ReactNode",
+            "description": "Header content rendered above menu items"
+          },
+          {
+            "name": "footer",
+            "type": "React.ReactNode",
+            "description": "Footer content rendered below menu items"
+          },
+          {
+            "name": "open",
+            "type": "boolean",
+            "description": "Controlled open state"
+          },
+          {
+            "name": "onOpenChange",
+            "type": "(open: boolean) => void",
+            "description": "Callback when open state changes"
+          }
+        ]
       }
     ]
   },

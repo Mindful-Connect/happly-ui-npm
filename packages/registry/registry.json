@@ -145,7 +145,7 @@
       "name": "dropdown",
       "type": "registry:ui",
       "title": "Dropdown",
-      "description": "A dropdown menu component built on Radix UI with items, groups, labels, sub-menus, and directional animations. Uses namespace exports: Dropdown.Root, Dropdown.Trigger, Dropdown.Content, Dropdown.Item, Dropdown.ItemIcon, Dropdown.Group, Dropdown.Label, Dropdown.MenuSub, Dropdown.MenuSubTrigger, Dropdown.MenuSubContent."
+      "description": "A dropdown menu component built on Radix UI with items, groups, labels, sub-menus, error variants, and a composed shorthand. Uses namespace exports: Dropdown.Root, Dropdown.Trigger, Dropdown.Content, Dropdown.Item, Dropdown.Composed."
     },
     {
       "name": "emoji-dialog",
@@ -211,7 +211,7 @@
       "name": "info-card",
       "type": "registry:ui",
       "title": "Info Card",
-      "description": "A reusable section for displaying labeled detail items in flexible layouts (inline, grid, stack, wrap)."
+      "description": "A reusable section for displaying labeled detail items. Layout is controlled via className (flexbox, grid, etc.)."
     },
     {
       "name": "info-grid",
