@@ -90,10 +90,12 @@ function main() {
     'progress-circle',
     'skeleton',
     'ai-orb',
+    'publication-status-badge',
     'status-badge',
     'status-indicator',
     'table',
     'tag',
+    'timeline-status-badge',
   ];
 
   const NAVIGATION_COMPONENTS = [
