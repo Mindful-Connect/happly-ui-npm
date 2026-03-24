@@ -346,6 +346,12 @@
       "description": "A compact card for promotional content with icon, decorative background, title, description, and optional link. Uses namespace exports: PromotionalCard.Root, PromotionalCard.Icon, PromotionalCard.Decoration, PromotionalCard.Content, PromotionalCard.Title, PromotionalCard.Description, PromotionalCard.Link, PromotionalCard.Composed."
     },
     {
+      "name": "publication-status-badge",
+      "type": "registry:ui",
+      "title": "Publication Status Badge",
+      "description": "A preconfigured status badge for content moderation statuses (draft, waiting for review, approved, require changes, declined). Composes StatusBadge internally."
+    },
+    {
       "name": "radio",
       "type": "registry:ui",
       "title": "Radio",
@@ -458,6 +464,12 @@
       "type": "registry:ui",
       "title": "Theme Provider",
       "description": "Generates a primary color palette from a single hex color and applies it as CSS custom properties."
+    },
+    {
+      "name": "timeline-status-badge",
+      "type": "registry:ui",
+      "title": "Timeline Status Badge",
+      "description": "A preconfigured badge for lifecycle timeline statuses (open, opening soon, closing soon, closed) with consistent colors and icons. Composes Badge internally."
     },
     {
       "name": "tooltip",

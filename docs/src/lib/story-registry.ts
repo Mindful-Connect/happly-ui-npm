@@ -52,6 +52,7 @@ import { default as popoverMeta, Playground as popover_Playground, Demo as popov
 import { default as progressBarMeta, Playground as progressBar_Playground, Color as progressBar_Color, WithLabel as progressBar_WithLabel, DataStorage as progressBar_DataStorage } from '@/components/ui/progress-bar.stories';
 import { default as progressCircleMeta, Playground as progressCircle_Playground, Sizes as progressCircle_Sizes } from '@/components/ui/progress-circle.stories';
 import { default as promotionalCardMeta, Stroke as promotionalCard_Stroke, Filled as promotionalCard_Filled, Clickable as promotionalCard_Clickable, Composed as promotionalCard_Composed, Grid as promotionalCard_Grid } from '@/components/ui/promotional-card.stories';
+import { default as publicationStatusBadgeMeta, Draft as publicationStatusBadge_Draft, WaitingForReview as publicationStatusBadge_WaitingForReview, Approved as publicationStatusBadge_Approved, RequireChanges as publicationStatusBadge_RequireChanges, Declined as publicationStatusBadge_Declined, AllStatuses as publicationStatusBadge_AllStatuses, LightVariant as publicationStatusBadge_LightVariant, CustomLabel as publicationStatusBadge_CustomLabel } from '@/components/ui/publication-status-badge.stories';
 import { default as radioCardMeta, Playground as radioCard_Playground, Default as radioCard_Default, WithKeyIcons as radioCard_WithKeyIcons, WithSimpleIcons as radioCard_WithSimpleIcons, WithBadges as radioCard_WithBadges, InlineDescription as radioCard_InlineDescription, AllowDeselect as radioCard_AllowDeselect, Disabled as radioCard_Disabled, ErrorState as radioCard_ErrorState, Composed as radioCard_Composed, PrimaryVariant as radioCard_PrimaryVariant, WithFormField as radioCard_WithFormField } from '@/components/ui/radio-card.stories';
 import { default as radioMeta, Playground as radio_Playground, Demo as radio_Demo, Variants as radio_Variants, Disabled as radio_Disabled, WithLabel as radio_WithLabel, WithLabelExtended as radio_WithLabelExtended, WithFormField as radio_WithFormField } from '@/components/ui/radio.stories';
 import { default as sectionToggleMeta, Playground as sectionToggle_Playground, Default as sectionToggle_Default, Collapsed as sectionToggle_Collapsed, Composed as sectionToggle_Composed } from '@/components/ui/section-toggle.stories';
@@ -70,6 +71,7 @@ import { default as tagInputMeta, Playground as tagInput_Playground, Default as 
 import { default as tagMeta, Playground as tag_Playground, Stroke as tag_Stroke, Gray as tag_Gray, Rounded as tag_Rounded, Disabled as tag_Disabled, WithImage as tag_WithImage, WithAvatar as tag_WithAvatar, Dismissable as tag_Dismissable } from '@/components/ui/tag.stories';
 import { default as textareaMeta, Playground as textarea_Playground, Demo as textarea_Demo, InteractiveCounter as textarea_InteractiveCounter, HasError as textarea_HasError, WithLabelAndHint as textarea_WithLabelAndHint, Disabled as textarea_Disabled, Simple as textarea_Simple, SimpleResize as textarea_SimpleResize } from '@/components/ui/textarea.stories';
 import { default as themeProviderMeta, Default as themeProvider_Default, Global as themeProvider_Global, MultipleThemes as themeProvider_MultipleThemes } from '@/components/ui/theme-provider.stories';
+import { default as timelineStatusBadgeMeta, Open as timelineStatusBadge_Open, OpenSoon as timelineStatusBadge_OpenSoon, ClosingSoon as timelineStatusBadge_ClosingSoon, Closed as timelineStatusBadge_Closed, MediumSize as timelineStatusBadge_MediumSize, AllStatuses as timelineStatusBadge_AllStatuses, CustomLabel as timelineStatusBadge_CustomLabel } from '@/components/ui/timeline-status-badge.stories';
 import { default as tooltipMeta, Playground as tooltip_Playground, Light as tooltip_Light, Size as tooltip_Size, Position as tooltip_Position, HTMLContent as tooltip_HTMLContent } from '@/components/ui/tooltip.stories';
 
 export const storyRegistry: Record<string, {
@@ -649,6 +651,19 @@ export const storyRegistry: Record<string, {
     'Grid': promotionalCard_Grid
     }
   },
+  'publication-status-badge': {
+    meta: publicationStatusBadgeMeta,
+    stories: {
+    'Draft': publicationStatusBadge_Draft,
+    'WaitingForReview': publicationStatusBadge_WaitingForReview,
+    'Approved': publicationStatusBadge_Approved,
+    'RequireChanges': publicationStatusBadge_RequireChanges,
+    'Declined': publicationStatusBadge_Declined,
+    'AllStatuses': publicationStatusBadge_AllStatuses,
+    'LightVariant': publicationStatusBadge_LightVariant,
+    'CustomLabel': publicationStatusBadge_CustomLabel
+    }
+  },
   'radio-card': {
     meta: radioCardMeta,
     stories: {
@@ -849,6 +864,18 @@ export const storyRegistry: Record<string, {
     'Default': themeProvider_Default,
     'Global': themeProvider_Global,
     'MultipleThemes': themeProvider_MultipleThemes
+    }
+  },
+  'timeline-status-badge': {
+    meta: timelineStatusBadgeMeta,
+    stories: {
+    'Open': timelineStatusBadge_Open,
+    'OpenSoon': timelineStatusBadge_OpenSoon,
+    'ClosingSoon': timelineStatusBadge_ClosingSoon,
+    'Closed': timelineStatusBadge_Closed,
+    'MediumSize': timelineStatusBadge_MediumSize,
+    'AllStatuses': timelineStatusBadge_AllStatuses,
+    'CustomLabel': timelineStatusBadge_CustomLabel
     }
   },
   'tooltip': {

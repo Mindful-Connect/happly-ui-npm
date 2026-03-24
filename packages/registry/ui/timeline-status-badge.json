@@ -1,0 +1,88 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "timeline-status-badge",
+  "type": "registry:ui",
+  "title": "Timeline Status Badge",
+  "description": "A preconfigured badge for lifecycle timeline statuses (open, opening soon, closing soon, closed) with consistent colors and icons. Composes Badge internally.",
+  "version": "1.0.0",
+  "dependencies": ["@remixicon/react"],
+  "registryDependencies": ["badge"],
+  "docs": {
+    "lead": "A preconfigured badge for lifecycle timeline statuses with consistent colors, icons, and labels. Composes Badge internally.",
+    "usage": "import TimelineStatusBadge from \"@/components/ui/timeline-status-badge\"\n\n<TimelineStatusBadge status=\"open\" />",
+    "examples": [
+      {
+        "title": "Open",
+        "description": "Green badge indicating an open/active status.",
+        "code": "<TimelineStatusBadge status=\"open\" />",
+        "stories": ["Open"]
+      },
+      {
+        "title": "Opening Soon",
+        "description": "Purple badge indicating a status that will open soon.",
+        "code": "<TimelineStatusBadge status=\"open_soon\" />",
+        "stories": ["OpenSoon"]
+      },
+      {
+        "title": "Closing Soon",
+        "description": "Yellow badge indicating a status that is closing soon.",
+        "code": "<TimelineStatusBadge status=\"closing_soon\" />",
+        "stories": ["ClosingSoon"]
+      },
+      {
+        "title": "Closed",
+        "description": "Red badge indicating a closed status.",
+        "code": "<TimelineStatusBadge status=\"closed\" />",
+        "stories": ["Closed"]
+      },
+      {
+        "title": "Medium Size",
+        "description": "All statuses at medium size.",
+        "code": "<TimelineStatusBadge status=\"open\" size=\"medium\" />",
+        "stories": ["MediumSize"]
+      },
+      {
+        "title": "All Statuses",
+        "description": "All four timeline statuses side by side.",
+        "code": "<TimelineStatusBadge status=\"open\" />\n<TimelineStatusBadge status=\"open_soon\" />\n<TimelineStatusBadge status=\"closing_soon\" />\n<TimelineStatusBadge status=\"closed\" />",
+        "stories": ["AllStatuses"]
+      },
+      {
+        "title": "Custom Label",
+        "description": "Override the default label via children for i18n or custom text.",
+        "code": "<TimelineStatusBadge status=\"open\">Ouvert</TimelineStatusBadge>",
+        "stories": ["CustomLabel"]
+      }
+    ],
+    "api": [
+      {
+        "name": "TimelineStatusBadge",
+        "description": "A preconfigured Badge that maps timeline lifecycle statuses to colors, icons, and labels.",
+        "props": [
+          {
+            "name": "status",
+            "type": "'open' | 'open_soon' | 'closing_soon' | 'closed'",
+            "description": "The lifecycle timeline status"
+          },
+          {
+            "name": "size",
+            "type": "'small' | 'medium'",
+            "default": "'small'",
+            "description": "The size of the badge"
+          },
+          {
+            "name": "children",
+            "type": "React.ReactNode",
+            "description": "Override the default label (useful for i18n)"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/timeline-status-badge.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -97,6 +97,10 @@
             "href": "/docs/components/progress-circle"
           },
           {
+            "title": "Publication Status Badge",
+            "href": "/docs/components/publication-status-badge"
+          },
+          {
             "title": "Skeleton",
             "href": "/docs/components/skeleton"
           },
@@ -115,6 +119,10 @@
           {
             "title": "Tag",
             "href": "/docs/components/tag"
+          },
+          {
+            "title": "Timeline Status Badge",
+            "href": "/docs/components/timeline-status-badge"
           }
         ],
         "collapsed": false

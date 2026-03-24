@@ -1,0 +1,94 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "publication-status-badge",
+  "type": "registry:ui",
+  "title": "Publication Status Badge",
+  "description": "A preconfigured status badge for content moderation statuses (draft, waiting for review, approved, require changes, declined). Composes StatusBadge internally.",
+  "version": "1.0.0",
+  "dependencies": ["@remixicon/react"],
+  "registryDependencies": ["status-badge"],
+  "docs": {
+    "lead": "A preconfigured status badge for content moderation workflows with consistent icons, colors, and labels. Composes StatusBadge internally.",
+    "usage": "import PublicationStatusBadge from \"@/components/ui/publication-status-badge\"\n\n<PublicationStatusBadge status=\"approved\" />",
+    "examples": [
+      {
+        "title": "Draft",
+        "description": "Neutral badge for draft content.",
+        "code": "<PublicationStatusBadge status=\"draft\" />",
+        "stories": ["Draft"]
+      },
+      {
+        "title": "Waiting for Review",
+        "description": "Neutral badge for content awaiting review.",
+        "code": "<PublicationStatusBadge status=\"waiting_for_review\" />",
+        "stories": ["WaitingForReview"]
+      },
+      {
+        "title": "Approved",
+        "description": "Success badge for approved content.",
+        "code": "<PublicationStatusBadge status=\"approved\" />",
+        "stories": ["Approved"]
+      },
+      {
+        "title": "Require Changes",
+        "description": "Warning badge for content that needs changes.",
+        "code": "<PublicationStatusBadge status=\"require_changes\" />",
+        "stories": ["RequireChanges"]
+      },
+      {
+        "title": "Declined",
+        "description": "Error badge for declined content.",
+        "code": "<PublicationStatusBadge status=\"declined\" />",
+        "stories": ["Declined"]
+      },
+      {
+        "title": "All Statuses",
+        "description": "All five moderation statuses side by side.",
+        "code": "<PublicationStatusBadge status=\"draft\" />\n<PublicationStatusBadge status=\"waiting_for_review\" />\n<PublicationStatusBadge status=\"approved\" />\n<PublicationStatusBadge status=\"require_changes\" />\n<PublicationStatusBadge status=\"declined\" />",
+        "stories": ["AllStatuses"]
+      },
+      {
+        "title": "Light Variant",
+        "description": "All statuses using the light variant with colored backgrounds.",
+        "code": "<PublicationStatusBadge status=\"approved\" variant=\"light\" />",
+        "stories": ["LightVariant"]
+      },
+      {
+        "title": "Custom Label",
+        "description": "Override the default label via children for i18n or custom text.",
+        "code": "<PublicationStatusBadge status=\"approved\">Approuvé</PublicationStatusBadge>",
+        "stories": ["CustomLabel"]
+      }
+    ],
+    "api": [
+      {
+        "name": "PublicationStatusBadge",
+        "description": "A preconfigured StatusBadge that maps moderation statuses to semantic colors, icons, and labels.",
+        "props": [
+          {
+            "name": "status",
+            "type": "'draft' | 'waiting_for_review' | 'approved' | 'require_changes' | 'declined'",
+            "description": "The moderation status"
+          },
+          {
+            "name": "variant",
+            "type": "'stroke' | 'light'",
+            "default": "'stroke'",
+            "description": "The visual variant of the badge"
+          },
+          {
+            "name": "children",
+            "type": "React.ReactNode",
+            "description": "Override the default label (useful for i18n)"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/publication-status-badge.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}
