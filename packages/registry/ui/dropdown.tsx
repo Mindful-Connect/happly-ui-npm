@@ -26,7 +26,7 @@ const DropdownContent = React.forwardRef<
       ref={forwardedRef}
       sideOffset={sideOffset}
       className={cn(
-        'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 z-50 w-[300px] overflow-hidden rounded-2xl p-2 ring-1 ring-inset',
+        'z-50 pointer-events-auto w-[300px] overflow-hidden rounded-2xl bg-bg-white-0 p-2 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200',
         'flex flex-col gap-1',
         // origin
         'data-[side=bottom]:origin-top data-[side=left]:origin-right data-[side=right]:origin-left data-[side=top]:origin-bottom',
@@ -46,14 +46,16 @@ DropdownContent.displayName = 'DropdownContent';
 const DropdownItem = React.forwardRef<
   React.ComponentRef<typeof DropdownMenuPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
-    inset?: boolean;
-  }
->(({ className, inset, ...rest }, forwardedRef) => (
+  inset?: boolean;
+  variant?: 'default' | 'error';
+}
+>(({ className, inset, variant = 'default', ...rest }, forwardedRef) => (
   <DropdownMenuPrimitive.Item
     ref={forwardedRef}
+    data-variant={variant}
     className={cn(
       // base
-      'group/item text-paragraph-sm text-text-strong-950 relative cursor-pointer rounded-lg p-2 outline-none select-none',
+      'group/item relative cursor-pointer select-none rounded-lg p-2 text-paragraph-sm text-text-strong-950 outline-none',
       'flex items-center gap-2',
       'transition duration-200 ease-out',
       // hover
@@ -62,6 +64,8 @@ const DropdownItem = React.forwardRef<
       'focus:outline-none',
       // disabled
       'data-[disabled]:text-text-disabled-300',
+      // variant
+      variant === 'error' && 'text-error-base',
       inset && 'pl-9',
       className
     )}
@@ -71,19 +75,21 @@ const DropdownItem = React.forwardRef<
 DropdownItem.displayName = 'DropdownItem';
 
 function DropdownItemIcon<T extends React.ElementType>({
-  className,
-  as,
-  ...rest
-}: PolymorphicComponentProps<T>) {
+                                                         className,
+                                                         as,
+                                                         ...rest
+                                                       }: PolymorphicComponentProps<T>) {
   const Component = as || 'div';
 
   return (
     <Component
       className={cn(
         // base
-        'text-text-sub-600 h-5 w-5',
+        'h-5 w-5 text-text-sub-600',
         // disabled
         'group-has-[[data-disabled]]:text-text-disabled-300',
+        // variant
+        'group-data-[variant=error]/item:text-error-base',
         className
       )}
       {...rest}
@@ -111,7 +117,7 @@ const DropdownLabel = React.forwardRef<
   <DropdownMenuPrimitive.Label
     ref={forwardedRef}
     className={cn(
-      'text-subheading-xs text-text-soft-400 px-2 py-1 uppercase',
+      'px-2 py-1 text-subheading-xs uppercase text-text-soft-400',
       className
     )}
     {...rest}
@@ -122,14 +128,14 @@ DropdownLabel.displayName = 'DropdownLabel';
 const DropdownMenuSubTrigger = React.forwardRef<
   React.ComponentRef<typeof DropdownMenuPrimitive.SubTrigger>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
-    inset?: boolean;
-  }
+  inset?: boolean;
+}
 >(({ className, inset, children, ...rest }, forwardedRef) => (
   <DropdownMenuPrimitive.SubTrigger
     ref={forwardedRef}
     className={cn(
       // base
-      'group/item text-paragraph-sm text-text-strong-950 relative cursor-pointer rounded-lg p-2 outline-0 select-none',
+      'group/item relative cursor-pointer select-none rounded-lg p-2 text-paragraph-sm text-text-strong-950 outline-0',
       'flex items-center gap-2',
       'transition duration-200 ease-out',
       // hover
@@ -155,7 +161,7 @@ const DropdownMenuSubContent = React.forwardRef<
   <DropdownMenuPrimitive.SubContent
     ref={forwardedRef}
     className={cn(
-      'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 z-50 w-max overflow-hidden rounded-2xl p-2 ring-1 ring-inset',
+      'z-50 pointer-events-auto w-max overflow-hidden rounded-2xl bg-bg-white-0 p-2 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200',
       'flex flex-col gap-1',
       // animation
       'data-[state=open]:animate-in data-[state=open]:fade-in-0',
@@ -168,6 +174,116 @@ const DropdownMenuSubContent = React.forwardRef<
   />
 ));
 DropdownMenuSubContent.displayName = 'DropdownMenuSubContent';
+
+// --- Composed ---
+
+type DropdownMenuItem = {
+  label: React.ReactNode;
+  icon?: React.ElementType;
+  variant?: 'default' | 'error';
+  disabled?: boolean;
+  onSelect?: () => void;
+  href?: string;
+};
+
+type DropdownMenuGroup = {
+  label?: string;
+  items: DropdownMenuItem[];
+};
+
+type DropdownComposedProps = {
+  /** The trigger element. Rendered via asChild. */
+  children: React.ReactNode;
+  /** Menu items. Accepts a flat array of items or grouped arrays. */
+  groups: DropdownMenuGroup[];
+  /** Content alignment relative to trigger. */
+  align?: 'start' | 'center' | 'end';
+  /** Content side relative to trigger. */
+  side?: 'top' | 'right' | 'bottom' | 'left';
+  /** Distance in pixels from the trigger. */
+  sideOffset?: number;
+  /** Additional className for the content panel. */
+  contentClassName?: string;
+  /** Header content rendered above menu items. */
+  header?: React.ReactNode;
+  /** Footer content rendered below menu items. */
+  footer?: React.ReactNode;
+  /** Controlled open state. */
+  open?: boolean;
+  /** Callback when open state changes. */
+  onOpenChange?: (open: boolean) => void;
+};
+
+function DropdownComposed({
+  children,
+  groups,
+  align = 'start',
+  side,
+  sideOffset,
+  contentClassName,
+  header,
+  footer,
+  open,
+  onOpenChange,
+}: DropdownComposedProps) {
+  return (
+    <DropdownRoot open={open} onOpenChange={onOpenChange}>
+      <DropdownTrigger asChild>{children}</DropdownTrigger>
+      <DropdownContent
+        align={align}
+        side={side}
+        sideOffset={sideOffset}
+        className={contentClassName}
+      >
+        {header}
+        {groups.map((group, groupIndex) => (
+          <React.Fragment key={groupIndex}>
+            {groupIndex > 0 && (
+              <DropdownSeparator className='my-1 h-px bg-stroke-soft-200' />
+            )}
+            <DropdownGroup>
+              {group.label && <DropdownLabel>{group.label}</DropdownLabel>}
+              {group.items.map((item, itemIndex) => {
+                const itemContent = (
+                  <>
+                    {item.icon && <DropdownItemIcon as={item.icon} />}
+                    {item.label}
+                  </>
+                );
+
+                if (item.href) {
+                  return (
+                    <DropdownItem
+                      key={itemIndex}
+                      variant={item.variant}
+                      disabled={item.disabled}
+                      asChild
+                    >
+                      <a href={item.href}>{itemContent}</a>
+                    </DropdownItem>
+                  );
+                }
+
+                return (
+                  <DropdownItem
+                    key={itemIndex}
+                    variant={item.variant}
+                    disabled={item.disabled}
+                    onSelect={item.onSelect}
+                  >
+                    {itemContent}
+                  </DropdownItem>
+                );
+              })}
+            </DropdownGroup>
+          </React.Fragment>
+        ))}
+        {footer}
+      </DropdownContent>
+    </DropdownRoot>
+  );
+}
+DropdownComposed.displayName = 'DropdownComposed';
 
 export {
   DropdownRoot as Root,
@@ -186,4 +302,6 @@ export {
   DropdownRadioItem as RadioItem,
   DropdownSeparator as Separator,
   DropdownArrow as Arrow,
+  DropdownComposed as Composed,
 };
+export type { DropdownMenuItem, DropdownMenuGroup, DropdownComposedProps };

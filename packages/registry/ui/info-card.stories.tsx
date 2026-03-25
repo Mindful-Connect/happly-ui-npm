@@ -15,7 +15,7 @@ export default { title: 'Cards/Info Card' };
 export const Inline = {
   render: () => (
     <div className='w-full'>
-      <InfoCard.Root layout='inline'>
+      <InfoCard.Root className='flex-row flex-wrap items-stretch'>
         <InfoCard.Item>
           <InfoCard.Label>Submitted date</InfoCard.Label>
           <InfoCard.Value>
@@ -40,7 +40,7 @@ export const Inline = {
 export const InlineWithFullWidthItem = {
   render: () => (
     <div className='w-full'>
-      <InfoCard.Root layout='inline'>
+      <InfoCard.Root className='flex-row flex-wrap items-stretch'>
         <InfoCard.Item>
           <InfoCard.Label>Submitted date</InfoCard.Label>
           <InfoCard.Value>
@@ -57,7 +57,7 @@ export const InlineWithFullWidthItem = {
             <span>Sean Muir</span>
           </InfoCard.Value>
         </InfoCard.Item>
-        <InfoCard.Item fullWidth>
+        <InfoCard.Item className='w-full'>
           <InfoCard.Label>Publication status</InfoCard.Label>
           <InfoCard.Value>
             <StatusBadge.Root status='pending'>
@@ -74,7 +74,7 @@ export const InlineWithFullWidthItem = {
 export const Grid2Columns = {
   render: () => (
     <div className='w-full'>
-      <InfoCard.Root layout='grid' columns={2}>
+      <InfoCard.Root className='grid grid-cols-2'>
         <InfoCard.Item>
           <InfoCard.Label>Start date</InfoCard.Label>
           <InfoCard.Value>
@@ -113,7 +113,7 @@ export const Grid2Columns = {
 export const Stacked = {
   render: () => (
     <div className='w-full'>
-      <InfoCard.Root layout='stack'>
+      <InfoCard.Root>
         <InfoCard.Item>
           <InfoCard.Label>Application ID</InfoCard.Label>
           <InfoCard.Value>
@@ -146,7 +146,7 @@ export const Stacked = {
 export const WithAction = {
   render: () => (
     <div className='w-full'>
-      <InfoCard.Root layout='inline'>
+      <InfoCard.Root className='flex-row flex-wrap items-stretch'>
         <InfoCard.Item>
           <InfoCard.Label>Submitted date</InfoCard.Label>
           <InfoCard.Value>
@@ -163,7 +163,7 @@ export const WithAction = {
             <span>Sean Muir</span>
           </InfoCard.Value>
         </InfoCard.Item>
-        <InfoCard.Action />
+        <InfoCard.Action className='h-[70px] @xl:h-auto @xl:[aspect-ratio:1/1]' />
       </InfoCard.Root>
     </div>
   ),
@@ -172,7 +172,7 @@ export const WithAction = {
 export const WithActionNotification = {
   render: () => (
     <div className='w-full'>
-      <InfoCard.Root layout='inline'>
+      <InfoCard.Root className='flex-row flex-wrap items-stretch'>
         <InfoCard.Item>
           <InfoCard.Label>Submitted date</InfoCard.Label>
           <InfoCard.Value>
@@ -190,25 +190,23 @@ export const WithActionNotification = {
           </InfoCard.Value>
         </InfoCard.Item>
         <InfoCard.Item>
-          <InfoCard.Label>Created by</InfoCard.Label>
+          <InfoCard.Label>Category</InfoCard.Label>
           <InfoCard.Value>
-            <Avatar.Root size='20'>
-              <Avatar.Image src='https://i.pravatar.cc/40?u=sean' />
-            </Avatar.Root>
-            <span>Sean Muir</span>
+            <Badge.Root variant='lighter' color='blue'>
+              Technology
+            </Badge.Root>
           </InfoCard.Value>
         </InfoCard.Item>
         <InfoCard.Item>
-          <InfoCard.Label>Created by</InfoCard.Label>
+          <InfoCard.Label>Priority</InfoCard.Label>
           <InfoCard.Value>
-            <Avatar.Root size='20'>
-              <Avatar.Image src='https://i.pravatar.cc/40?u=sean' />
-            </Avatar.Root>
-            <span>Sean Muir</span>
+            <Badge.Root variant='lighter' color='red'>
+              High
+            </Badge.Root>
           </InfoCard.Value>
         </InfoCard.Item>
         <InfoCard.Item>
-          <InfoCard.Label>Created by</InfoCard.Label>
+          <InfoCard.Label>Assignee</InfoCard.Label>
           <InfoCard.Value>
             <Avatar.Root size='20'>
               <Avatar.Image src='https://i.pravatar.cc/40?u=sean' />
@@ -216,7 +214,10 @@ export const WithActionNotification = {
             <span>Sean Muir</span>
           </InfoCard.Value>
         </InfoCard.Item>
-        <InfoCard.Action notification />
+        <InfoCard.Action
+          notification
+          className='h-[70px] @xl:h-auto @xl:[aspect-ratio:1/1]'
+        />
       </InfoCard.Root>
     </div>
   ),
@@ -225,7 +226,7 @@ export const WithActionNotification = {
 export const WithCustomAction = {
   render: () => (
     <div className='w-full'>
-      <InfoCard.Root layout='inline'>
+      <InfoCard.Root className='flex-row flex-wrap items-stretch'>
         <InfoCard.Item>
           <InfoCard.Label>Application ID</InfoCard.Label>
           <InfoCard.Value>
@@ -241,7 +242,7 @@ export const WithCustomAction = {
             </StatusBadge.Root>
           </InfoCard.Value>
         </InfoCard.Item>
-        <InfoCard.Action className='h-[70px] @sm:w-[70px]'>
+        <InfoCard.Action className='h-[70px] @xl:h-auto @xl:[aspect-ratio:1/1]'>
           <RiExternalLinkLine className='text-icon-sub-600 size-5' />
         </InfoCard.Action>
       </InfoCard.Root>
@@ -252,7 +253,7 @@ export const WithCustomAction = {
 export const InlineManyItems = {
   render: () => (
     <div className='w-full'>
-      <InfoCard.Root layout='inline'>
+      <InfoCard.Root className='flex-row flex-wrap items-stretch'>
         <InfoCard.Item>
           <InfoCard.Label>Submitted date</InfoCard.Label>
           <InfoCard.Value>
@@ -318,7 +319,7 @@ export const InlineManyItems = {
 export const Grid3Columns = {
   render: () => (
     <div className='w-full'>
-      <InfoCard.Root layout='grid' columns={3}>
+      <InfoCard.Root className='grid grid-cols-3'>
         <InfoCard.Item>
           <InfoCard.Label>Amount</InfoCard.Label>
           <InfoCard.Value>

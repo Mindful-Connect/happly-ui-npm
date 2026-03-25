@@ -3,110 +3,94 @@
   "name": "info-card",
   "type": "registry:ui",
   "title": "Info Card",
-  "description": "A reusable section for displaying labeled detail items in flexible layouts (inline, grid, stack, wrap).",
-  "version": "1.0.0",
+  "description": "A reusable section for displaying labeled detail items. Layout is controlled via className (flexbox, grid, etc.).",
+  "version": "2.0.0",
   "dependencies": ["@remixicon/react"],
   "registryDependencies": ["tv", "happly-ui-utils", "status-indicator"],
+  "migration": {
+    "guide": "Info Card v2 removes the layout, columns, and fullWidth props. Use className on Root for layout (e.g. className=\"flex-row flex-wrap items-stretch\" for inline, className=\"grid grid-cols-2\" for grid). Use className=\"w-full\" on Item instead of the fullWidth prop. Action no longer auto-squares — use className=\"h-[70px] @xl:h-auto @xl:[aspect-ratio:1/1]\" for the responsive square pattern."
+  },
   "docs": {
-    "lead": "Display labeled key-value detail items within a section card. Supports inline, grid, stacked, and wrapped layouts. Each item has a label and a custom-rendered value as children. The value container defaults to text-label-xs and text-sub-600 styling.",
-    "usage": "import * as InfoCard from \"@/components/ui/info-card\"\n\n<InfoCard.Root layout=\"inline\">\n  <InfoCard.Item>\n    <InfoCard.Label>Label</InfoCard.Label>\n    <InfoCard.Value>Value content</InfoCard.Value>\n  </InfoCard.Item>\n</InfoCard.Root>",
+    "lead": "Display labeled key-value detail items within a section card. Layout is fully controlled via className — use flexbox for inline, CSS grid for columns, or the default stacked flex-col.",
+    "usage": "import * as InfoCard from \"@/components/ui/info-card\"\n\n<InfoCard.Root className=\"flex-row flex-wrap items-stretch\">\n  <InfoCard.Item>\n    <InfoCard.Label>Label</InfoCard.Label>\n    <InfoCard.Value>Value content</InfoCard.Value>\n  </InfoCard.Item>\n</InfoCard.Root>",
     "examples": [
       {
         "title": "Inline",
-        "description": "Items displayed side by side, each taking equal width. Uses Avatar for the user image.",
-        "code": "import { RiTimeLine } from '@remixicon/react'\nimport * as Avatar from '@/components/ui/avatar'\nimport * as InfoCard from '@/components/ui/info-card'\n\n<InfoCard.Root layout=\"inline\">\n  <InfoCard.Item>\n    <InfoCard.Label>Submitted date</InfoCard.Label>\n    <InfoCard.Value>\n      <RiTimeLine className=\"w-4 h-4\" />\n      <span>Jan 3, 2025</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Created by</InfoCard.Label>\n    <InfoCard.Value>\n      <Avatar.Root size=\"20\">\n        <Avatar.Image src=\"avatar.jpg\" />\n      </Avatar.Root>\n      <span>Sean Muir</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n</InfoCard.Root>",
+        "description": "Items displayed side by side using flex-row. Uses Avatar for the user image.",
+        "code": "<InfoCard.Root className=\"flex-row flex-wrap items-stretch\">\n  <InfoCard.Item>\n    <InfoCard.Label>Submitted date</InfoCard.Label>\n    <InfoCard.Value>\n      <RiTimeLine className=\"w-4 h-4\" />\n      <span>Jan 3, 2025</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Created by</InfoCard.Label>\n    <InfoCard.Value>\n      <Avatar.Root size=\"20\">\n        <Avatar.Image src=\"avatar.jpg\" />\n      </Avatar.Root>\n      <span>Sean Muir</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n</InfoCard.Root>",
         "stories": ["Inline"]
       },
       {
         "title": "Inline with Full Width Item",
-        "description": "Mix inline and full-width items using the fullWidth prop. Uses StatusBadge for the status value and Avatar for the user image.",
-        "code": "import { RiAlertFill, RiTimeLine } from '@remixicon/react'\nimport * as Avatar from '@/components/ui/avatar'\nimport * as InfoCard from '@/components/ui/info-card'\nimport * as StatusBadge from '@/components/ui/status-badge'\n\n<InfoCard.Root layout=\"inline\">\n  <InfoCard.Item>\n    <InfoCard.Label>Submitted date</InfoCard.Label>\n    <InfoCard.Value>\n      <RiTimeLine className=\"w-4 h-4\" />\n      <span>Jan 3, 2025</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Created by</InfoCard.Label>\n    <InfoCard.Value>\n      <Avatar.Root size=\"20\">\n        <Avatar.Image src=\"avatar.jpg\" />\n      </Avatar.Root>\n      <span>Sean Muir</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item fullWidth>\n    <InfoCard.Label>Publication status</InfoCard.Label>\n    <InfoCard.Value>\n      <StatusBadge.Root status=\"pending\">\n        <StatusBadge.Icon as={RiAlertFill} />\n        Require changes\n      </StatusBadge.Root>\n    </InfoCard.Value>\n  </InfoCard.Item>\n</InfoCard.Root>",
+        "description": "Mix inline and full-width items using className=\"w-full\" on the item.",
+        "code": "<InfoCard.Root className=\"flex-row flex-wrap items-stretch\">\n  <InfoCard.Item>\n    <InfoCard.Label>Submitted date</InfoCard.Label>\n    <InfoCard.Value>...</InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Created by</InfoCard.Label>\n    <InfoCard.Value>...</InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item className=\"w-full\">\n    <InfoCard.Label>Publication status</InfoCard.Label>\n    <InfoCard.Value>\n      <StatusBadge.Root status=\"pending\">\n        <StatusBadge.Icon as={RiAlertFill} />\n        Require changes\n      </StatusBadge.Root>\n    </InfoCard.Value>\n  </InfoCard.Item>\n</InfoCard.Root>",
         "stories": ["InlineWithFullWidthItem"]
       },
       {
         "title": "Grid (2 Columns)",
-        "description": "Items arranged in a fixed 2-column grid. Uses Badge for category and priority values.",
-        "code": "import { RiCalendarLine } from '@remixicon/react'\nimport * as Badge from '@/components/ui/badge'\nimport * as InfoCard from '@/components/ui/info-card'\n\n<InfoCard.Root layout=\"grid\" columns={2}>\n  <InfoCard.Item>\n    <InfoCard.Label>Start date</InfoCard.Label>\n    <InfoCard.Value>\n      <RiCalendarLine className=\"w-4 h-4\" />\n      <span>Mar 1, 2025</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>End date</InfoCard.Label>\n    <InfoCard.Value>\n      <RiCalendarLine className=\"w-4 h-4\" />\n      <span>Jun 30, 2025</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Category</InfoCard.Label>\n    <InfoCard.Value>\n      <Badge.Root variant=\"lighter\" color=\"blue\">\n        Technology\n      </Badge.Root>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Priority</InfoCard.Label>\n    <InfoCard.Value>\n      <Badge.Root variant=\"lighter\" color=\"red\">\n        High\n      </Badge.Root>\n    </InfoCard.Value>\n  </InfoCard.Item>\n</InfoCard.Root>",
+        "description": "Items arranged in a fixed 2-column grid using className=\"grid grid-cols-2\".",
+        "code": "<InfoCard.Root className=\"grid grid-cols-2\">\n  <InfoCard.Item>\n    <InfoCard.Label>Start date</InfoCard.Label>\n    <InfoCard.Value>...</InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>End date</InfoCard.Label>\n    <InfoCard.Value>...</InfoCard.Value>\n  </InfoCard.Item>\n</InfoCard.Root>",
         "stories": ["Grid2Columns"]
       },
       {
         "title": "Stacked",
-        "description": "Items stacked vertically, each taking full width. Uses Avatar and StatusBadge.",
-        "code": "import * as Avatar from '@/components/ui/avatar'\nimport * as InfoCard from '@/components/ui/info-card'\nimport * as StatusBadge from '@/components/ui/status-badge'\n\n<InfoCard.Root layout=\"stack\">\n  <InfoCard.Item>\n    <InfoCard.Label>Application ID</InfoCard.Label>\n    <InfoCard.Value>\n      <span>#APP-2025-0142</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Applicant</InfoCard.Label>\n    <InfoCard.Value>\n      <Avatar.Root size=\"20\">\n        <Avatar.Image src=\"avatar.jpg\" />\n      </Avatar.Root>\n      <span>Jane Cooper</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Status</InfoCard.Label>\n    <InfoCard.Value>\n      <StatusBadge.Root status=\"completed\" variant=\"light\">\n        <StatusBadge.Dot />\n        Approved\n      </StatusBadge.Root>\n    </InfoCard.Value>\n  </InfoCard.Item>\n</InfoCard.Root>",
+        "description": "Items stacked vertically (default flex-col layout).",
+        "code": "<InfoCard.Root>\n  <InfoCard.Item>\n    <InfoCard.Label>Application ID</InfoCard.Label>\n    <InfoCard.Value>#APP-2025-0142</InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Status</InfoCard.Label>\n    <InfoCard.Value>\n      <StatusBadge.Root status=\"completed\" variant=\"light\">\n        <StatusBadge.Dot />\n        Approved\n      </StatusBadge.Root>\n    </InfoCard.Value>\n  </InfoCard.Item>\n</InfoCard.Root>",
         "stories": ["Stacked"]
       },
       {
         "title": "With Action",
-        "description": "Inline layout with a default action button. The action renders as a square button with an arrow icon.",
-        "code": "import { RiTimeLine } from '@remixicon/react'\nimport * as Avatar from '@/components/ui/avatar'\nimport * as InfoCard from '@/components/ui/info-card'\n\n<InfoCard.Root layout=\"inline\">\n  <InfoCard.Item>\n    <InfoCard.Label>Submitted date</InfoCard.Label>\n    <InfoCard.Value>\n      <RiTimeLine className=\"w-4 h-4\" />\n      <span>Jan 3, 2025</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Created by</InfoCard.Label>\n    <InfoCard.Value>\n      <Avatar.Root size=\"20\">\n        <Avatar.Image src=\"avatar.jpg\" />\n      </Avatar.Root>\n      <span>Sean Muir</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Action />\n</InfoCard.Root>",
+        "description": "Inline layout with a responsive square action button. Uses h-[70px] on mobile and aspect-ratio:1/1 at @xl breakpoint.",
+        "code": "<InfoCard.Root className=\"flex-row flex-wrap items-stretch\">\n  <InfoCard.Item>\n    <InfoCard.Label>Submitted date</InfoCard.Label>\n    <InfoCard.Value>...</InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Created by</InfoCard.Label>\n    <InfoCard.Value>...</InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Action className=\"h-[70px] @xl:h-auto @xl:[aspect-ratio:1/1]\" />\n</InfoCard.Root>",
         "stories": ["WithAction"]
       },
       {
         "title": "Action with Notification",
-        "description": "Action button with a notification dot in the top-right corner. Uses the StatusIndicator component internally.",
-        "code": "import { RiTimeLine } from '@remixicon/react'\nimport * as Avatar from '@/components/ui/avatar'\nimport * as InfoCard from '@/components/ui/info-card'\n\n<InfoCard.Root layout=\"inline\">\n  <InfoCard.Item>\n    <InfoCard.Label>Submitted date</InfoCard.Label>\n    <InfoCard.Value>\n      <RiTimeLine className=\"w-4 h-4\" />\n      <span>Jan 3, 2025</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Created by</InfoCard.Label>\n    <InfoCard.Value>\n      <Avatar.Root size=\"20\">\n        <Avatar.Image src=\"avatar.jpg\" />\n      </Avatar.Root>\n      <span>Sean Muir</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Action notification />\n</InfoCard.Root>",
+        "description": "Action button with a notification dot and responsive square sizing.",
+        "code": "<InfoCard.Root className=\"flex-row flex-wrap items-stretch\">\n  <InfoCard.Item>...</InfoCard.Item>\n  <InfoCard.Action\n    notification\n    className=\"h-[70px] @xl:h-auto @xl:[aspect-ratio:1/1]\"\n  />\n</InfoCard.Root>",
         "stories": ["WithActionNotification"]
       },
       {
         "title": "With Custom Action",
-        "description": "Action button with a custom icon. Pass children to override the default arrow icon.",
-        "code": "import { RiExternalLinkLine } from '@remixicon/react'\nimport * as InfoCard from '@/components/ui/info-card'\nimport * as StatusBadge from '@/components/ui/status-badge'\n\n<InfoCard.Root layout=\"inline\">\n  <InfoCard.Item>\n    <InfoCard.Label>Application ID</InfoCard.Label>\n    <InfoCard.Value>\n      <span>#APP-2025-0142</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Status</InfoCard.Label>\n    <InfoCard.Value>\n      <StatusBadge.Root status=\"completed\" variant=\"light\">\n        <StatusBadge.Dot />\n        Approved\n      </StatusBadge.Root>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Action>\n    <RiExternalLinkLine className=\"size-5 text-icon-sub-600\" />\n  </InfoCard.Action>\n</InfoCard.Root>",
+        "description": "Action button with a custom icon and responsive square sizing.",
+        "code": "<InfoCard.Root className=\"flex-row flex-wrap items-stretch\">\n  <InfoCard.Item>...</InfoCard.Item>\n  <InfoCard.Action className=\"h-[70px] @xl:h-auto @xl:[aspect-ratio:1/1]\">\n    <RiExternalLinkLine className=\"size-5 text-icon-sub-600\" />\n  </InfoCard.Action>\n</InfoCard.Root>",
         "stories": ["WithCustomAction"]
       },
       {
         "title": "Grid (3 Columns)",
-        "description": "Items arranged in a fixed 3-column grid. Uses Badge for the duration value.",
-        "code": "import { RiCalendarLine } from '@remixicon/react'\nimport * as Badge from '@/components/ui/badge'\nimport * as InfoCard from '@/components/ui/info-card'\n\n<InfoCard.Root layout=\"grid\" columns={3}>\n  <InfoCard.Item>\n    <InfoCard.Label>Amount</InfoCard.Label>\n    <InfoCard.Value>\n      <span>$25,000</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Duration</InfoCard.Label>\n    <InfoCard.Value>\n      <Badge.Root variant=\"stroke\">\n        12 months\n      </Badge.Root>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Deadline</InfoCard.Label>\n    <InfoCard.Value>\n      <RiCalendarLine className=\"w-4 h-4\" />\n      <span>Dec 31, 2025</span>\n    </InfoCard.Value>\n  </InfoCard.Item>\n</InfoCard.Root>",
+        "description": "Items arranged in a fixed 3-column grid.",
+        "code": "<InfoCard.Root className=\"grid grid-cols-3\">\n  <InfoCard.Item>\n    <InfoCard.Label>Amount</InfoCard.Label>\n    <InfoCard.Value>$25,000</InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Duration</InfoCard.Label>\n    <InfoCard.Value>\n      <Badge.Root variant=\"stroke\">12 months</Badge.Root>\n    </InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Deadline</InfoCard.Label>\n    <InfoCard.Value>...</InfoCard.Value>\n  </InfoCard.Item>\n</InfoCard.Root>",
         "stories": ["Grid3Columns"]
       }
     ],
     "api": [
       {
         "name": "InfoCard.Root",
-        "description": "The container for info card items. Controls layout and spacing.",
-        "props": [
-          {
-            "name": "layout",
-            "type": "'inline' | 'grid' | 'stack' | 'wrap'",
-            "default": "'inline'",
-            "description": "Controls how items are arranged."
-          },
-          {
-            "name": "columns",
-            "type": "1 | 2 | 3 | 4",
-            "default": "-",
-            "description": "Number of columns when layout is 'grid'."
-          }
-        ]
+        "description": "The container for info card items. Default layout is flex-col. Use className for inline (flex-row), grid, or other layouts.",
+        "props": []
       },
       {
         "name": "InfoCard.Item",
         "description": "An individual card containing a label and value.",
-        "props": [
-          {
-            "name": "fullWidth",
-            "type": "boolean",
-            "default": "false",
-            "description": "When true, the item spans the full width of the container."
-          }
-        ]
+        "props": []
       },
       {
         "name": "InfoCard.Label",
-        "description": "The label text for an info card item."
+        "description": "The label text for an info card item.",
+        "props": []
       },
       {
         "name": "InfoCard.Value",
-        "description": "The value container for custom-rendered content. Defaults to text-label-xs and text-text-sub-600 styling."
+        "description": "The value container for custom-rendered content. Defaults to text-label-xs and text-text-sub-600 styling.",
+        "props": []
       },
       {
         "name": "InfoCard.Action",
-        "description": "A square action button styled like an info card item. Renders a default RiArrowRightUpLine icon that can be overridden via children. Renders as an anchor tag when href is provided, otherwise a button.",
+        "description": "An action button styled like an info card item. Renders a default RiArrowRightUpLine icon that can be overridden via children. Renders as an anchor tag when href is provided, otherwise a button. Use className=\"h-[70px] @xl:h-auto @xl:[aspect-ratio:1/1]\" for the responsive square pattern.",
         "props": [
           {
             "name": "href",
             "type": "string",
-            "default": "-",
             "description": "When provided, renders as an anchor tag instead of a button."
           },
           {
