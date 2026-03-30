@@ -11,6 +11,7 @@ const SCALE_STEPS = [
 
 const SEMANTIC_TOKENS = [
   { name: 'base', variable: '--color-primary-base' },
+  { name: 'contrast', variable: '--color-primary-contrast' },
   { name: 'dark', variable: '--color-primary-dark' },
   { name: 'darker', variable: '--color-primary-darker' },
   { name: 'light', variable: '--color-primary-light' },
@@ -88,7 +89,20 @@ const FullPalette = ({ label, color }: { label: string; color: string }) => (
 );
 
 export const Default = {
-  render: () => <FullPalette label='Purple (default)' color='#7d52f4' />,
+  render: () => (
+    <div className='flex flex-col gap-5'>
+      <div className='flex items-center gap-2'>
+        <div className='h-4 w-4 rounded-full ring-1 ring-black/5 bg-primary-base' />
+        <span className='text-text-strong-950 text-sm font-semibold'>
+          Current Primary
+        </span>
+      </div>
+
+      <ScaleRow label='Scale (950–50)' />
+      <SemanticRow label='Semantic' tokens={SEMANTIC_TOKENS} />
+      <SemanticRow label='Alpha' tokens={ALPHA_TOKENS} />
+    </div>
+  ),
 };
 
 export const Global = {

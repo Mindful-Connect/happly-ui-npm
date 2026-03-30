@@ -318,7 +318,7 @@ const FileCardActions = React.forwardRef<
   return (
     <div
       ref={forwardedRef}
-      className={cn('flex shrink-0 items-center', className)}
+      className={cn('flex shrink-0 items-center gap-2', className)}
       {...rest}
     />
   );

@@ -3,7 +3,7 @@
 
 import { default as accordionMeta, Default as accordion_Default, ArrowStart as accordion_ArrowStart, StrokeVariant as accordion_StrokeVariant, StrokeArrowStart as accordion_StrokeArrowStart, GroupDefault as accordion_GroupDefault, GroupArrowStart as accordion_GroupArrowStart, GroupStroke as accordion_GroupStroke, GroupStrokeArrowStart as accordion_GroupStrokeArrowStart } from '@/components/ui/accordion.stories';
 import { default as aiOrbMeta, Default as aiOrb_Default, Animated as aiOrb_Animated, Sizes as aiOrb_Sizes, Playground as aiOrb_Playground } from '@/components/ui/ai-orb.stories';
-import { default as alertMeta, Playground as alert_Playground, Filled as alert_Filled, Light as alert_Light, Lighter as alert_Lighter, Stroke as alert_Stroke, Sizes as alert_Sizes } from '@/components/ui/alert.stories';
+import { default as alertMeta, Playground as alert_Playground, DefaultIcons as alert_DefaultIcons, CustomIcon as alert_CustomIcon, Filled as alert_Filled, Light as alert_Light, Lighter as alert_Lighter, Stroke as alert_Stroke, Sizes as alert_Sizes } from '@/components/ui/alert.stories';
 import { default as avatarGroupCompactMeta, Playground as avatarGroupCompact_Playground, Variants as avatarGroupCompact_Variants, Size as avatarGroupCompact_Size } from '@/components/ui/avatar-group-compact.stories';
 import { default as avatarGroupMeta, Playground as avatarGroup_Playground, Size as avatarGroup_Size } from '@/components/ui/avatar-group.stories';
 import { default as avatarMeta, Playground as avatar_Playground, Color as avatar_Color, Size as avatar_Size, Text as avatar_Text, Placeholder as avatar_Placeholder, Status as avatar_Status, Notification as avatar_Notification, BrandLogo as avatar_BrandLogo, Verified as avatar_Verified, TopIndicators as avatar_TopIndicators, SquareRounded as avatar_SquareRounded, CustomPlaceholder as avatar_CustomPlaceholder, AsLink as avatar_AsLink } from '@/components/ui/avatar.stories';
@@ -50,7 +50,7 @@ import { default as passwordInputMeta, Playground as passwordInput_Playground, D
 import { default as phoneInputMeta, Playground as phoneInput_Playground, Default as phoneInput_Default, Controlled as phoneInput_Controlled, Sizes as phoneInput_Sizes, ErrorState as phoneInput_ErrorState, Disabled as phoneInput_Disabled, WithFormField as phoneInput_WithFormField } from '@/components/ui/phone-input.stories';
 import { default as popoverMeta, Playground as popover_Playground, Demo as popover_Demo, Position as popover_Position } from '@/components/ui/popover.stories';
 import { default as progressBarMeta, Playground as progressBar_Playground, Color as progressBar_Color, WithLabel as progressBar_WithLabel, DataStorage as progressBar_DataStorage } from '@/components/ui/progress-bar.stories';
-import { default as progressCircleMeta, Playground as progressCircle_Playground, Sizes as progressCircle_Sizes } from '@/components/ui/progress-circle.stories';
+import { default as progressCircleMeta, Playground as progressCircle_Playground, Sizes as progressCircle_Sizes, Values as progressCircle_Values } from '@/components/ui/progress-circle.stories';
 import { default as promotionalCardMeta, Stroke as promotionalCard_Stroke, Filled as promotionalCard_Filled, Clickable as promotionalCard_Clickable, Composed as promotionalCard_Composed, Grid as promotionalCard_Grid } from '@/components/ui/promotional-card.stories';
 import { default as publicationStatusBadgeMeta, Draft as publicationStatusBadge_Draft, WaitingForReview as publicationStatusBadge_WaitingForReview, Approved as publicationStatusBadge_Approved, RequireChanges as publicationStatusBadge_RequireChanges, Declined as publicationStatusBadge_Declined, AllStatuses as publicationStatusBadge_AllStatuses, LightVariant as publicationStatusBadge_LightVariant, CustomLabel as publicationStatusBadge_CustomLabel } from '@/components/ui/publication-status-badge.stories';
 import { default as radioCardMeta, Playground as radioCard_Playground, Default as radioCard_Default, WithKeyIcons as radioCard_WithKeyIcons, WithSimpleIcons as radioCard_WithSimpleIcons, WithBadges as radioCard_WithBadges, InlineDescription as radioCard_InlineDescription, AllowDeselect as radioCard_AllowDeselect, Disabled as radioCard_Disabled, ErrorState as radioCard_ErrorState, Composed as radioCard_Composed, PrimaryVariant as radioCard_PrimaryVariant, WithFormField as radioCard_WithFormField } from '@/components/ui/radio-card.stories';
@@ -104,6 +104,8 @@ export const storyRegistry: Record<string, {
     meta: alertMeta,
     stories: {
     'Playground': alert_Playground,
+    'DefaultIcons': alert_DefaultIcons,
+    'CustomIcon': alert_CustomIcon,
     'Filled': alert_Filled,
     'Light': alert_Light,
     'Lighter': alert_Lighter,
@@ -645,7 +647,8 @@ export const storyRegistry: Record<string, {
     meta: progressCircleMeta,
     stories: {
     'Playground': progressCircle_Playground,
-    'Sizes': progressCircle_Sizes
+    'Sizes': progressCircle_Sizes,
+    'Values': progressCircle_Values
     }
   },
   'promotional-card': {

@@ -85,7 +85,11 @@ const keyIconVariants = tv({
     { style: 'filled', color: 'purple', class: 'bg-feature-base' },
     { style: 'filled', color: 'pink', class: 'bg-highlighted-base' },
     { style: 'filled', color: 'teal', class: 'bg-verified-base' },
-    { style: 'filled', color: 'primary', class: 'bg-primary-base' },
+    {
+      style: 'filled',
+      color: 'primary',
+      class: 'bg-primary-base text-primary-contrast',
+    },
     // lighter + primary color
     {
       style: 'lighter',

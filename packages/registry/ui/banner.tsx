@@ -228,8 +228,8 @@ export const bannerVariants = tv({
       variant: 'filled',
       status: 'primary',
       class: {
-        icon: 'text-static-white',
-        root: 'bg-primary-base text-static-white',
+        icon: 'text-primary-contrast',
+        root: 'bg-primary-base text-primary-contrast',
       },
     },
     {

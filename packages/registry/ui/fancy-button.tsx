@@ -30,7 +30,7 @@ export const fancyButtonVariants = tv({
         root: 'bg-bg-strong-950 text-text-white-0 shadow-fancy-buttons-neutral',
       },
       primary: {
-        root: 'bg-primary-base text-static-white shadow-fancy-buttons-primary',
+        root: 'bg-primary-base text-primary-contrast shadow-fancy-buttons-primary',
       },
       error: {
         root: 'bg-error-base text-static-white shadow-fancy-buttons-error',

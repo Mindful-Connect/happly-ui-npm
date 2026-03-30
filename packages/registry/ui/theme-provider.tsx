@@ -139,6 +139,7 @@ function clampToGamut(
 }
 
 interface GeneratedScale {
+  input: string;
   raw: Record<string, string>;
   alpha: Record<string, string>;
   light: Record<string, string>;
@@ -157,33 +158,39 @@ function generateScale(hex: string): GeneratedScale {
     raw[step] = rgbToHex(cr, cg, cb);
   }
 
-  // Alpha variants from the 500 step
-  const base500 = raw['500'];
+  // Alpha variants from the input color
   const alpha: Record<string, string> = {
-    '24': `${base500}3d`,
-    '16': `${base500}29`,
-    '10': `${base500}1a`,
+    '24': `${hex}3d`,
+    '16': `${hex}29`,
+    '10': `${hex}1a`,
   };
 
-  // Light-mode semantic aliases
+  // Light-mode semantic aliases — base is the exact input color
   const light: Record<string, string> = {
-    base: raw['500'],
+    base: hex,
     dark: raw['800'],
     darker: raw['700'],
     light: raw['100'],
     lighter: raw['50'],
   };
 
-  // Dark-mode semantic aliases
+  // Dark-mode semantic aliases — base is the exact input color
   const dark: Record<string, string> = {
-    base: raw['400'],
+    base: hex,
     dark: raw['800'],
     darker: raw['700'],
-    light: `${raw['500']}29`, // alpha-16
-    lighter: `${raw['500']}1a`, // alpha-10
+    light: `${hex}29`, // alpha-16
+    lighter: `${hex}1a`, // alpha-10
   };
 
-  return { raw, alpha, light, dark };
+  return { input: hex, raw, alpha, light, dark };
+}
+
+function contrastColor(hex: string): string {
+  const [r, g, b] = hexToRgb(hex);
+  const [L] = rgbToOklch(r, g, b);
+  // OKLCH lightness > 0.7 means the color is perceptually light → use dark text
+  return L > 0.8 ? '#0e121b' : '#ffffff';
 }
 
 function buildCssVars(
@@ -209,6 +216,9 @@ function buildCssVars(
   vars['--color-primary-darker'] = semantic.darker;
   vars['--color-primary-light'] = semantic.light;
   vars['--color-primary-lighter'] = semantic.lighter;
+
+  // Dynamic contrast color for text on primary-base backgrounds
+  vars['--color-primary-contrast'] = contrastColor(semantic.base);
 
   return vars;
 }

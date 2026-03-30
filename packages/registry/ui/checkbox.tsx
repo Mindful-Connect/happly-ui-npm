@@ -20,7 +20,7 @@ function IconCheck({ ...rest }: React.SVGProps<SVGSVGElement>) {
       <path
         d='M1 3.5L4 6.5L9 1.5'
         strokeWidth='1.5'
-        className='stroke-static-white'
+        className='stroke-inherit'
       />
     </svg>
   );
@@ -36,7 +36,7 @@ function IconIndeterminate({ ...rest }: React.SVGProps<SVGSVGElement>) {
       xmlns='http://www.w3.org/2000/svg'
       {...rest}
     >
-      <path d='M0 1H8' strokeWidth='1.5' className='stroke-static-white' />
+      <path d='M0 1H8' strokeWidth='1.5' className='stroke-inherit' />
     </svg>
   );
 }
@@ -52,6 +52,7 @@ const FILL_CLASSES = {
       'group-data-[state=checked]/checkbox:fill-primary-base',
       'group-data-[state=indeterminate]/checkbox:fill-primary-base',
     ],
+    stroke: 'stroke-primary-contrast',
   },
   neutral: {
     outer: [
@@ -63,6 +64,7 @@ const FILL_CLASSES = {
       'group-data-[state=checked]/checkbox:fill-text-strong-950',
       'group-data-[state=indeterminate]/checkbox:fill-text-strong-950',
     ],
+    stroke: 'stroke-static-white',
   },
 } as const;
 
@@ -199,12 +201,15 @@ const CheckboxRoot = React.forwardRef<
           <IconCheck
             className={cn(
               'absolute top-1/2 left-1/2 shrink-0 -translate-x-1/2 -translate-y-1/2',
+              fills.stroke,
               // checked
               'group-data-[state=checked]/checkbox:opacity-100',
               'group-data-[state=checked]/checkbox:[&>path]:[stroke-dashoffset:0]',
               // path
               '[&>path]:[stroke-dasharray:var(--total-length)] [&>path]:[stroke-dashoffset:var(--total-length)]',
-              'group-data-[state=indeterminate]/checkbox:invisible'
+              'group-data-[state=indeterminate]/checkbox:invisible',
+              // disabled
+              'group-disabled/checkbox:!stroke-text-disabled-300'
             )}
             style={{
               ['--total-length' as any]: TOTAL_LENGTH_CHECK,
@@ -213,12 +218,15 @@ const CheckboxRoot = React.forwardRef<
           <IconIndeterminate
             className={cn(
               'absolute top-1/2 left-1/2 shrink-0 -translate-x-1/2 -translate-y-1/2',
+              fills.stroke,
               // indeterminate
               'group-data-[state=indeterminate]/checkbox:opacity-100',
               'group-data-[state=indeterminate]/checkbox:[&>path]:[stroke-dashoffset:0]',
               // path
               '[&>path]:[stroke-dasharray:var(--total-length)] [&>path]:[stroke-dashoffset:var(--total-length)]',
-              'invisible group-data-[state=indeterminate]/checkbox:visible'
+              'invisible group-data-[state=indeterminate]/checkbox:visible',
+              // disabled
+              'group-disabled/checkbox:!stroke-text-disabled-300'
             )}
             style={{
               ['--total-length' as any]: TOTAL_LENGTH_INDETERMINATE,
