@@ -6,16 +6,22 @@
   "description": "A circular progress indicator with SVG ring, multiple sizes, customizable color, and optional centered text content. Uses namespace exports: ProgressCircle.Root.",
   "version": "1.0.0",
   "dependencies": [],
-  "registryDependencies": ["tv", "happly-ui-utils"],
+  "registryDependencies": ["happly-ui-utils"],
   "docs": {
-    "lead": "A circular progress indicator with SVG ring, multiple sizes, customizable color, and optional centered text content.",
+    "lead": "A circular progress indicator with SVG ring, any size, customizable color, and optional centered text content.",
     "usage": "import * as ProgressCircle from \"@/components/ui/progress-circle\"\n\n<ProgressCircle.Root value={75}>75%</ProgressCircle.Root>",
     "examples": [
       {
         "title": "Sizes",
-        "description": "Progress circles in all sizes (80, 72, 64, 56, 48) with percentage labels. Smaller sizes omit text.",
-        "code": "<ProgressCircle.Root value={50}>50%</ProgressCircle.Root>\n<ProgressCircle.Root size=\"56\" value={75}>75%</ProgressCircle.Root>\n<ProgressCircle.Root size=\"48\" value={100} />",
+        "description": "Progress circles accept any numeric size. Stroke width auto-scales proportionally.",
+        "code": "<ProgressCircle.Root size={80} value={75}>75%</ProgressCircle.Root>\n<ProgressCircle.Root size={48} value={75}>75%</ProgressCircle.Root>\n<ProgressCircle.Root size={16} value={75} />",
         "stories": ["Sizes"]
+      },
+      {
+        "title": "Values",
+        "description": "Progress circles at different completion percentages.",
+        "code": "<ProgressCircle.Root value={0}>0%</ProgressCircle.Root>\n<ProgressCircle.Root value={50}>50%</ProgressCircle.Root>\n<ProgressCircle.Root value={100}>100%</ProgressCircle.Root>",
+        "stories": ["Values"]
       }
     ],
     "api": [
@@ -25,9 +31,15 @@
         "props": [
           {
             "name": "size",
-            "type": "'80' | '72' | '64' | '56' | '48' | '44'",
-            "default": "'80'",
-            "description": "The size of the circle in pixels"
+            "type": "number",
+            "default": "80",
+            "description": "The diameter of the circle in pixels"
+          },
+          {
+            "name": "strokeWidth",
+            "type": "number",
+            "default": "size * 0.08",
+            "description": "Override the auto-calculated stroke width"
           },
           {
             "name": "value",
