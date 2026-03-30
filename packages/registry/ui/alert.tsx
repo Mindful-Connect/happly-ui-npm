@@ -1,7 +1,14 @@
 'use client';
 
 import * as React from 'react';
-import { RiCloseLine } from '@remixicon/react';
+import {
+  RiAlertFill,
+  RiCheckboxCircleFill,
+  RiCloseLine,
+  RiErrorWarningFill,
+  RiInformationFill,
+  RiSparklingFill,
+} from '@remixicon/react';
 
 import type { PolymorphicComponentProps } from '@/lib/polymorphic';
 import { recursiveCloneChildren } from '@/lib/recursive-clone-children';
@@ -51,20 +58,20 @@ export const alertVariants = tv({
       xsmall: {
         root: 'rounded-lg p-2 text-paragraph-xs',
         wrapper: 'gap-2',
-        icon: 'w-4 h-4',
-        closeIcon: 'w-4 h-4',
+        icon: '!w-4 !h-4',
+        closeIcon: '!w-4 !h-4',
       },
       small: {
         root: 'rounded-lg px-2.5 py-2 text-paragraph-sm',
         wrapper: 'gap-2',
-        icon: 'w-5 h-5',
-        closeIcon: 'w-5 h-5',
+        icon: '!w-5 !h-5',
+        closeIcon: '!w-5 !h-5',
       },
       large: {
         root: 'rounded-xl p-3.5 pb-4 text-paragraph-sm',
         wrapper: 'items-start gap-3',
-        icon: 'w-5 h-5',
-        closeIcon: 'w-5 h-5',
+        icon: '!w-5 !h-5',
+        closeIcon: '!w-5 !h-5',
       },
     },
   },
@@ -228,6 +235,14 @@ export const alertVariants = tv({
   },
 });
 
+const STATUS_ICONS = {
+  error: RiErrorWarningFill,
+  warning: RiAlertFill,
+  success: RiCheckboxCircleFill,
+  information: RiInformationFill,
+  feature: RiSparklingFill,
+} as const;
+
 type AlertSharedProps = VariantProps<typeof alertVariants>;
 
 export type AlertProps = VariantProps<typeof alertVariants> &
@@ -274,7 +289,7 @@ function AlertIcon<T extends React.ElementType>({
   className,
   as,
 }: PolymorphicComponentProps<T, AlertSharedProps>) {
-  const Component = as || 'div';
+  const Component = as || STATUS_ICONS[status ?? 'information'];
   const { icon } = alertVariants({ size, variant, status });
 
   return <Component className={icon({ class: className })} />;

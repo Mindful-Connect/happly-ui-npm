@@ -32,6 +32,7 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
     'theme-provider': '[&>div]:w-full',
     'info-card': '[&>div]:w-full',
     'empty-state': '[&>div]:w-full',
+    alert: '[&>div]:w-full',
   };
   const previewClassName = previewClassOverrides[name];
 

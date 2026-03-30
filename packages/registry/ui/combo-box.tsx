@@ -461,7 +461,7 @@ function ComboBoxContent({
     ) : (
       <div className='flex flex-col gap-1'>
         {ctx.filteredOptions.map((option, index) => (
-          <ComboBoxItem key={option.value} value={option.value} index={index} />
+          <ComboBoxItem key={`${option.value}-${index}`} value={option.value} index={index} />
         ))}
       </div>
     ));
@@ -718,9 +718,9 @@ function ComboBoxTags({
           <Tag.DismissButton onClick={ctx.removeAll} />
         </Tag.Root>
       ) : (
-        selectedOptions.map((opt) => (
+        selectedOptions.map((opt, index) => (
           <Tag.Root
-            key={opt.value}
+            key={`${opt.value}-${index}`}
             variant={variant}
             disabled={ctx.disabled || ctx.value.length <= ctx.min}
           >

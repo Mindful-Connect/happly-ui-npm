@@ -45,7 +45,7 @@ interface UseFileUploadReturn {
   clearFiles: () => void;
   openFilePicker: () => void;
   getInputProps: () => React.InputHTMLAttributes<HTMLInputElement> & {
-    ref: React.RefObject<HTMLInputElement | null>;
+    ref: React.RefObject<HTMLInputElement>;
   };
   getRootProps: () => {
     onDrop: (e: React.DragEvent) => void;
@@ -430,7 +430,7 @@ export function useFileUpload(
       tabIndex: -1,
       multiple: maxFiles !== 1,
       accept: allowedFileTypes?.join(','),
-      ref: inputRef,
+      ref: inputRef as React.RefObject<HTMLInputElement>,
       onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
           addFiles(Array.from(e.target.files));

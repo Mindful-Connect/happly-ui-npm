@@ -12,36 +12,48 @@
   "registryDependencies": ["tv", "polymorphic", "recursive-clone-children"],
   "docs": {
     "lead": "A versatile alert component with multiple variants, status colors, and sizes for user notifications.",
-    "usage": "import * as Alert from \"@/components/ui/alert\"\n\n<Alert.Root variant=\"filled\" status=\"error\">\n  <Alert.Icon as={RiErrorWarningFill} />\n  Insert your alert title here!\n</Alert.Root>",
+    "usage": "import * as Alert from \"@/components/ui/alert\"\n\n<Alert.Root variant=\"filled\" status=\"error\">\n  <Alert.Icon />\n  Insert your alert title here!\n</Alert.Root>",
     "examples": [
+      {
+        "title": "Default Icons",
+        "description": "Each status automatically renders a matching icon: error (RiErrorWarningFill), warning (RiAlertFill), success (RiCheckboxCircleFill), information (RiInformationFill), feature (RiSparklingFill). No `as` prop needed.",
+        "code": "<Alert.Root variant=\"light\" status=\"error\">\n  <Alert.Icon />\n  Error alert\n</Alert.Root>\n\n<Alert.Root variant=\"light\" status=\"success\">\n  <Alert.Icon />\n  Success alert\n</Alert.Root>",
+        "stories": ["DefaultIcons"]
+      },
+      {
+        "title": "Custom Icon",
+        "description": "Override the default icon using the `as` prop.",
+        "code": "<Alert.Root variant=\"light\" status=\"feature\">\n  <Alert.Icon as={RiMagicFill} />\n  Feature alert with custom icon\n</Alert.Root>",
+        "stories": ["CustomIcon"]
+      },
       {
         "title": "Filled",
         "description": "Filled variant alerts in all status colors with icon, link, and close button.",
-        "code": "<Alert.Root variant=\"filled\" status=\"error\">\n  <Alert.Icon as={RiErrorWarningFill} />\n  Alert title\n</Alert.Root>",
+        "code": "<Alert.Root variant=\"filled\" status=\"error\">\n  <Alert.Icon />\n  Alert title\n</Alert.Root>",
         "stories": ["Filled"]
       },
       {
         "title": "Light",
         "description": "Light variant alerts in all status colors.",
-        "code": "<Alert.Root variant=\"light\" status=\"warning\">\n  <Alert.Icon as={RiAlertFill} />\n  Alert title\n</Alert.Root>",
+        "code": "<Alert.Root variant=\"light\" status=\"warning\">\n  <Alert.Icon />\n  Alert title\n</Alert.Root>",
         "stories": ["Light"]
       },
       {
         "title": "Lighter",
         "description": "Lighter variant alerts in all status colors.",
-        "code": "<Alert.Root variant=\"lighter\" status=\"success\">\n  <Alert.Icon as={RiCheckboxCircleFill} />\n  Alert title\n</Alert.Root>",
+        "code": "<Alert.Root variant=\"lighter\" status=\"success\">\n  <Alert.Icon />\n  Alert title\n</Alert.Root>",
         "stories": ["Lighter"]
       },
       {
         "title": "Stroke",
         "description": "Stroke variant alerts in all status colors with outline border.",
-        "code": "<Alert.Root variant=\"stroke\" status=\"information\">\n  <Alert.Icon as={RiInformationFill} />\n  Alert title\n</Alert.Root>",
+        "code": "<Alert.Root variant=\"stroke\" status=\"information\">\n  <Alert.Icon />\n  Alert title\n</Alert.Root>",
         "stories": ["Stroke"]
       },
       {
         "title": "Sizes",
         "description": "Alerts come in three sizes: xsmall, small (default), and large. The large size supports title, description, and action links.",
-        "code": "<Alert.Root variant=\"filled\" status=\"error\" size=\"xsmall\">\n  <Alert.Icon as={RiErrorWarningFill} />\n  Alert title\n</Alert.Root>\n\n<Alert.Root variant=\"light\" status=\"warning\" size=\"small\">\n  <Alert.Icon as={RiAlertFill} />\n  Alert title\n</Alert.Root>\n\n<Alert.Root variant=\"lighter\" status=\"success\" size=\"large\">\n  <Alert.Icon as={RiCheckboxCircleFill} />\n  <div>\n    <div className=\"text-label-sm\">Title</div>\n    <div>Description</div>\n  </div>\n</Alert.Root>",
+        "code": "<Alert.Root variant=\"filled\" status=\"error\" size=\"xsmall\">\n  <Alert.Icon />\n  Alert title\n</Alert.Root>\n\n<Alert.Root variant=\"light\" status=\"warning\" size=\"small\">\n  <Alert.Icon />\n  Alert title\n</Alert.Root>\n\n<Alert.Root variant=\"lighter\" status=\"success\" size=\"large\">\n  <Alert.Icon />\n  <div>\n    <div className=\"text-label-sm\">Title</div>\n    <div>Description</div>\n  </div>\n</Alert.Root>",
         "stories": ["Sizes"]
       }
     ],
@@ -77,12 +89,12 @@
       },
       {
         "name": "Alert.Icon",
-        "description": "Renders a polymorphic status icon.",
+        "description": "Renders a status icon. Defaults to a matching icon per status (error → RiErrorWarningFill, warning → RiAlertFill, success → RiCheckboxCircleFill, information → RiInformationFill, feature → RiSparklingFill). Override with the `as` prop.",
         "props": [
           {
             "name": "as",
             "type": "React.ElementType",
-            "description": "The icon component to render"
+            "description": "Override the default status icon with a custom icon component"
           }
         ]
       },
