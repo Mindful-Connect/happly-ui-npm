@@ -70,7 +70,7 @@ import { default as tableMeta, Default as table_Default } from '@/components/ui/
 import { default as tagInputMeta, Playground as tagInput_Playground, Default as tagInput_Default, Controlled as tagInput_Controlled, MaxTags as tagInput_MaxTags, GrayVariant as tagInput_GrayVariant, Sizes as tagInput_Sizes, WithFormField as tagInput_WithFormField } from '@/components/ui/tag-input.stories';
 import { default as tagMeta, Playground as tag_Playground, Stroke as tag_Stroke, Gray as tag_Gray, Rounded as tag_Rounded, Disabled as tag_Disabled, WithImage as tag_WithImage, WithAvatar as tag_WithAvatar, Dismissable as tag_Dismissable } from '@/components/ui/tag.stories';
 import { default as textareaMeta, Playground as textarea_Playground, Demo as textarea_Demo, InteractiveCounter as textarea_InteractiveCounter, HasError as textarea_HasError, WithLabelAndHint as textarea_WithLabelAndHint, Disabled as textarea_Disabled, Simple as textarea_Simple, SimpleResize as textarea_SimpleResize } from '@/components/ui/textarea.stories';
-import { default as themeProviderMeta, Default as themeProvider_Default, Global as themeProvider_Global, MultipleThemes as themeProvider_MultipleThemes } from '@/components/ui/theme-provider.stories';
+import { default as themeProviderMeta, Default as themeProvider_Default, Global as themeProvider_Global, MultipleThemes as themeProvider_MultipleThemes, PrimaryTokens as themeProvider_PrimaryTokens } from '@/components/ui/theme-provider.stories';
 import { default as timelineStatusBadgeMeta, Open as timelineStatusBadge_Open, OpenSoon as timelineStatusBadge_OpenSoon, ClosingSoon as timelineStatusBadge_ClosingSoon, Closed as timelineStatusBadge_Closed, MediumSize as timelineStatusBadge_MediumSize, AllStatuses as timelineStatusBadge_AllStatuses, CustomLabel as timelineStatusBadge_CustomLabel } from '@/components/ui/timeline-status-badge.stories';
 import { default as tooltipMeta, Playground as tooltip_Playground, Light as tooltip_Light, Size as tooltip_Size, Position as tooltip_Position, HTMLContent as tooltip_HTMLContent } from '@/components/ui/tooltip.stories';
 
@@ -872,7 +872,8 @@ export const storyRegistry: Record<string, {
     stories: {
     'Default': themeProvider_Default,
     'Global': themeProvider_Global,
-    'MultipleThemes': themeProvider_MultipleThemes
+    'MultipleThemes': themeProvider_MultipleThemes,
+    'PrimaryTokens': themeProvider_PrimaryTokens
     }
   },
   'timeline-status-badge': {

@@ -80,7 +80,7 @@ export const tabMenuHorizontalVariants = tv({
       variant: 'primary',
       selected: true,
       class: {
-        item: 'cursor-default border-transparent bg-primary-base text-static-white',
+        item: 'cursor-default border-transparent bg-primary-base text-primary-contrast',
       },
     },
     // primary unselected

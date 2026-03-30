@@ -40,7 +40,7 @@ const gridCellClass = cn(
 );
 
 const gridCellActiveClass =
-  'bg-primary-base text-static-white hover:bg-primary-base hover:text-static-white';
+  'bg-primary-base text-primary-contrast hover:bg-primary-base hover:text-primary-contrast';
 
 function MonthGrid({
   displayYear,
@@ -326,7 +326,7 @@ function Calendar({
                 // hover
                 'hover:bg-bg-weak-50 hover:text-text-strong-950',
                 // selected
-                'aria-[selected]:bg-primary-base aria-[selected]:text-static-white',
+                'aria-[selected]:bg-primary-base aria-[selected]:text-primary-contrast',
                 // focus visible
                 'focus:outline-none focus-visible:bg-bg-weak-50 focus-visible:text-text-strong-950'
               ),

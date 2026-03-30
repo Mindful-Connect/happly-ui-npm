@@ -59,14 +59,14 @@ export const Colors = {
 export const Inline = {
   render: () => (
     <div className='flex flex-col gap-4'>
-      <p className='text-paragraph-sm text-text-sub-600 flex items-center gap-2'>
+      <span className='text-paragraph-sm text-text-sub-600 flex items-center gap-2'>
         <Loader.Root size={14} color='current' />
         Fetching results...
-      </p>
-      <p className='text-paragraph-md text-text-strong-950 flex items-center gap-2'>
+      </span>
+      <span className='text-paragraph-md text-text-strong-950 flex items-center gap-2'>
         <Loader.Root size={18} color='primary' />
         Processing your request
-      </p>
+      </span>
     </div>
   ),
 };
