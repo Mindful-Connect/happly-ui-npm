@@ -179,21 +179,21 @@
   --color-black-alpha-10: #1717171a;
 
   /* HapplyUI Dynamic Neutral Colors */
-  --color-neutral-950: var(--color-gray-950);
-  --color-neutral-900: var(--color-gray-900);
-  --color-neutral-800: var(--color-gray-800);
-  --color-neutral-700: var(--color-gray-700);
-  --color-neutral-600: var(--color-gray-600);
-  --color-neutral-500: var(--color-gray-500);
-  --color-neutral-400: var(--color-gray-400);
-  --color-neutral-300: var(--color-gray-300);
-  --color-neutral-200: var(--color-gray-200);
-  --color-neutral-100: var(--color-gray-100);
-  --color-neutral-50: var(--color-gray-50);
-  --color-neutral-0: var(--color-gray-0);
-  --color-neutral-alpha-24: var(--color-gray-alpha-24);
-  --color-neutral-alpha-16: var(--color-gray-alpha-16);
-  --color-neutral-alpha-10: var(--color-gray-alpha-10);
+  --color-neutral-950: var(--color-slate-950);
+  --color-neutral-900: var(--color-slate-900);
+  --color-neutral-800: var(--color-slate-800);
+  --color-neutral-700: var(--color-slate-700);
+  --color-neutral-600: var(--color-slate-600);
+  --color-neutral-500: var(--color-slate-500);
+  --color-neutral-400: var(--color-slate-400);
+  --color-neutral-300: var(--color-slate-300);
+  --color-neutral-200: var(--color-slate-200);
+  --color-neutral-100: var(--color-slate-100);
+  --color-neutral-50: var(--color-slate-50);
+  --color-neutral-0: var(--color-slate-0);
+  --color-neutral-alpha-24: var(--color-slate-alpha-24);
+  --color-neutral-alpha-16: var(--color-slate-alpha-16);
+  --color-neutral-alpha-10: var(--color-slate-alpha-10);
 
   /* HapplyUI Dynamic Primary Colors */
   --color-primary-50: var(--color-purple-50);
