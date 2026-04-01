@@ -8,9 +8,9 @@ import { useDebounce } from 'use-debounce';
 
 import * as Input from './input';
 import * as Popover from './popover';
-import { useFormField } from '@/lib/happly-ui/form-field-context';
-import { cn } from '@/lib/happly-ui/happly-ui-utils';
-import { useFormFieldBinding } from '@/lib/happly-ui/use-form-field-binding';
+import { useFormField } from '@/lib/form-field-context';
+import { cn } from '@/lib/happly-ui-utils';
+import { useFormFieldBinding } from '@/lib/use-form-field-binding';
 
 // ─── Types ─────────────────────────────────────────────────
 
