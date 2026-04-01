@@ -58,6 +58,12 @@
       "description": "A currency input component with currency selection."
     },
     {
+      "name": "date-input",
+      "type": "registry:ui",
+      "title": "Date Input",
+      "description": "A date input field that looks like a standard input but opens a calendar datepicker popover on click."
+    },
+    {
       "name": "custom-input-wrapper",
       "type": "registry:ui",
       "title": "Custom Input Wrapper",

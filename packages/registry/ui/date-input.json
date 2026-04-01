@@ -1,0 +1,155 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "date-input",
+  "type": "registry:ui",
+  "title": "Date Input",
+  "description": "A date input field that looks like a standard input but opens a calendar datepicker popover on click. Uses namespace exports: DateInput.Root.",
+  "version": "1.0.0",
+  "dependencies": [
+    "date-fns",
+    "@remixicon/react"
+  ],
+  "registryDependencies": [
+    "datepicker",
+    "input",
+    "popover",
+    "form-field-context",
+    "happly-ui-utils",
+    "polymorphic"
+  ],
+  "docs": {
+    "lead": "A date input field that visually matches the Input component but opens a calendar popover for date selection.",
+    "usage": "import * as DateInput from \"@/components/ui/date-input\"\n\n<DateInput.Root value={date} onChange={setDate} placeholder=\"Select a date\" />",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Basic date input with default placeholder.",
+        "code": "<DateInput.Root value={date} onChange={setDate} />",
+        "stories": ["Default"]
+      },
+      {
+        "title": "With Placeholder",
+        "description": "Date input with a custom placeholder.",
+        "code": "<DateInput.Root value={date} onChange={setDate} placeholder=\"Pick a start date\" />",
+        "stories": ["WithPlaceholder"]
+      },
+      {
+        "title": "Custom Format",
+        "description": "Date input with a custom date format string (date-fns).",
+        "code": "<DateInput.Root value={date} onChange={setDate} formatStr=\"MM/dd/yyyy\" />",
+        "stories": ["CustomFormat"]
+      },
+      {
+        "title": "Sizes",
+        "description": "Available size variants: medium, small, and xsmall.",
+        "code": "<DateInput.Root size=\"small\" value={date} onChange={setDate} />",
+        "stories": ["Sizes"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Disabled date input.",
+        "code": "<DateInput.Root disabled value={date} onChange={setDate} />",
+        "stories": ["Disabled"]
+      },
+      {
+        "title": "Error State",
+        "description": "Date input with error styling.",
+        "code": "<DateInput.Root hasError value={date} onChange={setDate} />",
+        "stories": ["ErrorState"]
+      },
+      {
+        "title": "With Form Field",
+        "description": "Date input composed with FormField for label, hint, and error.",
+        "code": "<FormField.Root label=\"Start Date\" required hint=\"When should this go live?\">\n  <DateInput.Root value={date} onChange={setDate} />\n</FormField.Root>",
+        "stories": ["WithFormField"]
+      },
+      {
+        "title": "Uncontrolled",
+        "description": "Uncontrolled date input with defaultValue and onChange callback.",
+        "code": "<DateInput.Root defaultValue={new Date()} onChange={(d) => console.log(d)} />",
+        "stories": ["Uncontrolled"]
+      }
+    ],
+    "api": [
+      {
+        "name": "DateInput.Root",
+        "description": "The date input component. Renders as an input-styled button that opens a calendar popover.",
+        "props": [
+          {
+            "name": "value",
+            "type": "Date | undefined",
+            "description": "The controlled selected date"
+          },
+          {
+            "name": "defaultValue",
+            "type": "Date | undefined",
+            "description": "The initial date for uncontrolled usage"
+          },
+          {
+            "name": "onChange",
+            "type": "(date: Date | undefined) => void",
+            "description": "Callback when the selected date changes"
+          },
+          {
+            "name": "placeholder",
+            "type": "string",
+            "default": "'Select a date'",
+            "description": "Placeholder text when no date is selected"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disable the input"
+          },
+          {
+            "name": "formatStr",
+            "type": "string",
+            "default": "'LLL dd, y'",
+            "description": "date-fns format string for displaying the selected date"
+          },
+          {
+            "name": "calendarProps",
+            "type": "Omit<CalendarProps, 'mode' | 'selected' | 'onSelect'>",
+            "description": "Additional props passed to the Calendar component"
+          },
+          {
+            "name": "size",
+            "type": "'medium' | 'small' | 'xsmall'",
+            "default": "'medium'",
+            "description": "Size variant matching the Input component"
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Show error styling"
+          },
+          {
+            "name": "leadingIcon",
+            "type": "React.ElementType",
+            "default": "RiCalendarLine",
+            "description": "Icon displayed before the date text"
+          },
+          {
+            "name": "popoverAlign",
+            "type": "'start' | 'center' | 'end'",
+            "default": "'start'",
+            "description": "Horizontal alignment of the popover"
+          },
+          {
+            "name": "popoverSide",
+            "type": "'top' | 'right' | 'bottom' | 'left'",
+            "description": "Side of the trigger to place the popover"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/date-input.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

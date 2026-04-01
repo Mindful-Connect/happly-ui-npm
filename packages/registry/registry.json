@@ -118,6 +118,12 @@
       "description": "A calendar datepicker component with single date, range, and popover modes. Uses namespace exports: Datepicker.Calendar."
     },
     {
+      "name": "date-input",
+      "type": "registry:ui",
+      "title": "Date Input",
+      "description": "A date input field that looks like a standard input but opens a calendar datepicker popover on click. Uses namespace exports: DateInput.Root."
+    },
+    {
       "name": "digit-input",
       "type": "registry:ui",
       "title": "Digit Input",

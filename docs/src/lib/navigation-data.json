@@ -202,6 +202,10 @@
                 "href": "/docs/components/currency-input"
               },
               {
+                "title": "Date Input",
+                "href": "/docs/components/date-input"
+              },
+              {
                 "title": "Location Input",
                 "href": "/docs/components/location-input"
               },
