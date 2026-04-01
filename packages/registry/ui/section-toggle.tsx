@@ -23,6 +23,7 @@ function SectionToggleRoot({
         open ? 'bg-bg-weak-50' : 'bg-bg-white-0 cursor-pointer',
         className
       )}
+      {...(open && { 'data-section-toggle-open': '' })}
       {...rest}
     >
       {children}
