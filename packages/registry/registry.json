@@ -112,16 +112,16 @@
       "description": "A composed currency input with inline currency symbol and currency selector dropdown. Built on Input and Select primitives."
     },
     {
-      "name": "datepicker",
-      "type": "registry:ui",
-      "title": "Datepicker",
-      "description": "A calendar datepicker component with single date, range, and popover modes. Uses namespace exports: Datepicker.Calendar."
-    },
-    {
       "name": "date-input",
       "type": "registry:ui",
       "title": "Date Input",
       "description": "A date input field that looks like a standard input but opens a calendar datepicker popover on click. Uses namespace exports: DateInput.Root."
+    },
+    {
+      "name": "datepicker",
+      "type": "registry:ui",
+      "title": "Datepicker",
+      "description": "A calendar datepicker component with single date, range, and popover modes. Uses namespace exports: Datepicker.Calendar."
     },
     {
       "name": "digit-input",
@@ -188,6 +188,12 @@
       "type": "registry:ui",
       "title": "File Upload",
       "description": "A dropzone-style file upload area with type presets for document, image, video, audio, and attachment uploads."
+    },
+    {
+      "name": "filter-dropdown",
+      "type": "registry:ui",
+      "title": "Filter Dropdown",
+      "description": "A composable multi-select filter dropdown with category navigation, checkbox options, search, select all, and apply button. Uses namespace exports: FilterDropdown.Root, FilterDropdown.Trigger, FilterDropdown.Content, FilterDropdown.Header, FilterDropdown.Search, FilterDropdown.SelectAll, FilterDropdown.Group, FilterDropdown.Item, FilterDropdown.CategoryList, FilterDropdown.CategoryItem, FilterDropdown.Apply."
     },
     {
       "name": "form-field",

@@ -1,0 +1,382 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "filter-dropdown",
+  "type": "registry:ui",
+  "title": "Filter Dropdown",
+  "description": "A composable multi-select filter dropdown with category navigation, checkbox options, search, select all, and apply button. Uses namespace exports: FilterDropdown.Root, FilterDropdown.Trigger, FilterDropdown.Content, FilterDropdown.Header, FilterDropdown.Search, FilterDropdown.SelectAll, FilterDropdown.Group, FilterDropdown.Item, FilterDropdown.CategoryList, FilterDropdown.CategoryItem, FilterDropdown.Apply.",
+  "version": "1.0.0",
+  "dependencies": [
+    "@radix-ui/react-popover",
+    "@radix-ui/react-scroll-area",
+    "@remixicon/react"
+  ],
+  "registryDependencies": [
+    "button",
+    "checkbox",
+    "divider",
+    "input",
+    "link-button",
+    "happly-ui-utils",
+    "polymorphic"
+  ],
+  "docs": {
+    "lead": "A composable multi-select filter dropdown with two-level category navigation, checkbox options, optional search, select all, and an apply button. Designed for maximum flexibility — use it as a flat filter or with drill-down categories.",
+    "usage": "import * as FilterDropdown from \"@/components/ui/filter-dropdown\"\n\n<FilterDropdown.Root>\n  <FilterDropdown.Trigger asChild>\n    <button>Filters</button>\n  </FilterDropdown.Trigger>\n  <FilterDropdown.Content>\n    <FilterDropdown.Header onBack={handleBack} onReset={handleReset} />\n    <FilterDropdown.SelectAll checked={allChecked} onCheckedChange={handleSelectAll} />\n    <FilterDropdown.Group>\n      <FilterDropdown.Item checked={true} onCheckedChange={handleChange}>Option</FilterDropdown.Item>\n    </FilterDropdown.Group>\n    <FilterDropdown.Apply onClick={handleApply} />\n  </FilterDropdown.Content>\n</FilterDropdown.Root>",
+    "examples": [
+      {
+        "title": "Category Menu",
+        "description": "A compact category selector with icons. Click a category to drill into its options.",
+        "code": "<FilterDropdown.Root>\n  <FilterDropdown.Trigger asChild>\n    <Button.Root variant=\"neutral\" mode=\"stroke\">\n      <Button.Icon as={RiFilterLine} />\n      Filters\n    </Button.Root>\n  </FilterDropdown.Trigger>\n  <FilterDropdown.Content className=\"w-[224px]\">\n    <FilterDropdown.CategoryList>\n      <FilterDropdown.CategoryItem icon={RiPuzzle2Line}>Types</FilterDropdown.CategoryItem>\n      <FilterDropdown.CategoryItem icon={RiEyeLine}>Visibility</FilterDropdown.CategoryItem>\n    </FilterDropdown.CategoryList>\n  </FilterDropdown.Content>\n</FilterDropdown.Root>",
+        "stories": ["CategoryMenu"]
+      },
+      {
+        "title": "Text Options",
+        "description": "Multi-select filter with plain text options, select all, and apply button.",
+        "code": "<FilterDropdown.Content>\n  <FilterDropdown.Header onBack={handleBack} onReset={reset} />\n  <FilterDropdown.SelectAll checked={allChecked} onCheckedChange={selectAll} />\n  <FilterDropdown.Group>\n    <FilterDropdown.Item checked={selected.has('Grant')} onCheckedChange={() => toggle('Grant')}>Grant</FilterDropdown.Item>\n  </FilterDropdown.Group>\n  <FilterDropdown.Apply onClick={handleApply} />\n</FilterDropdown.Content>",
+        "stories": ["TextOptions"]
+      },
+      {
+        "title": "Badge Options",
+        "description": "Filter options rendered as badges (e.g., deadline status with colored indicators).",
+        "code": "<FilterDropdown.Item checked={true} onCheckedChange={handleChange}>\n  <Badge.Root variant=\"light\" color=\"green\" size=\"small\">Open</Badge.Root>\n</FilterDropdown.Item>",
+        "stories": ["BadgeOptions"]
+      },
+      {
+        "title": "Status Badge Options",
+        "description": "Filter options rendered as status badges for publication status filtering.",
+        "code": "<FilterDropdown.Item checked={true} onCheckedChange={handleChange}>\n  <StatusBadge.Root>Waiting for review</StatusBadge.Root>\n</FilterDropdown.Item>",
+        "stories": ["StatusBadgeOptions"]
+      },
+      {
+        "title": "With Search",
+        "description": "Filter with a search input for large option lists (e.g., people/users).",
+        "code": "<FilterDropdown.Content>\n  <FilterDropdown.Header onBack={handleBack} onReset={reset} />\n  <FilterDropdown.Search value={search} onChange={(e) => setSearch(e.target.value)} />\n  <FilterDropdown.SelectAll checked={allChecked} onCheckedChange={selectAll} />\n  <FilterDropdown.Group>\n    {filtered.map((person) => (\n      <FilterDropdown.Item key={person} checked={selected.has(person)} onCheckedChange={() => toggle(person)}>\n        <Avatar /> {person}\n      </FilterDropdown.Item>\n    ))}\n  </FilterDropdown.Group>\n  <FilterDropdown.Apply onClick={handleApply} />\n</FilterDropdown.Content>",
+        "stories": ["WithSearch"]
+      },
+      {
+        "title": "Two-Level Navigation",
+        "description": "Complete example with category menu that drills into option panels. Navigation state is managed by the consumer.",
+        "code": "// Consumer manages view state\nconst [view, setView] = useState('categories');\n\n<FilterDropdown.Content className={view === 'categories' ? 'w-[224px]' : undefined}>\n  {view === 'categories' && (\n    <FilterDropdown.CategoryList>\n      <FilterDropdown.CategoryItem icon={RiPuzzle2Line} onClick={() => setView('types')}>Types</FilterDropdown.CategoryItem>\n    </FilterDropdown.CategoryList>\n  )}\n  {view === 'types' && (\n    <>\n      <FilterDropdown.Header onBack={() => setView('categories')} onReset={reset} />\n      <FilterDropdown.SelectAll checked={allChecked} onCheckedChange={selectAll} />\n      <FilterDropdown.Group>\n        <FilterDropdown.Item checked={true} onCheckedChange={handleChange}>Grant</FilterDropdown.Item>\n      </FilterDropdown.Group>\n      <FilterDropdown.Apply onClick={handleApply} />\n    </>\n  )}\n</FilterDropdown.Content>",
+        "stories": ["TwoLevelNavigation"]
+      },
+      {
+        "title": "Flat Filter",
+        "description": "Single-level filter without category navigation — just options, select all, and apply.",
+        "code": "<FilterDropdown.Content>\n  <FilterDropdown.Header onReset={reset} />\n  <FilterDropdown.SelectAll checked={allChecked} onCheckedChange={selectAll} />\n  <FilterDropdown.Group>\n    <FilterDropdown.Item checked={true} onCheckedChange={handleChange}>Visible for members</FilterDropdown.Item>\n    <FilterDropdown.Item checked={false} onCheckedChange={handleChange}>Hidden from members</FilterDropdown.Item>\n  </FilterDropdown.Group>\n  <FilterDropdown.Apply onClick={handleApply} />\n</FilterDropdown.Content>",
+        "stories": ["FlatFilter"]
+      },
+      {
+        "title": "Composed (Two-Level)",
+        "description": "The Composed shorthand renders a full two-level filter dropdown from a config array. When 2+ filters are provided, a category menu is shown first.",
+        "code": "<FilterDropdown.Composed\n  filters={[\n    { key: 'types', label: 'Types', icon: RiPuzzle2Line, options: [{ value: 'grant', label: 'Grant' }, { value: 'loan', label: 'Loan' }] },\n    { key: 'visibility', label: 'Visibility', icon: RiEyeLine, options: [{ value: 'visible', label: 'Visible' }, { value: 'hidden', label: 'Hidden' }] },\n  ]}\n  selected={{ types: [], visibility: [] }}\n  onSelectedChange={(key, values) => setSelected(prev => ({ ...prev, [key]: values }))}\n  onApply={(sel) => console.log(sel)}\n>\n  <Button.Root>Filters</Button.Root>\n</FilterDropdown.Composed>",
+        "stories": ["ComposedTwoLevel"]
+      },
+      {
+        "title": "Composed (Flat)",
+        "description": "When a single filter is provided, the Composed variant skips the category menu and renders options directly.",
+        "code": "<FilterDropdown.Composed\n  filters={[\n    { key: 'visibility', label: 'Visibility', options: [{ value: 'visible', label: 'Visible' }, { value: 'hidden', label: 'Hidden' }] },\n  ]}\n  selected={{ visibility: [] }}\n  onSelectedChange={(key, values) => setSelected(prev => ({ ...prev, [key]: values }))}\n  onApply={(sel) => console.log(sel)}\n>\n  <Button.Root>Visibility</Button.Root>\n</FilterDropdown.Composed>",
+        "stories": ["ComposedFlat"]
+      },
+      {
+        "title": "Composed with Search",
+        "description": "Composed variant with searchable enabled for large option lists.",
+        "code": "<FilterDropdown.Composed\n  filters={[\n    { key: 'people', label: 'Created by', icon: RiUserLine, searchable: true, searchPlaceholder: 'Search people...', options: people.map(p => ({ value: p, label: p })) },\n  ]}\n  selected={{ people: [] }}\n  onSelectedChange={(key, values) => setSelected(prev => ({ ...prev, [key]: values }))}\n  onApply={(sel) => console.log(sel)}\n>\n  <Button.Root>Created by</Button.Root>\n</FilterDropdown.Composed>",
+        "stories": ["ComposedWithSearch"]
+      },
+      {
+        "title": "Composed with Badges",
+        "description": "Composed variant where option labels are ReactNode (Badge components) instead of plain strings.",
+        "code": "<FilterDropdown.Composed\n  filters={[{\n    key: 'deadline',\n    label: 'Deadline status',\n    options: [\n      { value: 'Open', label: <Badge.Root variant=\"light\" color=\"green\" size=\"small\">Open</Badge.Root> },\n      { value: 'Closed', label: <Badge.Root variant=\"light\" color=\"red\" size=\"small\">Closed</Badge.Root> },\n    ],\n  }]}\n  selected={{ deadline: [] }}\n  onSelectedChange={(key, values) => setSelected(prev => ({ ...prev, [key]: values }))}\n  onApply={(sel) => console.log(sel)}\n>\n  <Button.Root>Deadline status</Button.Root>\n</FilterDropdown.Composed>",
+        "stories": ["ComposedWithBadges"]
+      }
+    ],
+    "api": [
+      {
+        "name": "FilterDropdown.Root",
+        "description": "The root container. Wraps Radix Popover.Root.",
+        "props": [
+          {
+            "name": "open",
+            "type": "boolean",
+            "description": "Controlled open state"
+          },
+          {
+            "name": "onOpenChange",
+            "type": "(open: boolean) => void",
+            "description": "Callback when open state changes"
+          }
+        ]
+      },
+      {
+        "name": "FilterDropdown.Trigger",
+        "description": "The element that opens the filter dropdown.",
+        "props": [
+          {
+            "name": "asChild",
+            "type": "boolean",
+            "default": "false",
+            "description": "Render as child element using Radix Slot"
+          }
+        ]
+      },
+      {
+        "name": "FilterDropdown.Content",
+        "description": "The dropdown content panel with border, shadow, and animations.",
+        "props": [
+          {
+            "name": "align",
+            "type": "'start' | 'center' | 'end'",
+            "default": "'start'",
+            "description": "Alignment relative to the trigger"
+          },
+          {
+            "name": "sideOffset",
+            "type": "number",
+            "default": "8",
+            "description": "Distance in pixels from the trigger"
+          }
+        ]
+      },
+      {
+        "name": "FilterDropdown.Header",
+        "description": "Navigation header with Back and Reset filter buttons.",
+        "props": [
+          {
+            "name": "onBack",
+            "type": "() => void",
+            "description": "Callback for Back button. If omitted, Back button is hidden."
+          },
+          {
+            "name": "onReset",
+            "type": "() => void",
+            "description": "Callback for Reset filter button. If omitted, Reset button is hidden."
+          },
+          {
+            "name": "backLabel",
+            "type": "string",
+            "default": "'Back'",
+            "description": "Custom label for the back button"
+          },
+          {
+            "name": "resetLabel",
+            "type": "string",
+            "default": "'Reset filter'",
+            "description": "Custom label for the reset button"
+          }
+        ]
+      },
+      {
+        "name": "FilterDropdown.Search",
+        "description": "A search input with magnifying glass icon for filtering options.",
+        "props": [
+          {
+            "name": "placeholder",
+            "type": "string",
+            "default": "'Search...'",
+            "description": "Placeholder text"
+          },
+          {
+            "name": "value",
+            "type": "string",
+            "description": "Controlled input value"
+          },
+          {
+            "name": "onChange",
+            "type": "(e: ChangeEvent) => void",
+            "description": "Input change handler"
+          }
+        ]
+      },
+      {
+        "name": "FilterDropdown.SelectAll",
+        "description": "Checkbox with 'Select all' label and a divider below. Supports indeterminate state.",
+        "props": [
+          {
+            "name": "checked",
+            "type": "boolean | 'indeterminate'",
+            "description": "Checkbox state"
+          },
+          {
+            "name": "onCheckedChange",
+            "type": "(checked: boolean) => void",
+            "description": "Callback when checked state changes"
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "default": "'Select all'",
+            "description": "Custom label text"
+          }
+        ]
+      },
+      {
+        "name": "FilterDropdown.Group",
+        "description": "Scrollable container for filter items with a custom scrollbar.",
+        "props": [
+          {
+            "name": "maxHeight",
+            "type": "number",
+            "default": "280",
+            "description": "Maximum height in pixels before scrolling"
+          }
+        ]
+      },
+      {
+        "name": "FilterDropdown.Item",
+        "description": "A selectable filter option with a checkbox. Accepts children for flexible content (text, badges, avatars).",
+        "props": [
+          {
+            "name": "checked",
+            "type": "boolean",
+            "description": "Whether the item is selected"
+          },
+          {
+            "name": "onCheckedChange",
+            "type": "(checked: boolean) => void",
+            "description": "Callback when selection changes"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disables the item"
+          },
+          {
+            "name": "children",
+            "type": "React.ReactNode",
+            "description": "Item content — plain text, Badge, StatusBadge, Avatar + name, or any custom content"
+          }
+        ]
+      },
+      {
+        "name": "FilterDropdown.ItemIcon",
+        "description": "Polymorphic icon for use inside Item children.",
+        "props": [
+          {
+            "name": "as",
+            "type": "React.ElementType",
+            "description": "The icon component to render"
+          }
+        ]
+      },
+      {
+        "name": "FilterDropdown.CategoryList",
+        "description": "Container for category items in the category menu view.",
+        "props": []
+      },
+      {
+        "name": "FilterDropdown.CategoryItem",
+        "description": "A non-checkbox item with an icon for category navigation.",
+        "props": [
+          {
+            "name": "icon",
+            "type": "React.ElementType",
+            "description": "Leading icon component"
+          },
+          {
+            "name": "onClick",
+            "type": "() => void",
+            "description": "Callback when the category is clicked"
+          }
+        ]
+      },
+      {
+        "name": "FilterDropdown.Apply",
+        "description": "Full-width apply button at the bottom of the filter panel.",
+        "props": [
+          {
+            "name": "label",
+            "type": "string",
+            "default": "'Apply'",
+            "description": "Button label"
+          },
+          {
+            "name": "onClick",
+            "type": "() => void",
+            "description": "Callback when apply is clicked"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disables the button"
+          }
+        ]
+      },
+      {
+        "name": "FilterDropdown.Composed",
+        "description": "A composed shorthand that renders a complete filter dropdown from a config array. Automatically handles two-level category navigation (2+ filters) or flat single-level (1 filter). Manages internal view state, search, select all, and reset.",
+        "props": [
+          {
+            "name": "children",
+            "type": "React.ReactNode",
+            "description": "The trigger element. Rendered via asChild."
+          },
+          {
+            "name": "filters",
+            "type": "FilterConfig[]",
+            "description": "Filter configuration array. Each entry has key, label, icon, searchable, searchPlaceholder, and options (value + label). 1 entry = flat filter (no categories), 2+ = two-level navigation."
+          },
+          {
+            "name": "selected",
+            "type": "Record<string, string[]>",
+            "description": "Selected values per filter key, e.g. { types: ['grant'], visibility: [] }."
+          },
+          {
+            "name": "onSelectedChange",
+            "type": "(key: string, values: string[]) => void",
+            "description": "Called when selection changes for a filter key."
+          },
+          {
+            "name": "onApply",
+            "type": "(selected: Record<string, string[]>) => void",
+            "description": "Called when Apply is clicked. Receives all current selections."
+          },
+          {
+            "name": "align",
+            "type": "'start' | 'center' | 'end'",
+            "default": "'start'",
+            "description": "Content alignment relative to trigger"
+          },
+          {
+            "name": "side",
+            "type": "'top' | 'right' | 'bottom' | 'left'",
+            "description": "Content side relative to trigger"
+          },
+          {
+            "name": "sideOffset",
+            "type": "number",
+            "description": "Distance in pixels from the trigger"
+          },
+          {
+            "name": "contentClassName",
+            "type": "string",
+            "description": "Additional className for the content panel"
+          },
+          {
+            "name": "applyLabel",
+            "type": "string",
+            "default": "'Apply'",
+            "description": "Custom label for the apply button"
+          },
+          {
+            "name": "open",
+            "type": "boolean",
+            "description": "Controlled open state"
+          },
+          {
+            "name": "onOpenChange",
+            "type": "(open: boolean) => void",
+            "description": "Callback when open state changes"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/filter-dropdown.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -30,6 +30,7 @@ import { default as fancyButtonMeta, Playground as fancyButton_Playground, Varia
 import { default as fileCardMeta, UploadStates as fileCard_UploadStates, CompletedMediaTypes as fileCard_CompletedMediaTypes, Download as fileCard_Download, Compact as fileCard_Compact, Item as fileCard_Item, ItemDownload as fileCard_ItemDownload, ItemCompact as fileCard_ItemCompact } from '@/components/ui/file-card.stories';
 import { default as fileFormatIconMeta, Default as fileFormatIcon_Default, Colors as fileFormatIcon_Colors, Sizes as fileFormatIcon_Sizes } from '@/components/ui/file-format-icon.stories';
 import { default as fileUploadMeta, Document as fileUpload_Document, Image as fileUpload_Image, Video as fileUpload_Video, Audio as fileUpload_Audio, Attachment as fileUpload_Attachment, CustomOverrides as fileUpload_CustomOverrides, Dragging as fileUpload_Dragging } from '@/components/ui/file-upload.stories';
+import { default as filterDropdownMeta, CategoryMenu as filterDropdown_CategoryMenu, TextOptions as filterDropdown_TextOptions, BadgeOptions as filterDropdown_BadgeOptions, StatusBadgeOptions as filterDropdown_StatusBadgeOptions, WithSearch as filterDropdown_WithSearch, TwoLevelNavigation as filterDropdown_TwoLevelNavigation, FlatFilter as filterDropdown_FlatFilter, ComposedTwoLevel as filterDropdown_ComposedTwoLevel, ComposedFlat as filterDropdown_ComposedFlat, ComposedWithSearch as filterDropdown_ComposedWithSearch, ComposedWithBadges as filterDropdown_ComposedWithBadges } from '@/components/ui/filter-dropdown.stories';
 import { default as formFieldMeta, Playground as formField_Playground, Demo as formField_Demo, WithError as formField_WithError, Disabled as formField_Disabled, CompoundMode as formField_CompoundMode, FormValidation as formField_FormValidation, AutoBindingShowcase as formField_AutoBindingShowcase } from '@/components/ui/form-field.stories';
 import { default as hintMeta, Playground as hint_Playground, Demo as hint_Demo, Disabled as hint_Disabled, HasError as hint_HasError, CustomIcon as hint_CustomIcon, Composed as hint_Composed } from '@/components/ui/hint.stories';
 import { default as infoCardMeta, Inline as infoCard_Inline, InlineWithFullWidthItem as infoCard_InlineWithFullWidthItem, Grid2Columns as infoCard_Grid2Columns, Stacked as infoCard_Stacked, WithAction as infoCard_WithAction, WithActionNotification as infoCard_WithActionNotification, WithCustomAction as infoCard_WithCustomAction, InlineManyItems as infoCard_InlineManyItems, Grid3Columns as infoCard_Grid3Columns } from '@/components/ui/info-card.stories';
@@ -424,6 +425,22 @@ export const storyRegistry: Record<string, {
     'Attachment': fileUpload_Attachment,
     'CustomOverrides': fileUpload_CustomOverrides,
     'Dragging': fileUpload_Dragging
+    }
+  },
+  'filter-dropdown': {
+    meta: filterDropdownMeta,
+    stories: {
+    'CategoryMenu': filterDropdown_CategoryMenu,
+    'TextOptions': filterDropdown_TextOptions,
+    'BadgeOptions': filterDropdown_BadgeOptions,
+    'StatusBadgeOptions': filterDropdown_StatusBadgeOptions,
+    'WithSearch': filterDropdown_WithSearch,
+    'TwoLevelNavigation': filterDropdown_TwoLevelNavigation,
+    'FlatFilter': filterDropdown_FlatFilter,
+    'ComposedTwoLevel': filterDropdown_ComposedTwoLevel,
+    'ComposedFlat': filterDropdown_ComposedFlat,
+    'ComposedWithSearch': filterDropdown_ComposedWithSearch,
+    'ComposedWithBadges': filterDropdown_ComposedWithBadges
     }
   },
   'form-field': {
