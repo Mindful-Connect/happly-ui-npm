@@ -122,6 +122,7 @@ function main() {
     'drawer',
     'dropdown',
     'emoji-dialog',
+    'filter-dropdown',
     'modal',
     'popover',
   ];

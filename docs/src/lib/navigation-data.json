@@ -331,6 +331,10 @@
             "href": "/docs/components/emoji-dialog"
           },
           {
+            "title": "Filter Dropdown",
+            "href": "/docs/components/filter-dropdown"
+          },
+          {
             "title": "Modal",
             "href": "/docs/components/modal"
           },
