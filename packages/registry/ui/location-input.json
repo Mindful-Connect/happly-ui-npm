@@ -107,7 +107,7 @@
       {
         "name": "LocationRequest",
         "description": "The resolved location object returned by `onLocationChange`, or `null` when cleared.",
-        "definition": "{\n  place_id: string;\n  city?: string | null;\n  region?: string | null;\n  country: string;\n  address: string;\n  formatted_address: string;\n  latitude: number;\n  longitude: number;\n} | null"
+        "definition": "{\n  place_id: string;\n  city?: string | null;\n  region?: string | null;\n  country: string;\n  country_code: string;\n  address: string;\n  formatted_address: string;\n  latitude: number;\n  longitude: number;\n} | null"
       }
     ]
   },

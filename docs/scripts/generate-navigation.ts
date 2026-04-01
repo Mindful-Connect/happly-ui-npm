@@ -147,6 +147,7 @@ function main() {
   const COMPOSED_INPUT_COMPONENTS = [
     'combo-box',
     'currency-input',
+    'date-input',
     'location-input',
     'password-input',
     'phone-input',

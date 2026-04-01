@@ -28,6 +28,8 @@ export const inputVariants = tv({
       'before:transition before:duration-200 before:ease-out',
       // hover
       'hover:shadow-none',
+      // hover override inside section toggle (keep shadow + ring visible against toggle bg)
+      '[[data-section-toggle-open]_&]:hover:shadow-regular-xs',
       // focus
       'has-[input:focus]:shadow-button-important-focus has-[input:focus]:before:ring-stroke-strong-950',
       // disabled
@@ -39,6 +41,8 @@ export const inputVariants = tv({
       'transition duration-200 ease-out',
       // hover
       'hover:[&:not(&:has(input:focus))]:bg-bg-weak-50',
+      // hover override inside section toggle (bg-weak-50 clashes with toggle bg)
+      '[[data-section-toggle-open]_&]:hover:[&:not(&:has(input:focus))]:bg-bg-white-0',
       // disabled
       'has-[input:disabled]:pointer-events-none has-[input:disabled]:bg-bg-weak-50',
     ],
@@ -124,6 +128,8 @@ export const inputVariants = tv({
         root: [
           // hover
           'hover:[&:not(:has(input:focus)):has(>:only-child)]:before:ring-transparent',
+          // hover override inside section toggle (keep ring visible against toggle bg)
+          '[[data-section-toggle-open]_&]:hover:[&:not(:has(input:focus)):has(>:only-child)]:before:ring-stroke-soft-200',
         ],
       },
     },

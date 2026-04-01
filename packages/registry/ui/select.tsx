@@ -22,6 +22,8 @@ export const selectVariants = tv({
       'transition duration-200 ease-out',
       // hover
       'hover:bg-bg-weak-50 hover:ring-transparent',
+      // hover override inside section toggle (bg-weak-50 clashes with toggle bg)
+      '[[data-section-toggle-open]_&]:hover:bg-bg-white-0 [[data-section-toggle-open]_&]:hover:ring-stroke-soft-200',
       // focus
       'focus:shadow-button-important-focus focus:outline-none focus:ring-stroke-strong-950',
       'focus:text-text-strong-950 data-[placeholder]:focus:text-text-strong-950',

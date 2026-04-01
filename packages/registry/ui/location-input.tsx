@@ -46,6 +46,7 @@ export type LocationRequest = {
   city?: string | null;
   region?: string | null;
   country: string;
+  country_code: string;
   address: string;
   formatted_address: string;
   latitude: number;
@@ -86,6 +87,7 @@ function resolvePlace(
       const city = get('locality');
       const region = get('administrative_area_level_1', 'short_name');
       const country = get('country');
+      const countryCode = get('country', 'short_name');
       const address = `${streetNumber} ${route}`.trim();
 
       const parts = [address, city, region, country].filter(Boolean);
@@ -97,6 +99,7 @@ function resolvePlace(
         city: city || null,
         region: region || null,
         country,
+        country_code: countryCode,
         formatted_address,
         latitude: place.geometry?.location?.lat() ?? 0,
         longitude: place.geometry?.location?.lng() ?? 0,
@@ -150,22 +153,21 @@ const LocationInputRoot = React.forwardRef<
     const resolvedHasError = hasError ?? formField.hasError;
     const resolvedDisabled = disabled ?? formField.disabled;
 
-    // Auto-bind: stores formatted_address string, wraps/unwraps LocationRequest
-    const binding = useFormFieldBinding<string>();
+    // Auto-bind: stores full LocationRequest object in RHF
+    const binding = useFormFieldBinding<LocationRequest>({
+      parse: (stored: unknown) =>
+        stored && typeof stored === 'object' ? (stored as LocationRequest) : null,
+      format: (value: LocationRequest) => value ?? undefined,
+    });
 
     // Priority: explicit props > RHF binding > null
     const location =
-      locationProp !== undefined
-        ? locationProp
-        : binding?.value
-          ? ({ formatted_address: binding.value } as LocationRequest)
-          : null;
+      locationProp !== undefined ? locationProp : (binding?.value ?? null);
 
     const onLocationChange =
       onLocationChangeProp ??
       (binding
-        ? (loc: LocationRequest) =>
-            binding.onChange(loc?.formatted_address ?? '')
+        ? (loc: LocationRequest) => binding.onChange(loc)
         : undefined);
 
     const [open, setOpen] = React.useState(false);
@@ -307,7 +309,7 @@ const LocationInputRoot = React.forwardRef<
                         }
                         onClick={() => handleSelect(suggestion)}
                         className={cn(
-                          'rounded-10 text-paragraph-sm text-text-strong-950 flex w-full cursor-pointer items-center gap-2 p-2 text-left select-none',
+                          'flex w-full cursor-pointer select-none items-center gap-2 rounded-10 p-2 text-left text-paragraph-sm text-text-strong-950',
                           'transition duration-200 ease-out',
                           'hover:bg-bg-weak-50'
                         )}
@@ -321,7 +323,7 @@ const LocationInputRoot = React.forwardRef<
                   </div>
                 </ScrollAreaPrimitives.Viewport>
                 <ScrollAreaPrimitives.Scrollbar orientation='vertical'>
-                  <ScrollAreaPrimitives.Thumb className='bg-bg-soft-200 !w-1 rounded' />
+                  <ScrollAreaPrimitives.Thumb className='!w-1 rounded bg-bg-soft-200' />
                 </ScrollAreaPrimitives.Scrollbar>
               </ScrollAreaPrimitives.Root>
             </RemoveScroll>
