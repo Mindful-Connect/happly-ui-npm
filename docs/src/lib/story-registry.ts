@@ -17,6 +17,7 @@ import { default as comboBoxMeta, Playground as comboBox_Playground, Default as 
 import { default as commandMenuMeta, Playground as commandMenu_Playground, Demo as commandMenu_Demo } from '@/components/ui/command-menu.stories';
 import { default as compactButtonMeta, Playground as compactButton_Playground, Variants as compactButton_Variants, Sizes as compactButton_Sizes, FullRadius as compactButton_FullRadius, Disabled as compactButton_Disabled, AsChild as compactButton_AsChild } from '@/components/ui/compact-button.stories';
 import { default as currencyInputMeta, Playground as currencyInput_Playground, Default as currencyInput_Default, Controlled as currencyInput_Controlled, Sizes as currencyInput_Sizes, ErrorState as currencyInput_ErrorState, Disabled as currencyInput_Disabled, WithFormField as currencyInput_WithFormField } from '@/components/ui/currency-input.stories';
+import { default as dateInputMeta, Default as dateInput_Default, WithPlaceholder as dateInput_WithPlaceholder, CustomFormat as dateInput_CustomFormat, Sizes as dateInput_Sizes, Disabled as dateInput_Disabled, ErrorState as dateInput_ErrorState, WithFormField as dateInput_WithFormField, Uncontrolled as dateInput_Uncontrolled, Playground as dateInput_Playground } from '@/components/ui/date-input.stories';
 import { default as datepickerMeta, Playground as datepicker_Playground, Demo as datepicker_Demo, PopoverDemo as datepicker_PopoverDemo, ApprovalDemo as datepicker_ApprovalDemo, RangeDemo as datepicker_RangeDemo, WithFormField as datepicker_WithFormField } from '@/components/ui/datepicker.stories';
 import { default as digitInputMeta, Playground as digitInput_Playground, Demo as digitInput_Demo, HasError as digitInput_HasError, Disabled as digitInput_Disabled, Square as digitInput_Square, WithFormField as digitInput_WithFormField } from '@/components/ui/digit-input.stories';
 import { default as dividerMeta, Playground as divider_Playground, Line as divider_Line, LineSpacing as divider_LineSpacing, LineText as divider_LineText, TextOnly as divider_TextOnly, SolidText as divider_SolidText, Content as divider_Content } from '@/components/ui/divider.stories';
@@ -274,6 +275,20 @@ export const storyRegistry: Record<string, {
     'ErrorState': currencyInput_ErrorState,
     'Disabled': currencyInput_Disabled,
     'WithFormField': currencyInput_WithFormField
+    }
+  },
+  'date-input': {
+    meta: dateInputMeta,
+    stories: {
+    'Default': dateInput_Default,
+    'WithPlaceholder': dateInput_WithPlaceholder,
+    'CustomFormat': dateInput_CustomFormat,
+    'Sizes': dateInput_Sizes,
+    'Disabled': dateInput_Disabled,
+    'ErrorState': dateInput_ErrorState,
+    'WithFormField': dateInput_WithFormField,
+    'Uncontrolled': dateInput_Uncontrolled,
+    'Playground': dateInput_Playground
     }
   },
   'datepicker': {

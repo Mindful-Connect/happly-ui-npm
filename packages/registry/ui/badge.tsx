@@ -50,6 +50,7 @@ export const badgeVariants = tv({
       },
     },
     color: {
+      primary: {},
       gray: {},
       blue: {},
       orange: {},
@@ -72,6 +73,11 @@ export const badgeVariants = tv({
   },
   compoundVariants: [
     //#region variant=filled
+    {
+      variant: 'filled',
+      color: 'primary',
+      class: { root: 'bg-primary-base text-primary-contrast' },
+    },
     {
       variant: 'filled',
       color: 'gray',
@@ -127,6 +133,11 @@ export const badgeVariants = tv({
     //#region variant=light
     {
       variant: 'light',
+      color: 'primary',
+      class: { root: 'bg-primary-200 text-primary-950' },
+    },
+    {
+      variant: 'light',
       color: 'gray',
       class: { root: 'bg-neutral-200 text-neutral-800' },
     },
@@ -180,6 +191,11 @@ export const badgeVariants = tv({
     //#region variant=lighter
     {
       variant: 'lighter',
+      color: 'primary',
+      class: { root: 'bg-primary-50 text-primary-950 ring-primary-100' },
+    },
+    {
+      variant: 'lighter',
       color: 'gray',
       class: { root: 'bg-neutral-100 text-neutral-800 ring-neutral-200' },
     },
@@ -231,6 +247,11 @@ export const badgeVariants = tv({
     //#endregion
 
     //#region variant=stroke
+    {
+      variant: 'stroke',
+      color: 'primary',
+      class: { root: 'text-primary-500' },
+    },
     {
       variant: 'stroke',
       color: 'gray',
@@ -305,6 +326,7 @@ export const badgeVariants = tv({
       disabled: true,
       variant: ['stroke', 'filled', 'light', 'lighter'],
       color: [
+        'primary',
         'red',
         'gray',
         'blue',

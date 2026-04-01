@@ -23,24 +23,24 @@ const radioCardVariants = tv({
       // focus-within
       'focus-within:shadow-button-important-focus focus-within:ring-stroke-strong-950',
       // checked
-      'has-[[data-state=checked]]:ring-stroke-strong-950',
+      'data-[state=checked]:ring-stroke-strong-950',
       // disabled (must override checked state)
-      'has-[[data-disabled]]:pointer-events-none has-[[data-disabled]]:shadow-none has-[[data-disabled]]:bg-bg-weak-50',
-      'has-[[data-disabled]]:ring-stroke-soft-200',
-      'has-[[data-disabled]]:has-[[data-state=checked]]:ring-stroke-soft-200',
+      'data-[disabled]:pointer-events-none data-[disabled]:shadow-none data-[disabled]:bg-bg-weak-50',
+      'data-[disabled]:ring-stroke-soft-200',
+      'data-[disabled]:data-[state=checked]:ring-stroke-soft-200',
     ],
     content: 'flex min-w-0 flex-1',
     title: [
       'text-label-sm text-text-strong-950',
       'transition duration-200 ease-out',
       // disabled
-      'group-has-[[data-disabled]]/card:text-text-disabled-300',
+      'group-data-[disabled]/card:text-text-disabled-300',
     ],
     description: [
       'text-paragraph-sm text-text-sub-600',
       'transition duration-200 ease-out',
       // disabled
-      'group-has-[[data-disabled]]/card:text-text-disabled-300',
+      'group-data-[disabled]/card:text-text-disabled-300',
     ],
   },
   variants: {
@@ -52,7 +52,7 @@ const radioCardVariants = tv({
           // focus-within
           'focus-within:shadow-button-error-focus focus-within:ring-error-base',
           // checked
-          'has-[[data-state=checked]]:ring-error-base',
+          'data-[state=checked]:ring-error-base',
         ],
       },
     },
@@ -165,6 +165,7 @@ const RadioCardItem = React.forwardRef<HTMLLabelElement, RadioCardItemProps>(
       value: groupValue,
     } = React.useContext(RadioCardContext);
     const { item } = radioCardVariants({ hasError });
+    const isChecked = groupValue === value;
 
     const handleClick = React.useCallback(
       (e: React.MouseEvent<HTMLLabelElement>) => {
@@ -182,6 +183,8 @@ const RadioCardItem = React.forwardRef<HTMLLabelElement, RadioCardItemProps>(
         <label
           ref={forwardedRef}
           className={item({ class: className })}
+          data-state={isChecked ? 'checked' : 'unchecked'}
+          data-disabled={disabled ? '' : undefined}
           onClick={handleClick}
           {...rest}
         >
