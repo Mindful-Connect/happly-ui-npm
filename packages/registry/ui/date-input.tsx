@@ -69,15 +69,17 @@ function DateInput({
     <Popover.Root open={open} onOpenChange={setOpen}>
       <Popover.Trigger asChild disabled={disabled}>
         <div>
-          <Input.Composed
-            readOnly
-            leadingIcon={LeadingIcon}
-            value={date ? format(date, formatStr) : ''}
-            placeholder={placeholder}
-            size={size}
-            hasError={resolvedHasError}
-            className='cursor-pointer'
-          />
+          <Input.Root size={size} hasError={resolvedHasError}>
+            <Input.Wrapper className='cursor-pointer'>
+              <Input.Icon as={LeadingIcon} />
+              <Input.Input
+                readOnly
+                value={date ? format(date, formatStr) : ''}
+                placeholder={placeholder}
+                className='cursor-pointer'
+              />
+            </Input.Wrapper>
+          </Input.Root>
         </div>
       </Popover.Trigger>
       <Popover.Content
