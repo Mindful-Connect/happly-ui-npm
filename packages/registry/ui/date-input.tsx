@@ -52,8 +52,10 @@ function DateInput({
   const formField = useFormField();
   const resolvedHasError = hasError ?? formField.hasError;
 
-  const handleSelect = React.useCallback(
-    (selected: Date | undefined) => {
+  const handleSelect: NonNullable<
+    Extract<CalendarProps, { mode: 'single' }>['onSelect']
+  > = React.useCallback(
+    (selected) => {
       if (value === undefined) {
         setInternalDate(selected);
       }
