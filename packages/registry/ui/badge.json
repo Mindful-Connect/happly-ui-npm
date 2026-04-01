@@ -45,8 +45,8 @@
       },
       {
         "title": "Colors",
-        "description": "All 10 available color options across the design system.",
-        "code": "<Badge.Root>Badge</Badge.Root>\n<Badge.Root color=\"blue\">Badge</Badge.Root>\n<Badge.Root color=\"red\">Badge</Badge.Root>\n<Badge.Root color=\"green\">Badge</Badge.Root>",
+        "description": "All 11 available color options across the design system, including primary.",
+        "code": "<Badge.Root color=\"primary\">Badge</Badge.Root>\n<Badge.Root>Badge</Badge.Root>\n<Badge.Root color=\"blue\">Badge</Badge.Root>\n<Badge.Root color=\"red\">Badge</Badge.Root>\n<Badge.Root color=\"green\">Badge</Badge.Root>",
         "stories": ["BadgeColors"]
       },
       {
@@ -117,7 +117,7 @@
           },
           {
             "name": "color",
-            "type": "'gray' | 'blue' | 'orange' | 'red' | 'green' | 'yellow' | 'purple' | 'sky' | 'pink' | 'teal'",
+            "type": "'primary' | 'gray' | 'blue' | 'orange' | 'red' | 'green' | 'yellow' | 'purple' | 'sky' | 'pink' | 'teal'",
             "default": "'gray'",
             "description": "The color of the badge"
           },
@@ -186,7 +186,7 @@
           },
           {
             "name": "color",
-            "type": "'gray' | 'blue' | 'orange' | 'red' | 'green' | 'yellow' | 'purple' | 'sky' | 'pink' | 'teal'",
+            "type": "'primary' | 'gray' | 'blue' | 'orange' | 'red' | 'green' | 'yellow' | 'purple' | 'sky' | 'pink' | 'teal'",
             "default": "'gray'",
             "description": "Shared color for all badges (overridden by per-item color)"
           },
@@ -204,7 +204,7 @@
           },
           {
             "name": "toggleColor",
-            "type": "'gray' | 'blue' | 'orange' | 'red' | 'green' | 'yellow' | 'purple' | 'sky' | 'pink' | 'teal'",
+            "type": "'primary' | 'gray' | 'blue' | 'orange' | 'red' | 'green' | 'yellow' | 'purple' | 'sky' | 'pink' | 'teal'",
             "default": "'gray'",
             "description": "Color for the show more/less toggle badge"
           }

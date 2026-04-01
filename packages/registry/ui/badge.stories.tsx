@@ -23,6 +23,7 @@ export const Playground = {
     color: {
       control: 'select',
       options: [
+        'primary',
         'gray',
         'blue',
         'orange',
@@ -44,6 +45,11 @@ export const Playground = {
 export const BadgeFilled = {
   render: () => (
     <div className='flex flex-col items-center gap-6'>
+      <Badge.Root variant='filled' color='primary'>
+        <Badge.Icon as={RiFlashlightFill} />
+        Badge
+      </Badge.Root>
+
       <Badge.Root variant='filled'>
         <Badge.Icon as={RiFlashlightFill} />
         Badge
@@ -75,6 +81,11 @@ export const BadgeFilled = {
 export const BadgeLight = {
   render: () => (
     <div className='flex flex-col items-center gap-6'>
+      <Badge.Root variant='light' color='primary'>
+        <Badge.Icon as={RiFlashlightFill} />
+        Badge
+      </Badge.Root>
+
       <Badge.Root variant='light'>
         <Badge.Icon as={RiFlashlightFill} />
         Badge
@@ -106,6 +117,11 @@ export const BadgeLight = {
 export const BadgeLighter = {
   render: () => (
     <div className='flex flex-col items-center gap-6'>
+      <Badge.Root variant='lighter' color='primary'>
+        <Badge.Icon as={RiFlashlightFill} />
+        Badge
+      </Badge.Root>
+
       <Badge.Root variant='lighter'>
         <Badge.Icon as={RiFlashlightFill} />
         Badge
@@ -137,6 +153,11 @@ export const BadgeLighter = {
 export const BadgeStroke = {
   render: () => (
     <div className='flex flex-col items-center gap-6'>
+      <Badge.Root variant='stroke' color='primary'>
+        <Badge.Icon as={RiFlashlightFill} />
+        Badge
+      </Badge.Root>
+
       <Badge.Root variant='stroke'>
         <Badge.Icon as={RiFlashlightFill} />
         Badge
@@ -168,6 +189,7 @@ export const BadgeStroke = {
 export const BadgeColors = {
   render: () => (
     <div className='flex w-full max-w-96 flex-wrap items-center justify-center gap-6'>
+      <Badge.Root color='primary'>Badge</Badge.Root>
       <Badge.Root>Badge</Badge.Root>
       <Badge.Root color='blue'>Badge</Badge.Root>
       <Badge.Root color='orange'>Badge</Badge.Root>
