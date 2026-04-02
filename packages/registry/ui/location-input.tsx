@@ -290,13 +290,13 @@ const LocationInputRoot = React.forwardRef<
               }
             }}
             style={{ width: anchorWidth || undefined }}
-            className='overflow-hidden p-0'
+            className='overflow-hidden py-2'
           >
             <RemoveScroll allowPinchZoom>
               <ScrollAreaPrimitives.Root type='auto'>
                 <ScrollAreaPrimitives.Viewport
                   style={{ overflowY: undefined }}
-                  className='max-h-[196px] w-full scroll-py-2 overflow-auto p-2'
+                  className='max-h-[196px] w-full scroll-py-2 overflow-auto px-2'
                   role='listbox'
                 >
                   <div className='flex flex-col gap-1'>
