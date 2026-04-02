@@ -208,7 +208,7 @@ function Calendar({
 
   const [yearGridStart, setYearGridStart] = React.useState(() => {
     const y = displayMonth.getFullYear();
-    return y - (y % 16);
+    return y - (y % 12);
   });
 
   const handleCaptionClick = () => {
