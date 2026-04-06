@@ -241,7 +241,7 @@ const InputEl = React.forwardRef<
     }
 >(
   (
-    { className, type = 'text', size, hasError, asChild, ...rest },
+    { className, type = 'text', size, hasError, asChild, placeholder, ...rest },
     forwardedRef
   ) => {
     const Component = asChild ? Slot : 'input';
@@ -256,6 +256,7 @@ const InputEl = React.forwardRef<
         type={type}
         className={input({ class: className })}
         ref={forwardedRef}
+        placeholder={placeholder ?? '\u200B'}
         {...rest}
       />
     );
