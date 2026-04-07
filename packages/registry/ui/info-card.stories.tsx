@@ -163,7 +163,7 @@ export const WithAction = {
             <span>Sean Muir</span>
           </InfoCard.Value>
         </InfoCard.Item>
-        <InfoCard.Action className='h-[70px] @xl:h-auto @xl:[aspect-ratio:1/1]' />
+        <InfoCard.Action className='h-[70px] @xl:[aspect-ratio:1/1] @xl:h-auto' />
       </InfoCard.Root>
     </div>
   ),
@@ -216,7 +216,7 @@ export const WithActionNotification = {
         </InfoCard.Item>
         <InfoCard.Action
           notification
-          className='h-[70px] @xl:h-auto @xl:[aspect-ratio:1/1]'
+          className='h-[70px] @xl:[aspect-ratio:1/1] @xl:h-auto'
         />
       </InfoCard.Root>
     </div>
@@ -242,7 +242,7 @@ export const WithCustomAction = {
             </StatusBadge.Root>
           </InfoCard.Value>
         </InfoCard.Item>
-        <InfoCard.Action className='h-[70px] @xl:h-auto @xl:[aspect-ratio:1/1]'>
+        <InfoCard.Action className='h-[70px] @xl:[aspect-ratio:1/1] @xl:h-auto'>
           <RiExternalLinkLine className='text-icon-sub-600 size-5' />
         </InfoCard.Action>
       </InfoCard.Root>

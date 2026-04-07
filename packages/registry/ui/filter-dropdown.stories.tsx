@@ -120,10 +120,7 @@ export const TextOptions = {
           </Button.Root>
         </FilterDropdown.Trigger>
         <FilterDropdown.Content>
-          <FilterDropdown.Header
-            onBack={() => alert('Back')}
-            onReset={reset}
-          />
+          <FilterDropdown.Header onBack={() => alert('Back')} onReset={reset} />
           <FilterDropdown.SelectAll
             checked={allChecked}
             onCheckedChange={selectAll}
@@ -170,10 +167,7 @@ export const BadgeOptions = {
           </Button.Root>
         </FilterDropdown.Trigger>
         <FilterDropdown.Content>
-          <FilterDropdown.Header
-            onBack={() => alert('Back')}
-            onReset={reset}
-          />
+          <FilterDropdown.Header onBack={() => alert('Back')} onReset={reset} />
           <FilterDropdown.SelectAll
             checked={allChecked}
             onCheckedChange={selectAll}
@@ -219,10 +213,7 @@ export const StatusBadgeOptions = {
           </Button.Root>
         </FilterDropdown.Trigger>
         <FilterDropdown.Content>
-          <FilterDropdown.Header
-            onBack={() => alert('Back')}
-            onReset={reset}
-          />
+          <FilterDropdown.Header onBack={() => alert('Back')} onReset={reset} />
           <FilterDropdown.SelectAll
             checked={allChecked}
             onCheckedChange={selectAll}

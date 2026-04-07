@@ -38,7 +38,10 @@ const ProgressCircleRoot = React.forwardRef<
     const offset = circumference - (safeValue / max) * circumference;
 
     return (
-      <div className={cn('relative inline-flex', className)} style={{ width: size, height: size }}>
+      <div
+        className={cn('relative inline-flex', className)}
+        style={{ width: size, height: size }}
+      >
         <svg
           ref={forwardedRef}
           width={size}

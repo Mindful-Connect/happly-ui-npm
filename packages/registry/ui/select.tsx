@@ -349,7 +349,7 @@ const SelectContent = React.forwardRef<
         ref={forwardedRef}
         className={cn(
           // base
-          'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 pointer-events-auto relative z-50 overflow-hidden rounded-2xl ring-1 ring-inset py-2',
+          'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 pointer-events-auto relative z-50 overflow-hidden rounded-2xl py-2 ring-1 ring-inset',
           // widths
           'max-w-[max(var(--radix-select-trigger-width),320px)] min-w-[var(--radix-select-trigger-width)]',
           // heights

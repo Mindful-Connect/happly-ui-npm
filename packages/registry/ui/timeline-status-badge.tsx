@@ -8,7 +8,12 @@ import {
   RiTimeFill,
 } from '@remixicon/react';
 
-const TIMELINE_STATUSES = ['open', 'open_soon', 'closing_soon', 'closed'] as const;
+const TIMELINE_STATUSES = [
+  'open',
+  'open_soon',
+  'closing_soon',
+  'closed',
+] as const;
 export type TimelineStatus = (typeof TIMELINE_STATUSES)[number];
 
 const STATUS_CONFIG: Record<
@@ -21,7 +26,11 @@ const STATUS_CONFIG: Record<
 > = {
   open: { color: 'green', icon: RiCheckboxCircleFill, label: 'Open' },
   open_soon: { color: 'purple', icon: RiTimeFill, label: 'Opening Soon' },
-  closing_soon: { color: 'yellow', icon: RiAlarmWarningFill, label: 'Closing Soon' },
+  closing_soon: {
+    color: 'yellow',
+    icon: RiAlarmWarningFill,
+    label: 'Closing Soon',
+  },
   closed: { color: 'red', icon: RiCloseCircleFill, label: 'Closed' },
 };
 

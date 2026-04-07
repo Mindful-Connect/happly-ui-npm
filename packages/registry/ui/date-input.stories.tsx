@@ -5,7 +5,10 @@ import * as React from 'react';
 import * as DateInput from './date-input';
 import * as FormField from './form-field';
 
-export default { title: 'Form/Composed Inputs/Date Input', component: DateInput.Root };
+export default {
+  title: 'Form/Composed Inputs/Date Input',
+  component: DateInput.Root,
+};
 
 function DefaultRender() {
   const [date, setDate] = React.useState<Date | undefined>(undefined);

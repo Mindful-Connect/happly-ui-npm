@@ -326,9 +326,7 @@ export const ComposedWithHeaderFooter = {
           <div className='flex items-center gap-3 p-2'>
             <Avatar.Root size='40' />
             <div className='flex-1'>
-              <div className='text-label-sm text-text-strong-950'>
-                Wei Chen
-              </div>
+              <div className='text-label-sm text-text-strong-950'>Wei Chen</div>
               <div className='text-paragraph-xs text-text-sub-600 mt-1'>
                 wei@alignui.com
               </div>
