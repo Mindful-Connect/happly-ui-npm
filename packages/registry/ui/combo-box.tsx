@@ -461,7 +461,11 @@ function ComboBoxContent({
     ) : (
       <div className='flex flex-col gap-1'>
         {ctx.filteredOptions.map((option, index) => (
-          <ComboBoxItem key={`${option.value}-${index}`} value={option.value} index={index} />
+          <ComboBoxItem
+            key={`${option.value}-${index}`}
+            value={option.value}
+            index={index}
+          />
         ))}
       </div>
     ));
@@ -470,7 +474,7 @@ function ComboBoxContent({
     <ScrollAreaPrimitives.Root type='auto'>
       <ScrollAreaPrimitives.Viewport
         style={{ overflowY: undefined }}
-        className='max-h-[var(--combobox-content-max-height)] w-full scroll-py-2 overflow-auto p-2'
+        className='max-h-[var(--combobox-content-max-height)] w-full scroll-py-2 overflow-auto px-2'
         role='listbox'
         id={ctx.listboxId}
         aria-multiselectable='true'
@@ -510,7 +514,7 @@ function ComboBoxContent({
       }}
       style={{ width: ctx.anchorWidth || undefined }}
       className={cn(
-        'overflow-hidden p-0 [--combobox-content-max-height:196px]',
+        'overflow-hidden py-2 [--combobox-content-max-height:196px]',
         className
       )}
     >

@@ -44,7 +44,5 @@ export const AllStatuses = {
 };
 
 export const CustomLabel = {
-  render: () => (
-    <TimelineStatusBadge status='open'>Ouvert</TimelineStatusBadge>
-  ),
+  render: () => <TimelineStatusBadge status='open'>Ouvert</TimelineStatusBadge>,
 };

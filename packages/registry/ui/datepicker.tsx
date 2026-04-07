@@ -60,8 +60,8 @@ function MonthGrid({
   onClickCaption: () => void;
 }) {
   return (
-    <div className='w-[368px] space-y-2 p-5'>
-      <div className='bg-bg-weak-50 relative flex h-9 items-center justify-center rounded-lg'>
+    <div className='flex min-h-[292px] w-[332px] grow flex-col gap-y-3 p-4'>
+      <div className='bg-bg-weak-50 relative flex h-9 shrink-0 items-center justify-center rounded-lg'>
         <button
           type='button'
           className={cn(navButtonClass, 'top-1/2 left-1.5 -translate-y-1/2')}
@@ -84,23 +84,26 @@ function MonthGrid({
           <RiArrowRightSLine className='h-5 w-5' />
         </button>
       </div>
-      <div className='grid grid-cols-4 gap-2'>
-        {MONTHS.map((name, i) => (
-          <button
-            key={name}
-            type='button'
-            className={cn(
-              gridCellClass,
-              'h-10',
-              i === currentMonth &&
-                displayYear === currentYear &&
-                gridCellActiveClass
-            )}
-            onClick={() => onSelectMonth(i)}
-          >
-            {name}
-          </button>
-        ))}
+
+      <div className='flex grow flex-col justify-center'>
+        <div className='grid grid-cols-4 gap-x-2 gap-y-2.5'>
+          {MONTHS.map((name, i) => (
+            <button
+              key={name}
+              type='button'
+              className={cn(
+                gridCellClass,
+                'h-16',
+                i === currentMonth &&
+                  displayYear === currentYear &&
+                  gridCellActiveClass
+              )}
+              onClick={() => onSelectMonth(i)}
+            >
+              {name}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -123,8 +126,8 @@ function YearGrid({
   const endYear = startYear + 11;
 
   return (
-    <div className='w-[368px] space-y-2 p-5'>
-      <div className='bg-bg-weak-50 relative flex h-9 items-center justify-center rounded-lg'>
+    <div className='flex min-h-[292px] w-[332px] grow flex-col gap-y-3 p-4'>
+      <div className='bg-bg-weak-50 relative flex h-9 shrink-0 items-center justify-center rounded-lg'>
         <button
           type='button'
           className={cn(navButtonClass, 'top-1/2 left-1.5 -translate-y-1/2')}
@@ -143,21 +146,24 @@ function YearGrid({
           <RiArrowRightSLine className='h-5 w-5' />
         </button>
       </div>
-      <div className='grid grid-cols-4 gap-2'>
-        {years.map((year) => (
-          <button
-            key={year}
-            type='button'
-            className={cn(
-              gridCellClass,
-              'h-10',
-              year === currentYear && gridCellActiveClass
-            )}
-            onClick={() => onSelectYear(year)}
-          >
-            {year}
-          </button>
-        ))}
+
+      <div className='flex grow flex-col justify-center'>
+        <div className='grid grid-cols-4 gap-x-2 gap-y-2.5'>
+          {years.map((year) => (
+            <button
+              key={year}
+              type='button'
+              className={cn(
+                gridCellClass,
+                'h-16',
+                year === currentYear && gridCellActiveClass
+              )}
+              onClick={() => onSelectYear(year)}
+            >
+              {year}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -172,9 +178,21 @@ function Calendar({
   ...rest
 }: CalendarProps) {
   const [view, setView] = React.useState<CalendarView>('days');
-  const [internalMonth, setInternalMonth] = React.useState(
-    () => defaultMonth ?? new Date()
-  );
+  // Proposed logic for internalMonth initialization
+  const [internalMonth, setInternalMonth] = React.useState(() => {
+    if (defaultMonth) return defaultMonth;
+
+    const selected = (rest as any).selected;
+    if (selected) {
+      if (selected instanceof Date) return selected;
+      if (Array.isArray(selected) && selected[0] instanceof Date)
+        return selected[0];
+      if (typeof selected === 'object' && selected.from instanceof Date)
+        return selected.from;
+    }
+
+    return new Date();
+  });
 
   const displayMonth = controlledMonth ?? internalMonth;
 
@@ -234,7 +252,7 @@ function Calendar({
       transition={{ duration: 0.2, ease: 'easeInOut' }}
       className='overflow-hidden'
     >
-      <div ref={contentRef}>
+      <div ref={contentRef} className='flex min-h-[292px] flex-col'>
         {view === 'years' && (
           <YearGrid
             startYear={yearGridStart}
@@ -263,7 +281,7 @@ function Calendar({
             }}
             onClickCaption={() => {
               setYearGridStart(
-                displayMonth.getFullYear() - (displayMonth.getFullYear() % 12)
+                displayMonth.getFullYear() - (displayMonth.getFullYear() % 20)
               );
               setView('years');
             }}
@@ -276,11 +294,11 @@ function Calendar({
             month={displayMonth}
             onMonthChange={handleMonthChange}
             classNames={{
-              multiple_months: '',
-              caption_start: 'p-5',
-              caption_end: 'p-5',
-              months: 'flex divide-x divide-stroke-soft-200',
-              month: 'space-y-2',
+              multiple_months: 'grow',
+              caption_start: 'p-4',
+              caption_end: 'p-4',
+              months: 'flex grow divide-x divide-stroke-soft-200',
+              month: 'flex flex-col grow gap-y-3',
               caption:
                 'flex justify-center items-center relative rounded-lg bg-bg-weak-50 h-9',
               caption_label:
@@ -295,11 +313,12 @@ function Calendar({
               table: 'w-full border-collapse',
               head_row: 'flex gap-2',
               head_cell:
-                'text-text-soft-400 text-label-sm uppercase w-10 h-10 flex items-center justify-center text-center select-none',
-              row: 'grid grid-flow-col auto-cols-auto w-full mt-2 gap-2',
+                'text-text-soft-400 text-label-sm uppercase w-9 h-8 flex items-center justify-center text-center select-none',
+              root: 'grow flex flex-col',
+              row: 'grid grid-flow-col auto-cols-auto w-full mt-1 gap-1',
               cell: cn(
                 // base
-                'group/cell relative w-10 h-10 shrink-0 select-none p-0',
+                'group/cell relative w-9 h-8 shrink-0 select-none p-0',
                 // range
                 '[&:has(.day-range-middle)]:bg-primary-alpha-10',
                 'first:[&:has([aria-selected])]:rounded-l-lg last:[&:has([aria-selected])]:rounded-r-lg',
@@ -321,7 +340,7 @@ function Calendar({
               ),
               day: cn(
                 // base
-                'flex w-10 h-10 shrink-0 items-center justify-center rounded-lg text-center text-label-sm text-text-sub-600 outline-none',
+                'flex w-9 h-8 shrink-0 items-center justify-center rounded-lg text-center text-label-sm text-text-sub-600 outline-none',
                 'transition duration-200 ease-out',
                 // hover
                 'hover:bg-bg-weak-50 hover:text-text-strong-950',

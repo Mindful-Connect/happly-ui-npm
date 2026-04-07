@@ -128,6 +128,8 @@ type LocationInputProps = Omit<
   hasError?: boolean;
   /** Country restrictions for autocomplete (ISO 3166-1 alpha-2 codes) */
   countryRestrictions?: string[];
+  /** Restricts the place types returned. E.g. ['(cities)'] to only return cities instead of street addresses */
+  types?: string[];
 };
 
 const LocationInputRoot = React.forwardRef<
@@ -144,6 +146,7 @@ const LocationInputRoot = React.forwardRef<
       hasError,
       disabled,
       countryRestrictions,
+      types,
       className,
       ...rest
     },
@@ -156,7 +159,9 @@ const LocationInputRoot = React.forwardRef<
     // Auto-bind: stores full LocationRequest object in RHF
     const binding = useFormFieldBinding<LocationRequest>({
       parse: (stored: unknown) =>
-        stored && typeof stored === 'object' ? (stored as LocationRequest) : null,
+        stored && typeof stored === 'object'
+          ? (stored as LocationRequest)
+          : null,
       format: (value: LocationRequest) => value ?? undefined,
     });
 
@@ -166,9 +171,7 @@ const LocationInputRoot = React.forwardRef<
 
     const onLocationChange =
       onLocationChangeProp ??
-      (binding
-        ? (loc: LocationRequest) => binding.onChange(loc)
-        : undefined);
+      (binding ? (loc: LocationRequest) => binding.onChange(loc) : undefined);
 
     const [open, setOpen] = React.useState(false);
     const [search, setSearch] = React.useState(
@@ -224,7 +227,7 @@ const LocationInputRoot = React.forwardRef<
         .getPlacePredictions({
           input: debouncedSearch,
           componentRestrictions: { country: countries },
-          types: ['address'],
+          types: types ?? ['address'],
         })
         .then(({ predictions }) => {
           setSuggestions(predictions);
@@ -290,13 +293,13 @@ const LocationInputRoot = React.forwardRef<
               }
             }}
             style={{ width: anchorWidth || undefined }}
-            className='overflow-hidden p-0'
+            className='overflow-hidden py-2'
           >
             <RemoveScroll allowPinchZoom>
               <ScrollAreaPrimitives.Root type='auto'>
                 <ScrollAreaPrimitives.Viewport
                   style={{ overflowY: undefined }}
-                  className='max-h-[196px] w-full scroll-py-2 overflow-auto p-2'
+                  className='max-h-[196px] w-full scroll-py-2 overflow-auto px-2'
                   role='listbox'
                 >
                   <div className='flex flex-col gap-1'>
@@ -309,7 +312,7 @@ const LocationInputRoot = React.forwardRef<
                         }
                         onClick={() => handleSelect(suggestion)}
                         className={cn(
-                          'flex w-full cursor-pointer select-none items-center gap-2 rounded-10 p-2 text-left text-paragraph-sm text-text-strong-950',
+                          'rounded-10 text-paragraph-sm text-text-strong-950 flex w-full cursor-pointer items-center gap-2 p-2 text-left select-none',
                           'transition duration-200 ease-out',
                           'hover:bg-bg-weak-50'
                         )}
@@ -323,7 +326,7 @@ const LocationInputRoot = React.forwardRef<
                   </div>
                 </ScrollAreaPrimitives.Viewport>
                 <ScrollAreaPrimitives.Scrollbar orientation='vertical'>
-                  <ScrollAreaPrimitives.Thumb className='!w-1 rounded bg-bg-soft-200' />
+                  <ScrollAreaPrimitives.Thumb className='bg-bg-soft-200 !w-1 rounded' />
                 </ScrollAreaPrimitives.Scrollbar>
               </ScrollAreaPrimitives.Root>
             </RemoveScroll>

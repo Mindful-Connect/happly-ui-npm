@@ -96,12 +96,12 @@ InfoCardValue.displayName = 'InfoCardValue';
 
 type InfoCardActionProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   React.AnchorHTMLAttributes<HTMLAnchorElement> & {
-  href?: string;
-  notification?: boolean;
-};
+    href?: string;
+    notification?: boolean;
+  };
 
 const ActionNotification = () => (
-  <span className='absolute -right-1 -top-1'>
+  <span className='absolute -top-1 -right-1'>
     <StatusIndicator status='notification' />
   </span>
 );

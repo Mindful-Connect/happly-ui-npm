@@ -26,7 +26,7 @@ const DropdownContent = React.forwardRef<
       ref={forwardedRef}
       sideOffset={sideOffset}
       className={cn(
-        'z-50 pointer-events-auto w-[300px] overflow-hidden rounded-2xl bg-bg-white-0 p-2 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200',
+        'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 pointer-events-auto z-50 w-[300px] overflow-hidden rounded-2xl p-2 ring-1 ring-inset',
         'flex flex-col gap-1',
         // origin
         'data-[side=bottom]:origin-top data-[side=left]:origin-right data-[side=right]:origin-left data-[side=top]:origin-bottom',
@@ -46,16 +46,16 @@ DropdownContent.displayName = 'DropdownContent';
 const DropdownItem = React.forwardRef<
   React.ComponentRef<typeof DropdownMenuPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
-  inset?: boolean;
-  variant?: 'default' | 'error';
-}
+    inset?: boolean;
+    variant?: 'default' | 'error';
+  }
 >(({ className, inset, variant = 'default', ...rest }, forwardedRef) => (
   <DropdownMenuPrimitive.Item
     ref={forwardedRef}
     data-variant={variant}
     className={cn(
       // base
-      'group/item relative cursor-pointer select-none rounded-lg p-2 text-paragraph-sm text-text-strong-950 outline-none',
+      'group/item text-paragraph-sm text-text-strong-950 relative cursor-pointer rounded-lg p-2 outline-none select-none',
       'flex items-center gap-2',
       'transition duration-200 ease-out',
       // hover
@@ -75,17 +75,17 @@ const DropdownItem = React.forwardRef<
 DropdownItem.displayName = 'DropdownItem';
 
 function DropdownItemIcon<T extends React.ElementType>({
-                                                         className,
-                                                         as,
-                                                         ...rest
-                                                       }: PolymorphicComponentProps<T>) {
+  className,
+  as,
+  ...rest
+}: PolymorphicComponentProps<T>) {
   const Component = as || 'div';
 
   return (
     <Component
       className={cn(
         // base
-        'h-5 w-5 text-text-sub-600',
+        'text-text-sub-600 h-5 w-5',
         // disabled
         'group-has-[[data-disabled]]:text-text-disabled-300',
         // variant
@@ -117,7 +117,7 @@ const DropdownLabel = React.forwardRef<
   <DropdownMenuPrimitive.Label
     ref={forwardedRef}
     className={cn(
-      'px-2 py-1 text-subheading-xs uppercase text-text-soft-400',
+      'text-subheading-xs text-text-soft-400 px-2 py-1 uppercase',
       className
     )}
     {...rest}
@@ -128,14 +128,14 @@ DropdownLabel.displayName = 'DropdownLabel';
 const DropdownMenuSubTrigger = React.forwardRef<
   React.ComponentRef<typeof DropdownMenuPrimitive.SubTrigger>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
-  inset?: boolean;
-}
+    inset?: boolean;
+  }
 >(({ className, inset, children, ...rest }, forwardedRef) => (
   <DropdownMenuPrimitive.SubTrigger
     ref={forwardedRef}
     className={cn(
       // base
-      'group/item relative cursor-pointer select-none rounded-lg p-2 text-paragraph-sm text-text-strong-950 outline-0',
+      'group/item text-paragraph-sm text-text-strong-950 relative cursor-pointer rounded-lg p-2 outline-0 select-none',
       'flex items-center gap-2',
       'transition duration-200 ease-out',
       // hover
@@ -161,7 +161,7 @@ const DropdownMenuSubContent = React.forwardRef<
   <DropdownMenuPrimitive.SubContent
     ref={forwardedRef}
     className={cn(
-      'z-50 pointer-events-auto w-max overflow-hidden rounded-2xl bg-bg-white-0 p-2 shadow-regular-md ring-1 ring-inset ring-stroke-soft-200',
+      'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 pointer-events-auto z-50 w-max overflow-hidden rounded-2xl p-2 ring-1 ring-inset',
       'flex flex-col gap-1',
       // animation
       'data-[state=open]:animate-in data-[state=open]:fade-in-0',
@@ -239,7 +239,7 @@ function DropdownComposed({
         {groups.map((group, groupIndex) => (
           <React.Fragment key={groupIndex}>
             {groupIndex > 0 && (
-              <DropdownSeparator className='my-1 h-px bg-stroke-soft-200' />
+              <DropdownSeparator className='bg-stroke-soft-200 my-1 h-px' />
             )}
             <DropdownGroup>
               {group.label && <DropdownLabel>{group.label}</DropdownLabel>}

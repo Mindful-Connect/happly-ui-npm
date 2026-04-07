@@ -92,7 +92,7 @@ export const Default = {
   render: () => (
     <div className='flex flex-col gap-5'>
       <div className='flex items-center gap-2'>
-        <div className='h-4 w-4 rounded-full ring-1 ring-black/5 bg-primary-base' />
+        <div className='bg-primary-base h-4 w-4 rounded-full ring-1 ring-black/5' />
         <span className='text-text-strong-950 text-sm font-semibold'>
           Current Primary
         </span>

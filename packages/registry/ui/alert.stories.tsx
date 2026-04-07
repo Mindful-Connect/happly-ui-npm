@@ -83,7 +83,10 @@ export const Filled = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -94,7 +97,10 @@ export const Filled = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -105,7 +111,10 @@ export const Filled = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -116,7 +125,10 @@ export const Filled = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -127,7 +139,10 @@ export const Filled = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -144,7 +159,10 @@ export const Light = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -155,7 +173,10 @@ export const Light = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -166,7 +187,10 @@ export const Light = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -177,7 +201,10 @@ export const Light = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -188,7 +215,10 @@ export const Light = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -205,7 +235,10 @@ export const Lighter = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -216,7 +249,10 @@ export const Lighter = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -227,7 +263,10 @@ export const Lighter = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -238,7 +277,10 @@ export const Lighter = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -249,7 +291,10 @@ export const Lighter = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -266,7 +311,10 @@ export const Stroke = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -277,7 +325,10 @@ export const Stroke = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -288,7 +339,10 @@ export const Stroke = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -299,7 +353,10 @@ export const Stroke = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -310,7 +367,10 @@ export const Stroke = {
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
-        <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+        <button
+          type='button'
+          className='appearance-none border-0 bg-transparent p-0'
+        >
           <Alert.CloseIcon />
         </button>
       </Alert.Root>
@@ -330,7 +390,10 @@ export const Sizes = {
           <LinkButton.Root variant='modifiable' size='small' underline>
             Upgrade
           </LinkButton.Root>
-          <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+          <button
+            type='button'
+            className='appearance-none border-0 bg-transparent p-0'
+          >
             <Alert.CloseIcon />
           </button>
         </Alert.Root>
@@ -345,7 +408,10 @@ export const Sizes = {
           <LinkButton.Root variant='modifiable' size='small' underline>
             Upgrade
           </LinkButton.Root>
-          <button type='button' className='appearance-none border-0 bg-transparent p-0'>
+          <button
+            type='button'
+            className='appearance-none border-0 bg-transparent p-0'
+          >
             <Alert.CloseIcon />
           </button>
         </Alert.Root>
