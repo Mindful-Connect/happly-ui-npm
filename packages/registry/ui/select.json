@@ -68,6 +68,12 @@
         "stories": ["Disabled"]
       },
       {
+        "title": "Readonly",
+        "description": "Readonly select states with placeholder and filled values.",
+        "code": "<Select.Root readOnly>\n  <Select.Trigger>\n    <Select.Value placeholder=\"Select...\" />\n  </Select.Trigger>\n  <Select.Content>...</Select.Content>\n</Select.Root>",
+        "stories": ["Readonly"]
+      },
+      {
         "title": "Compact",
         "description": "Compact variant with auto-width trigger.",
         "code": "<Select.Root variant=\"compact\" defaultValue=\"25\">\n  <Select.Trigger>\n    <Select.Value />\n  </Select.Trigger>\n  <Select.Content align=\"center\">\n    <Select.Item value=\"25\">25</Select.Item>\n  </Select.Content>\n</Select.Root>",

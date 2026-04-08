@@ -468,6 +468,59 @@ export const Disabled = {
   ),
 };
 
+export const Readonly = {
+  render: () => (
+    <div className='w-full max-w-[300px] min-w-[300px] space-y-6'>
+      <Select.Root readOnly>
+        <Select.Trigger>
+          <Select.Value
+            placeholder={
+              <div className='flex items-center gap-2'>
+                <Select.TriggerIcon as={RiGlobalLine} /> Select a country...
+              </div>
+            }
+          />
+        </Select.Trigger>
+        <Select.Content>
+          {countries.map((item) => (
+            <Select.Item
+              key={item.value}
+              value={item.value}
+              disabled={item.disabled}
+            >
+              <Select.ItemIcon
+                style={{ backgroundImage: `url(${item.icon})` }}
+              />
+              {item.label}
+            </Select.Item>
+          ))}
+        </Select.Content>
+      </Select.Root>
+
+      <Select.Root readOnly defaultValue='laura-perez'>
+        <Select.Trigger>
+          <Select.Value placeholder='Select a user...' />
+        </Select.Trigger>
+        <Select.Content>
+          {users.map((item) => (
+            <Select.Item key={item.value} value={item.value}>
+              <Select.ItemIcon as={Avatar.Root} size='20' color={item.color}>
+                <Avatar.Image src={item.image} />
+              </Select.ItemIcon>
+              <div className='flex items-center gap-1'>
+                {item.name}
+                <span className='text-paragraph-xs text-text-soft-400 group-has-[&]/trigger:hidden'>
+                  {item.handle}
+                </span>
+              </div>
+            </Select.Item>
+          ))}
+        </Select.Content>
+      </Select.Root>
+    </div>
+  ),
+};
+
 export const Compact = {
   render: () => (
     <Select.Root variant='compact' defaultValue='25'>
