@@ -225,12 +225,13 @@ export const selectVariants = tv({
 type SelectContextType = Pick<
   VariantProps<typeof selectVariants>,
   'variant' | 'size' | 'hasError'
->;
+> & { readOnly?: boolean };
 
 const SelectContext = React.createContext<SelectContextType>({
   size: 'medium',
   variant: 'default',
   hasError: false,
+  readOnly: false,
 });
 
 const useSelectContext = () => React.useContext(SelectContext);
@@ -239,6 +240,7 @@ const SelectRoot = ({
   size = 'medium',
   variant = 'default',
   hasError,
+  readOnly,
   value: valueProp,
   onValueChange: onValueChangeProp,
   ...rest
@@ -257,12 +259,12 @@ const SelectRoot = ({
       onOpenChange?.(open);
       if (!open) formField.onBlur?.();
     },
-    [onOpenChange, formField.onBlur]
+    [onOpenChange, formField]
   );
 
   return (
     <SelectContext.Provider
-      value={{ size, variant, hasError: resolvedHasError }}
+      value={{ size, variant, hasError: resolvedHasError, readOnly }}
     >
       <SelectPrimitives.Root
         value={resolvedValue}
@@ -291,7 +293,7 @@ const SelectTrigger = React.forwardRef<
   React.ComponentRef<typeof SelectPrimitives.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitives.Trigger>
 >(({ className, children, ...rest }, forwardedRef) => {
-  const { size, variant, hasError } = useSelectContext();
+  const { size, variant, hasError, readOnly } = useSelectContext();
 
   const { triggerRoot, triggerArrow } = selectVariants({
     size,
@@ -302,8 +304,13 @@ const SelectTrigger = React.forwardRef<
   return (
     <SelectPrimitives.Trigger
       ref={forwardedRef}
-      className={triggerRoot({ class: className })}
+      className={cn(
+        triggerRoot({ class: className }),
+        readOnly && 'pointer-events-none'
+      )}
       aria-invalid={hasError || undefined}
+      tabIndex={readOnly ? -1 : undefined}
+      aria-readonly={readOnly || undefined}
       {...rest}
     >
       <Slottable>{children}</Slottable>

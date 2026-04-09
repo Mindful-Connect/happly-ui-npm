@@ -33,6 +33,7 @@ interface UseFileUploadOptions {
   onUploadSuccess?: (file: UploadFile) => void;
   onUploadError?: (file: UploadFile, error: Error) => void;
   onFileRemove?: (file: UploadFile) => void;
+  onRestrictionFailed?: (file: any, error: Error) => void;
 }
 
 interface UseFileUploadReturn {
@@ -83,6 +84,7 @@ export function useFileUpload(
     onUploadSuccess,
     onUploadError,
     onFileRemove,
+    onRestrictionFailed,
   } = options;
 
   const [files, setFiles] = React.useState<UploadFile[]>([]);
@@ -100,6 +102,7 @@ export function useFileUpload(
     onUploadSuccess,
     onUploadError,
     onFileRemove,
+    onRestrictionFailed,
   });
 
   React.useEffect(() => {
@@ -111,6 +114,7 @@ export function useFileUpload(
       onUploadSuccess,
       onUploadError,
       onFileRemove,
+      onRestrictionFailed,
     };
   }, [
     headers,
@@ -120,6 +124,7 @@ export function useFileUpload(
     onUploadSuccess,
     onUploadError,
     onFileRemove,
+    onRestrictionFailed,
   ]);
 
   // Create Uppy instance
@@ -280,18 +285,7 @@ export function useFileUpload(
       file: UppyFile<UppyMeta, UppyBody> | undefined,
       error: Error
     ) => {
-      if (!file) return;
-
-      setFiles((prev) =>
-        prev.map((f) => {
-          if (f.id !== file.id) return f;
-          return {
-            ...f,
-            status: 'failed' as const,
-            error: error?.message ?? 'File not allowed',
-          };
-        })
-      );
+      latestPropsRef.current.onRestrictionFailed?.(file, error);
     };
 
     uppy.on('file-added', onFileAdded);
