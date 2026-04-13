@@ -86,10 +86,7 @@ function FilterDropdownHeader({
 }: FilterDropdownHeaderProps) {
   return (
     <div
-      className={cn(
-        'flex items-center justify-between px-3 pt-4',
-        className
-      )}
+      className={cn('flex items-center justify-between px-3 pt-4', className)}
       {...rest}
     >
       {onBack && (
@@ -128,13 +125,7 @@ const FilterDropdownSearch = React.forwardRef<
   FilterDropdownSearchProps
 >(
   (
-    {
-      className,
-      placeholder = 'Search...',
-      size = 'small',
-      value,
-      onChange,
-    },
+    { className, placeholder = 'Search...', size = 'small', value, onChange },
     forwardedRef
   ) => (
     <div className={cn('px-3 pt-4', className)}>
@@ -178,10 +169,7 @@ function FilterDropdownSelectAll({
           'hover:bg-bg-weak-50'
         )}
       >
-        <Checkbox.Root
-          checked={checked}
-          onCheckedChange={onCheckedChange}
-        />
+        <Checkbox.Root checked={checked} onCheckedChange={onCheckedChange} />
         <span className='text-paragraph-sm text-text-strong-950'>{label}</span>
       </label>
       <Divider.Root variant='line' />
@@ -314,7 +302,7 @@ function FilterDropdownCategoryItem({
       type='button'
       className={cn(
         // matches Dropdown.Item styling
-        'group/item relative cursor-pointer select-none rounded-lg p-2 text-paragraph-sm text-text-strong-950 outline-none',
+        'group/item text-paragraph-sm text-text-strong-950 relative cursor-pointer rounded-lg p-2 outline-none select-none',
         'flex w-full items-center gap-2',
         'transition duration-200 ease-out',
         // hover
@@ -331,7 +319,7 @@ function FilterDropdownCategoryItem({
         <Icon
           className={cn(
             // matches Dropdown.ItemIcon styling
-            'h-5 w-5 text-text-sub-600',
+            'text-text-sub-600 h-5 w-5',
             'group-disabled/item:text-text-disabled-300'
           )}
         />
@@ -517,7 +505,9 @@ function FilterDropdownComposed({
   const [remoteStates, setRemoteStates] = React.useState<
     Record<string, RemoteState>
   >({});
-  const debounceTimers = React.useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+  const debounceTimers = React.useRef<
+    Record<string, ReturnType<typeof setTimeout>>
+  >({});
 
   const updateRemoteState = React.useCallback(
     (key: string, update: Partial<RemoteState>) => {
@@ -530,12 +520,19 @@ function FilterDropdownComposed({
   );
 
   const fetchRemote = React.useCallback(
-    async (filter: FilterConfig, query: string, page: number): Promise<void> => {
+    async (
+      filter: FilterConfig,
+      query: string,
+      page: number
+    ): Promise<void> => {
       if (!filter.remote) return;
       const key = filter.key;
       const isFirstPage = page === 1;
 
-      updateRemoteState(key, isFirstPage ? { isLoading: true } : { isLoadingMore: true });
+      updateRemoteState(
+        key,
+        isFirstPage ? { isLoading: true } : { isLoadingMore: true }
+      );
 
       try {
         const result = await filter.remote.onFetch({ query, page });
@@ -587,10 +584,9 @@ function FilterDropdownComposed({
         // Revert unapplied changes by restoring the snapshot
         if (!didApply.current) {
           const snapshot = openSnapshot.current;
-          const allKeys = Array.from(new Set([
-            ...Object.keys(snapshot),
-            ...Object.keys(selected),
-          ]));
+          const allKeys = Array.from(
+            new Set([...Object.keys(snapshot), ...Object.keys(selected)])
+          );
           for (let i = 0; i < allKeys.length; i++) {
             const key = allKeys[i];
             const prev = snapshot[key] ?? [];
@@ -647,7 +643,8 @@ function FilterDropdownComposed({
       if (!filter.remote) return;
       const key = filter.key;
       const state = remoteStates[key];
-      if (!state || !state.hasMore || state.isLoadingMore || state.isLoading) return;
+      if (!state || !state.hasMore || state.isLoadingMore || state.isLoading)
+        return;
       if (loadMoreLock.current[key]) return;
       loadMoreLock.current[key] = true;
       fetchRemote(filter, state.query, state.page + 1).finally(() => {
@@ -708,10 +705,9 @@ function FilterDropdownComposed({
   // Detect whether selections have changed from the snapshot taken on open
   const hasChanges = React.useMemo(() => {
     const snapshot = openSnapshot.current;
-    const allKeys = Array.from(new Set([
-      ...Object.keys(snapshot),
-      ...Object.keys(selected),
-    ]));
+    const allKeys = Array.from(
+      new Set([...Object.keys(snapshot), ...Object.keys(selected)])
+    );
     for (let i = 0; i < allKeys.length; i++) {
       const key = allKeys[i];
       const prev = snapshot[key] ?? [];
@@ -728,9 +724,7 @@ function FilterDropdownComposed({
     ? remoteStates[activeFilter.key]
     : null;
 
-  const activeOptions = activeFilter
-    ? getOptionsForFilter(activeFilter)
-    : [];
+  const activeOptions = activeFilter ? getOptionsForFilter(activeFilter) : [];
   const activeSelectedSet = activeFilter
     ? new Set(selected[activeFilter.key] ?? [])
     : new Set<string>();
@@ -749,10 +743,7 @@ function FilterDropdownComposed({
         align={align}
         side={side}
         sideOffset={sideOffset}
-        className={cn(
-          view === 'categories' && 'w-[224px]',
-          contentClassName
-        )}
+        className={cn(view === 'categories' && 'w-[224px]', contentClassName)}
       >
         {view === 'categories' && (
           <FilterDropdownCategoryList>
@@ -771,11 +762,7 @@ function FilterDropdownComposed({
         {activeFilter && view !== 'categories' && (
           <>
             <FilterDropdownHeader
-              onBack={
-                isSingleFilter
-                  ? undefined
-                  : () => setView('categories')
-              }
+              onBack={isSingleFilter ? undefined : () => setView('categories')}
               onReset={() => reset(activeFilter.key)}
             />
             {activeFilter.searchable && (
@@ -802,9 +789,7 @@ function FilterDropdownComposed({
             )}
             <FilterDropdownGroup
               onScrollEnd={
-                shouldLoadMore
-                  ? () => handleLoadMore(activeFilter)
-                  : undefined
+                shouldLoadMore ? () => handleLoadMore(activeFilter) : undefined
               }
               isLoadingMore={activeRemoteState?.isLoadingMore}
             >
@@ -865,4 +850,9 @@ export {
   FilterDropdownApply as Apply,
   FilterDropdownComposed as Composed,
 };
-export type { FilterOption, FilterConfig, FilterDropdownComposedProps, RemoteFetchResult };
+export type {
+  FilterOption,
+  FilterConfig,
+  FilterDropdownComposedProps,
+  RemoteFetchResult,
+};

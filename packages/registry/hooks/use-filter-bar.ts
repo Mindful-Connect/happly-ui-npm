@@ -57,12 +57,9 @@ function useFilterBar<T extends FilterState>({
     setSelections(next);
   }, [filters, filterKeys]);
 
-  const onSelectedChange = useCallback(
-    (key: string, values: string[]) => {
-      setSelections((prev) => ({ ...prev, [key]: values }));
-    },
-    []
-  );
+  const onSelectedChange = useCallback((key: string, values: string[]) => {
+    setSelections((prev) => ({ ...prev, [key]: values }));
+  }, []);
 
   const onApply = useCallback(
     (selected: Record<string, string[]>) => {

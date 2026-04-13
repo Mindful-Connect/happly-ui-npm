@@ -4,15 +4,8 @@
   "type": "registry:ui",
   "title": "Applied Filters",
   "description": "Displays currently active filter selections as dismissible tags grouped by category, with a reset-all button. Designed to pair with FilterDropdown. Uses namespace exports: AppliedFilters.Root, AppliedFilters.CustomGroup, AppliedFilters.Tag.",
-  "dependencies": [
-    "@remixicon/react"
-  ],
-  "registryDependencies": [
-    "button",
-    "tag",
-    "happly-ui-utils",
-    "polymorphic"
-  ],
+  "dependencies": ["@remixicon/react"],
+  "registryDependencies": ["button", "tag", "happly-ui-utils", "polymorphic"],
   "docs": {
     "lead": "A horizontal bar that displays currently active filters as dismissible tags, grouped by category. Pairs with FilterDropdown to give users a clear overview of applied filters with one-click removal.",
     "usage": "import * as AppliedFilters from \"@/components/ui/applied-filters\"\nimport { RiUserSettingsLine, RiSettings3Line } from \"@remixicon/react\"\n\nconst filters = [\n  { key: 'role', label: 'Role', icon: RiSettings3Line, options: [\n    { value: 'admin', label: 'Admin' },\n    { value: 'member', label: 'Team member' },\n  ]},\n]\n\n<AppliedFilters.Root\n  filters={filters}\n  selected={{ role: ['admin', 'member'] }}\n  onRemove={(key, value) => { /* remove value from key */ }}\n  onResetAll={() => { /* clear all */ }}\n/>",

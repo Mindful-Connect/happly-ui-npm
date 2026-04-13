@@ -74,12 +74,9 @@ function useFilterState(initial: Record<string, string[]> = {}) {
     setSelected({});
   }, []);
 
-  const handleSelectedChange = useCallback(
-    (key: string, values: string[]) => {
-      setSelected((prev) => ({ ...prev, [key]: values }));
-    },
-    []
-  );
+  const handleSelectedChange = useCallback((key: string, values: string[]) => {
+    setSelected((prev) => ({ ...prev, [key]: values }));
+  }, []);
 
   return {
     selected,
@@ -94,16 +91,12 @@ function useFilterState(initial: Record<string, string[]> = {}) {
 
 export const Default = {
   render: () => {
-    const {
-      selected,
-      handleRemove,
-      handleRemoveGroup,
-      handleResetAll,
-    } = useFilterState({
-      accountType: ['business'],
-      role: ['admin', 'member'],
-      status: ['suspended', 'not_invited'],
-    });
+    const { selected, handleRemove, handleRemoveGroup, handleResetAll } =
+      useFilterState({
+        accountType: ['business'],
+        role: ['admin', 'member'],
+        status: ['suspended', 'not_invited'],
+      });
 
     return (
       <AppliedFilters.Root
@@ -164,11 +157,7 @@ export const ManyTags = {
 export const CustomGroup = {
   render: () => {
     const [search, setSearch] = useState('john doe');
-    const {
-      selected,
-      handleRemove,
-      handleResetAll,
-    } = useFilterState({
+    const { selected, handleRemove, handleResetAll } = useFilterState({
       role: ['admin'],
     });
 

@@ -602,13 +602,29 @@ export const ComposedWithBadges = {
 
 const ALL_PROVIDERS = Array.from({ length: 85 }, (_, i) => ({
   id: `provider-${i + 1}`,
-  name: [
-    'Acme Corp', 'Globex Industries', 'Initech', 'Umbrella Corp',
-    'Stark Industries', 'Wayne Enterprises', 'Oscorp', 'LexCorp',
-    'Cyberdyne Systems', 'Soylent Corp', 'Wonka Industries', 'Tyrell Corp',
-    'Weyland-Yutani', 'Aperture Science', 'Black Mesa', 'Massive Dynamic',
-    'Dharma Initiative', 'Hooli', 'Pied Piper', 'Prestige Worldwide',
-  ][i % 20] + ` ${Math.floor(i / 20) + 1}`,
+  name:
+    [
+      'Acme Corp',
+      'Globex Industries',
+      'Initech',
+      'Umbrella Corp',
+      'Stark Industries',
+      'Wayne Enterprises',
+      'Oscorp',
+      'LexCorp',
+      'Cyberdyne Systems',
+      'Soylent Corp',
+      'Wonka Industries',
+      'Tyrell Corp',
+      'Weyland-Yutani',
+      'Aperture Science',
+      'Black Mesa',
+      'Massive Dynamic',
+      'Dharma Initiative',
+      'Hooli',
+      'Pied Piper',
+      'Prestige Worldwide',
+    ][i % 20] + ` ${Math.floor(i / 20) + 1}`,
   logo: i % 3 === 0 ? `https://i.pravatar.cc/40?u=company-${i}` : null,
 }));
 
