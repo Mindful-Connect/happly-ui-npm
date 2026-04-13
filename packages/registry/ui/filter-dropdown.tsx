@@ -500,6 +500,7 @@ function FilterDropdownComposed({
   // Snapshot of selections when the popover opened, used to detect changes and revert on cancel
   const openSnapshot = React.useRef<Record<string, string[]>>({});
   const didApply = React.useRef(false);
+  const [openCount, setOpenCount] = React.useState(0);
 
   // Remote filter state per key
   const [remoteStates, setRemoteStates] = React.useState<
@@ -580,6 +581,7 @@ function FilterDropdownComposed({
           Object.entries(selected).map(([k, v]) => [k, [...v]])
         );
         didApply.current = false;
+        setOpenCount((c) => c + 1);
       } else {
         // Revert unapplied changes by restoring the snapshot
         if (!didApply.current) {
@@ -717,7 +719,8 @@ function FilterDropdownComposed({
       if (curr.some((v) => !prevSet.has(v))) return true;
     }
     return false;
-  }, [selected]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected, openCount]);
 
   const activeFilter = filters.find((f) => f.key === view);
   const activeRemoteState = activeFilter?.remote
