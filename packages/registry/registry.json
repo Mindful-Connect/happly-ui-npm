@@ -514,6 +514,12 @@
       "description": "Hook for managing file uploads with presigned URLs, progress tracking, and file state."
     },
     {
+      "name": "use-filter-bar",
+      "type": "registry:hook",
+      "title": "useFilterBar",
+      "description": "Hook that manages the state plumbing between FilterDropdown.Composed and AppliedFilters.Root — local selections, apply, remove, reset, and sync with committed filter state."
+    },
+    {
       "name": "use-form-field-binding",
       "type": "registry:lib",
       "title": "useFormFieldBinding",

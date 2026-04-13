@@ -64,9 +64,7 @@ function AnimatedTag({
         transitionProperty: 'width, opacity, transform',
         transitionDuration: `${EXIT_MS}ms`,
         transitionTimingFunction: 'cubic-bezier(0.2, 0, 0, 1)',
-        ...(exiting
-          ? { width: 0, opacity: 0, transform: 'scale(0.9)' }
-          : {}),
+        ...(exiting ? { width: 0, opacity: 0, transform: 'scale(0.9)' } : {}),
       }}
       className={cn(
         'inline-flex overflow-hidden',
@@ -183,9 +181,7 @@ const AppliedFiltersRoot = React.forwardRef<
     // Determine which groups have active selections
     const activeGroups = React.useMemo(
       () =>
-        filters.filter(
-          (f) => selected[f.key] && selected[f.key].length > 0
-        ),
+        filters.filter((f) => selected[f.key] && selected[f.key].length > 0),
       [filters, selected]
     );
 
@@ -215,8 +211,8 @@ const AppliedFiltersRoot = React.forwardRef<
         {/* Label */}
         {hasActiveFilters && (
           <div className='flex shrink-0 items-center gap-1'>
-            <LabelIcon className='h-5 w-5 text-text-sub-600' />
-            <span className='whitespace-nowrap text-label-sm text-text-strong-950'>
+            <LabelIcon className='text-text-sub-600 h-5 w-5' />
+            <span className='text-label-sm text-text-strong-950 whitespace-nowrap'>
               {label}
             </span>
           </div>
@@ -258,9 +254,7 @@ function AppliedFiltersGroup({
 
   // Resolve option labels from values
   const resolvedItems = React.useMemo(() => {
-    const optionMap = new Map(
-      group.options.map((o) => [o.value, o.label])
-    );
+    const optionMap = new Map(group.options.map((o) => [o.value, o.label]));
     return values.map((v) => ({
       value: v,
       label: optionMap.get(v) ?? v,
@@ -271,10 +265,8 @@ function AppliedFiltersGroup({
     <div className='flex items-center gap-3'>
       {/* Category label */}
       <div className='flex shrink-0 items-center gap-1'>
-        {GroupIcon && (
-          <GroupIcon className='h-5 w-5 text-text-soft-400' />
-        )}
-        <span className='whitespace-nowrap text-label-sm text-text-sub-600'>
+        {GroupIcon && <GroupIcon className='text-text-soft-400 h-5 w-5' />}
+        <span className='text-label-sm text-text-sub-600 whitespace-nowrap'>
           {group.label}
         </span>
       </div>
@@ -299,13 +291,12 @@ function AppliedFiltersGroup({
 
 const APPLIED_FILTERS_CUSTOM_GROUP_NAME = 'AppliedFiltersCustomGroup';
 
-type AppliedFiltersCustomGroupProps =
-  React.HTMLAttributes<HTMLDivElement> & {
-    /** Category label */
-    label: string;
-    /** Icon shown beside the category label */
-    icon?: React.ElementType;
-  };
+type AppliedFiltersCustomGroupProps = React.HTMLAttributes<HTMLDivElement> & {
+  /** Category label */
+  label: string;
+  /** Icon shown beside the category label */
+  icon?: React.ElementType;
+};
 
 const AppliedFiltersCustomGroup = React.forwardRef<
   HTMLDivElement,
@@ -318,16 +309,12 @@ const AppliedFiltersCustomGroup = React.forwardRef<
       {...rest}
     >
       <div className='flex shrink-0 items-center gap-1'>
-        {GroupIcon && (
-          <GroupIcon className='h-5 w-5 text-text-soft-400' />
-        )}
-        <span className='whitespace-nowrap text-label-sm text-text-sub-600'>
+        {GroupIcon && <GroupIcon className='text-text-soft-400 h-5 w-5' />}
+        <span className='text-label-sm text-text-sub-600 whitespace-nowrap'>
           {label}
         </span>
       </div>
-      <div className='flex flex-wrap items-center gap-1.5'>
-        {children}
-      </div>
+      <div className='flex flex-wrap items-center gap-1.5'>{children}</div>
     </div>
   );
 });

@@ -401,6 +401,10 @@
         "href": "/docs/hooks/use-file-upload"
       },
       {
+        "title": "useFilterBar",
+        "href": "/docs/hooks/use-filter-bar"
+      },
+      {
         "title": "useTabObserver",
         "href": "/docs/hooks/use-tab-observer"
       }

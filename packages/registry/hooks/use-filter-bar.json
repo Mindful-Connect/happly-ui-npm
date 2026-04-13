@@ -1,0 +1,97 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "use-filter-bar",
+  "type": "registry:hook",
+  "title": "useFilterBar",
+  "description": "Hook that manages the state plumbing between FilterDropdown.Composed and AppliedFilters.Root — local selections, apply, remove, reset, and sync with committed filter state.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": [],
+  "docs": {
+    "lead": "A React hook that eliminates the boilerplate of wiring FilterDropdown and AppliedFilters together. It manages local working selections, syncs them with committed filter state, and provides handlers for apply, remove, and reset — so the page only needs to define filter configs and plug in the returned props.",
+    "usage": "import { useFilterBar } from \"@/hooks/use-filter-bar\"\n\nconst filterBar = useFilterBar({\n  filterKeys: ['status', 'category', 'assignee'],\n  filters,\n  setFilters,\n  setPage,\n})",
+    "examples": [
+      {
+        "title": "Basic Usage with FilterDropdown and AppliedFilters",
+        "description": "Wire the hook's return values directly to FilterDropdown.Composed and AppliedFilters.Root props.",
+        "code": "const FILTER_KEYS = ['types', 'status'] as const;\n\nconst filterBar = useFilterBar({\n  filterKeys: FILTER_KEYS,\n  filters,\n  setFilters,\n  setPage,\n});\n\n<FilterDropdown.Composed\n  filters={filterConfigs}\n  selected={filterBar.selections}\n  onSelectedChange={filterBar.onSelectedChange}\n  onApply={filterBar.onApply}\n>\n  <Button.Root>Filters</Button.Root>\n</FilterDropdown.Composed>\n\n<AppliedFilters.Root\n  filters={appliedFilterGroups}\n  selected={filterBar.applied}\n  onRemove={filterBar.onRemove}\n  onResetAll={filterBar.onResetAll}\n/>",
+        "stories": []
+      }
+    ],
+    "api": [
+      {
+        "name": "useFilterBar",
+        "description": "Hook that manages filter state plumbing between a filter dropdown and applied filters display.",
+        "props": [
+          {
+            "name": "filterKeys",
+            "type": "readonly string[]",
+            "description": "The keys from the filter state object that this hook manages. Each key must hold a string[] value."
+          },
+          {
+            "name": "filters",
+            "type": "T extends Record<string, unknown>",
+            "description": "The committed filter state object (e.g. from context or URL params)."
+          },
+          {
+            "name": "setFilters",
+            "type": "React.Dispatch<React.SetStateAction<T>>",
+            "description": "State setter for the committed filters."
+          },
+          {
+            "name": "setPage",
+            "type": "(page: number) => void",
+            "description": "Optional page setter. Called with 1 after every apply, remove, or reset."
+          }
+        ]
+      },
+      {
+        "name": "UseFilterBarReturn",
+        "description": "Return value of the useFilterBar hook.",
+        "props": [
+          {
+            "name": "selections",
+            "type": "Record<string, string[]>",
+            "description": "Local working selections. Pass to FilterDropdown.Composed `selected` prop."
+          },
+          {
+            "name": "onSelectedChange",
+            "type": "(key: string, values: string[]) => void",
+            "description": "Pass to FilterDropdown.Composed `onSelectedChange` prop."
+          },
+          {
+            "name": "onApply",
+            "type": "(selected: Record<string, string[]>) => void",
+            "description": "Pass to FilterDropdown.Composed `onApply` prop. Commits selections to filter state."
+          },
+          {
+            "name": "applied",
+            "type": "Record<string, string[]>",
+            "description": "Applied filter values derived from committed state. Pass to AppliedFilters.Root `selected` prop."
+          },
+          {
+            "name": "onRemove",
+            "type": "(key: string, value: string) => void",
+            "description": "Removes a single value from an applied filter. Pass to AppliedFilters.Root `onRemove` prop."
+          },
+          {
+            "name": "onResetAll",
+            "type": "() => void",
+            "description": "Clears all managed filter keys. Pass to AppliedFilters.Root `onResetAll` prop."
+          },
+          {
+            "name": "hasAppliedFilters",
+            "type": "boolean",
+            "description": "Whether any managed filters currently have applied values."
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "hooks/use-filter-bar.ts",
+      "type": "registry:hook"
+    }
+  ]
+}

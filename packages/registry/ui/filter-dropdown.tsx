@@ -422,6 +422,8 @@ type FilterOption = {
   value: string;
   /** Display content — string or ReactNode (e.g. Badge, StatusBadge) */
   label: React.ReactNode;
+  /** Plain text label for applied filter tags. Falls back to label if omitted. */
+  tagLabel?: string;
 };
 
 type FilterConfig = {
@@ -507,6 +509,10 @@ function FilterDropdownComposed({
     {}
   );
 
+  // Snapshot of selections when the popover opened, used to detect changes and revert on cancel
+  const openSnapshot = React.useRef<Record<string, string[]>>({});
+  const didApply = React.useRef(false);
+
   // Remote filter state per key
   const [remoteStates, setRemoteStates] = React.useState<
     Record<string, RemoteState>
@@ -571,7 +577,33 @@ function FilterDropdownComposed({
   const handleOpenChange = React.useCallback(
     (open: boolean) => {
       onOpenChangeProp?.(open);
-      if (!open) {
+      if (open) {
+        // Snapshot current selections so we can detect changes and revert on cancel
+        openSnapshot.current = Object.fromEntries(
+          Object.entries(selected).map(([k, v]) => [k, [...v]])
+        );
+        didApply.current = false;
+      } else {
+        // Revert unapplied changes by restoring the snapshot
+        if (!didApply.current) {
+          const snapshot = openSnapshot.current;
+          const allKeys = Array.from(new Set([
+            ...Object.keys(snapshot),
+            ...Object.keys(selected),
+          ]));
+          for (let i = 0; i < allKeys.length; i++) {
+            const key = allKeys[i];
+            const prev = snapshot[key] ?? [];
+            const curr = selected[key] ?? [];
+            if (
+              prev.length !== curr.length ||
+              prev.some((v, idx) => v !== curr[idx])
+            ) {
+              onSelectedChange(key, prev);
+            }
+          }
+        }
+
         setView(isSingleFilter ? filters[0].key : 'categories');
         setSearchTerms({});
         setRemoteStates({});
@@ -581,7 +613,7 @@ function FilterDropdownComposed({
         debounceTimers.current = {};
       }
     },
-    [onOpenChangeProp, isSingleFilter, filters]
+    [onOpenChangeProp, isSingleFilter, filters, selected, onSelectedChange]
   );
 
   // Clean up debounce timers on unmount
@@ -672,6 +704,24 @@ function FilterDropdownComposed({
       return true;
     return 'indeterminate';
   };
+
+  // Detect whether selections have changed from the snapshot taken on open
+  const hasChanges = React.useMemo(() => {
+    const snapshot = openSnapshot.current;
+    const allKeys = Array.from(new Set([
+      ...Object.keys(snapshot),
+      ...Object.keys(selected),
+    ]));
+    for (let i = 0; i < allKeys.length; i++) {
+      const key = allKeys[i];
+      const prev = snapshot[key] ?? [];
+      const curr = selected[key] ?? [];
+      if (prev.length !== curr.length) return true;
+      const prevSet = new Set(prev);
+      if (curr.some((v) => !prevSet.has(v))) return true;
+    }
+    return false;
+  }, [selected]);
 
   const activeFilter = filters.find((f) => f.key === view);
   const activeRemoteState = activeFilter?.remote
@@ -784,7 +834,11 @@ function FilterDropdownComposed({
             </FilterDropdownGroup>
             <FilterDropdownApply
               label={applyLabel}
-              onClick={() => onApply?.(selected)}
+              disabled={!hasChanges}
+              onClick={() => {
+                didApply.current = true;
+                onApply?.(selected);
+              }}
             />
           </>
         )}
