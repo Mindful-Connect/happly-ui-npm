@@ -26,7 +26,7 @@ import { default as dotStepperMeta, Playground as dotStepper_Playground, Demo as
 import { default as drawerMeta, Playground as drawer_Playground, Basic as drawer_Basic, Demo as drawer_Demo } from '@/components/ui/drawer.stories';
 import { default as dropdownMeta, Default as dropdown_Default, WithGroups as dropdown_WithGroups, WithHeaderAndFooter as dropdown_WithHeaderAndFooter, WithErrorItem as dropdown_WithErrorItem, WithDisabledItems as dropdown_WithDisabledItems, SubMenu as dropdown_SubMenu, Composed as dropdown_Composed, ComposedWithHeaderFooter as dropdown_ComposedWithHeaderFooter, ComposedWithLabels as dropdown_ComposedWithLabels, ComposedWithLinks as dropdown_ComposedWithLinks } from '@/components/ui/dropdown.stories';
 import { default as emojiDialogMeta, Playground as emojiDialog_Playground, Default as emojiDialog_Default, DeleteConfirmation as emojiDialog_DeleteConfirmation, UnsavedChanges as emojiDialog_UnsavedChanges, SuccessConfirmation as emojiDialog_SuccessConfirmation, WithFormContent as emojiDialog_WithFormContent, WithFloatingMemojis as emojiDialog_WithFloatingMemojis, StaticNoAnimations as emojiDialog_StaticNoAnimations, CustomEmojiArea as emojiDialog_CustomEmojiArea } from '@/components/ui/emoji-dialog.stories';
-import { default as emptyStateMeta, Default as emptyState_Default, WithTitle as emptyState_WithTitle, SearchNoResults as emptyState_SearchNoResults, NoFiles as emptyState_NoFiles, WithMultipleActions as emptyState_WithMultipleActions, Unbounded as emptyState_Unbounded, Sizes as emptyState_Sizes, Composed as emptyState_Composed } from '@/components/ui/empty-state.stories';
+import { default as emptyStateMeta, Default as emptyState_Default, WithTitle as emptyState_WithTitle, SearchNoResults as emptyState_SearchNoResults, NoFiles as emptyState_NoFiles, WithMultipleActions as emptyState_WithMultipleActions, Unbounded as emptyState_Unbounded, Sizes as emptyState_Sizes, Filled as emptyState_Filled, Composed as emptyState_Composed } from '@/components/ui/empty-state.stories';
 import { default as fancyButtonMeta, Playground as fancyButton_Playground, Variants as fancyButton_Variants, WithIcon as fancyButton_WithIcon, Sizes as fancyButton_Sizes, Disabled as fancyButton_Disabled, AsChild as fancyButton_AsChild } from '@/components/ui/fancy-button.stories';
 import { default as fileCardMeta, UploadStates as fileCard_UploadStates, CompletedMediaTypes as fileCard_CompletedMediaTypes, Download as fileCard_Download, Compact as fileCard_Compact, Item as fileCard_Item, ItemDownload as fileCard_ItemDownload, ItemCompact as fileCard_ItemCompact } from '@/components/ui/file-card.stories';
 import { default as fileFormatIconMeta, Default as fileFormatIcon_Default, Colors as fileFormatIcon_Colors, Sizes as fileFormatIcon_Sizes } from '@/components/ui/file-format-icon.stories';
@@ -394,6 +394,7 @@ export const storyRegistry: Record<string, {
     'WithMultipleActions': emptyState_WithMultipleActions,
     'Unbounded': emptyState_Unbounded,
     'Sizes': emptyState_Sizes,
+    'Filled': emptyState_Filled,
     'Composed': emptyState_Composed
     }
   },

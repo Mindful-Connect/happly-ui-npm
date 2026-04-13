@@ -43,10 +43,17 @@ export const emptyStateVariants = tv({
       },
       false: {},
     },
+    filled: {
+      true: {
+        root: 'rounded-2xl bg-bg-white-0 shadow-regular-xs',
+      },
+      false: {},
+    },
   },
   defaultVariants: {
     size: 'md',
     bordered: false,
+    filled: false,
   },
 });
 
@@ -65,9 +72,10 @@ function EmptyStateRoot({
   className,
   size,
   bordered,
+  filled,
   ...rest
 }: EmptyStateRootProps) {
-  const { root } = emptyStateVariants({ size, bordered });
+  const { root } = emptyStateVariants({ size, bordered, filled });
 
   return (
     <div className={root({ class: className })} {...rest}>

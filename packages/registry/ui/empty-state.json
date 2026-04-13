@@ -45,6 +45,12 @@
         "stories": ["Unbounded"]
       },
       {
+        "title": "Filled",
+        "description": "White background with a subtle shadow — useful on colored or patterned backgrounds.",
+        "code": "<EmptyState.Root filled>\n  <EmptyState.Icon icon={<RiInboxLine />} />\n  <EmptyState.Title>No items yet</EmptyState.Title>\n  <EmptyState.Description>Get started by adding your first one.</EmptyState.Description>\n</EmptyState.Root>",
+        "stories": ["Filled"]
+      },
+      {
         "title": "Sizes",
         "description": "Three sizes: sm, md (default), and lg. Icon size scales automatically.",
         "code": "<EmptyState.Root size=\"lg\" bordered>\n  <EmptyState.Icon size=\"xl\" icon={<RiFileList3Line />} />\n  ...\n</EmptyState.Root>",
@@ -73,6 +79,12 @@
             "type": "boolean",
             "default": "false",
             "description": "Adds a dashed border container"
+          },
+          {
+            "name": "filled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Adds a white background with a subtle shadow"
           }
         ]
       },

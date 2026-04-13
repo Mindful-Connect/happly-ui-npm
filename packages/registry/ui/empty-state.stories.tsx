@@ -159,6 +159,27 @@ export const Sizes = {
   ),
 };
 
+export const Filled = {
+  render: () => (
+    <EmptyState.Root filled>
+      <EmptyState.Icon icon={<RiInboxLine />} />
+      <div className='flex flex-col items-center gap-1'>
+        <EmptyState.Title>No items yet</EmptyState.Title>
+        <EmptyState.Description>
+          Items you create will appear here. Get started by adding your first
+          one.
+        </EmptyState.Description>
+      </div>
+      <EmptyState.Actions>
+        <Button.Root size='xsmall' variant='neutral' mode='stroke'>
+          <Button.Icon as={RiAddLine} />
+          Create item
+        </Button.Root>
+      </EmptyState.Actions>
+    </EmptyState.Root>
+  ),
+};
+
 export const Composed = {
   render: () => (
     <EmptyState.Composed
