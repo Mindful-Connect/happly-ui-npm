@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   RiCalendarEventLine,
   RiEyeLine,
@@ -8,8 +8,10 @@ import {
   RiUserLine,
 } from '@remixicon/react';
 
+import * as Avatar from './avatar';
 import * as Button from './button';
 import * as FilterDropdown from './filter-dropdown';
+import type { RemoteFetchResult } from './filter-dropdown';
 import * as StatusBadge from './status-badge';
 import TimelineStatusBadge from './timeline-status-badge';
 import type { TimelineStatus } from './timeline-status-badge';
@@ -590,6 +592,160 @@ export const ComposedWithBadges = {
         <Button.Root variant='neutral' mode='stroke'>
           <Button.Icon as={RiFilterLine} />
           Deadline status
+        </Button.Root>
+      </FilterDropdown.Composed>
+    );
+  },
+};
+
+// ─── Remote Search with Infinite Scroll ───────────────────
+
+const ALL_PROVIDERS = Array.from({ length: 85 }, (_, i) => ({
+  id: `provider-${i + 1}`,
+  name: [
+    'Acme Corp', 'Globex Industries', 'Initech', 'Umbrella Corp',
+    'Stark Industries', 'Wayne Enterprises', 'Oscorp', 'LexCorp',
+    'Cyberdyne Systems', 'Soylent Corp', 'Wonka Industries', 'Tyrell Corp',
+    'Weyland-Yutani', 'Aperture Science', 'Black Mesa', 'Massive Dynamic',
+    'Dharma Initiative', 'Hooli', 'Pied Piper', 'Prestige Worldwide',
+  ][i % 20] + ` ${Math.floor(i / 20) + 1}`,
+  logo: i % 3 === 0 ? `https://i.pravatar.cc/40?u=company-${i}` : null,
+}));
+
+function simulateProviderFetch({
+  query,
+  page,
+  limit = 15,
+}: {
+  query: string;
+  page: number;
+  limit?: number;
+}): Promise<RemoteFetchResult> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const filtered = query
+        ? ALL_PROVIDERS.filter((p) =>
+            p.name.toLowerCase().includes(query.toLowerCase())
+          )
+        : ALL_PROVIDERS;
+
+      const start = (page - 1) * limit;
+      const pageItems = filtered.slice(start, start + limit);
+
+      resolve({
+        options: pageItems.map((p) => ({
+          value: p.id,
+          label: (
+            <span className='flex items-center gap-2'>
+              <Avatar.Root size='20' placeholderType='company'>
+                {p.logo ? <Avatar.Image src={p.logo} alt={p.name} /> : null}
+              </Avatar.Root>
+              {p.name}
+            </span>
+          ),
+        })),
+        hasMore: start + limit < filtered.length,
+      });
+    }, 600);
+  });
+}
+
+export const ComposedWithRemoteSearch = {
+  render: function Render() {
+    const [selected, setSelected] = useState<Record<string, string[]>>({
+      providers: [],
+    });
+
+    const fetchProviders = useCallback(
+      ({ query, page }: { query: string; page: number }) =>
+        simulateProviderFetch({ query, page, limit: 15 }),
+      []
+    );
+
+    return (
+      <FilterDropdown.Composed
+        filters={[
+          {
+            key: 'providers',
+            label: 'Providers',
+            icon: RiUserLine,
+            searchable: true,
+            searchPlaceholder: 'Search providers...',
+            options: [],
+            remote: {
+              onFetch: fetchProviders,
+              debounceMs: 300,
+            },
+          },
+        ]}
+        selected={selected}
+        onSelectedChange={(key, values) =>
+          setSelected((prev) => ({ ...prev, [key]: values }))
+        }
+        onApply={(sel) => alert(JSON.stringify(sel, null, 2))}
+      >
+        <Button.Root variant='neutral' mode='stroke'>
+          <Button.Icon as={RiFilterLine} />
+          Providers
+          {selected.providers.length > 0 && (
+            <span className='bg-primary-base text-primary-contrast flex h-5 w-5 items-center justify-center rounded-full text-[11px] font-medium'>
+              {selected.providers.length}
+            </span>
+          )}
+        </Button.Root>
+      </FilterDropdown.Composed>
+    );
+  },
+};
+
+// ─── Two-Level with Remote Category ───────────────────────
+
+export const ComposedTwoLevelWithRemote = {
+  render: function Render() {
+    const [selected, setSelected] = useState<Record<string, string[]>>({
+      types: [],
+      providers: [],
+    });
+
+    const fetchProviders = useCallback(
+      ({ query, page }: { query: string; page: number }) =>
+        simulateProviderFetch({ query, page, limit: 15 }),
+      []
+    );
+
+    return (
+      <FilterDropdown.Composed
+        filters={[
+          {
+            key: 'types',
+            label: 'Types',
+            icon: RiPuzzle2Line,
+            searchable: true,
+            searchPlaceholder: 'Search types...',
+            options: TYPE_OPTIONS.map((o) => ({ value: o, label: o })),
+          },
+          {
+            key: 'providers',
+            label: 'Providers',
+            icon: RiUserLine,
+            searchable: true,
+            searchPlaceholder: 'Search providers...',
+            options: [],
+            remote: {
+              onFetch: fetchProviders,
+              debounceMs: 300,
+            },
+          },
+        ]}
+        selected={selected}
+        onSelectedChange={(key, values) =>
+          setSelected((prev) => ({ ...prev, [key]: values }))
+        }
+        onApply={(sel) => alert(JSON.stringify(sel, null, 2))}
+      >
+        <Button.Root variant='neutral' mode='stroke'>
+          <Button.Icon as={RiFilterLine} />
+          Filters
         </Button.Root>
       </FilterDropdown.Composed>
     );

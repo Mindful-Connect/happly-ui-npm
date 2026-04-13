@@ -92,9 +92,15 @@
       },
       {
         "title": "Composed with Remote Search",
-        "description": "Composed variant with server-side search and infinite scroll. The remote.onFetch callback is called on mount, on search input change (debounced), and when the user scrolls near the bottom. Options are passed as empty initially — the component fetches them lazily.",
+        "description": "Composed variant with server-side search and infinite scroll. The remote.onFetch callback is called on mount, on search input change (debounced), and when the user scrolls near the bottom. Options are passed as empty initially — the component fetches them lazily. A loading spinner shows during initial fetch, and a smaller spinner appears at the bottom of the list when loading more pages.",
         "code": "const fetchProviders = async ({ query, page }) => {\n  const res = await fetch(`/api/providers?q=${query}&page=${page}&limit=20`);\n  const data = await res.json();\n  return {\n    options: data.items.map(p => ({ value: p.id, label: p.name })),\n    hasMore: data.currentPage < data.lastPage,\n  };\n};\n\n<FilterDropdown.Composed\n  filters={[{\n    key: 'providers',\n    label: 'Providers',\n    icon: RiUserLine,\n    searchable: true,\n    searchPlaceholder: 'Search providers...',\n    options: [],\n    remote: { onFetch: fetchProviders, debounceMs: 300 },\n  }]}\n  selected={{ providers: [] }}\n  onSelectedChange={(key, values) => setSelected(prev => ({ ...prev, [key]: values }))}\n  onApply={(sel) => console.log(sel)}\n>\n  <Button.Root>Providers</Button.Root>\n</FilterDropdown.Composed>",
         "stories": ["ComposedWithRemoteSearch"]
+      },
+      {
+        "title": "Two-Level with Remote Category",
+        "description": "Multi-category filter where one category uses static local options and another uses remote server-side search with infinite scroll. Demonstrates mixing static and remote filters in the same dropdown.",
+        "code": "<FilterDropdown.Composed\n  filters={[\n    {\n      key: 'types',\n      label: 'Types',\n      icon: RiPuzzle2Line,\n      searchable: true,\n      options: types.map(t => ({ value: t, label: t })),\n    },\n    {\n      key: 'providers',\n      label: 'Providers',\n      icon: RiUserLine,\n      searchable: true,\n      searchPlaceholder: 'Search providers...',\n      options: [],\n      remote: { onFetch: fetchProviders, debounceMs: 300 },\n    },\n  ]}\n  selected={selected}\n  onSelectedChange={(key, values) => setSelected(prev => ({ ...prev, [key]: values }))}\n  onApply={(sel) => console.log(sel)}\n>\n  <Button.Root>Filters</Button.Root>\n</FilterDropdown.Composed>",
+        "stories": ["ComposedTwoLevelWithRemote"]
       }
     ],
     "api": [
@@ -386,6 +392,75 @@
             "name": "onOpenChange",
             "type": "(open: boolean) => void",
             "description": "Callback when open state changes"
+          }
+        ]
+      },
+      {
+        "name": "FilterConfig",
+        "description": "Configuration object for each filter group passed to FilterDropdown.Composed.",
+        "props": [
+          {
+            "name": "key",
+            "type": "string",
+            "description": "Unique identifier for this filter group"
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "description": "Display label shown in the category menu"
+          },
+          {
+            "name": "icon",
+            "type": "React.ElementType",
+            "description": "Icon shown in the category menu"
+          },
+          {
+            "name": "searchable",
+            "type": "boolean",
+            "default": "false",
+            "description": "Enable search input for this filter"
+          },
+          {
+            "name": "searchPlaceholder",
+            "type": "string",
+            "description": "Placeholder text for the search input"
+          },
+          {
+            "name": "options",
+            "type": "FilterOption[]",
+            "description": "Static options array. For remote filters, pass an empty array — options are fetched via remote.onFetch."
+          },
+          {
+            "name": "remote",
+            "type": "{ onFetch, debounceMs? }",
+            "description": "Enable remote data fetching for this filter. When set, options are loaded lazily from the server with support for search and infinite scroll."
+          },
+          {
+            "name": "remote.onFetch",
+            "type": "(params: { query: string; page: number }) => Promise<RemoteFetchResult>",
+            "description": "Async function that fetches a page of options. Called on initial mount, on search input change (debounced), and when the user scrolls near the bottom of the list."
+          },
+          {
+            "name": "remote.debounceMs",
+            "type": "number",
+            "default": "300",
+            "description": "Debounce delay in milliseconds for search input before triggering a remote fetch."
+          }
+        ]
+      },
+      {
+        "name": "RemoteFetchResult",
+        "description": "Return type for the remote.onFetch callback.",
+        "props": [
+          {
+            "name": "options",
+            "type": "FilterOption[]",
+            "description": "The fetched options for this page"
+          },
+          {
+            "name": "hasMore",
+            "type": "boolean",
+            "description": "Whether more pages are available. When false, infinite scroll stops fetching."
           }
         ]
       }
