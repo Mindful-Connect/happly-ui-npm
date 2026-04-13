@@ -76,6 +76,7 @@ function main() {
   ];
 
   const DISPLAYING_DATA_COMPONENTS = [
+    'applied-filters',
     'avatar',
     'avatar-group',
     'avatar-group-compact',

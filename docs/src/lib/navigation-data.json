@@ -49,6 +49,10 @@
             "href": "/docs/components/ai-orb"
           },
           {
+            "title": "Applied Filters",
+            "href": "/docs/components/applied-filters"
+          },
+          {
             "title": "Avatar",
             "href": "/docs/components/avatar"
           },
@@ -382,10 +386,6 @@
           }
         ],
         "collapsed": false
-      },
-      {
-        "title": "Applied Filters",
-        "href": "/docs/components/applied-filters"
       }
     ]
   },
