@@ -92,41 +92,13 @@ const AppliedFiltersLayout = React.forwardRef<
   HTMLDivElement,
   AppliedFiltersLayoutProps
 >(({ resetButton, className, children, ...rest }, forwardedRef) => {
-  const contentRef = React.useRef<HTMLDivElement>(null);
-  const [wrapped, setWrapped] = React.useState(false);
-
-  React.useEffect(() => {
-    const el = contentRef.current;
-    if (!el) return;
-
-    const check = () => {
-      // A single row has the same scrollHeight as the first child's
-      // offsetHeight (plus gap). If the container is taller, it wrapped.
-      const firstChild = el.firstElementChild as HTMLElement | null;
-      if (!firstChild) return;
-      setWrapped(el.scrollHeight > firstChild.offsetHeight + 4);
-    };
-
-    check();
-    const observer = new ResizeObserver(check);
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <div
       ref={forwardedRef}
-      className={cn(
-        'flex gap-3',
-        wrapped ? 'items-start' : 'items-center',
-        className
-      )}
+      className={cn('flex items-start gap-3', className)}
       {...rest}
     >
-      <div
-        ref={contentRef}
-        className='flex min-w-0 flex-1 flex-wrap items-center gap-3'
-      >
+      <div className='flex min-w-0 flex-1 flex-wrap items-center gap-2'>
         {children}
       </div>
       {resetButton}
@@ -261,29 +233,25 @@ function AppliedFiltersGroup({
     }));
   }, [group.options, values]);
 
+  // Renders as inline fragments so items flow in the parent's flex-wrap row
   return (
-    <div className='flex items-center gap-3'>
-      {/* Category label */}
+    <>
       <div className='flex shrink-0 items-center gap-1'>
-        {GroupIcon && <GroupIcon className='text-text-soft-400 h-5 w-5' />}
-        <span className='text-label-sm text-text-sub-600 whitespace-nowrap'>
+        {GroupIcon && <GroupIcon className='h-5 w-5 text-text-soft-400' />}
+        <span className='whitespace-nowrap text-label-sm text-text-sub-600'>
           {group.label}
         </span>
       </div>
-
-      {/* Tags */}
-      <div className='flex flex-wrap items-center gap-1.5'>
-        {resolvedItems.map((item) => (
-          <AnimatedTag
-            key={item.value}
-            filterKey={group.key}
-            value={item.value}
-            label={item.label}
-            onRemove={onRemove}
-          />
-        ))}
-      </div>
-    </div>
+      {resolvedItems.map((item) => (
+        <AnimatedTag
+          key={item.value}
+          filterKey={group.key}
+          value={item.value}
+          label={item.label}
+          onRemove={onRemove}
+        />
+      ))}
+    </>
   );
 }
 
@@ -303,19 +271,19 @@ const AppliedFiltersCustomGroup = React.forwardRef<
   AppliedFiltersCustomGroupProps
 >(({ label, icon: GroupIcon, className, children, ...rest }, forwardedRef) => {
   return (
-    <div
-      ref={forwardedRef}
-      className={cn('flex items-center gap-3', className)}
-      {...rest}
-    >
-      <div className='flex shrink-0 items-center gap-1'>
-        {GroupIcon && <GroupIcon className='text-text-soft-400 h-5 w-5' />}
-        <span className='text-label-sm text-text-sub-600 whitespace-nowrap'>
+    <>
+      <div
+        ref={forwardedRef}
+        className={cn('flex shrink-0 items-center gap-1', className)}
+        {...rest}
+      >
+        {GroupIcon && <GroupIcon className='h-5 w-5 text-text-soft-400' />}
+        <span className='whitespace-nowrap text-label-sm text-text-sub-600'>
           {label}
         </span>
       </div>
-      <div className='flex flex-wrap items-center gap-1.5'>{children}</div>
-    </div>
+      {children}
+    </>
   );
 });
 AppliedFiltersCustomGroup.displayName = APPLIED_FILTERS_CUSTOM_GROUP_NAME;
