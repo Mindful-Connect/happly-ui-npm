@@ -7,7 +7,7 @@
   "scripts": {
     "build": "bun run --filter './packages/*' build",
     "dev": "bun run --filter './packages/*' dev",
-    "build:registry": "bun run scripts/build-registry.ts",
+    "build:registry": "bun run scripts/build-registry.ts && bun run scripts/build-tailwind-plugin.ts",
     "clean": "rm -rf packages/*/dist packages/*/.turbo",
     "lint": "eslint .",
     "storybook": "bun run --cwd packages/registry storybook",

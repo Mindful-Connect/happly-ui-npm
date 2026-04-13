@@ -12,7 +12,9 @@ import {
   keyframes,
   animations,
 } from '../templates/tokens.js';
+import { REGISTRY_URL } from '../../types/index.js';
 import type { HapplyConfig } from '../../types/index.js';
+import { fetchOrReadRaw, isLocalRegistry } from '../registry.js';
 import { logger } from '../logger.js';
 
 const HAPPLY_PLUGIN_FILE = 'happly-ui-tailwind.cjs';
@@ -54,9 +56,9 @@ async function updateConfigV3(
     return;
   }
 
-  // Write the plugin file
+  // Write the plugin file — fetch from registry, fall back to bundled tokens
   const pluginPath = path.join(cwd, HAPPLY_PLUGIN_FILE);
-  const pluginContent = generatePluginFile();
+  const pluginContent = await fetchPluginFile(config.registry);
 
   if (existsSync(pluginPath)) {
     logger.info(`Overwriting existing ${HAPPLY_PLUGIN_FILE}`);
@@ -104,9 +106,31 @@ async function updateConfigV3(
 }
 
 /**
- * Generate the HapplyUI Tailwind plugin file content.
+ * Fetch the pre-built Tailwind plugin file from the registry.
+ * Falls back to generating locally from bundled tokens if fetch fails.
+ */
+async function fetchPluginFile(registryUrl?: string): Promise<string> {
+  const baseUrl = registryUrl || REGISTRY_URL;
+  const url = isLocalRegistry(baseUrl)
+    ? path.join(baseUrl.replace('file://', ''), 'styles', HAPPLY_PLUGIN_FILE)
+    : `${baseUrl}/styles/${HAPPLY_PLUGIN_FILE}`;
+
+  try {
+    const content = await fetchOrReadRaw(url);
+    logger.info('Fetched latest tokens from registry');
+    return content;
+  } catch {
+    logger.warn(
+      'Could not fetch latest tokens from registry, using bundled fallback.'
+    );
+    return generatePluginFile();
+  }
+}
+
+/**
+ * Generate the HapplyUI Tailwind plugin file content from bundled tokens.
  *
- * This plugin extends the theme with all design tokens.
+ * This is the fallback when the registry is unreachable.
  * Using Tailwind's plugin API ensures proper deep-merging with
  * existing user config (shadcn primary, etc.) without key conflicts.
  */
