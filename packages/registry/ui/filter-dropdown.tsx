@@ -10,6 +10,7 @@ import * as Checkbox from '@/components/ui/checkbox';
 import * as Divider from '@/components/ui/divider';
 import * as Input from '@/components/ui/input';
 import * as LinkButton from '@/components/ui/link-button';
+import * as Loader from '@/components/ui/loader';
 import { cn } from '@/lib/happly-ui-utils';
 import type { PolymorphicComponentProps } from '@/lib/polymorphic';
 
@@ -85,7 +86,10 @@ function FilterDropdownHeader({
 }: FilterDropdownHeaderProps) {
   return (
     <div
-      className={cn('flex items-center justify-between px-3 pt-4', className)}
+      className={cn(
+        'flex items-center justify-between px-3 pt-4',
+        className
+      )}
       {...rest}
     >
       {onBack && (
@@ -124,7 +128,13 @@ const FilterDropdownSearch = React.forwardRef<
   FilterDropdownSearchProps
 >(
   (
-    { className, placeholder = 'Search...', size = 'small', value, onChange },
+    {
+      className,
+      placeholder = 'Search...',
+      size = 'small',
+      value,
+      onChange,
+    },
     forwardedRef
   ) => (
     <div className={cn('px-3 pt-4', className)}>
@@ -168,7 +178,10 @@ function FilterDropdownSelectAll({
           'hover:bg-bg-weak-50'
         )}
       >
-        <Checkbox.Root checked={checked} onCheckedChange={onCheckedChange} />
+        <Checkbox.Root
+          checked={checked}
+          onCheckedChange={onCheckedChange}
+        />
         <span className='text-paragraph-sm text-text-strong-950'>{label}</span>
       </label>
       <Divider.Root variant='line' />
@@ -181,22 +194,53 @@ FilterDropdownSelectAll.displayName = 'FilterDropdownSelectAll';
 
 type FilterDropdownGroupProps = React.HTMLAttributes<HTMLDivElement> & {
   maxHeight?: number;
+  onScrollEnd?: () => void;
+  isLoadingMore?: boolean;
 };
 
 function FilterDropdownGroup({
   className,
   children,
   maxHeight = 280,
+  onScrollEnd,
+  isLoadingMore,
   ...rest
 }: FilterDropdownGroupProps) {
+  const viewportRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    if (!onScrollEnd) return;
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+
+    function handleScroll() {
+      if (!viewport) return;
+      const { scrollTop, scrollHeight, clientHeight } = viewport;
+      if (scrollHeight - scrollTop - clientHeight < 40) {
+        onScrollEnd?.();
+      }
+    }
+
+    viewport.addEventListener('scroll', handleScroll);
+    return () => viewport.removeEventListener('scroll', handleScroll);
+  }, [onScrollEnd]);
+
   return (
     <div className={cn('px-3 pt-2', className)} {...rest}>
       <ScrollAreaPrimitives.Root type='auto'>
         <ScrollAreaPrimitives.Viewport
+          ref={viewportRef}
           className='w-full overflow-auto'
           style={{ maxHeight }}
         >
-          <div className='flex flex-col gap-1'>{children}</div>
+          <div className='flex flex-col gap-1'>
+            {children}
+            {isLoadingMore && (
+              <div className='flex items-center justify-center py-2'>
+                <Loader.Root size={16} color='neutral' />
+              </div>
+            )}
+          </div>
         </ScrollAreaPrimitives.Viewport>
         <ScrollAreaPrimitives.Scrollbar
           orientation='vertical'
@@ -270,7 +314,7 @@ function FilterDropdownCategoryItem({
       type='button'
       className={cn(
         // matches Dropdown.Item styling
-        'group/item text-paragraph-sm text-text-strong-950 relative cursor-pointer rounded-lg p-2 outline-none select-none',
+        'group/item relative cursor-pointer select-none rounded-lg p-2 text-paragraph-sm text-text-strong-950 outline-none',
         'flex w-full items-center gap-2',
         'transition duration-200 ease-out',
         // hover
@@ -287,7 +331,7 @@ function FilterDropdownCategoryItem({
         <Icon
           className={cn(
             // matches Dropdown.ItemIcon styling
-            'text-text-sub-600 h-5 w-5',
+            'h-5 w-5 text-text-sub-600',
             'group-disabled/item:text-text-disabled-300'
           )}
         />
@@ -364,6 +408,13 @@ function FilterDropdownItemIcon<T extends React.ElementType>({
 }
 FilterDropdownItemIcon.displayName = 'FilterDropdownItemIcon';
 
+// ─── Remote fetch result ───────────────────────────────────
+
+type RemoteFetchResult = {
+  options: FilterOption[];
+  hasMore: boolean;
+};
+
 // ─── Composed ──────────────────────────────────────────────
 
 type FilterOption = {
@@ -384,8 +435,27 @@ type FilterConfig = {
   searchable?: boolean;
   /** Search placeholder text */
   searchPlaceholder?: string;
-  /** The selectable options */
+  /** The selectable options (used for static filters) */
   options: FilterOption[];
+  /** Remote data source for lazy-loaded, server-searched filters */
+  remote?: {
+    /** Fetch a page of options. Called on mount, search change, and scroll-to-bottom. */
+    onFetch: (params: {
+      query: string;
+      page: number;
+    }) => Promise<RemoteFetchResult>;
+    /** Debounce delay in ms for search input. Defaults to 300. */
+    debounceMs?: number;
+  };
+};
+
+type RemoteState = {
+  options: FilterOption[];
+  page: number;
+  hasMore: boolean;
+  isLoading: boolean;
+  isLoadingMore: boolean;
+  query: string;
 };
 
 type FilterDropdownComposedProps = {
@@ -437,18 +507,123 @@ function FilterDropdownComposed({
     {}
   );
 
+  // Remote filter state per key
+  const [remoteStates, setRemoteStates] = React.useState<
+    Record<string, RemoteState>
+  >({});
+  const debounceTimers = React.useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+
+  const updateRemoteState = React.useCallback(
+    (key: string, update: Partial<RemoteState>) => {
+      setRemoteStates((prev) => ({
+        ...prev,
+        [key]: { ...prev[key], ...update } as RemoteState,
+      }));
+    },
+    []
+  );
+
+  const fetchRemote = React.useCallback(
+    async (filter: FilterConfig, query: string, page: number): Promise<void> => {
+      if (!filter.remote) return;
+      const key = filter.key;
+      const isFirstPage = page === 1;
+
+      updateRemoteState(key, isFirstPage ? { isLoading: true } : { isLoadingMore: true });
+
+      try {
+        const result = await filter.remote.onFetch({ query, page });
+        setRemoteStates((prev) => {
+          const existing = prev[key];
+          return {
+            ...prev,
+            [key]: {
+              options: isFirstPage
+                ? result.options
+                : [...(existing?.options ?? []), ...result.options],
+              page,
+              hasMore: result.hasMore,
+              isLoading: false,
+              isLoadingMore: false,
+              query,
+            },
+          };
+        });
+      } catch {
+        updateRemoteState(key, { isLoading: false, isLoadingMore: false });
+      }
+    },
+    [updateRemoteState]
+  );
+
+  // Track which remote filters have been initially fetched
+  const fetchedRemoteKeys = React.useRef<Set<string>>(new Set());
+
+  // Fetch first page when navigating to a remote filter
+  React.useEffect(() => {
+    const activeFilter = filters.find((f) => f.key === view);
+    if (!activeFilter?.remote) return;
+    if (fetchedRemoteKeys.current.has(activeFilter.key)) return;
+    fetchedRemoteKeys.current.add(activeFilter.key);
+    fetchRemote(activeFilter, '', 1);
+  }, [view, filters, fetchRemote]);
+
   const handleOpenChange = React.useCallback(
     (open: boolean) => {
       onOpenChangeProp?.(open);
       if (!open) {
         setView(isSingleFilter ? filters[0].key : 'categories');
         setSearchTerms({});
+        setRemoteStates({});
+        fetchedRemoteKeys.current.clear();
+        loadMoreLock.current = {};
+        Object.values(debounceTimers.current).forEach(clearTimeout);
+        debounceTimers.current = {};
       }
     },
     [onOpenChangeProp, isSingleFilter, filters]
   );
 
-  const getSelectedSet = (key: string) => new Set(selected[key] ?? []);
+  // Clean up debounce timers on unmount
+  React.useEffect(() => {
+    return () => {
+      Object.values(debounceTimers.current).forEach(clearTimeout);
+    };
+  }, []);
+
+  const handleRemoteSearch = React.useCallback(
+    (filter: FilterConfig, value: string) => {
+      if (!filter.remote) return;
+      const key = filter.key;
+      const delay = filter.remote.debounceMs ?? 300;
+
+      if (debounceTimers.current[key]) {
+        clearTimeout(debounceTimers.current[key]);
+      }
+
+      debounceTimers.current[key] = setTimeout(() => {
+        fetchRemote(filter, value, 1);
+      }, delay);
+    },
+    [fetchRemote]
+  );
+
+  const loadMoreLock = React.useRef<Record<string, boolean>>({});
+
+  const handleLoadMore = React.useCallback(
+    (filter: FilterConfig) => {
+      if (!filter.remote) return;
+      const key = filter.key;
+      const state = remoteStates[key];
+      if (!state || !state.hasMore || state.isLoadingMore || state.isLoading) return;
+      if (loadMoreLock.current[key]) return;
+      loadMoreLock.current[key] = true;
+      fetchRemote(filter, state.query, state.page + 1).finally(() => {
+        loadMoreLock.current[key] = false;
+      });
+    },
+    [remoteStates, fetchRemote]
+  );
 
   const toggle = (key: string, value: string) => {
     const current = selected[key] ?? [];
@@ -458,26 +633,10 @@ function FilterDropdownComposed({
     onSelectedChange(key, next);
   };
 
-  const selectAll = (filter: FilterConfig) => {
-    const current = selected[filter.key] ?? [];
-    const allValues = filter.options.map((o) => o.value);
-    const next = current.length === allValues.length ? [] : allValues;
-    onSelectedChange(filter.key, next);
-  };
-
-  const reset = (key: string) => {
-    onSelectedChange(key, []);
-    setSearchTerms((prev) => ({ ...prev, [key]: '' }));
-  };
-
-  const getAllChecked = (filter: FilterConfig): boolean | 'indeterminate' => {
-    const count = (selected[filter.key] ?? []).length;
-    if (count === 0) return false;
-    if (count === filter.options.length) return true;
-    return 'indeterminate';
-  };
-
-  const getFilteredOptions = (filter: FilterConfig) => {
+  const getOptionsForFilter = (filter: FilterConfig): FilterOption[] => {
+    if (filter.remote) {
+      return remoteStates[filter.key]?.options ?? [];
+    }
     const term = (searchTerms[filter.key] ?? '').toLowerCase();
     if (!term) return filter.options;
     return filter.options.filter((o) => {
@@ -486,7 +645,52 @@ function FilterDropdownComposed({
     });
   };
 
+  const selectAll = (filter: FilterConfig) => {
+    const options = getOptionsForFilter(filter);
+    const currentSet = new Set(selected[filter.key] ?? []);
+    const allValues = options.map((o) => o.value);
+    const allSelected =
+      allValues.length > 0 && allValues.every((v) => currentSet.has(v));
+    onSelectedChange(filter.key, allSelected ? [] : allValues);
+  };
+
+  const reset = (key: string) => {
+    onSelectedChange(key, []);
+    setSearchTerms((prev) => ({ ...prev, [key]: '' }));
+    const filter = filters.find((f) => f.key === key);
+    if (filter?.remote) {
+      fetchRemote(filter, '', 1);
+    }
+  };
+
+  const getAllChecked = (filter: FilterConfig): boolean | 'indeterminate' => {
+    const options = getOptionsForFilter(filter);
+    const currentSet = new Set(selected[filter.key] ?? []);
+    if (currentSet.size === 0) return false;
+    const allValues = options.map((o) => o.value);
+    if (allValues.length > 0 && allValues.every((v) => currentSet.has(v)))
+      return true;
+    return 'indeterminate';
+  };
+
   const activeFilter = filters.find((f) => f.key === view);
+  const activeRemoteState = activeFilter?.remote
+    ? remoteStates[activeFilter.key]
+    : null;
+
+  const activeOptions = activeFilter
+    ? getOptionsForFilter(activeFilter)
+    : [];
+  const activeSelectedSet = activeFilter
+    ? new Set(selected[activeFilter.key] ?? [])
+    : new Set<string>();
+
+  // Only wire up infinite scroll when there's more data to load and we're not already fetching
+  const shouldLoadMore =
+    activeFilter?.remote &&
+    activeRemoteState?.hasMore &&
+    !activeRemoteState?.isLoadingMore &&
+    !activeRemoteState?.isLoading;
 
   return (
     <FilterDropdownRoot open={openProp} onOpenChange={handleOpenChange}>
@@ -495,7 +699,10 @@ function FilterDropdownComposed({
         align={align}
         side={side}
         sideOffset={sideOffset}
-        className={cn(view === 'categories' && 'w-[224px]', contentClassName)}
+        className={cn(
+          view === 'categories' && 'w-[224px]',
+          contentClassName
+        )}
       >
         {view === 'categories' && (
           <FilterDropdownCategoryList>
@@ -514,35 +721,66 @@ function FilterDropdownComposed({
         {activeFilter && view !== 'categories' && (
           <>
             <FilterDropdownHeader
-              onBack={isSingleFilter ? undefined : () => setView('categories')}
+              onBack={
+                isSingleFilter
+                  ? undefined
+                  : () => setView('categories')
+              }
               onReset={() => reset(activeFilter.key)}
             />
             {activeFilter.searchable && (
               <FilterDropdownSearch
                 placeholder={activeFilter.searchPlaceholder}
                 value={searchTerms[activeFilter.key] ?? ''}
-                onChange={(e) =>
+                onChange={(e) => {
+                  const value = e.target.value;
                   setSearchTerms((prev) => ({
                     ...prev,
-                    [activeFilter.key]: e.target.value,
-                  }))
-                }
+                    [activeFilter.key]: value,
+                  }));
+                  if (activeFilter.remote) {
+                    handleRemoteSearch(activeFilter, value);
+                  }
+                }}
               />
             )}
-            <FilterDropdownSelectAll
-              checked={getAllChecked(activeFilter)}
-              onCheckedChange={() => selectAll(activeFilter)}
-            />
-            <FilterDropdownGroup>
-              {getFilteredOptions(activeFilter).map((option) => (
-                <FilterDropdownItem
-                  key={option.value}
-                  checked={getSelectedSet(activeFilter.key).has(option.value)}
-                  onCheckedChange={() => toggle(activeFilter.key, option.value)}
-                >
-                  {option.label}
-                </FilterDropdownItem>
-              ))}
+            {!activeRemoteState?.isLoading && (
+              <FilterDropdownSelectAll
+                checked={getAllChecked(activeFilter)}
+                onCheckedChange={() => selectAll(activeFilter)}
+              />
+            )}
+            <FilterDropdownGroup
+              onScrollEnd={
+                shouldLoadMore
+                  ? () => handleLoadMore(activeFilter)
+                  : undefined
+              }
+              isLoadingMore={activeRemoteState?.isLoadingMore}
+            >
+              {activeRemoteState?.isLoading ? (
+                <div className='flex items-center justify-center py-4'>
+                  <Loader.Root size={20} color='neutral' />
+                </div>
+              ) : activeOptions.length === 0 ? (
+                <div className='flex items-center justify-center py-4'>
+                  <span className='text-paragraph-sm text-text-soft-400'>
+                    No results found
+                  </span>
+                </div>
+              ) : (
+                activeOptions.map((option) => (
+                  <FilterDropdownItem
+                    key={option.value}
+                    checked={activeSelectedSet.has(option.value)}
+                    onCheckedChange={() =>
+                      toggle(activeFilter.key, option.value)
+                    }
+                  >
+                    {option.label}
+                  </FilterDropdownItem>
+                ))
+              )}
             </FilterDropdownGroup>
             <FilterDropdownApply
               label={applyLabel}
@@ -573,4 +811,4 @@ export {
   FilterDropdownApply as Apply,
   FilterDropdownComposed as Composed,
 };
-export type { FilterOption, FilterConfig, FilterDropdownComposedProps };
+export type { FilterOption, FilterConfig, FilterDropdownComposedProps, RemoteFetchResult };

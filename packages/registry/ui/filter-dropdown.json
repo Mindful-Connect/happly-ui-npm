@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Filter Dropdown",
   "description": "A composable multi-select filter dropdown with category navigation, checkbox options, search, select all, and apply button. Uses namespace exports: FilterDropdown.Root, FilterDropdown.Trigger, FilterDropdown.Content, FilterDropdown.Header, FilterDropdown.Search, FilterDropdown.SelectAll, FilterDropdown.Group, FilterDropdown.Item, FilterDropdown.CategoryList, FilterDropdown.CategoryItem, FilterDropdown.Apply.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "dependencies": [
     "@radix-ui/react-popover",
     "@radix-ui/react-scroll-area",
@@ -16,6 +16,7 @@
     "divider",
     "input",
     "link-button",
+    "loader",
     "happly-ui-utils",
     "polymorphic"
   ],
@@ -88,6 +89,12 @@
         "description": "Composed variant where option labels are ReactNode (Badge components) instead of plain strings.",
         "code": "<FilterDropdown.Composed\n  filters={[{\n    key: 'deadline',\n    label: 'Deadline status',\n    options: [\n      { value: 'Open', label: <Badge.Root variant=\"light\" color=\"green\" size=\"small\">Open</Badge.Root> },\n      { value: 'Closed', label: <Badge.Root variant=\"light\" color=\"red\" size=\"small\">Closed</Badge.Root> },\n    ],\n  }]}\n  selected={{ deadline: [] }}\n  onSelectedChange={(key, values) => setSelected(prev => ({ ...prev, [key]: values }))}\n  onApply={(sel) => console.log(sel)}\n>\n  <Button.Root>Deadline status</Button.Root>\n</FilterDropdown.Composed>",
         "stories": ["ComposedWithBadges"]
+      },
+      {
+        "title": "Composed with Remote Search",
+        "description": "Composed variant with server-side search and infinite scroll. The remote.onFetch callback is called on mount, on search input change (debounced), and when the user scrolls near the bottom. Options are passed as empty initially — the component fetches them lazily.",
+        "code": "const fetchProviders = async ({ query, page }) => {\n  const res = await fetch(`/api/providers?q=${query}&page=${page}&limit=20`);\n  const data = await res.json();\n  return {\n    options: data.items.map(p => ({ value: p.id, label: p.name })),\n    hasMore: data.currentPage < data.lastPage,\n  };\n};\n\n<FilterDropdown.Composed\n  filters={[{\n    key: 'providers',\n    label: 'Providers',\n    icon: RiUserLine,\n    searchable: true,\n    searchPlaceholder: 'Search providers...',\n    options: [],\n    remote: { onFetch: fetchProviders, debounceMs: 300 },\n  }]}\n  selected={{ providers: [] }}\n  onSelectedChange={(key, values) => setSelected(prev => ({ ...prev, [key]: values }))}\n  onApply={(sel) => console.log(sel)}\n>\n  <Button.Root>Providers</Button.Root>\n</FilterDropdown.Composed>",
+        "stories": ["ComposedWithRemoteSearch"]
       }
     ],
     "api": [
@@ -211,13 +218,24 @@
       },
       {
         "name": "FilterDropdown.Group",
-        "description": "Scrollable container for filter items with a custom scrollbar.",
+        "description": "Scrollable container for filter items with a custom scrollbar. Supports infinite scroll via onScrollEnd.",
         "props": [
           {
             "name": "maxHeight",
             "type": "number",
             "default": "280",
             "description": "Maximum height in pixels before scrolling"
+          },
+          {
+            "name": "onScrollEnd",
+            "type": "() => void",
+            "description": "Called when the user scrolls near the bottom of the list. Use for infinite scroll / load-more."
+          },
+          {
+            "name": "isLoadingMore",
+            "type": "boolean",
+            "default": "false",
+            "description": "Shows a loading spinner at the bottom of the list when fetching more items."
           }
         ]
       },
@@ -315,7 +333,7 @@
           {
             "name": "filters",
             "type": "FilterConfig[]",
-            "description": "Filter configuration array. Each entry has key, label, icon, searchable, searchPlaceholder, and options (value + label). 1 entry = flat filter (no categories), 2+ = two-level navigation."
+            "description": "Filter configuration array. Each entry has key, label, icon, searchable, searchPlaceholder, options (value + label), and an optional remote object for server-side search with infinite scroll. 1 entry = flat filter (no categories), 2+ = two-level navigation."
           },
           {
             "name": "selected",
