@@ -665,12 +665,21 @@ function FilterDropdownComposed({
   };
 
   const getOptionsForFilter = (filter: FilterConfig): FilterOption[] => {
-    if (filter.remote) {
-      return remoteStates[filter.key]?.options ?? [];
-    }
+    const raw = filter.remote
+      ? remoteStates[filter.key]?.options ?? []
+      : filter.options;
+
+    // Deduplicate by value — guards against API returning duplicate slugs
+    const seen = new Set<string>();
+    const unique = raw.filter((o) => {
+      if (seen.has(o.value)) return false;
+      seen.add(o.value);
+      return true;
+    });
+
     const term = (searchTerms[filter.key] ?? '').toLowerCase();
-    if (!term) return filter.options;
-    return filter.options.filter((o) => {
+    if (!term) return unique;
+    return unique.filter((o) => {
       const text = typeof o.label === 'string' ? o.label : o.value;
       return text.toLowerCase().includes(term);
     });
