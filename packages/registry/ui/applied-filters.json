@@ -1,0 +1,130 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "applied-filters",
+  "type": "registry:ui",
+  "title": "Applied Filters",
+  "description": "Displays currently active filter selections as dismissible tags grouped by category, with a reset-all button. Designed to pair with FilterDropdown. Uses namespace exports: AppliedFilters.Root, AppliedFilters.CustomGroup, AppliedFilters.Tag.",
+  "dependencies": [
+    "@remixicon/react"
+  ],
+  "registryDependencies": [
+    "button",
+    "tag",
+    "happly-ui-utils",
+    "polymorphic"
+  ],
+  "docs": {
+    "lead": "A horizontal bar that displays currently active filters as dismissible tags, grouped by category. Pairs with FilterDropdown to give users a clear overview of applied filters with one-click removal.",
+    "usage": "import * as AppliedFilters from \"@/components/ui/applied-filters\"\nimport { RiUserSettingsLine, RiSettings3Line } from \"@remixicon/react\"\n\nconst filters = [\n  { key: 'role', label: 'Role', icon: RiSettings3Line, options: [\n    { value: 'admin', label: 'Admin' },\n    { value: 'member', label: 'Team member' },\n  ]},\n]\n\n<AppliedFilters.Root\n  filters={filters}\n  selected={{ role: ['admin', 'member'] }}\n  onRemove={(key, value) => { /* remove value from key */ }}\n  onResetAll={() => { /* clear all */ }}\n/>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Multiple filter groups with dismissible tags and a reset button.",
+        "code": "<AppliedFilters.Root filters={filters} selected={selected} onRemove={handleRemove} onResetAll={handleResetAll} />",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Single Filter Group",
+        "description": "A single active filter group.",
+        "code": "<AppliedFilters.Root filters={filters} selected={{ role: ['admin'] }} onRemove={handleRemove} onResetAll={handleResetAll} />",
+        "stories": ["SingleGroup"]
+      },
+      {
+        "title": "Custom Group",
+        "description": "Use CustomGroup and Tag sub-components for custom filter rendering (e.g. search inputs, date ranges).",
+        "code": "<AppliedFilters.Root filters={[]} selected={{}} onRemove={() => {}}>\n  <AppliedFilters.CustomGroup label=\"Search\" icon={RiSearchLine}>\n    <AppliedFilters.Tag onDismiss={() => {}}>query text</AppliedFilters.Tag>\n  </AppliedFilters.CustomGroup>\n</AppliedFilters.Root>",
+        "stories": ["CustomGroup"]
+      },
+      {
+        "title": "With FilterDropdown",
+        "description": "Combined with FilterDropdown for a complete filter bar experience.",
+        "code": "<div className=\"flex flex-col gap-3\">\n  <FilterDropdown.Composed ...>\n    <Button.Root>Filter</Button.Root>\n  </FilterDropdown.Composed>\n  <AppliedFilters.Root ... />\n</div>",
+        "stories": ["WithFilterDropdown"]
+      }
+    ],
+    "api": [
+      {
+        "name": "AppliedFilters.Root",
+        "description": "The main container that renders all active filter groups with tags and a reset button. Returns null when no filters are active.",
+        "props": [
+          {
+            "name": "filters",
+            "type": "AppliedFilterGroup[]",
+            "description": "Filter group definitions. Each group needs a key, label, and options array."
+          },
+          {
+            "name": "selected",
+            "type": "Record<string, string[]>",
+            "description": "Currently selected values per filter key. Same shape as FilterDropdown's selected prop."
+          },
+          {
+            "name": "onRemove",
+            "type": "(key: string, value: string) => void",
+            "description": "Called when a single filter tag is dismissed."
+          },
+          {
+            "name": "onRemoveGroup",
+            "type": "(key: string) => void",
+            "description": "Called when all values for a group should be cleared."
+          },
+          {
+            "name": "onResetAll",
+            "type": "() => void",
+            "description": "Called when the reset-all button is clicked. If omitted, the button is hidden."
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "default": "'Applied filters:'",
+            "description": "Text label shown before the filter groups."
+          },
+          {
+            "name": "resetLabel",
+            "type": "string",
+            "default": "'Reset all filters'",
+            "description": "Label for the reset-all button."
+          },
+          {
+            "name": "labelIcon",
+            "type": "React.ElementType",
+            "default": "RiFilter3Fill",
+            "description": "Icon rendered beside the label."
+          }
+        ]
+      },
+      {
+        "name": "AppliedFilters.CustomGroup",
+        "description": "A manually composed filter group for non-standard filters (search queries, date ranges, etc.).",
+        "props": [
+          {
+            "name": "label",
+            "type": "string",
+            "description": "The group label."
+          },
+          {
+            "name": "icon",
+            "type": "React.ElementType",
+            "description": "Icon shown beside the label."
+          }
+        ]
+      },
+      {
+        "name": "AppliedFilters.Tag",
+        "description": "A pre-styled dismissible tag for use inside CustomGroup.",
+        "props": [
+          {
+            "name": "onDismiss",
+            "type": "() => void",
+            "description": "Called when the tag dismiss button is clicked. If omitted, no dismiss button is shown."
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/applied-filters.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

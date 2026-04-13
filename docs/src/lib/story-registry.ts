@@ -4,6 +4,7 @@
 import { default as accordionMeta, Default as accordion_Default, ArrowStart as accordion_ArrowStart, StrokeVariant as accordion_StrokeVariant, StrokeArrowStart as accordion_StrokeArrowStart, GroupDefault as accordion_GroupDefault, GroupArrowStart as accordion_GroupArrowStart, GroupStroke as accordion_GroupStroke, GroupStrokeArrowStart as accordion_GroupStrokeArrowStart } from '@/components/ui/accordion.stories';
 import { default as aiOrbMeta, Default as aiOrb_Default, Animated as aiOrb_Animated, Sizes as aiOrb_Sizes, Playground as aiOrb_Playground } from '@/components/ui/ai-orb.stories';
 import { default as alertMeta, Playground as alert_Playground, DefaultIcons as alert_DefaultIcons, CustomIcon as alert_CustomIcon, Filled as alert_Filled, Light as alert_Light, Lighter as alert_Lighter, Stroke as alert_Stroke, Sizes as alert_Sizes } from '@/components/ui/alert.stories';
+import { default as appliedFiltersMeta, Default as appliedFilters_Default, SingleGroup as appliedFilters_SingleGroup, ManyTags as appliedFilters_ManyTags, CustomGroup as appliedFilters_CustomGroup, WithoutResetButton as appliedFilters_WithoutResetButton, WithFilterDropdown as appliedFilters_WithFilterDropdown, Empty as appliedFilters_Empty } from '@/components/ui/applied-filters.stories';
 import { default as avatarGroupCompactMeta, Playground as avatarGroupCompact_Playground, Variants as avatarGroupCompact_Variants, Size as avatarGroupCompact_Size } from '@/components/ui/avatar-group-compact.stories';
 import { default as avatarGroupMeta, Playground as avatarGroup_Playground, Size as avatarGroup_Size } from '@/components/ui/avatar-group.stories';
 import { default as avatarMeta, Playground as avatar_Playground, Color as avatar_Color, Size as avatar_Size, Text as avatar_Text, Placeholder as avatar_Placeholder, Status as avatar_Status, Notification as avatar_Notification, BrandLogo as avatar_BrandLogo, Verified as avatar_Verified, TopIndicators as avatar_TopIndicators, SquareRounded as avatar_SquareRounded, CustomPlaceholder as avatar_CustomPlaceholder, AsLink as avatar_AsLink } from '@/components/ui/avatar.stories';
@@ -30,7 +31,7 @@ import { default as fancyButtonMeta, Playground as fancyButton_Playground, Varia
 import { default as fileCardMeta, UploadStates as fileCard_UploadStates, CompletedMediaTypes as fileCard_CompletedMediaTypes, Download as fileCard_Download, Compact as fileCard_Compact, Item as fileCard_Item, ItemDownload as fileCard_ItemDownload, ItemCompact as fileCard_ItemCompact } from '@/components/ui/file-card.stories';
 import { default as fileFormatIconMeta, Default as fileFormatIcon_Default, Colors as fileFormatIcon_Colors, Sizes as fileFormatIcon_Sizes } from '@/components/ui/file-format-icon.stories';
 import { default as fileUploadMeta, Document as fileUpload_Document, Image as fileUpload_Image, Video as fileUpload_Video, Audio as fileUpload_Audio, Attachment as fileUpload_Attachment, CustomOverrides as fileUpload_CustomOverrides, Dragging as fileUpload_Dragging } from '@/components/ui/file-upload.stories';
-import { default as filterDropdownMeta, CategoryMenu as filterDropdown_CategoryMenu, TextOptions as filterDropdown_TextOptions, BadgeOptions as filterDropdown_BadgeOptions, StatusBadgeOptions as filterDropdown_StatusBadgeOptions, WithSearch as filterDropdown_WithSearch, TwoLevelNavigation as filterDropdown_TwoLevelNavigation, FlatFilter as filterDropdown_FlatFilter, ComposedTwoLevel as filterDropdown_ComposedTwoLevel, ComposedFlat as filterDropdown_ComposedFlat, ComposedWithSearch as filterDropdown_ComposedWithSearch, ComposedWithBadges as filterDropdown_ComposedWithBadges } from '@/components/ui/filter-dropdown.stories';
+import { default as filterDropdownMeta, CategoryMenu as filterDropdown_CategoryMenu, TextOptions as filterDropdown_TextOptions, BadgeOptions as filterDropdown_BadgeOptions, StatusBadgeOptions as filterDropdown_StatusBadgeOptions, WithSearch as filterDropdown_WithSearch, TwoLevelNavigation as filterDropdown_TwoLevelNavigation, FlatFilter as filterDropdown_FlatFilter, ComposedTwoLevel as filterDropdown_ComposedTwoLevel, ComposedFlat as filterDropdown_ComposedFlat, ComposedWithSearch as filterDropdown_ComposedWithSearch, ComposedWithBadges as filterDropdown_ComposedWithBadges, ComposedWithRemoteSearch as filterDropdown_ComposedWithRemoteSearch, ComposedTwoLevelWithRemote as filterDropdown_ComposedTwoLevelWithRemote } from '@/components/ui/filter-dropdown.stories';
 import { default as formFieldMeta, Playground as formField_Playground, Demo as formField_Demo, WithError as formField_WithError, Disabled as formField_Disabled, CompoundMode as formField_CompoundMode, FormValidation as formField_FormValidation, AutoBindingShowcase as formField_AutoBindingShowcase } from '@/components/ui/form-field.stories';
 import { default as hintMeta, Playground as hint_Playground, Demo as hint_Demo, Disabled as hint_Disabled, HasError as hint_HasError, CustomIcon as hint_CustomIcon, Composed as hint_Composed } from '@/components/ui/hint.stories';
 import { default as infoCardMeta, Inline as infoCard_Inline, InlineWithFullWidthItem as infoCard_InlineWithFullWidthItem, Grid2Columns as infoCard_Grid2Columns, Stacked as infoCard_Stacked, WithAction as infoCard_WithAction, WithActionNotification as infoCard_WithActionNotification, WithCustomAction as infoCard_WithCustomAction, InlineManyItems as infoCard_InlineManyItems, Grid3Columns as infoCard_Grid3Columns } from '@/components/ui/info-card.stories';
@@ -59,7 +60,7 @@ import { default as radioCardMeta, Playground as radioCard_Playground, Default a
 import { default as radioMeta, Playground as radio_Playground, Demo as radio_Demo, Variants as radio_Variants, Disabled as radio_Disabled, WithLabel as radio_WithLabel, WithLabelExtended as radio_WithLabelExtended, WithFormField as radio_WithFormField } from '@/components/ui/radio.stories';
 import { default as sectionToggleMeta, Playground as sectionToggle_Playground, Default as sectionToggle_Default, Collapsed as sectionToggle_Collapsed, Composed as sectionToggle_Composed } from '@/components/ui/section-toggle.stories';
 import { default as sectionMeta, Playground as section_Playground, Default as section_Default, WithCustomHeaderWidth as section_WithCustomHeaderWidth, Composed as section_Composed } from '@/components/ui/section.stories';
-import { default as selectMeta, Playground as select_Playground, Demo as select_Demo, WithLabelHint as select_WithLabelHint, WithIcons as select_WithIcons, Sizes as select_Sizes, WithCountryFlags as select_WithCountryFlags, WithUsers as select_WithUsers, Disabled as select_Disabled, Compact as select_Compact, CompactCountry as select_CompactCountry, CompactSizes as select_CompactSizes, InlineCountry as select_InlineCountry, InputWithInlineSelect as select_InputWithInlineSelect, WithInput as select_WithInput, WithInputSizes as select_WithInputSizes } from '@/components/ui/select.stories';
+import { default as selectMeta, Playground as select_Playground, Demo as select_Demo, WithLabelHint as select_WithLabelHint, WithIcons as select_WithIcons, Sizes as select_Sizes, WithCountryFlags as select_WithCountryFlags, WithUsers as select_WithUsers, Disabled as select_Disabled, Readonly as select_Readonly, Compact as select_Compact, CompactCountry as select_CompactCountry, CompactSizes as select_CompactSizes, InlineCountry as select_InlineCountry, InputWithInlineSelect as select_InputWithInlineSelect, WithInput as select_WithInput, WithInputSizes as select_WithInputSizes } from '@/components/ui/select.stories';
 import { default as skeletonMeta, Default as skeleton_Default, Card as skeleton_Card, Circular as skeleton_Circular } from '@/components/ui/skeleton.stories';
 import { default as sliderMeta, Playground as slider_Playground, Demo as slider_Demo, Variants as slider_Variants, Range as slider_Range, WithTooltip as slider_WithTooltip, WithFormField as slider_WithFormField } from '@/components/ui/slider.stories';
 import { default as socialsInputMeta, Default as socialsInput_Default, WithExistingValues as socialsInput_WithExistingValues, AllSocials as socialsInput_AllSocials, CustomSocials as socialsInput_CustomSocials, ReadOnly as socialsInput_ReadOnly, WithFormField as socialsInput_WithFormField, ErrorState as socialsInput_ErrorState, CustomLabels as socialsInput_CustomLabels } from '@/components/ui/socials-input.stories';
@@ -113,6 +114,18 @@ export const storyRegistry: Record<string, {
     'Lighter': alert_Lighter,
     'Stroke': alert_Stroke,
     'Sizes': alert_Sizes
+    }
+  },
+  'applied-filters': {
+    meta: appliedFiltersMeta,
+    stories: {
+    'Default': appliedFilters_Default,
+    'SingleGroup': appliedFilters_SingleGroup,
+    'ManyTags': appliedFilters_ManyTags,
+    'CustomGroup': appliedFilters_CustomGroup,
+    'WithoutResetButton': appliedFilters_WithoutResetButton,
+    'WithFilterDropdown': appliedFilters_WithFilterDropdown,
+    'Empty': appliedFilters_Empty
     }
   },
   'avatar-group-compact': {
@@ -440,7 +453,9 @@ export const storyRegistry: Record<string, {
     'ComposedTwoLevel': filterDropdown_ComposedTwoLevel,
     'ComposedFlat': filterDropdown_ComposedFlat,
     'ComposedWithSearch': filterDropdown_ComposedWithSearch,
-    'ComposedWithBadges': filterDropdown_ComposedWithBadges
+    'ComposedWithBadges': filterDropdown_ComposedWithBadges,
+    'ComposedWithRemoteSearch': filterDropdown_ComposedWithRemoteSearch,
+    'ComposedTwoLevelWithRemote': filterDropdown_ComposedTwoLevelWithRemote
     }
   },
   'form-field': {
@@ -764,6 +779,7 @@ export const storyRegistry: Record<string, {
     'WithCountryFlags': select_WithCountryFlags,
     'WithUsers': select_WithUsers,
     'Disabled': select_Disabled,
+    'Readonly': select_Readonly,
     'Compact': select_Compact,
     'CompactCountry': select_CompactCountry,
     'CompactSizes': select_CompactSizes,

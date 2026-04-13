@@ -303,6 +303,7 @@ export const colors = {
     'primary-base': 'var(--color-primary-base)',
     'primary-light': 'var(--color-primary-light)',
     'primary-lighter': 'var(--color-primary-lighter)',
+    'primary-contrast': 'var(--color-primary-contrast)',
     'primary-alpha-24': 'var(--color-primary-alpha-24)',
     'primary-alpha-20': 'var(--color-primary-alpha-20)',
     'primary-alpha-16': 'var(--color-primary-alpha-16)',
@@ -520,6 +521,7 @@ export const colors = {
     'alpha-20': 'var(--color-primary-alpha-20)',
     'alpha-16': 'var(--color-primary-alpha-16)',
     'alpha-10': 'var(--color-primary-alpha-10)',
+    contrast: 'var(--color-primary-contrast)',
   },
   faded: {
     dark: 'var(--color-faded-dark)',

@@ -28,6 +28,12 @@
       "description": "Utility functions and types for the Alert component."
     },
     {
+      "name": "applied-filters",
+      "type": "registry:ui",
+      "title": "Applied Filters",
+      "description": "Displays currently active filter selections as dismissible tags grouped by category, with a reset-all button. Designed to pair with FilterDropdown. Uses namespace exports: AppliedFilters.Root, AppliedFilters.CustomGroup, AppliedFilters.Tag."
+    },
+    {
       "name": "avatar",
       "type": "registry:ui",
       "title": "Avatar",
