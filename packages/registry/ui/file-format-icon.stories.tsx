@@ -21,6 +21,7 @@ export const Colors = {
       <FileFormatIcon.Root format='CSV' color='sky' />
       <FileFormatIcon.Root format='KEY' color='yellow' />
       <FileFormatIcon.Root format='TXT' color='gray' />
+      <FileFormatIcon.Root />
     </div>
   ),
 };

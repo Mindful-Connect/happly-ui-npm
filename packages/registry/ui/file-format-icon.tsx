@@ -128,12 +128,14 @@ const FileFormatIconRoot = React.forwardRef<SVGSVGElement, FileFormatIconProps>(
           className='stroke-stroke-sub-300'
           strokeWidth='1.5'
         />
-        <foreignObject x='0' y='0' width='40' height='40'>
-          {/* @ts-ignore */}
-          <div xmlns='http://www.w3.org/1999/xhtml' className={formatBox()}>
-            {format}
-          </div>
-        </foreignObject>
+        {format && (
+          <foreignObject x='0' y='0' width='40' height='40'>
+            {/* @ts-ignore */}
+            <div xmlns='http://www.w3.org/1999/xhtml' className={formatBox()}>
+              {format}
+            </div>
+          </foreignObject>
+        )}
       </svg>
     );
   }
