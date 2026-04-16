@@ -99,7 +99,7 @@ function LabelInfo({
   iconClassName?: string;
 }) {
   return (
-    <Tooltip.Provider>
+    <Tooltip.Provider delayDuration={30}>
       <Tooltip.Root>
         <Tooltip.Trigger asChild>
           <button type='button' className='ml-px inline-flex align-middle'>
