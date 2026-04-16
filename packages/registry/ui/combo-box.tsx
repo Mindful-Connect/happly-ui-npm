@@ -584,7 +584,7 @@ function ComboBoxItem({
         }
       }}
       className={cn(
-        'text-paragraph-sm text-text-strong-950 relative flex w-full cursor-pointer items-center gap-2 rounded-[0.625rem] p-2 text-left select-none',
+        'text-paragraph-sm text-text-strong-950 relative flex w-full cursor-pointer items-center gap-2 rounded-[0.625rem] p-2 text-left font-medium select-none',
         'transition duration-200 ease-out outline-none',
         'hover:bg-bg-weak-50',
         isHighlighted && 'bg-bg-weak-50',
