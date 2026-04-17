@@ -481,7 +481,10 @@ function ComboBoxContent({
       >
         {items}
       </ScrollAreaPrimitives.Viewport>
-      <ScrollAreaPrimitives.Scrollbar orientation='vertical'>
+      <ScrollAreaPrimitives.Scrollbar
+        orientation='vertical'
+        className='my-1.5 mr-0.5'
+      >
         <ScrollAreaPrimitives.Thumb className='bg-bg-soft-200 !w-1 rounded' />
       </ScrollAreaPrimitives.Scrollbar>
     </ScrollAreaPrimitives.Root>
