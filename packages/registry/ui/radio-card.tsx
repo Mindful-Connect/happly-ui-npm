@@ -20,8 +20,8 @@ const radioCardVariants = tv({
       'transition duration-200 ease-out',
       // hover
       'hover:bg-bg-weak-50 hover:ring-transparent',
-      // focus-within
-      'focus-within:shadow-button-important-focus focus-within:ring-stroke-strong-950',
+      // focus-visible
+      'has-[:focus-visible]:shadow-button-important-focus has-[:focus-visible]:ring-stroke-strong-950',
       // checked
       'data-[state=checked]:ring-stroke-strong-950',
       // disabled (must override checked state)
@@ -49,8 +49,8 @@ const radioCardVariants = tv({
         item: [
           // base
           'ring-error-base',
-          // focus-within
-          'focus-within:shadow-button-error-focus focus-within:ring-error-base',
+          // focus-visible
+          'has-[:focus-visible]:shadow-button-error-focus has-[:focus-visible]:ring-error-base',
           // checked
           'data-[state=checked]:ring-error-base',
         ],
