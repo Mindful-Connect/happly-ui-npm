@@ -21,10 +21,7 @@ const ALERT_CLOSE_ICON_NAME = 'AlertCloseIcon';
 export const alertVariants = tv({
   slots: {
     root: 'w-full',
-    wrapper: [
-      'grid w-full auto-cols-auto grid-flow-col grid-cols-[auto,minmax(0,1fr)] items-start',
-      'transition duration-200 ease-out',
-    ],
+    wrapper: ['flex w-full items-start', 'transition duration-200 ease-out'],
     icon: 'shrink-0',
     closeIcon: '',
   },
