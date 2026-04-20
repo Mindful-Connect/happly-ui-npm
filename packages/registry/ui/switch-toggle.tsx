@@ -76,7 +76,7 @@ const SwitchToggleTrigger = React.forwardRef<
         // active
         'data-[state=active]:text-text-strong-950',
         // inactive hover
-        'data-[state=inactive]:hover:shadow-toggle-switch data-[state=inactive]:cursor-pointer',
+        'data-[state=inactive]:hover:shadow-toggle-switch',
         className
       )}
       {...rest}
