@@ -86,8 +86,9 @@ function ResizeHandle() {
 }
 ResizeHandle.displayName = 'ResizeHandle';
 
-type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> &
-  (
+type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
+  maxResizeHeight?: number | string;
+} & (
     | {
         simple: true;
         children?: never;
@@ -99,7 +100,6 @@ type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> &
         children?: React.ReactNode;
         containerClassName?: string;
         hasError?: boolean;
-        maxResizeHeight?: number | string;
       }
   );
 
