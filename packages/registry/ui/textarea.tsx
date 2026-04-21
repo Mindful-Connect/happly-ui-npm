@@ -99,12 +99,13 @@ type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> &
         children?: React.ReactNode;
         containerClassName?: string;
         hasError?: boolean;
+        maxResizeHeight?: number | string;
       }
   );
 
 const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
-    { containerClassName, children, hasError, simple, ...rest },
+    { containerClassName, children, hasError, simple, maxResizeHeight, ...rest },
     forwardedRef
   ) => {
     const formField = useFormField();
@@ -149,7 +150,7 @@ const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           containerClassName
         )}
       >
-        <div className='grid'>
+        <div className='grid flex-1'>
           <div className='pointer-events-none relative z-10 flex flex-col gap-2 [grid-area:1/1]'>
             <Textarea
               ref={forwardedRef}
@@ -161,7 +162,10 @@ const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
               <ResizeHandle />
             </div>
           </div>
-          <div className='min-h-full resize-y overflow-hidden opacity-0 [grid-area:1/1]' />
+          <div
+            className='min-h-full resize-y overflow-hidden opacity-0 [grid-area:1/1]'
+            style={maxResizeHeight ? { maxHeight: maxResizeHeight } : undefined}
+          />
         </div>
       </div>
     );
