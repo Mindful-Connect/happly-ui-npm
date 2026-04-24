@@ -26,6 +26,12 @@
         "description": "Modal with a header section containing icon, title, and description.",
         "code": "<Modal.Content>\n  <Modal.Header\n    icon={RiChatSettingsLine}\n    title=\"Communication Preferences\"\n    description=\"Choose contact preferences.\"\n  />\n  <Modal.Body>...</Modal.Body>\n  <Modal.Footer>...</Modal.Footer>\n</Modal.Content>",
         "stories": ["WithHeader"]
+      },
+      {
+        "title": "Pattern Variant",
+        "description": "A feature modal with a subtle background grid and a badge-style floating close button. `variant` and `closeVariant` are independent — you can use either without the other.",
+        "code": "<Modal.Content variant=\"pattern\" closeVariant=\"badge\" className=\"max-w-[560px]\">\n  <div className=\"p-10\">Your custom layout here</div>\n</Modal.Content>",
+        "stories": ["Pattern"]
       }
     ],
     "api": [
@@ -61,6 +67,18 @@
         "name": "Modal.Content",
         "description": "The modal popup with overlay and close button.",
         "props": [
+          {
+            "name": "variant",
+            "type": "'default' | 'pattern'",
+            "default": "'default'",
+            "description": "Visual style. 'pattern' adds a subtle grid background and a border to the content."
+          },
+          {
+            "name": "closeVariant",
+            "type": "'default' | 'badge'",
+            "default": "'default'",
+            "description": "Close-button style. 'badge' renders a floating badge-style close (outer pill + inner bordered circle); 'default' uses a ghost compact button."
+          },
           {
             "name": "showClose",
             "type": "boolean",

@@ -666,7 +666,7 @@ function FilterDropdownComposed({
 
   const getOptionsForFilter = (filter: FilterConfig): FilterOption[] => {
     const raw = filter.remote
-      ? remoteStates[filter.key]?.options ?? []
+      ? (remoteStates[filter.key]?.options ?? [])
       : filter.options;
 
     // Deduplicate by value — guards against API returning duplicate slugs

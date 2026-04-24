@@ -47,7 +47,7 @@ import { default as locationInputMeta, Playground as locationInput_Playground, D
 import { default as logoUploadMeta, Default as logoUpload_Default, WithLogo as logoUpload_WithLogo, Uploading as logoUpload_Uploading, UploadingWithPreview as logoUpload_UploadingWithPreview, Failed as logoUpload_Failed, CustomPreview as logoUpload_CustomPreview, UserAvatar as logoUpload_UserAvatar, Composed as logoUpload_Composed, WithFormField as logoUpload_WithFormField, ComposedWithLogo as logoUpload_ComposedWithLogo } from '@/components/ui/logo-upload.stories';
 import { default as markdownEditorMeta, Default as markdownEditor_Default, SingleLanguage as markdownEditor_SingleLanguage, ControlledMulti as markdownEditor_ControlledMulti, CustomToggle as markdownEditor_CustomToggle, Compound as markdownEditor_Compound, WithFormField as markdownEditor_WithFormField, WithError as markdownEditor_WithError, Disabled as markdownEditor_Disabled, WithDefaultContent as markdownEditor_WithDefaultContent } from '@/components/ui/markdown-editor.stories';
 import { default as menuTabBarMeta, Default as menuTabBar_Default, Primary as menuTabBar_Primary, WithoutIcons as menuTabBar_WithoutIcons, Composed as menuTabBar_Composed, ScrollToSection as menuTabBar_ScrollToSection, Disabled as menuTabBar_Disabled } from '@/components/ui/menu-tab-bar.stories';
-import { default as modalMeta, Playground as modal_Playground, Demo as modal_Demo, WithHeader as modal_WithHeader } from '@/components/ui/modal.stories';
+import { default as modalMeta, Playground as modal_Playground, Demo as modal_Demo, WithHeader as modal_WithHeader, Pattern as modal_Pattern } from '@/components/ui/modal.stories';
 import { default as paginationMeta, Playground as pagination_Playground, Demo as pagination_Demo, Rounded as pagination_Rounded, Group as pagination_Group, AsLink as pagination_AsLink } from '@/components/ui/pagination.stories';
 import { default as passwordInputMeta, Playground as passwordInput_Playground, Default as passwordInput_Default, WithStrength as passwordInput_WithStrength, Sizes as passwordInput_Sizes, ErrorState as passwordInput_ErrorState, WithFormField as passwordInput_WithFormField } from '@/components/ui/password-input.stories';
 import { default as phoneInputMeta, Playground as phoneInput_Playground, Default as phoneInput_Default, Controlled as phoneInput_Controlled, Sizes as phoneInput_Sizes, ErrorState as phoneInput_ErrorState, Disabled as phoneInput_Disabled, WithFormField as phoneInput_WithFormField } from '@/components/ui/phone-input.stories';
@@ -638,7 +638,8 @@ export const storyRegistry: Record<string, {
     stories: {
     'Playground': modal_Playground,
     'Demo': modal_Demo,
-    'WithHeader': modal_WithHeader
+    'WithHeader': modal_WithHeader,
+    'Pattern': modal_Pattern
     }
   },
   'pagination': {

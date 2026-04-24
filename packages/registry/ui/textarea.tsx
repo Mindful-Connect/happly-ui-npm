@@ -105,7 +105,14 @@ type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
 
 const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
-    { containerClassName, children, hasError, simple, maxResizeHeight, ...rest },
+    {
+      containerClassName,
+      children,
+      hasError,
+      simple,
+      maxResizeHeight,
+      ...rest
+    },
     forwardedRef
   ) => {
     const formField = useFormField();
