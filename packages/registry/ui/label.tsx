@@ -102,7 +102,10 @@ function LabelInfo({
     <Tooltip.Provider>
       <Tooltip.Root delayDuration={30}>
         <Tooltip.Trigger asChild>
-          <button type='button' className='ml-px inline-flex align-middle'>
+          <button
+            type='button'
+            className='-mt-0.5 ml-px inline-flex align-middle'
+          >
             <LabelInfoIcon className={iconClassName} />
           </button>
         </Tooltip.Trigger>
