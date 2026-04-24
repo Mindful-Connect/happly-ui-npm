@@ -415,6 +415,7 @@ const ComboBoxSearchTrigger = React.forwardRef<
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
               disabled={ctx.disabled}
+              className='cursor-pointer'
             />
             {!ctx.preview && (
               <Input.Icon
