@@ -16,7 +16,7 @@ const LabelRoot = React.forwardRef<
     <LabelPrimitives.Root
       ref={forwardedRef}
       className={cn(
-        'group text-label-sm text-text-strong-950 cursor-pointer',
+        'group text-label-sm text-text-strong-950 cursor-default',
         'inline',
         // disabled
         'aria-disabled:text-text-disabled-300',
