@@ -397,7 +397,7 @@ const ComboBoxSearchTrigger = React.forwardRef<
           hasError={ctx.hasError}
           className={className}
         >
-          <Input.Wrapper>
+          <Input.Wrapper className='cursor-pointer'>
             <Input.Icon as={leadingIcon} />
             <Input.Input
               ref={forwardedRef}
