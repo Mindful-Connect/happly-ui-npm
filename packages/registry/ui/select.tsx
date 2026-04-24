@@ -20,6 +20,7 @@ export const selectVariants = tv({
       'text-paragraph-sm text-text-strong-950',
       'flex items-center text-left',
       'transition duration-200 ease-out',
+      'cursor-pointer',
       // hover
       'hover:bg-bg-weak-50 hover:ring-transparent',
       // hover override inside section toggle (bg-weak-50 clashes with toggle bg)
