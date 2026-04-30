@@ -27,6 +27,7 @@ import { default as drawerMeta, Playground as drawer_Playground, Basic as drawer
 import { default as dropdownMeta, Default as dropdown_Default, WithGroups as dropdown_WithGroups, WithHeaderAndFooter as dropdown_WithHeaderAndFooter, WithErrorItem as dropdown_WithErrorItem, WithDisabledItems as dropdown_WithDisabledItems, SubMenu as dropdown_SubMenu, Composed as dropdown_Composed, ComposedWithHeaderFooter as dropdown_ComposedWithHeaderFooter, ComposedWithLabels as dropdown_ComposedWithLabels, ComposedWithLinks as dropdown_ComposedWithLinks } from '@/components/ui/dropdown.stories';
 import { default as emojiDialogMeta, Playground as emojiDialog_Playground, Default as emojiDialog_Default, DeleteConfirmation as emojiDialog_DeleteConfirmation, UnsavedChanges as emojiDialog_UnsavedChanges, SuccessConfirmation as emojiDialog_SuccessConfirmation, WithFormContent as emojiDialog_WithFormContent, WithFloatingMemojis as emojiDialog_WithFloatingMemojis, StaticNoAnimations as emojiDialog_StaticNoAnimations, CustomEmojiArea as emojiDialog_CustomEmojiArea } from '@/components/ui/emoji-dialog.stories';
 import { default as emptyStateMeta, Default as emptyState_Default, WithTitle as emptyState_WithTitle, SearchNoResults as emptyState_SearchNoResults, NoFiles as emptyState_NoFiles, WithMultipleActions as emptyState_WithMultipleActions, Unbounded as emptyState_Unbounded, Sizes as emptyState_Sizes, Filled as emptyState_Filled, Composed as emptyState_Composed } from '@/components/ui/empty-state.stories';
+import { default as fadeScrollMeta, Vertical as fadeScroll_Vertical, Horizontal as fadeScroll_Horizontal, VerticalList as fadeScroll_VerticalList, CustomFadeSize as fadeScroll_CustomFadeSize, NoOverflow as fadeScroll_NoOverflow } from '@/components/ui/fade-scroll.stories';
 import { default as fancyButtonMeta, Playground as fancyButton_Playground, Variants as fancyButton_Variants, WithIcon as fancyButton_WithIcon, Sizes as fancyButton_Sizes, Disabled as fancyButton_Disabled, AsChild as fancyButton_AsChild } from '@/components/ui/fancy-button.stories';
 import { default as fileCardMeta, UploadStates as fileCard_UploadStates, CompletedMediaTypes as fileCard_CompletedMediaTypes, Download as fileCard_Download, Compact as fileCard_Compact, Item as fileCard_Item, ItemDownload as fileCard_ItemDownload, ItemCompact as fileCard_ItemCompact } from '@/components/ui/file-card.stories';
 import { default as fileFormatIconMeta, Default as fileFormatIcon_Default, Colors as fileFormatIcon_Colors, Sizes as fileFormatIcon_Sizes } from '@/components/ui/file-format-icon.stories';
@@ -66,6 +67,7 @@ import { default as sliderMeta, Playground as slider_Playground, Demo as slider_
 import { default as socialsInputMeta, Default as socialsInput_Default, WithExistingValues as socialsInput_WithExistingValues, AllSocials as socialsInput_AllSocials, CustomSocials as socialsInput_CustomSocials, ReadOnly as socialsInput_ReadOnly, WithFormField as socialsInput_WithFormField, ErrorState as socialsInput_ErrorState, CustomLabels as socialsInput_CustomLabels } from '@/components/ui/socials-input.stories';
 import { default as statusBadgeMeta, Playground as statusBadge_Playground, Completed as statusBadge_Completed, Pending as statusBadge_Pending, Failed as statusBadge_Failed, Disabled as statusBadge_Disabled, AsChild as statusBadge_AsChild } from '@/components/ui/status-badge.stories';
 import { default as statusIndicatorMeta, TopVariants as statusIndicator_TopVariants, BottomVariants as statusIndicator_BottomVariants } from '@/components/ui/status-indicator.stories';
+import { default as stepIndicatorMeta, FirstStepActive as stepIndicator_FirstStepActive, MidProgress as stepIndicator_MidProgress, LastStepActive as stepIndicator_LastStepActive, AllCompleted as stepIndicator_AllCompleted, Compound as stepIndicator_Compound, Clickable as stepIndicator_Clickable, CustomRailColors as stepIndicator_CustomRailColors } from '@/components/ui/step-indicator.stories';
 import { default as switchToggleMeta, Default as switchToggle_Default, Rounded as switchToggle_Rounded, GroupDefault as switchToggle_GroupDefault, GroupTextOnly as switchToggle_GroupTextOnly } from '@/components/ui/switch-toggle.stories';
 import { default as switchMeta, Playground as switch_Playground, Demo as switch_Demo, Variants as switch_Variants, Disabled as switch_Disabled, WithLabel as switch_WithLabel, WithLabelExtended as switch_WithLabelExtended, WithFormField as switch_WithFormField } from '@/components/ui/switch.stories';
 import { default as tabMenuHorizontalMeta, Default as tabMenuHorizontal_Default, Primary as tabMenuHorizontal_Primary, WithIcons as tabMenuHorizontal_WithIcons, WithCounter as tabMenuHorizontal_WithCounter, Composed as tabMenuHorizontal_Composed, Overflow as tabMenuHorizontal_Overflow, Disabled as tabMenuHorizontal_Disabled } from '@/components/ui/tab-menu-horizontal.stories';
@@ -396,6 +398,16 @@ export const storyRegistry: Record<string, {
     'Sizes': emptyState_Sizes,
     'Filled': emptyState_Filled,
     'Composed': emptyState_Composed
+    }
+  },
+  'fade-scroll': {
+    meta: fadeScrollMeta,
+    stories: {
+    'Vertical': fadeScroll_Vertical,
+    'Horizontal': fadeScroll_Horizontal,
+    'VerticalList': fadeScroll_VerticalList,
+    'CustomFadeSize': fadeScroll_CustomFadeSize,
+    'NoOverflow': fadeScroll_NoOverflow
     }
   },
   'fancy-button': {
@@ -839,6 +851,18 @@ export const storyRegistry: Record<string, {
     stories: {
     'TopVariants': statusIndicator_TopVariants,
     'BottomVariants': statusIndicator_BottomVariants
+    }
+  },
+  'step-indicator': {
+    meta: stepIndicatorMeta,
+    stories: {
+    'FirstStepActive': stepIndicator_FirstStepActive,
+    'MidProgress': stepIndicator_MidProgress,
+    'LastStepActive': stepIndicator_LastStepActive,
+    'AllCompleted': stepIndicator_AllCompleted,
+    'Compound': stepIndicator_Compound,
+    'Clickable': stepIndicator_Clickable,
+    'CustomRailColors': stepIndicator_CustomRailColors
     }
   },
   'switch-toggle': {

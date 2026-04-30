@@ -172,6 +172,12 @@
       "description": "A centered placeholder for empty listing pages with an opinionated icon, text, and optional actions. Uses namespace exports: EmptyState.Root, EmptyState.Icon, EmptyState.Title, EmptyState.Description, EmptyState.Actions, EmptyState.Composed."
     },
     {
+      "name": "fade-scroll",
+      "type": "registry:ui",
+      "title": "Fade Scroll",
+      "description": "An edge-fade scroll container that hides the native scrollbar and replaces it with soft gradient fades on the edges that still have content to reveal. Works in both vertical and horizontal orientations. Uses namespace exports: FadeScroll.Root."
+    },
+    {
       "name": "fancy-button",
       "type": "registry:ui",
       "title": "Fancy Button",
@@ -434,6 +440,12 @@
       "type": "registry:ui",
       "title": "Status Indicator",
       "description": "A versatile status indicator for avatars supporting top (verified, pin, favorite, add, remove, notification) and bottom (online, offline, busy, away, company) positions."
+    },
+    {
+      "name": "step-indicator",
+      "type": "registry:ui",
+      "title": "Step Indicator",
+      "description": "A vertical step indicator with a continuous 18px-wide rail, per-step icons, status-aware fill, and a right-side completion adornment (green check / progress ring / empty circle). Composes ProgressCircle for active steps. Uses namespace exports: StepIndicator.Root, StepIndicator.Item, StepIndicator.Composed."
     },
     {
       "name": "switch",

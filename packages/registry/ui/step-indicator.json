@@ -1,0 +1,126 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "step-indicator",
+  "type": "registry:ui",
+  "title": "Step Indicator",
+  "description": "A vertical step indicator with a continuous 18px-wide rail, per-step icons, status-aware fill, and a right-side completion adornment (green check / progress ring / empty circle). Composes ProgressCircle for active steps. Uses namespace exports: StepIndicator.Root, StepIndicator.Item, StepIndicator.Composed.",
+  "version": "1.0.0",
+  "dependencies": ["@remixicon/react"],
+  "registryDependencies": ["happly-ui-utils", "progress-circle"],
+  "docs": {
+    "lead": "A vertical step indicator that shows progress through a multi-step flow. The rail is an 18px-wide capsule that fills from the top down to the last non-pending step, with rounded caps at both ends and at every filled→unfilled transition. Each row shows a status-aware right-side indicator: success check, progress ring, or empty circle.",
+    "usage": "import * as StepIndicator from \"@/components/ui/step-indicator\"\nimport { RiUser3Fill, RiMoneyDollarCircleFill } from \"@remixicon/react\"\n\n<StepIndicator.Root>\n  <StepIndicator.Item\n    status=\"completed\"\n    icon={RiUser3Fill}\n    title=\"Capability & Fit\"\n    description=\"3 Questions\"\n  />\n  <StepIndicator.Item\n    status=\"active\"\n    progress={50}\n    icon={RiMoneyDollarCircleFill}\n    title=\"Offer Details\"\n    description=\"3 Questions\"\n  />\n</StepIndicator.Root>",
+    "examples": [
+      {
+        "title": "First Step Active",
+        "description": "The flow has just started — only the first step is active, the rest are pending. The rail shows a small filled cap at the top with rounded ends.",
+        "code": "<StepIndicator.Composed\n  items={[\n    { status: 'active', progress: 30, icon: RiUser3Fill, title: 'Capability & Fit', description: '3 Questions' },\n    { status: 'pending', icon: RiMoneyDollarCircleFill, title: 'Offer Details', description: '3 Questions' },\n    { status: 'pending', icon: RiQuestionFill, title: 'Financing & Readiness', description: '4 Questions' },\n    { status: 'pending', icon: RiFileFill, title: 'Supporting Documents', description: '2 Questions' },\n  ]}\n/>",
+        "stories": ["FirstStepActive"]
+      },
+      {
+        "title": "Mid Progress",
+        "description": "First step completed, second step active. The filled rail extends from the top through the active step and ends with a rounded cap; the gray track resumes below with a rounded top.",
+        "code": "<StepIndicator.Composed\n  items={[\n    { status: 'completed', icon: RiUser3Fill, title: 'Capability & Fit', description: '3 Questions' },\n    { status: 'active', progress: 50, icon: RiMoneyDollarCircleFill, title: 'Offer Details', description: '3 Questions' },\n    { status: 'pending', icon: RiQuestionFill, title: 'Financing & Readiness', description: '4 Questions' },\n    { status: 'pending', icon: RiFileFill, title: 'Supporting Documents', description: '2 Questions' },\n  ]}\n/>",
+        "stories": ["MidProgress"]
+      },
+      {
+        "title": "Last Step Active",
+        "description": "Most steps completed, the final step is active. The rail extends through every position and the last step shows a progress ring on the right.",
+        "code": "<StepIndicator.Composed\n  items={[\n    { status: 'completed', icon: RiUser3Fill, title: 'Capability & Fit', description: '3 Questions' },\n    { status: 'completed', icon: RiMoneyDollarCircleFill, title: 'Offer Details', description: '3 Questions' },\n    { status: 'completed', icon: RiQuestionFill, title: 'Financing & Readiness', description: '4 Questions' },\n    { status: 'active', progress: 70, icon: RiFileFill, title: 'Supporting Documents', description: '2 Questions' },\n  ]}\n/>",
+        "stories": ["LastStepActive"]
+      },
+      {
+        "title": "All Completed",
+        "description": "Every step is done — the rail is fully filled and every right-side adornment shows the success check.",
+        "code": "<StepIndicator.Composed\n  items={[\n    { status: 'completed', icon: RiUser3Fill, title: 'Capability & Fit', description: '3 Questions' },\n    { status: 'completed', icon: RiMoneyDollarCircleFill, title: 'Offer Details', description: '3 Questions' },\n    { status: 'completed', icon: RiQuestionFill, title: 'Financing & Readiness', description: '4 Questions' },\n    { status: 'completed', icon: RiFileFill, title: 'Supporting Documents', description: '2 Questions' },\n  ]}\n/>",
+        "stories": ["AllCompleted"]
+      },
+      {
+        "title": "Compound API",
+        "description": "Use Root + Item directly for full control over each row (e.g., individual click handlers, per-row classes).",
+        "code": "<StepIndicator.Root>\n  <StepIndicator.Item status=\"completed\" icon={RiUser3Fill} title=\"Capability & Fit\" description=\"3 Questions\" />\n  <StepIndicator.Item status=\"active\" progress={50} icon={RiMoneyDollarCircleFill} title=\"Offer Details\" description=\"3 Questions\" />\n  <StepIndicator.Item status=\"pending\" icon={RiQuestionFill} title=\"Financing & Readiness\" description=\"4 Questions\" />\n  <StepIndicator.Item status=\"pending\" icon={RiFileFill} title=\"Supporting Documents\" description=\"2 Questions\" />\n</StepIndicator.Root>",
+        "stories": ["Compound"]
+      },
+      {
+        "title": "Custom Rail Colors",
+        "description": "Override the filled and unfilled rail Tailwind classes via railFilledClassName and railTrackClassName to retheme the indicator.",
+        "code": "<StepIndicator.Composed\n  railFilledClassName=\"bg-information-base\"\n  railTrackClassName=\"bg-bg-weak-50\"\n  items={items}\n/>",
+        "stories": ["CustomRailColors"]
+      }
+    ],
+    "api": [
+      {
+        "name": "StepIndicator.Root",
+        "description": "Container that computes rail-fill state from its Item children and threads it down via cloneElement. Forwards a ref to the underlying div and accepts standard div props.",
+        "props": [
+          {
+            "name": "railFilledClassName",
+            "type": "string",
+            "default": "'bg-primary-base'",
+            "description": "Tailwind class for the filled rail and the icon bulge of non-pending steps. Override to retheme."
+          },
+          {
+            "name": "railTrackClassName",
+            "type": "string",
+            "default": "'bg-bg-soft-200'",
+            "description": "Tailwind class for the unfilled rail track and pending icon bulges."
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "description": "Additional class names. Default is `flex w-full flex-col` (no gap — gaps are inside each Item so the rail reads as one continuous capsule)."
+          }
+        ]
+      },
+      {
+        "name": "StepIndicator.Item",
+        "description": "A single row in the indicator. Reads its position from Root via cloneElement-injected props to render the correct rail-fill state. Must be a direct child of Root (or rendered via Composed).",
+        "props": [
+          {
+            "name": "status",
+            "type": "'pending' | 'active' | 'completed'",
+            "description": "Drives the rail bulge color, the right-side adornment, and the rail-fill computation in Root."
+          },
+          {
+            "name": "icon",
+            "type": "React.ElementType",
+            "description": "Icon component (e.g. from @remixicon/react) rendered inside the rail bulge at 12px. Required."
+          },
+          {
+            "name": "title",
+            "type": "ReactNode",
+            "description": "Primary label shown in the content column."
+          },
+          {
+            "name": "description",
+            "type": "ReactNode",
+            "description": "Secondary line under the title (e.g. '3 Questions', a date, or a hint)."
+          },
+          {
+            "name": "progress",
+            "type": "number",
+            "default": "50",
+            "description": "Progress 0–100 used by the right-side ProgressCircle when status is 'active'. Ignored otherwise."
+          }
+        ]
+      },
+      {
+        "name": "StepIndicator.Composed",
+        "description": "Data-driven shorthand that renders Root + Item from an items array. Accepts all Root props plus an `items` array.",
+        "props": [
+          {
+            "name": "items",
+            "type": "{ status: 'pending' | 'active' | 'completed'; icon: React.ElementType; title: ReactNode; description?: ReactNode; progress?: number; onClick?: (e: MouseEvent) => void }[]",
+            "description": "Array of step definitions, rendered in order."
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/step-indicator.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}
