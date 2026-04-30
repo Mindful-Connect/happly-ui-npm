@@ -103,10 +103,12 @@ function main() {
     'dot-stepper',
     'menu-tab-bar',
     'pagination',
+    'step-indicator',
   ];
 
   const LAYOUT_COMPONENTS = [
     'accordion',
+    'fade-scroll',
     'switch-toggle',
     'tab-menu-horizontal',
   ];
