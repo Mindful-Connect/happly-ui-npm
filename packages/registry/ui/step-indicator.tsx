@@ -312,7 +312,7 @@ const StepIndicatorItem = React.forwardRef<HTMLDivElement, StepIndicatorItemProp
           className={cn(
             'group/step flex min-w-0 items-center justify-between gap-3 rounded-md py-2 outline-none transition-colors',
             interactive &&
-              'cursor-pointer hover:bg-bg-weak-50 focus-visible:bg-bg-weak-50 focus-visible:ring-2 focus-visible:ring-stroke-strong-950'
+              'cursor-pointer'
           )}
           onClick={
             interactive
