@@ -46,7 +46,13 @@ function SectionToggleHeader({
 }: SectionToggleHeaderProps) {
   return (
     <div
-      className={cn('flex items-start gap-3.5 p-2', className)}
+      className={cn(
+        'flex items-start gap-3.5 p-2',
+        // When open, drop the bottom padding so the gap to content matches
+        // Figma's gap-[16px] (Content's pt-4 alone provides the 16px).
+        open && 'pb-0',
+        className
+      )}
       {...(!open &&
         onOpenChange && {
           role: 'button',

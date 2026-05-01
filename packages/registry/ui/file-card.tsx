@@ -53,6 +53,7 @@ const FileCardThumbnail = React.forwardRef<
       ref={forwardedRef}
       className={cn(
         'bg-bg-weak-50 flex h-[104px] w-full shrink-0 items-center justify-center overflow-clip @sm:w-44',
+        '[&>svg]:h-14 [&>svg]:w-14',
         className
       )}
       {...rest}
@@ -335,7 +336,7 @@ const FileCardRemoveButton = React.forwardRef<
     <Button.Root
       ref={forwardedRef}
       variant='error'
-      mode='stroke'
+      mode='lighter'
       size='xsmall'
       className={className}
       {...rest}

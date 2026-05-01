@@ -68,7 +68,7 @@ const SwitchToggleTrigger = React.forwardRef<
       className={cn(
         // base
         'peer',
-        'text-label-sm text-text-soft-400 relative z-10 h-7 rounded-full px-3 whitespace-nowrap outline-none',
+        'text-label-sm text-text-sub-600 relative z-10 h-7 rounded-full px-3 whitespace-nowrap outline-none',
         'flex items-center justify-center gap-1.5',
         'transition duration-300 ease-out',
         // focus
