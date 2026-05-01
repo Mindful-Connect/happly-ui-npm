@@ -43,6 +43,12 @@
         "stories": ["CustomToggle"]
       },
       {
+        "title": "Flag Toggle",
+        "description": "Compact flag-only variant of the language toggle. Pass `DEFAULT_FLAG_TOGGLE_ITEMS` for a more visually lightweight switch (flags sourced from the same circle-flags library used by the currency-input component).",
+        "code": "<MarkdownEditor.Composed\n  toggleItems={MarkdownEditor.DEFAULT_FLAG_TOGGLE_ITEMS}\n  defaultToggleValue=\"en\"\n/>",
+        "stories": ["FlagToggle"]
+      },
+      {
         "title": "Compound",
         "description": "Full compound mode with custom toolbar layout using the useMarkdownFormatting hook.",
         "code": "const [previewing, setPreviewing] = useState(false);\nconst [value, setValue] = useState('');\nconst ref = useRef<HTMLTextAreaElement>(null);\nconst format = MarkdownEditor.useMarkdownFormatting(ref, setValue);\n\n<MarkdownEditor.Root previewing={previewing}>\n  <MarkdownEditor.Toolbar>\n    <MarkdownEditor.ToolbarGroup>\n      <MarkdownEditor.ToolbarButton onClick={() => format('bold')}>B</MarkdownEditor.ToolbarButton>\n    </MarkdownEditor.ToolbarGroup>\n    <MarkdownEditor.Toggle items={MarkdownEditor.DEFAULT_TOGGLE_ITEMS} defaultValue=\"en\" />\n  </MarkdownEditor.Toolbar>\n  <MarkdownEditor.Content ref={ref} value={value} onChange={(e) => setValue(e.target.value)} />\n</MarkdownEditor.Root>",

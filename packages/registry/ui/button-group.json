@@ -18,6 +18,18 @@
         "stories": ["Default"]
       },
       {
+        "title": "Icons Only",
+        "description": "Compact icon-only button group with px-3 py-2 (12 horizontal, 8 vertical) padding. Override the icon's default -mx-2 (which hugs an adjacent text label) so the icon sits centered in the padded area.",
+        "code": "<ButtonGroup.Root>\n  <ButtonGroup.Item className=\"px-3\" aria-label=\"Bold\">\n    <ButtonGroup.Icon as={RiBold} className=\"mx-0\" />\n  </ButtonGroup.Item>\n  <ButtonGroup.Item className=\"px-3\" aria-label=\"Italic\">\n    <ButtonGroup.Icon as={RiItalic} className=\"mx-0\" />\n  </ButtonGroup.Item>\n  <ButtonGroup.Item className=\"px-3\" aria-label=\"Underline\">\n    <ButtonGroup.Icon as={RiUnderline} className=\"mx-0\" />\n  </ButtonGroup.Item>\n</ButtonGroup.Root>",
+        "stories": ["IconsOnly"]
+      },
+      {
+        "title": "Text Only",
+        "description": "Text-only button group with px-4 py-2 (16 horizontal, 8 vertical) padding — matches the default small variant.",
+        "code": "<ButtonGroup.Root>\n  <ButtonGroup.Item>Day</ButtonGroup.Item>\n  <ButtonGroup.Item>Week</ButtonGroup.Item>\n  <ButtonGroup.Item>Month</ButtonGroup.Item>\n</ButtonGroup.Root>",
+        "stories": ["TextOnly"]
+      },
+      {
         "title": "Sizes",
         "description": "Button groups come in small (default), xsmall, and xxsmall sizes.",
         "code": "<ButtonGroup.Root size=\"small\">...</ButtonGroup.Root>\n<ButtonGroup.Root size=\"xsmall\">...</ButtonGroup.Root>\n<ButtonGroup.Root size=\"xxsmall\">...</ButtonGroup.Root>",
