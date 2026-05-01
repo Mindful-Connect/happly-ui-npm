@@ -321,6 +321,20 @@ function ToolbarGroup({ className, children, ...rest }: ToolbarGroupProps) {
 }
 ToolbarGroup.displayName = 'MarkdownEditorToolbarGroup';
 
+type ToolbarSeparatorProps = React.HTMLAttributes<HTMLDivElement>;
+
+function ToolbarSeparator({ className, ...rest }: ToolbarSeparatorProps) {
+  return (
+    <div
+      role='separator'
+      aria-orientation='vertical'
+      className={cn('bg-stroke-soft-200 mx-1 h-4 w-px', className)}
+      {...rest}
+    />
+  );
+}
+ToolbarSeparator.displayName = 'MarkdownEditorToolbarSeparator';
+
 // ---------------------------------------------------------------------------
 // Toggle
 // ---------------------------------------------------------------------------
@@ -468,6 +482,37 @@ const DEFAULT_TOOLBAR_ICONS = [
 const DEFAULT_TOGGLE_ITEMS: SwitchToggleGroupItem[] = [
   { value: 'en', label: 'English' },
   { value: 'fr', label: 'French' },
+];
+
+/**
+ * Compact flag-only variant of the language toggle. Pass via
+ * `toggleItems={DEFAULT_FLAG_TOGGLE_ITEMS}` for a more visually lightweight
+ * switch. Flags sourced from the same circle-flags library used by the
+ * currency-input component.
+ */
+const DEFAULT_FLAG_TOGGLE_ITEMS: SwitchToggleGroupItem[] = [
+  {
+    value: 'en',
+    label: (
+      <img
+        src='https://mindful-connect.github.io/circle-flags/flags/ca.svg'
+        alt='English'
+        aria-label='English'
+        className='h-5 w-5 shrink-0 rounded-full transition-[filter,opacity] duration-200 [[data-state=inactive]_&]:grayscale [[data-state=inactive]_&]:opacity-60'
+      />
+    ),
+  },
+  {
+    value: 'fr',
+    label: (
+      <img
+        src='https://mindful-connect.github.io/circle-flags/flags/fr.svg'
+        alt='French'
+        aria-label='French'
+        className='h-5 w-5 shrink-0 rounded-full transition-[filter,opacity] duration-200 [[data-state=inactive]_&]:grayscale [[data-state=inactive]_&]:opacity-60'
+      />
+    ),
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -682,6 +727,7 @@ function ComposedSingle({
               <Icon className='h-5 w-5' />
             </ToolbarButton>
           ))}
+          <ToolbarSeparator />
           <ToolbarButton
             onClick={() => setPreviewing((p) => !p)}
             tooltip={previewing ? 'Edit' : 'Preview'}
@@ -826,6 +872,7 @@ function ComposedMulti({
               <Icon className='h-5 w-5' />
             </ToolbarButton>
           ))}
+          <ToolbarSeparator />
           <ToolbarButton
             onClick={() => setPreviewing((p) => !p)}
             tooltip={previewing ? 'Edit' : 'Preview'}
@@ -862,10 +909,12 @@ export {
   Toolbar,
   ToolbarButton,
   ToolbarGroup,
+  ToolbarSeparator,
   Toggle,
   Content,
   Composed,
   DEFAULT_TOGGLE_ITEMS,
+  DEFAULT_FLAG_TOGGLE_ITEMS,
   useMarkdownEditorContext,
   useMarkdownFormatting,
   renderMarkdown,
@@ -876,6 +925,7 @@ export type {
   ToolbarProps,
   ToolbarButtonProps,
   ToolbarGroupProps,
+  ToolbarSeparatorProps,
   ToggleProps,
   ContentProps,
   ComposedProps,

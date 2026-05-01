@@ -82,6 +82,22 @@ export const CustomToggle = {
 };
 
 // ---------------------------------------------------------------------------
+// Flag toggle (compact)
+// ---------------------------------------------------------------------------
+
+export const FlagToggle = {
+  render: () => (
+    <div className='w-full min-w-[560px]'>
+      <MarkdownEditor.Composed
+        placeholder='Editor with flag-only language toggle...'
+        toggleItems={MarkdownEditor.DEFAULT_FLAG_TOGGLE_ITEMS}
+        defaultToggleValue='en'
+      />
+    </div>
+  ),
+};
+
+// ---------------------------------------------------------------------------
 // Compound (manual wiring)
 // ---------------------------------------------------------------------------
 

@@ -8,8 +8,8 @@ import type { PolymorphicComponentProps } from '@/lib/polymorphic';
 
 const DocumentUploadIcon = () => (
   <svg
-    width='81'
-    height='54'
+    width='97'
+    height='65'
     viewBox='0 0 81 54'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
@@ -126,8 +126,8 @@ const DocumentUploadIcon = () => (
 
 const ImageUploadIcon = () => (
   <svg
-    width='88'
-    height='56'
+    width='106'
+    height='67'
     viewBox='0 0 88 56'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
@@ -205,8 +205,8 @@ const ImageUploadIcon = () => (
 
 const VideoUploadIcon = () => (
   <svg
-    width='78'
-    height='54'
+    width='94'
+    height='65'
     viewBox='0 0 78 54'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
@@ -329,8 +329,8 @@ const VideoUploadIcon = () => (
 
 const AudioUploadIcon = () => (
   <svg
-    width='111'
-    height='62'
+    width='133'
+    height='74'
     viewBox='0 0 111 62'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
@@ -540,8 +540,8 @@ const AudioUploadIcon = () => (
 
 const AttachmentUploadIcon = () => (
   <svg
-    width='81'
-    height='54'
+    width='97'
+    height='65'
     viewBox='0 0 81 54'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
@@ -692,6 +692,15 @@ const DROPZONE_PRESETS: Record<
 
 // ─── Compound components ─────────────────────────────────────────────────────
 
+// SVG-drawn dashed border so dash length/gap match the design spec instead of
+// browser defaults (which render dashes far too tight). stroke-width=2 because
+// half is clipped by the element edge, leaving a crisp 1px visible stroke.
+const dashedBorderImage = (hex: string) =>
+  `url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='100%25'%20height='100%25'%20fill='none'%3E%3Crect%20width='100%25'%20height='100%25'%20rx='12'%20ry='12'%20stroke='%23${hex}'%20stroke-width='2'%20stroke-dasharray='6%204'/%3E%3C/svg%3E")`;
+
+const DASHED_BORDER_DEFAULT = dashedBorderImage('CACFD8');
+const DASHED_BORDER_ACTIVE = dashedBorderImage('7D52F4');
+
 const FileUploadRoot = React.forwardRef<
   HTMLLabelElement,
   React.LabelHTMLAttributes<HTMLLabelElement> & {
@@ -700,7 +709,16 @@ const FileUploadRoot = React.forwardRef<
   }
 >(
   (
-    { className, asChild, dragging, onDragOver, onDragLeave, onDrop, ...rest },
+    {
+      className,
+      asChild,
+      dragging,
+      onDragOver,
+      onDragLeave,
+      onDrop,
+      style,
+      ...rest
+    },
     forwardedRef
   ) => {
     const Component = asChild ? Slot : 'label';
@@ -755,12 +773,18 @@ const FileUploadRoot = React.forwardRef<
         ref={forwardedRef}
         {...rest}
         className={cn(
-          'border-stroke-sub-300 bg-bg-white-0 flex w-full cursor-pointer flex-col items-center gap-5 rounded-xl border border-dashed p-8 text-center',
+          'bg-bg-white-0 flex w-full cursor-pointer flex-col items-center gap-5 rounded-xl p-8 text-center',
           'transition duration-200 ease-out',
           'hover:bg-bg-weak-50',
-          isDragging && 'border-primary-base bg-primary-alpha-10',
+          isDragging && 'bg-primary-alpha-10',
           className
         )}
+        style={{
+          backgroundImage: isDragging
+            ? DASHED_BORDER_ACTIVE
+            : DASHED_BORDER_DEFAULT,
+          ...style,
+        }}
         onDragOver={handleDragOver}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}

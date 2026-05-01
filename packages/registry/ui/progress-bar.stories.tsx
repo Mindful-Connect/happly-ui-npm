@@ -10,7 +10,7 @@ export const Playground = {
   args: {
     value: 50,
     max: 100,
-    color: 'blue',
+    color: 'primary',
   },
   argTypes: {
     value: { control: { type: 'range', min: 0, max: 100, step: 1 } },
@@ -43,7 +43,7 @@ export const WithLabel = {
   render: () => (
     <div className='w-96'>
       <div className='flex items-center gap-2'>
-        <ProgressBar.Root value={55} />
+        <ProgressBar.Root value={55} color='primary' />
         <span className='text-paragraph-xs text-text-sub-600'>55%</span>
       </div>
     </div>
@@ -60,7 +60,7 @@ export const DataStorage = {
           </span>
           <span className='text-paragraph-xs text-text-sub-600'>55%</span>
         </div>
-        <ProgressBar.Root value={55} />
+        <ProgressBar.Root value={55} color='primary' />
         <div className='text-paragraph-xs text-text-sub-600'>
           <LinkButton.Root variant='primary' underline>
             Upgrade

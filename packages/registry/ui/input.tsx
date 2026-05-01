@@ -93,6 +93,8 @@ export const inputVariants = tv({
       'group-has-[:placeholder-shown]:text-text-soft-400',
       // focus state
       'group-has-[:placeholder-shown]:group-has-[input:focus]:text-text-sub-600',
+      // disabled
+      'group-has-[input:disabled]/input-wrapper:text-text-disabled-300',
     ],
   },
   variants: {

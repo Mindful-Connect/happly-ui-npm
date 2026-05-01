@@ -3,6 +3,12 @@ import * as React from 'react';
 import { tv, type VariantProps } from '@/lib/tv';
 import * as KeyIcon from '@/components/ui/key-icon';
 
+// SVG-drawn dashed border so the dash pattern matches the design spec instead
+// of browser defaults. stroke-width=2 because half is clipped by the element
+// edge, leaving a crisp 1px visible stroke. Color: stroke-soft-200 (#EAECF0),
+// radius matches rounded-2xl (16px).
+const DASHED_BORDER_IMAGE = `url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='100%25'%20height='100%25'%20fill='none'%3E%3Crect%20width='100%25'%20height='100%25'%20rx='16'%20ry='16'%20stroke='%23EAECF0'%20stroke-width='2'%20stroke-dasharray='6%204'/%3E%3C/svg%3E")`;
+
 const EMPTY_STATE_ROOT_NAME = 'EmptyStateRoot';
 const EMPTY_STATE_ICON_NAME = 'EmptyStateIcon';
 const EMPTY_STATE_TITLE_NAME = 'EmptyStateTitle';
@@ -39,7 +45,7 @@ export const emptyStateVariants = tv({
     },
     bordered: {
       true: {
-        root: 'rounded-2xl border border-dashed border-stroke-soft-200',
+        root: 'rounded-2xl',
       },
       false: {},
     },
@@ -73,12 +79,19 @@ function EmptyStateRoot({
   size,
   bordered,
   filled,
+  style,
   ...rest
 }: EmptyStateRootProps) {
   const { root } = emptyStateVariants({ size, bordered, filled });
 
   return (
-    <div className={root({ class: className })} {...rest}>
+    <div
+      className={root({ class: className })}
+      style={
+        bordered ? { backgroundImage: DASHED_BORDER_IMAGE, ...style } : style
+      }
+      {...rest}
+    >
       {children}
     </div>
   );
@@ -96,7 +109,7 @@ function EmptyStateIcon({ icon, size = 'lg' }: EmptyStateIconProps) {
   return (
     <KeyIcon.Root
       size={size}
-      className='text-text-soft-400 shadow-regular-deep'
+      className='text-text-soft-400 shadow-regular-deep ring-0'
       icon={icon}
     />
   );

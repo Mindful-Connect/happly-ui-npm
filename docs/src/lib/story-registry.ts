@@ -10,7 +10,7 @@ import { default as avatarGroupMeta, Playground as avatarGroup_Playground, Size 
 import { default as avatarMeta, Playground as avatar_Playground, Color as avatar_Color, Size as avatar_Size, Text as avatar_Text, Placeholder as avatar_Placeholder, Status as avatar_Status, Notification as avatar_Notification, BrandLogo as avatar_BrandLogo, Verified as avatar_Verified, TopIndicators as avatar_TopIndicators, SquareRounded as avatar_SquareRounded, CustomPlaceholder as avatar_CustomPlaceholder, AsLink as avatar_AsLink } from '@/components/ui/avatar.stories';
 import { default as badgeMeta, Playground as badge_Playground, BadgeFilled as badge_BadgeFilled, BadgeLight as badge_BadgeLight, BadgeLighter as badge_BadgeLighter, BadgeStroke as badge_BadgeStroke, BadgeColors as badge_BadgeColors, Size as badge_Size, Square as badge_Square, WithIcon as badge_WithIcon, WithDot as badge_WithDot, Disabled as badge_Disabled, AsChild as badge_AsChild, GroupDefault as badge_GroupDefault, Group as badge_Group, GroupExpanded as badge_GroupExpanded } from '@/components/ui/badge.stories';
 import { default as bannerMeta, Playground as banner_Playground, Error as banner_Error, Warning as banner_Warning, Success as banner_Success, Information as banner_Information, Feature as banner_Feature, Primary as banner_Primary } from '@/components/ui/banner.stories';
-import { default as buttonGroupMeta, Playground as buttonGroup_Playground, Default as buttonGroup_Default, Sizes as buttonGroup_Sizes } from '@/components/ui/button-group.stories';
+import { default as buttonGroupMeta, Playground as buttonGroup_Playground, Default as buttonGroup_Default, IconsOnly as buttonGroup_IconsOnly, TextOnly as buttonGroup_TextOnly, Sizes as buttonGroup_Sizes } from '@/components/ui/button-group.stories';
 import { default as buttonMeta, Playground as button_Playground, PrimaryVariant as button_PrimaryVariant, NeutralVariant as button_NeutralVariant, SuccessVariant as button_SuccessVariant, WarningVariant as button_WarningVariant, ErrorVariant as button_ErrorVariant, Sizes as button_Sizes, Disabled as button_Disabled, WithIcon as button_WithIcon, FullWidth as button_FullWidth, AsChild as button_AsChild, Loading as button_Loading, LoadingInteractive as button_LoadingInteractive, Composition as button_Composition } from '@/components/ui/button.stories';
 import { default as checkboxMeta, Playground as checkbox_Playground, Demo as checkbox_Demo, Variants as checkbox_Variants, Disabled as checkbox_Disabled, WithLabel as checkbox_WithLabel, WithLabelExtended as checkbox_WithLabelExtended, WithFormField as checkbox_WithFormField } from '@/components/ui/checkbox.stories';
 import { default as colorPickerMeta, Playground as colorPicker_Playground, Demo as colorPicker_Demo, PopoverDemo as colorPicker_PopoverDemo, WithFormField as colorPicker_WithFormField } from '@/components/ui/color-picker.stories';
@@ -46,7 +46,7 @@ import { default as linkButtonMeta, Playground as linkButton_Playground, Variant
 import { default as loaderMeta, Playground as loader_Playground, Sizes as loader_Sizes, Colors as loader_Colors, Inline as loader_Inline, CustomStroke as loader_CustomStroke } from '@/components/ui/loader.stories';
 import { default as locationInputMeta, Playground as locationInput_Playground, Default as locationInput_Default } from '@/components/ui/location-input.stories';
 import { default as logoUploadMeta, Default as logoUpload_Default, WithLogo as logoUpload_WithLogo, Uploading as logoUpload_Uploading, UploadingWithPreview as logoUpload_UploadingWithPreview, Failed as logoUpload_Failed, CustomPreview as logoUpload_CustomPreview, UserAvatar as logoUpload_UserAvatar, Composed as logoUpload_Composed, WithFormField as logoUpload_WithFormField, ComposedWithLogo as logoUpload_ComposedWithLogo } from '@/components/ui/logo-upload.stories';
-import { default as markdownEditorMeta, Default as markdownEditor_Default, SingleLanguage as markdownEditor_SingleLanguage, ControlledMulti as markdownEditor_ControlledMulti, CustomToggle as markdownEditor_CustomToggle, Compound as markdownEditor_Compound, WithFormField as markdownEditor_WithFormField, WithError as markdownEditor_WithError, Disabled as markdownEditor_Disabled, WithDefaultContent as markdownEditor_WithDefaultContent } from '@/components/ui/markdown-editor.stories';
+import { default as markdownEditorMeta, Default as markdownEditor_Default, SingleLanguage as markdownEditor_SingleLanguage, ControlledMulti as markdownEditor_ControlledMulti, CustomToggle as markdownEditor_CustomToggle, FlagToggle as markdownEditor_FlagToggle, Compound as markdownEditor_Compound, WithFormField as markdownEditor_WithFormField, WithError as markdownEditor_WithError, Disabled as markdownEditor_Disabled, WithDefaultContent as markdownEditor_WithDefaultContent } from '@/components/ui/markdown-editor.stories';
 import { default as menuTabBarMeta, Default as menuTabBar_Default, Primary as menuTabBar_Primary, WithoutIcons as menuTabBar_WithoutIcons, Composed as menuTabBar_Composed, ScrollToSection as menuTabBar_ScrollToSection, Disabled as menuTabBar_Disabled } from '@/components/ui/menu-tab-bar.stories';
 import { default as modalMeta, Playground as modal_Playground, Demo as modal_Demo, WithHeader as modal_WithHeader, Pattern as modal_Pattern } from '@/components/ui/modal.stories';
 import { default as paginationMeta, Playground as pagination_Playground, Demo as pagination_Demo, Rounded as pagination_Rounded, Group as pagination_Group, AsLink as pagination_AsLink } from '@/components/ui/pagination.stories';
@@ -200,6 +200,8 @@ export const storyRegistry: Record<string, {
     stories: {
     'Playground': buttonGroup_Playground,
     'Default': buttonGroup_Default,
+    'IconsOnly': buttonGroup_IconsOnly,
+    'TextOnly': buttonGroup_TextOnly,
     'Sizes': buttonGroup_Sizes
     }
   },
@@ -627,6 +629,7 @@ export const storyRegistry: Record<string, {
     'SingleLanguage': markdownEditor_SingleLanguage,
     'ControlledMulti': markdownEditor_ControlledMulti,
     'CustomToggle': markdownEditor_CustomToggle,
+    'FlagToggle': markdownEditor_FlagToggle,
     'Compound': markdownEditor_Compound,
     'WithFormField': markdownEditor_WithFormField,
     'WithError': markdownEditor_WithError,

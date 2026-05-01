@@ -46,8 +46,10 @@ const Textarea = React.forwardRef<
             'placeholder:text-text-soft-400 placeholder:transition placeholder:duration-200 placeholder:ease-out placeholder:select-none',
             // hover placeholder
             'group-hover/textarea:placeholder:text-text-sub-600',
-            // focus
-            'focus:outline-none',
+            // focus — neutralize any upstream :focus ring/shadow bleed (the
+            // wrapper paints the focus ring; the element itself stays clean).
+            'focus:shadow-none focus:ring-0 focus:ring-offset-0 focus:outline-none',
+            'focus-visible:shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none',
             // focus placeholder
             'focus:placeholder:text-text-sub-600',
           ],
