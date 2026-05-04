@@ -158,6 +158,7 @@ interface LogoUploadItemProps {
   buttonLabel?: string;
   onButtonClick?: () => void;
   className?: string;
+  disabled?: boolean;
 }
 
 function LogoUploadItem({
@@ -171,6 +172,7 @@ function LogoUploadItem({
   buttonLabel = 'Change',
   onButtonClick,
   className,
+  disabled,
 }: LogoUploadItemProps) {
   return (
     <LogoUploadRoot className={className}>
@@ -195,6 +197,7 @@ function LogoUploadItem({
             mode='stroke'
             size='xsmall'
             onClick={onButtonClick}
+            disabled={disabled}
           >
             {buttonLabel}
           </Button.Root>

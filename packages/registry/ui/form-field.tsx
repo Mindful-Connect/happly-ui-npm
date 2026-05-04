@@ -27,6 +27,7 @@ type FormFieldRootProps = React.HTMLAttributes<HTMLDivElement> & {
   label?: React.ReactNode;
   htmlFor?: string;
   required?: boolean;
+  labelClassName?: string;
   labelSub?: React.ReactNode;
   labelSubParens?: boolean;
   labelInfo?: React.ReactNode;
@@ -43,6 +44,7 @@ function FormFieldRoot({
   label,
   htmlFor,
   required,
+  labelClassName,
   labelSub,
   labelSubParens,
   labelInfo,
@@ -88,6 +90,7 @@ function FormFieldRoot({
             subParens={labelSubParens}
             info={labelInfo}
             disabled={disabled}
+            className={labelClassName}
           >
             {label}
           </Label.Composed>

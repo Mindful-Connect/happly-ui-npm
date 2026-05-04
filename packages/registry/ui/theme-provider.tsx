@@ -365,4 +365,9 @@ ThemeProviderRoot.displayName = THEME_PROVIDER_ROOT_NAME;
 // Exports
 // ---------------------------------------------------------------------------
 
-export { ThemeProviderRoot as Root, generateScale, buildCssVars };
+export {
+  ThemeProviderRoot as Root,
+  generateScale,
+  buildCssVars,
+  contrastColor,
+};

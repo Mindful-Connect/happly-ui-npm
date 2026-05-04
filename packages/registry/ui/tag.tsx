@@ -28,7 +28,7 @@ export const tagVariants = tv({
     ],
     dismissButton: [
       // base
-      'group/dismiss-button -ml-1.5 -mr-1 w-4 h-4 shrink-0',
+      'group/dismiss-button -ml-1.5 -mr-1 w-4 h-4 shrink-0 hover:cursor-pointer',
       // focus
       'focus:outline-none',
     ],

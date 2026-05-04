@@ -397,7 +397,7 @@ const ComboBoxSearchTrigger = React.forwardRef<
           hasError={ctx.hasError}
           className={className}
         >
-          <Input.Wrapper>
+          <Input.Wrapper className='cursor-pointer'>
             <Input.Icon as={leadingIcon} />
             <Input.Input
               ref={forwardedRef}
@@ -415,6 +415,7 @@ const ComboBoxSearchTrigger = React.forwardRef<
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
               disabled={ctx.disabled}
+              className='cursor-pointer'
             />
             {!ctx.preview && (
               <Input.Icon
@@ -481,7 +482,10 @@ function ComboBoxContent({
       >
         {items}
       </ScrollAreaPrimitives.Viewport>
-      <ScrollAreaPrimitives.Scrollbar orientation='vertical'>
+      <ScrollAreaPrimitives.Scrollbar
+        orientation='vertical'
+        className='my-1.5 mr-0.5'
+      >
         <ScrollAreaPrimitives.Thumb className='bg-bg-soft-200 !w-1 rounded' />
       </ScrollAreaPrimitives.Scrollbar>
     </ScrollAreaPrimitives.Root>
@@ -584,7 +588,7 @@ function ComboBoxItem({
         }
       }}
       className={cn(
-        'text-paragraph-sm text-text-strong-950 relative flex w-full cursor-pointer items-center gap-2 rounded-[0.625rem] p-2 text-left select-none',
+        'text-paragraph-sm text-text-strong-950 relative flex w-full cursor-pointer items-center gap-2 rounded-[0.625rem] p-2 text-left font-medium select-none',
         'transition duration-200 ease-out outline-none',
         'hover:bg-bg-weak-50',
         isHighlighted && 'bg-bg-weak-50',

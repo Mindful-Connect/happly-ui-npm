@@ -60,6 +60,12 @@
             "description": "Tailwind stroke class for the progress ring color"
           },
           {
+            "name": "baseColor",
+            "type": "string",
+            "default": "'stroke-bg-soft-200'",
+            "description": "Tailwind class for the background ring color"
+          },
+          {
             "name": "children",
             "type": "ReactNode",
             "description": "Content displayed centered inside the circle"

@@ -16,7 +16,7 @@ const LabelRoot = React.forwardRef<
     <LabelPrimitives.Root
       ref={forwardedRef}
       className={cn(
-        'group text-label-sm text-text-strong-950 cursor-pointer',
+        'group text-label-sm text-text-strong-950 cursor-default',
         'inline',
         // disabled
         'aria-disabled:text-text-disabled-300',
@@ -100,9 +100,12 @@ function LabelInfo({
 }) {
   return (
     <Tooltip.Provider>
-      <Tooltip.Root>
+      <Tooltip.Root delayDuration={30}>
         <Tooltip.Trigger asChild>
-          <button type='button' className='ml-px inline-flex align-middle'>
+          <button
+            type='button'
+            className='-mt-0.5 ml-px inline-flex align-middle'
+          >
             <LabelInfoIcon className={iconClassName} />
           </button>
         </Tooltip.Trigger>

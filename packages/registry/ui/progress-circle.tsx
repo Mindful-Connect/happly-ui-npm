@@ -11,6 +11,7 @@ type ProgressCircleRootProps = Omit<React.SVGProps<SVGSVGElement>, 'value'> & {
   strokeWidth?: number;
   children?: React.ReactNode;
   color?: string;
+  baseColor?: string;
 };
 
 const ProgressCircleRoot = React.forwardRef<
@@ -26,6 +27,7 @@ const ProgressCircleRoot = React.forwardRef<
       className,
       children,
       color = 'stroke-primary-base',
+      baseColor = 'stroke-bg-soft-200',
       ...rest
     }: ProgressCircleRootProps,
     forwardedRef
@@ -60,7 +62,7 @@ const ProgressCircleRoot = React.forwardRef<
             cy={radius}
             strokeWidth={strokeWidth}
             fill='none'
-            className='stroke-bg-soft-200'
+            className={baseColor}
           />
           {safeValue >= 0 && (
             <circle
