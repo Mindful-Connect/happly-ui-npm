@@ -1,7 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import { RiChatSettingsLine, RiCheckboxCircleFill } from '@remixicon/react';
+import {
+  RiChatSettingsLine,
+  RiCheckboxCircleFill,
+  RiQuillPenLine,
+} from '@remixicon/react';
 
 import * as Button from './button';
 import * as Modal from './modal';
@@ -11,13 +15,27 @@ export default { title: 'Overlays/Modal', component: Modal.Root };
 export const Playground = {
   args: {
     showClose: true,
+    variant: 'default',
+    closeVariant: 'default',
   },
   argTypes: {
     showClose: { control: 'boolean' },
+    variant: {
+      control: 'radio',
+      options: ['default', 'pattern'],
+    },
+    closeVariant: {
+      control: 'radio',
+      options: ['default', 'badge'],
+    },
   },
   render: (args: any) => (
     <Modal.Root defaultOpen>
-      <Modal.Content showClose={args.showClose}>
+      <Modal.Content
+        showClose={args.showClose}
+        variant={args.variant}
+        closeVariant={args.closeVariant}
+      >
         <Modal.Body>
           <div className='text-label-md text-text-strong-950'>Modal Title</div>
           <div className='text-paragraph-sm text-text-sub-600'>
@@ -178,4 +196,60 @@ function WithHeaderRender() {
 
 export const WithHeader = {
   render: () => <WithHeaderRender />,
+};
+
+function PatternRender() {
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <Modal.Root open={open} onOpenChange={setOpen}>
+      <Modal.Trigger asChild>
+        <Button.Root
+          variant='neutral'
+          mode='stroke'
+          onClick={() => setOpen(true)}
+        >
+          Click to open
+        </Button.Root>
+      </Modal.Trigger>
+      <Modal.Content
+        variant='pattern'
+        closeVariant='badge'
+        className='max-w-[560px]'
+      >
+        <div className='flex flex-col items-start gap-6 p-10'>
+          <div className='bg-bg-white-0 ring-stroke-soft-200 shadow-regular-md flex h-14 w-14 shrink-0 items-center justify-center rounded-full ring-1 ring-inset'>
+            <RiQuillPenLine className='text-text-sub-600 h-7 w-7' />
+          </div>
+          <div className='space-y-2'>
+            <Modal.Title className='text-title-h6 text-text-strong-950'>
+              Confirm your intent before submitting
+            </Modal.Title>
+            <Modal.Description className='text-paragraph-sm text-text-sub-600'>
+              You are formally expressing interest in this business opportunity.
+            </Modal.Description>
+          </div>
+          <div className='flex w-full gap-3'>
+            <Modal.Close asChild>
+              <Button.Root
+                variant='neutral'
+                mode='stroke'
+                size='small'
+                className='flex-1'
+              >
+                Cancel
+              </Button.Root>
+            </Modal.Close>
+            <Button.Root size='small' className='flex-1'>
+              Continue
+            </Button.Root>
+          </div>
+        </div>
+      </Modal.Content>
+    </Modal.Root>
+  );
+}
+
+export const Pattern = {
+  render: () => <PatternRender />,
 };

@@ -237,8 +237,8 @@ function AppliedFiltersGroup({
   return (
     <>
       <div className='flex shrink-0 items-center gap-1'>
-        {GroupIcon && <GroupIcon className='h-5 w-5 text-text-soft-400' />}
-        <span className='whitespace-nowrap text-label-sm text-text-sub-600'>
+        {GroupIcon && <GroupIcon className='text-text-soft-400 h-5 w-5' />}
+        <span className='text-label-sm text-text-sub-600 whitespace-nowrap'>
           {group.label}
         </span>
       </div>
@@ -277,8 +277,8 @@ const AppliedFiltersCustomGroup = React.forwardRef<
         className={cn('flex shrink-0 items-center gap-1', className)}
         {...rest}
       >
-        {GroupIcon && <GroupIcon className='h-5 w-5 text-text-soft-400' />}
-        <span className='whitespace-nowrap text-label-sm text-text-sub-600'>
+        {GroupIcon && <GroupIcon className='text-text-soft-400 h-5 w-5' />}
+        <span className='text-label-sm text-text-sub-600 whitespace-nowrap'>
           {label}
         </span>
       </div>

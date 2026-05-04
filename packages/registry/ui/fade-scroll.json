@@ -1,0 +1,87 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "fade-scroll",
+  "type": "registry:ui",
+  "title": "Fade Scroll",
+  "description": "An edge-fade scroll container that hides the native scrollbar and replaces it with soft gradient fades on the edges that still have content to reveal. Works in both vertical and horizontal orientations. Uses namespace exports: FadeScroll.Root.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": ["happly-ui-utils"],
+  "docs": {
+    "lead": "A scroll container that swaps the native scrollbar for soft gradient edge fades. The fade only shows on edges that still have more content to reveal, and the component works in either vertical or horizontal orientation.",
+    "usage": "import * as FadeScroll from \"@/components/ui/fade-scroll\"\n\n<FadeScroll.Root className=\"h-64\">\n  {/* scrollable content */}\n</FadeScroll.Root>",
+    "examples": [
+      {
+        "title": "Vertical",
+        "description": "The default orientation. The top fade appears once you scroll past the first line; the bottom fade disappears at the end.",
+        "code": "<FadeScroll.Root className=\"h-64 max-w-md space-y-3\">\n  {paragraphs.map((p, i) => <p key={i}>{p}</p>)}\n</FadeScroll.Root>",
+        "stories": ["Vertical"]
+      },
+      {
+        "title": "Horizontal",
+        "description": "Set orientation='horizontal' and lay out children with flex/gap. Left and right fades replace the horizontal scrollbar.",
+        "code": "<FadeScroll.Root orientation=\"horizontal\" className=\"flex max-w-lg gap-3\">\n  {cards.map((c) => <Card key={c.id} {...c} />)}\n</FadeScroll.Root>",
+        "stories": ["Horizontal"]
+      },
+      {
+        "title": "Vertical List",
+        "description": "A scrollable list inside a bordered card. Children's natural size is preserved — the [&>*]:shrink-0 rule prevents flex/grid from compressing items below their content size.",
+        "code": "<FadeScroll.Root className=\"h-72 w-72 rounded-lg border\">\n  <ul>\n    {items.map((item) => <li key={item.id}>{item.label}</li>)}\n  </ul>\n</FadeScroll.Root>",
+        "stories": ["VerticalList"]
+      },
+      {
+        "title": "Custom Fade Size",
+        "description": "Override the fade distance with the fadeSize prop (in pixels). Smaller values give a sharper edge; larger values give a softer, more dramatic fade.",
+        "code": "<FadeScroll.Root orientation=\"horizontal\" fadeSize={64} className=\"flex max-w-lg gap-3\">\n  {items}\n</FadeScroll.Root>",
+        "stories": ["CustomFadeSize"]
+      },
+      {
+        "title": "No Overflow",
+        "description": "When the content fits inside the container, no fades render — the component is visually inert until scrolling becomes possible.",
+        "code": "<FadeScroll.Root className=\"h-64 max-w-md\">\n  <p>Short content that doesn't overflow.</p>\n</FadeScroll.Root>",
+        "stories": ["NoOverflow"]
+      }
+    ],
+    "api": [
+      {
+        "name": "FadeScroll.Root",
+        "description": "Scroll container with hidden native scrollbar and gradient mask fades on edges with overflowing content. Forwards a ref to the underlying div and accepts all standard div props (className, style, onScroll, etc.).",
+        "props": [
+          {
+            "name": "orientation",
+            "type": "'vertical' | 'horizontal'",
+            "default": "'vertical'",
+            "description": "Scroll axis. 'vertical' uses overflow-y-auto with top/bottom fades; 'horizontal' uses overflow-x-auto with left/right fades."
+          },
+          {
+            "name": "fadeSize",
+            "type": "number",
+            "default": "24",
+            "description": "Length of the gradient fade in pixels. Larger values produce a softer fade; smaller values produce a sharper edge."
+          },
+          {
+            "name": "className",
+            "type": "string",
+            "description": "Additional class names. Use this to set the container's height (vertical) or width (horizontal), padding, layout (flex/grid), and any other styling. Sizing is intentionally not opinionated."
+          },
+          {
+            "name": "style",
+            "type": "React.CSSProperties",
+            "description": "Inline styles. Merged with the mask styles applied internally — your styles take precedence on conflicting keys."
+          },
+          {
+            "name": "onScroll",
+            "type": "(event: React.UIEvent<HTMLDivElement>) => void",
+            "description": "Forwarded to the inner scroll div. Called after the internal scroll-state update so fades stay accurate."
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/fade-scroll.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

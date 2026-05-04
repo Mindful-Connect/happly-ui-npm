@@ -145,6 +145,7 @@ const columns: ColumnDef<Data>[] = [
         Member Name
         <button
           type='button'
+          className='cursor-pointer'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           {getSortingIcon(column.getIsSorted())}
@@ -176,6 +177,7 @@ const columns: ColumnDef<Data>[] = [
         Title
         <button
           type='button'
+          className='cursor-pointer'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           {getSortingIcon(column.getIsSorted())}
@@ -201,6 +203,7 @@ const columns: ColumnDef<Data>[] = [
         Status
         <button
           type='button'
+          className='cursor-pointer'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           {getSortingIcon(column.getIsSorted())}

@@ -309,14 +309,14 @@ export const badgeVariants = tv({
       size: 'small',
       square: true,
       class: {
-        root: 'min-w-[1.25rem] p-0.5',
+        root: 'min-w-[1.25rem] px-1.5 py-0.5',
       },
     },
     {
       size: 'medium',
       square: true,
       class: {
-        root: 'min-w-[1.5rem] p-1',
+        root: 'min-w-[1.5rem] px-2 py-1',
       },
     },
     //#endregion

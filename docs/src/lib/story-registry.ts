@@ -10,7 +10,7 @@ import { default as avatarGroupMeta, Playground as avatarGroup_Playground, Size 
 import { default as avatarMeta, Playground as avatar_Playground, Color as avatar_Color, Size as avatar_Size, Text as avatar_Text, Placeholder as avatar_Placeholder, Status as avatar_Status, Notification as avatar_Notification, BrandLogo as avatar_BrandLogo, Verified as avatar_Verified, TopIndicators as avatar_TopIndicators, SquareRounded as avatar_SquareRounded, CustomPlaceholder as avatar_CustomPlaceholder, AsLink as avatar_AsLink } from '@/components/ui/avatar.stories';
 import { default as badgeMeta, Playground as badge_Playground, BadgeFilled as badge_BadgeFilled, BadgeLight as badge_BadgeLight, BadgeLighter as badge_BadgeLighter, BadgeStroke as badge_BadgeStroke, BadgeColors as badge_BadgeColors, Size as badge_Size, Square as badge_Square, WithIcon as badge_WithIcon, WithDot as badge_WithDot, Disabled as badge_Disabled, AsChild as badge_AsChild, GroupDefault as badge_GroupDefault, Group as badge_Group, GroupExpanded as badge_GroupExpanded } from '@/components/ui/badge.stories';
 import { default as bannerMeta, Playground as banner_Playground, Error as banner_Error, Warning as banner_Warning, Success as banner_Success, Information as banner_Information, Feature as banner_Feature, Primary as banner_Primary } from '@/components/ui/banner.stories';
-import { default as buttonGroupMeta, Playground as buttonGroup_Playground, Default as buttonGroup_Default, Sizes as buttonGroup_Sizes } from '@/components/ui/button-group.stories';
+import { default as buttonGroupMeta, Playground as buttonGroup_Playground, Default as buttonGroup_Default, IconsOnly as buttonGroup_IconsOnly, TextOnly as buttonGroup_TextOnly, Sizes as buttonGroup_Sizes } from '@/components/ui/button-group.stories';
 import { default as buttonMeta, Playground as button_Playground, PrimaryVariant as button_PrimaryVariant, NeutralVariant as button_NeutralVariant, SuccessVariant as button_SuccessVariant, WarningVariant as button_WarningVariant, ErrorVariant as button_ErrorVariant, Sizes as button_Sizes, Disabled as button_Disabled, WithIcon as button_WithIcon, FullWidth as button_FullWidth, AsChild as button_AsChild, Loading as button_Loading, LoadingInteractive as button_LoadingInteractive, Composition as button_Composition } from '@/components/ui/button.stories';
 import { default as checkboxMeta, Playground as checkbox_Playground, Demo as checkbox_Demo, Variants as checkbox_Variants, Disabled as checkbox_Disabled, WithLabel as checkbox_WithLabel, WithLabelExtended as checkbox_WithLabelExtended, WithFormField as checkbox_WithFormField } from '@/components/ui/checkbox.stories';
 import { default as colorPickerMeta, Playground as colorPicker_Playground, Demo as colorPicker_Demo, PopoverDemo as colorPicker_PopoverDemo, WithFormField as colorPicker_WithFormField } from '@/components/ui/color-picker.stories';
@@ -27,6 +27,7 @@ import { default as drawerMeta, Playground as drawer_Playground, Basic as drawer
 import { default as dropdownMeta, Default as dropdown_Default, WithGroups as dropdown_WithGroups, WithHeaderAndFooter as dropdown_WithHeaderAndFooter, WithErrorItem as dropdown_WithErrorItem, WithDisabledItems as dropdown_WithDisabledItems, SubMenu as dropdown_SubMenu, Composed as dropdown_Composed, ComposedWithHeaderFooter as dropdown_ComposedWithHeaderFooter, ComposedWithLabels as dropdown_ComposedWithLabels, ComposedWithLinks as dropdown_ComposedWithLinks } from '@/components/ui/dropdown.stories';
 import { default as emojiDialogMeta, Playground as emojiDialog_Playground, Default as emojiDialog_Default, DeleteConfirmation as emojiDialog_DeleteConfirmation, UnsavedChanges as emojiDialog_UnsavedChanges, SuccessConfirmation as emojiDialog_SuccessConfirmation, WithFormContent as emojiDialog_WithFormContent, WithFloatingMemojis as emojiDialog_WithFloatingMemojis, StaticNoAnimations as emojiDialog_StaticNoAnimations, CustomEmojiArea as emojiDialog_CustomEmojiArea } from '@/components/ui/emoji-dialog.stories';
 import { default as emptyStateMeta, Default as emptyState_Default, WithTitle as emptyState_WithTitle, SearchNoResults as emptyState_SearchNoResults, NoFiles as emptyState_NoFiles, WithMultipleActions as emptyState_WithMultipleActions, Unbounded as emptyState_Unbounded, Sizes as emptyState_Sizes, Filled as emptyState_Filled, Composed as emptyState_Composed } from '@/components/ui/empty-state.stories';
+import { default as fadeScrollMeta, Vertical as fadeScroll_Vertical, Horizontal as fadeScroll_Horizontal, VerticalList as fadeScroll_VerticalList, CustomFadeSize as fadeScroll_CustomFadeSize, NoOverflow as fadeScroll_NoOverflow } from '@/components/ui/fade-scroll.stories';
 import { default as fancyButtonMeta, Playground as fancyButton_Playground, Variants as fancyButton_Variants, WithIcon as fancyButton_WithIcon, Sizes as fancyButton_Sizes, Disabled as fancyButton_Disabled, AsChild as fancyButton_AsChild } from '@/components/ui/fancy-button.stories';
 import { default as fileCardMeta, UploadStates as fileCard_UploadStates, CompletedMediaTypes as fileCard_CompletedMediaTypes, Download as fileCard_Download, Compact as fileCard_Compact, Item as fileCard_Item, ItemDownload as fileCard_ItemDownload, ItemCompact as fileCard_ItemCompact } from '@/components/ui/file-card.stories';
 import { default as fileFormatIconMeta, Default as fileFormatIcon_Default, Colors as fileFormatIcon_Colors, Sizes as fileFormatIcon_Sizes } from '@/components/ui/file-format-icon.stories';
@@ -45,9 +46,9 @@ import { default as linkButtonMeta, Playground as linkButton_Playground, Variant
 import { default as loaderMeta, Playground as loader_Playground, Sizes as loader_Sizes, Colors as loader_Colors, Inline as loader_Inline, CustomStroke as loader_CustomStroke } from '@/components/ui/loader.stories';
 import { default as locationInputMeta, Playground as locationInput_Playground, Default as locationInput_Default } from '@/components/ui/location-input.stories';
 import { default as logoUploadMeta, Default as logoUpload_Default, WithLogo as logoUpload_WithLogo, Uploading as logoUpload_Uploading, UploadingWithPreview as logoUpload_UploadingWithPreview, Failed as logoUpload_Failed, CustomPreview as logoUpload_CustomPreview, UserAvatar as logoUpload_UserAvatar, Composed as logoUpload_Composed, WithFormField as logoUpload_WithFormField, ComposedWithLogo as logoUpload_ComposedWithLogo } from '@/components/ui/logo-upload.stories';
-import { default as markdownEditorMeta, Default as markdownEditor_Default, SingleLanguage as markdownEditor_SingleLanguage, ControlledMulti as markdownEditor_ControlledMulti, CustomToggle as markdownEditor_CustomToggle, Compound as markdownEditor_Compound, WithFormField as markdownEditor_WithFormField, WithError as markdownEditor_WithError, Disabled as markdownEditor_Disabled, WithDefaultContent as markdownEditor_WithDefaultContent } from '@/components/ui/markdown-editor.stories';
+import { default as markdownEditorMeta, Default as markdownEditor_Default, SingleLanguage as markdownEditor_SingleLanguage, ControlledMulti as markdownEditor_ControlledMulti, CustomToggle as markdownEditor_CustomToggle, FlagToggle as markdownEditor_FlagToggle, Compound as markdownEditor_Compound, WithFormField as markdownEditor_WithFormField, WithError as markdownEditor_WithError, Disabled as markdownEditor_Disabled, WithDefaultContent as markdownEditor_WithDefaultContent } from '@/components/ui/markdown-editor.stories';
 import { default as menuTabBarMeta, Default as menuTabBar_Default, Primary as menuTabBar_Primary, WithoutIcons as menuTabBar_WithoutIcons, Composed as menuTabBar_Composed, ScrollToSection as menuTabBar_ScrollToSection, Disabled as menuTabBar_Disabled } from '@/components/ui/menu-tab-bar.stories';
-import { default as modalMeta, Playground as modal_Playground, Demo as modal_Demo, WithHeader as modal_WithHeader } from '@/components/ui/modal.stories';
+import { default as modalMeta, Playground as modal_Playground, Demo as modal_Demo, WithHeader as modal_WithHeader, Pattern as modal_Pattern } from '@/components/ui/modal.stories';
 import { default as paginationMeta, Playground as pagination_Playground, Demo as pagination_Demo, Rounded as pagination_Rounded, Group as pagination_Group, AsLink as pagination_AsLink } from '@/components/ui/pagination.stories';
 import { default as passwordInputMeta, Playground as passwordInput_Playground, Default as passwordInput_Default, WithStrength as passwordInput_WithStrength, Sizes as passwordInput_Sizes, ErrorState as passwordInput_ErrorState, WithFormField as passwordInput_WithFormField } from '@/components/ui/password-input.stories';
 import { default as phoneInputMeta, Playground as phoneInput_Playground, Default as phoneInput_Default, Controlled as phoneInput_Controlled, Sizes as phoneInput_Sizes, ErrorState as phoneInput_ErrorState, Disabled as phoneInput_Disabled, WithFormField as phoneInput_WithFormField } from '@/components/ui/phone-input.stories';
@@ -66,6 +67,7 @@ import { default as sliderMeta, Playground as slider_Playground, Demo as slider_
 import { default as socialsInputMeta, Default as socialsInput_Default, WithExistingValues as socialsInput_WithExistingValues, AllSocials as socialsInput_AllSocials, CustomSocials as socialsInput_CustomSocials, ReadOnly as socialsInput_ReadOnly, WithFormField as socialsInput_WithFormField, ErrorState as socialsInput_ErrorState, CustomLabels as socialsInput_CustomLabels } from '@/components/ui/socials-input.stories';
 import { default as statusBadgeMeta, Playground as statusBadge_Playground, Completed as statusBadge_Completed, Pending as statusBadge_Pending, Failed as statusBadge_Failed, Disabled as statusBadge_Disabled, AsChild as statusBadge_AsChild } from '@/components/ui/status-badge.stories';
 import { default as statusIndicatorMeta, TopVariants as statusIndicator_TopVariants, BottomVariants as statusIndicator_BottomVariants } from '@/components/ui/status-indicator.stories';
+import { default as stepIndicatorMeta, FirstStepActive as stepIndicator_FirstStepActive, MidProgress as stepIndicator_MidProgress, LastStepActive as stepIndicator_LastStepActive, AllCompleted as stepIndicator_AllCompleted, Compound as stepIndicator_Compound, Clickable as stepIndicator_Clickable, CustomRailColors as stepIndicator_CustomRailColors } from '@/components/ui/step-indicator.stories';
 import { default as switchToggleMeta, Default as switchToggle_Default, Rounded as switchToggle_Rounded, GroupDefault as switchToggle_GroupDefault, GroupTextOnly as switchToggle_GroupTextOnly } from '@/components/ui/switch-toggle.stories';
 import { default as switchMeta, Playground as switch_Playground, Demo as switch_Demo, Variants as switch_Variants, Disabled as switch_Disabled, WithLabel as switch_WithLabel, WithLabelExtended as switch_WithLabelExtended, WithFormField as switch_WithFormField } from '@/components/ui/switch.stories';
 import { default as tabMenuHorizontalMeta, Default as tabMenuHorizontal_Default, Primary as tabMenuHorizontal_Primary, WithIcons as tabMenuHorizontal_WithIcons, WithCounter as tabMenuHorizontal_WithCounter, Composed as tabMenuHorizontal_Composed, Overflow as tabMenuHorizontal_Overflow, Disabled as tabMenuHorizontal_Disabled } from '@/components/ui/tab-menu-horizontal.stories';
@@ -198,6 +200,8 @@ export const storyRegistry: Record<string, {
     stories: {
     'Playground': buttonGroup_Playground,
     'Default': buttonGroup_Default,
+    'IconsOnly': buttonGroup_IconsOnly,
+    'TextOnly': buttonGroup_TextOnly,
     'Sizes': buttonGroup_Sizes
     }
   },
@@ -396,6 +400,16 @@ export const storyRegistry: Record<string, {
     'Sizes': emptyState_Sizes,
     'Filled': emptyState_Filled,
     'Composed': emptyState_Composed
+    }
+  },
+  'fade-scroll': {
+    meta: fadeScrollMeta,
+    stories: {
+    'Vertical': fadeScroll_Vertical,
+    'Horizontal': fadeScroll_Horizontal,
+    'VerticalList': fadeScroll_VerticalList,
+    'CustomFadeSize': fadeScroll_CustomFadeSize,
+    'NoOverflow': fadeScroll_NoOverflow
     }
   },
   'fancy-button': {
@@ -615,6 +629,7 @@ export const storyRegistry: Record<string, {
     'SingleLanguage': markdownEditor_SingleLanguage,
     'ControlledMulti': markdownEditor_ControlledMulti,
     'CustomToggle': markdownEditor_CustomToggle,
+    'FlagToggle': markdownEditor_FlagToggle,
     'Compound': markdownEditor_Compound,
     'WithFormField': markdownEditor_WithFormField,
     'WithError': markdownEditor_WithError,
@@ -638,7 +653,8 @@ export const storyRegistry: Record<string, {
     stories: {
     'Playground': modal_Playground,
     'Demo': modal_Demo,
-    'WithHeader': modal_WithHeader
+    'WithHeader': modal_WithHeader,
+    'Pattern': modal_Pattern
     }
   },
   'pagination': {
@@ -838,6 +854,18 @@ export const storyRegistry: Record<string, {
     stories: {
     'TopVariants': statusIndicator_TopVariants,
     'BottomVariants': statusIndicator_BottomVariants
+    }
+  },
+  'step-indicator': {
+    meta: stepIndicatorMeta,
+    stories: {
+    'FirstStepActive': stepIndicator_FirstStepActive,
+    'MidProgress': stepIndicator_MidProgress,
+    'LastStepActive': stepIndicator_LastStepActive,
+    'AllCompleted': stepIndicator_AllCompleted,
+    'Compound': stepIndicator_Compound,
+    'Clickable': stepIndicator_Clickable,
+    'CustomRailColors': stepIndicator_CustomRailColors
     }
   },
   'switch-toggle': {

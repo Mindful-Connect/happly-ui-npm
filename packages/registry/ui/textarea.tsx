@@ -46,8 +46,10 @@ const Textarea = React.forwardRef<
             'placeholder:text-text-soft-400 placeholder:transition placeholder:duration-200 placeholder:ease-out placeholder:select-none',
             // hover placeholder
             'group-hover/textarea:placeholder:text-text-sub-600',
-            // focus
-            'focus:outline-none',
+            // focus — neutralize any upstream :focus ring/shadow bleed (the
+            // wrapper paints the focus ring; the element itself stays clean).
+            'focus:shadow-none focus:ring-0 focus:ring-offset-0 focus:outline-none',
+            'focus-visible:shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none',
             // focus placeholder
             'focus:placeholder:text-text-sub-600',
           ],
@@ -86,8 +88,9 @@ function ResizeHandle() {
 }
 ResizeHandle.displayName = 'ResizeHandle';
 
-type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> &
-  (
+type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
+  maxResizeHeight?: number | string;
+} & (
     | {
         simple: true;
         children?: never;
@@ -104,7 +107,14 @@ type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> &
 
 const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
-    { containerClassName, children, hasError, simple, ...rest },
+    {
+      containerClassName,
+      children,
+      hasError,
+      simple,
+      maxResizeHeight,
+      ...rest
+    },
     forwardedRef
   ) => {
     const formField = useFormField();
@@ -149,7 +159,7 @@ const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           containerClassName
         )}
       >
-        <div className='grid'>
+        <div className='grid flex-1'>
           <div className='pointer-events-none relative z-10 flex flex-col gap-2 [grid-area:1/1]'>
             <Textarea
               ref={forwardedRef}
@@ -161,7 +171,10 @@ const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
               <ResizeHandle />
             </div>
           </div>
-          <div className='min-h-full resize-y overflow-hidden opacity-0 [grid-area:1/1]' />
+          <div
+            className='min-h-full resize-y overflow-hidden opacity-0 [grid-area:1/1]'
+            style={maxResizeHeight ? { maxHeight: maxResizeHeight } : undefined}
+          />
         </div>
       </div>
     );
