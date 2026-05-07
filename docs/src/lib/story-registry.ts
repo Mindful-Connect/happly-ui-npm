@@ -44,7 +44,7 @@ import { default as labelMeta, Playground as label_Playground, Demo as label_Dem
 import { default as levelBarMeta, Playground as levelBar_Playground, Levels as levelBar_Levels, CustomSegments as levelBar_CustomSegments } from '@/components/ui/level-bar.stories';
 import { default as linkButtonMeta, Playground as linkButton_Playground, Variants as linkButton_Variants, Sizes as linkButton_Sizes, Underline as linkButton_Underline, WithIcon as linkButton_WithIcon, Disabled as linkButton_Disabled, AsChild as linkButton_AsChild } from '@/components/ui/link-button.stories';
 import { default as loaderMeta, Playground as loader_Playground, Sizes as loader_Sizes, Colors as loader_Colors, Inline as loader_Inline, CustomStroke as loader_CustomStroke } from '@/components/ui/loader.stories';
-import { default as locationInputMeta, Playground as locationInput_Playground, Default as locationInput_Default } from '@/components/ui/location-input.stories';
+import { default as locationInputMeta, Playground as locationInput_Playground, Default as locationInput_Default, WithError as locationInput_WithError, Multi as locationInput_Multi, MultiWithMax as locationInput_MultiWithMax } from '@/components/ui/location-input.stories';
 import { default as logoUploadMeta, Default as logoUpload_Default, WithLogo as logoUpload_WithLogo, Uploading as logoUpload_Uploading, UploadingWithPreview as logoUpload_UploadingWithPreview, Failed as logoUpload_Failed, CustomPreview as logoUpload_CustomPreview, UserAvatar as logoUpload_UserAvatar, Composed as logoUpload_Composed, WithFormField as logoUpload_WithFormField, ComposedWithLogo as logoUpload_ComposedWithLogo } from '@/components/ui/logo-upload.stories';
 import { default as markdownEditorMeta, Default as markdownEditor_Default, SingleLanguage as markdownEditor_SingleLanguage, ControlledMulti as markdownEditor_ControlledMulti, CustomToggle as markdownEditor_CustomToggle, FlagToggle as markdownEditor_FlagToggle, Compound as markdownEditor_Compound, WithFormField as markdownEditor_WithFormField, WithError as markdownEditor_WithError, Disabled as markdownEditor_Disabled, WithDefaultContent as markdownEditor_WithDefaultContent } from '@/components/ui/markdown-editor.stories';
 import { default as menuTabBarMeta, Default as menuTabBar_Default, Primary as menuTabBar_Primary, WithoutIcons as menuTabBar_WithoutIcons, Composed as menuTabBar_Composed, ScrollToSection as menuTabBar_ScrollToSection, Disabled as menuTabBar_Disabled } from '@/components/ui/menu-tab-bar.stories';
@@ -605,7 +605,10 @@ export const storyRegistry: Record<string, {
     meta: locationInputMeta,
     stories: {
     'Playground': locationInput_Playground,
-    'Default': locationInput_Default
+    'Default': locationInput_Default,
+    'WithError': locationInput_WithError,
+    'Multi': locationInput_Multi,
+    'MultiWithMax': locationInput_MultiWithMax
     }
   },
   'logo-upload': {

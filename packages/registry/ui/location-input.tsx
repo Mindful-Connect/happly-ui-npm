@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { RiMapPinLine } from '@remixicon/react';
+import { RiAddLine, RiMapPinLine, RiSubtractLine } from '@remixicon/react';
 import * as ScrollAreaPrimitives from '@radix-ui/react-scroll-area';
 import { RemoveScroll } from 'react-remove-scroll';
 import { useDebounce } from 'use-debounce';
@@ -120,16 +120,20 @@ type LocationInputProps = Omit<
   location?: LocationRequest;
   /** Callback when a location is selected or cleared */
   onLocationChange?: (location: LocationRequest) => void;
-  /** Leading icon component */
-  icon?: React.ElementType;
+  /** Leading icon component. Pass `null` to omit the leading icon. */
+  icon?: React.ElementType | null;
   /** Input size */
   size?: 'medium' | 'small' | 'xsmall';
   /** Error state */
   hasError?: boolean;
   /** Country restrictions for autocomplete (ISO 3166-1 alpha-2 codes) */
   countryRestrictions?: string[];
-  /** Restricts the place types returned. E.g. ['(cities)'] to only return cities instead of street addresses */
-  types?: string[];
+  /** Place IDs to exclude from suggestions — used by `Multi` to prevent
+   * the same address from being picked across multiple rows. */
+  excludePlaceIds?: string[];
+  /** Optional slot rendered inside the input wrapper after the input.
+   * Used by `Multi` to inline a per-row remove button. */
+  trailing?: React.ReactNode;
 };
 
 const LocationInputRoot = React.forwardRef<
@@ -146,8 +150,9 @@ const LocationInputRoot = React.forwardRef<
       hasError,
       disabled,
       countryRestrictions,
-      types,
+      excludePlaceIds,
       className,
+      trailing,
       ...rest
     },
     forwardedRef
@@ -184,6 +189,7 @@ const LocationInputRoot = React.forwardRef<
     const countryRestrictionsKey = (
       countryRestrictions ?? DEFAULT_COUNTRY_RESTRICTIONS
     ).join(',');
+    const excludePlaceIdsKey = (excludePlaceIds ?? []).join(',');
 
     // Sync search text when location prop changes externally (e.g. form reset)
     React.useEffect(() => {
@@ -221,20 +227,24 @@ const LocationInputRoot = React.forwardRef<
       }
 
       const countries = countryRestrictionsKey.split(',');
+      const excluded = excludePlaceIdsKey ? excludePlaceIdsKey.split(',') : [];
       const autocompleteService =
         new window.google.maps.places.AutocompleteService();
       autocompleteService
         .getPlacePredictions({
           input: debouncedSearch,
           componentRestrictions: { country: countries },
-          types: types ?? ['address'],
+          types: ['address'],
         })
         .then(({ predictions }) => {
-          setSuggestions(predictions);
-          if (predictions.length > 0) handleOpenChange(true);
+          const filtered = excluded.length
+            ? predictions.filter((p) => !excluded.includes(p.place_id))
+            : predictions;
+          setSuggestions(filtered);
+          if (filtered.length > 0) handleOpenChange(true);
         })
         .catch(() => {});
-    }, [debouncedSearch, countryRestrictionsKey]);
+    }, [debouncedSearch, countryRestrictionsKey, excludePlaceIdsKey]);
 
     function handleSelect(suggestion: Suggestion) {
       resolvePlace(suggestion.place_id, (resolved) => {
@@ -252,7 +262,7 @@ const LocationInputRoot = React.forwardRef<
           <div ref={anchorRef} className={className}>
             <Input.Root size={size} hasError={resolvedHasError}>
               <Input.Wrapper>
-                <Input.Icon as={Icon} />
+                {Icon && <Input.Icon as={Icon} />}
                 <Input.Input
                   ref={forwardedRef}
                   role='combobox'
@@ -275,6 +285,7 @@ const LocationInputRoot = React.forwardRef<
                   disabled={resolvedDisabled}
                   {...rest}
                 />
+                {trailing}
               </Input.Wrapper>
             </Input.Root>
           </div>
@@ -293,13 +304,13 @@ const LocationInputRoot = React.forwardRef<
               }
             }}
             style={{ width: anchorWidth || undefined }}
-            className='overflow-hidden py-2'
+            className='overflow-hidden p-0'
           >
             <RemoveScroll allowPinchZoom>
               <ScrollAreaPrimitives.Root type='auto'>
                 <ScrollAreaPrimitives.Viewport
                   style={{ overflowY: undefined }}
-                  className='max-h-[196px] w-full scroll-py-2 overflow-auto px-2'
+                  className='max-h-[196px] w-full scroll-py-2 overflow-auto p-2'
                   role='listbox'
                 >
                   <div className='flex flex-col gap-1'>
@@ -338,4 +349,210 @@ const LocationInputRoot = React.forwardRef<
 );
 LocationInputRoot.displayName = 'LocationInputRoot';
 
-export { LocationInputRoot as Root, type LocationInputProps };
+// ─── LocationInputMulti ────────────────────────────────────
+
+type LocationInputMultiProps = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'onChange'
+> & {
+  /** Selected locations (optional — auto-binds to RHF when inside FormField.Root) */
+  locations?: LocationRequest[];
+  /** Callback when the list of selected locations changes */
+  onLocationsChange?: (locations: NonNullable<LocationRequest>[]) => void;
+  /** Input size variant */
+  size?: 'medium' | 'small' | 'xsmall';
+  /** Error state — applied to every row */
+  hasError?: boolean;
+  /** Disabled state — applied to every row and the add button */
+  disabled?: boolean;
+  /** Country restrictions for autocomplete (ISO 3166-1 alpha-2 codes) */
+  countryRestrictions?: string[];
+  /** Placeholder for each row's input */
+  placeholder?: string;
+  /** Maximum number of rows. When reached, the add button is disabled. */
+  maxLocations?: number;
+  /** Minimum visible rows. The remove button is hidden once at the floor. Defaults to 1. */
+  minLocations?: number;
+  /** Label for the add-row button. Defaults to "Add another location". */
+  addLabel?: string;
+};
+
+type LocationInputMultiRow = {
+  id: string;
+  location: LocationRequest;
+};
+
+let multiRowIdCounter = 0;
+function makeRowId() {
+  multiRowIdCounter += 1;
+  return `loc-row-${multiRowIdCounter}`;
+}
+
+function LocationInputMulti({
+  locations: locationsProp,
+  onLocationsChange,
+  size,
+  hasError,
+  disabled,
+  countryRestrictions,
+  placeholder,
+  maxLocations,
+  minLocations = 1,
+  addLabel = 'Add another location',
+  className,
+  ...rest
+}: LocationInputMultiProps) {
+  const formField = useFormField();
+  const resolvedHasError = hasError ?? formField.hasError;
+  const resolvedDisabled = disabled ?? formField.disabled;
+
+  const binding = useFormFieldBinding<NonNullable<LocationRequest>[]>({
+    parse: (stored: unknown) =>
+      Array.isArray(stored) ? (stored as NonNullable<LocationRequest>[]) : [],
+    format: (value) => value,
+    defaultValue: [],
+  });
+
+  const externalValue =
+    locationsProp !== undefined ? locationsProp : (binding?.value ?? []);
+  const onChange = onLocationsChange ?? binding?.onChange;
+
+  // Internal rows include drafts (rows being typed in that haven't selected a place yet).
+  const [rows, setRows] = React.useState<LocationInputMultiRow[]>(() =>
+    externalValue.length > 0
+      ? externalValue.map((loc) => ({ id: makeRowId(), location: loc }))
+      : Array.from({ length: minLocations }, () => ({
+          id: makeRowId(),
+          location: null,
+        }))
+  );
+
+  // Reconcile when the external list changes (form reset, parent-driven update).
+  // The lastEmitted ref guards against the loop from our own emitChange calls.
+  const lastEmittedRef = React.useRef<NonNullable<LocationRequest>[]>([]);
+  React.useEffect(() => {
+    const sameAsLast =
+      externalValue.length === lastEmittedRef.current.length &&
+      externalValue.every(
+        (v, i) => v?.place_id === lastEmittedRef.current[i]?.place_id
+      );
+    if (sameAsLast) return;
+    setRows(
+      externalValue.length > 0
+        ? externalValue.map((loc) => ({ id: makeRowId(), location: loc }))
+        : Array.from({ length: minLocations }, () => ({
+            id: makeRowId(),
+            location: null,
+          }))
+    );
+  }, [externalValue, minLocations]);
+
+  function emitChange(nextRows: LocationInputMultiRow[]) {
+    const filtered = nextRows
+      .map((r) => r.location)
+      .filter(
+        (l): l is NonNullable<LocationRequest> => l !== null && l !== undefined
+      );
+    lastEmittedRef.current = filtered;
+    onChange?.(filtered);
+  }
+
+  function handleRowChange(id: string, location: LocationRequest) {
+    setRows((prev) => {
+      const next = prev.map((r) => (r.id === id ? { ...r, location } : r));
+      emitChange(next);
+      return next;
+    });
+  }
+
+  function handleAdd() {
+    if (resolvedDisabled) return;
+    if (maxLocations && rows.length >= maxLocations) return;
+    if (rows.some((r) => !r.location)) return;
+    setRows((prev) => [...prev, { id: makeRowId(), location: null }]);
+  }
+
+  function handleRemove(id: string) {
+    if (resolvedDisabled) return;
+    setRows((prev) => {
+      if (prev.length <= minLocations) return prev;
+      const next = prev.filter((r) => r.id !== id);
+      emitChange(next);
+      return next;
+    });
+  }
+
+  const allRowsFilled = rows.every((r) => r.location);
+  const canAdd = allRowsFilled && (!maxLocations || rows.length < maxLocations);
+  const canRemove = rows.length > minLocations;
+
+  // Place IDs already chosen across all rows — used to filter suggestions
+  // so the same address can't be picked twice.
+  const selectedPlaceIds = rows
+    .map((r) => r.location?.place_id)
+    .filter((id): id is string => Boolean(id));
+
+  return (
+    <div className={cn('flex flex-col gap-2', className)} {...rest}>
+      {rows.map((row) => (
+        <LocationInputRoot
+          key={row.id}
+          icon={null}
+          location={row.location}
+          onLocationChange={(loc) => handleRowChange(row.id, loc)}
+          size={size}
+          hasError={resolvedHasError}
+          disabled={resolvedDisabled}
+          countryRestrictions={countryRestrictions}
+          placeholder={placeholder}
+          excludePlaceIds={selectedPlaceIds.filter(
+            (id) => id !== row.location?.place_id
+          )}
+          trailing={
+            canRemove ? (
+              <button
+                type='button'
+                tabIndex={-1}
+                onClick={() => handleRemove(row.id)}
+                disabled={resolvedDisabled}
+                aria-label='Remove location'
+                className={cn(
+                  'flex size-5 shrink-0 items-center justify-center',
+                  'text-text-soft-400 transition duration-200 ease-out',
+                  'hover:text-text-strong-950',
+                  'disabled:text-text-disabled-300 disabled:pointer-events-none'
+                )}
+              >
+                <RiSubtractLine className='size-5' />
+              </button>
+            ) : null
+          }
+        />
+      ))}
+
+      <button
+        type='button'
+        onClick={handleAdd}
+        disabled={resolvedDisabled || !canAdd}
+        className={cn(
+          'rounded-8 flex w-fit items-center gap-0.5 py-1.5',
+          'text-text-sub-600',
+          'transition duration-200 ease-out',
+          'hover:text-text-strong-950',
+          'disabled:text-text-disabled-300 disabled:pointer-events-none'
+        )}
+      >
+        <RiAddLine className='size-5' />
+        <span className='text-label-sm px-1'>{addLabel}</span>
+      </button>
+    </div>
+  );
+}
+LocationInputMulti.displayName = 'LocationInputMulti';
+
+export {
+  LocationInputRoot as Root,
+  LocationInputMulti as Multi,
+  type LocationInputProps,
+  type LocationInputMultiProps,
+};

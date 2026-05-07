@@ -3,10 +3,10 @@
   "name": "location-input",
   "type": "registry:ui",
   "title": "Location Input",
-  "description": "A Google Maps address autocomplete input with Popover dropdown.",
-  "version": "2.1.0",
+  "description": "A Google Maps address autocomplete input with Popover dropdown. Includes a Multi variant for collecting an ordered list of locations.",
+  "version": "2.3.0",
   "migration": {
-    "guide": "v2.1 removes the built-in Google Maps loader — the consuming app must call `setOptions()` and `importLibrary('places')` once at startup (e.g. in a global provider). The `apiKey` prop has been removed. The component now syncs its internal search text when the `location` prop changes externally (e.g. form reset). When used inside a `FormField.Root` with a `name` prop, validation is triggered automatically on blur. `hasError` is read from form field context if not provided."
+    "guide": "v2.3 hardens `Multi` against accidental empty rows and duplicate selections: the add button is disabled until every existing row has a selected place, and each row's suggestion list filters out place IDs already chosen by other rows. `Root` gains an `excludePlaceIds` prop that drives the dedupe and is also useful standalone. v2.2 added the `Multi` variant for collecting a list of locations with add/remove rows, plus a `trailing` slot on `Root` for inlining custom content (e.g. a remove button) inside the input wrapper. The `types` prop has been removed — `Root` now always restricts predictions to street addresses. v2.1 removes the built-in Google Maps loader — the consuming app must call `setOptions()` and `importLibrary('places')` once at startup (e.g. in a global provider). The `apiKey` prop has been removed. The component syncs its internal search text when the `location` prop changes externally (e.g. form reset). When used inside a `FormField.Root` with a `name` prop, validation is triggered automatically on blur. `hasError` is read from form field context if not provided."
   },
   "dependencies": [
     "use-debounce",
@@ -22,9 +22,9 @@
     "happly-ui-utils"
   ],
   "docs": {
-    "lead": "A Google Maps address autocomplete input with async search and place resolution.",
+    "lead": "A Google Maps address autocomplete input with async search and place resolution. Use `Multi` to collect a list of locations.",
     "setup": "The consuming app must load the Google Maps Places library once at startup before using this component:\n\n```ts\nimport { setOptions, importLibrary } from '@googlemaps/js-api-loader';\n\nsetOptions({ key: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || '' });\nimportLibrary('places').catch(() => {});\n```\n\nPlace this at module level (e.g. in a global context provider) so it runs exactly once.",
-    "usage": "import * as LocationInput from \"@/components/ui/location-input\"\n\nconst [location, setLocation] = useState<LocationRequest>(null)\n\n<LocationInput.Root\n  location={location}\n  onLocationChange={setLocation}\n  placeholder=\"Search address...\"\n/>",
+    "usage": "import * as LocationInput from \"@/components/ui/location-input\"\n\n// Single\nconst [location, setLocation] = useState<LocationRequest>(null)\n\n<LocationInput.Root\n  location={location}\n  onLocationChange={setLocation}\n  placeholder=\"Search address...\"\n/>\n\n// Multi\nconst [locations, setLocations] = useState<NonNullable<LocationRequest>[]>([])\n\n<LocationInput.Multi\n  locations={locations}\n  onLocationsChange={setLocations}\n/>",
     "examples": [
       {
         "title": "Default",
@@ -33,19 +33,32 @@
         "stories": ["Default"]
       },
       {
+        "title": "With Error State",
+        "description": "Manually set error state.",
+        "code": "<LocationInput.Root\n  location={location}\n  onLocationChange={setLocation}\n  hasError\n/>",
+        "stories": ["WithError"]
+      },
+      {
+        "title": "Multi",
+        "description": "Collect an ordered list of locations. Each row is an autocomplete input; rows can be added with the trailing button and removed with the inline minus icon (shown when more than `minLocations` rows are visible).",
+        "code": "const [locations, setLocations] = useState<NonNullable<LocationRequest>[]>([])\n\n<LocationInput.Multi\n  locations={locations}\n  onLocationsChange={setLocations}\n/>",
+        "stories": ["Multi"]
+      },
+      {
+        "title": "Multi with Max",
+        "description": "Cap the number of locations. The add button is disabled once `maxLocations` is reached.",
+        "code": "<LocationInput.Multi\n  locations={locations}\n  onLocationsChange={setLocations}\n  maxLocations={3}\n  addLabel=\"Add location (max 3)\"\n/>",
+        "stories": ["MultiWithMax"]
+      },
+      {
         "title": "With React Hook Form",
-        "description": "Used inside a FormField.Root with automatic error handling and validation on blur.",
-        "code": "const { setValue, watch } = useFormContext()\n\n<FormField.Root name=\"location\" label=\"Location\" required>\n  <LocationInput.Root\n    location={\n      watch('location')\n        ? { formatted_address: watch('location') } as LocationRequest\n        : null\n    }\n    onLocationChange={(loc) =>\n      setValue('location', loc?.formatted_address ?? '', {\n        shouldValidate: true,\n      })\n    }\n  />\n</FormField.Root>"
+        "description": "Used inside a FormField.Root with automatic error handling and validation on blur. Both `Root` and `Multi` auto-bind to RHF: `Root` stores a single `LocationRequest`, `Multi` stores `LocationRequest[]`.",
+        "code": "<FormField.Root name=\"location\" label=\"Location\" required>\n  <LocationInput.Root />\n</FormField.Root>\n\n<FormField.Root name=\"locations\" label=\"Locations\">\n  <LocationInput.Multi />\n</FormField.Root>"
       },
       {
         "title": "Custom Country Restrictions",
         "description": "Restrict autocomplete to specific countries.",
         "code": "<LocationInput.Root\n  location={location}\n  onLocationChange={setLocation}\n  countryRestrictions={['ca', 'us']}\n/>"
-      },
-      {
-        "title": "With Error State",
-        "description": "Manually set error state.",
-        "code": "<LocationInput.Root\n  location={location}\n  onLocationChange={setLocation}\n  hasError\n/>"
       }
     ],
     "api": [
@@ -72,9 +85,9 @@
           },
           {
             "name": "icon",
-            "type": "React.ElementType",
+            "type": "React.ElementType | null",
             "default": "RiMapPinLine",
-            "description": "Leading icon component."
+            "description": "Leading icon component. Pass `null` to omit the leading icon — `Multi` uses this to render unadorned rows."
           },
           {
             "name": "size",
@@ -99,6 +112,79 @@
             "type": "string[]",
             "default": "['ca', 'us', 'fr']",
             "description": "ISO 3166-1 alpha-2 country codes for autocomplete restrictions."
+          },
+          {
+            "name": "excludePlaceIds",
+            "type": "string[]",
+            "description": "Place IDs to filter out of the suggestion list. Used by `Multi` to prevent the same address from being picked across rows."
+          },
+          {
+            "name": "trailing",
+            "type": "ReactNode",
+            "description": "Optional slot rendered inside the input wrapper after the input. Used by `Multi` to inline a per-row remove button; can also hold custom adornments."
+          }
+        ]
+      },
+      {
+        "name": "LocationInput.Multi",
+        "description": "Collects a list of locations. Renders one `Root` per row with an inline remove button, plus an add-row button below. Prevents duplicate selections by filtering each row's suggestion list against the place IDs already picked in other rows, and disables the add button until every existing row has a selected place. Auto-binds to React Hook Form as `LocationRequest[]` when inside a `FormField.Root`.",
+        "props": [
+          {
+            "name": "locations",
+            "type": "LocationRequest[]",
+            "description": "The list of selected locations. Optional — auto-binds to RHF when inside `FormField.Root`."
+          },
+          {
+            "name": "onLocationsChange",
+            "type": "(locations: LocationRequest[]) => void",
+            "description": "Callback when the list changes (rows added, removed, or a row's place is selected/changed)."
+          },
+          {
+            "name": "minLocations",
+            "type": "number",
+            "default": "1",
+            "description": "Minimum visible rows. The remove button is hidden once this floor is reached."
+          },
+          {
+            "name": "maxLocations",
+            "type": "number",
+            "description": "Maximum number of rows. When reached, the add button is disabled."
+          },
+          {
+            "name": "addLabel",
+            "type": "string",
+            "default": "'Add another location'",
+            "description": "Label text for the add-row button."
+          },
+          {
+            "name": "size",
+            "type": "'medium' | 'small' | 'xsmall'",
+            "default": "'medium'",
+            "description": "Input size variant applied to every row."
+          },
+          {
+            "name": "hasError",
+            "type": "boolean",
+            "default": "false",
+            "description": "Error state applied to every row. Read from FormField context if not provided."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disabled state applied to every row and the add button. Read from FormField context if not provided."
+          },
+          {
+            "name": "countryRestrictions",
+            "type": "string[]",
+            "default": "['ca', 'us', 'fr']",
+            "description": "ISO 3166-1 alpha-2 country codes for autocomplete restrictions, applied to every row."
+          },
+          {
+            "name": "placeholder",
+            "type": "string",
+            "default": "'Search address...'",
+            "description": "Placeholder for each row's input."
           }
         ]
       }
