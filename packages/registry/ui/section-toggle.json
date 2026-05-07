@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Section Toggle",
   "description": "A collapsible section with a title, description, and switch toggle that reveals content when enabled. Uses namespace exports: SectionToggle.Root, SectionToggle.Header, SectionToggle.TextGroup, SectionToggle.Title, SectionToggle.Description, SectionToggle.Content, SectionToggle.Composed (composed).",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "dependencies": ["framer-motion"],
   "registryDependencies": ["happly-ui-utils", "switch"],
   "docs": {
@@ -60,6 +60,11 @@
             "name": "contentClassName",
             "type": "string",
             "description": "Additional classes for the content area"
+          },
+          {
+            "name": "headerClassName",
+            "type": "string",
+            "description": "Additional classes for the header row"
           }
         ]
       },
@@ -82,13 +87,18 @@
       },
       {
         "name": "SectionToggle.Header",
-        "description": "The header row containing text and the switch toggle.",
+        "description": "The header row containing text and the switch toggle. Acts as a click target to open the section when collapsed and onOpenChange is provided.",
         "props": [
           {
             "name": "open",
             "type": "boolean",
             "default": "false",
-            "description": "Adjusts header padding — uniform when closed, no bottom padding when open"
+            "description": "Current open state — when false and onOpenChange is provided, the header becomes a button that opens the section on click"
+          },
+          {
+            "name": "onOpenChange",
+            "type": "(open: boolean) => void",
+            "description": "Callback fired when the collapsed header is clicked to expand the section"
           }
         ]
       },
