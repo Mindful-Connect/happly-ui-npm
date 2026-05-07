@@ -48,16 +48,9 @@ type ComboBoxContextValue = {
   setHighlightedIndex: (index: number) => void;
   listboxId: string;
   getItemId: (index: number) => string;
-  /** Synthetic "Add '<query>'" item when in creatable mode and the
-   * trimmed search doesn't match any existing option or selected value. */
   createItem: { value: string; label: string } | null;
-  /** Commit the current createItem: push value, clear search. */
   commitCreate: () => void;
-  /** True when the trimmed search query is already in the selected values —
-   * lets Content swap the empty message from "no results" to "already added". */
   isQueryAlreadySelected: boolean;
-  /** Creatable mode with no preset options. The trigger skips opening a
-   * popover and Content renders nothing — Enter alone creates chips. */
   pureFreeform: boolean;
 };
 
