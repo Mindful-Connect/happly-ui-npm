@@ -506,6 +506,7 @@ export default function SocialsInput({
         <ComboBox.SearchTrigger
           leadingIcon={RiLinkM}
           placeholder={labels.placeholder}
+          className={hasError ? 'border-error-base' : undefined}
         />
         <ComboBox.Content>
           <SocialPickerItems />
