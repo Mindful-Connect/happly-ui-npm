@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Combo Box",
   "description": "A searchable multi-select combo box with compound components for full composability.",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "migration": {
     "guide": "v3 modularizes into compound components (Root, SearchTrigger, Content, Item, ItemIcon, ItemIndicator, Empty, Tags). Use ComboBox.Composed for the same flat-props API as v2. For custom item rendering (checkbox + avatar + name), use the compound API with ComboBox.Item children. useComboBoxContext() is exported for advanced composition."
   },

@@ -58,3 +58,61 @@ function DefaultRender() {
 export const Default = {
   render: () => <DefaultRender />,
 };
+
+function WithErrorRender() {
+  const [location, setLocation] = useState<LocationRequest>(null);
+
+  return (
+    <div style={{ maxWidth: '672px', width: '100%' }}>
+      <LocationInput.Root
+        location={location}
+        onLocationChange={setLocation}
+        hasError
+      />
+    </div>
+  );
+}
+
+export const WithError = {
+  render: () => <WithErrorRender />,
+};
+
+function MultiRender() {
+  const [locations, setLocations] = useState<
+    NonNullable<LocationRequest>[]
+  >([]);
+
+  return (
+    <div style={{ maxWidth: '672px', width: '100%' }}>
+      <LocationInput.Multi
+        locations={locations}
+        onLocationsChange={setLocations}
+      />
+    </div>
+  );
+}
+
+export const Multi = {
+  render: () => <MultiRender />,
+};
+
+function MultiWithMaxRender() {
+  const [locations, setLocations] = useState<
+    NonNullable<LocationRequest>[]
+  >([]);
+
+  return (
+    <div style={{ maxWidth: '672px', width: '100%' }}>
+      <LocationInput.Multi
+        locations={locations}
+        onLocationsChange={setLocations}
+        maxLocations={3}
+        addLabel='Add location (max 3)'
+      />
+    </div>
+  );
+}
+
+export const MultiWithMax = {
+  render: () => <MultiWithMaxRender />,
+};

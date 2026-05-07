@@ -122,7 +122,7 @@ type ComboBoxRootProps = {
 };
 
 function ComboBoxRoot({
-  options,
+  options: rawOptions,
   value: valueProp,
   defaultValue = [],
   onValueChange,
@@ -143,6 +143,20 @@ function ComboBoxRoot({
   const hasError = hasErrorProp || formField.hasError;
   const disabled = disabledProp || formField.disabled;
   const binding = useFormFieldBinding<string[]>({ defaultValue: [] });
+
+  // Dedupe by `value` so an upstream API returning multiple rows with the same
+  // value (e.g. the same slug under different IDs) doesn't render twice. First
+  // occurrence wins.
+  const options = React.useMemo(() => {
+    const seen = new Set<string>();
+    const out: ComboBoxOption[] = [];
+    for (const opt of rawOptions) {
+      if (seen.has(opt.value)) continue;
+      seen.add(opt.value);
+      out.push(opt);
+    }
+    return out;
+  }, [rawOptions]);
 
   // Priority: explicit props > RHF binding > internal state
   const hasExplicitValue = valueProp !== undefined;
