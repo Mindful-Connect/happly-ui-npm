@@ -48,6 +48,17 @@ type ComboBoxContextValue = {
   setHighlightedIndex: (index: number) => void;
   listboxId: string;
   getItemId: (index: number) => string;
+  /** Synthetic "Add '<query>'" item when in creatable mode and the
+   * trimmed search doesn't match any existing option or selected value. */
+  createItem: { value: string; label: string } | null;
+  /** Commit the current createItem: push value, clear search. */
+  commitCreate: () => void;
+  /** True when the trimmed search query is already in the selected values —
+   * lets Content swap the empty message from "no results" to "already added". */
+  isQueryAlreadySelected: boolean;
+  /** Creatable mode with no preset options. The trigger skips opening a
+   * popover and Content renders nothing — Enter alone creates chips. */
+  pureFreeform: boolean;
 };
 
 const ComboBoxContext = React.createContext<ComboBoxContextValue | null>(null);
@@ -102,6 +113,14 @@ type ComboBoxRootProps = {
   size?: 'medium' | 'small' | 'xsmall';
   /** Preview mode — renders the option list inline in the DOM and hides tags */
   preview?: boolean;
+  /** When true, lets the user add new free-form values that aren't in
+   * `options`. Surfaces an "Add '<query>'" item when the search query is
+   * non-empty and doesn't match any existing option/value. Selected create
+   * values render as tags using the value as the label. Pass `options=[]`
+   * for a pure free-form chip input — no dropdown, just type and press Enter. */
+  creatable?: boolean;
+  /** Customize the create item's label — defaults to `Add "<query>"`. */
+  createLabel?: (query: string) => string;
   /** Callback when popover open state changes */
   onOpenChange?: (open: boolean) => void;
   /** Additional className for the outer wrapper */
@@ -121,6 +140,8 @@ function ComboBoxRoot({
   hasError: hasErrorProp = false,
   size = 'medium',
   preview = false,
+  creatable = false,
+  createLabel,
   onOpenChange: onOpenChangeProp,
   className,
   children,
@@ -134,7 +155,6 @@ function ComboBoxRoot({
   const hasExplicitValue = valueProp !== undefined;
   const hasExplicitOnChange = onValueChange !== undefined;
 
-  // Controlled / uncontrolled value
   const [internalValue, setInternalValue] = React.useState(defaultValue);
   const value = hasExplicitValue
     ? valueProp
@@ -173,7 +193,6 @@ function ComboBoxRoot({
     return options.filter((o) => o.label.toLowerCase().includes(lower));
   }, [options, search]);
 
-  // Reset highlighted index when filtered options change
   React.useEffect(() => {
     setHighlightedIndex(-1);
   }, [filteredOptions.length, search]);
@@ -227,6 +246,40 @@ function ComboBoxRoot({
     setValue([]);
   }, [disabled, setValue]);
 
+  const createItem = React.useMemo(() => {
+    if (!creatable) return null;
+    const trimmed = search.trim();
+    if (!trimmed) return null;
+    const lower = trimmed.toLowerCase();
+    const existingOption = options.some(
+      (o) => o.value.toLowerCase() === lower || o.label.toLowerCase() === lower
+    );
+    if (existingOption) return null;
+    if (value.some((v) => v.toLowerCase() === lower)) return null;
+    return {
+      value: trimmed,
+      label: createLabel ? createLabel(trimmed) : `Add "${trimmed}"`,
+    };
+  }, [creatable, search, options, value, createLabel]);
+
+  const isQueryAlreadySelected = React.useMemo(() => {
+    if (!creatable) return false;
+    const trimmed = search.trim();
+    if (!trimmed) return false;
+    const lower = trimmed.toLowerCase();
+    return value.some((v) => v.toLowerCase() === lower);
+  }, [creatable, search, value]);
+
+  const pureFreeform = creatable && options.length === 0;
+
+  const commitCreate = React.useCallback(() => {
+    if (!createItem) return;
+    if (value.length >= max) return;
+    setValue([...value, createItem.value]);
+    setSearch('');
+    setHighlightedIndex(0);
+  }, [createItem, value, max, setValue]);
+
   const ctx: ComboBoxContextValue = React.useMemo(
     () => ({
       options,
@@ -253,6 +306,10 @@ function ComboBoxRoot({
       setHighlightedIndex,
       listboxId,
       getItemId,
+      createItem,
+      commitCreate,
+      isQueryAlreadySelected,
+      pureFreeform,
     }),
     [
       options,
@@ -278,6 +335,10 @@ function ComboBoxRoot({
       highlightedIndex,
       listboxId,
       getItemId,
+      createItem,
+      commitCreate,
+      isQueryAlreadySelected,
+      pureFreeform,
     ]
   );
 
@@ -285,7 +346,7 @@ function ComboBoxRoot({
     <AnchorRefContext.Provider value={anchorRef}>
       <ComboBoxContext.Provider value={ctx}>
         <div className={cn('flex flex-col gap-2', className)}>
-          {preview ? (
+          {preview || pureFreeform ? (
             children
           ) : (
             <Popover.Root open={open} onOpenChange={handleOpenChange}>
@@ -335,11 +396,14 @@ const ComboBoxSearchTrigger = React.forwardRef<
     const anchorRef = useAnchorRef();
 
     function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-      const count = ctx.filteredOptions.length;
+      // Create item, when present, occupies index 0; real options shift by 1.
+      const createOffset = ctx.createItem ? 1 : 0;
+      const count = ctx.filteredOptions.length + createOffset;
 
       switch (e.key) {
         case 'ArrowDown': {
           e.preventDefault();
+          if (ctx.pureFreeform) break;
           if (!ctx.open && !ctx.preview) {
             ctx.handleOpenChange(true);
             ctx.setHighlightedIndex(0);
@@ -352,6 +416,7 @@ const ComboBoxSearchTrigger = React.forwardRef<
         }
         case 'ArrowUp': {
           e.preventDefault();
+          if (ctx.pureFreeform) break;
           if (count > 0) {
             ctx.setHighlightedIndex(
               ctx.highlightedIndex > 0 ? ctx.highlightedIndex - 1 : count - 1
@@ -360,19 +425,30 @@ const ComboBoxSearchTrigger = React.forwardRef<
           break;
         }
         case 'Home': {
+          if (ctx.pureFreeform) break;
           e.preventDefault();
           if (count > 0) ctx.setHighlightedIndex(0);
           break;
         }
         case 'End': {
+          if (ctx.pureFreeform) break;
           e.preventDefault();
           if (count > 0) ctx.setHighlightedIndex(count - 1);
           break;
         }
         case 'Enter': {
           e.preventDefault();
-          if (ctx.highlightedIndex >= 0 && ctx.highlightedIndex < count) {
-            const option = ctx.filteredOptions[ctx.highlightedIndex];
+          // Nothing highlighted yet — in creatable mode, commit the typed
+          // query so the user can rapid-fire entries without arrow-keys.
+          if (ctx.highlightedIndex < 0 || ctx.highlightedIndex >= count) {
+            if (ctx.createItem) ctx.commitCreate();
+            break;
+          }
+          if (createOffset && ctx.highlightedIndex === 0) {
+            ctx.commitCreate();
+          } else {
+            const option =
+              ctx.filteredOptions[ctx.highlightedIndex - createOffset];
             if (option) ctx.toggle(option.value);
           }
           break;
@@ -410,13 +486,16 @@ const ComboBoxSearchTrigger = React.forwardRef<
               value={ctx.search}
               onChange={(e) => ctx.setSearch(e.target.value)}
               onFocus={() =>
-                !ctx.disabled && !ctx.preview && ctx.handleOpenChange(true)
+                !ctx.disabled &&
+                !ctx.preview &&
+                !ctx.pureFreeform &&
+                ctx.handleOpenChange(true)
               }
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
               disabled={ctx.disabled}
             />
-            {!ctx.preview && (
+            {!ctx.preview && !ctx.pureFreeform && (
               <Input.Icon
                 as={trailingIcon}
                 className={cn(
@@ -430,7 +509,7 @@ const ComboBoxSearchTrigger = React.forwardRef<
       </div>
     );
 
-    if (ctx.preview) return input;
+    if (ctx.preview || ctx.pureFreeform) return input;
 
     return <Popover.Anchor asChild>{input}</Popover.Anchor>;
   }
@@ -442,29 +521,43 @@ ComboBoxSearchTrigger.displayName = 'ComboBoxSearchTrigger';
 type ComboBoxContentProps = {
   /** Message shown when no options match the search */
   emptyMessage?: string;
+  /** Message shown when the typed query is already in the selected values (creatable mode). */
+  alreadyAddedMessage?: string;
   className?: string;
   children?: React.ReactNode;
 };
 
 function ComboBoxContent({
   emptyMessage = 'No results found.',
+  alreadyAddedMessage = 'Already added.',
   className,
   children,
 }: ComboBoxContentProps) {
   const ctx = useComboBoxContext();
   const anchorRef = useAnchorRef();
 
+  if (ctx.pureFreeform) return null;
+
+  const createOffset = ctx.createItem ? 1 : 0;
+  const isEmpty = ctx.filteredOptions.length === 0 && !ctx.createItem;
+  const emptyText = ctx.isQueryAlreadySelected
+    ? alreadyAddedMessage
+    : emptyMessage;
+
   const items =
     children ??
-    (ctx.filteredOptions.length === 0 ? (
-      <ComboBoxEmpty>{emptyMessage}</ComboBoxEmpty>
+    (isEmpty ? (
+      <ComboBoxEmpty>{emptyText}</ComboBoxEmpty>
     ) : (
       <div className='flex flex-col gap-1'>
+        {ctx.createItem && (
+          <ComboBoxCreateItem index={0} item={ctx.createItem} />
+        )}
         {ctx.filteredOptions.map((option, index) => (
           <ComboBoxItem
-            key={`${option.value}-${index}`}
+            key={option.value}
             value={option.value}
-            index={index}
+            index={index + createOffset}
           />
         ))}
       </div>
@@ -474,7 +567,7 @@ function ComboBoxContent({
     <ScrollAreaPrimitives.Root type='auto'>
       <ScrollAreaPrimitives.Viewport
         style={{ overflowY: undefined }}
-        className='max-h-[var(--combobox-content-max-height)] w-full scroll-py-2 overflow-auto px-2'
+        className='max-h-[var(--combobox-content-max-height)] w-full scroll-py-2 overflow-auto p-2'
         role='listbox'
         id={ctx.listboxId}
         aria-multiselectable='true'
@@ -514,7 +607,7 @@ function ComboBoxContent({
       }}
       style={{ width: ctx.anchorWidth || undefined }}
       className={cn(
-        'overflow-hidden py-2 [--combobox-content-max-height:196px]',
+        'overflow-hidden p-0 [--combobox-content-max-height:196px]',
         className
       )}
     >
@@ -555,13 +648,11 @@ function ComboBoxItem({
 
   const isDisabled = ctx.disabled || disabledProp || atMax;
 
-  // Resolve index: use explicit prop, or find from filtered options
   const resolvedIndex =
     index ?? ctx.filteredOptions.findIndex((o) => o.value === itemValue);
   const isHighlighted =
     resolvedIndex >= 0 && resolvedIndex === ctx.highlightedIndex;
 
-  // Scroll into view when highlighted via keyboard
   React.useEffect(() => {
     if (isHighlighted && itemRef.current) {
       itemRef.current.scrollIntoView({ block: 'nearest' });
@@ -665,6 +756,47 @@ function ComboBoxItemIndicator({
 }
 ComboBoxItemIndicator.displayName = 'ComboBoxItemIndicator';
 
+// ─── CreateItem ─────────────────────────────────────────────
+
+function ComboBoxCreateItem({
+  index,
+  item,
+}: {
+  index: number;
+  item: { value: string; label: string };
+}) {
+  const ctx = useComboBoxContext();
+  const itemRef = React.useRef<HTMLDivElement>(null);
+  const isHighlighted = index === ctx.highlightedIndex;
+
+  React.useEffect(() => {
+    if (isHighlighted && itemRef.current) {
+      itemRef.current.scrollIntoView({ block: 'nearest' });
+    }
+  }, [isHighlighted]);
+
+  return (
+    <div
+      ref={itemRef}
+      id={ctx.getItemId(index)}
+      role='option'
+      aria-selected={false}
+      data-highlighted={isHighlighted || undefined}
+      onClick={() => ctx.commitCreate()}
+      onMouseEnter={() => ctx.setHighlightedIndex(index)}
+      className={cn(
+        'text-paragraph-sm text-text-strong-950 relative flex w-full cursor-pointer items-center gap-2 rounded-[0.625rem] p-2 text-left select-none',
+        'transition duration-200 ease-out outline-none',
+        'hover:bg-bg-weak-50',
+        isHighlighted && 'bg-bg-weak-50'
+      )}
+    >
+      <span className='line-clamp-1'>{item.label}</span>
+    </div>
+  );
+}
+ComboBoxCreateItem.displayName = 'ComboBoxCreateItem';
+
 // ─── Empty ──────────────────────────────────────────────────
 
 type ComboBoxEmptyProps = {
@@ -722,9 +854,9 @@ function ComboBoxTags({
           <Tag.DismissButton onClick={ctx.removeAll} />
         </Tag.Root>
       ) : (
-        selectedOptions.map((opt, index) => (
+        selectedOptions.map((opt) => (
           <Tag.Root
-            key={`${opt.value}-${index}`}
+            key={opt.value}
             variant={variant}
             disabled={ctx.disabled || ctx.value.length <= ctx.min}
           >
@@ -756,6 +888,8 @@ type ComboBoxComposedProps = Omit<ComboBoxRootProps, 'children'> & {
   placeholder?: string;
   /** Message shown when no options match the search */
   emptyMessage?: string;
+  /** Message shown when the typed query is already in the selected values (creatable mode). */
+  alreadyAddedMessage?: string;
   /** When provided and all options are selected, show a single tag with this label */
   selectAllLabel?: string;
   /** Tag visual variant for selected items */
@@ -771,6 +905,7 @@ const ComboBoxComposed = React.forwardRef<
       icon,
       placeholder,
       emptyMessage,
+      alreadyAddedMessage,
       selectAllLabel,
       tagVariant,
       ...rootProps
@@ -784,7 +919,10 @@ const ComboBoxComposed = React.forwardRef<
           leadingIcon={icon}
           placeholder={placeholder}
         />
-        <ComboBoxContent emptyMessage={emptyMessage} />
+        <ComboBoxContent
+          emptyMessage={emptyMessage}
+          alreadyAddedMessage={alreadyAddedMessage}
+        />
         <ComboBoxTags variant={tagVariant} selectAllLabel={selectAllLabel} />
       </ComboBoxRoot>
     );
