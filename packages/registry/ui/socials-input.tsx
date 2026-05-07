@@ -551,12 +551,13 @@ export default function SocialsInput({
                   onChange={(e) => handleInputChange(e.target.value)}
                   onKeyDown={handleInputKeyDown}
                   onPaste={handlePaste}
+                  onBlur={handleConfirmEdit}
                 />
                 <button
                   type='button'
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={handleConfirmEdit}
-                  className='text-text-sub-600 hover:text-success-base shrink-0 transition duration-200 ease-out'
+                  className='text-text-sub-600 hover:text-success-base py-1.5 pl-1 transition duration-200 ease-out'
                 >
                   <RiCheckLine className='h-5 w-5' />
                 </button>
