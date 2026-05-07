@@ -633,6 +633,63 @@ export const Preview = {
   render: () => <PreviewRender />,
 };
 
+function CreatableRender() {
+  const [tags, setTags] = React.useState<string[]>(['ai', 'product']);
+  const [freeform, setFreeform] = React.useState<string[]>([]);
+  const [labeled, setLabeled] = React.useState<string[]>([]);
+
+  return (
+    <div className='flex flex-col gap-6'>
+      <div className='w-[300px]'>
+        <FormField.Root
+          label='Tags'
+          labelSub='type to add custom'
+          labelSubParens
+        >
+          <ComboBox.Composed
+            options={TAG_OPTIONS}
+            value={tags}
+            onValueChange={setTags}
+            creatable
+            placeholder='Pick or create a tag...'
+          />
+        </FormField.Root>
+      </div>
+      <div className='w-[300px]'>
+        <FormField.Root
+          label='Free-form chips'
+          labelSub='no preset options'
+          labelSubParens
+        >
+          <ComboBox.Composed
+            options={[]}
+            value={freeform}
+            onValueChange={setFreeform}
+            creatable
+            placeholder='Type and press Enter...'
+          />
+        </FormField.Root>
+      </div>
+      <div className='w-[300px]'>
+        <FormField.Root label='Custom create label'>
+          <ComboBox.Composed
+            options={TAG_OPTIONS}
+            value={labeled}
+            onValueChange={setLabeled}
+            creatable
+            createLabel={(q) => `Add new tag: ${q}`}
+            placeholder='Search or add a tag...'
+          />
+        </FormField.Root>
+      </div>
+    </div>
+  );
+}
+
+export const Creatable = {
+  render: () => <CreatableRender />,
+};
+
 function CustomMaxHeightRender() {
   const [value, setValue] = React.useState<string[]>([]);
 
