@@ -87,7 +87,7 @@ function DropdownItemIcon<T extends React.ElementType>({
         // base
         'text-text-sub-600 h-5 w-5',
         // disabled
-        'group-has-[[data-disabled]]:text-text-disabled-300',
+        'group-data-[disabled]/item:text-text-disabled-300',
         // variant
         'group-data-[variant=error]/item:text-error-base',
         className
