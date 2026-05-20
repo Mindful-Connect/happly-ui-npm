@@ -289,7 +289,7 @@
       "name": "location-input",
       "type": "registry:ui",
       "title": "Location Input",
-      "description": "A Google Maps address autocomplete input with Popover dropdown."
+      "description": "A Google Maps address autocomplete input with Popover dropdown. Includes a Multi variant for collecting an ordered list of locations."
     },
     {
       "name": "logo-upload",

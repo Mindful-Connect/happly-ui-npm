@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Combo Box",
   "description": "A searchable multi-select combo box with compound components for full composability.",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "migration": {
     "guide": "v3 modularizes into compound components (Root, SearchTrigger, Content, Item, ItemIcon, ItemIndicator, Empty, Tags). Use ComboBox.Composed for the same flat-props API as v2. For custom item rendering (checkbox + avatar + name), use the compound API with ComboBox.Item children. useComboBoxContext() is exported for advanced composition."
   },
@@ -104,6 +104,12 @@
         "stories": ["Preview"]
       },
       {
+        "title": "Creatable",
+        "description": "Allow users to add free-form values that aren't in `options`. Surfaces an `Add \"<query>\"` item when the typed query doesn't match any existing option or selection. If the query matches a value already added, the empty state swaps to `Already added.`. Pass `options=[]` for a pure free-form chip input — no dropdown, just type and press Enter.",
+        "code": "<ComboBox.Composed\n  options={tagOptions}\n  value={value}\n  onValueChange={setValue}\n  creatable\n/>",
+        "stories": ["Creatable"]
+      },
+      {
         "title": "Custom Max Height",
         "description": "Override the dropdown height via the --combobox-content-max-height CSS variable on Content.",
         "code": "<ComboBox.Root options={options} value={value} onValueChange={setValue}>\n  <ComboBox.SearchTrigger />\n  <ComboBox.Content className=\"[--combobox-content-max-height:350px]\" />\n  <ComboBox.Tags />\n</ComboBox.Root>",
@@ -178,6 +184,17 @@
             "description": "Preview mode — renders the option list inline in the DOM and hides tags."
           },
           {
+            "name": "creatable",
+            "type": "boolean",
+            "default": "false",
+            "description": "Allow free-form values not in `options`. Surfaces an `Add \"<query>\"` item when the typed query doesn't match any existing option or selection. With `options=[]` the dropdown is suppressed — typing and Enter creates chips inline."
+          },
+          {
+            "name": "createLabel",
+            "type": "(query: string) => string",
+            "description": "Customize the create item's label. Defaults to `Add \"<query>\"`."
+          },
+          {
             "name": "onOpenChange",
             "type": "(open: boolean) => void",
             "description": "Callback when dropdown open state changes."
@@ -217,6 +234,12 @@
             "type": "string",
             "default": "'No results found.'",
             "description": "Message when no options match the search."
+          },
+          {
+            "name": "alreadyAddedMessage",
+            "type": "string",
+            "default": "'Already added.'",
+            "description": "Message when the typed query is already in the selected values (creatable mode)."
           },
           {
             "name": "children",
@@ -318,6 +341,12 @@
             "type": "string",
             "default": "'No results found.'",
             "description": "Message when no options match."
+          },
+          {
+            "name": "alreadyAddedMessage",
+            "type": "string",
+            "default": "'Already added.'",
+            "description": "Message when the typed query is already in the selected values (creatable mode)."
           },
           {
             "name": "selectAllLabel",

@@ -14,7 +14,7 @@ import { default as buttonGroupMeta, Playground as buttonGroup_Playground, Defau
 import { default as buttonMeta, Playground as button_Playground, PrimaryVariant as button_PrimaryVariant, NeutralVariant as button_NeutralVariant, SuccessVariant as button_SuccessVariant, WarningVariant as button_WarningVariant, ErrorVariant as button_ErrorVariant, Sizes as button_Sizes, Disabled as button_Disabled, WithIcon as button_WithIcon, FullWidth as button_FullWidth, AsChild as button_AsChild, Loading as button_Loading, LoadingInteractive as button_LoadingInteractive, Composition as button_Composition } from '@/components/ui/button.stories';
 import { default as checkboxMeta, Playground as checkbox_Playground, Demo as checkbox_Demo, Variants as checkbox_Variants, Disabled as checkbox_Disabled, WithLabel as checkbox_WithLabel, WithLabelExtended as checkbox_WithLabelExtended, WithFormField as checkbox_WithFormField } from '@/components/ui/checkbox.stories';
 import { default as colorPickerMeta, Playground as colorPicker_Playground, Demo as colorPicker_Demo, PopoverDemo as colorPicker_PopoverDemo, WithFormField as colorPicker_WithFormField } from '@/components/ui/color-picker.stories';
-import { default as comboBoxMeta, Playground as comboBox_Playground, Default as comboBox_Default, WithPreselectedValues as comboBox_WithPreselectedValues, Uncontrolled as comboBox_Uncontrolled, FormSubmission as comboBox_FormSubmission, Sizes as comboBox_Sizes, SelectionConstraints as comboBox_SelectionConstraints, TagVariants as comboBox_TagVariants, States as comboBox_States, Customization as comboBox_Customization, WithIcons as comboBox_WithIcons, CompoundCustomItems as comboBox_CompoundCustomItems, CompoundCustomTags as comboBox_CompoundCustomTags, Preview as comboBox_Preview, CustomMaxHeight as comboBox_CustomMaxHeight } from '@/components/ui/combo-box.stories';
+import { default as comboBoxMeta, Playground as comboBox_Playground, Default as comboBox_Default, WithPreselectedValues as comboBox_WithPreselectedValues, Uncontrolled as comboBox_Uncontrolled, FormSubmission as comboBox_FormSubmission, Sizes as comboBox_Sizes, SelectionConstraints as comboBox_SelectionConstraints, TagVariants as comboBox_TagVariants, States as comboBox_States, Customization as comboBox_Customization, WithIcons as comboBox_WithIcons, CompoundCustomItems as comboBox_CompoundCustomItems, CompoundCustomTags as comboBox_CompoundCustomTags, Preview as comboBox_Preview, Creatable as comboBox_Creatable, CustomMaxHeight as comboBox_CustomMaxHeight } from '@/components/ui/combo-box.stories';
 import { default as commandMenuMeta, Playground as commandMenu_Playground, Demo as commandMenu_Demo } from '@/components/ui/command-menu.stories';
 import { default as compactButtonMeta, Playground as compactButton_Playground, Variants as compactButton_Variants, Sizes as compactButton_Sizes, FullRadius as compactButton_FullRadius, Disabled as compactButton_Disabled, AsChild as compactButton_AsChild } from '@/components/ui/compact-button.stories';
 import { default as currencyInputMeta, Playground as currencyInput_Playground, Default as currencyInput_Default, Controlled as currencyInput_Controlled, Sizes as currencyInput_Sizes, ErrorState as currencyInput_ErrorState, Disabled as currencyInput_Disabled, WithFormField as currencyInput_WithFormField } from '@/components/ui/currency-input.stories';
@@ -44,7 +44,7 @@ import { default as labelMeta, Playground as label_Playground, Demo as label_Dem
 import { default as levelBarMeta, Playground as levelBar_Playground, Levels as levelBar_Levels, CustomSegments as levelBar_CustomSegments } from '@/components/ui/level-bar.stories';
 import { default as linkButtonMeta, Playground as linkButton_Playground, Variants as linkButton_Variants, Sizes as linkButton_Sizes, Underline as linkButton_Underline, WithIcon as linkButton_WithIcon, Disabled as linkButton_Disabled, AsChild as linkButton_AsChild } from '@/components/ui/link-button.stories';
 import { default as loaderMeta, Playground as loader_Playground, Sizes as loader_Sizes, Colors as loader_Colors, Inline as loader_Inline, CustomStroke as loader_CustomStroke } from '@/components/ui/loader.stories';
-import { default as locationInputMeta, Playground as locationInput_Playground, Default as locationInput_Default } from '@/components/ui/location-input.stories';
+import { default as locationInputMeta, Playground as locationInput_Playground, Default as locationInput_Default, WithError as locationInput_WithError, Multi as locationInput_Multi, MultiWithMax as locationInput_MultiWithMax } from '@/components/ui/location-input.stories';
 import { default as logoUploadMeta, Default as logoUpload_Default, WithLogo as logoUpload_WithLogo, Uploading as logoUpload_Uploading, UploadingWithPreview as logoUpload_UploadingWithPreview, Failed as logoUpload_Failed, CustomPreview as logoUpload_CustomPreview, UserAvatar as logoUpload_UserAvatar, Composed as logoUpload_Composed, WithFormField as logoUpload_WithFormField, ComposedWithLogo as logoUpload_ComposedWithLogo } from '@/components/ui/logo-upload.stories';
 import { default as markdownEditorMeta, Default as markdownEditor_Default, SingleLanguage as markdownEditor_SingleLanguage, ControlledMulti as markdownEditor_ControlledMulti, CustomToggle as markdownEditor_CustomToggle, FlagToggle as markdownEditor_FlagToggle, Compound as markdownEditor_Compound, WithFormField as markdownEditor_WithFormField, WithError as markdownEditor_WithError, Disabled as markdownEditor_Disabled, WithDefaultContent as markdownEditor_WithDefaultContent } from '@/components/ui/markdown-editor.stories';
 import { default as menuTabBarMeta, Default as menuTabBar_Default, Primary as menuTabBar_Primary, WithoutIcons as menuTabBar_WithoutIcons, Composed as menuTabBar_Composed, ScrollToSection as menuTabBar_ScrollToSection, Disabled as menuTabBar_Disabled } from '@/components/ui/menu-tab-bar.stories';
@@ -262,6 +262,7 @@ export const storyRegistry: Record<string, {
     'CompoundCustomItems': comboBox_CompoundCustomItems,
     'CompoundCustomTags': comboBox_CompoundCustomTags,
     'Preview': comboBox_Preview,
+    'Creatable': comboBox_Creatable,
     'CustomMaxHeight': comboBox_CustomMaxHeight
     }
   },
@@ -604,7 +605,10 @@ export const storyRegistry: Record<string, {
     meta: locationInputMeta,
     stories: {
     'Playground': locationInput_Playground,
-    'Default': locationInput_Default
+    'Default': locationInput_Default,
+    'WithError': locationInput_WithError,
+    'Multi': locationInput_Multi,
+    'MultiWithMax': locationInput_MultiWithMax
     }
   },
   'logo-upload': {
