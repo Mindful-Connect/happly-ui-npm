@@ -11,13 +11,15 @@ export const Playground = {
     value: 50,
     max: 100,
     color: 'primary',
+    showAnimatedDot: false,
   },
   argTypes: {
     value: { control: { type: 'range', min: 0, max: 100, step: 1 } },
     max: { control: 'number' },
+    showAnimatedDot: { control: 'boolean' },
     color: {
       control: 'select',
-      options: ['blue', 'red', 'orange', 'green', 'primary'],
+      options: ['blue', 'red', 'orange', 'green', 'primary', 'neutral'],
     },
   },
   render: (args: any) => (
@@ -35,6 +37,15 @@ export const Color = {
       <ProgressBar.Root value={50} max={100} color='orange' />
       <ProgressBar.Root value={50} max={100} color='green' />
       <ProgressBar.Root value={50} max={100} color='primary' />
+      <ProgressBar.Root value={50} max={100} color='neutral' />
+    </div>
+  ),
+};
+
+export const WithAnimatedDot = {
+  render: () => (
+    <div className='w-96'>
+      <ProgressBar.Root value={75} color='primary' showAnimatedDot />
     </div>
   ),
 };

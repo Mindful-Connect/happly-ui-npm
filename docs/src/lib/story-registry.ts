@@ -53,7 +53,7 @@ import { default as paginationMeta, Playground as pagination_Playground, Demo as
 import { default as passwordInputMeta, Playground as passwordInput_Playground, Default as passwordInput_Default, WithStrength as passwordInput_WithStrength, Sizes as passwordInput_Sizes, ErrorState as passwordInput_ErrorState, WithFormField as passwordInput_WithFormField } from '@/components/ui/password-input.stories';
 import { default as phoneInputMeta, Playground as phoneInput_Playground, Default as phoneInput_Default, Controlled as phoneInput_Controlled, Sizes as phoneInput_Sizes, ErrorState as phoneInput_ErrorState, Disabled as phoneInput_Disabled, WithFormField as phoneInput_WithFormField } from '@/components/ui/phone-input.stories';
 import { default as popoverMeta, Playground as popover_Playground, Demo as popover_Demo, Position as popover_Position } from '@/components/ui/popover.stories';
-import { default as progressBarMeta, Playground as progressBar_Playground, Color as progressBar_Color, WithLabel as progressBar_WithLabel, DataStorage as progressBar_DataStorage } from '@/components/ui/progress-bar.stories';
+import { default as progressBarMeta, Playground as progressBar_Playground, Color as progressBar_Color, WithAnimatedDot as progressBar_WithAnimatedDot, WithLabel as progressBar_WithLabel, DataStorage as progressBar_DataStorage } from '@/components/ui/progress-bar.stories';
 import { default as progressCircleMeta, Playground as progressCircle_Playground, Sizes as progressCircle_Sizes, Values as progressCircle_Values } from '@/components/ui/progress-circle.stories';
 import { default as promotionalCardMeta, Stroke as promotionalCard_Stroke, Filled as promotionalCard_Filled, Clickable as promotionalCard_Clickable, Composed as promotionalCard_Composed, Grid as promotionalCard_Grid } from '@/components/ui/promotional-card.stories';
 import { default as publicationStatusBadgeMeta, Draft as publicationStatusBadge_Draft, WaitingForReview as publicationStatusBadge_WaitingForReview, Approved as publicationStatusBadge_Approved, RequireChanges as publicationStatusBadge_RequireChanges, Declined as publicationStatusBadge_Declined, AllStatuses as publicationStatusBadge_AllStatuses, LightVariant as publicationStatusBadge_LightVariant, CustomLabel as publicationStatusBadge_CustomLabel } from '@/components/ui/publication-status-badge.stories';
@@ -703,6 +703,7 @@ export const storyRegistry: Record<string, {
     stories: {
     'Playground': progressBar_Playground,
     'Color': progressBar_Color,
+    'WithAnimatedDot': progressBar_WithAnimatedDot,
     'WithLabel': progressBar_WithLabel,
     'DataStorage': progressBar_DataStorage
     }

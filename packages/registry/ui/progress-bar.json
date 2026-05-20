@@ -6,9 +6,9 @@
   "description": "A progress bar component indicating the completion status of a task with multiple color options.",
   "version": "2.0.0",
   "migration": {
-    "guide": "API changed: import as namespace `import * as ProgressBar from ...`, use `<ProgressBar.Root value={50} />` instead of `<ProgressBar progress={50} />`. The `variant` prop is replaced by `color` ('blue' | 'red' | 'orange' | 'green' | 'primary'). The `progress` prop is renamed to `value` with a configurable `max`."
+    "guide": "API changed: import as namespace `import * as ProgressBar from ...`, use `<ProgressBar.Root value={50} />` instead of `<ProgressBar progress={50} />`. The `variant` prop is replaced by `color` ('blue' | 'red' | 'orange' | 'green' | 'primary' | 'neutral'). The `progress` prop is renamed to `value` with a configurable `max`."
   },
-  "dependencies": [],
+  "dependencies": ["framer-motion"],
   "registryDependencies": ["tv"],
   "docs": {
     "lead": "A progress bar component to show the completion status of a task or process, with multiple color options.",
@@ -16,8 +16,8 @@
     "examples": [
       {
         "title": "Color",
-        "description": "Progress bars in all available colors: blue (default), red, orange, green, and primary.",
-        "code": "<ProgressBar.Root value={50} color=\"blue\" />\n<ProgressBar.Root value={50} color=\"red\" />\n<ProgressBar.Root value={50} color=\"primary\" />",
+        "description": "Progress bars in all available colors: blue (default), red, orange, green, primary, and neutral.",
+        "code": "<ProgressBar.Root value={50} color=\"blue\" />\n<ProgressBar.Root value={50} color=\"red\" />\n<ProgressBar.Root value={50} color=\"primary\" />\n<ProgressBar.Root value={50} color=\"neutral\" />",
         "stories": ["Color"]
       },
       {
@@ -40,7 +40,7 @@
         "props": [
           {
             "name": "color",
-            "type": "'blue' | 'red' | 'orange' | 'green' | 'primary'",
+            "type": "'blue' | 'red' | 'orange' | 'green' | 'primary' | 'neutral'",
             "default": "'blue'",
             "description": "The color of the progress indicator"
           },
@@ -55,6 +55,12 @@
             "type": "number",
             "default": "100",
             "description": "The maximum progress value"
+          },
+          {
+            "name": "showAnimatedDot",
+            "type": "boolean",
+            "default": "false",
+            "description": "Whether to show an animated dot moving across the progress bar"
           }
         ]
       }
