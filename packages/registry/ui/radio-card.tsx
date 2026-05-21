@@ -169,7 +169,16 @@ const RadioCardItem = React.forwardRef<HTMLLabelElement, RadioCardItemProps>(
 
     const handleClick = React.useCallback(
       (e: React.MouseEvent<HTMLLabelElement>) => {
+        // Radix renders a visually hidden <input type="radio"> inside the label.
+        // Clicking the label natively triggers a click on this input, which then bubbles up.
+        // We MUST ignore this synthesized bubbled event, otherwise it sees the newly
+        // selected state and instantly deselects it, causing the "thin circle" bug!
+        if ((e.target as HTMLElement).tagName === 'INPUT') {
+          return;
+        }
+
         onClick?.(e);
+
         if (allowDeselect && groupValue === value) {
           e.preventDefault();
           onValueChange?.('');
