@@ -18,7 +18,16 @@ export const Playground = {
     },
     color: {
       control: 'select',
-      options: ['gray', 'yellow', 'blue', 'sky', 'purple', 'red', 'primary'],
+      options: [
+        'white',
+        'gray',
+        'yellow',
+        'blue',
+        'sky',
+        'purple',
+        'red',
+        'primary',
+      ],
     },
     placeholderType: { control: 'select', options: ['user', 'company'] },
   },
@@ -32,6 +41,7 @@ export const Playground = {
 export const Color = {
   render: () => (
     <div className='flex w-full max-w-96 flex-wrap justify-center gap-6'>
+      <Avatar.Root color='white'>EW</Avatar.Root>
       <Avatar.Root>EW</Avatar.Root>
       <Avatar.Root color='yellow'>EW</Avatar.Root>
       <Avatar.Root color='blue'>EW</Avatar.Root>
