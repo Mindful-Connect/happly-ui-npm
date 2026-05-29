@@ -11,6 +11,7 @@ export const Playground = {
     value: 50,
     max: 100,
     color: 'primary',
+    indeterminate: false,
   },
   argTypes: {
     value: { control: { type: 'range', min: 0, max: 100, step: 1 } },
@@ -19,6 +20,7 @@ export const Playground = {
       control: 'select',
       options: ['blue', 'red', 'orange', 'green', 'primary'],
     },
+    indeterminate: { control: 'boolean' },
   },
   render: (args: any) => (
     <div className='w-96'>
@@ -67,6 +69,39 @@ export const DataStorage = {
           </LinkButton.Root>{' '}
           to unlock unlimited data storage.
         </div>
+      </div>
+    </div>
+  ),
+};
+
+export const Indeterminate = {
+  render: () => (
+    <div className='w-96'>
+      <ProgressBar.Root indeterminate color='primary' />
+    </div>
+  ),
+};
+
+export const IndeterminateColors = {
+  render: () => (
+    <div className='flex w-96 flex-col gap-6'>
+      <ProgressBar.Root indeterminate color='blue' />
+      <ProgressBar.Root indeterminate color='red' />
+      <ProgressBar.Root indeterminate color='orange' />
+      <ProgressBar.Root indeterminate color='green' />
+      <ProgressBar.Root indeterminate color='primary' />
+    </div>
+  ),
+};
+
+export const IndeterminateWithFinalizing = {
+  render: () => (
+    <div className='w-96'>
+      <div className='space-y-1.5'>
+        <span className='text-label-sm text-text-strong-950'>
+          Finalizing your matches...
+        </span>
+        <ProgressBar.Root indeterminate color='primary' />
       </div>
     </div>
   ),

@@ -128,6 +128,11 @@ type LocationInputProps = Omit<
   hasError?: boolean;
   /** Country restrictions for autocomplete (ISO 3166-1 alpha-2 codes) */
   countryRestrictions?: string[];
+  /**
+   * Google Places autocomplete prediction types. Defaults to `['address']`
+   * for street-level results; pass `['(cities)']` for city-level autocomplete.
+   */
+  types?: string[];
   /** Place IDs to exclude from suggestions — used by `Multi` to prevent
    * the same address from being picked across multiple rows. */
   excludePlaceIds?: string[];
@@ -150,6 +155,7 @@ const LocationInputRoot = React.forwardRef<
       hasError,
       disabled,
       countryRestrictions,
+      types = ['address'],
       excludePlaceIds,
       className,
       trailing,
@@ -190,6 +196,7 @@ const LocationInputRoot = React.forwardRef<
       countryRestrictions ?? DEFAULT_COUNTRY_RESTRICTIONS
     ).join(',');
     const excludePlaceIdsKey = (excludePlaceIds ?? []).join(',');
+    const typesKey = types.join(',');
 
     // Sync search text when location prop changes externally (e.g. form reset)
     React.useEffect(() => {
@@ -234,7 +241,7 @@ const LocationInputRoot = React.forwardRef<
         .getPlacePredictions({
           input: debouncedSearch,
           componentRestrictions: { country: countries },
-          types: ['address'],
+          types: typesKey.split(','),
         })
         .then(({ predictions }) => {
           const filtered = excluded.length
@@ -244,7 +251,7 @@ const LocationInputRoot = React.forwardRef<
           if (filtered.length > 0) handleOpenChange(true);
         })
         .catch(() => {});
-    }, [debouncedSearch, countryRestrictionsKey, excludePlaceIdsKey]);
+    }, [debouncedSearch, countryRestrictionsKey, excludePlaceIdsKey, typesKey]);
 
     function handleSelect(suggestion: Suggestion) {
       resolvePlace(suggestion.place_id, (resolved) => {
