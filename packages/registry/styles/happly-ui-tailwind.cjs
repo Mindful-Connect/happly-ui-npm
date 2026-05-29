@@ -778,6 +778,14 @@ module.exports = plugin(function() {
           "100%": {
             "backgroundPosition": "-200% 0"
           }
+        },
+        "indeterminate-slide": {
+          "0%": {
+            "transform": "translateX(-100%)"
+          },
+          "100%": {
+            "transform": "translateX(250%)"
+          }
         }
       },
       "animation": {
@@ -785,7 +793,8 @@ module.exports = plugin(function() {
         "accordion-up": "accordion-up 0.2s ease-out",
         "spin-smooth": "spin-smooth 1s linear infinite",
         "copy-success": "copy-success 0.3s ease-out forwards",
-        "shimmer": "shimmer 2s infinite linear"
+        "shimmer": "shimmer 2s infinite linear",
+        "indeterminate-slide": "indeterminate-slide 2s linear infinite"
       }
     }
   }

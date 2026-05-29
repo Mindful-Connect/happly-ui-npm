@@ -6,7 +6,7 @@
   "description": "A Google Maps address autocomplete input with Popover dropdown. Includes a Multi variant for collecting an ordered list of locations.",
   "version": "2.3.0",
   "migration": {
-    "guide": "v2.3 hardens `Multi` against accidental empty rows and duplicate selections: the add button is disabled until every existing row has a selected place, and each row's suggestion list filters out place IDs already chosen by other rows. `Root` gains an `excludePlaceIds` prop that drives the dedupe and is also useful standalone. v2.2 added the `Multi` variant for collecting a list of locations with add/remove rows, plus a `trailing` slot on `Root` for inlining custom content (e.g. a remove button) inside the input wrapper. The `types` prop has been removed — `Root` now always restricts predictions to street addresses. v2.1 removes the built-in Google Maps loader — the consuming app must call `setOptions()` and `importLibrary('places')` once at startup (e.g. in a global provider). The `apiKey` prop has been removed. The component syncs its internal search text when the `location` prop changes externally (e.g. form reset). When used inside a `FormField.Root` with a `name` prop, validation is triggered automatically on blur. `hasError` is read from form field context if not provided."
+    "guide": "v2.3 hardens `Multi` against accidental empty rows and duplicate selections: the add button is disabled until every existing row has a selected place, and each row's suggestion list filters out place IDs already chosen by other rows. `Root` gains an `excludePlaceIds` prop that drives the dedupe and is also useful standalone. v2.2 added the `Multi` variant for collecting a list of locations with add/remove rows, plus a `trailing` slot on `Root` for inlining custom content (e.g. a remove button) inside the input wrapper. `Root` accepts a `types` prop (default `['address']`) controlling the Google Places prediction types — pass `['(cities)']` for city-level autocomplete. v2.1 removes the built-in Google Maps loader — the consuming app must call `setOptions()` and `importLibrary('places')` once at startup (e.g. in a global provider). The `apiKey` prop has been removed. The component syncs its internal search text when the `location` prop changes externally (e.g. form reset). When used inside a `FormField.Root` with a `name` prop, validation is triggered automatically on blur. `hasError` is read from form field context if not provided."
   },
   "dependencies": [
     "use-debounce",
@@ -112,6 +112,12 @@
             "type": "string[]",
             "default": "['ca', 'us', 'fr']",
             "description": "ISO 3166-1 alpha-2 country codes for autocomplete restrictions."
+          },
+          {
+            "name": "types",
+            "type": "string[]",
+            "default": "['address']",
+            "description": "Google Places autocomplete prediction types. Defaults to street-level addresses; pass `['(cities)']` for city-level autocomplete."
           },
           {
             "name": "excludePlaceIds",

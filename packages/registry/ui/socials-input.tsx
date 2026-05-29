@@ -69,7 +69,7 @@ interface SocialConfig {
   generateUrl: (handle: string) => string;
 }
 
-const SOCIAL_CONFIGS: Record<SocialKey, SocialConfig> = {
+export const SOCIAL_CONFIGS: Record<SocialKey, SocialConfig> = {
   instagram: {
     key: 'instagram',
     label: 'Instagram',
