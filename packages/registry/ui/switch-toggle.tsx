@@ -15,47 +15,55 @@ const SwitchToggleList = React.forwardRef<
   React.ComponentRef<typeof TabsPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.List> & {
     floatingBgClassName?: string;
+    disabled?: boolean;
   }
->(({ children, className, floatingBgClassName, ...rest }, forwardedRef) => {
-  const [lineStyle, setLineStyle] = React.useState({ width: 0, left: 0 });
+>(
+  (
+    { children, className, floatingBgClassName, disabled, ...rest },
+    forwardedRef
+  ) => {
+    const [lineStyle, setLineStyle] = React.useState({ width: 0, left: 0 });
 
-  const { mounted, listRef } = useTabObserver({
-    onActiveTabChange: (_, activeTab) => {
-      const { offsetWidth: width, offsetLeft: left } = activeTab;
-      setLineStyle({ width, left });
-    },
-  });
+    const { mounted, listRef } = useTabObserver({
+      onActiveTabChange: (_, activeTab) => {
+        const { offsetWidth: width, offsetLeft: left } = activeTab;
+        setLineStyle({ width, left });
+      },
+    });
 
-  return (
-    <TabsPrimitive.List
-      ref={mergeRefs(forwardedRef, listRef)}
-      className={cn(
-        'bg-bg-weak-50 relative isolate grid w-full auto-cols-fr grid-flow-col gap-1 rounded-full p-1',
-        className
-      )}
-      {...rest}
-    >
-      <Slottable>{children}</Slottable>
-
-      {/* floating bg */}
-      <div
+    return (
+      <TabsPrimitive.List
+        ref={mergeRefs(forwardedRef, listRef)}
+        aria-disabled={disabled || undefined}
         className={cn(
-          'bg-bg-white-0 shadow-toggle-switch absolute inset-y-1 left-0 -z-10 rounded-full transition-transform duration-300',
-          {
-            hidden: !mounted,
-          },
-          floatingBgClassName
+          'bg-bg-weak-50 relative isolate grid w-full auto-cols-fr grid-flow-col gap-1 rounded-full p-1',
+          disabled && 'pointer-events-none opacity-50',
+          className
         )}
-        style={{
-          transform: `translate3d(${lineStyle.left}px, 0, 0)`,
-          width: `${lineStyle.width}px`,
-          transitionTimingFunction: 'cubic-bezier(0.65, 0, 0.35, 1)',
-        }}
-        aria-hidden='true'
-      />
-    </TabsPrimitive.List>
-  );
-});
+        {...rest}
+      >
+        <Slottable>{children}</Slottable>
+
+        {/* floating bg */}
+        <div
+          className={cn(
+            'bg-bg-white-0 shadow-toggle-switch absolute inset-y-1 left-0 -z-10 rounded-full transition-transform duration-300',
+            {
+              hidden: !mounted,
+            },
+            floatingBgClassName
+          )}
+          style={{
+            transform: `translate3d(${lineStyle.left}px, 0, 0)`,
+            width: `${lineStyle.width}px`,
+            transitionTimingFunction: 'cubic-bezier(0.65, 0, 0.35, 1)',
+          }}
+          aria-hidden='true'
+        />
+      </TabsPrimitive.List>
+    );
+  }
+);
 SwitchToggleList.displayName = 'SwitchToggleList';
 
 const SwitchToggleTrigger = React.forwardRef<
@@ -108,31 +116,38 @@ type SwitchToggleGroupProps = Omit<
   items: SwitchToggleGroupItem[];
   listClassName?: string;
   floatingBgClassName?: string;
+  disabled?: boolean;
 };
 
 const SwitchToggleGroup = React.forwardRef<
   React.ComponentRef<typeof TabsPrimitive.Root>,
   SwitchToggleGroupProps
->(({ items, listClassName, floatingBgClassName, ...rest }, forwardedRef) => {
-  return (
-    <SwitchToggleRoot ref={forwardedRef} {...rest}>
-      <SwitchToggleList
-        className={listClassName}
-        floatingBgClassName={floatingBgClassName}
-      >
-        {items.map((item) => {
-          const Icon = item.icon;
-          return (
-            <SwitchToggleTrigger key={item.value} value={item.value}>
-              {Icon && <Icon className='h-5 w-5 shrink-0' />}
-              {item.label}
-            </SwitchToggleTrigger>
-          );
-        })}
-      </SwitchToggleList>
-    </SwitchToggleRoot>
-  );
-});
+>(
+  (
+    { items, listClassName, floatingBgClassName, disabled, ...rest },
+    forwardedRef
+  ) => {
+    return (
+      <SwitchToggleRoot ref={forwardedRef} {...rest}>
+        <SwitchToggleList
+          className={listClassName}
+          floatingBgClassName={floatingBgClassName}
+          disabled={disabled}
+        >
+          {items.map((item) => {
+            const Icon = item.icon;
+            return (
+              <SwitchToggleTrigger key={item.value} value={item.value}>
+                {Icon && <Icon className='h-5 w-5 shrink-0' />}
+                {item.label}
+              </SwitchToggleTrigger>
+            );
+          })}
+        </SwitchToggleList>
+      </SwitchToggleRoot>
+    );
+  }
+);
 SwitchToggleGroup.displayName = SWITCH_TOGGLE_GROUP_NAME;
 
 export {

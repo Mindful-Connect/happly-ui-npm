@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "File Upload",
   "description": "A dropzone-style file upload area with type presets for document, image, video, audio, and attachment uploads.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "dependencies": ["@radix-ui/react-slot"],
   "registryDependencies": ["happly-ui-utils", "polymorphic"],
   "docs": {
@@ -52,6 +52,12 @@
         "description": "Visual feedback when a file is dragged over the dropzone.",
         "code": "<FileUpload.Root dragging>\n  <FileUpload.Content>\n    <FileUpload.Title>Drop your file here</FileUpload.Title>\n    <FileUpload.Description>Release to upload</FileUpload.Description>\n  </FileUpload.Content>\n  <FileUpload.Button>Browse File</FileUpload.Button>\n</FileUpload.Root>",
         "stories": ["Dragging"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Blocks interaction (the hidden file input is disabled so the file picker cannot open). The title, description, and button shift to muted disabled colors while the icon stays as-is — the dropzone is not uniformly dimmed.",
+        "code": "<FileUpload.Dropzone type=\"image\" disabled />",
+        "stories": ["Disabled"]
       }
     ],
     "api": [
@@ -83,6 +89,12 @@
             "name": "inputProps",
             "type": "React.InputHTMLAttributes<HTMLInputElement>",
             "description": "Props passed to the hidden file input (e.g., accept, multiple)."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disables the dropzone: mutes the title/description/button to disabled colors (icon unchanged), removes the pointer cursor and hover state, blocks click/drag interaction, and disables the hidden file input."
           }
         ]
       },
@@ -101,6 +113,12 @@
             "type": "boolean",
             "default": "false",
             "description": "When true, applies a highlighted border and background to indicate drag-over state."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Blocks click/drag interaction via pointer-events and removes the pointer cursor and hover state. Does not change child colors on its own — the Dropzone preset handles muting the title/description/button."
           }
         ]
       },
