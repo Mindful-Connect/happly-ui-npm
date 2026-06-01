@@ -22,8 +22,7 @@ export function getUIComponents(): RegistryItem[] {
   const registry = getRegistry();
   return registry.items.filter(
     (item) =>
-      item.type === 'registry:ui' &&
-      !['radio-group'].includes(item.name)
+      item.type === 'registry:ui' && !['radio-group'].includes(item.name)
   );
 }
 
@@ -70,7 +69,13 @@ export function getComponent(name: string): RegistryItemWithDocs | null {
   const hookPath = path.join(REGISTRY_PATH, 'hooks', `${name}.json`);
   const libPath = path.join(REGISTRY_PATH, 'lib', `${name}.json`);
 
-  const componentPath = fs.existsSync(uiPath) ? uiPath : fs.existsSync(hookPath) ? hookPath : fs.existsSync(libPath) ? libPath : null;
+  const componentPath = fs.existsSync(uiPath)
+    ? uiPath
+    : fs.existsSync(hookPath)
+      ? hookPath
+      : fs.existsSync(libPath)
+        ? libPath
+        : null;
 
   if (!componentPath) {
     return null;

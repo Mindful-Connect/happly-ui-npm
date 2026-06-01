@@ -31,6 +31,12 @@ export const progressBarVariants = tv({
         progress: 'bg-neutral-900',
       },
     },
+    indeterminate: {
+      true: {
+        root: 'relative overflow-hidden',
+        progress: 'absolute w-2/5',
+      },
+    },
   },
   defaultVariants: {
     color: 'blue',
@@ -52,11 +58,29 @@ const ProgressBarRoot = React.forwardRef<HTMLDivElement, ProgressBarRootProps>(
       value = 0,
       max = 100,
       showAnimatedDot = false,
+      indeterminate,
       ...rest
     },
     forwardedRef
   ) => {
-    const { root, progress } = progressBarVariants({ color });
+    const { root, progress } = progressBarVariants({ color, indeterminate });
+
+    if (indeterminate) {
+      return (
+        <div
+          ref={forwardedRef}
+          className={root({ class: className })}
+          role='progressbar'
+          aria-busy='true'
+          {...rest}
+        >
+          <div
+            className={progress()}
+            style={{ animation: 'var(--animate-indeterminate-slide)' }}
+          />
+        </div>
+      );
+    }
     const safeValue = Math.min(max, Math.max(value, 0));
 
     return (

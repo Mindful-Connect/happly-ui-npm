@@ -24,13 +24,21 @@
       "@/lib/happly-ui-utils": ["../packages/registry/lib/happly-ui-utils"],
       "@/lib/tv": ["../packages/registry/lib/tv"],
       "@/lib/polymorphic": ["../packages/registry/lib/polymorphic"],
-      "@/lib/recursive-clone-children": ["../packages/registry/lib/recursive-clone-children"],
+      "@/lib/recursive-clone-children": [
+        "../packages/registry/lib/recursive-clone-children"
+      ],
       "@/lib/alert-utils": ["../packages/registry/lib/alert-utils"],
       "@/lib/tag-utils": ["../packages/registry/lib/tag-utils"],
-      "@/lib/currency-input-utils": ["../packages/registry/lib/currency-input-utils"],
+      "@/lib/currency-input-utils": [
+        "../packages/registry/lib/currency-input-utils"
+      ],
       "@/lib/memoji": ["../packages/registry/lib/memoji"],
-      "@/lib/form-field-context": ["../packages/registry/lib/form-field-context"],
-      "@/lib/use-form-field-binding": ["../packages/registry/lib/use-form-field-binding"],
+      "@/lib/form-field-context": [
+        "../packages/registry/lib/form-field-context"
+      ],
+      "@/lib/use-form-field-binding": [
+        "../packages/registry/lib/use-form-field-binding"
+      ],
       "@/hooks/*": ["../packages/registry/hooks/*"],
       "@/*": ["./src/*"]
     }

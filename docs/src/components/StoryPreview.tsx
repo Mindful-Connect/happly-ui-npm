@@ -9,7 +9,11 @@ interface StoryPreviewProps {
   previewClassName?: string;
 }
 
-export function StoryPreview({ componentName, storyNames, previewClassName }: StoryPreviewProps) {
+export function StoryPreview({
+  componentName,
+  storyNames,
+  previewClassName,
+}: StoryPreviewProps) {
   return (
     <ComponentPreview className={previewClassName}>
       {storyNames.map((name) => {

@@ -4,7 +4,11 @@ import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
 
-import { type Section, type Subsection, type SubSubsection } from '@/lib/sections';
+import {
+  type Section,
+  type Subsection,
+  type SubSubsection,
+} from '@/lib/sections';
 
 export function TableOfContents({
   tableOfContents,
@@ -110,28 +114,29 @@ export function TableOfContents({
                           >
                             {subSection.title}
                           </Link>
-                          {subSection.children && subSection.children.length > 0 && (
-                            <ol
-                              role='list'
-                              className='mt-2 space-y-2 pl-5 text-slate-500 dark:text-slate-400'
-                            >
-                              {subSection.children.map((subSubSection) => (
-                                <li key={subSubSection.id}>
-                                  <Link
-                                    href={`#${subSubSection.id}`}
-                                    className={clsx(
-                                      'text-xs',
-                                      isActive(subSubSection)
-                                        ? 'text-sky-500'
-                                        : 'hover:text-slate-600 dark:hover:text-slate-300'
-                                    )}
-                                  >
-                                    {subSubSection.title}
-                                  </Link>
-                                </li>
-                              ))}
-                            </ol>
-                          )}
+                          {subSection.children &&
+                            subSection.children.length > 0 && (
+                              <ol
+                                role='list'
+                                className='mt-2 space-y-2 pl-5 text-slate-500 dark:text-slate-400'
+                              >
+                                {subSection.children.map((subSubSection) => (
+                                  <li key={subSubSection.id}>
+                                    <Link
+                                      href={`#${subSubSection.id}`}
+                                      className={clsx(
+                                        'text-xs',
+                                        isActive(subSubSection)
+                                          ? 'text-sky-500'
+                                          : 'hover:text-slate-600 dark:hover:text-slate-300'
+                                      )}
+                                    >
+                                      {subSubSection.title}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ol>
+                            )}
                         </li>
                       ))}
                     </ol>
