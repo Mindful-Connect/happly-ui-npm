@@ -86,10 +86,10 @@ function DropdownItemIcon<T extends React.ElementType>({
       className={cn(
         // base
         'text-text-sub-600 h-5 w-5',
-        // disabled
-        'group-data-[disabled]/item:text-text-disabled-300',
         // variant
         'group-data-[variant=error]/item:text-error-base',
+        // disabled (overrides variant color)
+        'group-data-[disabled]/item:!text-text-disabled-300',
         className
       )}
       {...rest}

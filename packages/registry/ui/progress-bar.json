@@ -31,6 +31,24 @@
         "description": "A composed example with title, progress bar, percentage, and an upgrade link.",
         "code": "<ProgressBar.Root value={55} />\n<LinkButton.Root variant=\"primary\" underline>Upgrade</LinkButton.Root>",
         "stories": ["DataStorage"]
+      },
+      {
+        "title": "Indeterminate",
+        "description": "Use when progress is in-progress but not measurable (e.g. waiting on a response, finalizing). The bar slides continuously and ignores value/max.",
+        "code": "<ProgressBar.Root indeterminate />",
+        "stories": ["Indeterminate"]
+      },
+      {
+        "title": "Indeterminate Colors",
+        "description": "Indeterminate animation in all available colors.",
+        "code": "<ProgressBar.Root indeterminate color=\"blue\" />\n<ProgressBar.Root indeterminate color=\"red\" />\n<ProgressBar.Root indeterminate color=\"primary\" />",
+        "stories": ["IndeterminateColors"]
+      },
+      {
+        "title": "Indeterminate With Finalizing Label",
+        "description": "A common pattern for the trailing window after a task hits 100% but is still being finalized — show the indeterminate bar under a status label.",
+        "code": "<div className=\"space-y-1.5\">\n  <span className=\"text-label-sm text-text-strong-950\">Finalizing your matches...</span>\n  <ProgressBar.Root indeterminate color=\"primary\" />\n</div>",
+        "stories": ["IndeterminateWithFinalizing"]
       }
     ],
     "api": [
@@ -61,6 +79,12 @@
             "type": "boolean",
             "default": "false",
             "description": "Whether to show an animated dot moving across the progress bar"
+          },
+          {
+            "name": "indeterminate",
+            "type": "boolean",
+            "default": "false",
+            "description": "When true, renders a continuous sliding animation and ignores value/max. Use when progress is in-progress but not measurable."
           }
         ]
       }

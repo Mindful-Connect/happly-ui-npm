@@ -820,6 +820,10 @@ export const keyframes = {
     '0%': { backgroundPosition: '200% 0' },
     '100%': { backgroundPosition: '-200% 0' },
   },
+  'indeterminate-slide': {
+    '0%': { transform: 'translateX(-100%)' },
+    '100%': { transform: 'translateX(250%)' },
+  },
 };
 
 export const animations = {
@@ -828,4 +832,5 @@ export const animations = {
   'spin-smooth': 'spin-smooth 1s linear infinite',
   'copy-success': 'copy-success 0.3s ease-out forwards',
   shimmer: 'shimmer 2s infinite linear',
+  'indeterminate-slide': 'indeterminate-slide 2s linear infinite',
 };

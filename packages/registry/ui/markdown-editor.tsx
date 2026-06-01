@@ -498,7 +498,7 @@ const DEFAULT_FLAG_TOGGLE_ITEMS: SwitchToggleGroupItem[] = [
         src='https://mindful-connect.github.io/circle-flags/flags/ca.svg'
         alt='English'
         aria-label='English'
-        className='h-5 w-5 shrink-0 rounded-full transition-[filter,opacity] duration-200 [[data-state=inactive]_&]:grayscale [[data-state=inactive]_&]:opacity-60'
+        className='h-5 w-5 shrink-0 rounded-full transition-[filter,opacity] duration-200 [[data-state=inactive]_&]:opacity-60 [[data-state=inactive]_&]:grayscale'
       />
     ),
   },
@@ -509,7 +509,7 @@ const DEFAULT_FLAG_TOGGLE_ITEMS: SwitchToggleGroupItem[] = [
         src='https://mindful-connect.github.io/circle-flags/flags/fr.svg'
         alt='French'
         aria-label='French'
-        className='h-5 w-5 shrink-0 rounded-full transition-[filter,opacity] duration-200 [[data-state=inactive]_&]:grayscale [[data-state=inactive]_&]:opacity-60'
+        className='h-5 w-5 shrink-0 rounded-full transition-[filter,opacity] duration-200 [[data-state=inactive]_&]:opacity-60 [[data-state=inactive]_&]:grayscale'
       />
     ),
   },

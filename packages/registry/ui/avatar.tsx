@@ -56,6 +56,9 @@ export const avatarVariants = tv({
       },
     },
     color: {
+      white: {
+        root: 'bg-bg-white-0 text-static-black',
+      },
       gray: {
         root: 'bg-bg-soft-200 text-static-black',
       },

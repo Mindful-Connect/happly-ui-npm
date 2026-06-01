@@ -19,8 +19,8 @@
     "examples": [
       {
         "title": "Color",
-        "description": "Avatar backgrounds in different colors: gray (default), yellow, blue, sky, purple, red, and primary.",
-        "code": "<Avatar.Root>EW</Avatar.Root>\n<Avatar.Root color=\"yellow\">EW</Avatar.Root>\n<Avatar.Root color=\"primary\">EW</Avatar.Root>",
+        "description": "Avatar backgrounds in different colors: white, gray (default), yellow, blue, sky, purple, red, and primary.",
+        "code": "<Avatar.Root color=\"white\">EW</Avatar.Root>\n<Avatar.Root>EW</Avatar.Root>\n<Avatar.Root color=\"primary\">EW</Avatar.Root>",
         "stories": ["Color"]
       },
       {
@@ -103,7 +103,7 @@
           },
           {
             "name": "color",
-            "type": "'gray' | 'yellow' | 'blue' | 'sky' | 'purple' | 'red' | 'primary'",
+            "type": "'white' | 'gray' | 'yellow' | 'blue' | 'sky' | 'purple' | 'red' | 'primary'",
             "default": "'gray'",
             "description": "The background color"
           },

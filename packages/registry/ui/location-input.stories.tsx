@@ -78,9 +78,9 @@ export const WithError = {
 };
 
 function MultiRender() {
-  const [locations, setLocations] = useState<
-    NonNullable<LocationRequest>[]
-  >([]);
+  const [locations, setLocations] = useState<NonNullable<LocationRequest>[]>(
+    []
+  );
 
   return (
     <div style={{ maxWidth: '672px', width: '100%' }}>
@@ -97,9 +97,9 @@ export const Multi = {
 };
 
 function MultiWithMaxRender() {
-  const [locations, setLocations] = useState<
-    NonNullable<LocationRequest>[]
-  >([]);
+  const [locations, setLocations] = useState<NonNullable<LocationRequest>[]>(
+    []
+  );
 
   return (
     <div style={{ maxWidth: '672px', width: '100%' }}>
