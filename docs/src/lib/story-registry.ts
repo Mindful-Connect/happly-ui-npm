@@ -31,7 +31,7 @@ import { default as fadeScrollMeta, Vertical as fadeScroll_Vertical, Horizontal 
 import { default as fancyButtonMeta, Playground as fancyButton_Playground, Variants as fancyButton_Variants, WithIcon as fancyButton_WithIcon, Sizes as fancyButton_Sizes, Disabled as fancyButton_Disabled, AsChild as fancyButton_AsChild } from '@/components/ui/fancy-button.stories';
 import { default as fileCardMeta, UploadStates as fileCard_UploadStates, CompletedMediaTypes as fileCard_CompletedMediaTypes, Download as fileCard_Download, Compact as fileCard_Compact, Item as fileCard_Item, ItemDownload as fileCard_ItemDownload, ItemCompact as fileCard_ItemCompact } from '@/components/ui/file-card.stories';
 import { default as fileFormatIconMeta, Default as fileFormatIcon_Default, Colors as fileFormatIcon_Colors, Sizes as fileFormatIcon_Sizes } from '@/components/ui/file-format-icon.stories';
-import { default as fileUploadMeta, Document as fileUpload_Document, Image as fileUpload_Image, Video as fileUpload_Video, Audio as fileUpload_Audio, Attachment as fileUpload_Attachment, CustomOverrides as fileUpload_CustomOverrides, Dragging as fileUpload_Dragging } from '@/components/ui/file-upload.stories';
+import { default as fileUploadMeta, Document as fileUpload_Document, Image as fileUpload_Image, Video as fileUpload_Video, Audio as fileUpload_Audio, Attachment as fileUpload_Attachment, CustomOverrides as fileUpload_CustomOverrides, Dragging as fileUpload_Dragging, Disabled as fileUpload_Disabled } from '@/components/ui/file-upload.stories';
 import { default as filterDropdownMeta, CategoryMenu as filterDropdown_CategoryMenu, TextOptions as filterDropdown_TextOptions, BadgeOptions as filterDropdown_BadgeOptions, StatusBadgeOptions as filterDropdown_StatusBadgeOptions, WithSearch as filterDropdown_WithSearch, TwoLevelNavigation as filterDropdown_TwoLevelNavigation, FlatFilter as filterDropdown_FlatFilter, ComposedTwoLevel as filterDropdown_ComposedTwoLevel, ComposedFlat as filterDropdown_ComposedFlat, ComposedWithSearch as filterDropdown_ComposedWithSearch, ComposedWithBadges as filterDropdown_ComposedWithBadges, ComposedWithRemoteSearch as filterDropdown_ComposedWithRemoteSearch, ComposedTwoLevelWithRemote as filterDropdown_ComposedTwoLevelWithRemote } from '@/components/ui/filter-dropdown.stories';
 import { default as formFieldMeta, Playground as formField_Playground, Demo as formField_Demo, WithError as formField_WithError, Disabled as formField_Disabled, CompoundMode as formField_CompoundMode, FormValidation as formField_FormValidation, AutoBindingShowcase as formField_AutoBindingShowcase } from '@/components/ui/form-field.stories';
 import { default as hintMeta, Playground as hint_Playground, Demo as hint_Demo, Disabled as hint_Disabled, HasError as hint_HasError, CustomIcon as hint_CustomIcon, Composed as hint_Composed } from '@/components/ui/hint.stories';
@@ -68,7 +68,7 @@ import { default as socialsInputMeta, Default as socialsInput_Default, WithExist
 import { default as statusBadgeMeta, Playground as statusBadge_Playground, Completed as statusBadge_Completed, Pending as statusBadge_Pending, Failed as statusBadge_Failed, Disabled as statusBadge_Disabled, AsChild as statusBadge_AsChild } from '@/components/ui/status-badge.stories';
 import { default as statusIndicatorMeta, TopVariants as statusIndicator_TopVariants, BottomVariants as statusIndicator_BottomVariants } from '@/components/ui/status-indicator.stories';
 import { default as stepIndicatorMeta, FirstStepActive as stepIndicator_FirstStepActive, MidProgress as stepIndicator_MidProgress, LastStepActive as stepIndicator_LastStepActive, AllCompleted as stepIndicator_AllCompleted, Compound as stepIndicator_Compound, Clickable as stepIndicator_Clickable, CustomRailColors as stepIndicator_CustomRailColors } from '@/components/ui/step-indicator.stories';
-import { default as switchToggleMeta, Default as switchToggle_Default, Rounded as switchToggle_Rounded, GroupDefault as switchToggle_GroupDefault, GroupTextOnly as switchToggle_GroupTextOnly } from '@/components/ui/switch-toggle.stories';
+import { default as switchToggleMeta, Default as switchToggle_Default, Rounded as switchToggle_Rounded, GroupDefault as switchToggle_GroupDefault, GroupTextOnly as switchToggle_GroupTextOnly, Disabled as switchToggle_Disabled } from '@/components/ui/switch-toggle.stories';
 import { default as switchMeta, Playground as switch_Playground, Demo as switch_Demo, Variants as switch_Variants, Disabled as switch_Disabled, WithLabel as switch_WithLabel, WithLabelExtended as switch_WithLabelExtended, WithFormField as switch_WithFormField } from '@/components/ui/switch.stories';
 import { default as tabMenuHorizontalMeta, Default as tabMenuHorizontal_Default, Primary as tabMenuHorizontal_Primary, WithIcons as tabMenuHorizontal_WithIcons, WithCounter as tabMenuHorizontal_WithCounter, Composed as tabMenuHorizontal_Composed, Overflow as tabMenuHorizontal_Overflow, Disabled as tabMenuHorizontal_Disabled } from '@/components/ui/tab-menu-horizontal.stories';
 import { default as tableMeta, Default as table_Default } from '@/components/ui/table.stories';
@@ -453,7 +453,8 @@ export const storyRegistry: Record<string, {
     'Audio': fileUpload_Audio,
     'Attachment': fileUpload_Attachment,
     'CustomOverrides': fileUpload_CustomOverrides,
-    'Dragging': fileUpload_Dragging
+    'Dragging': fileUpload_Dragging,
+    'Disabled': fileUpload_Disabled
     }
   },
   'filter-dropdown': {
@@ -881,7 +882,8 @@ export const storyRegistry: Record<string, {
     'Default': switchToggle_Default,
     'Rounded': switchToggle_Rounded,
     'GroupDefault': switchToggle_GroupDefault,
-    'GroupTextOnly': switchToggle_GroupTextOnly
+    'GroupTextOnly': switchToggle_GroupTextOnly,
+    'Disabled': switchToggle_Disabled
     }
   },
   'switch': {

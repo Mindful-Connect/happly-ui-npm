@@ -706,6 +706,7 @@ const FileUploadRoot = React.forwardRef<
   React.LabelHTMLAttributes<HTMLLabelElement> & {
     asChild?: boolean;
     dragging?: boolean;
+    disabled?: boolean;
   }
 >(
   (
@@ -713,6 +714,7 @@ const FileUploadRoot = React.forwardRef<
       className,
       asChild,
       dragging,
+      disabled,
       onDragOver,
       onDragLeave,
       onDrop,
@@ -773,10 +775,12 @@ const FileUploadRoot = React.forwardRef<
         ref={forwardedRef}
         {...rest}
         className={cn(
-          'bg-bg-white-0 flex w-full cursor-pointer flex-col items-center gap-5 rounded-xl p-8 text-center',
+          'bg-bg-white-0 flex w-full flex-col items-center gap-5 rounded-xl p-8 text-center',
           'transition duration-200 ease-out',
-          'hover:bg-bg-weak-50',
-          isDragging && 'bg-primary-alpha-10',
+          disabled
+            ? 'pointer-events-none'
+            : 'cursor-pointer hover:bg-bg-weak-50',
+          isDragging && !disabled && 'bg-primary-alpha-10',
           className
         )}
         style={{
@@ -799,8 +803,9 @@ const FileUploadButton = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & {
     asChild?: boolean;
+    disabled?: boolean;
   }
->(({ className, asChild, ...rest }, forwardedRef) => {
+>(({ className, asChild, disabled, ...rest }, forwardedRef) => {
   const Component = asChild ? Slot : 'div';
 
   return (
@@ -809,6 +814,7 @@ const FileUploadButton = React.forwardRef<
       className={cn(
         'bg-bg-white-0 text-label-sm text-text-sub-600 inline-flex h-8 items-center justify-center gap-2.5 rounded-lg px-2.5 whitespace-nowrap',
         'ring-stroke-soft-200 shadow-regular-xs pointer-events-none ring-1 ring-inset',
+        disabled && 'text-text-disabled-300',
         className
       )}
       {...rest}
@@ -835,12 +841,16 @@ FileUploadIcon.displayName = 'FileUploadIcon';
 
 const FileUploadTitle = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...rest }, forwardedRef) => {
+  React.HTMLAttributes<HTMLDivElement> & { disabled?: boolean }
+>(({ className, disabled, ...rest }, forwardedRef) => {
   return (
     <div
       ref={forwardedRef}
-      className={cn('text-label-sm text-text-strong-950', className)}
+      className={cn(
+        'text-label-sm text-text-strong-950',
+        disabled && 'text-text-soft-400',
+        className
+      )}
       {...rest}
     />
   );
@@ -849,12 +859,16 @@ FileUploadTitle.displayName = 'FileUploadTitle';
 
 const FileUploadDescription = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...rest }, forwardedRef) => {
+  React.HTMLAttributes<HTMLDivElement> & { disabled?: boolean }
+>(({ className, disabled, ...rest }, forwardedRef) => {
   return (
     <div
       ref={forwardedRef}
-      className={cn('text-paragraph-xs text-text-sub-600', className)}
+      className={cn(
+        'text-paragraph-xs text-text-sub-600',
+        disabled && 'text-text-disabled-300',
+        className
+      )}
       {...rest}
     />
   );
@@ -885,6 +899,7 @@ type FileUploadDropzoneProps = Omit<
   title?: string;
   description?: string;
   buttonText?: string;
+  disabled?: boolean;
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 };
 
@@ -893,22 +908,46 @@ const FileUploadDropzone = React.forwardRef<
   FileUploadDropzoneProps
 >(
   (
-    { type, title, description, buttonText, inputProps, className, ...rest },
+    {
+      type,
+      title,
+      description,
+      buttonText,
+      disabled,
+      inputProps,
+      className,
+      ...rest
+    },
     forwardedRef
   ) => {
     const preset = DROPZONE_PRESETS[type];
 
     return (
-      <FileUploadRoot ref={forwardedRef} className={className} {...rest}>
-        <input type='file' tabIndex={-1} className='hidden' {...inputProps} />
+      <FileUploadRoot
+        ref={forwardedRef}
+        className={className}
+        disabled={disabled}
+        {...rest}
+      >
+        <input
+          type='file'
+          tabIndex={-1}
+          className='hidden'
+          {...inputProps}
+          disabled={disabled}
+        />
         {preset.icon}
         <FileUploadContent>
-          <FileUploadTitle>{title ?? preset.title}</FileUploadTitle>
-          <FileUploadDescription>
+          <FileUploadTitle disabled={disabled}>
+            {title ?? preset.title}
+          </FileUploadTitle>
+          <FileUploadDescription disabled={disabled}>
             {description ?? preset.description}
           </FileUploadDescription>
         </FileUploadContent>
-        <FileUploadButton>{buttonText ?? preset.button}</FileUploadButton>
+        <FileUploadButton disabled={disabled}>
+          {buttonText ?? preset.button}
+        </FileUploadButton>
       </FileUploadRoot>
     );
   }
