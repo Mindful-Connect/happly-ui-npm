@@ -68,7 +68,7 @@
             "name": "scrollMargin",
             "type": "number",
             "default": "16",
-            "description": "Extra pixels below the auto-detected offset. The component already accounts for sticky headers by measuring its own bottom edge."
+            "description": "Gap in pixels left above the target section when scrolling to it. Works with any scroll container (page or nested overflow element)."
           }
         ]
       },
