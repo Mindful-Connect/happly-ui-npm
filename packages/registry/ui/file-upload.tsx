@@ -645,7 +645,13 @@ const AttachmentUploadIcon = () => (
 
 // ─── Dropzone presets ────────────────────────────────────────────────────────
 
-type FileUploadType = 'document' | 'image' | 'video' | 'audio' | 'attachment';
+export type FileUploadType =
+  | 'document'
+  | 'image'
+  | 'video'
+  | 'audio'
+  | 'archive'
+  | 'attachment';
 
 const DROPZONE_PRESETS: Record<
   FileUploadType,
@@ -679,6 +685,12 @@ const DROPZONE_PRESETS: Record<
     icon: <AudioUploadIcon />,
     title: 'Choose an existing audio file or upload a new one.',
     description: 'Supported formats: MP3, WAV. Max size: 50MB.',
+    button: 'Browse File',
+  },
+  archive: {
+    icon: <AttachmentUploadIcon />,
+    title: 'Choose an existing archive file or upload a new one.',
+    description: 'Supported formats: ZIP, RAR, 7z. Max size: 50MB.',
     button: 'Browse File',
   },
   attachment: {
@@ -778,7 +790,7 @@ const FileUploadRoot = React.forwardRef<
           'bg-bg-white-0 flex w-full flex-col items-center gap-5 rounded-xl p-8 text-center',
           'transition duration-200 ease-out',
           disabled
-            ? 'pointer-events-none'
+            ? 'pointer-events-none opacity-60'
             : 'hover:bg-bg-weak-50 cursor-pointer',
           isDragging && !disabled && 'bg-primary-alpha-10',
           className

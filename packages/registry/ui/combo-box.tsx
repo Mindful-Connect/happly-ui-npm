@@ -150,7 +150,7 @@ function ComboBoxRoot({
   const options = React.useMemo(() => {
     const seen = new Set<string>();
     const out: ComboBoxOption[] = [];
-    for (const opt of rawOptions) {
+    for (const opt of rawOptions ?? []) {
       if (seen.has(opt.value)) continue;
       seen.add(opt.value);
       out.push(opt);
@@ -557,7 +557,7 @@ function ComboBoxContent({
     (isEmpty ? (
       <ComboBoxEmpty>{emptyText}</ComboBoxEmpty>
     ) : (
-      <div className='flex flex-col gap-1'>
+      <>
         {ctx.createItem && (
           <ComboBoxCreateItem index={0} item={ctx.createItem} />
         )}
@@ -568,14 +568,14 @@ function ComboBoxContent({
             index={index + createOffset}
           />
         ))}
-      </div>
+      </>
     ));
 
   const scrollArea = (
     <ScrollAreaPrimitives.Root type='auto'>
       <ScrollAreaPrimitives.Viewport
         style={{ overflowY: undefined }}
-        className='max-h-[var(--combobox-content-max-height)] w-full scroll-py-2 overflow-auto p-2'
+        className='flex max-h-[var(--combobox-content-max-height)] w-full scroll-py-2 flex-col gap-1 overflow-auto p-2'
         role='listbox'
         id={ctx.listboxId}
         aria-multiselectable='true'
@@ -659,8 +659,9 @@ function ComboBoxItem({
 
   const isDisabled = ctx.disabled || disabledProp || atMax;
 
+  const findIdx = ctx.filteredOptions.findIndex((o) => o.value === itemValue);
   const resolvedIndex =
-    index ?? ctx.filteredOptions.findIndex((o) => o.value === itemValue);
+    index ?? (findIdx === -1 ? -1 : findIdx + (ctx.createItem ? 1 : 0));
   const isHighlighted =
     resolvedIndex >= 0 && resolvedIndex === ctx.highlightedIndex;
 

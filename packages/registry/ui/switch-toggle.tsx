@@ -137,7 +137,11 @@ const SwitchToggleGroup = React.forwardRef<
           {items.map((item) => {
             const Icon = item.icon;
             return (
-              <SwitchToggleTrigger key={item.value} value={item.value}>
+              <SwitchToggleTrigger
+                key={item.value}
+                value={item.value}
+                disabled={disabled}
+              >
                 {Icon && <Icon className='h-5 w-5 shrink-0' />}
                 {item.label}
               </SwitchToggleTrigger>

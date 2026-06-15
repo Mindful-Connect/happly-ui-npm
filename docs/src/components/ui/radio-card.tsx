@@ -19,7 +19,7 @@ const radioCardVariants = tv({
       'ring-1 ring-inset ring-stroke-soft-200',
       'transition duration-200 ease-out',
       // hover
-      'hover:bg-bg-weak-50 hover:ring-transparent',
+      'hover:bg-bg-weak-50 hover:shadow-none hover:ring-transparent',
       // keyboard focus only — avoid sticky ring after mouse-click selection
       'has-[:focus-visible]:shadow-button-important-focus has-[:focus-visible]:ring-stroke-strong-950',
       // checked

@@ -159,7 +159,8 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
           const cc = newIso2.toUpperCase() as CountryCode;
           const maxLen = cc === 'US' || cc === 'CA' ? 10 : 15;
           const trimmed = digits.slice(0, maxLen);
-          const e164 = `+${countryData.dialCode}${trimmed}`;
+          const e164 =
+            trimmed.length > 0 ? `+${countryData.dialCode}${trimmed}` : '';
           setDisplayValue(formatNationalDigits(trimmed, cc));
           lastEmittedRef.current = e164;
           onValueChange?.(e164);
@@ -185,7 +186,7 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
         setDisplayValue(formatted);
 
         const dialCode = activeCountry?.dialCode ?? '';
-        const e164 = `+${dialCode}${digits}`;
+        const e164 = digits.length > 0 ? `+${dialCode}${digits}` : '';
         lastEmittedRef.current = e164;
         onValueChange?.(e164);
       },

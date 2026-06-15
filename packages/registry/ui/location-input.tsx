@@ -63,6 +63,7 @@ function resolvePlace(
   placeId: string,
   callback: (location: NonNullable<LocationRequest>) => void
 ) {
+  if (!window.google?.maps?.places) return;
   const placesService = new window.google.maps.places.PlacesService(
     document.createElement('div')
   );
@@ -389,12 +390,6 @@ type LocationInputMultiRow = {
   location: LocationRequest;
 };
 
-let multiRowIdCounter = 0;
-function makeRowId() {
-  multiRowIdCounter += 1;
-  return `loc-row-${multiRowIdCounter}`;
-}
-
 function LocationInputMulti({
   locations: locationsProp,
   onLocationsChange,
@@ -413,6 +408,14 @@ function LocationInputMulti({
   const resolvedHasError = hasError ?? formField.hasError;
   const resolvedDisabled = disabled ?? formField.disabled;
 
+  const baseId = React.useId();
+  const rowCounterRef = React.useRef(0);
+
+  const makeRowId = React.useCallback(() => {
+    rowCounterRef.current += 1;
+    return `${baseId}-row-${rowCounterRef.current}`;
+  }, [baseId]);
+
   const binding = useFormFieldBinding<NonNullable<LocationRequest>[]>({
     parse: (stored: unknown) =>
       Array.isArray(stored) ? (stored as NonNullable<LocationRequest>[]) : [],
@@ -425,14 +428,19 @@ function LocationInputMulti({
   const onChange = onLocationsChange ?? binding?.onChange;
 
   // Internal rows include drafts (rows being typed in that haven't selected a place yet).
-  const [rows, setRows] = React.useState<LocationInputMultiRow[]>(() =>
-    externalValue.length > 0
-      ? externalValue.map((loc) => ({ id: makeRowId(), location: loc }))
-      : Array.from({ length: minLocations }, () => ({
-          id: makeRowId(),
-          location: null,
+  const [rows, setRows] = React.useState<LocationInputMultiRow[]>(() => {
+    const len = externalValue.length > 0 ? externalValue.length : minLocations;
+    rowCounterRef.current = len;
+    return externalValue.length > 0
+      ? externalValue.map((loc, idx) => ({
+          id: `${baseId}-row-${idx + 1}`,
+          location: loc,
         }))
-  );
+      : Array.from({ length: minLocations }, (_, idx) => ({
+          id: `${baseId}-row-${idx + 1}`,
+          location: null,
+        }));
+  });
 
   // Reconcile when the external list changes (form reset, parent-driven update).
   // The lastEmitted ref guards against the loop from our own emitChange calls.
@@ -444,15 +452,20 @@ function LocationInputMulti({
         (v, i) => v?.place_id === lastEmittedRef.current[i]?.place_id
       );
     if (sameAsLast) return;
+    const len = externalValue.length > 0 ? externalValue.length : minLocations;
+    rowCounterRef.current = len;
     setRows(
       externalValue.length > 0
-        ? externalValue.map((loc) => ({ id: makeRowId(), location: loc }))
-        : Array.from({ length: minLocations }, () => ({
-            id: makeRowId(),
+        ? externalValue.map((loc, idx) => ({
+            id: `${baseId}-row-${idx + 1}`,
+            location: loc,
+          }))
+        : Array.from({ length: minLocations }, (_, idx) => ({
+            id: `${baseId}-row-${idx + 1}`,
             location: null,
           }))
     );
-  }, [externalValue, minLocations]);
+  }, [externalValue, minLocations, baseId]);
 
   function emitChange(nextRows: LocationInputMultiRow[]) {
     const filtered = nextRows

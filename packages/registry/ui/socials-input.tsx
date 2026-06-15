@@ -108,11 +108,7 @@ export const SOCIAL_CONFIGS: Record<SocialKey, SocialConfig> = {
     domains: ['/linkedin.com', '.linkedin.com'],
     extractHandle: (url) => {
       const match = url.match(/linkedin\.com\/in\/([^/?#]+)/);
-      if (!match) return url;
-      return match[1]
-        .split('-')
-        .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
-        .join(' ');
+      return match ? match[1] : url;
     },
     generateUrl: (text) => {
       const username = text.startsWith('@') ? text.substring(1) : text;
@@ -127,11 +123,7 @@ export const SOCIAL_CONFIGS: Record<SocialKey, SocialConfig> = {
     domains: ['/facebook.com', '.facebook.com'],
     extractHandle: (url) => {
       const match = url.match(/facebook\.com\/([^/?#]+)/);
-      if (!match) return url;
-      return match[1]
-        .split('.')
-        .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
-        .join(' ');
+      return match ? match[1] : url;
     },
     generateUrl: (text) => {
       const username = text.startsWith('@') ? text.substring(1) : text;
