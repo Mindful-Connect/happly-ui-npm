@@ -53,3 +53,9 @@ export const Dragging = {
     </FileUpload.Root>
   ),
 };
+
+export const Disabled = {
+  render: () => (
+    <FileUpload.Dropzone type='image' disabled className='min-w-[480px]' />
+  ),
+};

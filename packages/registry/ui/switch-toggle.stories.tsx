@@ -80,3 +80,24 @@ export const GroupTextOnly = {
     </div>
   ),
 };
+
+export const Disabled = {
+  render: () => (
+    <div className='flex w-full max-w-sm flex-col gap-4'>
+      <SwitchToggle.Root defaultValue='light'>
+        <SwitchToggle.List disabled>
+          <SwitchToggle.Trigger value='light'>
+            <RiSunLine className='h-5 w-5 shrink-0' />
+            Light
+          </SwitchToggle.Trigger>
+          <SwitchToggle.Trigger value='dark'>
+            <RiMoonLine className='h-5 w-5 shrink-0' />
+            Dark
+          </SwitchToggle.Trigger>
+        </SwitchToggle.List>
+      </SwitchToggle.Root>
+
+      <SwitchToggle.Group defaultValue='system' items={themeItems} disabled />
+    </div>
+  ),
+};

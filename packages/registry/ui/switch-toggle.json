@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Switch Toggle",
   "description": "A tab-based switch toggle with animated floating background indicator. Includes a composed SwitchToggle.Group for quick usage. Uses Radix Tabs with namespace exports.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "dependencies": [
     "@radix-ui/react-slot",
     "@radix-ui/react-tabs",
@@ -38,6 +38,12 @@
         "description": "Composed group with text-only items, no icons.",
         "code": "const items = [\n  { value: 'daily', label: 'Daily' },\n  { value: 'weekly', label: 'Weekly' },\n  { value: 'monthly', label: 'Monthly' },\n];\n\n<SwitchToggle.Group defaultValue='weekly' items={items} />",
         "stories": ["GroupTextOnly"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Dims the whole control and blocks interaction. Pass `disabled` to SwitchToggle.List for the composed Root/List/Trigger pattern, or directly to SwitchToggle.Group.",
+        "code": "<SwitchToggle.Root defaultValue='light'>\n  <SwitchToggle.List disabled>\n    <SwitchToggle.Trigger value='light'>Light</SwitchToggle.Trigger>\n    <SwitchToggle.Trigger value='dark'>Dark</SwitchToggle.Trigger>\n  </SwitchToggle.List>\n</SwitchToggle.Root>\n\n<SwitchToggle.Group defaultValue='system' items={items} disabled />",
+        "stories": ["Disabled"]
       }
     ],
     "api": [
@@ -70,6 +76,12 @@
             "name": "floatingBgClassName",
             "type": "string",
             "description": "Additional classes for the floating background indicator element"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disables the entire control: dims it (opacity) and blocks pointer interaction on all triggers. Sets aria-disabled."
           }
         ]
       },
@@ -119,6 +131,12 @@
             "name": "floatingBgClassName",
             "type": "string",
             "description": "Additional classes for the floating background indicator"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "Disables the entire group: dims it and blocks pointer interaction on all triggers."
           },
           {
             "name": "defaultValue",

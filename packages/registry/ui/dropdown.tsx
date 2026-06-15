@@ -26,7 +26,9 @@ const DropdownContent = React.forwardRef<
       ref={forwardedRef}
       sideOffset={sideOffset}
       className={cn(
-        'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 pointer-events-auto z-50 w-[300px] overflow-hidden rounded-2xl p-2 ring-1 ring-inset',
+        // Min width per Figma (224px); grows with content, capped at the
+        // viewport-available width so it never overflows the screen.
+        'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 pointer-events-auto z-50 w-max max-w-[var(--radix-dropdown-menu-content-available-width)] min-w-[224px] overflow-hidden rounded-2xl p-2 ring-1 ring-inset',
         'flex flex-col gap-1',
         // origin
         'data-[side=bottom]:origin-top data-[side=left]:origin-right data-[side=right]:origin-left data-[side=top]:origin-bottom',
@@ -85,7 +87,7 @@ function DropdownItemIcon<T extends React.ElementType>({
     <Component
       className={cn(
         // base
-        'text-text-sub-600 h-5 w-5',
+        'text-text-sub-600 h-5 w-5 shrink-0',
         // variant
         'group-data-[variant=error]/item:text-error-base',
         // disabled (overrides variant color)
@@ -161,7 +163,9 @@ const DropdownMenuSubContent = React.forwardRef<
   <DropdownMenuPrimitive.SubContent
     ref={forwardedRef}
     className={cn(
-      'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 pointer-events-auto z-50 w-max overflow-hidden rounded-2xl p-2 ring-1 ring-inset',
+      // Min width per Figma (224px); grows with content, capped at the
+      // viewport-available width so it never overflows the screen.
+      'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 pointer-events-auto z-50 w-max max-w-[var(--radix-dropdown-menu-content-available-width)] min-w-[224px] overflow-hidden rounded-2xl p-2 ring-1 ring-inset',
       'flex flex-col gap-1',
       // animation
       'data-[state=open]:animate-in data-[state=open]:fade-in-0',

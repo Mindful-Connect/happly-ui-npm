@@ -100,9 +100,8 @@ type MenuTabBarRootProps = Pick<
 > &
   React.HTMLAttributes<HTMLDivElement> & {
     /**
-     * Extra pixels to add below the auto-detected offset.
-     * The component already accounts for sticky headers by measuring
-     * its own bottom edge — use this only for additional spacing.
+     * Gap in pixels left above the target section when scrolling to it.
+     * Works whether the page or a nested overflow element is the scroller.
      * @default 16
      */
     scrollMargin?: number;
@@ -244,6 +243,25 @@ type MenuTabBarItemProps = MenuTabBarSharedProps &
     scrollTo?: string;
   };
 
+/**
+ * Find the nearest scrollable ancestor of an element, or null when the page
+ * itself is the scroller. Lets scrollTo work inside nested overflow containers,
+ * not only when the whole window scrolls.
+ */
+function getScrollableParent(el: HTMLElement | null): HTMLElement | null {
+  let node = el?.parentElement ?? null;
+  while (node) {
+    const { overflowY } = window.getComputedStyle(node);
+    const scrollable =
+      overflowY === 'auto' || overflowY === 'scroll' || overflowY === 'overlay';
+    if (scrollable && node.scrollHeight > node.clientHeight) {
+      return node;
+    }
+    node = node.parentElement;
+  }
+  return null;
+}
+
 const MenuTabBarItem = React.forwardRef<HTMLButtonElement, MenuTabBarItemProps>(
   (
     { children, className, variant, selected, scrollTo, onClick, ...rest },
@@ -269,19 +287,22 @@ const MenuTabBarItem = React.forwardRef<HTMLButtonElement, MenuTabBarItemProps>(
         if (scrollTo) {
           const target = document.getElementById(scrollTo);
           if (target) {
-            const barBottom = ctx?.rootRef.current
-              ? ctx.rootRef.current.getBoundingClientRect().bottom
-              : 0;
-
             const margin = ctx?.scrollMargin ?? 16;
-
-            const top =
-              target.getBoundingClientRect().top +
-              window.scrollY -
-              barBottom -
-              margin;
-
-            window.scrollTo({ top, behavior: 'smooth' });
+            const scroller = getScrollableParent(target);
+            if (scroller) {
+              // Scroll within the actual scroll container, not the window.
+              const top =
+                scroller.scrollTop +
+                target.getBoundingClientRect().top -
+                scroller.getBoundingClientRect().top -
+                margin;
+              scroller.scrollTo({ top, behavior: 'smooth' });
+            } else {
+              // The page itself is the scroller.
+              const top =
+                target.getBoundingClientRect().top + window.scrollY - margin;
+              window.scrollTo({ top, behavior: 'smooth' });
+            }
           }
         }
         onClick?.(e);
