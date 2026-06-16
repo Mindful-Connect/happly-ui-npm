@@ -2,7 +2,11 @@
 
 import * as React from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import { RiAddLine, RiSubtractLine } from '@remixicon/react';
+import {
+  RiAddLine,
+  RiArrowDownSLine,
+  RiSubtractLine,
+} from '@remixicon/react';
 
 import type { PolymorphicComponentProps } from '@/lib/polymorphic';
 import { cn } from '@/lib/happly-ui-utils';
@@ -12,6 +16,7 @@ const ACCORDION_ROOT_NAME = 'AccordionRoot';
 const ACCORDION_ITEM_NAME = 'AccordionItem';
 const ACCORDION_ICON_NAME = 'AccordionIcon';
 const ACCORDION_ARROW_NAME = 'AccordionArrow';
+const ACCORDION_CHEVRON_NAME = 'AccordionChevron';
 const ACCORDION_TRIGGER_NAME = 'AccordionTrigger';
 const ACCORDION_CONTENT_NAME = 'AccordionContent';
 
@@ -34,6 +39,19 @@ const accordionItemVariants = tv({
         'hover:ring-stroke-sub-300',
         'has-[:focus-visible]:ring-stroke-sub-300',
         'data-[state=open]:ring-stroke-sub-300',
+      ],
+      // Connected list: items joined inside one bordered container,
+      // separated by top dividers. The container styling lives on the
+      // parent (Accordion.Root / Accordion.Group), not the item.
+      list: [
+        'rounded-none ring-0 bg-bg-white-0 border-stroke-soft-200',
+        'border-t first:border-t-0',
+        // Mirrors the filled variant's bg fill (same bg-weak-50 token) on
+        // hover/focus/open. The divider border stays constant so the
+        // connected list keeps its seams.
+        'hover:bg-bg-weak-50',
+        'has-[:focus-visible]:bg-bg-weak-50',
+        'data-[state=open]:bg-bg-weak-50',
       ],
     },
   },
@@ -151,6 +169,37 @@ function AccordionArrow({
 }
 AccordionArrow.displayName = ACCORDION_ARROW_NAME;
 
+type AccordionChevronProps = React.HTMLAttributes<HTMLSpanElement> & {
+  icon?: React.ElementType;
+};
+
+function AccordionChevron({
+  className,
+  icon: Icon = RiArrowDownSLine,
+  ...rest
+}: AccordionChevronProps) {
+  return (
+    <span
+      className={cn(
+        'flex shrink-0 items-center justify-center rounded-lg p-1.5',
+        'border-stroke-soft-200 bg-bg-white-0 shadow-regular-xs border',
+        'transition duration-200 ease-out',
+        className
+      )}
+      {...rest}
+    >
+      <Icon
+        className={cn(
+          'text-text-sub-600 h-5 w-5',
+          'transition-transform duration-200 ease-out',
+          'group-data-[state=open]/accordion:rotate-180'
+        )}
+      />
+    </span>
+  );
+}
+AccordionChevron.displayName = ACCORDION_CHEVRON_NAME;
+
 const AccordionContent = React.forwardRef<
   React.ComponentRef<typeof AccordionPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
@@ -201,16 +250,27 @@ const AccordionGroup = React.forwardRef<
     { items, variant, arrowPosition = 'end', className, ...rest },
     forwardedRef
   ) => {
+    const isList = variant === 'list';
+    const Indicator = isList ? AccordionChevron : AccordionArrow;
+
     return (
       <AccordionRoot
         ref={forwardedRef}
-        className={cn('space-y-6', className)}
+        className={cn(
+          isList
+            ? 'border-stroke-soft-200 bg-bg-white-0 shadow-regular-xs overflow-hidden rounded-2xl border'
+            : 'space-y-6',
+          className
+        )}
         {...(rest as any)}
       >
         {items.map((item) => {
           const hasIcon = !!item.icon;
-          const contentPadding =
-            arrowPosition === 'start' || hasIcon ? 'pl-[30px]' : undefined;
+          const contentPadding = isList
+            ? cn('px-5 pt-0 pb-4', hasIcon && 'pl-[50px]')
+            : arrowPosition === 'start' || hasIcon
+              ? 'pl-[30px]'
+              : undefined;
 
           return (
             <AccordionItem
@@ -218,11 +278,11 @@ const AccordionGroup = React.forwardRef<
               value={item.value}
               variant={variant}
             >
-              <AccordionTrigger>
-                {arrowPosition === 'start' && <AccordionArrow />}
+              <AccordionTrigger className={isList ? 'py-4 pr-3 pl-5' : undefined}>
+                {arrowPosition === 'start' && <Indicator />}
                 {item.icon && <AccordionIcon as={item.icon} />}
                 {item.title}
-                {arrowPosition === 'end' && <AccordionArrow />}
+                {arrowPosition === 'end' && <Indicator />}
               </AccordionTrigger>
               <AccordionContent className={contentPadding}>
                 {item.content}
@@ -243,6 +303,7 @@ export {
   AccordionTrigger as Trigger,
   AccordionIcon as Icon,
   AccordionArrow as Arrow,
+  AccordionChevron as Chevron,
   AccordionContent as Content,
   AccordionGroup as Group,
   accordionItemVariants,
