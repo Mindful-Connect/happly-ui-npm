@@ -2,6 +2,8 @@ import {
   RiAccountCircleLine,
   RiMapPinTimeLine,
   RiQuestionLine,
+  RiSuitcaseLine,
+  RiUser3Line,
 } from '@remixicon/react';
 
 import * as Accordion from './accordion';
@@ -176,6 +178,53 @@ export const StrokeArrowStart = {
   ),
 };
 
+export const ListVariant = {
+  render: () => (
+    <div className='w-[480px]'>
+      <Accordion.Root
+        type='single'
+        collapsible
+        className='border-stroke-soft-200 bg-bg-white-0 shadow-regular-xs overflow-hidden rounded-2xl border'
+      >
+        <Accordion.Item value='a' variant='list'>
+          <Accordion.Trigger className='py-4 pr-3 pl-5'>
+            <Accordion.Icon as={RiUser3Line} />
+            Business profile
+            <Accordion.Chevron />
+          </Accordion.Trigger>
+          <Accordion.Content className='px-5 pt-0 pb-4 pl-[50px]'>
+            Manage your company name, logo, and other organisation details
+            shown across the platform.
+          </Accordion.Content>
+        </Accordion.Item>
+
+        <Accordion.Item value='b' variant='list'>
+          <Accordion.Trigger className='py-4 pr-3 pl-5'>
+            <Accordion.Icon as={RiSuitcaseLine} />
+            Personal profile
+            <Accordion.Chevron />
+          </Accordion.Trigger>
+          <Accordion.Content className='px-5 pt-0 pb-4 pl-[50px]'>
+            Update your name, contact information, and personal preferences.
+          </Accordion.Content>
+        </Accordion.Item>
+
+        <Accordion.Item value='c' variant='list'>
+          <Accordion.Trigger className='py-4 pr-3 pl-5'>
+            <Accordion.Icon as={RiQuestionLine} />
+            Billing &amp; payments
+            <Accordion.Chevron />
+          </Accordion.Trigger>
+          <Accordion.Content className='px-5 pt-0 pb-4 pl-[50px]'>
+            Review invoices, update your payment method, and manage your
+            subscription.
+          </Accordion.Content>
+        </Accordion.Item>
+      </Accordion.Root>
+    </div>
+  ),
+};
+
 // --- Composed (Group) stories ---
 
 const faqItems: Accordion.AccordionGroupItem[] = [
@@ -223,6 +272,30 @@ const simpleItems: Accordion.AccordionGroupItem[] = [
   },
 ];
 
+const profileItems: Accordion.AccordionGroupItem[] = [
+  {
+    value: 'a',
+    title: 'Business profile',
+    content:
+      'Manage your company name, logo, and other organisation details shown across the platform.',
+    icon: RiUser3Line,
+  },
+  {
+    value: 'b',
+    title: 'Personal profile',
+    content:
+      'Update your name, contact information, and personal preferences.',
+    icon: RiSuitcaseLine,
+  },
+  {
+    value: 'c',
+    title: 'Billing & payments',
+    content:
+      'Review invoices, update your payment method, and manage your subscription.',
+    icon: RiQuestionLine,
+  },
+];
+
 export const GroupDefault = {
   render: () => (
     <div className='w-96'>
@@ -266,6 +339,19 @@ export const GroupStrokeArrowStart = {
         items={simpleItems}
         variant='stroke'
         arrowPosition='start'
+      />
+    </div>
+  ),
+};
+
+export const GroupList = {
+  render: () => (
+    <div className='w-[480px]'>
+      <Accordion.Group
+        type='single'
+        collapsible
+        items={profileItems}
+        variant='list'
       />
     </div>
   ),

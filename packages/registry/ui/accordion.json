@@ -3,12 +3,12 @@
   "name": "accordion",
   "type": "registry:ui",
   "title": "Accordion",
-  "description": "A collapsible accordion component with filled and stroke variants. Includes a composed Accordion.Group for quick usage. Built on Radix Accordion with namespace exports.",
+  "description": "A collapsible accordion component with filled, stroke, and connected list variants. Includes a composed Accordion.Group for quick usage. Built on Radix Accordion with namespace exports.",
   "version": "1.0.0",
   "dependencies": ["@radix-ui/react-accordion", "@remixicon/react"],
   "registryDependencies": ["tv", "polymorphic", "happly-ui-utils"],
   "docs": {
-    "lead": "A collapsible accordion component with filled and stroke variants. Built on Radix Accordion for full accessibility.",
+    "lead": "A collapsible accordion component with filled, stroke, and connected list variants. Built on Radix Accordion for full accessibility.",
     "usage": "import * as Accordion from \"@/components/ui/accordion\"\n\n<Accordion.Root type=\"single\" collapsible>\n  <Accordion.Item value=\"a\">\n    <Accordion.Trigger>\n      <Accordion.Icon as={Icon} />\n      Title\n      <Accordion.Arrow />\n    </Accordion.Trigger>\n    <Accordion.Content>Content</Accordion.Content>\n  </Accordion.Item>\n</Accordion.Root>",
     "examples": [
       {
@@ -36,6 +36,12 @@
         "stories": ["StrokeArrowStart"]
       },
       {
+        "title": "List (Connected)",
+        "description": "Connected list variant. Items are joined inside one bordered container, separated by top dividers, with a chevron-in-a-button arrow that rotates open. The container styling lives on Accordion.Root, the list variant on each Accordion.Item.",
+        "code": "<Accordion.Root\n  type='single'\n  collapsible\n  className='overflow-hidden rounded-2xl border border-stroke-soft-200 bg-bg-white-0 shadow-regular-xs'\n>\n  <Accordion.Item value='a' variant='list'>\n    <Accordion.Trigger className='py-4 pr-3 pl-5'>\n      <Accordion.Icon as={RiUser3Line} />\n      Business profile\n      <Accordion.Chevron />\n    </Accordion.Trigger>\n    <Accordion.Content className='px-5 pt-0 pb-4 pl-[50px]'>\n      Manage your company details shown across the platform.\n    </Accordion.Content>\n  </Accordion.Item>\n</Accordion.Root>",
+        "stories": ["ListVariant"]
+      },
+      {
         "title": "Group (Composed)",
         "description": "Composed group component with items as props and arrow at end.",
         "code": "const items = [\n  { value: 'a', title: 'Account info', content: 'Details...', icon: RiAccountCircleLine },\n  { value: 'b', title: 'Payments', content: 'Details...', icon: RiQuestionLine },\n];\n\n<Accordion.Group type='single' collapsible items={items} />",
@@ -58,6 +64,12 @@
         "description": "Composed group with stroke variant and arrow at start.",
         "code": "<Accordion.Group type='single' collapsible items={items} variant='stroke' arrowPosition='start' />",
         "stories": ["GroupStrokeArrowStart"]
+      },
+      {
+        "title": "Group List (Connected)",
+        "description": "Composed group with the connected list variant. The container, dividers, chevron arrow, and content padding are all handled automatically.",
+        "code": "<Accordion.Group type='single' collapsible items={items} variant='list' />",
+        "stories": ["GroupList"]
       }
     ],
     "api": [
@@ -89,9 +101,9 @@
           },
           {
             "name": "variant",
-            "type": "'filled' | 'stroke'",
+            "type": "'filled' | 'stroke' | 'list'",
             "default": "'filled'",
-            "description": "Visual style. Filled fills with background on open, stroke keeps a border"
+            "description": "Visual style. Filled fills with background on open, stroke keeps a border, list joins items into a connected, divider-separated container (container styling applied on Accordion.Root)"
           }
         ]
       },
@@ -130,6 +142,18 @@
         ]
       },
       {
+        "name": "Accordion.Chevron",
+        "description": "Toggle indicator used by the list variant. Renders a chevron inside a bordered button box that rotates 180° when the item is open.",
+        "props": [
+          {
+            "name": "icon",
+            "type": "React.ElementType",
+            "default": "RiArrowDownSLine",
+            "description": "The chevron icon component to render"
+          }
+        ]
+      },
+      {
         "name": "Accordion.Content",
         "description": "The collapsible content area with slide animation.",
         "props": []
@@ -145,9 +169,9 @@
           },
           {
             "name": "variant",
-            "type": "'filled' | 'stroke'",
+            "type": "'filled' | 'stroke' | 'list'",
             "default": "'filled'",
-            "description": "Visual style applied to all items"
+            "description": "Visual style applied to all items. The list variant renders a connected container with a chevron arrow"
           },
           {
             "name": "arrowPosition",
