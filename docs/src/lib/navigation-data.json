@@ -394,6 +394,10 @@
           }
         ],
         "collapsed": false
+      },
+      {
+        "title": "Chat",
+        "href": "/docs/components/chat"
       }
     ]
   },

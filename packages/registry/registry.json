@@ -82,6 +82,12 @@
       "description": "A compound button group component with sizes, icons, and toggle group support via asChild. Uses namespace exports: ButtonGroup.Root, ButtonGroup.Item, ButtonGroup.Icon."
     },
     {
+      "name": "chat",
+      "type": "registry:ui",
+      "title": "Chat",
+      "description": "A composable chat interface: scrollable message thread with received/sent bubbles, short pills, dividers, and a batteries-included message input. Composes the Avatar and Button components. Uses namespace exports: Chat.Root, Chat.List, Chat.Message, Chat.Avatar, Chat.Bubble, Chat.Timestamp, Chat.Divider, Chat.Input, Chat.SendButton."
+    },
+    {
       "name": "checkbox",
       "type": "registry:ui",
       "title": "Checkbox",
