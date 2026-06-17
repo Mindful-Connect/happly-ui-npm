@@ -506,7 +506,7 @@ const ChatInput = React.forwardRef<HTMLTextAreaElement, ChatInputProps>(
           style={{ maxHeight }}
           className={cn(
             'text-paragraph-sm text-text-strong-950 flex-1 resize-none self-center',
-            'overflow-y-auto border-none bg-transparent px-1 py-2 outline-none',
+            'overflow-y-auto border-none bg-transparent px-1 py-2 ring-0 outline-none',
             'placeholder:text-text-soft-400 disabled:text-text-disabled-300',
             className
           )}
