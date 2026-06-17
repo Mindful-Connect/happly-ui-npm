@@ -180,7 +180,11 @@ function main() {
     'promotional-card',
   ];
 
-  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...LAYOUT_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS, ...FILE_UPLOAD_COMPONENTS, ...PROVIDER_COMPONENTS, ...SECTION_COMPONENTS, ...CARD_COMPONENTS];
+  const COMMUNICATION_COMPONENTS = [
+    'chat',
+  ];
+
+  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...LAYOUT_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS, ...FILE_UPLOAD_COMPONENTS, ...PROVIDER_COMPONENTS, ...SECTION_COMPONENTS, ...CARD_COMPONENTS, ...COMMUNICATION_COMPONENTS];
 
   const mainLinks = componentLinks
     .filter((item) => !GROUPED_COMPONENTS.includes(item.name))
@@ -234,6 +238,10 @@ function main() {
     .filter((item) => CARD_COMPONENTS.includes(item.name))
     .map(({ name, ...rest }) => rest);
 
+  const communicationLinks = componentLinks
+    .filter((item) => COMMUNICATION_COMPONENTS.includes(item.name))
+    .map(({ name, ...rest }) => rest);
+
   // Build full navigation structure
   const navigation = [
     {
@@ -254,6 +262,11 @@ function main() {
         {
           title: 'Displaying data',
           links: displayingDataLinks,
+          collapsed: false,
+        },
+        {
+          title: 'Communication',
+          links: communicationLinks,
           collapsed: false,
         },
         {
