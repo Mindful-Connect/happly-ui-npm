@@ -12,6 +12,7 @@ import { default as badgeMeta, Playground as badge_Playground, BadgeFilled as ba
 import { default as bannerMeta, Playground as banner_Playground, Error as banner_Error, Warning as banner_Warning, Success as banner_Success, Information as banner_Information, Feature as banner_Feature, Primary as banner_Primary } from '@/components/ui/banner.stories';
 import { default as buttonGroupMeta, Playground as buttonGroup_Playground, Default as buttonGroup_Default, IconsOnly as buttonGroup_IconsOnly, TextOnly as buttonGroup_TextOnly, Sizes as buttonGroup_Sizes } from '@/components/ui/button-group.stories';
 import { default as buttonMeta, Playground as button_Playground, PrimaryVariant as button_PrimaryVariant, NeutralVariant as button_NeutralVariant, SuccessVariant as button_SuccessVariant, WarningVariant as button_WarningVariant, ErrorVariant as button_ErrorVariant, Sizes as button_Sizes, Disabled as button_Disabled, WithIcon as button_WithIcon, FullWidth as button_FullWidth, AsChild as button_AsChild, Loading as button_Loading, LoadingInteractive as button_LoadingInteractive, Composition as button_Composition } from '@/components/ui/button.stories';
+import { default as chatMeta, Default as chat_Default, Bubbles as chat_Bubbles, PillsAndDividers as chat_PillsAndDividers, Input as chat_Input, Interactive as chat_Interactive, CustomInput as chat_CustomInput, Disabled as chat_Disabled } from '@/components/ui/chat.stories';
 import { default as checkboxMeta, Playground as checkbox_Playground, Demo as checkbox_Demo, Variants as checkbox_Variants, Disabled as checkbox_Disabled, WithLabel as checkbox_WithLabel, WithLabelExtended as checkbox_WithLabelExtended, WithFormField as checkbox_WithFormField } from '@/components/ui/checkbox.stories';
 import { default as colorPickerMeta, Playground as colorPicker_Playground, Demo as colorPicker_Demo, PopoverDemo as colorPicker_PopoverDemo, WithFormField as colorPicker_WithFormField } from '@/components/ui/color-picker.stories';
 import { default as comboBoxMeta, Playground as comboBox_Playground, Default as comboBox_Default, WithPreselectedValues as comboBox_WithPreselectedValues, Uncontrolled as comboBox_Uncontrolled, FormSubmission as comboBox_FormSubmission, Sizes as comboBox_Sizes, SelectionConstraints as comboBox_SelectionConstraints, TagVariants as comboBox_TagVariants, States as comboBox_States, Customization as comboBox_Customization, WithIcons as comboBox_WithIcons, CompoundCustomItems as comboBox_CompoundCustomItems, CompoundCustomTags as comboBox_CompoundCustomTags, Preview as comboBox_Preview, Creatable as comboBox_Creatable, CustomMaxHeight as comboBox_CustomMaxHeight } from '@/components/ui/combo-box.stories';
@@ -224,6 +225,18 @@ export const storyRegistry: Record<string, {
     'Loading': button_Loading,
     'LoadingInteractive': button_LoadingInteractive,
     'Composition': button_Composition
+    }
+  },
+  'chat': {
+    meta: chatMeta,
+    stories: {
+    'Default': chat_Default,
+    'Bubbles': chat_Bubbles,
+    'PillsAndDividers': chat_PillsAndDividers,
+    'Input': chat_Input,
+    'Interactive': chat_Interactive,
+    'CustomInput': chat_CustomInput,
+    'Disabled': chat_Disabled
     }
   },
   'checkbox': {
