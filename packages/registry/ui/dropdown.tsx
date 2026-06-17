@@ -28,7 +28,7 @@ const DropdownContent = React.forwardRef<
       className={cn(
         // Min width per Figma (224px); grows with content, capped at the
         // viewport-available width so it never overflows the screen.
-        'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 pointer-events-auto z-50 w-max min-w-[224px] max-w-[var(--radix-dropdown-menu-content-available-width)] overflow-hidden rounded-2xl p-2 ring-1 ring-inset',
+        'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 pointer-events-auto z-50 w-max max-w-[var(--radix-dropdown-menu-content-available-width)] min-w-[224px] overflow-hidden rounded-2xl p-2 ring-1 ring-inset',
         'flex flex-col gap-1',
         // origin
         'data-[side=bottom]:origin-top data-[side=left]:origin-right data-[side=right]:origin-left data-[side=top]:origin-bottom',
@@ -165,7 +165,7 @@ const DropdownMenuSubContent = React.forwardRef<
     className={cn(
       // Min width per Figma (224px); grows with content, capped at the
       // viewport-available width so it never overflows the screen.
-      'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 pointer-events-auto z-50 w-max min-w-[224px] max-w-[var(--radix-dropdown-menu-content-available-width)] overflow-hidden rounded-2xl p-2 ring-1 ring-inset',
+      'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 pointer-events-auto z-50 w-max max-w-[var(--radix-dropdown-menu-content-available-width)] min-w-[224px] overflow-hidden rounded-2xl p-2 ring-1 ring-inset',
       'flex flex-col gap-1',
       // animation
       'data-[state=open]:animate-in data-[state=open]:fade-in-0',

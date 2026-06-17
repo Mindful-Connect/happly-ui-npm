@@ -17,7 +17,7 @@ const longParagraphs = [
 
 export const Vertical = {
   render: () => (
-    <FadeScroll.Root className='h-64 max-w-md space-y-3 pr-2 text-sm text-text-sub-600'>
+    <FadeScroll.Root className='text-text-sub-600 h-64 max-w-md space-y-3 pr-2 text-sm'>
       {longParagraphs.map((p, i) => (
         <p key={i}>{p}</p>
       ))}
@@ -34,7 +34,7 @@ export const Horizontal = {
       {Array.from({ length: 12 }).map((_, i) => (
         <div
           key={i}
-          className='flex h-24 w-40 items-center justify-center rounded-lg border border-stroke-soft-200 bg-bg-weak-50 text-sm font-medium text-text-strong-950'
+          className='border-stroke-soft-200 bg-bg-weak-50 text-text-strong-950 flex h-24 w-40 items-center justify-center rounded-lg border text-sm font-medium'
         >
           Card {i + 1}
         </div>
@@ -45,12 +45,12 @@ export const Horizontal = {
 
 export const VerticalList = {
   render: () => (
-    <FadeScroll.Root className='h-72 w-72 rounded-lg border border-stroke-soft-200 bg-bg-white-0'>
+    <FadeScroll.Root className='border-stroke-soft-200 bg-bg-white-0 h-72 w-72 rounded-lg border'>
       <ul>
         {Array.from({ length: 24 }).map((_, i) => (
           <li
             key={i}
-            className='border-b border-stroke-soft-200 px-4 py-3 text-sm text-text-strong-950 last:border-0'
+            className='border-stroke-soft-200 text-text-strong-950 border-b px-4 py-3 text-sm last:border-0'
           >
             List item #{i + 1}
           </li>
@@ -64,7 +64,7 @@ export const CustomFadeSize = {
   render: () => (
     <div className='flex flex-col gap-6'>
       <div>
-        <p className='mb-2 text-xs uppercase text-text-sub-600'>
+        <p className='text-text-sub-600 mb-2 text-xs uppercase'>
           fadeSize=8 (subtle)
         </p>
         <FadeScroll.Root
@@ -75,7 +75,7 @@ export const CustomFadeSize = {
           {Array.from({ length: 10 }).map((_, i) => (
             <div
               key={i}
-              className='flex h-16 w-32 items-center justify-center rounded-lg border border-stroke-soft-200 bg-bg-weak-50 text-sm'
+              className='border-stroke-soft-200 bg-bg-weak-50 flex h-16 w-32 items-center justify-center rounded-lg border text-sm'
             >
               Item {i + 1}
             </div>
@@ -83,7 +83,7 @@ export const CustomFadeSize = {
         </FadeScroll.Root>
       </div>
       <div>
-        <p className='mb-2 text-xs uppercase text-text-sub-600'>
+        <p className='text-text-sub-600 mb-2 text-xs uppercase'>
           fadeSize=64 (dramatic)
         </p>
         <FadeScroll.Root
@@ -94,7 +94,7 @@ export const CustomFadeSize = {
           {Array.from({ length: 10 }).map((_, i) => (
             <div
               key={i}
-              className='flex h-16 w-32 items-center justify-center rounded-lg border border-stroke-soft-200 bg-bg-weak-50 text-sm'
+              className='border-stroke-soft-200 bg-bg-weak-50 flex h-16 w-32 items-center justify-center rounded-lg border text-sm'
             >
               Item {i + 1}
             </div>
@@ -107,7 +107,7 @@ export const CustomFadeSize = {
 
 export const NoOverflow = {
   render: () => (
-    <FadeScroll.Root className='h-64 max-w-md space-y-3 text-sm text-text-sub-600'>
+    <FadeScroll.Root className='text-text-sub-600 h-64 max-w-md space-y-3 text-sm'>
       <p>
         When content fits, no fades appear at all — the component is invisible
         in the layout until scroll is actually possible.

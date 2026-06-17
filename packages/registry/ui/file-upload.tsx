@@ -779,7 +779,7 @@ const FileUploadRoot = React.forwardRef<
           'transition duration-200 ease-out',
           disabled
             ? 'pointer-events-none'
-            : 'cursor-pointer hover:bg-bg-weak-50',
+            : 'hover:bg-bg-weak-50 cursor-pointer',
           isDragging && !disabled && 'bg-primary-alpha-10',
           className
         )}

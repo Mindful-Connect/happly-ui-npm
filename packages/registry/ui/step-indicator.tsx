@@ -29,10 +29,16 @@ type StepIndicatorRootProps = React.HTMLAttributes<HTMLDivElement> & {
    * or when an item has its own `onClick`. Per-item `onClick` runs first
    * and can call `event.preventDefault()` to suppress this callback.
    */
-  onItemClick?: (index: number, event: React.SyntheticEvent<HTMLDivElement>) => void;
+  onItemClick?: (
+    index: number,
+    event: React.SyntheticEvent<HTMLDivElement>
+  ) => void;
 };
 
-const StepIndicatorRoot = React.forwardRef<HTMLDivElement, StepIndicatorRootProps>(
+const StepIndicatorRoot = React.forwardRef<
+  HTMLDivElement,
+  StepIndicatorRootProps
+>(
   (
     {
       className,
@@ -48,16 +54,13 @@ const StepIndicatorRoot = React.forwardRef<HTMLDivElement, StepIndicatorRootProp
     const allChildren = React.Children.toArray(children);
     const isItem = (child: React.ReactNode) =>
       React.isValidElement(child) &&
-      Boolean(
-        (child.type as unknown as { [k: string]: unknown })[ITEM_BRAND]
-      );
+      Boolean((child.type as unknown as { [k: string]: unknown })[ITEM_BRAND]);
 
     const itemFilled: boolean[] = [];
     allChildren.forEach((child) => {
       if (isItem(child)) {
-        const status = (
-          child as React.ReactElement<StepIndicatorItemProps>
-        ).props.status;
+        const status = (child as React.ReactElement<StepIndicatorItemProps>)
+          .props.status;
         itemFilled.push(status !== 'pending');
       }
     });
@@ -190,7 +193,7 @@ const StepIndicatorRoot = React.forwardRef<HTMLDivElement, StepIndicatorRootProp
         <div
           aria-hidden
           className={cn(
-            'pointer-events-none absolute left-0 top-0 h-full w-[18px] rounded-full',
+            'pointer-events-none absolute top-0 left-0 h-full w-[18px] rounded-full',
             railTrackClassName
           )}
         />
@@ -199,7 +202,7 @@ const StepIndicatorRoot = React.forwardRef<HTMLDivElement, StepIndicatorRootProp
         <div
           aria-hidden
           className={cn(
-            'pointer-events-none absolute left-0 top-0 w-[18px] rounded-full',
+            'pointer-events-none absolute top-0 left-0 w-[18px] rounded-full',
             railFilledClassName
           )}
           style={{
@@ -237,7 +240,10 @@ type StepIndicatorItemProps = Omit<
   __onActivate?: (event: React.SyntheticEvent<HTMLDivElement>) => void;
 };
 
-const StepIndicatorItem = React.forwardRef<HTMLDivElement, StepIndicatorItemProps>(
+const StepIndicatorItem = React.forwardRef<
+  HTMLDivElement,
+  StepIndicatorItemProps
+>(
   (
     {
       status,
@@ -263,8 +269,7 @@ const StepIndicatorItem = React.forwardRef<HTMLDivElement, StepIndicatorItemProp
       | undefined =
       __onActivate ??
       (onClick
-        ? (event) =>
-            onClick(event as React.MouseEvent<HTMLDivElement>)
+        ? (event) => onClick(event as React.MouseEvent<HTMLDivElement>)
         : undefined);
     const interactive = !!activate;
 
@@ -310,9 +315,8 @@ const StepIndicatorItem = React.forwardRef<HTMLDivElement, StepIndicatorItemProp
         </div>
         <div
           className={cn(
-            'group/step flex min-w-0 items-center justify-between gap-3 rounded-md py-2 outline-none transition-colors',
-            interactive &&
-              'cursor-pointer'
+            'group/step flex min-w-0 items-center justify-between gap-3 rounded-md py-2 transition-colors outline-none',
+            interactive && 'cursor-pointer'
           )}
           onClick={
             interactive
@@ -327,11 +331,11 @@ const StepIndicatorItem = React.forwardRef<HTMLDivElement, StepIndicatorItemProp
           }
         >
           <div className='flex min-w-0 flex-1 flex-col gap-0.5'>
-            <p className='truncate text-label-sm text-text-strong-950'>
+            <p className='text-label-sm text-text-strong-950 truncate'>
               {title}
             </p>
             {description ? (
-              <p className='truncate text-paragraph-xs text-text-soft-400'>
+              <p className='text-paragraph-xs text-text-soft-400 truncate'>
                 {description}
               </p>
             ) : null}
@@ -362,7 +366,7 @@ function DefaultStatusAdornment({
       <div
         aria-hidden
         className={cn(
-          'absolute inset-0 rounded-full border-[1.5px] border-bg-soft-200 transition-all duration-300 ease-out',
+          'border-bg-soft-200 absolute inset-0 rounded-full border-[1.5px] transition-all duration-300 ease-out',
           status === 'pending' ? 'scale-100 opacity-100' : 'scale-75 opacity-0'
         )}
       />
@@ -382,8 +386,10 @@ function DefaultStatusAdornment({
       <div
         aria-hidden
         className={cn(
-          'absolute inset-0 flex items-center justify-center rounded-full bg-success-base text-static-white transition-all duration-300 ease-out',
-          status === 'completed' ? 'scale-100 opacity-100' : 'scale-75 opacity-0'
+          'bg-success-base text-static-white absolute inset-0 flex items-center justify-center rounded-full transition-all duration-300 ease-out',
+          status === 'completed'
+            ? 'scale-100 opacity-100'
+            : 'scale-75 opacity-0'
         )}
       >
         <RiCheckLine className='size-3.5' />
