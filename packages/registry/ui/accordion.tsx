@@ -2,11 +2,7 @@
 
 import * as React from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import {
-  RiAddLine,
-  RiArrowDownSLine,
-  RiSubtractLine,
-} from '@remixicon/react';
+import { RiAddLine, RiArrowDownSLine, RiSubtractLine } from '@remixicon/react';
 
 import type { PolymorphicComponentProps } from '@/lib/polymorphic';
 import { cn } from '@/lib/happly-ui-utils';
@@ -278,7 +274,9 @@ const AccordionGroup = React.forwardRef<
               value={item.value}
               variant={variant}
             >
-              <AccordionTrigger className={isList ? 'py-4 pr-3 pl-5' : undefined}>
+              <AccordionTrigger
+                className={isList ? 'py-4 pr-3 pl-5' : undefined}
+              >
                 {arrowPosition === 'start' && <Indicator />}
                 {item.icon && <AccordionIcon as={item.icon} />}
                 {item.title}

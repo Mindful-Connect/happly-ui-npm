@@ -106,6 +106,27 @@ const CurrencyInputRoot = React.forwardRef<
     const resolvedHasError = hasError ?? formField.hasError;
     const resolvedDisabled = disabled ?? formField.disabled;
 
+    // Caret preservation: this is a controlled input whose displayed value is
+    // reformatted (thousands separators) on every keystroke. Without this, the
+    // browser collapses the caret to the END after each controlled re-render, so
+    // typing mid-value pushes subsequent characters to the end. We record how
+    // many significant chars (digits + decimal point) precede the caret on
+    // change, then restore that position once the reformatted value has rendered.
+    const inputRef = React.useRef<HTMLInputElement | null>(null);
+    const pendingCaretRef = React.useRef<number | null>(null);
+
+    const setInputRef = React.useCallback(
+      (node: HTMLInputElement | null) => {
+        inputRef.current = node;
+        if (typeof forwardedRef === 'function') {
+          forwardedRef(node);
+        } else if (forwardedRef) {
+          forwardedRef.current = node;
+        }
+      },
+      [forwardedRef]
+    );
+
     // Amount binding: number ↔ string conversion when valueAsNumber
     const amountBinding = useFormFieldBinding<string>(
       valueAsNumber
@@ -162,7 +183,15 @@ const CurrencyInputRoot = React.forwardRef<
 
     const handleInputChange = React.useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
-        const raw = stripFormatting(e.target.value);
+        const el = e.target;
+        const caret = el.selectionStart ?? el.value.length;
+        // Significant chars before the caret = the count to restore after
+        // reformatting (formatting only adds/removes commas around these).
+        pendingCaretRef.current = stripFormatting(
+          el.value.slice(0, caret)
+        ).length;
+
+        const raw = stripFormatting(el.value);
         // Prevent multiple decimal points
         const parts = raw.split('.');
         const cleaned =
@@ -172,12 +201,40 @@ const CurrencyInputRoot = React.forwardRef<
       [onValueChange]
     );
 
+    // Restore the caret after the reformatted display value has rendered. Runs
+    // every render but only acts when a change just queued a caret position.
+    React.useLayoutEffect(() => {
+      const target = pendingCaretRef.current;
+      if (target == null) return;
+      pendingCaretRef.current = null;
+
+      const el = inputRef.current;
+      if (!el) return;
+
+      // Map "target significant chars" back to an index in the formatted string.
+      let index = 0;
+      if (target > 0) {
+        let count = 0;
+        index = displayValue.length;
+        for (let i = 0; i < displayValue.length; i++) {
+          if (/[0-9.]/.test(displayValue[i])) {
+            count++;
+            if (count === target) {
+              index = i + 1;
+              break;
+            }
+          }
+        }
+      }
+      el.setSelectionRange(index, index);
+    });
+
     return (
       <Input.Root size={size} hasError={resolvedHasError}>
         <Input.Wrapper>
           <Input.InlineAffix>{symbol}</Input.InlineAffix>
           <Input.Input
-            ref={forwardedRef}
+            ref={setInputRef}
             inputMode='decimal'
             placeholder={placeholder}
             value={displayValue}
@@ -199,7 +256,7 @@ const CurrencyInputRoot = React.forwardRef<
             <Select.Trigger>
               <Select.Value />
             </Select.Trigger>
-            <Select.Content>
+            <Select.Content className='z-[999]'>
               {currencies.map((item) => (
                 <Select.Item key={item.code} value={item.code}>
                   {item.icon && (

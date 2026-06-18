@@ -193,8 +193,8 @@ export const ListVariant = {
             <Accordion.Chevron />
           </Accordion.Trigger>
           <Accordion.Content className='px-5 pt-0 pb-4 pl-[50px]'>
-            Manage your company name, logo, and other organisation details
-            shown across the platform.
+            Manage your company name, logo, and other organisation details shown
+            across the platform.
           </Accordion.Content>
         </Accordion.Item>
 
@@ -283,8 +283,7 @@ const profileItems: Accordion.AccordionGroupItem[] = [
   {
     value: 'b',
     title: 'Personal profile',
-    content:
-      'Update your name, contact information, and personal preferences.',
+    content: 'Update your name, contact information, and personal preferences.',
     icon: RiSuitcaseLine,
   },
   {
