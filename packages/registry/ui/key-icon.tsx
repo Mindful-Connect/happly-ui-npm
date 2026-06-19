@@ -104,7 +104,7 @@ const keyIconVariants = tv({
   },
 });
 
-type KeyIconProps = React.ComponentPropsWithoutRef<'div'> &
+type KeyIconProps = Omit<React.ComponentPropsWithoutRef<'div'>, 'style'> &
   VariantProps<typeof keyIconVariants> & {
     icon?: React.ReactNode;
   };
