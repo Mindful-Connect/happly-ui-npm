@@ -170,6 +170,7 @@ function YearGrid({
 }
 
 function Calendar({
+  className,
   classNames,
   showOutsideDays = true,
   month: controlledMonth,
@@ -253,7 +254,7 @@ function Calendar({
     <motion.div
       animate={{ height: animatedHeight }}
       transition={{ duration: 0.2, ease: 'easeInOut' }}
-      className='overflow-hidden'
+      className={cn('overflow-hidden', className)}
     >
       <div ref={contentRef} className='flex min-h-[292px] flex-col'>
         {view === 'years' && (
