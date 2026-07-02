@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Datepicker",
   "description": "A calendar datepicker component with single date, range, and popover modes. Uses namespace exports: Datepicker.Calendar.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "migration": {
     "guide": "API changed: removed lucide-react dependency, now uses @remixicon/react. Removed datepicker.css file. Removed CalendarDayButton export. Simplified to single Calendar export with react-day-picker v9 classNames API."
   },
