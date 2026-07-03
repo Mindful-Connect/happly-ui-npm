@@ -71,9 +71,10 @@ export const tagVariants = tv({
     },
     disabled: {
       true: {
-        root: 'pointer-events-none bg-bg-weak-50 text-text-disabled-300 ring-transparent',
+        // text stays base sub-600 — disabled tags keep readable labels
+        root: 'pointer-events-none bg-bg-weak-50 ring-transparent',
         icon: 'text-text-disabled-300 [&:not(.remixicon)]:opacity-[.48]',
-        dismissIcon: 'text-text-disabled-300',
+        dismissButton: 'hidden',
       },
     },
   },
