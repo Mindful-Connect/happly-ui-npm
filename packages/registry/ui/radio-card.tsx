@@ -24,23 +24,24 @@ const radioCardVariants = tv({
       'has-[:focus-visible]:shadow-button-important-focus has-[:focus-visible]:ring-stroke-strong-950',
       // checked
       'data-[state=checked]:ring-stroke-strong-950',
-      // disabled (must override checked state)
-      'data-[disabled]:pointer-events-none data-[disabled]:shadow-none data-[disabled]:bg-bg-weak-50',
-      'data-[disabled]:ring-stroke-soft-200',
+      // disabled — unchecked flattens to gray, checked keeps the white card
+      'data-[disabled]:pointer-events-none',
+      'data-[disabled]:data-[state=unchecked]:bg-bg-weak-50 data-[disabled]:data-[state=unchecked]:ring-transparent data-[disabled]:data-[state=unchecked]:shadow-none',
       'data-[disabled]:data-[state=checked]:ring-stroke-soft-200',
     ],
     content: 'flex min-w-0 flex-1',
     title: [
       'text-label-sm text-text-strong-950',
       'transition duration-200 ease-out',
-      // disabled
-      'group-data-[disabled]/card:text-text-disabled-300',
+      // disabled — stacked group-data variants would compile to nested groups
+      'group-[[data-disabled][data-state=unchecked]]/card:text-text-disabled-300',
+      'group-[[data-disabled][data-state=checked]]/card:text-text-sub-600',
     ],
     description: [
       'text-paragraph-sm text-text-sub-600',
       'transition duration-200 ease-out',
-      // disabled
-      'group-data-[disabled]/card:text-text-disabled-300',
+      // disabled — checked keeps the base sub-600
+      'group-[[data-disabled][data-state=unchecked]]/card:text-text-disabled-300',
     ],
   },
   variants: {
@@ -72,6 +73,7 @@ type RadioCardSharedProps = VariantProps<typeof radioCardVariants>;
 
 type RadioCardContextType = RadioCardSharedProps & {
   allowDeselect?: boolean;
+  disabled?: boolean;
   onValueChange?: (value: string) => void;
   value?: string | null;
 };
@@ -98,6 +100,7 @@ const RadioCardRoot = React.forwardRef<
       hasError,
       variant = 'neutral',
       allowDeselect,
+      disabled: disabledProp,
       onValueChange: onValueChangeProp,
       value: valueProp,
       ...rest
@@ -106,6 +109,8 @@ const RadioCardRoot = React.forwardRef<
   ) => {
     const formField = useFormField();
     const resolvedHasError = hasError ?? formField.hasError;
+    // Priority: explicit prop > form-field context (mirrors Radio.Group)
+    const resolvedDisabled = disabledProp ?? formField.disabled;
     const { root } = radioCardVariants({ hasError: resolvedHasError, variant });
     const binding = useFormFieldBinding<string>();
 
@@ -126,6 +131,7 @@ const RadioCardRoot = React.forwardRef<
           hasError: resolvedHasError,
           variant,
           allowDeselect,
+          disabled: resolvedDisabled,
           onValueChange: resolvedOnValueChange,
           value: resolvedValue,
         }}
@@ -136,6 +142,7 @@ const RadioCardRoot = React.forwardRef<
           className={root({ class: className })}
           value={resolvedValue}
           onValueChange={handleValueChange}
+          disabled={resolvedDisabled}
           {...rest}
         >
           {children}
@@ -161,11 +168,13 @@ const RadioCardItem = React.forwardRef<HTMLLabelElement, RadioCardItemProps>(
     const {
       hasError,
       allowDeselect,
+      disabled: groupDisabled,
       onValueChange,
       value: groupValue,
     } = React.useContext(RadioCardContext);
     const { item } = radioCardVariants({ hasError });
     const isChecked = groupValue === value;
+    const resolvedDisabled = disabled ?? groupDisabled;
 
     const handleClick = React.useCallback(
       (e: React.MouseEvent<HTMLLabelElement>) => {
@@ -179,12 +188,12 @@ const RadioCardItem = React.forwardRef<HTMLLabelElement, RadioCardItemProps>(
     );
 
     return (
-      <RadioCardItemContext.Provider value={{ value, disabled }}>
+      <RadioCardItemContext.Provider value={{ value, disabled: resolvedDisabled }}>
         <label
           ref={forwardedRef}
           className={item({ class: className })}
           data-state={isChecked ? 'checked' : 'unchecked'}
-          data-disabled={disabled ? '' : undefined}
+          data-disabled={resolvedDisabled ? '' : undefined}
           onClick={handleClick}
           {...rest}
         >

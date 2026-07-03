@@ -104,8 +104,9 @@ const RadioGroupItem = React.forwardRef<
             'group-hover/radio:fill-bg-sub-300',
             // focus
             outerClasses,
-            // disabled
-            'group-disabled/radio:fill-bg-soft-200',
+            // disabled + unchecked — checked keeps the white base for the gray ring;
+            // stacked group-data variants would compile to nested groups
+            'group-[[data-disabled][data-state=unchecked]]/radio:fill-bg-soft-200',
             // checked
             'group-data-[state=checked]/radio:fill-bg-white-0'
           )}
@@ -179,7 +180,7 @@ const RadioGroupItem = React.forwardRef<
               // variant
               indicatorClasses,
               // disabled
-              'group-disabled/radio:stroke-bg-soft-200'
+              'group-disabled/radio:stroke-bg-sub-300'
             )}
           />
         </svg>
