@@ -10,7 +10,12 @@ import * as Badge from './badge';
 import * as InfoCard from './info-card';
 import * as StatusBadge from './status-badge';
 
-export default { title: 'Cards/Info Card' };
+// Stories use full-width wrappers; the default 'centered' layout shrink-wraps
+// the story container and collapses w-full, so use 'padded' here.
+export default {
+  title: 'Cards/Info Card',
+  parameters: { layout: 'padded' },
+};
 
 export const Inline = {
   render: () => (
@@ -163,7 +168,7 @@ export const WithAction = {
             <span>Sean Muir</span>
           </InfoCard.Value>
         </InfoCard.Item>
-        <InfoCard.Action className='h-[70px] @xl:[aspect-ratio:1/1] @xl:h-auto' />
+        <InfoCard.Action className='size-[70px]' />
       </InfoCard.Root>
     </div>
   ),
@@ -214,10 +219,7 @@ export const WithActionNotification = {
             <span>Sean Muir</span>
           </InfoCard.Value>
         </InfoCard.Item>
-        <InfoCard.Action
-          notification
-          className='h-[70px] @xl:[aspect-ratio:1/1] @xl:h-auto'
-        />
+        <InfoCard.Action notification className='size-[70px]' />
       </InfoCard.Root>
     </div>
   ),
@@ -242,7 +244,7 @@ export const WithCustomAction = {
             </StatusBadge.Root>
           </InfoCard.Value>
         </InfoCard.Item>
-        <InfoCard.Action className='h-[70px] @xl:[aspect-ratio:1/1] @xl:h-auto'>
+        <InfoCard.Action className='size-[70px]'>
           <RiExternalLinkLine className='text-icon-sub-600 size-5' />
         </InfoCard.Action>
       </InfoCard.Root>

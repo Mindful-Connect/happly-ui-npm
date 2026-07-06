@@ -41,7 +41,7 @@
       },
       {
         "title": "Disabled",
-        "description": "Dims the whole control and blocks interaction. Pass `disabled` to SwitchToggle.List for the composed Root/List/Trigger pattern, or directly to SwitchToggle.Group.",
+        "description": "Applies the disabled styling and blocks interaction. Pass `disabled` to SwitchToggle.List for the composed Root/List/Trigger pattern, or directly to SwitchToggle.Group.",
         "code": "<SwitchToggle.Root defaultValue='light'>\n  <SwitchToggle.List disabled>\n    <SwitchToggle.Trigger value='light'>Light</SwitchToggle.Trigger>\n    <SwitchToggle.Trigger value='dark'>Dark</SwitchToggle.Trigger>\n  </SwitchToggle.List>\n</SwitchToggle.Root>\n\n<SwitchToggle.Group defaultValue='system' items={items} disabled />",
         "stories": ["Disabled"]
       }

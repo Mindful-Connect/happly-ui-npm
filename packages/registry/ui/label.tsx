@@ -18,8 +18,6 @@ const LabelRoot = React.forwardRef<
       className={cn(
         'group text-label-sm text-text-strong-950 cursor-default',
         'inline',
-        // disabled
-        'aria-disabled:text-text-disabled-300',
         className
       )}
       aria-disabled={disabled}
@@ -35,15 +33,7 @@ function LabelAsterisk({
   ...rest
 }: React.HTMLAttributes<HTMLSpanElement>) {
   return (
-    <span
-      className={cn(
-        'text-error-base ml-px',
-        // disabled
-        'group-aria-disabled:text-text-disabled-300',
-        className
-      )}
-      {...rest}
-    >
+    <span className={cn('text-error-base ml-px', className)} {...rest}>
       {children || '*'}
     </span>
   );
@@ -59,12 +49,7 @@ function LabelSub({
 }) {
   return (
     <span
-      className={cn(
-        'text-paragraph-sm text-text-sub-600 ml-px',
-        // disabled
-        'group-aria-disabled:text-text-disabled-300',
-        className
-      )}
+      className={cn('text-paragraph-sm text-text-sub-600 ml-px', className)}
       {...rest}
     >
       {parens ? `(${children})` : children}
