@@ -9,15 +9,29 @@ import { cn } from '@/lib/happly-ui-utils';
 // directly to the textarea element (a textarea is its own scroll container,
 // so it can't be wrapped by FadeScroll.Root).
 
-const FADE_SIZE = 24;
+// A plain linear ramp reads as a hard line where it meets full opacity, so
+// the stops follow a smoothstep curve instead. The bottom fade is shorter
+// than the top so the last visible line of text stays readable.
+const TOP_FADE_SIZE = 56;
+const BOTTOM_FADE_SIZE = 32;
+
+function fadeGradient(direction: 'to bottom' | 'to top', size: number) {
+  return (
+    `linear-gradient(${direction}, transparent, ` +
+    `rgba(0,0,0,0.16) ${Math.round(size * 0.25)}px, ` +
+    `rgba(0,0,0,0.5) ${Math.round(size * 0.5)}px, ` +
+    `rgba(0,0,0,0.84) ${Math.round(size * 0.75)}px, ` +
+    `black ${size}px)`
+  );
+}
 
 function buildVerticalMaskImage(canScrollUp: boolean, canScrollDown: boolean) {
   if (!canScrollUp && !canScrollDown) return 'none';
   const top = canScrollUp
-    ? `linear-gradient(to bottom, transparent, black ${FADE_SIZE}px)`
+    ? fadeGradient('to bottom', TOP_FADE_SIZE)
     : 'linear-gradient(black, black)';
   const bottom = canScrollDown
-    ? `linear-gradient(to top, transparent, black ${FADE_SIZE}px)`
+    ? fadeGradient('to top', BOTTOM_FADE_SIZE)
     : 'linear-gradient(black, black)';
   return `${top}, ${bottom}`;
 }

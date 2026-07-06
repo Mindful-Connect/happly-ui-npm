@@ -65,7 +65,7 @@
             "name": "disabled",
             "type": "boolean",
             "default": "false",
-            "description": "Show disabled styling"
+            "description": "Kept for API compatibility — disabled hints keep their normal colors"
           }
         ]
       },
@@ -101,7 +101,7 @@
             "name": "disabled",
             "type": "boolean",
             "default": "false",
-            "description": "Show disabled styling"
+            "description": "Kept for API compatibility — disabled hints keep their normal colors"
           }
         ]
       }

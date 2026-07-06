@@ -345,7 +345,7 @@ type ToggleProps = Omit<
   'children'
 >;
 
-function Toggle({ listClassName, ...props }: ToggleProps) {
+function Toggle({ listClassName, triggerClassName, ...props }: ToggleProps) {
   const { disabled } = useMarkdownEditorContext();
 
   return (
@@ -354,6 +354,13 @@ function Toggle({ listClassName, ...props }: ToggleProps) {
         // When disabled, fall back to the List's base bg-bg-weak-50 so the
         // track matches the disabled design on the white editor shell.
         listClassName={cn(!disabled && 'bg-bg-soft-200', listClassName)}
+        // On this darker track the hover pill goes lighter (toward the white
+        // active pill) — the component's default darker hover would vanish
+        // against bg-soft-200.
+        triggerClassName={cn(
+          'data-[state=inactive]:hover:bg-neutral-100',
+          triggerClassName
+        )}
         disabled={disabled}
         {...props}
       />
