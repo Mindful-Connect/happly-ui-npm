@@ -16,11 +16,10 @@ export const hintVariants = tv({
     icon: 'w-4 h-4 shrink-0 text-text-soft-400',
   },
   variants: {
+    // Disabled fields keep the hint at its normal colors (the new disabled
+    // design only mutes the control itself); the prop is kept for API compat.
     disabled: {
-      true: {
-        root: 'text-text-disabled-300',
-        icon: 'text-text-disabled-300',
-      },
+      true: {},
     },
     hasError: {
       true: {

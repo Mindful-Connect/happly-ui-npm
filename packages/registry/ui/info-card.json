@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Info Card",
   "description": "A reusable section for displaying labeled detail items. Layout is controlled via className (flexbox, grid, etc.).",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "dependencies": ["@remixicon/react"],
   "registryDependencies": ["tv", "happly-ui-utils", "status-indicator"],
   "migration": {

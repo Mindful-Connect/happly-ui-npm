@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Date Input",
   "description": "A date input field that looks like a standard input but opens a calendar datepicker popover on click. Uses namespace exports: DateInput.Root.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dependencies": ["date-fns", "@remixicon/react"],
   "registryDependencies": [
     "datepicker",
