@@ -74,6 +74,7 @@ function DateInput({
               <Input.Icon as={LeadingIcon} />
               <Input.Input
                 readOnly
+                disabled={disabled}
                 value={date ? format(date, formatStr) : ''}
                 placeholder={placeholder}
                 className='cursor-pointer'

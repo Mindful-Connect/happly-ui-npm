@@ -78,6 +78,12 @@
             "name": "containerClassName",
             "type": "string",
             "description": "Additional classes for the container wrapper (non-simple mode only)"
+          },
+          {
+            "name": "fadeScroll",
+            "type": "boolean",
+            "default": "true",
+            "description": "Fade out overflowing content at the top/bottom edges while scrolling and hide the native scrollbar (non-simple mode only)"
           }
         ]
       },

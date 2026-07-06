@@ -243,10 +243,21 @@ const InputEl = React.forwardRef<
     }
 >(
   (
-    { className, type = 'text', size, hasError, asChild, placeholder, ...rest },
+    {
+      className,
+      type = 'text',
+      size,
+      hasError,
+      asChild,
+      placeholder,
+      disabled,
+      ...rest
+    },
     forwardedRef
   ) => {
     const Component = asChild ? Slot : 'input';
+    const formField = useFormField();
+    const resolvedDisabled = disabled ?? formField.disabled;
 
     const { input } = inputVariants({
       size,
@@ -259,6 +270,7 @@ const InputEl = React.forwardRef<
         className={input({ class: className })}
         ref={forwardedRef}
         placeholder={placeholder ?? '\u200B'}
+        disabled={resolvedDisabled}
         {...rest}
       />
     );

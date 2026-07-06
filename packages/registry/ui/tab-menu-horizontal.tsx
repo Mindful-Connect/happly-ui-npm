@@ -40,7 +40,7 @@ export const tabMenuHorizontalVariants = tv({
     item: [
       'flex shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border px-4 py-2 text-label-sm',
       'transition-colors duration-150 ease-out',
-      'disabled:pointer-events-none disabled:opacity-50',
+      'disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
     ],
     icon: 'w-5 h-5 shrink-0',
     counter: 'shrink-0',

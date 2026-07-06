@@ -36,8 +36,8 @@ const SwitchToggleList = React.forwardRef<
         ref={mergeRefs(forwardedRef, listRef)}
         aria-disabled={disabled || undefined}
         className={cn(
-          'bg-bg-weak-50 relative isolate grid w-full auto-cols-fr grid-flow-col gap-1 rounded-full p-1',
-          disabled && 'pointer-events-none opacity-50',
+          'group/switch-toggle bg-bg-weak-50 relative isolate grid w-full auto-cols-fr grid-flow-col gap-1 rounded-full p-1',
+          disabled && 'pointer-events-none',
           className
         )}
         {...rest}
@@ -51,6 +51,7 @@ const SwitchToggleList = React.forwardRef<
             {
               hidden: !mounted,
             },
+            disabled && 'shadow-none',
             floatingBgClassName
           )}
           style={{
@@ -84,7 +85,10 @@ const SwitchToggleTrigger = React.forwardRef<
         // active
         'data-[state=active]:text-text-strong-950',
         // inactive hover
-        'data-[state=inactive]:hover:shadow-toggle-switch',
+        'data-[state=inactive]:hover:bg-neutral-100',
+        // disabled (via aria-disabled on the List)
+        'group-aria-disabled/switch-toggle:text-text-disabled-300',
+        'data-[state=active]:group-aria-disabled/switch-toggle:text-text-disabled-300',
         className
       )}
       {...rest}
