@@ -16,11 +16,11 @@ export const infoCardVariants = tv({
       'flex flex-col gap-2',
     ],
     item: [
-      'flex flex-1 flex-col justify-center gap-1.5 overflow-clip rounded-xl bg-bg-white-0 p-2',
+      'flex flex-1 flex-col justify-center gap-1.5 overflow-clip rounded-xl bg-bg-white-0 p-3.5',
       'shadow-[0px_2px_5px_-1px_rgba(0,0,0,0.04),0px_12px_40px_-8px_rgba(0,0,0,0.08),0px_0px_0px_1px_var(--color-bg-white-0),0px_0px_0px_1.5px_rgba(153,160,174,0.1)]',
     ],
     action: [
-      'flex items-center justify-center overflow-visible rounded-xl bg-bg-white-0 p-2',
+      'flex aspect-square min-h-[70px] items-center justify-center overflow-visible rounded-xl bg-bg-white-0 p-2',
       'shadow-[0px_2px_5px_-1px_rgba(0,0,0,0.04),0px_12px_40px_-8px_rgba(0,0,0,0.08),0px_0px_0px_1px_var(--color-bg-white-0),0px_0px_0px_1.5px_rgba(153,160,174,0.1)]',
       'transition-colors hover:bg-bg-weak-50 cursor-pointer',
     ],

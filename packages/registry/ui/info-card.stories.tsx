@@ -168,7 +168,7 @@ export const WithAction = {
             <span>Sean Muir</span>
           </InfoCard.Value>
         </InfoCard.Item>
-        <InfoCard.Action className='size-[70px]' />
+        <InfoCard.Action />
       </InfoCard.Root>
     </div>
   ),
@@ -219,7 +219,7 @@ export const WithActionNotification = {
             <span>Sean Muir</span>
           </InfoCard.Value>
         </InfoCard.Item>
-        <InfoCard.Action notification className='size-[70px]' />
+        <InfoCard.Action notification />
       </InfoCard.Root>
     </div>
   ),
@@ -244,7 +244,7 @@ export const WithCustomAction = {
             </StatusBadge.Root>
           </InfoCard.Value>
         </InfoCard.Item>
-        <InfoCard.Action className='size-[70px]'>
+        <InfoCard.Action>
           <RiExternalLinkLine className='text-icon-sub-600 size-5' />
         </InfoCard.Action>
       </InfoCard.Root>

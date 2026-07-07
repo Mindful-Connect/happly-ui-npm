@@ -8,7 +8,7 @@
   "dependencies": ["@remixicon/react"],
   "registryDependencies": ["tv", "happly-ui-utils", "status-indicator"],
   "migration": {
-    "guide": "Info Card v2 removes the layout, columns, and fullWidth props. Use className on Root for layout (e.g. className=\"flex-row flex-wrap items-stretch\" for inline, className=\"grid grid-cols-2\" for grid). Use className=\"w-full\" on Item instead of the fullWidth prop. Action no longer auto-squares — use className=\"size-[70px]\" for the square action pattern."
+    "guide": "Info Card v2 removes the layout, columns, and fullWidth props. Use className on Root for layout (e.g. className=\"flex-row flex-wrap items-stretch\" for inline, className=\"grid grid-cols-2\" for grid). Use className=\"w-full\" on Item instead of the fullWidth prop. Action keeps a square 1:1 shape automatically (min 70px, stretching to match the row height) — no sizing className is needed."
   },
   "docs": {
     "lead": "Display labeled key-value detail items within a section card. Layout is fully controlled via className — use flexbox for inline, CSS grid for columns, or the default stacked flex-col.",
@@ -40,20 +40,20 @@
       },
       {
         "title": "With Action",
-        "description": "Inline layout with a square action button. Uses size-[70px] for a 1:1 box; sibling items stretch to match its height.",
-        "code": "<InfoCard.Root className=\"flex-row flex-wrap items-stretch\">\n  <InfoCard.Item>\n    <InfoCard.Label>Submitted date</InfoCard.Label>\n    <InfoCard.Value>...</InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Created by</InfoCard.Label>\n    <InfoCard.Value>...</InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Action className=\"size-[70px]\" />\n</InfoCard.Root>",
+        "description": "Inline layout with a square action button. The action keeps a 1:1 aspect (min 70px) and stretches to match the row height.",
+        "code": "<InfoCard.Root className=\"flex-row flex-wrap items-stretch\">\n  <InfoCard.Item>\n    <InfoCard.Label>Submitted date</InfoCard.Label>\n    <InfoCard.Value>...</InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Created by</InfoCard.Label>\n    <InfoCard.Value>...</InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Action />\n</InfoCard.Root>",
         "stories": ["WithAction"]
       },
       {
         "title": "Action with Notification",
         "description": "Action button with a notification dot and square sizing.",
-        "code": "<InfoCard.Root className=\"flex-row flex-wrap items-stretch\">\n  <InfoCard.Item>...</InfoCard.Item>\n  <InfoCard.Action\n    notification\n    className=\"size-[70px]\"\n  />\n</InfoCard.Root>",
+        "code": "<InfoCard.Root className=\"flex-row flex-wrap items-stretch\">\n  <InfoCard.Item>...</InfoCard.Item>\n  <InfoCard.Action notification />\n</InfoCard.Root>",
         "stories": ["WithActionNotification"]
       },
       {
         "title": "With Custom Action",
         "description": "Action button with a custom icon and square sizing.",
-        "code": "<InfoCard.Root className=\"flex-row flex-wrap items-stretch\">\n  <InfoCard.Item>...</InfoCard.Item>\n  <InfoCard.Action className=\"size-[70px]\">\n    <RiExternalLinkLine className=\"size-5 text-icon-sub-600\" />\n  </InfoCard.Action>\n</InfoCard.Root>",
+        "code": "<InfoCard.Root className=\"flex-row flex-wrap items-stretch\">\n  <InfoCard.Item>...</InfoCard.Item>\n  <InfoCard.Action>\n    <RiExternalLinkLine className=\"size-5 text-icon-sub-600\" />\n  </InfoCard.Action>\n</InfoCard.Root>",
         "stories": ["WithCustomAction"]
       },
       {
@@ -86,7 +86,7 @@
       },
       {
         "name": "InfoCard.Action",
-        "description": "An action button styled like an info card item. Renders a default RiArrowRightUpLine icon that can be overridden via children. Renders as an anchor tag when href is provided, otherwise a button. Use className=\"size-[70px]\" for the square action pattern.",
+        "description": "An action button styled like an info card item. Renders a default RiArrowRightUpLine icon that can be overridden via children. Renders as an anchor tag when href is provided, otherwise a button. Keeps a square 1:1 shape automatically (min 70px), stretching to match the row height.",
         "props": [
           {
             "name": "href",
