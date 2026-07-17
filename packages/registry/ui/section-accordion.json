@@ -1,0 +1,153 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "section-accordion",
+  "type": "registry:ui",
+  "title": "Section Accordion",
+  "description": "A sectioned accordion where each section has a title, a description, and arbitrary content. Only one section opens at a time; sections can be disabled. Includes a composed Section Accordion.Group. Built on Radix Accordion.",
+  "version": "1.0.0",
+  "dependencies": ["@radix-ui/react-accordion", "@remixicon/react"],
+  "registryDependencies": ["happly-ui-utils"],
+  "docs": {
+    "lead": "A sectioned accordion for grouping arbitrary content under collapsible headers. Each section has a title and a description, only one opens at a time, and sections can be disabled. Built on Radix Accordion for full accessibility.",
+    "usage": "import * as SectionAccordion from \"@/components/ui/section-accordion\"\n\n<SectionAccordion.Root defaultValue=\"a\">\n  <SectionAccordion.Item value=\"a\">\n    <SectionAccordion.Header>\n      <SectionAccordion.Trigger>\n        <SectionAccordion.Heading>\n          <SectionAccordion.Title>Title</SectionAccordion.Title>\n          <SectionAccordion.Description>2 Lessons</SectionAccordion.Description>\n        </SectionAccordion.Heading>\n        <SectionAccordion.Chevron />\n      </SectionAccordion.Trigger>\n    </SectionAccordion.Header>\n    <SectionAccordion.Content>Content</SectionAccordion.Content>\n  </SectionAccordion.Item>\n</SectionAccordion.Root>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "A sectioned accordion built from the primitives. Only one section opens at a time — opening a closed section closes the open one. The last section is disabled.",
+        "code": "<SectionAccordion.Root defaultValue='idea-validation'>\n  <SectionAccordion.Item value='idea-validation'>\n    <SectionAccordion.Header>\n      <SectionAccordion.Trigger>\n        <SectionAccordion.Heading>\n          <SectionAccordion.Title>Idea Validation & Market Research</SectionAccordion.Title>\n          <SectionAccordion.Description>8 Lessons</SectionAccordion.Description>\n        </SectionAccordion.Heading>\n        <SectionAccordion.Chevron />\n      </SectionAccordion.Trigger>\n    </SectionAccordion.Header>\n    <SectionAccordion.Content>\n      {/* arbitrary content, e.g. lesson rows */}\n    </SectionAccordion.Content>\n  </SectionAccordion.Item>\n</SectionAccordion.Root>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Group (Composed)",
+        "description": "The composed Section Accordion.Group renders sections from an array of items — the quickest way to use the component. Handles the header, chevron, and content layout automatically.",
+        "code": "<SectionAccordion.Group\n  defaultValue='idea-validation'\n  items={[\n    { value: 'welcome', title: 'Welcome & Foundations', description: '2 Lessons', content: <Lessons /> },\n    { value: 'idea-validation', title: 'Idea Validation & Market Research', description: '8 Lessons', content: <Lessons /> },\n    { value: 'launch', title: 'Launch & Go-to-Market', description: '5 Lessons', disabled: true, content: null },\n  ]}\n/>",
+        "stories": ["Group"]
+      },
+      {
+        "title": "Arbitrary Content",
+        "description": "Section content can be any React node — cards, forms, lists, or plain text.",
+        "code": "<SectionAccordion.Group\n  defaultValue='overview'\n  items={[\n    { value: 'overview', title: 'Overview', description: 'Getting started', content: <p>Any React node can go here.</p> },\n    { value: 'locked', title: 'Locked section', description: 'Unavailable', disabled: true, content: null },\n  ]}\n/>",
+        "stories": ["ArbitraryContent"]
+      }
+    ],
+    "api": [
+      {
+        "name": "SectionAccordion.Root",
+        "description": "The bordered container that holds the sections. Wraps Radix Accordion.Root, defaulting to type='single' collapsible so only one section is open at a time. Pass defaultValue / value to control which section is open.",
+        "props": [
+          {
+            "name": "type",
+            "type": "'single' | 'multiple'",
+            "default": "'single'",
+            "description": "Whether one or multiple sections can be open at a time"
+          },
+          {
+            "name": "collapsible",
+            "type": "boolean",
+            "default": "true",
+            "description": "When type is 'single', allows closing the open section"
+          },
+          {
+            "name": "defaultValue",
+            "type": "string",
+            "description": "The value of the section open by default (uncontrolled)"
+          }
+        ]
+      },
+      {
+        "name": "SectionAccordion.Item",
+        "description": "An individual section. Fills with a subtle background when open.",
+        "props": [
+          {
+            "name": "value",
+            "type": "string",
+            "description": "Unique value for this section"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": "false",
+            "description": "When true, the section cannot be opened and renders in a muted state"
+          }
+        ]
+      },
+      {
+        "name": "SectionAccordion.Header",
+        "description": "Wraps the trigger in a heading element for accessibility. Wraps Radix Accordion.Header.",
+        "props": []
+      },
+      {
+        "name": "SectionAccordion.Trigger",
+        "description": "The clickable header row that toggles the section. Lay out a Heading and a Chevron inside it.",
+        "props": []
+      },
+      {
+        "name": "SectionAccordion.Heading",
+        "description": "Vertical stack for the title and description.",
+        "props": []
+      },
+      {
+        "name": "SectionAccordion.Title",
+        "description": "The section title.",
+        "props": []
+      },
+      {
+        "name": "SectionAccordion.Description",
+        "description": "The secondary description line (e.g. '8 Lessons'). Brightens from soft to sub color when its section is open.",
+        "props": []
+      },
+      {
+        "name": "SectionAccordion.Chevron",
+        "description": "The boxed toggle indicator on the right of the header. Rotates 180° when the section is open.",
+        "props": [
+          {
+            "name": "icon",
+            "type": "React.ElementType",
+            "default": "RiArrowDownSLine",
+            "description": "The chevron icon component to render"
+          }
+        ]
+      },
+      {
+        "name": "SectionAccordion.Content",
+        "description": "The collapsible body with slide animation. Renders arbitrary children.",
+        "props": []
+      },
+      {
+        "name": "SectionAccordion.Group",
+        "description": "Composed sectioned accordion that renders sections from props. Handles the header, chevron, and content layout automatically.",
+        "props": [
+          {
+            "name": "items",
+            "type": "SectionAccordionGroupItem[]",
+            "description": "Array of sections with value, title, optional description, content, and optional disabled"
+          },
+          {
+            "name": "chevronIcon",
+            "type": "React.ElementType",
+            "default": "RiArrowDownSLine",
+            "description": "The chevron icon component rendered in every section header"
+          },
+          {
+            "name": "type",
+            "type": "'single' | 'multiple'",
+            "default": "'single'",
+            "description": "Whether one or multiple sections can be open at a time"
+          },
+          {
+            "name": "collapsible",
+            "type": "boolean",
+            "default": "true",
+            "description": "When type is 'single', allows closing the open section"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/section-accordion.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}
