@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Textarea",
   "description": "A textarea component with character counter, resize handle, error state, and simple mode. Uses namespace exports: Textarea.Root, Textarea.CharCounter.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "migration": {
     "guide": "API changed: import as namespace `import * as Textarea from ...`, use `<Textarea.Root>` with children for `<Textarea.CharCounter>`. Old named export `{ Textarea }` removed. New sub-component: `Textarea.CharCounter`. New props: `simple` (renders without container), `hasError`, `containerClassName`. Built-in resize handle in non-simple mode."
   },
@@ -78,6 +78,12 @@
             "name": "containerClassName",
             "type": "string",
             "description": "Additional classes for the container wrapper (non-simple mode only)"
+          },
+          {
+            "name": "fadeScroll",
+            "type": "boolean",
+            "default": "true",
+            "description": "Fade out overflowing content at the top/bottom edges while scrolling and hide the native scrollbar (non-simple mode only)"
           }
         ]
       },

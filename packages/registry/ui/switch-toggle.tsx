@@ -36,8 +36,8 @@ const SwitchToggleList = React.forwardRef<
         ref={mergeRefs(forwardedRef, listRef)}
         aria-disabled={disabled || undefined}
         className={cn(
-          'bg-bg-weak-50 relative isolate grid w-full auto-cols-fr grid-flow-col gap-1 rounded-full p-1',
-          disabled && 'pointer-events-none opacity-50',
+          'group/switch-toggle bg-bg-weak-50 relative isolate grid w-full auto-cols-fr grid-flow-col gap-1 rounded-full p-1',
+          disabled && 'pointer-events-none',
           className
         )}
         {...rest}
@@ -51,6 +51,7 @@ const SwitchToggleList = React.forwardRef<
             {
               hidden: !mounted,
             },
+            disabled && 'shadow-none',
             floatingBgClassName
           )}
           style={{
@@ -83,8 +84,13 @@ const SwitchToggleTrigger = React.forwardRef<
         'focus:outline-none',
         // active
         'data-[state=active]:text-text-strong-950',
-        // inactive hover
-        'data-[state=inactive]:hover:shadow-toggle-switch',
+        // inactive hover — one step darker than the default weak-50 track
+        // (bg-100 is indistinguishable from it). Darker-track contexts flip
+        // the hover lighter via Group's triggerClassName instead.
+        'data-[state=inactive]:hover:bg-bg-soft-200',
+        // disabled (via aria-disabled on the List)
+        'group-aria-disabled/switch-toggle:text-text-disabled-300',
+        'data-[state=active]:group-aria-disabled/switch-toggle:text-text-disabled-300',
         className
       )}
       {...rest}
@@ -115,6 +121,7 @@ type SwitchToggleGroupProps = Omit<
 > & {
   items: SwitchToggleGroupItem[];
   listClassName?: string;
+  triggerClassName?: string;
   floatingBgClassName?: string;
   disabled?: boolean;
 };
@@ -124,7 +131,14 @@ const SwitchToggleGroup = React.forwardRef<
   SwitchToggleGroupProps
 >(
   (
-    { items, listClassName, floatingBgClassName, disabled, ...rest },
+    {
+      items,
+      listClassName,
+      triggerClassName,
+      floatingBgClassName,
+      disabled,
+      ...rest
+    },
     forwardedRef
   ) => {
     return (
@@ -140,6 +154,7 @@ const SwitchToggleGroup = React.forwardRef<
               <SwitchToggleTrigger
                 key={item.value}
                 value={item.value}
+                className={triggerClassName}
                 disabled={disabled}
               >
                 {Icon && <Icon className='h-5 w-5 shrink-0' />}

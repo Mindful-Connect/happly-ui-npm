@@ -33,7 +33,7 @@ function DateInput({
   defaultValue,
   onChange,
   placeholder = 'Select a date',
-  disabled = false,
+  disabled,
   formatStr = 'LLL dd, y',
   calendarProps,
   size,
@@ -51,6 +51,7 @@ function DateInput({
 
   const formField = useFormField();
   const resolvedHasError = hasError ?? formField.hasError;
+  const resolvedDisabled = disabled ?? formField.disabled ?? false;
 
   const handleSelect: NonNullable<
     Extract<CalendarProps, { mode: 'single' }>['onSelect']
@@ -66,14 +67,24 @@ function DateInput({
   );
 
   return (
-    <Popover.Root open={open} onOpenChange={setOpen}>
-      <Popover.Trigger asChild disabled={disabled}>
+    // `disabled` gates the popover state directly: the Trigger is a div
+    // (asChild), which ignores the `disabled` attribute — clicks on it would
+    // still open the popover even though the inner input is disabled.
+    <Popover.Root
+      open={!resolvedDisabled && open}
+      onOpenChange={(next) => {
+        if (resolvedDisabled) return;
+        setOpen(next);
+      }}
+    >
+      <Popover.Trigger asChild disabled={resolvedDisabled}>
         <div>
           <Input.Root size={size} hasError={resolvedHasError}>
             <Input.Wrapper className='cursor-pointer'>
               <Input.Icon as={LeadingIcon} />
               <Input.Input
                 readOnly
+                disabled={resolvedDisabled}
                 value={date ? format(date, formatStr) : ''}
                 placeholder={placeholder}
                 className='cursor-pointer'

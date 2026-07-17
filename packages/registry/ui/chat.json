@@ -1,0 +1,229 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "chat",
+  "type": "registry:ui",
+  "title": "Chat",
+  "description": "A composable chat interface: scrollable message thread with received/sent bubbles, short pills, dividers, and a batteries-included message input. Composes the Avatar and Button components. Uses namespace exports: Chat.Root, Chat.List, Chat.Message, Chat.Avatar, Chat.Bubble, Chat.Timestamp, Chat.Divider, Chat.Input, Chat.SendButton.",
+  "dependencies": ["@remixicon/react"],
+  "registryDependencies": ["tv", "happly-ui-utils", "avatar", "button"],
+  "docs": {
+    "lead": "A composable chat interface with a scrollable, auto-scrolling message thread and a configurable message input. Composes the Avatar and Button components. Bring your own message data; override any part as needed.",
+    "usage": "import * as Chat from \"@/components/ui/chat\"\n\n<Chat.Root>\n  <Chat.List>\n    <Chat.Message side=\"received\" avatar={<Chat.Avatar src=\"/avatar.png\" />}>\n      <Chat.Bubble>\n        Hello there!\n        <Chat.Timestamp>3:00 PM</Chat.Timestamp>\n      </Chat.Bubble>\n    </Chat.Message>\n  </Chat.List>\n  <Chat.Input onSend={(text) => send(text)} />\n</Chat.Root>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "A full thread with received and sent bubbles, short pills, and date / new-message dividers. Set a height on a parent so the list can scroll.",
+        "code": "<div className=\"h-[600px] w-full max-w-2xl\">\n  <Chat.Root>\n    <Chat.List>\n      <Chat.Message side=\"received\" avatar={avatar}>\n        <Chat.Bubble>\n          Join us for an engaging seminar…\n          <Chat.Timestamp>3:00 PM</Chat.Timestamp>\n        </Chat.Bubble>\n      </Chat.Message>\n      <Chat.Message side=\"sent\">\n        <Chat.Bubble>\n          Explore the fundamentals…\n          <Chat.Timestamp>3:00 PM</Chat.Timestamp>\n        </Chat.Bubble>\n      </Chat.Message>\n      <Chat.Divider>23 May, 2025</Chat.Divider>\n      <Chat.Message side=\"received\">\n        <Chat.Bubble shape=\"pill\">\n          Hey!\n          <Chat.Timestamp>3:00 PM</Chat.Timestamp>\n        </Chat.Bubble>\n      </Chat.Message>\n      <Chat.Divider variant=\"feature\">New message</Chat.Divider>\n    </Chat.List>\n    <Chat.Input onSend={(text) => send(text)} />\n  </Chat.Root>\n</div>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Bubbles",
+        "description": "Sent, received, and highlighted bubble tones. The tone defaults from the parent Message's side and can be overridden.",
+        "code": "<Chat.Message side=\"received\" avatar={avatar}>\n  <Chat.Bubble>\n    A received message.\n    <Chat.Timestamp>3:00 PM</Chat.Timestamp>\n  </Chat.Bubble>\n</Chat.Message>\n<Chat.Message side=\"sent\" avatar={avatar}>\n  <Chat.Bubble>\n    A sent message.\n    <Chat.Timestamp>3:00 PM</Chat.Timestamp>\n  </Chat.Bubble>\n</Chat.Message>\n<Chat.Message side=\"received\">\n  <Chat.Bubble tone=\"highlight\">\n    A highlighted message.\n    <Chat.Timestamp>3:00 PM</Chat.Timestamp>\n  </Chat.Bubble>\n</Chat.Message>",
+        "stories": ["Bubbles"]
+      },
+      {
+        "title": "Pills and Dividers",
+        "description": "Short pill-shaped messages and both divider variants (date and highlighted new-message).",
+        "code": "<Chat.Message side=\"received\">\n  <Chat.Bubble shape=\"pill\">\n    Hey!\n    <Chat.Timestamp>3:00 PM</Chat.Timestamp>\n  </Chat.Bubble>\n</Chat.Message>\n<Chat.Divider>23 May, 2025</Chat.Divider>\n<Chat.Divider variant=\"feature\">New message</Chat.Divider>",
+        "stories": ["PillsAndDividers"]
+      },
+      {
+        "title": "Input",
+        "description": "The default input: attachment + emoji buttons, an auto-growing field, and a send button. Uncontrolled by default; Enter sends, Shift+Enter inserts a newline.",
+        "code": "<Chat.Input onSend={(text) => console.log(text)} />",
+        "stories": ["Input"]
+      },
+      {
+        "title": "Interactive",
+        "description": "A live thread that appends messages on send. The list sticks to the bottom as new messages arrive.",
+        "code": "const [messages, setMessages] = React.useState([])\n\n<Chat.Root>\n  <Chat.List>\n    {messages.map((m) => (\n      <Chat.Message key={m.id} side={m.side} avatar={m.avatar}>\n        <Chat.Bubble>\n          {m.text}\n          <Chat.Timestamp>Now</Chat.Timestamp>\n        </Chat.Bubble>\n      </Chat.Message>\n    ))}\n  </Chat.List>\n  <Chat.Input onSend={(text) => setMessages((p) => [...p, { id: p.length + 1, side: 'sent', text }])} />\n</Chat.Root>",
+        "stories": ["Interactive"]
+      },
+      {
+        "title": "Custom Input",
+        "description": "Override the default input clusters with the leading / actions slots. Chat.SendButton forwards Button props, so restyling is just variant/mode.",
+        "code": "<Chat.Input\n  placeholder=\"Ask anything…\"\n  showAttachment={false}\n  actions={<Chat.SendButton variant=\"primary\" mode=\"filled\" />}\n  onSend={(text) => send(text)}\n/>",
+        "stories": ["CustomInput"]
+      },
+      {
+        "title": "Disabled",
+        "description": "Disabled input with muted styling.",
+        "code": "<Chat.Input disabled placeholder=\"You cannot type here…\" />",
+        "stories": ["Disabled"]
+      }
+    ],
+    "api": [
+      {
+        "name": "Chat.Root",
+        "description": "Vertical layout container. Fills its parent and pins the input 20px below the list. Set a height on it (or its parent) so the list can scroll.",
+        "props": []
+      },
+      {
+        "name": "Chat.List",
+        "description": "Scrollable message container. Auto-scrolls to the newest message when the user is near the bottom.",
+        "props": [
+          {
+            "name": "autoScroll",
+            "type": "boolean",
+            "default": "true",
+            "description": "Stick to the bottom as new messages arrive (unless the user has scrolled up)"
+          }
+        ]
+      },
+      {
+        "name": "Chat.Message",
+        "description": "A single message row. Reserves a 44px gutter on both sides so avatar-less rows stay aligned with rows that have an avatar.",
+        "props": [
+          {
+            "name": "side",
+            "type": "'sent' | 'received'",
+            "description": "Which side the message is on. Drives alignment and the default bubble tone."
+          },
+          {
+            "name": "avatar",
+            "type": "React.ReactNode",
+            "description": "Optional avatar rendered in the gutter on the message's side (e.g. <Chat.Avatar src=\"…\" />)"
+          }
+        ]
+      },
+      {
+        "name": "Chat.Avatar",
+        "description": "Thin wrapper around the Avatar component, sized for chat rows (32px). Pass `src` for the common case, or compose Avatar parts as children. Forwards all Avatar.Root props (size, color, etc.).",
+        "props": [
+          {
+            "name": "src",
+            "type": "string",
+            "description": "Image source. Renders an Avatar.Image when provided."
+          },
+          {
+            "name": "size",
+            "type": "string",
+            "default": "'32'",
+            "description": "Avatar size token (forwarded to Avatar.Root)"
+          }
+        ]
+      },
+      {
+        "name": "Chat.Bubble",
+        "description": "The message bubble. Reads side from the parent Message to pick a default tone.",
+        "props": [
+          {
+            "name": "shape",
+            "type": "'bubble' | 'pill'",
+            "default": "'bubble'",
+            "description": "Rounded card ('bubble') or content-hugging pill ('pill') for short messages"
+          },
+          {
+            "name": "tone",
+            "type": "'received' | 'highlight' | 'sent'",
+            "description": "Color tone. Defaults from the parent Message's side (sent → sent, otherwise received)."
+          }
+        ]
+      },
+      {
+        "name": "Chat.Timestamp",
+        "description": "Small caption inside a bubble. Adapts its color and position to the surrounding bubble.",
+        "props": []
+      },
+      {
+        "name": "Chat.Divider",
+        "description": "A centered label between two rules, e.g. a date or a new-message marker.",
+        "props": [
+          {
+            "name": "variant",
+            "type": "'default' | 'feature'",
+            "default": "'default'",
+            "description": "Neutral date label ('default') or highlighted primary label ('feature')"
+          }
+        ]
+      },
+      {
+        "name": "Chat.Input",
+        "description": "Batteries-included composer. Uncontrolled by default; pass value/onChange to control it. Enter sends, Shift+Enter inserts a newline.",
+        "props": [
+          {
+            "name": "onSend",
+            "type": "(value: string) => void",
+            "description": "Fired when the user sends (Enter or the send button). Receives the trimmed text."
+          },
+          {
+            "name": "value",
+            "type": "string",
+            "description": "Controlled value. Omit for uncontrolled behavior."
+          },
+          {
+            "name": "onChange",
+            "type": "(value: string) => void",
+            "description": "Fired on every keystroke"
+          },
+          {
+            "name": "placeholder",
+            "type": "string",
+            "default": "'Write a message...'",
+            "description": "Placeholder text"
+          },
+          {
+            "name": "onAttach",
+            "type": "() => void",
+            "description": "Click handler for the default attachment button"
+          },
+          {
+            "name": "onEmoji",
+            "type": "() => void",
+            "description": "Click handler for the default emoji button"
+          },
+          {
+            "name": "showAttachment",
+            "type": "boolean",
+            "default": "true",
+            "description": "Show the attachment button"
+          },
+          {
+            "name": "showEmoji",
+            "type": "boolean",
+            "default": "true",
+            "description": "Show the emoji button"
+          },
+          {
+            "name": "leading",
+            "type": "React.ReactNode",
+            "description": "Replace the left (attachment) cluster entirely"
+          },
+          {
+            "name": "actions",
+            "type": "React.ReactNode",
+            "description": "Replace the right (emoji + send) cluster entirely"
+          },
+          {
+            "name": "sendDisabled",
+            "type": "boolean",
+            "description": "Disable sending even when there is text"
+          },
+          {
+            "name": "maxHeight",
+            "type": "number",
+            "default": "128",
+            "description": "Max auto-grow height in px before the field scrolls"
+          },
+          {
+            "name": "containerClassName",
+            "type": "string",
+            "description": "Additional classes for the input container"
+          }
+        ]
+      },
+      {
+        "name": "Chat.SendButton",
+        "description": "The send button, built on the Button component (neutral / lighter by default). Renders an arrow-up icon unless given children, and forwards all Button.Root props (variant, mode, loading, etc.).",
+        "props": []
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/chat.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

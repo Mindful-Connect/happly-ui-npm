@@ -4,7 +4,7 @@
   "type": "registry:ui",
   "title": "Markdown Editor",
   "description": "A markdown text editor with formatting toolbar, preview mode, and built-in English/French language toggle. Supports single-language and multi-language modes with per-language value objects. Compound or composed mode. Works with FormField.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "dependencies": ["@remixicon/react", "marked"],
   "registryDependencies": [
     "form-field-context",

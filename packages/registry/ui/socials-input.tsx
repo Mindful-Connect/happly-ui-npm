@@ -512,7 +512,7 @@ export default function SocialsInput({
             const config = SOCIAL_CONFIGS[key];
             const displayName = config.extractHandle(formValue[key]!);
             return (
-              <Tag.Root key={key} variant='gray' disabled={readOnly}>
+              <Tag.Root key={key} variant='gray'>
                 <Tag.Icon as={config.icon} />
                 <span>{displayName}</span>
                 {!readOnly && (

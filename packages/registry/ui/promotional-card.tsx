@@ -22,7 +22,7 @@ export const promotionalCardVariants = tv({
     ],
     icon: 'absolute left-[15px] top-[15px] !w-8 h-8',
     decoration:
-      'pointer-events-none absolute -top-[71px] left-[calc(100%-88px)] !size-[163px] text-icon-strong-950',
+      'pointer-events-none absolute -top-[71px] left-[calc(100%-88px)] !size-[163px] text-icon-strong-950 opacity-[0.03]',
     content: 'absolute top-[63px] left-[15px] right-4 flex flex-col gap-1',
     title: 'text-label-sm text-text-strong-950 truncate',
     descriptionRow: 'flex items-center gap-1',
@@ -50,7 +50,6 @@ export const promotionalCardVariants = tv({
           // hover
           'hover:bg-bg-weak-50 hover:shadow-none hover:border-transparent',
         ],
-        decoration: 'opacity-[0.02]',
       },
     },
     clickable: {

@@ -132,6 +132,16 @@
         "collapsed": false
       },
       {
+        "title": "Communication",
+        "links": [
+          {
+            "title": "Chat",
+            "href": "/docs/components/chat"
+          }
+        ],
+        "collapsed": false
+      },
+      {
         "title": "Form",
         "links": [
           {

@@ -230,7 +230,8 @@ function MarkdownEditorRoot({
       <div
         className={cn(
           'bg-bg-weak-50 @container/mde flex w-full flex-col gap-2 rounded-2xl p-2',
-          disabled && 'pointer-events-none opacity-50',
+          disabled &&
+            'bg-bg-white-0 ring-stroke-soft-200 pointer-events-none ring-1 ring-inset',
           className
         )}
         {...rest}
@@ -344,11 +345,23 @@ type ToggleProps = Omit<
   'children'
 >;
 
-function Toggle({ listClassName, ...props }: ToggleProps) {
+function Toggle({ listClassName, triggerClassName, ...props }: ToggleProps) {
+  const { disabled } = useMarkdownEditorContext();
+
   return (
     <div className='w-full @[450px]/mde:w-auto'>
       <SwitchToggle.Group
-        listClassName={cn('bg-bg-soft-200', listClassName)}
+        // When disabled, fall back to the List's base bg-bg-weak-50 so the
+        // track matches the disabled design on the white editor shell.
+        listClassName={cn(!disabled && 'bg-bg-soft-200', listClassName)}
+        // On this darker track the hover pill goes lighter (toward the white
+        // active pill) — the component's default darker hover would vanish
+        // against bg-soft-200.
+        triggerClassName={cn(
+          'data-[state=inactive]:hover:bg-neutral-100',
+          triggerClassName
+        )}
+        disabled={disabled}
         {...props}
       />
     </div>

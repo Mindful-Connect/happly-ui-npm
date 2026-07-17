@@ -170,6 +170,7 @@ function YearGrid({
 }
 
 function Calendar({
+  className,
   classNames,
   showOutsideDays = true,
   month: controlledMonth,
@@ -180,14 +181,17 @@ function Calendar({
   const [view, setView] = React.useState<CalendarView>('days');
   // Proposed logic for internalMonth initialization
   const [internalMonth, setInternalMonth] = React.useState(() => {
-    if (defaultMonth) return defaultMonth;
+    const isValidDate = (d: unknown): d is Date =>
+      d instanceof Date && !isNaN(d.getTime());
+
+    if (isValidDate(defaultMonth)) return defaultMonth;
 
     const selected = (rest as any).selected;
     if (selected) {
-      if (selected instanceof Date) return selected;
-      if (Array.isArray(selected) && selected[0] instanceof Date)
+      if (isValidDate(selected)) return selected;
+      if (Array.isArray(selected) && isValidDate(selected[0]))
         return selected[0];
-      if (typeof selected === 'object' && selected.from instanceof Date)
+      if (typeof selected === 'object' && isValidDate(selected.from))
         return selected.from;
     }
 
@@ -250,7 +254,7 @@ function Calendar({
     <motion.div
       animate={{ height: animatedHeight }}
       transition={{ duration: 0.2, ease: 'easeInOut' }}
-      className='overflow-hidden'
+      className={cn('overflow-hidden', className)}
     >
       <div ref={contentRef} className='flex min-h-[292px] flex-col'>
         {view === 'years' && (
