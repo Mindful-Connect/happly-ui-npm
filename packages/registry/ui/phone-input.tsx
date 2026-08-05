@@ -126,7 +126,12 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
     React.useEffect(() => {
       if (value === undefined || value === lastEmittedRef.current) return;
 
-      const parsed = parsePhoneNumber(value);
+      // Without a fallback country, a national-format value (e.g. "4165551234") parses to
+      // undefined and neither branch below runs, leaving the field silently blank.
+      const parsed = parsePhoneNumber(
+        value,
+        activeCountryIso2.toUpperCase() as CountryCode
+      );
       if (parsed && parsed.nationalNumber) {
         const countryIso2 = (parsed.country?.toLowerCase() ??
           activeCountryIso2) as CountryIso2;
