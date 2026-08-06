@@ -108,11 +108,7 @@ export const SOCIAL_CONFIGS: Record<SocialKey, SocialConfig> = {
     domains: ['/linkedin.com', '.linkedin.com'],
     extractHandle: (url) => {
       const match = url.match(/linkedin\.com\/in\/([^/?#]+)/);
-      if (!match) return url;
-      return match[1]
-        .split('-')
-        .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
-        .join(' ');
+      return match ? match[1] : url;
     },
     generateUrl: (text) => {
       const username = text.startsWith('@') ? text.substring(1) : text;
@@ -127,11 +123,7 @@ export const SOCIAL_CONFIGS: Record<SocialKey, SocialConfig> = {
     domains: ['/facebook.com', '.facebook.com'],
     extractHandle: (url) => {
       const match = url.match(/facebook\.com\/([^/?#]+)/);
-      if (!match) return url;
-      return match[1]
-        .split('.')
-        .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
-        .join(' ');
+      return match ? match[1] : url;
     },
     generateUrl: (text) => {
       const username = text.startsWith('@') ? text.substring(1) : text;
@@ -506,6 +498,7 @@ export default function SocialsInput({
         <ComboBox.SearchTrigger
           leadingIcon={RiLinkM}
           placeholder={labels.placeholder}
+          className={hasError ? 'border-error-base' : undefined}
         />
         <ComboBox.Content>
           <SocialPickerItems />
@@ -551,12 +544,13 @@ export default function SocialsInput({
                   onChange={(e) => handleInputChange(e.target.value)}
                   onKeyDown={handleInputKeyDown}
                   onPaste={handlePaste}
+                  onBlur={handleConfirmEdit}
                 />
                 <button
                   type='button'
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={handleConfirmEdit}
-                  className='text-text-sub-600 hover:text-success-base shrink-0 transition duration-200 ease-out'
+                  className='text-text-sub-600 hover:text-success-base py-1.5 pl-1 transition duration-200 ease-out'
                 >
                   <RiCheckLine className='h-5 w-5' />
                 </button>

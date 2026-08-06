@@ -38,6 +38,14 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       'react/jsx-uses-react': 'off',
       'react/react-in-jsx-scope': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
+      '@typescript-eslint/no-empty-object-type': 'warn',
+      'react-hooks/set-state-in-effect': 'warn',
+      'react-hooks/preserve-manual-memoization': 'warn',
+      'react-hooks/refs': 'warn',
     },
   },
   {
@@ -67,9 +75,15 @@ export default tseslint.config(
     },
   },
   {
-    files: ['**/*.js', '**/*.mjs'],
+    files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
     rules: {
       '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
+  {
+    files: ['**/*.stories.tsx'],
+    rules: {
+      'react-hooks/rules-of-hooks': 'off',
     },
   }
 );

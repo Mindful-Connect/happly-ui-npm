@@ -404,6 +404,10 @@
           }
         ],
         "collapsed": false
+      },
+      {
+        "title": "Section Accordion",
+        "href": "/docs/components/section-accordion"
       }
     ]
   },

@@ -155,6 +155,7 @@ const SwitchToggleGroup = React.forwardRef<
                 key={item.value}
                 value={item.value}
                 className={triggerClassName}
+                disabled={disabled}
               >
                 {Icon && <Icon className='h-5 w-5 shrink-0' />}
                 {item.label}

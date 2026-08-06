@@ -32,6 +32,9 @@ function ButtonLoadingContent({
   loadingText?: string;
 }) {
   const text = extractText(children);
+  if (!text) {
+    return <Loader.Root size={14} color='current' />;
+  }
   const exitLetters = text.split('');
   const loadingLetters = loadingText.split('');
   const exitEndMs = exitLetters.length * LETTER_DELAY + LETTER_DURATION;

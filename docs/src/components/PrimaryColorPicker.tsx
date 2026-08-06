@@ -83,10 +83,7 @@ export function PrimaryColorPicker({
 
       {open && (
         <>
-          <div
-            className='fixed inset-0 z-40'
-            onClick={() => setOpen(false)}
-          />
+          <div className='fixed inset-0 z-40' onClick={() => setOpen(false)} />
           <div className='absolute top-full right-0 z-50 mt-3 w-[240px] rounded-xl bg-white p-3 shadow-md ring-1 shadow-black/5 ring-black/5 dark:bg-slate-800 dark:ring-white/5'>
             <ColorPicker.Root value={pickerColor} onChange={handleChange}>
               <ColorPicker.Area

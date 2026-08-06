@@ -16,9 +16,27 @@ const nextConfig = {
     unoptimized: true,
   },
   webpack: (config) => {
-    const registryUi = path.resolve(__dirname, '..', 'packages', 'registry', 'ui');
-    const registryLib = path.resolve(__dirname, '..', 'packages', 'registry', 'lib');
-    const registryHooks = path.resolve(__dirname, '..', 'packages', 'registry', 'hooks');
+    const registryUi = path.resolve(
+      __dirname,
+      '..',
+      'packages',
+      'registry',
+      'ui'
+    );
+    const registryLib = path.resolve(
+      __dirname,
+      '..',
+      'packages',
+      'registry',
+      'lib'
+    );
+    const registryHooks = path.resolve(
+      __dirname,
+      '..',
+      'packages',
+      'registry',
+      'hooks'
+    );
 
     // Ensure registry files can resolve packages from docs/node_modules
     config.resolve.modules = [
@@ -34,13 +52,25 @@ const nextConfig = {
       '@/lib/happly-ui-utils': path.resolve(registryLib, 'happly-ui-utils'),
       '@/lib/tv': path.resolve(registryLib, 'tv'),
       '@/lib/polymorphic': path.resolve(registryLib, 'polymorphic'),
-      '@/lib/recursive-clone-children': path.resolve(registryLib, 'recursive-clone-children'),
+      '@/lib/recursive-clone-children': path.resolve(
+        registryLib,
+        'recursive-clone-children'
+      ),
       '@/lib/alert-utils': path.resolve(registryLib, 'alert-utils'),
       '@/lib/tag-utils': path.resolve(registryLib, 'tag-utils'),
-      '@/lib/currency-input-utils': path.resolve(registryLib, 'currency-input-utils'),
+      '@/lib/currency-input-utils': path.resolve(
+        registryLib,
+        'currency-input-utils'
+      ),
       '@/lib/memoji': path.resolve(registryLib, 'memoji'),
-      '@/lib/form-field-context': path.resolve(registryLib, 'form-field-context'),
-      '@/lib/use-form-field-binding': path.resolve(registryLib, 'use-form-field-binding'),
+      '@/lib/form-field-context': path.resolve(
+        registryLib,
+        'form-field-context'
+      ),
+      '@/lib/use-form-field-binding': path.resolve(
+        registryLib,
+        'use-form-field-binding'
+      ),
       // Point @/hooks to registry hooks source
       '@/hooks': registryHooks,
       // Fix for headlessui 1.7.19 import error: transition/transition.js -> transitions/transition.js

@@ -280,7 +280,7 @@ function EmojiDialogFooter({
     return (
       <div
         className={cn(
-          'relative z-10 flex w-full flex-col-reverse gap-4 sm:flex-row [&>*]:flex-1',
+          'relative z-10 flex w-full flex-col-reverse gap-4 *:flex-1 sm:flex-row',
           className
         )}
         {...rest}
@@ -301,7 +301,7 @@ function EmojiDialogFooter({
         ...entrySpring,
       }}
       className={cn(
-        'relative z-10 flex w-full flex-col-reverse gap-4 sm:flex-row [&>*]:flex-1',
+        'relative z-10 flex w-full flex-col-reverse gap-4 *:flex-1 sm:flex-row',
         className
       )}
     >
@@ -825,7 +825,7 @@ const EmojiDialogBubble = React.forwardRef<
         )}
       >
         {icon && (
-          <div className='bg-bg-white-0 text-text-strong-950 flex h-5 h-8 w-8 shrink-0 items-center justify-center rounded-full shadow-[0_15px_50px_0_rgba(0,0,0,0.15)] [&>*]:w-5'>
+          <div className='bg-bg-white-0 text-text-strong-950 flex h-8 w-8 shrink-0 items-center justify-center rounded-full shadow-[0_15px_50px_0_rgba(0,0,0,0.15)] *:w-5'>
             {icon}
           </div>
         )}

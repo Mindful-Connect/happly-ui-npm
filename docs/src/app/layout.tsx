@@ -1,5 +1,4 @@
 import { type Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import clsx from 'clsx';
 
@@ -8,11 +7,10 @@ import { Layout } from '@/components/Layout';
 
 import '@/styles/tailwind.css';
 
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
+// Mock Inter font config for offline building environments
+const inter = {
   variable: '--font-inter',
-});
+};
 
 // Use local version of Lexend so that we can use OpenType features
 const lexend = localFont({

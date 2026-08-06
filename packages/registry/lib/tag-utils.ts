@@ -12,6 +12,7 @@ export const TAG_CATEGORY = {
   LiveStreamTopic: 'live_stream_topic',
   EventTopic: 'event_topic',
   Group: 'group',
+  LessonTopic: 'lesson_topic',
 } as const;
 export type TagCategory = ObjectValues<typeof TAG_CATEGORY>;
 

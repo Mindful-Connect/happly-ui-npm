@@ -54,12 +54,13 @@ import { default as paginationMeta, Playground as pagination_Playground, Demo as
 import { default as passwordInputMeta, Playground as passwordInput_Playground, Default as passwordInput_Default, WithStrength as passwordInput_WithStrength, Sizes as passwordInput_Sizes, ErrorState as passwordInput_ErrorState, WithFormField as passwordInput_WithFormField } from '@/components/ui/password-input.stories';
 import { default as phoneInputMeta, Playground as phoneInput_Playground, Default as phoneInput_Default, Controlled as phoneInput_Controlled, Sizes as phoneInput_Sizes, ErrorState as phoneInput_ErrorState, Disabled as phoneInput_Disabled, WithFormField as phoneInput_WithFormField } from '@/components/ui/phone-input.stories';
 import { default as popoverMeta, Playground as popover_Playground, Demo as popover_Demo, Position as popover_Position } from '@/components/ui/popover.stories';
-import { default as progressBarMeta, Playground as progressBar_Playground, Color as progressBar_Color, WithLabel as progressBar_WithLabel, DataStorage as progressBar_DataStorage, Indeterminate as progressBar_Indeterminate, IndeterminateColors as progressBar_IndeterminateColors, IndeterminateWithFinalizing as progressBar_IndeterminateWithFinalizing } from '@/components/ui/progress-bar.stories';
+import { default as progressBarMeta, Playground as progressBar_Playground, Color as progressBar_Color, WithAnimatedDot as progressBar_WithAnimatedDot, WithLabel as progressBar_WithLabel, DataStorage as progressBar_DataStorage, Indeterminate as progressBar_Indeterminate, IndeterminateColors as progressBar_IndeterminateColors, IndeterminateWithFinalizing as progressBar_IndeterminateWithFinalizing } from '@/components/ui/progress-bar.stories';
 import { default as progressCircleMeta, Playground as progressCircle_Playground, Sizes as progressCircle_Sizes, Values as progressCircle_Values } from '@/components/ui/progress-circle.stories';
 import { default as promotionalCardMeta, Stroke as promotionalCard_Stroke, Filled as promotionalCard_Filled, Clickable as promotionalCard_Clickable, Composed as promotionalCard_Composed, Grid as promotionalCard_Grid } from '@/components/ui/promotional-card.stories';
 import { default as publicationStatusBadgeMeta, Draft as publicationStatusBadge_Draft, WaitingForReview as publicationStatusBadge_WaitingForReview, Approved as publicationStatusBadge_Approved, RequireChanges as publicationStatusBadge_RequireChanges, Declined as publicationStatusBadge_Declined, AllStatuses as publicationStatusBadge_AllStatuses, LightVariant as publicationStatusBadge_LightVariant, CustomLabel as publicationStatusBadge_CustomLabel } from '@/components/ui/publication-status-badge.stories';
 import { default as radioCardMeta, Playground as radioCard_Playground, Default as radioCard_Default, WithKeyIcons as radioCard_WithKeyIcons, WithSimpleIcons as radioCard_WithSimpleIcons, WithBadges as radioCard_WithBadges, InlineDescription as radioCard_InlineDescription, AllowDeselect as radioCard_AllowDeselect, Disabled as radioCard_Disabled, ErrorState as radioCard_ErrorState, Composed as radioCard_Composed, PrimaryVariant as radioCard_PrimaryVariant, WithFormField as radioCard_WithFormField } from '@/components/ui/radio-card.stories';
 import { default as radioMeta, Playground as radio_Playground, Demo as radio_Demo, Variants as radio_Variants, Disabled as radio_Disabled, WithLabel as radio_WithLabel, WithLabelExtended as radio_WithLabelExtended, WithFormField as radio_WithFormField } from '@/components/ui/radio.stories';
+import { default as sectionAccordionMeta, Default as sectionAccordion_Default, Group as sectionAccordion_Group, ArbitraryContent as sectionAccordion_ArbitraryContent } from '@/components/ui/section-accordion.stories';
 import { default as sectionToggleMeta, Playground as sectionToggle_Playground, Default as sectionToggle_Default, Collapsed as sectionToggle_Collapsed, Composed as sectionToggle_Composed } from '@/components/ui/section-toggle.stories';
 import { default as sectionMeta, Playground as section_Playground, Default as section_Default, WithCustomHeaderWidth as section_WithCustomHeaderWidth, Composed as section_Composed } from '@/components/ui/section.stories';
 import { default as selectMeta, Playground as select_Playground, Demo as select_Demo, WithLabelHint as select_WithLabelHint, WithIcons as select_WithIcons, Sizes as select_Sizes, WithCountryFlags as select_WithCountryFlags, WithUsers as select_WithUsers, Disabled as select_Disabled, Readonly as select_Readonly, Compact as select_Compact, CompactCountry as select_CompactCountry, CompactSizes as select_CompactSizes, InlineCountry as select_InlineCountry, InputWithInlineSelect as select_InputWithInlineSelect, WithInput as select_WithInput, WithInputSizes as select_WithInputSizes } from '@/components/ui/select.stories';
@@ -723,6 +724,7 @@ export const storyRegistry: Record<string, {
     stories: {
     'Playground': progressBar_Playground,
     'Color': progressBar_Color,
+    'WithAnimatedDot': progressBar_WithAnimatedDot,
     'WithLabel': progressBar_WithLabel,
     'DataStorage': progressBar_DataStorage,
     'Indeterminate': progressBar_Indeterminate,
@@ -788,6 +790,14 @@ export const storyRegistry: Record<string, {
     'WithLabel': radio_WithLabel,
     'WithLabelExtended': radio_WithLabelExtended,
     'WithFormField': radio_WithFormField
+    }
+  },
+  'section-accordion': {
+    meta: sectionAccordionMeta,
+    stories: {
+    'Default': sectionAccordion_Default,
+    'Group': sectionAccordion_Group,
+    'ArbitraryContent': sectionAccordion_ArbitraryContent
     }
   },
   'section-toggle': {

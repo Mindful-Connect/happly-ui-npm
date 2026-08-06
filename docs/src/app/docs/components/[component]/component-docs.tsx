@@ -70,7 +70,12 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
       title: example.title,
       level: 4 as const,
     }));
-    inputChildren.push({ id: 'examples', title: 'Examples', level: 3, children: exampleChildren });
+    inputChildren.push({
+      id: 'examples',
+      title: 'Examples',
+      level: 3,
+      children: exampleChildren,
+    });
   }
 
   if (docs?.api && docs.api.length > 0) {
@@ -251,12 +256,23 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
                 <h2 id='examples'>Examples</h2>
                 {docs.examples.map((example, index) => (
                   <div key={index} className='mb-8'>
-                    <h3 id={`example-${slugify(example.title)}`} className='scroll-mt-24'>{example.title}</h3>
+                    <h3
+                      id={`example-${slugify(example.title)}`}
+                      className='scroll-mt-24'
+                    >
+                      {example.title}
+                    </h3>
                     {example.description && <p>{example.description}</p>}
                     {example.stories?.length ? (
-                      <StoryPreview componentName={name} storyNames={example.stories} previewClassName={previewClassName} />
+                      <StoryPreview
+                        componentName={name}
+                        storyNames={example.stories}
+                        previewClassName={previewClassName}
+                      />
                     ) : null}
-                    {example.code && <Fence language='tsx'>{example.code}</Fence>}
+                    {example.code && (
+                      <Fence language='tsx'>{example.code}</Fence>
+                    )}
                   </div>
                 ))}
                 <hr />
@@ -362,7 +378,10 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
                               <p>{example.description}</p>
                             )}
                             {example.stories?.length ? (
-                              <StoryPreview componentName='phone-input' storyNames={example.stories} />
+                              <StoryPreview
+                                componentName='phone-input'
+                                storyNames={example.stories}
+                              />
                             ) : null}
                             <Fence language='tsx'>{example.code}</Fence>
                           </div>
@@ -477,7 +496,10 @@ export function ComponentDocs({ component }: ComponentDocsProps) {
                                 <p>{example.description}</p>
                               )}
                               {example.stories?.length ? (
-                                <StoryPreview componentName='currency-input' storyNames={example.stories} />
+                                <StoryPreview
+                                  componentName='currency-input'
+                                  storyNames={example.stories}
+                                />
                               ) : null}
                               <Fence language='tsx'>{example.code}</Fence>
                             </div>

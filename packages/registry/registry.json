@@ -406,6 +406,12 @@
       "description": "A two-column section layout with a title/description header on the left and content area on the right. Uses namespace exports: Section.Root, Section.Header, Section.Title, Section.Description, Section.Content, Section.Composed (composed)."
     },
     {
+      "name": "section-accordion",
+      "type": "registry:ui",
+      "title": "Section Accordion",
+      "description": "A sectioned accordion where each section has a title, a description, and arbitrary content. Only one section opens at a time; sections can be disabled. Includes a composed Section Accordion.Group. Built on Radix Accordion."
+    },
+    {
       "name": "section-toggle",
       "type": "registry:ui",
       "title": "Section Toggle",

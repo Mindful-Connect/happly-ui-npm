@@ -36,8 +36,7 @@ function main() {
   const componentLinks = registry.items
     .filter(
       (item) =>
-        item.type === 'registry:ui' &&
-        item.name !== 'avatar-empty-icons'
+        item.type === 'registry:ui' && item.name !== 'avatar-empty-icons'
     )
     .map((item) => ({
       title: item.title,
@@ -58,8 +57,7 @@ function main() {
   // Filter context libraries and generate navigation links
   const contextLinks = registry.items
     .filter(
-      (item) =>
-        item.type === 'registry:lib' && item.name.endsWith('-context')
+      (item) => item.type === 'registry:lib' && item.name.endsWith('-context')
     )
     .map((item) => ({
       title: item.title,
@@ -113,12 +111,7 @@ function main() {
     'tab-menu-horizontal',
   ];
 
-  const FEEDBACK_COMPONENTS = [
-    'alert',
-    'empty-state',
-    'loader',
-    'tooltip',
-  ];
+  const FEEDBACK_COMPONENTS = ['alert', 'empty-state', 'loader', 'tooltip'];
 
   const OVERLAY_COMPONENTS = [
     'command-menu',
@@ -166,25 +159,31 @@ function main() {
     'logo-upload',
   ];
 
-  const PROVIDER_COMPONENTS = [
-    'theme-provider',
-  ];
+  const PROVIDER_COMPONENTS = ['theme-provider'];
 
-  const SECTION_COMPONENTS = [
-    'section',
-    'section-toggle',
-  ];
+  const SECTION_COMPONENTS = ['section', 'section-toggle'];
 
-  const CARD_COMPONENTS = [
-    'info-card',
-    'promotional-card',
-  ];
+  const CARD_COMPONENTS = ['info-card', 'promotional-card'];
 
   const COMMUNICATION_COMPONENTS = [
     'chat',
   ];
 
-  const GROUPED_COMPONENTS = [...ACTION_COMPONENTS, ...DISPLAYING_DATA_COMPONENTS, ...NAVIGATION_COMPONENTS, ...LAYOUT_COMPONENTS, ...FEEDBACK_COMPONENTS, ...OVERLAY_COMPONENTS, ...FORM_COMPONENTS, ...COMPOSED_INPUT_COMPONENTS, ...FILE_UPLOAD_COMPONENTS, ...PROVIDER_COMPONENTS, ...SECTION_COMPONENTS, ...CARD_COMPONENTS, ...COMMUNICATION_COMPONENTS];
+  const GROUPED_COMPONENTS = [
+    ...ACTION_COMPONENTS,
+    ...DISPLAYING_DATA_COMPONENTS,
+    ...NAVIGATION_COMPONENTS,
+    ...LAYOUT_COMPONENTS,
+    ...FEEDBACK_COMPONENTS,
+    ...OVERLAY_COMPONENTS,
+    ...FORM_COMPONENTS,
+    ...COMPOSED_INPUT_COMPONENTS,
+    ...FILE_UPLOAD_COMPONENTS,
+    ...PROVIDER_COMPONENTS,
+    ...SECTION_COMPONENTS,
+    ...CARD_COMPONENTS, 
+    ...COMMUNICATION_COMPONENTS,
+  ];
 
   const mainLinks = componentLinks
     .filter((item) => !GROUPED_COMPONENTS.includes(item.name))
