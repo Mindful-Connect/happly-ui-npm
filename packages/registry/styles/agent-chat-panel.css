@@ -1,0 +1,45 @@
+/* Per-word HARD CUT: the word holds at opacity 0 for its whole duration and snaps
+   to 1 at the end — that is what steps(1, end) buys. The line builds as a
+   staircase of discrete words rather than a soft fade. Opacity only: no blur, no
+   travel, no scale. */
+@keyframes word-cut {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.word-cut {
+  display: inline-block;
+  opacity: 0;
+  will-change: opacity;
+  animation: word-cut var(--word-dur, 0.14s) steps(1, end) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .word-cut {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Typing dots — each lights in turn, looping until the state changes. */
+@keyframes dot-blink {
+  0%,
+  70%,
+  100% {
+    opacity: 0.15;
+  }
+  35% {
+    opacity: 1;
+  }
+}
+.dot-blink {
+  animation: dot-blink 1.4s ease-in-out infinite both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dot-blink {
+    animation: none;
+    opacity: 0.6;
+  }
+}

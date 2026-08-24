@@ -5,6 +5,9 @@
   "title": "Agent Chat Panel",
   "description": "The member-facing agent conversation: streamed replies, narrated steps, host-supplied UI blocks, proposed follow-ups and destructive-action approvals. Presentational only — pair it with @happly/agent-client for the stream.",
   "dependencies": ["@remixicon/react", "framer-motion", "@happly/agent-client"],
-  "registryDependencies": [],
-  "files": [{ "path": "ui/agent-chat-panel.tsx", "type": "registry:ui" }]
+  "registryDependencies": ["happly-ui-utils"],
+  "files": [
+    { "path": "ui/agent-chat-panel.tsx", "type": "registry:ui" },
+    { "path": "styles/agent-chat-panel.css", "type": "registry:style" }
+  ]
 }

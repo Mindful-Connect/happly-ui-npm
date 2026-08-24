@@ -7,3 +7,4 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @import './styles/markdown-editor.css';
+@import './styles/agent-chat-panel.css';
