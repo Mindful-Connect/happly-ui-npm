@@ -43,3 +43,26 @@
     opacity: 0.6;
   }
 }
+
+/* Composer scrollbar (visual-parity spec §14) — applied to the textarea, but
+   until now had no rule anywhere in this repo, so it did nothing. */
+.scrollbar-minimal::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.scrollbar-minimal::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-minimal::-webkit-scrollbar-thumb {
+  background-color: #eceef2; /* lighter than the card border (#e1e4ea) */
+  border-radius: 9999px;
+  /* Inset the painted thumb: 2px clear top/right/bottom, 4px left. The 10px rail
+     minus a 4px left + 2px right border leaves a 4px-wide thumb. */
+  border-style: solid;
+  border-color: transparent;
+  border-width: 2px 2px 2px 4px;
+  background-clip: padding-box;
+}
+.scrollbar-minimal::-webkit-scrollbar-thumb:hover {
+  background-color: #dce0e6;
+}

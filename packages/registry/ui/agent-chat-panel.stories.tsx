@@ -106,3 +106,70 @@ export const ComposerBusy: StoryObj<typeof AgentChatPanel> = {
     pendingQuery: 'Summarize this page for me',
   },
 };
+
+export const Thinking: StoryObj<typeof AgentChatPanel> = {
+  args: {
+    ...base,
+    busy: true,
+    turns: [{ id: 'u1', role: 'user', text: 'Show me grants in Montréal' }],
+    steps: [
+      { id: 's1', label: 'Reading your business profile', status: 'done' },
+      { id: 's2', label: 'Searching programs', status: 'active' },
+    ],
+  },
+};
+
+export const WithBlockAndSuggestions: StoryObj<typeof AgentChatPanel> = {
+  args: {
+    ...base,
+    turns: [
+      { id: 'u1', role: 'user', text: 'Show me grants in Montréal' },
+      {
+        id: 'a1',
+        role: 'assistant',
+        text: 'Found 8 that fit. Want me to narrow it down?',
+      },
+    ],
+    blocks: [
+      {
+        id: 'b1',
+        name: 'opportunity-summary',
+        data: { count: 8, funding: 3650000 },
+      },
+    ],
+    blockComponents: {
+      'opportunity-summary': ({ data }: { data: never }) => (
+        <div className='rounded-10 border-stroke-soft-200 text-label-sm border p-3'>
+          {(data as { count: number }).count} opportunities
+        </div>
+      ),
+    },
+    suggestions: [
+      { label: 'Under $50K', prompt: 'Only ones under $50K' },
+      { label: 'Closing soon', prompt: 'Which are closing soon?' },
+    ],
+  },
+};
+
+export const Error: StoryObj<typeof AgentChatPanel> = {
+  args: {
+    ...base,
+    turns: [
+      { id: 'u1', role: 'user', text: 'Show me grants in Montréal' },
+      {
+        id: 'a1',
+        role: 'assistant',
+        text: 'Something went wrong reaching the assistant. Try again.',
+      },
+    ],
+  },
+};
+
+// The failure mode that must never break the thread.
+export const UnknownBlock: StoryObj<typeof AgentChatPanel> = {
+  args: {
+    ...base,
+    turns: [{ id: 'a1', role: 'assistant', text: 'Here is what I found.' }],
+    blocks: [{ id: 'b1', name: 'block-from-the-future' as never, data: {} }],
+  },
+};

@@ -1,8 +1,13 @@
 'use client';
 
 import * as React from 'react';
-import { RiArrowUpLine, RiStopFill } from '@remixicon/react';
-import { motion, useReducedMotion } from 'framer-motion';
+import {
+  RiArrowUpLine,
+  RiStopFill,
+  RiLoader2Fill,
+  RiCheckboxCircleFill,
+} from '@remixicon/react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import type { BlockName } from '@happly/agent-client';
 
 import { cn } from '@/lib/happly-ui-utils';
@@ -147,10 +152,136 @@ function ComposerSparkle({ className }: { className?: string }) {
   );
 }
 
+// Per-word reveal timing (visual-parity spec §5) — matches the `.word-cut`
+// keyframe's own duration and the stagger baked into its custom property.
+const WORD_CUT_DUR_S = 0.14;
+const WORD_STAGGER_S = 0.056;
+
+function wordsOf(text: string): string[] {
+  const trimmed = text.trim();
+  return trimmed === '' ? [] : trimmed.split(/\s+/);
+}
+
+// How long a text of `wordCount` words takes to finish revealing. A hard cut
+// means the last word only lands at the end of ITS OWN duration, so the total
+// is every stagger before it plus one full cut — not just the staggers.
+function wordRevealSeconds(wordCount: number): number {
+  return WORD_CUT_DUR_S + Math.max(0, wordCount - 1) * WORD_STAGGER_S;
+}
+
+/**
+ * Turn text, revealed word by word via the `.word-cut` CSS keyframe
+ * (visual-parity spec §5). `fresh` gates the whole effect: a turn that has
+ * already played its reveal — or any visitor under `prefers-reduced-motion`
+ * — renders flat, with no spans, so remounting the thread (e.g. the host
+ * switching tabs and back) never retypes history.
+ */
+function RevealedText({
+  text,
+  className,
+  fresh,
+}: {
+  readonly text: string;
+  readonly className?: string;
+  readonly fresh: boolean;
+}) {
+  const reduceMotion = useReducedMotion();
+  if (reduceMotion || !fresh) {
+    return <p className={className}>{text}</p>;
+  }
+  const words = wordsOf(text);
+  return (
+    <p className={className}>
+      {words.map((word, i) => (
+        <React.Fragment key={i}>
+          <span
+            className='word-cut'
+            style={{
+              animationDelay: `${i * WORD_STAGGER_S}s`,
+              ['--word-dur' as string]: `${WORD_CUT_DUR_S}s`,
+            }}
+          >
+            {word}
+          </span>
+          {i < words.length - 1 ? ' ' : ''}
+        </React.Fragment>
+      ))}
+    </p>
+  );
+}
+
+// Looping typing dots for a casual reply that hasn't produced step data yet
+// (visual-parity spec §7). `.dot-blink`'s own reduced-motion query holds it
+// at a static, non-animating opacity.
+function TypingIndicator() {
+  return (
+    <span
+      className='inline-flex items-center gap-1 py-1'
+      aria-label='H is typing'
+    >
+      {[0, 200, 400].map((d) => (
+        <span
+          key={d}
+          className='dot-blink bg-text-soft-400 inline-block h-1.5 w-1.5 rounded-full'
+          style={{ animationDelay: `${d}ms` }}
+        />
+      ))}
+    </span>
+  );
+}
+
+/**
+ * The "thinking" step box: one row visible at a time, cross-faded (visual-
+ * parity spec §6). The prototype rotates canned strings on a 1100ms timer;
+ * this shows whichever step is currently active — or the last one once
+ * everything's done — so the SAME box now advances on real `step` events
+ * instead. `steps` is paced upstream by `StepTimeline` (`@happly/agent-
+ * client`), which is what keeps a step that resolves in a few ms from
+ * flashing illegibly.
+ */
+function StepBox({ steps }: { readonly steps: readonly AgentStep[] }) {
+  const reduceMotion = useReducedMotion();
+  const current =
+    steps.find((s) => s.status === 'active') ?? steps[steps.length - 1];
+  if (!current) return null;
+  const Icon = current.status === 'done' ? RiCheckboxCircleFill : RiLoader2Fill;
+  return (
+    <div className='rounded-10 border-stroke-soft-200 bg-bg-white-0 text-text-sub-600 shadow-regular-xs relative z-[1] flex h-10 items-center gap-1.5 overflow-hidden border-[0.5px] px-3'>
+      <AnimatePresence mode='wait' initial={false}>
+        <motion.div
+          key={current.id}
+          initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -6 }}
+          transition={
+            reduceMotion
+              ? { duration: 0.15 }
+              : { duration: 0.28, ease: 'easeOut' }
+          }
+          className='flex min-w-0 items-center gap-1.5'
+        >
+          <Icon
+            className={cn(
+              'size-4 shrink-0',
+              current.status === 'active' && 'animate-spin'
+            )}
+          />
+          <span className='text-label-xs truncate font-medium'>
+            {current.label}
+          </span>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export function AgentChatPanel({
   turns,
+  steps,
   blocks,
+  suggestions,
   quickStarts,
+  blockComponents,
   emptyState,
   busy = false,
   pendingQuery,
@@ -176,6 +307,47 @@ export function AgentChatPanel({
       onBlock?.(block.name, block.data);
     }
   }, [blocks, onBlock]);
+
+  // Turns whose word-cut reveal has already finished playing (visual-parity
+  // spec §5) — state, so the flip from spans to flat text is a normal render
+  // rather than a ref read during render (refs are for effects/handlers,
+  // never render itself). It's read on every render, but by the time a turn
+  // is actually added here its spans already sit at opacity 1 (the
+  // keyframe's `both` fill mode holds them there), so flattening changes no
+  // pixel — what it changes is the NEXT time this turn is mounted fresh, in
+  // particular after a host remount (a tab switch), which must not replay
+  // the animation from scratch.
+  //
+  // Settled after a delay rather than immediately on arrival: marking a turn
+  // revealed the instant it appears would let some unrelated re-render
+  // (another turn arriving, `busy` flipping) strip its animation classes
+  // mid-flight.
+  const [revealedTurns, setRevealedTurns] = React.useState<ReadonlySet<string>>(
+    () => new Set()
+  );
+  // Bookkeeping only, never read during render: the word count each turn was
+  // last scheduled against, so growing text (a mid-stream turn) reschedules a
+  // longer settle instead of settling early, but a turn whose text hasn't
+  // changed doesn't get a fresh timer on every unrelated re-render.
+  const scheduledLengthsRef = React.useRef(new Map<string, number>());
+  React.useEffect(() => {
+    const timers: number[] = [];
+    for (const t of turns) {
+      if (t.role !== 'assistant') continue;
+      const wordCount = wordsOf(t.text).length;
+      if (scheduledLengthsRef.current.get(t.id) === wordCount) continue;
+      scheduledLengthsRef.current.set(t.id, wordCount);
+      const settleMs = (wordRevealSeconds(wordCount) + 0.25) * 1000;
+      timers.push(
+        window.setTimeout(() => {
+          setRevealedTurns((prev) =>
+            prev.has(t.id) ? prev : new Set(prev).add(t.id)
+          );
+        }, settleMs)
+      );
+    }
+    return () => timers.forEach((id) => window.clearTimeout(id));
+  }, [turns]);
 
   // Composer auto-grows with its content up to ~2 lines, then scrolls. Once it
   // wraps past one line it reflows ChatGPT-style: the textarea takes the full
@@ -207,8 +379,6 @@ export function AgentChatPanel({
   return (
     <div className='flex h-full flex-col'>
       <div className='flex-1 overflow-y-auto px-6 py-4'>
-        {/* Turn rendering arrives in a later task; until then this area holds
-            only the idle content below. */}
         <motion.div
           initial={false}
           animate={{
@@ -243,6 +413,102 @@ export function AgentChatPanel({
             </div>
           )}
         </motion.div>
+
+        <div className='flex flex-col gap-4'>
+          {turns.map((turn) => {
+            const entrance = {
+              initial: reduceMotion ? { opacity: 0 } : { opacity: 0, y: 2 },
+              animate: { opacity: 1, y: 0 },
+              transition: reduceMotion
+                ? { duration: 0.2 }
+                : { type: 'spring' as const, bounce: 0, duration: 0.4 },
+            };
+            if (turn.role === 'user') {
+              // The prototype pairs this bubble with an avatar column; this
+              // panel has no avatar data to draw from (the props carry no
+              // member identity), so the bubble alone — right-aligned, capped
+              // so a long message can't run the full width of the panel —
+              // carries the visual weight instead.
+              return (
+                <motion.div
+                  key={turn.id}
+                  {...entrance}
+                  className='flex justify-end'
+                >
+                  <div className='bg-primary-base text-paragraph-sm text-static-white max-w-[85%] rounded-[16px] rounded-br-[6px] px-3 py-2.5 leading-5'>
+                    {turn.text}
+                  </div>
+                </motion.div>
+              );
+            }
+            return (
+              <motion.div key={turn.id} {...entrance}>
+                {/* Model-authored text, rendered as TEXT. Never
+                    dangerouslySetInnerHTML. */}
+                <RevealedText
+                  text={turn.text}
+                  fresh={!revealedTurns.has(turn.id)}
+                  className='text-paragraph-sm text-text-strong-950 leading-[1.5]'
+                />
+              </motion.div>
+            );
+          })}
+
+          {busy && (
+            <motion.div
+              initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 2 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={
+                reduceMotion
+                  ? { duration: 0.2 }
+                  : { type: 'spring', bounce: 0, duration: 0.4 }
+              }
+            >
+              {steps.length > 0 ? (
+                <StepBox steps={steps} />
+              ) : (
+                <TypingIndicator />
+              )}
+            </motion.div>
+          )}
+
+          {blocks.map((block) => {
+            const Component = blockComponents[block.name];
+            // An unknown block degrades to nothing: an older panel meeting a
+            // newer server loses a card, never the conversation.
+            if (!Component) return null;
+            return <Component key={block.id} data={block.data as never} />;
+          })}
+
+          {/* Follow-up suggestions — identical pill styling to the
+              quick-start chips above (spec §4): the prototype treats entry
+              shortcuts and follow-ups as the same affordance. Held back while
+              busy so they don't invite a second request over the one still
+              in flight. */}
+          {!busy && suggestions.length > 0 && (
+            <motion.div
+              initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={
+                reduceMotion
+                  ? { duration: 0.2 }
+                  : { duration: 0.3, delay: 0.35, ease: 'easeOut' }
+              }
+              className='flex flex-col items-start gap-2'
+            >
+              {suggestions.map((s) => (
+                <button
+                  key={s.prompt}
+                  type='button'
+                  onClick={() => onSuggestion(s.prompt)}
+                  className='bg-bg-white-0 text-label-xs shadow-regular-xs hover:bg-bg-weak-50 flex items-center gap-[3px] rounded-full border border-[rgba(14,18,27,0.1)] py-1.5 pr-2 pl-1.5 font-medium text-[#717784] transition-colors'
+                >
+                  {s.label}
+                </button>
+              ))}
+            </motion.div>
+          )}
+        </div>
       </div>
       <div className='flex shrink-0 flex-col gap-3 p-3'>
         {/* Composer is local rather than Chat.Input: that component carries attachment and
