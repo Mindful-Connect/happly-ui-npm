@@ -3,8 +3,8 @@
   "name": "agent-chat-panel",
   "type": "registry:ui",
   "title": "Agent Chat Panel",
-  "description": "The member-facing agent conversation: streamed replies, narrated steps, host-supplied UI blocks, proposed follow-ups and destructive-action approvals. Presentational only — pair it with @happly/agent-client for the stream.",
-  "dependencies": ["@remixicon/react", "framer-motion", "@happly/agent-client"],
+  "description": "The member-facing agent conversation: streamed replies, narrated steps, host-supplied UI blocks, proposed follow-ups and destructive-action approvals. Presentational only — pair it with @mindful-connect/agent-client for the stream.",
+  "dependencies": ["@remixicon/react", "framer-motion", "@mindful-connect/agent-client"],
   "registryDependencies": ["happly-ui-utils"],
   "files": [
     { "path": "ui/agent-chat-panel.tsx", "type": "registry:ui" },

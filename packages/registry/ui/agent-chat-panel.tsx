@@ -8,7 +8,7 @@ import {
   RiCheckboxCircleFill,
 } from '@remixicon/react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import type { BlockName } from '@happly/agent-client';
+import type { BlockName } from '@mindful-connect/agent-client';
 
 import { cn } from '@/lib/happly-ui-utils';
 
