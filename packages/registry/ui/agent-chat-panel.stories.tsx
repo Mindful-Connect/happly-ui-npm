@@ -151,6 +151,25 @@ export const WithBlockAndSuggestions: StoryObj<typeof AgentChatPanel> = {
   },
 };
 
+export const AwaitingApproval: StoryObj<typeof AgentChatPanel> = {
+  args: {
+    ...base,
+    turns: [
+      { id: 't1', role: 'user', text: 'Set my organisation name to "Dinesh Inc".' },
+      {
+        id: 't2',
+        role: 'assistant',
+        text: 'I can make that change — it needs your approval first.',
+      },
+    ],
+    approval: {
+      approvalId: 'ap-1',
+      toolName: 'update_business_profile',
+      summary: 'Update business profile',
+    },
+  },
+};
+
 export const Error: StoryObj<typeof AgentChatPanel> = {
   args: {
     ...base,

@@ -275,6 +275,57 @@ function StepBox({ steps }: { readonly steps: readonly AgentStep[] }) {
   );
 }
 
+/**
+ * The consent gate (HW-740 B3). A destructive tool call arrives here instead of
+ * executing; nothing happens until the member decides. The card shows the tool
+ * in plain words and the exact change it will make — the member approves what
+ * will actually run, not a paraphrase of it.
+ */
+function ApprovalCard({
+  approval,
+  onApprove,
+}: {
+  readonly approval: AgentApproval;
+  readonly onApprove: (approvalId: string, approved: boolean) => void;
+}) {
+  const reduceMotion = useReducedMotion();
+  return (
+    <motion.div
+      initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 4 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={
+        reduceMotion ? { duration: 0.2 } : { duration: 0.3, ease: 'easeOut' }
+      }
+      className='rounded-10 border-stroke-soft-200 bg-bg-white-0 shadow-regular-xs flex flex-col gap-3 border-[0.5px] p-4'
+    >
+      <div className='flex flex-col gap-1'>
+        <span className='text-label-xs text-text-soft-400 font-medium tracking-wide uppercase'>
+          Approval needed
+        </span>
+        <span className='text-label-sm text-text-strong-950 font-medium'>
+          {approval.summary}
+        </span>
+      </div>
+      <div className='flex items-center gap-2'>
+        <button
+          type='button'
+          onClick={() => onApprove(approval.approvalId, true)}
+          className='bg-primary-base text-label-xs text-static-white hover:opacity-90 rounded-lg px-3 py-1.5 font-medium transition-opacity'
+        >
+          Approve
+        </button>
+        <button
+          type='button'
+          onClick={() => onApprove(approval.approvalId, false)}
+          className='bg-bg-white-0 text-label-xs shadow-regular-xs hover:bg-bg-weak-50 rounded-lg border border-[rgba(14,18,27,0.1)] px-3 py-1.5 font-medium text-[#717784] transition-colors'
+        >
+          Deny
+        </button>
+      </div>
+    </motion.div>
+  );
+}
+
 export function AgentChatPanel({
   turns,
   steps,
@@ -283,10 +334,12 @@ export function AgentChatPanel({
   quickStarts,
   blockComponents,
   emptyState,
+  approval,
   busy = false,
   pendingQuery,
   onSend,
   onSuggestion,
+  onApprove,
   onBlock,
 }: AgentChatPanelProps) {
   const [draft, setDraft] = React.useState('');
@@ -479,6 +532,13 @@ export function AgentChatPanel({
             if (!Component) return null;
             return <Component key={block.id} data={block.data as never} />;
           })}
+
+          {/* A pending approval renders even while the turn's tail is still
+              revealing: the decision is the point, and hiding it behind the
+              pacing would read as the agent stalling. */}
+          {approval && (
+            <ApprovalCard approval={approval} onApprove={onApprove} />
+          )}
 
           {/* Follow-up suggestions — identical pill styling to the
               quick-start chips above (spec §4): the prototype treats entry

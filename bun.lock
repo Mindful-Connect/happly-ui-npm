@@ -85,7 +85,7 @@
     "packages/registry": {
       "name": "@happlyui/registry",
       "dependencies": {
-        "@mindful-connect/agent-client": "^0.1.0",
+        "@mindful-connect/agent-client": "^0.2.0",
         "@radix-ui/react-accordion": "^1.2.11",
         "@radix-ui/react-checkbox": "^1.3.3",
         "@radix-ui/react-dialog": "^1.1.15",
@@ -284,7 +284,7 @@
 
     "@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.31", "", { "dependencies": { "@jridgewell/resolve-uri": "^3.1.0", "@jridgewell/sourcemap-codec": "^1.4.14" } }, "sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw=="],
 
-    "@mindful-connect/agent-client": ["@mindful-connect/agent-client@0.1.0", "https://npm.pkg.github.com/download/@mindful-connect/agent-client/0.1.0/3710cfb5276b2e3a8519311a32830173b5c96136", { "peerDependencies": { "zod": "^3.24.1" } }, "sha512-zgjlOhmgwSDmv/2I1xNNGWuKYfA2Hoxvh341ee6FgkPk/PEDjhkG1/MyenqUPwCbdvmIn4EtCoe+hWvN2ypOsQ=="],
+    "@mindful-connect/agent-client": ["@mindful-connect/agent-client@0.2.0", "https://npm.pkg.github.com/download/@mindful-connect/agent-client/0.2.0/64622dd8bda3720e6f3d87a374a1d890879c3728", { "peerDependencies": { "react": ">=18", "zod": "^3.24.1" } }, "sha512-4+UFmxANDjGv5bbgTyHZsIWn8/Rg/TkXIrq87GjYJfE5xD9vhRTAP7HehK1D0t+ofB0RpM/9+5OrSlr5inTWXA=="],
 
     "@nodelib/fs.scandir": ["@nodelib/fs.scandir@2.1.5", "", { "dependencies": { "@nodelib/fs.stat": "2.0.5", "run-parallel": "^1.1.9" } }, "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="],
 
