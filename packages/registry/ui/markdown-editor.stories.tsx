@@ -13,7 +13,7 @@ export default { title: 'Form/Markdown Editor' };
 export const Default = {
   render: () => (
     <div className='w-full min-w-[560px]'>
-      <MarkdownEditor.Composed placeholder='Describe your ideal successor and transition structure...' />
+      <MarkdownEditor.Composed placeholder='Describe your ideal successor and transition structure…' />
     </div>
   ),
 };
@@ -27,7 +27,7 @@ export const SingleLanguage = {
     <div className='w-full min-w-[560px]'>
       <MarkdownEditor.Composed
         toggleItems={false}
-        placeholder='Write in a single language...'
+        placeholder='Write in a single language…'
       />
     </div>
   ),
@@ -46,7 +46,7 @@ function ControlledMultiRender() {
   return (
     <div className='w-full min-w-[560px] space-y-4'>
       <MarkdownEditor.Composed
-        placeholder='Write here...'
+        placeholder='Write here…'
         value={values}
         onChange={setValues}
       />
@@ -69,7 +69,7 @@ export const CustomToggle = {
   render: () => (
     <div className='w-full min-w-[560px]'>
       <MarkdownEditor.Composed
-        placeholder='Editor with custom toggle items...'
+        placeholder='Editor with custom toggle items…'
         toggleItems={[
           { value: 'en', label: 'EN' },
           { value: 'fr', label: 'FR' },
@@ -89,7 +89,7 @@ export const FlagToggle = {
   render: () => (
     <div className='w-full min-w-[560px]'>
       <MarkdownEditor.Composed
-        placeholder='Editor with flag-only language toggle...'
+        placeholder='Editor with flag-only language toggle…'
         toggleItems={MarkdownEditor.DEFAULT_FLAG_TOGGLE_ITEMS}
         defaultToggleValue='en'
       />
@@ -143,7 +143,7 @@ function CompoundRender() {
           ref={textareaRef}
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          placeholder='Write something with custom toolbar...'
+          placeholder='Write something with custom toolbar…'
         />
       </MarkdownEditor.Root>
     </div>
@@ -162,14 +162,14 @@ export const WithFormField = {
   render: () => (
     <div className='w-full min-w-[560px]'>
       <FormField.Root
-        label='Business Description'
+        label='Business description'
         htmlFor='description'
         required
         hint='Describe your business in detail.'
       >
         <MarkdownEditor.Composed
           id='description'
-          placeholder='Describe your ideal successor and transition structure...'
+          placeholder='Describe your ideal successor and transition structure…'
         />
       </FormField.Root>
     </div>
@@ -180,15 +180,15 @@ export const WithError = {
   render: () => (
     <div className='w-full min-w-[560px]'>
       <FormField.Root
-        label='Business Description'
+        label='Business description'
         htmlFor='description'
         required
-        error='This field is required.'
+        error='Add a description to continue.'
       >
         <MarkdownEditor.Composed
           id='description'
           hasError
-          placeholder='Describe your ideal successor and transition structure...'
+          placeholder='Describe your ideal successor and transition structure…'
         />
       </FormField.Root>
     </div>
@@ -199,14 +199,14 @@ export const Disabled = {
   render: () => (
     <div className='w-full min-w-[560px]'>
       <FormField.Root
-        label='Business Description'
+        label='Business description'
         htmlFor='description'
         disabled
       >
         <MarkdownEditor.Composed
           id='description'
           disabled
-          placeholder='Describe your ideal successor and transition structure...'
+          placeholder='Describe your ideal successor and transition structure…'
         />
       </FormField.Root>
     </div>
@@ -253,7 +253,7 @@ Ceci est du texte en **gras** et en _italique_.
     <div className='w-full min-w-[560px]'>
       <MarkdownEditor.Composed
         defaultValue={defaultValues}
-        placeholder='Start editing...'
+        placeholder='Start editing…'
       />
     </div>
   );

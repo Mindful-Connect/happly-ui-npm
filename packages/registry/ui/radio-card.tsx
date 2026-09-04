@@ -17,7 +17,8 @@ const radioCardVariants = tv({
       'group/card relative flex w-full cursor-pointer items-center gap-3.5 rounded-xl p-4',
       'bg-bg-white-0 shadow-regular-xs',
       'ring-1 ring-inset ring-stroke-soft-200',
-      'transition duration-200 ease-out',
+      // ring + shadow both compile to box-shadow in Tailwind v4
+      'transition-[background-color,box-shadow] duration-150 ease-out',
       // hover
       'hover:bg-bg-weak-50 hover:ring-transparent',
       // keyboard focus only — avoid sticky ring after mouse-click selection
@@ -31,15 +32,15 @@ const radioCardVariants = tv({
     ],
     content: 'flex min-w-0 flex-1',
     title: [
-      'text-label-sm text-text-strong-950',
-      'transition duration-200 ease-out',
+      'text-label-sm text-text-strong-950 text-balance break-words',
+      'transition-[color] duration-150 ease-out',
       // disabled — stacked group-data variants would compile to nested groups
       'group-[[data-disabled][data-state=unchecked]]/card:text-text-disabled-300',
       'group-[[data-disabled][data-state=checked]]/card:text-text-sub-600',
     ],
     description: [
-      'text-paragraph-sm text-text-sub-600',
-      'transition duration-200 ease-out',
+      'text-paragraph-sm text-text-sub-600 text-pretty break-words',
+      'transition-[color] duration-150 ease-out',
       // disabled — checked keeps the base sub-600
       'group-[[data-disabled][data-state=unchecked]]/card:text-text-disabled-300',
     ],
@@ -175,6 +176,11 @@ const RadioCardItem = React.forwardRef<HTMLLabelElement, RadioCardItemProps>(
     const { item } = radioCardVariants({ hasError });
     const isChecked = groupValue === value;
     const resolvedDisabled = disabled ?? groupDisabled;
+    // <label> does not reliably name a role="radio" button, so the title and
+    // description are wired to the indicator explicitly.
+    const contentId = React.useId();
+    const titleId = `${contentId}-title`;
+    const descriptionId = `${contentId}-description`;
 
     const handleClick = React.useCallback(
       (e: React.MouseEvent<HTMLLabelElement>) => {
@@ -188,7 +194,9 @@ const RadioCardItem = React.forwardRef<HTMLLabelElement, RadioCardItemProps>(
     );
 
     return (
-      <RadioCardItemContext.Provider value={{ value, disabled: resolvedDisabled }}>
+      <RadioCardItemContext.Provider
+        value={{ value, disabled: resolvedDisabled, titleId, descriptionId }}
+      >
         <label
           ref={forwardedRef}
           className={item({ class: className })}
@@ -208,6 +216,8 @@ RadioCardItem.displayName = 'RadioCardItem';
 type RadioCardItemContextType = {
   value: string;
   disabled?: boolean;
+  titleId?: string;
+  descriptionId?: string;
 };
 
 const RadioCardItemContext = React.createContext<RadioCardItemContextType>({
@@ -224,18 +234,32 @@ type RadioCardIndicatorProps = Omit<
 const RadioCardIndicator = React.forwardRef<
   React.ComponentRef<typeof RadioGroupPrimitive.Item>,
   RadioCardIndicatorProps
->((props, forwardedRef) => {
-  const { value, disabled } = React.useContext(RadioCardItemContext);
+>(
+  (
+    {
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledBy,
+      'aria-describedby': ariaDescribedBy,
+      ...props
+    },
+    forwardedRef
+  ) => {
+    const { value, disabled, titleId, descriptionId } =
+      React.useContext(RadioCardItemContext);
 
-  return (
-    <Radio.Item
-      ref={forwardedRef}
-      value={value}
-      disabled={disabled}
-      {...props}
-    />
-  );
-});
+    return (
+      <Radio.Item
+        ref={forwardedRef}
+        value={value}
+        disabled={disabled}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabel ? undefined : (ariaLabelledBy ?? titleId)}
+        aria-describedby={ariaDescribedBy ?? descriptionId}
+        {...props}
+      />
+    );
+  }
+);
 RadioCardIndicator.displayName = 'RadioCardIndicator';
 
 // ─── Content ──────────────────────────────────────────────
@@ -271,13 +295,15 @@ RadioCardContent.displayName = 'RadioCardContent';
 const RadioCardTitle = React.forwardRef<
   HTMLSpanElement,
   React.ComponentPropsWithoutRef<'span'>
->(({ className, ...rest }, forwardedRef) => {
+>(({ className, id, ...rest }, forwardedRef) => {
   const { hasError } = React.useContext(RadioCardContext);
+  const { titleId } = React.useContext(RadioCardItemContext);
   const { title } = radioCardVariants({ hasError });
 
   return (
     <span
       ref={forwardedRef}
+      id={id ?? titleId}
       className={title({ class: className })}
       {...rest}
     />
@@ -290,13 +316,15 @@ RadioCardTitle.displayName = 'RadioCardTitle';
 const RadioCardDescription = React.forwardRef<
   HTMLParagraphElement,
   React.ComponentPropsWithoutRef<'p'>
->(({ className, ...rest }, forwardedRef) => {
+>(({ className, id, ...rest }, forwardedRef) => {
   const { hasError } = React.useContext(RadioCardContext);
+  const { descriptionId } = React.useContext(RadioCardItemContext);
   const { description } = radioCardVariants({ hasError });
 
   return (
     <p
       ref={forwardedRef}
+      id={id ?? descriptionId}
       className={description({ class: className })}
       {...rest}
     />

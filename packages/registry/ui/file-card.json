@@ -206,12 +206,26 @@
       {
         "name": "FileCard.DownloadButton",
         "description": "A subtle download icon button for downloading files.",
-        "props": []
+        "props": [
+          {
+            "name": "aria-label",
+            "type": "string",
+            "default": "'Download'",
+            "description": "Accessible name for the icon-only button"
+          }
+        ]
       },
       {
         "name": "FileCard.CloseButton",
         "description": "A subtle close (x) button for canceling uploads.",
-        "props": []
+        "props": [
+          {
+            "name": "aria-label",
+            "type": "string",
+            "default": "'Close'",
+            "description": "Accessible name for the icon-only button"
+          }
+        ]
       },
       {
         "name": "FileCard.RetryLink",
@@ -269,7 +283,14 @@
       {
         "name": "FileCard.DeleteButton",
         "description": "A subtle delete bin icon button for removing files.",
-        "props": []
+        "props": [
+          {
+            "name": "aria-label",
+            "type": "string",
+            "default": "'Delete'",
+            "description": "Accessible name for the icon-only button"
+          }
+        ]
       }
     ]
   },

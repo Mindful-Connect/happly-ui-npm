@@ -15,7 +15,7 @@ import { tv, type VariantProps } from '@/lib/tv';
 const STATUS_INDICATOR_ROOT_NAME = 'StatusIndicatorRoot';
 
 export const statusIndicatorVariants = tv({
-  base: 'flex items-center justify-center rounded-full drop-shadow-[0_2px_4px_#1b1c1d0a]',
+  base: 'flex items-center justify-center rounded-full drop-shadow-regular-sm',
   variants: {
     status: {
       verified: 'size-8 rounded-none',
@@ -40,6 +40,22 @@ export const statusIndicatorVariants = tv({
 type StatusIndicatorRootProps = React.HTMLAttributes<HTMLDivElement> &
   VariantProps<typeof statusIndicatorVariants>;
 
+// The dot variants carry their meaning in color alone, so each one gets a
+// text alternative (announced via `role="img"` on the wrapper).
+const STATUS_LABELS: Record<string, string> = {
+  verified: 'Verified',
+  pin: 'Pinned',
+  favorite: 'Favorite',
+  add: 'Add',
+  remove: 'Remove',
+  notification: 'New notification',
+  online: 'Online',
+  offline: 'Offline',
+  busy: 'Busy',
+  away: 'Away',
+  company: 'Company',
+};
+
 const topIcons: Record<string, React.ReactNode> = {
   pin: <RiPushpinFill className='text-text-white-0 size-3.5' />,
   favorite: <RiStarFill className='text-text-white-0 size-3.5' />,
@@ -56,7 +72,7 @@ function VerifiedBadge() {
       />
       <path
         d='M21.9288 7.51457C21.6636 7.51457 21.4092 7.40921 21.2217 7.22167L18.707 4.70696C18.3164 4.31643 17.6833 4.31643 17.2927 4.70696L14.778 7.22167C14.5905 7.40921 14.3361 7.51457 14.0709 7.51457H10.5146C9.96228 7.51457 9.51457 7.96228 9.51457 8.51457V12.0709C9.51457 12.3361 9.40921 12.5905 9.22167 12.778L6.70696 15.2927C6.31643 15.6833 6.31643 16.3164 6.70696 16.707L9.22167 19.2217C9.40921 19.4092 9.51457 19.6636 9.51457 19.9288V23.4851C9.51457 24.0374 9.96228 24.4851 10.5146 24.4851H14.0709C14.3361 24.4851 14.5905 24.5905 14.778 24.778L17.2927 27.2927C17.6833 27.6833 18.3164 27.6833 18.707 27.2927L21.2217 24.778C21.4092 24.5905 21.6636 24.4851 21.9288 24.4851H25.4851C26.0374 24.4851 26.4851 24.0374 26.4851 23.4851V19.9288C26.4851 19.6636 26.5905 19.4092 26.778 19.2217L29.2927 16.707C29.6833 16.3164 29.6833 15.6833 29.2927 15.2927L26.778 12.778C26.5905 12.5905 26.4851 12.3361 26.4851 12.0709V8.51457C26.4851 7.96228 26.0374 7.51457 25.4851 7.51457H21.9288Z'
-        fill='#47C2FF'
+        className='fill-verified-base'
       />
       <path
         d='M23.3737 13.3739L16.6666 20.081L13.2928 16.7073L14.707 15.2931L16.6666 17.2526L21.9595 11.9597L23.3737 13.3739Z'
@@ -79,9 +95,15 @@ const StatusIndicatorRoot = React.forwardRef<
       topIcons[resolvedStatus]
     );
 
+  // Consumer content (e.g. a company logo) carries its own semantics; the
+  // built-in indicators are color-only, so they announce their status instead.
+  const hasCustomContent = children !== undefined;
+
   return (
     <div
       ref={forwardedRef}
+      role={hasCustomContent ? undefined : 'img'}
+      aria-label={hasCustomContent ? undefined : STATUS_LABELS[resolvedStatus]}
       className={cn(statusIndicatorVariants({ status }), className)}
       {...rest}
     >

@@ -50,7 +50,7 @@
       {
         "title": "Dragging",
         "description": "Visual feedback when a file is dragged over the dropzone.",
-        "code": "<FileUpload.Root dragging>\n  <FileUpload.Content>\n    <FileUpload.Title>Drop your file here</FileUpload.Title>\n    <FileUpload.Description>Release to upload</FileUpload.Description>\n  </FileUpload.Content>\n  <FileUpload.Button>Browse File</FileUpload.Button>\n</FileUpload.Root>",
+        "code": "<FileUpload.Root dragging>\n  <FileUpload.Content>\n    <FileUpload.Title>Drop your file here</FileUpload.Title>\n    <FileUpload.Description>Release to start the upload.</FileUpload.Description>\n  </FileUpload.Content>\n  <FileUpload.Button>Choose file</FileUpload.Button>\n</FileUpload.Root>",
         "stories": ["Dragging"]
       },
       {

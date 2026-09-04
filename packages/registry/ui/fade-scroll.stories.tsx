@@ -17,7 +17,10 @@ const longParagraphs = [
 
 export const Vertical = {
   render: () => (
-    <FadeScroll.Root className='text-text-sub-600 h-64 max-w-md space-y-3 pr-2 text-sm'>
+    <FadeScroll.Root
+      label='About the fade scroll container'
+      className='text-text-sub-600 h-64 max-w-md space-y-3 pr-2 text-sm'
+    >
       {longParagraphs.map((p, i) => (
         <p key={i}>{p}</p>
       ))}
@@ -28,6 +31,7 @@ export const Vertical = {
 export const Horizontal = {
   render: () => (
     <FadeScroll.Root
+      label='Cards'
       orientation='horizontal'
       className='flex max-w-lg gap-3 pb-1'
     >
@@ -45,7 +49,10 @@ export const Horizontal = {
 
 export const VerticalList = {
   render: () => (
-    <FadeScroll.Root className='border-stroke-soft-200 bg-bg-white-0 h-72 w-72 rounded-lg border'>
+    <FadeScroll.Root
+      label='List items'
+      className='border-stroke-soft-200 bg-bg-white-0 h-72 w-72 rounded-lg border'
+    >
       <ul>
         {Array.from({ length: 24 }).map((_, i) => (
           <li
@@ -68,6 +75,7 @@ export const CustomFadeSize = {
           fadeSize=8 (subtle)
         </p>
         <FadeScroll.Root
+          label='Items with a subtle fade'
           orientation='horizontal'
           fadeSize={8}
           className='flex max-w-lg gap-3'
@@ -87,6 +95,7 @@ export const CustomFadeSize = {
           fadeSize=64 (dramatic)
         </p>
         <FadeScroll.Root
+          label='Items with a dramatic fade'
           orientation='horizontal'
           fadeSize={64}
           className='flex max-w-lg gap-3'

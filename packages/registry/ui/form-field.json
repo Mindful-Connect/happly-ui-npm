@@ -18,30 +18,30 @@
   ],
   "docs": {
     "lead": "A smart form field wrapper with built-in label, hint, error, and react-hook-form integration. Pass a `name` prop inside a FormProvider to auto-resolve errors — or use manual props for full control.",
-    "usage": "import * as FormField from \"@/components/ui/form-field\"\n\n// Automatic mode (with FormProvider)\n<FormField.Root name=\"email\" label=\"Email Address\" required hint=\"This is a hint text.\">\n  <Input.Composed placeholder=\"hello@example.com\" {...register('email')} />\n</FormField.Root>\n\n// Manual mode (without FormProvider)\n<FormField.Root label=\"Email Address\" error={error} hint=\"This is a hint text.\">\n  <Input.Composed placeholder=\"hello@example.com\" />\n</FormField.Root>",
+    "usage": "import * as FormField from \"@/components/ui/form-field\"\n\n// Automatic mode (with FormProvider)\n<FormField.Root name=\"email\" label=\"Email address\" required hint=\"Use the address you check most often.\">\n  <Input.Composed placeholder=\"hello@example.com\" {...register('email')} />\n</FormField.Root>\n\n// Manual mode (without FormProvider)\n<FormField.Root label=\"Email address\" error={error} hint=\"Use the address you check most often.\">\n  <Input.Composed placeholder=\"hello@example.com\" />\n</FormField.Root>",
     "examples": [
       {
         "title": "Demo",
         "description": "Props-driven form fields with label, hint, and various input types.",
-        "code": "<FormField.Root\n  label=\"Email Address\"\n  htmlFor=\"email\"\n  required\n  labelSub=\"(Required)\"\n  labelInfo=\"We'll use this to contact you.\"\n  hint=\"This is a hint text to help user.\"\n>\n  <Input.Composed id=\"email\" leadingIcon={RiMailLine} placeholder=\"hello@example.com\" />\n</FormField.Root>",
+        "code": "<FormField.Root\n  label=\"Email address\"\n  htmlFor=\"email\"\n  required\n  labelInfo=\"We'll use this to contact you.\"\n  hint=\"Use the address you check most often.\"\n>\n  <Input.Composed id=\"email\" leadingIcon={RiMailLine} placeholder=\"hello@example.com\" />\n</FormField.Root>",
         "stories": ["Demo"]
       },
       {
         "title": "With Error",
         "description": "Form field with error state. Error replaces hint and auto-sets hasError.",
-        "code": "<FormField.Root\n  label=\"Email Address\"\n  htmlFor=\"email\"\n  required\n  hint=\"This is a hint text.\"\n  error=\"Please enter a valid email address.\"\n>\n  <Input.Composed id=\"email\" leadingIcon={RiMailLine} />\n</FormField.Root>",
+        "code": "<FormField.Root\n  label=\"Email address\"\n  htmlFor=\"email\"\n  required\n  hint=\"Use the address you check most often.\"\n  error=\"Enter a valid email address, like name@example.com.\"\n>\n  <Input.Composed id=\"email\" leadingIcon={RiMailLine} />\n</FormField.Root>",
         "stories": ["WithError"]
       },
       {
         "title": "Disabled",
         "description": "Disabled form field. Disabled state auto-flows to children, label, and hint.",
-        "code": "<FormField.Root\n  label=\"Email Address\"\n  htmlFor=\"email\"\n  required\n  hint=\"This is a hint text.\"\n  disabled\n>\n  <Input.Composed id=\"email\" leadingIcon={RiMailLine} />\n</FormField.Root>",
+        "code": "<FormField.Root\n  label=\"Email address\"\n  htmlFor=\"email\"\n  required\n  hint=\"Use the address you check most often.\"\n  disabled\n>\n  <Input.Composed id=\"email\" leadingIcon={RiMailLine} />\n</FormField.Root>",
         "stories": ["Disabled"]
       },
       {
         "title": "Compound Mode",
         "description": "Full control using sub-components. FormField.Label and FormField.Hint auto-read hasError/disabled from context.",
-        "code": "<FormField.Root htmlFor=\"email\" hasError>\n  <FormField.Label required sub=\"(Required)\">\n    Email Address\n  </FormField.Label>\n  <Input.Root hasError>\n    <Input.Wrapper>\n      <Input.Icon as={RiMailLine} />\n      <Input.Input id=\"email\" placeholder=\"hello@example.com\" />\n    </Input.Wrapper>\n  </Input.Root>\n  <FormField.Error>Please enter a valid email address.</FormField.Error>\n</FormField.Root>",
+        "code": "<FormField.Root htmlFor=\"email\" hasError>\n  <FormField.Label required>\n    Email address\n  </FormField.Label>\n  <Input.Root hasError>\n    <Input.Wrapper>\n      <Input.Icon as={RiMailLine} />\n      <Input.Input id=\"email\" placeholder=\"hello@example.com\" />\n    </Input.Wrapper>\n  </Input.Root>\n  <FormField.Error>Enter a valid email address, like name@example.com.</FormField.Error>\n</FormField.Root>",
         "stories": ["CompoundMode"]
       },
       {
@@ -98,9 +98,15 @@
             "description": "Info tooltip content rendered as Label.Info"
           },
           {
+            "name": "labelInfoLabel",
+            "type": "string",
+            "default": "'More information'",
+            "description": "Accessible name for the labelInfo tooltip trigger"
+          },
+          {
             "name": "hint",
             "type": "React.ReactNode",
-            "description": "Hint text rendered below children. Hidden when error is present."
+            "description": "Hint text rendered below children. Hidden when error is present. The hint and error share the id `{htmlFor ?? name}-message`, so a control can point `aria-describedby` at it."
           },
           {
             "name": "error",

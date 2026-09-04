@@ -40,17 +40,108 @@ const maskCompositeStyle = {
   WebkitMaskComposite: 'source-in',
 } as React.CSSProperties;
 
+function prefersReducedMotion() {
+  return (
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+}
+
+function isEnabledTab(tab: HTMLElement) {
+  return (
+    !tab.hasAttribute('disabled') &&
+    tab.getAttribute('aria-disabled') !== 'true'
+  );
+}
+
+/**
+ * Roving `tabindex` (ARIA APG): a tablist is one Tab stop, not one per tab.
+ * The stop belongs to the selected tab, or — when nothing is selected, which
+ * this component allows on every item — to the first enabled tab, so the list
+ * is never dropped out of the tab order entirely. Driven from the Root over
+ * the rendered nodes rather than as an `Item` prop, because items are cloned
+ * children of arbitrary depth and the Root cannot address them individually.
+ */
+function setTabStop(tabs: HTMLElement[], stop: HTMLElement | undefined) {
+  for (const tab of tabs) {
+    tab.tabIndex = tab === stop ? 0 : -1;
+  }
+}
+
+function syncRovingTabIndex(container: HTMLElement | null) {
+  if (!container) return;
+
+  const tabs = Array.from(
+    container.querySelectorAll<HTMLElement>('[role="tab"]')
+  );
+  if (tabs.length === 0) return;
+
+  const enabled = tabs.filter(isEnabledTab);
+  const selected = enabled.find(
+    (tab) => tab.getAttribute('aria-selected') === 'true'
+  );
+
+  setTabStop(tabs, selected ?? enabled[0]);
+}
+
+/**
+ * ARIA APG tabs keyboard model: arrow keys move focus between tabs (wrapping),
+ * Home/End jump to the first/last. Activation stays manual — the native
+ * `<button>` already handles Enter and Space. The tab that receives focus also
+ * takes over the tablist's single Tab stop.
+ */
+function moveTabFocus(
+  event: React.KeyboardEvent<HTMLElement>,
+  container: HTMLElement | null
+) {
+  const { key } = event;
+  if (
+    !container ||
+    (key !== 'ArrowRight' &&
+      key !== 'ArrowLeft' &&
+      key !== 'Home' &&
+      key !== 'End')
+  ) {
+    return;
+  }
+
+  const allTabs = Array.from(
+    container.querySelectorAll<HTMLElement>('[role="tab"]')
+  );
+  const tabs = allTabs.filter(isEnabledTab);
+  const current = tabs.indexOf(document.activeElement as HTMLElement);
+  if (tabs.length === 0 || current === -1) return;
+
+  event.preventDefault();
+  const isRtl = getComputedStyle(container).direction === 'rtl';
+  const forward = isRtl ? key === 'ArrowLeft' : key === 'ArrowRight';
+  const next =
+    key === 'Home'
+      ? 0
+      : key === 'End'
+        ? tabs.length - 1
+        : (current + (forward ? 1 : -1) + tabs.length) % tabs.length;
+
+  const target = tabs[next];
+  target.focus();
+  setTabStop(allTabs, target);
+}
+
 export const menuTabBarVariants = tv({
   slots: {
     root: 'relative flex items-center gap-8 overflow-x-auto border-b border-stroke-soft-200 px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
     item: [
       'relative flex shrink-0 cursor-pointer items-center justify-center gap-[3px] pb-3.5 text-label-xs',
-      'transition-colors duration-300 ease-out',
+      'transition-colors duration-150 ease-out',
+      'rounded-sm outline-none focus-visible:shadow-button-important-focus',
       'disabled:pointer-events-none disabled:opacity-50',
     ],
     icon: 'size-4 shrink-0',
     indicator:
-      'absolute bottom-0 left-0 h-0.5 rounded-full transition-[transform,width] duration-300',
+      // Switching tabs is high-frequency: the slide stays <=150ms and eases
+      // out. The active tab is also marked by its label color, so the tab
+      // stays identifiable when the transition is suppressed or interrupted.
+      'absolute bottom-0 left-0 h-0.5 rounded-full transition-[transform,width] duration-150 ease-out',
   },
   variants: {
     variant: {
@@ -112,6 +203,7 @@ function MenuTabBarRoot({
   className,
   variant,
   scrollMargin = 16,
+  onKeyDown,
   ...rest
 }: MenuTabBarRootProps) {
   const uniqueId = React.useId();
@@ -156,6 +248,7 @@ function MenuTabBarRoot({
     const update = () => {
       updateIndicator();
       updateScrollState();
+      syncRovingTabIndex(container);
     };
 
     const resizeObserver = new ResizeObserver(update);
@@ -176,6 +269,12 @@ function MenuTabBarRoot({
       mutationObserver.disconnect();
     };
   }, [updateIndicator, updateScrollState]);
+
+  // Runs after every render, so a change of selection (or of the item list)
+  // moves the single Tab stop with it. Intentionally has no dependency array.
+  React.useEffect(() => {
+    syncRovingTabIndex(containerRef.current);
+  });
 
   const handleScroll = React.useCallback(() => {
     updateScrollState();
@@ -207,6 +306,11 @@ function MenuTabBarRoot({
         role='tablist'
         className={root({ class: className })}
         onScroll={handleScroll}
+        onKeyDown={(event) => {
+          onKeyDown?.(event);
+          if (!event.defaultPrevented)
+            moveTabFocus(event, containerRef.current);
+        }}
         style={
           maskImage !== 'none'
             ? { maskImage, WebkitMaskImage: maskImage, ...maskCompositeStyle }
@@ -226,7 +330,6 @@ function MenuTabBarRoot({
           style={{
             width: `${lineStyle.width}px`,
             transform: `translateX(${lineStyle.left}px)`,
-            transitionTimingFunction: 'cubic-bezier(0.65, 0, 0.35, 1)',
           }}
           aria-hidden='true'
         />
@@ -289,6 +392,11 @@ const MenuTabBarItem = React.forwardRef<HTMLButtonElement, MenuTabBarItemProps>(
           if (target) {
             const margin = ctx?.scrollMargin ?? 16;
             const scroller = getScrollableParent(target);
+            // Smooth scrolling is motion; jump straight there when the user
+            // has asked for reduced motion.
+            const behavior: ScrollBehavior = prefersReducedMotion()
+              ? 'auto'
+              : 'smooth';
             if (scroller) {
               // Scroll within the actual scroll container, not the window.
               const top =
@@ -296,12 +404,12 @@ const MenuTabBarItem = React.forwardRef<HTMLButtonElement, MenuTabBarItemProps>(
                 target.getBoundingClientRect().top -
                 scroller.getBoundingClientRect().top -
                 margin;
-              scroller.scrollTo({ top, behavior: 'smooth' });
+              scroller.scrollTo({ top, behavior });
             } else {
               // The page itself is the scroller.
               const top =
                 target.getBoundingClientRect().top + window.scrollY - margin;
-              window.scrollTo({ top, behavior: 'smooth' });
+              window.scrollTo({ top, behavior });
             }
           }
         }

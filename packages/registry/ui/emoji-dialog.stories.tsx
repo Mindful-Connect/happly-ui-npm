@@ -56,7 +56,7 @@ export const Playground = {
           </EmojiDialog.Bubble>
         </EmojiDialog.EmojiArea>
         <EmojiDialog.Header>
-          <EmojiDialog.Title>Playground Dialog</EmojiDialog.Title>
+          <EmojiDialog.Title>Playground dialog</EmojiDialog.Title>
           <EmojiDialog.Description>
             Use the controls to customize this dialog.
           </EmojiDialog.Description>
@@ -78,7 +78,7 @@ export const Default = {
   render: () => (
     <EmojiDialog.Root>
       <EmojiDialog.Trigger asChild>
-        <Button.Root>Open Welcome Dialog</Button.Root>
+        <Button.Root>Open welcome dialog</Button.Root>
       </EmojiDialog.Trigger>
       <EmojiDialog.Content>
         <EmojiDialog.EmojiArea
@@ -96,19 +96,19 @@ export const Default = {
         <EmojiDialog.Header>
           <EmojiDialog.Title>Welcome to Happly!</EmojiDialog.Title>
           <EmojiDialog.Description>
-            Your workspace is ready. Let&apos;s get you started with a quick
-            tour of the platform.
+            Your workspace is ready. Let’s get you started with a quick tour of
+            the platform.
           </EmojiDialog.Description>
         </EmojiDialog.Header>
         <EmojiDialog.Footer>
           <EmojiDialog.Close asChild>
             <Button.Root variant='neutral' mode='stroke'>
-              Skip Tour
+              Skip tour
             </Button.Root>
           </EmojiDialog.Close>
           <Button.Root>
             <Button.Icon as={RiSparklingLine} />
-            Start Tour
+            Start tour
           </Button.Root>
         </EmojiDialog.Footer>
       </EmojiDialog.Content>
@@ -122,7 +122,7 @@ export const DeleteConfirmation = {
       <EmojiDialog.Trigger asChild>
         <Button.Root variant='error'>
           <Button.Icon as={RiDeleteBinLine} />
-          Delete Account
+          Delete account
         </Button.Root>
       </EmojiDialog.Trigger>
       <EmojiDialog.Content>
@@ -135,11 +135,11 @@ export const DeleteConfirmation = {
           }}
         >
           <EmojiDialog.Bubble variant='danger' icon={<RiDeleteBinLine />}>
-            This can&apos;t be undone
+            This can’t be undone
           </EmojiDialog.Bubble>
         </EmojiDialog.EmojiArea>
         <EmojiDialog.Header>
-          <EmojiDialog.Title>Delete Your Account?</EmojiDialog.Title>
+          <EmojiDialog.Title>Delete your account?</EmojiDialog.Title>
           <EmojiDialog.Description
             lines={[
               'All your projects, files, and settings will be permanently removed.',
@@ -150,12 +150,12 @@ export const DeleteConfirmation = {
         <EmojiDialog.Footer>
           <EmojiDialog.Close asChild>
             <Button.Root variant='neutral' mode='stroke'>
-              Keep Account
+              Keep account
             </Button.Root>
           </EmojiDialog.Close>
           <Button.Root variant='error'>
             <Button.Icon as={RiDeleteBinLine} />
-            Delete Forever
+            Delete account
           </Button.Root>
         </EmojiDialog.Footer>
       </EmojiDialog.Content>
@@ -169,7 +169,7 @@ export const UnsavedChanges = {
       <EmojiDialog.Trigger asChild>
         <Button.Root variant='warning'>
           <Button.Icon as={RiAlertLine} />
-          Leave Page
+          Leave page
         </Button.Root>
       </EmojiDialog.Trigger>
       <EmojiDialog.Content>
@@ -186,7 +186,7 @@ export const UnsavedChanges = {
           </EmojiDialog.Bubble>
         </EmojiDialog.EmojiArea>
         <EmojiDialog.Header>
-          <EmojiDialog.Title>Unsaved Changes</EmojiDialog.Title>
+          <EmojiDialog.Title>Unsaved changes</EmojiDialog.Title>
           <EmojiDialog.Description>
             You have unsaved changes that will be lost if you leave this page.
           </EmojiDialog.Description>
@@ -194,10 +194,10 @@ export const UnsavedChanges = {
         <EmojiDialog.Footer>
           <EmojiDialog.Close asChild>
             <Button.Root variant='neutral' mode='stroke'>
-              Discard Changes
+              Discard changes
             </Button.Root>
           </EmojiDialog.Close>
-          <Button.Root>Save &amp; Continue</Button.Root>
+          <Button.Root>Save and continue</Button.Root>
         </EmojiDialog.Footer>
       </EmojiDialog.Content>
     </EmojiDialog.Root>
@@ -227,7 +227,7 @@ export const SuccessConfirmation = {
           </EmojiDialog.Bubble>
         </EmojiDialog.EmojiArea>
         <EmojiDialog.Header>
-          <EmojiDialog.Title>Payment Successful</EmojiDialog.Title>
+          <EmojiDialog.Title>Payment successful</EmojiDialog.Title>
           <EmojiDialog.Description>
             Your Pro subscription is now active. You have access to all premium
             features.
@@ -236,7 +236,7 @@ export const SuccessConfirmation = {
         <EmojiDialog.Footer>
           <Button.Root>
             <Button.Icon as={RiSparklingLine} />
-            Explore Pro Features
+            Explore Pro features
           </Button.Root>
         </EmojiDialog.Footer>
       </EmojiDialog.Content>
@@ -267,7 +267,7 @@ export const WithFormContent = {
           </EmojiDialog.Bubble>
         </EmojiDialog.EmojiArea>
         <EmojiDialog.Header>
-          <EmojiDialog.Title>Invite a Teammate</EmojiDialog.Title>
+          <EmojiDialog.Title>Invite a teammate</EmojiDialog.Title>
           <EmojiDialog.Description>
             Send an invite to collaborate on your workspace.
           </EmojiDialog.Description>
@@ -324,7 +324,7 @@ export const WithFloatingMemojis = {
       <EmojiDialog.Trigger asChild>
         <Button.Root>
           <Button.Icon as={RiGroupLine} />
-          Meet the Team
+          Meet the team
         </Button.Root>
       </EmojiDialog.Trigger>
       <EmojiDialog.Content>
@@ -338,11 +338,11 @@ export const WithFloatingMemojis = {
           }}
         >
           <EmojiDialog.Bubble icon={<RiSparklingLine />}>
-            We&apos;re glad you&apos;re here!
+            We’re glad you’re here
           </EmojiDialog.Bubble>
         </EmojiDialog.EmojiArea>
         <EmojiDialog.Header>
-          <EmojiDialog.Title>You&apos;re All Set!</EmojiDialog.Title>
+          <EmojiDialog.Title>You’re all set</EmojiDialog.Title>
           <EmojiDialog.Description>
             Your team workspace has been created. Invite your teammates and
             start collaborating.
@@ -351,12 +351,12 @@ export const WithFloatingMemojis = {
         <EmojiDialog.Footer>
           <EmojiDialog.Close asChild>
             <Button.Root variant='neutral' mode='stroke'>
-              I&apos;ll Do This Later
+              Do this later
             </Button.Root>
           </EmojiDialog.Close>
           <Button.Root>
             <Button.Icon as={RiMailLine} />
-            Invite Team
+            Send invite
           </Button.Root>
         </EmojiDialog.Footer>
       </EmojiDialog.Content>
@@ -370,7 +370,7 @@ export const StaticNoAnimations = {
       <EmojiDialog.Trigger asChild>
         <Button.Root variant='neutral' mode='stroke'>
           <Button.Icon as={RiLock2Line} />
-          Session Expired
+          Session expired
         </Button.Root>
       </EmojiDialog.Trigger>
       <EmojiDialog.Content disableAnimations>
@@ -387,16 +387,16 @@ export const StaticNoAnimations = {
           </EmojiDialog.Bubble>
         </EmojiDialog.EmojiArea>
         <EmojiDialog.Header>
-          <EmojiDialog.Title>Session Expired</EmojiDialog.Title>
+          <EmojiDialog.Title>Session expired</EmojiDialog.Title>
           <EmojiDialog.Description>
-            Your session has expired due to inactivity. Please sign in again to
-            continue.
+            Your session ended after a period of inactivity. Sign in again to
+            pick up where you left off.
           </EmojiDialog.Description>
         </EmojiDialog.Header>
         <EmojiDialog.Footer>
           <Button.Root>
             <Button.Icon as={RiLock2Line} />
-            Sign In Again
+            Sign in again
           </Button.Root>
         </EmojiDialog.Footer>
       </EmojiDialog.Content>
@@ -409,7 +409,7 @@ export const CustomEmojiArea = {
     <EmojiDialog.Root>
       <EmojiDialog.Trigger asChild>
         <Button.Root variant='neutral' mode='stroke'>
-          Open Celebration
+          Open celebration
         </Button.Root>
       </EmojiDialog.Trigger>
       <EmojiDialog.Content>
@@ -421,7 +421,7 @@ export const CustomEmojiArea = {
           </div>
         </EmojiDialog.EmojiArea>
         <EmojiDialog.Header>
-          <EmojiDialog.Title>Milestone Reached!</EmojiDialog.Title>
+          <EmojiDialog.Title>Milestone reached</EmojiDialog.Title>
           <EmojiDialog.Description>
             Your project just hit 10,000 users. Congratulations to the entire
             team!
@@ -433,7 +433,7 @@ export const CustomEmojiArea = {
               Dismiss
             </Button.Root>
           </EmojiDialog.Close>
-          <Button.Root>Share the News</Button.Root>
+          <Button.Root>Share the news</Button.Root>
         </EmojiDialog.Footer>
       </EmojiDialog.Content>
     </EmojiDialog.Root>

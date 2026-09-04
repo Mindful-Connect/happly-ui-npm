@@ -87,18 +87,18 @@
       },
       {
         "name": "SectionToggle.Header",
-        "description": "The header row containing text and the switch toggle. Acts as a click target to open the section when collapsed and onOpenChange is provided.",
+        "description": "The header row containing the text group and the switch. The switch is the section’s only control — it owns the role, the accessible name and the keyboard path. When collapsed and onOpenChange is provided, the header also acts as a pointer-only click target that opens the section; it claims no role and takes no tab stop.",
         "props": [
           {
             "name": "open",
             "type": "boolean",
             "default": "false",
-            "description": "Current open state — when false and onOpenChange is provided, the header becomes a button that opens the section on click"
+            "description": "Current open state — when false and onOpenChange is provided, clicking anywhere in the header opens the section."
           },
           {
             "name": "onOpenChange",
             "type": "(open: boolean) => void",
-            "description": "Callback fired when the collapsed header is clicked to expand the section"
+            "description": "Callback fired when the collapsed header is clicked to expand the section. Pass the same handler to the switch inside the header so both paths stay in sync."
           }
         ]
       },

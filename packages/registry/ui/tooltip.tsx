@@ -13,7 +13,13 @@ export const tooltipVariants = tv({
   slots: {
     content: [
       'z-50 pointer-events-auto shadow-tooltip',
-      'animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+      // Radix sizes the tooltip to its content, so a long string would run off
+      // the viewport with no way to reach it. Cap it at the space Radix
+      // measured so it wraps instead; short tooltips are unchanged.
+      'max-w-[var(--radix-tooltip-content-available-width)]',
+      // A tooltip is a high-frequency, hover-triggered surface: the enter stays
+      // at 150ms and the exit is shorter still, so it never feels like a scene.
+      'animate-in fade-in-0 zoom-in-95 duration-150 ease-out data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:duration-100 data-[state=closed]:ease-out data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
     ],
     arrow:
       '-translate-y-1/2 -rotate-45 border [clip-path:polygon(0_100%,0_0,100%_100%)]',

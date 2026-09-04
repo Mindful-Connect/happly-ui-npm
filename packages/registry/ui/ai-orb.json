@@ -27,7 +27,7 @@
     "api": [
       {
         "name": "AiOrb.Root",
-        "description": "The AI indicator orb SVG component.",
+        "description": "The AI indicator orb SVG component. Decorative by default (aria-hidden) and its looping animation stops under prefers-reduced-motion.",
         "props": [
           {
             "name": "size",

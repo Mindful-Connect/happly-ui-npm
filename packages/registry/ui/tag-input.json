@@ -31,7 +31,7 @@
       {
         "title": "Max Tags",
         "description": "Tag input limited to a maximum number of tags.",
-        "code": "<TagInput.Root defaultValue={['Tag 1']} maxTags={3} placeholder='Max 3 tags...' />",
+        "code": "<TagInput.Root defaultValue={['Tag 1']} maxTags={3} placeholder='Max 3 tags…' />",
         "stories": ["MaxTags"]
       },
       {
@@ -89,7 +89,7 @@
           {
             "name": "placeholder",
             "type": "string",
-            "default": "'Add tags...'",
+            "default": "'Add a tag…'",
             "description": "Placeholder text"
           },
           {

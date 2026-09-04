@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const config: StorybookConfig = {
-  stories: ['../ui/**/*.stories.tsx'],
+  stories: ['../ui/**/*.stories.tsx', '../showcase/**/*.stories.tsx'],
   addons: [],
   framework: {
     name: '@storybook/react-vite',

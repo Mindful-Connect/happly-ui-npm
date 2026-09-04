@@ -8,7 +8,7 @@ export default { title: 'Form/Textarea', component: Textarea.Root };
 
 export const Playground = {
   args: {
-    placeholder: 'Jot down your thoughts...',
+    placeholder: 'Jot down your thoughts…',
     simple: false,
     hasError: false,
     disabled: false,
@@ -34,7 +34,7 @@ export const Playground = {
 export const Demo = {
   render: () => (
     <div className='w-full min-w-[480px]'>
-      <Textarea.Root placeholder='Jot down your thoughts...'>
+      <Textarea.Root placeholder='Jot down your thoughts…'>
         <Textarea.CharCounter current={78} max={200} />
       </Textarea.Root>
     </div>
@@ -47,7 +47,7 @@ function InteractiveCounterRender() {
   return (
     <div className='w-full min-w-[480px]'>
       <Textarea.Root
-        placeholder='Jot down your thoughts...'
+        placeholder='Jot down your thoughts…'
         value={value}
         onChange={(e) => setValue(e.target.value)}
       >
@@ -64,7 +64,7 @@ export const InteractiveCounter = {
 export const HasError = {
   render: () => (
     <div className='w-full min-w-[480px]'>
-      <Textarea.Root placeholder='Jot down your thoughts...' hasError>
+      <Textarea.Root placeholder='Jot down your thoughts…' hasError>
         <Textarea.CharCounter current={78} max={200} />
       </Textarea.Root>
     </div>
@@ -82,7 +82,7 @@ export const WithLabelAndHint = {
         labelSubParens
         hint='This is a hint text to help user.'
       >
-        <Textarea.Root id='message' placeholder='Jot down your thoughts...'>
+        <Textarea.Root id='message' placeholder='Jot down your thoughts…'>
           <Textarea.CharCounter current={78} max={200} />
         </Textarea.Root>
       </FormField.Root>
@@ -93,7 +93,7 @@ export const WithLabelAndHint = {
 export const Disabled = {
   render: () => (
     <div className='w-full min-w-[480px]'>
-      <Textarea.Root placeholder='Jot down your thoughts...' disabled>
+      <Textarea.Root placeholder='Jot down your thoughts…' disabled>
         <Textarea.CharCounter current={78} max={200} />
       </Textarea.Root>
     </div>
@@ -103,7 +103,7 @@ export const Disabled = {
 export const Simple = {
   render: () => (
     <div className='w-full min-w-[480px]'>
-      <Textarea.Root placeholder='Jot down your thoughts...' simple />
+      <Textarea.Root placeholder='Jot down your thoughts…' simple />
     </div>
   ),
 };
@@ -112,7 +112,7 @@ export const SimpleResize = {
   render: () => (
     <div className='w-full min-w-[480px]'>
       <Textarea.Root
-        placeholder='Jot down your thoughts...'
+        placeholder='Jot down your thoughts…'
         simple
         className='resize-y'
       />

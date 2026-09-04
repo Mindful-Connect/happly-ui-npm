@@ -373,13 +373,13 @@ function ComposedRender() {
       <RadioCard.Root value={value} onValueChange={setValue}>
         <RadioCard.RadioCard
           value='card'
-          title='Credit Card'
+          title='Credit card'
           description='Pay with credit card'
           icon={<KeyIcon.Root icon={<RiBankCardLine />} />}
         />
         <RadioCard.RadioCard
           value='wallet'
-          title='Digital Wallet'
+          title='Digital wallet'
           description='Pay with digital wallet'
           icon={<KeyIcon.Root icon={<RiWalletLine />} />}
           badge={
@@ -390,7 +390,7 @@ function ComposedRender() {
         />
         <RadioCard.RadioCard
           value='bank'
-          title='Bank Transfer'
+          title='Bank transfer'
           description='Direct bank transfer'
           icon={<KeyIcon.Root icon={<RiBankLine />} />}
         />
@@ -444,7 +444,7 @@ function WithFormFieldRender() {
   return (
     <div className='w-[480px]'>
       <FormField.Root
-        label='Select Plan'
+        label='Select plan'
         required
         hint='Choose the plan that works for you.'
       >

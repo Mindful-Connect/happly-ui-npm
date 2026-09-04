@@ -28,7 +28,7 @@
       {
         "title": "Neutral Variant",
         "description": "The neutral variant uses grayscale colors for secondary actions.",
-        "code": "<Button.Root variant=\"neutral\" mode=\"filled\">Learn More</Button.Root>\n<Button.Root variant=\"neutral\" mode=\"stroke\">Learn More</Button.Root>\n<Button.Root variant=\"neutral\" mode=\"lighter\">Learn More</Button.Root>\n<Button.Root variant=\"neutral\" mode=\"ghost\">Learn More</Button.Root>",
+        "code": "<Button.Root variant=\"neutral\" mode=\"filled\">Learn more</Button.Root>\n<Button.Root variant=\"neutral\" mode=\"stroke\">Learn more</Button.Root>\n<Button.Root variant=\"neutral\" mode=\"lighter\">Learn more</Button.Root>\n<Button.Root variant=\"neutral\" mode=\"ghost\">Learn more</Button.Root>",
         "stories": ["NeutralVariant"]
       },
       {
@@ -70,7 +70,7 @@
       {
         "title": "Full Width",
         "description": "Buttons can stretch to fill their container with a className override.",
-        "code": "<Button.Root variant=\"neutral\" className=\"w-full\">\n  Learn More\n</Button.Root>",
+        "code": "<Button.Root variant=\"neutral\" className=\"w-full\">\n  Learn more\n</Button.Root>",
         "stories": ["FullWidth"]
       },
       {
@@ -126,6 +126,12 @@
             "type": "boolean",
             "default": "false",
             "description": "Renders as child element using Radix Slot"
+          },
+          {
+            "name": "static",
+            "type": "boolean",
+            "default": "false",
+            "description": "Turns off the scale-on-press feedback, for places where the motion would distract."
           },
           {
             "name": "loading",

@@ -61,16 +61,16 @@ export const NeutralVariant = {
   render: () => (
     <div className='flex flex-col items-center gap-4'>
       <Button.Root variant='neutral' mode='filled'>
-        Learn More
+        Learn more
       </Button.Root>
       <Button.Root variant='neutral' mode='stroke'>
-        Learn More
+        Learn more
       </Button.Root>
       <Button.Root variant='neutral' mode='lighter'>
-        Learn More
+        Learn more
       </Button.Root>
       <Button.Root variant='neutral' mode='ghost'>
-        Learn More
+        Learn more
       </Button.Root>
     </div>
   ),
@@ -226,7 +226,7 @@ export const FullWidth = {
   render: () => (
     <div className='w-96'>
       <Button.Root variant='neutral' className='w-full'>
-        Learn More
+        Learn more
       </Button.Root>
     </div>
   ),
@@ -247,7 +247,7 @@ export const Loading = {
     <div className='flex flex-col items-center gap-4'>
       <Button.Root loading>Get Started</Button.Root>
       <Button.Root loading variant='neutral' mode='stroke'>
-        Learn More
+        Learn more
       </Button.Root>
       <Button.Root loading variant='error' mode='filled'>
         Delete
@@ -284,7 +284,7 @@ export const LoadingInteractive = {
       <div className='flex flex-col items-center gap-4'>
         <LoadingButton>Get Started</LoadingButton>
         <LoadingButton variant='neutral' mode='stroke'>
-          Learn More
+          Learn more
         </LoadingButton>
         <LoadingButton variant='neutral' mode='filled' loadingText='Submitting'>
           Submit for review

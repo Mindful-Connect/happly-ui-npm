@@ -51,7 +51,7 @@
     "api": [
       {
         "name": "Divider.Root",
-        "description": "The main divider component.",
+        "description": "A horizontal divider. The line-only variants expose role=\"separator\"; the variants that carry a label or a control do not, because a separator hides its children from assistive technology.",
         "props": [
           {
             "name": "variant",

@@ -76,7 +76,7 @@
       {
         "title": "Customization",
         "description": "Custom icon, placeholder text, and empty message.",
-        "code": "<ComboBox.Composed options={options} icon={RiMapPinLine} placeholder=\"Search cities...\" />",
+        "code": "<ComboBox.Composed options={options} icon={RiMapPinLine} placeholder=\"Search cities…\" />",
         "stories": ["Customization"]
       },
       {
@@ -88,7 +88,7 @@
       {
         "title": "Compound Custom Items",
         "description": "Use the compound API for fully custom item rendering with checkbox indicators, avatars, and custom layouts.",
-        "code": "<ComboBox.Root options={users} value={selected} onValueChange={setSelected}>\n  <ComboBox.SearchTrigger placeholder=\"Search team members...\" />\n  <ComboBox.Content>\n    {filteredOptions.map(user => (\n      <ComboBox.Item key={user.value} value={user.value}>\n        <Checkbox checked={isSelected(user.value)} />\n        <Avatar src={user.avatar} />\n        <span>{user.name}</span>\n        <ComboBox.ItemIndicator selected={isSelected(user.value)} />\n      </ComboBox.Item>\n    ))}\n  </ComboBox.Content>\n  <ComboBox.Tags variant=\"stroke\" />\n</ComboBox.Root>",
+        "code": "<ComboBox.Root options={users} value={selected} onValueChange={setSelected}>\n  <ComboBox.SearchTrigger placeholder=\"Search team members…\" />\n  <ComboBox.Content>\n    {filteredOptions.map(user => (\n      <ComboBox.Item key={user.value} value={user.value}>\n        <Checkbox checked={isSelected(user.value)} />\n        <Avatar src={user.avatar} />\n        <span>{user.name}</span>\n        <ComboBox.ItemIndicator selected={isSelected(user.value)} />\n      </ComboBox.Item>\n    ))}\n  </ComboBox.Content>\n  <ComboBox.Tags variant=\"stroke\" />\n</ComboBox.Root>",
         "stories": ["CompoundCustomItems"]
       },
       {
@@ -220,7 +220,7 @@
           {
             "name": "placeholder",
             "type": "string",
-            "default": "'Choose or search...'",
+            "default": "'Choose or search…'",
             "description": "Search input placeholder."
           }
         ]
@@ -232,8 +232,8 @@
           {
             "name": "emptyMessage",
             "type": "string",
-            "default": "'No results found.'",
-            "description": "Message when no options match the search."
+            "default": "A message naming the current query, e.g. No results for “berlin”.",
+            "description": "Message when no options match the search. Defaults to a query-aware empty state."
           },
           {
             "name": "alreadyAddedMessage",
@@ -298,7 +298,7 @@
           {
             "name": "children",
             "type": "React.ReactNode",
-            "default": "'No results found.'",
+            "default": "A message naming the current query, e.g. No results for “berlin”.",
             "description": "Custom empty message."
           }
         ]
@@ -333,13 +333,13 @@
           {
             "name": "placeholder",
             "type": "string",
-            "default": "'Choose or search...'",
+            "default": "'Choose or search…'",
             "description": "Search input placeholder."
           },
           {
             "name": "emptyMessage",
             "type": "string",
-            "default": "'No results found.'",
+            "default": "A message naming the current query, e.g. No results for “berlin”.",
             "description": "Message when no options match."
           },
           {

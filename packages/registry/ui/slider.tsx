@@ -21,6 +21,11 @@ const THUMB_CLASSES = {
   neutral: 'bg-text-strong-950',
 } as const;
 
+const THUMB_FOCUS_CLASSES = {
+  primary: 'focus-visible:shadow-button-primary-focus',
+  neutral: 'focus-visible:shadow-button-important-focus',
+} as const;
+
 const SliderRoot = React.forwardRef<
   React.ComponentRef<typeof SliderPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root> & {
@@ -76,25 +81,41 @@ SliderRoot.displayName = 'SliderRoot';
 const SliderThumb = React.forwardRef<
   React.ComponentRef<typeof SliderPrimitive.Thumb>,
   React.ComponentPropsWithoutRef<typeof SliderPrimitive.Thumb>
->(({ className, ...rest }, forwardedRef) => {
-  const variant = React.useContext(SliderContext);
+>(
+  (
+    { className, 'aria-describedby': ariaDescribedBy, ...rest },
+    forwardedRef
+  ) => {
+    const variant = React.useContext(SliderContext);
+    const formField = useFormField();
 
-  return (
-    <SliderPrimitive.Thumb
-      ref={forwardedRef}
-      className={cn(
-        // base
-        'border-static-white shadow-toggle-switch box-content block h-1.5 w-1.5 shrink-0 cursor-pointer rounded-full border-[5px] outline-none',
-        // focus
-        'focus:outline-none',
-        // variant
-        THUMB_CLASSES[variant],
-        className
-      )}
-      {...rest}
-    />
-  );
-});
+    // `role="slider"` lives on the thumb, not on Radix's Root, so the field's
+    // hint/error has to be pointed at from here. No `aria-required`: a slider
+    // always has a value, and `slider` does not support the attribute.
+    const describedBy =
+      [ariaDescribedBy, formField.describedBy].filter(Boolean).join(' ') ||
+      undefined;
+
+    return (
+      <SliderPrimitive.Thumb
+        ref={forwardedRef}
+        aria-describedby={describedBy}
+        className={cn(
+          // base — 16px visual (6px core + 5px border each side)
+          'border-static-white shadow-toggle-switch box-content block h-1.5 w-1.5 shrink-0 cursor-pointer rounded-full border-[5px] outline-none',
+          // 24×24 hit area (WCAG 2.5.8)
+          'after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2',
+          // focus
+          THUMB_FOCUS_CLASSES[variant],
+          // variant
+          THUMB_CLASSES[variant],
+          className
+        )}
+        {...rest}
+      />
+    );
+  }
+);
 SliderThumb.displayName = 'SliderThumb';
 
 export { SliderRoot as Root, SliderThumb as Thumb };

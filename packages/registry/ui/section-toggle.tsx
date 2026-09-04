@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 
 import { Root as SwitchRoot } from '@/components/ui/switch';
 import { cn } from '@/lib/happly-ui-utils';
@@ -19,7 +19,7 @@ function SectionToggleRoot({
   return (
     <div
       className={cn(
-        'border-stroke-soft-200 shadow-regular-xs overflow-hidden rounded-2xl border p-2 transition-colors duration-200',
+        'border-stroke-soft-200 shadow-regular-xs overflow-hidden rounded-2xl border p-2 transition-colors duration-150',
         open ? 'bg-bg-weak-50' : 'bg-bg-white-0 cursor-pointer',
         className
       )}
@@ -44,15 +44,18 @@ function SectionToggleHeader({
   onOpenChange,
   ...rest
 }: SectionToggleHeaderProps) {
+  const isCollapsedTarget = !open && !!onOpenChange;
+
   return (
     <div
-      className={cn('flex items-start gap-3.5 p-2', className)}
-      {...(!open &&
-        onOpenChange && {
-          role: 'button',
-          tabIndex: 0,
-          onClick: () => onOpenChange(true),
-        })}
+      className={cn('flex items-start gap-3.5 rounded-lg p-2', className)}
+      // The Switch inside the header is the section's only control: it owns
+      // the role, the name, the state and the keyboard path. The header is a
+      // pointer convenience that forwards a click to the same handler, so it
+      // deliberately claims no role and takes no tab stop — a role="button"
+      // here would nest one interactive element inside another and give the
+      // same action two announcements.
+      {...(isCollapsedTarget && { onClick: () => onOpenChange!(true) })}
       {...rest}
     >
       {children}
@@ -84,7 +87,10 @@ function SectionToggleTitle({
 }: React.HTMLAttributes<HTMLHeadingElement>) {
   return (
     <h4
-      className={cn('text-label-sm text-text-strong-950', className)}
+      className={cn(
+        'text-label-sm text-text-strong-950 text-balance',
+        className
+      )}
       {...rest}
     >
       {children}
@@ -100,7 +106,10 @@ function SectionToggleDescription({
 }: React.HTMLAttributes<HTMLParagraphElement>) {
   return (
     <p
-      className={cn('text-paragraph-xs text-text-sub-600', className)}
+      className={cn(
+        'text-paragraph-xs text-text-sub-600 text-pretty',
+        className
+      )}
       {...rest}
     >
       {children}
@@ -119,18 +128,32 @@ function SectionToggleContent({
   open = false,
   ...rest
 }: SectionToggleContentProps) {
+  // framer-motion is JS-driven, so the theme's reduced-motion kill-switch does
+  // not reach it: swap the height animation for a plain crossfade.
+  const reduceMotion = useReducedMotion();
+
   return (
     <AnimatePresence initial={false}>
       {open && (
         <motion.div
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: 'auto', opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{
-            duration: 0.2,
-            ease: 'easeInOut',
-            opacity: { duration: 0.1 },
+          initial={reduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+          animate={
+            reduceMotion ? { opacity: 1 } : { height: 'auto', opacity: 1 }
+          }
+          // The exit is shorter than the enter, and eases out both ways.
+          exit={{
+            ...(reduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }),
+            transition: { duration: 0.15, ease: 'easeOut' },
           }}
+          transition={
+            reduceMotion
+              ? { duration: 0.15, ease: 'easeOut' }
+              : {
+                  duration: 0.2,
+                  ease: 'easeOut',
+                  opacity: { duration: 0.1 },
+                }
+          }
           className='overflow-hidden'
         >
           <div className={cn('pt-4', className)} {...rest}>
@@ -166,19 +189,17 @@ function SectionToggle({
   headerClassName,
   ...rest
 }: SectionToggleComposedProps) {
+  const titleId = React.useId();
+
   return (
     <SectionToggleRoot open={open} className={className} {...rest}>
       <SectionToggleHeader
         open={open}
+        onOpenChange={onOpenChange}
         className={headerClassName}
-        {...(!open && {
-          role: 'button',
-          tabIndex: 0,
-          onClick: () => onOpenChange?.(true),
-        })}
       >
         <SectionToggleTextGroup>
-          <SectionToggleTitle>{title}</SectionToggleTitle>
+          <SectionToggleTitle id={titleId}>{title}</SectionToggleTitle>
           {description && (
             <SectionToggleDescription>{description}</SectionToggleDescription>
           )}
@@ -190,6 +211,7 @@ function SectionToggle({
             variant='neutral'
             checked={open}
             onCheckedChange={onOpenChange}
+            aria-labelledby={titleId}
           />
         </div>
       </SectionToggleHeader>

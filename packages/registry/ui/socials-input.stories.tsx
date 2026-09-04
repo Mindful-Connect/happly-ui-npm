@@ -149,7 +149,7 @@ function ErrorStateRender() {
       <FormField.Root
         label='Social Media'
         required
-        error='Please add at least one social media profile.'
+        error='Add at least one social media profile.'
       >
         <SocialsInput
           name='socials-error'
@@ -178,7 +178,7 @@ export const CustomLabels = {
             formValue={values}
             setFormValue={setValues}
             labels={{
-              placeholder: 'Ajouter un réseau social...',
+              placeholder: 'Ajouter un réseau social…',
               errorUrl: 'Veuillez saisir une URL valide',
             }}
           />

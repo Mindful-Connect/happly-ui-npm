@@ -16,18 +16,18 @@
   ],
   "docs": {
     "lead": "A compound component for uploading logos or profile images. Shows a rounded avatar preview with placeholder, title, description, and action buttons. Designed to work with the useFileUpload hook.",
-    "usage": "import * as LogoUpload from \"@/components/ui/logo-upload\"\nimport * as Button from \"@/components/ui/button\"\nimport { useFileUpload } from \"@/hooks/use-file-upload\"\n\nconst upload = useFileUpload({ ... })\nconst file = upload.files[0]\n\n<LogoUpload.Root>\n  <LogoUpload.Preview file={file} placeholderType=\"company\" />\n  <LogoUpload.Content>\n    <LogoUpload.Title>Business logo</LogoUpload.Title>\n    <LogoUpload.Description>\n      <p>Supports JPEG or PNG files (max 3MB).</p>\n    </LogoUpload.Description>\n    <LogoUpload.Actions>\n      <Button.Root variant=\"neutral\" mode=\"stroke\" size=\"xsmall\" onClick={upload.openFilePicker}>\n        Change\n      </Button.Root>\n      <input {...upload.getInputProps()} />\n    </LogoUpload.Actions>\n  </LogoUpload.Content>\n</LogoUpload.Root>",
+    "usage": "import * as LogoUpload from \"@/components/ui/logo-upload\"\nimport * as Button from \"@/components/ui/button\"\nimport { useFileUpload } from \"@/hooks/use-file-upload\"\n\nconst upload = useFileUpload({ ... })\nconst file = upload.files[0]\n\n<LogoUpload.Root>\n  <LogoUpload.Preview file={file} placeholderType=\"company\" />\n  <LogoUpload.Content>\n    <LogoUpload.Title>Business logo</LogoUpload.Title>\n    <LogoUpload.Description>\n      <p>Supports JPEG or PNG files (max 3 MB).</p>\n    </LogoUpload.Description>\n    <LogoUpload.Actions>\n      <Button.Root variant=\"neutral\" mode=\"stroke\" size=\"xsmall\" onClick={upload.openFilePicker}>\n        Change\n      </Button.Root>\n      <input {...upload.getInputProps()} />\n    </LogoUpload.Actions>\n  </LogoUpload.Content>\n</LogoUpload.Root>",
     "examples": [
       {
         "title": "Default (Empty State)",
         "description": "Shows a company placeholder avatar when no file has been uploaded yet.",
-        "code": "<LogoUpload.Root>\n  <LogoUpload.Preview placeholderType=\"company\" />\n  <LogoUpload.Content>\n    <LogoUpload.Title>Business logo</LogoUpload.Title>\n    <LogoUpload.Description>\n      <p>Supports JPEG or PNG files (max 3MB).</p>\n      <p>Use a horizontal image (16:9). Best size: 1200 × 675 px.</p>\n    </LogoUpload.Description>\n    <LogoUpload.Actions>\n      <Button.Root variant=\"neutral\" mode=\"stroke\" size=\"xsmall\">Change</Button.Root>\n    </LogoUpload.Actions>\n  </LogoUpload.Content>\n</LogoUpload.Root>",
+        "code": "<LogoUpload.Root>\n  <LogoUpload.Preview placeholderType=\"company\" />\n  <LogoUpload.Content>\n    <LogoUpload.Title>Business logo</LogoUpload.Title>\n    <LogoUpload.Description>\n      <p>Supports JPEG or PNG files (max 3 MB).</p>\n      <p>Use a horizontal image (16:9). Best size: 1200 × 675 px.</p>\n    </LogoUpload.Description>\n    <LogoUpload.Actions>\n      <Button.Root variant=\"neutral\" mode=\"stroke\" size=\"xsmall\">Change</Button.Root>\n    </LogoUpload.Actions>\n  </LogoUpload.Content>\n</LogoUpload.Root>",
         "stories": ["Default"]
       },
       {
         "title": "With Uploaded Logo",
         "description": "Shows the uploaded image in the avatar preview.",
-        "code": "<LogoUpload.Root>\n  <LogoUpload.Preview file={file} />\n  <LogoUpload.Content>\n    <LogoUpload.Title>Business logo</LogoUpload.Title>\n    <LogoUpload.Description>\n      <p>Supports JPEG or PNG files (max 3MB).</p>\n    </LogoUpload.Description>\n    <LogoUpload.Actions>\n      <Button.Root variant=\"neutral\" mode=\"stroke\" size=\"xsmall\">Change</Button.Root>\n    </LogoUpload.Actions>\n  </LogoUpload.Content>\n</LogoUpload.Root>",
+        "code": "<LogoUpload.Root>\n  <LogoUpload.Preview file={file} />\n  <LogoUpload.Content>\n    <LogoUpload.Title>Business logo</LogoUpload.Title>\n    <LogoUpload.Description>\n      <p>Supports JPEG or PNG files (max 3 MB).</p>\n    </LogoUpload.Description>\n    <LogoUpload.Actions>\n      <Button.Root variant=\"neutral\" mode=\"stroke\" size=\"xsmall\">Change</Button.Root>\n    </LogoUpload.Actions>\n  </LogoUpload.Content>\n</LogoUpload.Root>",
         "stories": ["WithLogo"]
       },
       {
@@ -39,31 +39,31 @@
       {
         "title": "Custom Preview",
         "description": "Replace LogoUpload.Preview with any custom element. Since Root is a flex container, drop in your own preview markup.",
-        "code": "<LogoUpload.Root>\n  <LogoUpload.Preview\n    placeholder={<RiBuildingLine className=\"size-[60px] text-[#B8ACF6]\" />}\n    avatarClassName=\"bg-[#EFEBFF] ring-[1.26px] ring-[rgba(14,18,27,0.1)]\"\n  />\n  <LogoUpload.Content>\n    <LogoUpload.Title>Business logo</LogoUpload.Title>\n    <LogoUpload.Description>\n      <p>Supports JPEG or PNG files (max 3MB).</p>\n    </LogoUpload.Description>\n    <LogoUpload.Actions>\n      <Button.Root variant=\"neutral\" mode=\"stroke\" size=\"xsmall\">Change</Button.Root>\n    </LogoUpload.Actions>\n  </LogoUpload.Content>\n</LogoUpload.Root>",
+        "code": "<LogoUpload.Root>\n  <LogoUpload.Preview\n    placeholder={<RiBuildingLine className=\"size-[60px] text-[#B8ACF6]\" />}\n    avatarClassName=\"bg-[#EFEBFF] ring-[1.26px] ring-[rgba(14,18,27,0.1)]\"\n  />\n  <LogoUpload.Content>\n    <LogoUpload.Title>Business logo</LogoUpload.Title>\n    <LogoUpload.Description>\n      <p>Supports JPEG or PNG files (max 3 MB).</p>\n    </LogoUpload.Description>\n    <LogoUpload.Actions>\n      <Button.Root variant=\"neutral\" mode=\"stroke\" size=\"xsmall\">Change</Button.Root>\n    </LogoUpload.Actions>\n  </LogoUpload.Content>\n</LogoUpload.Root>",
         "stories": ["CustomPreview"]
       },
       {
         "title": "User Avatar Upload",
         "description": "Use placeholderType=\"user\" for profile photo uploads.",
-        "code": "<LogoUpload.Root>\n  <LogoUpload.Preview placeholderType=\"user\" />\n  <LogoUpload.Content>\n    <LogoUpload.Title>Profile photo</LogoUpload.Title>\n    <LogoUpload.Description>\n      <p>Supports JPEG or PNG files (max 3MB).</p>\n    </LogoUpload.Description>\n    <LogoUpload.Actions>\n      <Button.Root variant=\"neutral\" mode=\"stroke\" size=\"xsmall\">Change</Button.Root>\n    </LogoUpload.Actions>\n  </LogoUpload.Content>\n</LogoUpload.Root>",
+        "code": "<LogoUpload.Root>\n  <LogoUpload.Preview placeholderType=\"user\" />\n  <LogoUpload.Content>\n    <LogoUpload.Title>Profile photo</LogoUpload.Title>\n    <LogoUpload.Description>\n      <p>Supports JPEG or PNG files (max 3 MB).</p>\n    </LogoUpload.Description>\n    <LogoUpload.Actions>\n      <Button.Root variant=\"neutral\" mode=\"stroke\" size=\"xsmall\">Change</Button.Root>\n    </LogoUpload.Actions>\n  </LogoUpload.Content>\n</LogoUpload.Root>",
         "stories": ["UserAvatar"]
       },
       {
         "title": "Composed",
         "description": "Use LogoUpload.Item for a single-prop composed version that handles the full layout.",
-        "code": "<LogoUpload.Item\n  label=\"Business logo\"\n  description={\n    <>\n      <p>Supports JPEG or PNG files (max 3MB).</p>\n      <p>Use a horizontal image (16:9). Best size: 1200 × 675 px.</p>\n    </>\n  }\n  onButtonClick={upload.openFilePicker}\n/>",
+        "code": "<LogoUpload.Item\n  label=\"Business logo\"\n  description={\n    <>\n      <p>Supports JPEG or PNG files (max 3 MB).</p>\n      <p>Use a horizontal image (16:9). Best size: 1200 × 675 px.</p>\n    </>\n  }\n  onButtonClick={upload.openFilePicker}\n/>",
         "stories": ["Composed"]
       },
       {
         "title": "Composed with Logo",
         "description": "The composed version showing an uploaded image.",
-        "code": "<LogoUpload.Item\n  file={upload.files[0]}\n  label=\"Business logo\"\n  description={<p>Supports JPEG or PNG files (max 3MB).</p>}\n  onButtonClick={upload.openFilePicker}\n/>",
+        "code": "<LogoUpload.Item\n  file={upload.files[0]}\n  label=\"Business logo\"\n  description={<p>Supports JPEG or PNG files (max 3 MB).</p>}\n  onButtonClick={upload.openFilePicker}\n/>",
         "stories": ["ComposedWithLogo"]
       },
       {
         "title": "With FormField",
         "description": "Wrap LogoUpload.Item inside FormField.Root for label, hint, and error support.",
-        "code": "<FormField.Root label=\"Business logo\" hint=\"Used on your public profile and invoices.\">\n  <LogoUpload.Item\n    label=\"Upload a logo\"\n    description={<p>Supports JPEG or PNG files (max 3MB).</p>}\n    onButtonClick={upload.openFilePicker}\n  />\n</FormField.Root>",
+        "code": "<FormField.Root label=\"Business logo\" hint=\"Used on your public profile and invoices.\">\n  <LogoUpload.Item\n    label=\"Upload a logo\"\n    description={<p>Supports JPEG or PNG files (max 3 MB).</p>}\n    onButtonClick={upload.openFilePicker}\n  />\n</FormField.Root>",
         "stories": ["WithFormField"]
       }
     ],

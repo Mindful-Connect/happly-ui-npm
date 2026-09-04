@@ -21,7 +21,11 @@ type StepIndicatorRootProps = React.HTMLAttributes<HTMLDivElement> & {
   railFilledClassName?: string;
   /** Tailwind class for the unfilled rail track. */
   railTrackClassName?: string;
-  /** Transition duration for the rail-fill animation, in ms. */
+  /**
+   * Transition duration for the rail-fill animation, in ms. Defaults to 300 to
+   * match the step icon beside it; a longer fill leaves the rail trailing the
+   * state it represents.
+   */
   fillTransitionMs?: number;
   /**
    * Fires when any step is clicked. Receives the step's zero-based index.
@@ -45,7 +49,7 @@ const StepIndicatorRoot = React.forwardRef<
       children,
       railFilledClassName = 'bg-gradient-to-b from-primary-400 to-primary-500',
       railTrackClassName = 'bg-bg-soft-200',
-      fillTransitionMs = 500,
+      fillTransitionMs = 300,
       onItemClick,
       ...rest
     },
@@ -208,7 +212,7 @@ const StepIndicatorRoot = React.forwardRef<
           style={{
             height: `${fillHeight}px`,
             transition: animateEnabled
-              ? `height ${fillTransitionMs}ms cubic-bezier(0.4, 0, 0.2, 1)`
+              ? `height ${fillTransitionMs}ms ease-out`
               : undefined,
           }}
         />
@@ -307,7 +311,7 @@ const StepIndicatorItem = React.forwardRef<
           >
             <Icon
               className={cn(
-                'size-3 transition-colors duration-300',
+                'size-3 transition-colors duration-300 ease-out',
                 isFilled ? 'text-static-white' : 'text-text-soft-400'
               )}
             />
@@ -315,7 +319,8 @@ const StepIndicatorItem = React.forwardRef<
         </div>
         <div
           className={cn(
-            'group/step flex min-w-0 items-center justify-between gap-3 rounded-md py-2 transition-colors outline-none',
+            'group/step flex min-w-0 items-center justify-between gap-3 rounded-md py-2 transition-colors duration-150 ease-out outline-none',
+            'focus-visible:shadow-button-important-focus',
             interactive && 'cursor-pointer'
           )}
           onClick={
@@ -326,16 +331,25 @@ const StepIndicatorItem = React.forwardRef<
           onKeyDown={handleKeyDown}
           role={interactive ? 'button' : undefined}
           tabIndex={interactive ? 0 : undefined}
+          aria-current={status === 'active' ? 'step' : undefined}
           aria-label={
             interactive && typeof title === 'string' ? title : undefined
           }
         >
           <div className='flex min-w-0 flex-1 flex-col gap-0.5'>
-            <p className='text-label-sm text-text-strong-950 truncate'>
+            <p
+              className='text-label-sm text-text-strong-950 truncate'
+              title={typeof title === 'string' ? title : undefined}
+            >
               {title}
             </p>
             {description ? (
-              <p className='text-paragraph-xs text-text-soft-400 truncate'>
+              <p
+                className='text-paragraph-xs text-text-soft-400 truncate'
+                title={
+                  typeof description === 'string' ? description : undefined
+                }
+              >
                 {description}
               </p>
             ) : null}
@@ -366,15 +380,19 @@ function DefaultStatusAdornment({
       <div
         aria-hidden
         className={cn(
-          'border-bg-soft-200 absolute inset-0 rounded-full border-[1.5px] transition-all duration-300 ease-out',
-          status === 'pending' ? 'scale-100 opacity-100' : 'scale-75 opacity-0'
+          'border-bg-soft-200 absolute inset-0 rounded-full border-[1.5px] transition-[opacity,filter,scale] duration-300 ease-[cubic-bezier(0.2,0,0,1)]',
+          status === 'pending'
+            ? 'scale-100 opacity-100 blur-none'
+            : 'scale-[0.25] opacity-0 blur-[4px]'
         )}
       />
       <div
         aria-hidden
         className={cn(
-          'absolute inset-0 transition-all duration-300 ease-out',
-          status === 'active' ? 'scale-100 opacity-100' : 'scale-75 opacity-0'
+          'absolute inset-0 transition-[opacity,filter,scale] duration-300 ease-[cubic-bezier(0.2,0,0,1)]',
+          status === 'active'
+            ? 'scale-100 opacity-100 blur-none'
+            : 'scale-[0.25] opacity-0 blur-[4px]'
         )}
       >
         <ProgressCircle.Root
@@ -386,10 +404,10 @@ function DefaultStatusAdornment({
       <div
         aria-hidden
         className={cn(
-          'bg-success-base text-static-white absolute inset-0 flex items-center justify-center rounded-full transition-all duration-300 ease-out',
+          'bg-success-solid text-success-solid-contrast absolute inset-0 flex items-center justify-center rounded-full transition-[opacity,filter,scale] duration-300 ease-[cubic-bezier(0.2,0,0,1)]',
           status === 'completed'
-            ? 'scale-100 opacity-100'
-            : 'scale-75 opacity-0'
+            ? 'scale-100 opacity-100 blur-none'
+            : 'scale-[0.25] opacity-0 blur-[4px]'
         )}
       >
         <RiCheckLine className='size-3.5' />

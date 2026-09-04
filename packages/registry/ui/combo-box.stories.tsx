@@ -48,7 +48,7 @@ export const Playground = {
     size: 'medium',
     hasError: false,
     disabled: false,
-    placeholder: 'Choose or search...',
+    placeholder: 'Choose or search…',
     tagVariant: 'gray',
   },
   argTypes: {
@@ -371,7 +371,7 @@ function CustomizationRender() {
             value={cities}
             onValueChange={setCities}
             icon={RiMapPinLine}
-            placeholder='Search cities...'
+            placeholder='Search cities…'
           />
         </FormField.Root>
       </div>
@@ -387,7 +387,7 @@ function CustomizationRender() {
             ]}
             value={skills}
             onValueChange={setSkills}
-            placeholder='Type to filter skills...'
+            placeholder='Type to filter skills…'
           />
         </FormField.Root>
       </div>
@@ -459,7 +459,7 @@ function WithIconsRender() {
             options={FLAG_OPTIONS}
             value={flags}
             onValueChange={setFlags}
-            placeholder='Search countries...'
+            placeholder='Search countries…'
           />
         </FormField.Root>
       </div>
@@ -546,7 +546,7 @@ function CompoundCustomItemsRender() {
           value={value}
           onValueChange={setValue}
         >
-          <ComboBox.SearchTrigger placeholder='Search team members...' />
+          <ComboBox.SearchTrigger placeholder='Search team members…' />
           <ComboBox.Content>
             <CompoundCustomItemsItems />
           </ComboBox.Content>
@@ -599,7 +599,7 @@ function CompoundCustomTagsRender() {
           value={value}
           onValueChange={setValue}
         >
-          <ComboBox.SearchTrigger placeholder='Add assignee...' />
+          <ComboBox.SearchTrigger placeholder='Add assignee…' />
           <ComboBox.Content />
           <CompoundCustomTagsTags />
         </ComboBox.Root>
@@ -651,7 +651,7 @@ function CreatableRender() {
             value={tags}
             onValueChange={setTags}
             creatable
-            placeholder='Pick or create a tag...'
+            placeholder='Pick or create a tag…'
           />
         </FormField.Root>
       </div>
@@ -666,7 +666,7 @@ function CreatableRender() {
             value={freeform}
             onValueChange={setFreeform}
             creatable
-            placeholder='Type and press Enter...'
+            placeholder='Type and press Enter…'
           />
         </FormField.Root>
       </div>
@@ -678,7 +678,7 @@ function CreatableRender() {
             onValueChange={setLabeled}
             creatable
             createLabel={(q) => `Add new tag: ${q}`}
-            placeholder='Search or add a tag...'
+            placeholder='Search or add a tag…'
           />
         </FormField.Root>
       </div>

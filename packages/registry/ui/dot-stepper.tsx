@@ -15,7 +15,10 @@ export const dotStepperVariants = tv({
     root: 'flex flex-wrap',
     item: [
       // base
-      'shrink-0 rounded-full bg-bg-soft-200 outline-none transition duration-200 ease-out',
+      'relative shrink-0 rounded-full bg-bg-soft-200 outline-none transition-[background-color,box-shadow] duration-150 ease-out',
+      // hit area — the dot itself is 4–8px; the pseudo-element is widened to
+      // the gap between neighbours (never past it) and to 24px tall
+      'after:absolute after:top-1/2 after:left-1/2 after:h-6 after:-translate-x-1/2 after:-translate-y-1/2',
       // focus
       'focus:outline-none',
       'focus-visible:ring-2 focus-visible:ring-stroke-strong-950',
@@ -25,11 +28,11 @@ export const dotStepperVariants = tv({
     size: {
       small: {
         root: 'gap-2.5',
-        item: 'w-2 h-2',
+        item: 'w-2 h-2 after:w-[18px]',
       },
       xsmall: {
         root: 'gap-1.5',
-        item: 'w-1 h-1',
+        item: 'w-1 h-1 after:w-[10px]',
       },
     },
   },
@@ -90,6 +93,7 @@ const DotStepperItem = React.forwardRef<HTMLButtonElement, DotStepperItemProps>(
     return (
       <Component
         ref={forwardedRef}
+        aria-current={active ? 'step' : undefined}
         className={cn(item({ class: className }), {
           'bg-primary-base': active,
         })}

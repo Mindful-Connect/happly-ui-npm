@@ -5,7 +5,11 @@
   "title": "Drawer",
   "description": "A slide-in drawer panel built on Radix UI Dialog with overlay, header, body, and footer sections. Uses namespace exports: Drawer.Root, Drawer.Trigger, Drawer.Content, Drawer.Header, Drawer.Title, Drawer.Body, Drawer.Footer, Drawer.Close.",
   "version": "1.0.0",
-  "dependencies": ["@radix-ui/react-dialog", "@remixicon/react"],
+  "dependencies": [
+    "@radix-ui/react-dialog",
+    "@remixicon/react",
+    "tailwindcss-animate"
+  ],
   "registryDependencies": ["happly-ui-utils", "compact-button"],
   "docs": {
     "lead": "A slide-in drawer panel with overlay backdrop, header with close button, body, and footer sections.",
@@ -14,13 +18,13 @@
       {
         "title": "Basic",
         "description": "Simple drawer with header, body placeholder, and footer button.",
-        "code": "<Drawer.Root>\n  <Drawer.Trigger asChild>\n    <Button.Root>Open Drawer</Button.Root>\n  </Drawer.Trigger>\n  <Drawer.Content>\n    <Drawer.Header>\n      <Drawer.Title>Drawer Title</Drawer.Title>\n    </Drawer.Header>\n    <Drawer.Body>Content</Drawer.Body>\n    <Drawer.Footer className=\"border-t\">\n      <Button.Root>Footer Button</Button.Root>\n    </Drawer.Footer>\n  </Drawer.Content>\n</Drawer.Root>",
+        "code": "<Drawer.Root>\n  <Drawer.Trigger asChild>\n    <Button.Root>Open Drawer</Button.Root>\n  </Drawer.Trigger>\n  <Drawer.Content>\n    <Drawer.Header>\n      <Drawer.Title>Drawer Title</Drawer.Title>\n    </Drawer.Header>\n    <Drawer.Body>Content</Drawer.Body>\n    <Drawer.Footer>\n      <Button.Root>Footer Button</Button.Root>\n    </Drawer.Footer>\n  </Drawer.Content>\n</Drawer.Root>",
         "stories": ["Basic"]
       },
       {
         "title": "Demo",
         "description": "Drawer with contact details, information sections, and transaction list.",
-        "code": "<Drawer.Root>\n  <Drawer.Trigger asChild>\n    <Button.Root>Open Drawer</Button.Root>\n  </Drawer.Trigger>\n  <Drawer.Content>\n    <Drawer.Header>\n      <Drawer.Title>Contact Details</Drawer.Title>\n    </Drawer.Header>\n    <Drawer.Body>...</Drawer.Body>\n    <Drawer.Footer className=\"border-t\">\n      <Button.Root>See All Transactions</Button.Root>\n    </Drawer.Footer>\n  </Drawer.Content>\n</Drawer.Root>",
+        "code": "<Drawer.Root>\n  <Drawer.Trigger asChild>\n    <Button.Root>Open Drawer</Button.Root>\n  </Drawer.Trigger>\n  <Drawer.Content>\n    <Drawer.Header>\n      <Drawer.Title>Contact Details</Drawer.Title>\n    </Drawer.Header>\n    <Drawer.Body>...</Drawer.Body>\n    <Drawer.Footer>\n      <Button.Root>See All Transactions</Button.Root>\n    </Drawer.Footer>\n  </Drawer.Content>\n</Drawer.Root>",
         "stories": ["Demo"]
       }
     ],
@@ -60,7 +64,7 @@
       },
       {
         "name": "Drawer.Header",
-        "description": "Header area with optional close button.",
+        "description": "Header area with a bottom separator and an optional close button.",
         "props": [
           {
             "name": "showCloseButton",
@@ -82,7 +86,7 @@
       },
       {
         "name": "Drawer.Footer",
-        "description": "Footer area for action buttons.",
+        "description": "Footer area for action buttons, with a top separator.",
         "props": []
       },
       {

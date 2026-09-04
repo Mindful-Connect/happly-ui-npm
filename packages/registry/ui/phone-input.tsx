@@ -8,7 +8,7 @@ import {
   parseCountry,
 } from 'react-international-phone';
 
-import { useFormField } from '@/lib/form-field-context';
+import { FormFieldContext, useFormField } from '@/lib/form-field-context';
 import { useFormFieldBinding } from '@/lib/use-form-field-binding';
 
 import * as Input from './input';
@@ -31,6 +31,18 @@ const findCountry = (iso2: CountryIso2): CountryOption | undefined =>
   allCountries.find((c) => c.iso2 === iso2);
 
 const defaultPreferredCountries: CountryIso2[] = ['ca', 'us', 'fr'];
+
+/**
+ * Empty context to isolate the country Select from the parent FormField, the
+ * same way `currency-input` isolates its currency Select. Without it the field's
+ * hint/error id lands on both the country trigger and the number input, so the
+ * message is announced twice while tabbing across one field — and closing the
+ * dropdown fires the field's blur validation.
+ */
+const isolatedFormField = {
+  hasError: false,
+  disabled: false,
+};
 
 type PhoneInputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -85,6 +97,7 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
       placeholder = '(555) 000-0000',
       disabled,
       countryName,
+      onBlur: onBlurProp,
       ...rest
     },
     forwardedRef
@@ -92,6 +105,29 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
     const formField = useFormField();
     const resolvedHasError = hasError ?? formField.hasError;
     const resolvedDisabled = disabled ?? formField.disabled;
+    const countryLabelId = React.useId();
+    const countryValueId = React.useId();
+
+    // Caret preservation: this is a controlled input whose displayed value is
+    // reformatted ("(416) 555-1234") on every keystroke. Without this the
+    // browser collapses the caret to the END after each controlled re-render,
+    // so editing mid-number pushes the rest of the digits to the end. Same
+    // recipe as `currency-input.tsx` — record how many digits precede the caret
+    // on change, restore that position once the reformat has rendered.
+    const inputRef = React.useRef<HTMLInputElement | null>(null);
+    const pendingCaretRef = React.useRef<number | null>(null);
+
+    const setInputRef = React.useCallback(
+      (node: HTMLInputElement | null) => {
+        inputRef.current = node;
+        if (typeof forwardedRef === 'function') {
+          forwardedRef(node);
+        } else if (forwardedRef) {
+          forwardedRef.current = node;
+        }
+      },
+      [forwardedRef]
+    );
 
     // Phone value binding (e164 string)
     const phoneBinding = useFormFieldBinding<string>();
@@ -181,21 +217,115 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
 
     const handleInputChange = React.useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
-        let digits = e.target.value.replace(/\D/g, '');
-        const cc = activeCountryIso2.toUpperCase() as CountryCode;
+        const el = e.target;
+        const raw = el.value;
+        const caret = el.selectionStart ?? raw.length;
+        // Digits before the caret = the count to restore after reformatting
+        // (formatting only adds/removes brackets, spaces and dashes around them).
+        let pendingCaret = raw.slice(0, caret).replace(/\D/g, '').length;
+
+        let iso2 = activeCountryIso2;
+        let digits: string;
+
+        if (raw.trimStart().startsWith('+')) {
+          // An international number carries its own calling code. Stripping the
+          // whole string to digits would leave that code inside the national
+          // number and push the last digit past the length cap — "+14165551234"
+          // became "(141) 655-5123". Parse the calling code out and switch the
+          // country instead. Reached by paste and autofill: a typed "+" never
+          // accumulates in a controlled field.
+          const formatter = new AsYouType();
+          formatter.input(raw);
+          const parsedIso2 = formatter.getCountry()?.toLowerCase() as
+            | CountryIso2
+            | undefined;
+          const callingCode = formatter.getCallingCode();
+          if (parsedIso2 && findCountry(parsedIso2)) {
+            iso2 = parsedIso2;
+          } else if (callingCode && callingCode !== activeCountry?.dialCode) {
+            // Ambiguous code (+1 is shared): only move off the active country
+            // when the pasted code does not match it.
+            const match = allCountries.find((c) => c.dialCode === callingCode);
+            if (match) iso2 = match.iso2;
+          }
+          digits = formatter.getNationalNumber();
+          // The caret belongs after the national digits, not the calling code.
+          pendingCaret = Math.max(0, pendingCaret - (callingCode?.length ?? 0));
+        } else {
+          digits = raw.replace(/\D/g, '');
+          const activeCc = activeCountryIso2.toUpperCase();
+          if (
+            (activeCc === 'US' || activeCc === 'CA') &&
+            digits.length === 11 &&
+            digits.startsWith('1')
+          ) {
+            // A NANP number pasted with its trunk prefix ("14165551234") is 11
+            // digits; area codes never start with 1, so the leading 1 is the
+            // calling code, not part of the national number.
+            digits = digits.slice(1);
+            pendingCaret = Math.max(0, pendingCaret - 1);
+          }
+        }
+
+        const cc = iso2.toUpperCase() as CountryCode;
         const maxLen = cc === 'US' || cc === 'CA' ? 10 : 15;
         if (digits.length > maxLen) digits = digits.slice(0, maxLen);
 
-        const formatted = formatNationalDigits(digits, cc);
-        setDisplayValue(formatted);
+        if (iso2 !== activeCountryIso2) {
+          if (onCountryChange) {
+            onCountryChange(iso2);
+          } else if (countryBinding) {
+            countryBinding.onChange(iso2);
+          }
+          if (!isCountryControlled && !countryBinding)
+            setUncontrolledCountry(iso2);
+        }
 
-        const dialCode = activeCountry?.dialCode ?? '';
+        pendingCaretRef.current = pendingCaret;
+        setDisplayValue(formatNationalDigits(digits, cc));
+
+        const dialCode = findCountry(iso2)?.dialCode ?? '';
         const e164 = `+${dialCode}${digits}`;
         lastEmittedRef.current = e164;
         onValueChange?.(e164);
       },
-      [activeCountryIso2, activeCountry?.dialCode, onValueChange]
+      [
+        activeCountryIso2,
+        activeCountry?.dialCode,
+        isCountryControlled,
+        onCountryChange,
+        countryBinding,
+        onValueChange,
+      ]
     );
+
+    // Restore the caret after the reformatted display value has rendered. Runs
+    // every render but only acts when a change just queued a caret position.
+    React.useLayoutEffect(() => {
+      const target = pendingCaretRef.current;
+      if (target == null) return;
+      pendingCaretRef.current = null;
+
+      const el = inputRef.current;
+      if (!el) return;
+
+      // Map "target digits" back to an index in the formatted string.
+      let index = 0;
+      if (target > 0) {
+        let count = 0;
+        index = displayValue.length;
+        for (let i = 0; i < displayValue.length; i++) {
+          if (/\d/.test(displayValue[i])) {
+            count++;
+            if (count === target) {
+              index = i + 1;
+              break;
+            }
+          }
+        }
+      }
+      el.setSelectionRange(index, index);
+    });
 
     const preferred = React.useMemo(
       () => allCountries.filter((c) => preferredCountries.includes(c.iso2)),
@@ -208,62 +338,86 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
 
     return (
       <Input.Root size={size} hasError={resolvedHasError}>
-        <Select.Root
-          variant='compactForInput'
-          value={activeCountryIso2}
-          onValueChange={handleCountryChange}
-          disabled={resolvedDisabled}
-        >
-          <Select.Trigger>
-            {activeCountry && (
-              <div className='flex items-center gap-2'>
-                <div
-                  className='h-5 w-5 shrink-0 rounded-full bg-cover bg-center bg-no-repeat group-disabled/trigger:opacity-[.48]'
-                  style={{
-                    backgroundImage: `url(${FLAG_URL}/${activeCountryIso2}.svg)`,
-                  }}
-                />
-                <span>+{activeCountry.dialCode}</span>
-              </div>
-            )}
-          </Select.Trigger>
-          <Select.Content>
-            {preferred.map((c) => (
-              <Select.Item key={c.iso2} value={c.iso2}>
-                <Select.ItemIcon
-                  className='rounded-full bg-cover bg-center bg-no-repeat'
-                  style={{
-                    backgroundImage: `url(${FLAG_URL}/${c.iso2}.svg)`,
-                  }}
-                />
-                {c.name} (+{c.dialCode})
-              </Select.Item>
-            ))}
-            {preferred.length > 0 && others.length > 0 && (
-              <Select.Separator className='bg-stroke-soft-200 mx-2 my-1 h-px' />
-            )}
-            {others.map((c) => (
-              <Select.Item key={c.iso2} value={c.iso2}>
-                <Select.ItemIcon
-                  className='rounded-full bg-cover bg-center bg-no-repeat'
-                  style={{
-                    backgroundImage: `url(${FLAG_URL}/${c.iso2}.svg)`,
-                  }}
-                />
-                {c.name} (+{c.dialCode})
-              </Select.Item>
-            ))}
-          </Select.Content>
-        </Select.Root>
+        {/* Isolate the country Select from the parent FormField so the field's
+            hint is not announced on both controls and closing the dropdown
+            doesn't fire the number field's blur validation. */}
+        <FormFieldContext.Provider value={isolatedFormField}>
+          <Select.Root
+            variant='compactForInput'
+            value={activeCountryIso2}
+            onValueChange={handleCountryChange}
+            disabled={resolvedDisabled}
+          >
+            {/* The trigger's only content is the dial code ("+1"), so its
+                accessible name was just that value. `aria-label` would
+                *replace* it; a visually hidden label referenced alongside the
+                value element announces "Country +1" instead. */}
+            <Select.Trigger
+              aria-labelledby={`${countryLabelId} ${countryValueId}`}
+            >
+              <span id={countryLabelId} className='sr-only'>
+                Country
+              </span>
+              {activeCountry && (
+                <div id={countryValueId} className='flex items-center gap-2'>
+                  <div
+                    className='h-5 w-5 shrink-0 rounded-full bg-cover bg-center bg-no-repeat group-disabled/trigger:opacity-[.48]'
+                    style={{
+                      backgroundImage: `url(${FLAG_URL}/${activeCountryIso2}.svg)`,
+                    }}
+                  />
+                  <span>+{activeCountry.dialCode}</span>
+                </div>
+              )}
+            </Select.Trigger>
+            <Select.Content>
+              {preferred.map((c) => (
+                <Select.Item key={c.iso2} value={c.iso2}>
+                  <Select.ItemIcon
+                    className='rounded-full bg-cover bg-center bg-no-repeat'
+                    style={{
+                      backgroundImage: `url(${FLAG_URL}/${c.iso2}.svg)`,
+                    }}
+                  />
+                  {c.name} (+{c.dialCode})
+                </Select.Item>
+              ))}
+              {preferred.length > 0 && others.length > 0 && (
+                <Select.Separator className='bg-stroke-soft-200 mx-2 my-1 h-px' />
+              )}
+              {others.map((c) => (
+                <Select.Item key={c.iso2} value={c.iso2}>
+                  <Select.ItemIcon
+                    className='rounded-full bg-cover bg-center bg-no-repeat'
+                    style={{
+                      backgroundImage: `url(${FLAG_URL}/${c.iso2}.svg)`,
+                    }}
+                  />
+                  {c.name} (+{c.dialCode})
+                </Select.Item>
+              ))}
+            </Select.Content>
+          </Select.Root>
+        </FormFieldContext.Provider>
         <Input.Wrapper>
           <Input.Input
-            ref={forwardedRef}
+            ref={setInputRef}
             type='tel'
             inputMode='tel'
             autoComplete='tel-national'
+            // The number is reformatted as it is typed — proportional digits
+            // would shift the text under the caret.
+            className='tabular-nums'
             placeholder={placeholder}
             value={displayValue}
             onChange={handleInputChange}
+            // The country Select is isolated from the FormField above, so the
+            // number input is the field's only blur — it has to be the one that
+            // triggers validation. A consumer `onBlur` runs alongside it.
+            onBlur={(e) => {
+              onBlurProp?.(e);
+              formField.onBlur?.();
+            }}
             disabled={resolvedDisabled}
             {...rest}
           />

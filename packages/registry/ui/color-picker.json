@@ -20,7 +20,7 @@
       {
         "title": "In a Popover",
         "description": "Color picker inside a popover triggered by a button.",
-        "code": "<ColorPicker.Root value={color} onChange={setColor}>\n  <Popover.Root>\n    <Popover.Trigger asChild>\n      <Button.Root variant=\"neutral\" mode=\"stroke\">\n        <Button.Icon as={ColorPicker.Swatch} />\n        Pick Color\n      </Button.Root>\n    </Popover.Trigger>\n    <Popover.Content>...</Popover.Content>\n  </Popover.Root>\n</ColorPicker.Root>",
+        "code": "<ColorPicker.Root value={color} onChange={setColor}>\n  <Popover.Root>\n    <Popover.Trigger asChild>\n      <Button.Root variant=\"neutral\" mode=\"stroke\">\n        <Button.Icon as={ColorPicker.Swatch} />\n        Pick color\n      </Button.Root>\n    </Popover.Trigger>\n    <Popover.Content>...</Popover.Content>\n  </Popover.Root>\n</ColorPicker.Root>",
         "stories": ["PopoverDemo"]
       },
       {

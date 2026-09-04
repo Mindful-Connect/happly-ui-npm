@@ -18,11 +18,11 @@ export const buttonGroupVariants = tv({
       // base
       'group relative flex items-center justify-center whitespace-nowrap bg-bg-white-0 text-center text-text-sub-600 outline-none',
       'border border-stroke-soft-200',
-      'transition duration-200 ease-out',
+      'transition-[background-color,color,box-shadow] duration-150 ease-out',
       // hover
       'hover:bg-bg-weak-50',
       // focus
-      'focus:bg-bg-weak-50 focus:outline-none',
+      'focus-visible:z-10 focus-visible:bg-bg-weak-50 focus-visible:text-text-strong-950 focus-visible:shadow-button-important-focus',
       // active
       'data-[state=on]:bg-bg-weak-50',
       'data-[state=on]:text-text-strong-950',

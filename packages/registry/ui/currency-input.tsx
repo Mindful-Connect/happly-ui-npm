@@ -98,11 +98,14 @@ const CurrencyInputRoot = React.forwardRef<
       disabled,
       currencyName,
       valueAsNumber = true,
+      onBlur: onBlurProp,
       ...rest
     },
     forwardedRef
   ) => {
     const formField = useFormField();
+    const currencyLabelId = React.useId();
+    const currencyValueId = React.useId();
     const resolvedHasError = hasError ?? formField.hasError;
     const resolvedDisabled = disabled ?? formField.disabled;
 
@@ -148,9 +151,26 @@ const CurrencyInputRoot = React.forwardRef<
         : undefined
     );
 
-    // Priority: explicit props > RHF binding > internal state
-    const value = valueProp !== undefined ? valueProp : amountBinding?.value;
-    const onValueChange = onValueChangeProp ?? amountBinding?.onChange;
+    // Priority: explicit props > RHF binding > internal state.
+    // The internal state matters: without it `<CurrencyInput.Root />` — the
+    // documented uncontrolled usage — had no value source at all, so the amount
+    // never changed and the field could not be typed into. The currency code
+    // below already worked this way; the amount now matches it.
+    const hasExplicitValue = valueProp !== undefined;
+    const hasExplicitOnChange = onValueChangeProp !== undefined;
+    const [uncontrolledAmount, setUncontrolledAmount] = React.useState('');
+    const value = hasExplicitValue
+      ? valueProp
+      : (amountBinding?.value ?? uncontrolledAmount);
+
+    const onValueChange = React.useCallback(
+      (next: string) => {
+        if (!hasExplicitValue && !amountBinding) setUncontrolledAmount(next);
+        if (hasExplicitOnChange) onValueChangeProp?.(next);
+        else amountBinding?.onChange(next);
+      },
+      [hasExplicitValue, hasExplicitOnChange, onValueChangeProp, amountBinding]
+    );
 
     const [uncontrolledCurrency, setUncontrolledCurrency] =
       React.useState(defaultCurrency);
@@ -236,10 +256,20 @@ const CurrencyInputRoot = React.forwardRef<
           <Input.Input
             ref={setInputRef}
             inputMode='decimal'
+            // The amount is reformatted on every keystroke — proportional
+            // digits would shift the caret's neighbours as it grows.
+            className='tabular-nums'
             placeholder={placeholder}
             value={displayValue}
             onChange={handleInputChange}
-            onBlur={() => formField.onBlur?.()}
+            // The currency Select is isolated from the FormField below, so the
+            // amount input is the field's only blur — it has to be the one that
+            // triggers validation. A consumer `onBlur` runs alongside it rather
+            // than replacing it (it used to win outright via `{...rest}`).
+            onBlur={(e) => {
+              onBlurProp?.(e);
+              formField.onBlur?.();
+            }}
             disabled={resolvedDisabled}
             {...rest}
           />
@@ -253,8 +283,17 @@ const CurrencyInputRoot = React.forwardRef<
             onValueChange={handleCurrencyChange}
             disabled={resolvedDisabled}
           >
-            <Select.Trigger>
-              <Select.Value />
+            {/* The trigger's only content is the code ("CAD"), so its
+                accessible name was just the value. `aria-label` would *replace*
+                that value; a visually hidden label referenced alongside the
+                value element announces "Currency CAD" instead. */}
+            <Select.Trigger
+              aria-labelledby={`${currencyLabelId} ${currencyValueId}`}
+            >
+              <span id={currencyLabelId} className='sr-only'>
+                Currency
+              </span>
+              <Select.Value id={currencyValueId} />
             </Select.Trigger>
             <Select.Content className='z-[999]'>
               {currencies.map((item) => (

@@ -35,7 +35,7 @@ function IconCmd(props: React.SVGProps<SVGSVGElement>) {
 export const Demo = {
   render: () => (
     <Kbd.Root>
-      <IconCmd className='h-2.5 w-2.5' />
+      <IconCmd role='img' aria-label='Command' className='h-2.5 w-2.5' />
       +K
     </Kbd.Root>
   ),

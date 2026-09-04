@@ -10,6 +10,7 @@ export function IconEmptyUser(props: React.SVGProps<SVGSVGElement>) {
       xmlns='http://www.w3.org/2000/svg'
       fill='none'
       viewBox='0 0 80 80'
+      aria-hidden='true'
       {...props}
     >
       <g fill='#fff' clipPath={`url(#${clipPathId})`}>
@@ -37,6 +38,7 @@ export function IconEmptyCompany(props: React.SVGProps<SVGSVGElement>) {
       height={56}
       fill='none'
       viewBox='0 0 56 56'
+      aria-hidden='true'
       {...props}
     >
       <defs>

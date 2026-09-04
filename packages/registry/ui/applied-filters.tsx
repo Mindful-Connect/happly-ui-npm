@@ -29,7 +29,19 @@ type AppliedFilterGroup = {
 
 // ─── Animated Tag (internal) ──────────────────────────────
 
-const EXIT_MS = 200;
+// Exits stay shorter and softer than enters.
+const EXIT_MS = 150;
+
+/**
+ * Two chips sit on the same wrapped flex line when their boxes overlap
+ * vertically. Compared by rect rather than `offsetTop` because the row is
+ * `items-center`, so chips of different heights on one line do not share a top.
+ */
+function sharesLineWith(a: Element, b: Element) {
+  const ra = a.getBoundingClientRect();
+  const rb = b.getBoundingClientRect();
+  return ra.top < rb.bottom && rb.top < ra.bottom;
+}
 
 function AnimatedTag({
   filterKey,
@@ -44,15 +56,44 @@ function AnimatedTag({
 }) {
   const ref = React.useRef<HTMLDivElement>(null);
   const [exiting, setExiting] = React.useState(false);
+  const [exitStyle, setExitStyle] = React.useState<React.CSSProperties>({});
 
   const handleDismiss = () => {
     if (exiting) return;
     const el = ref.current;
+    const next: React.CSSProperties = {
+      width: 0,
+      opacity: 0,
+      transform: 'scale(0.9)',
+    };
+
     if (el) {
       // Lock current width so collapse animates from a fixed value
       el.style.width = `${el.offsetWidth}px`;
+
+      // Collapsing to width 0 leaves the row's own `gap` standing until the
+      // node unmounts, so every following chip snaps sideways by one gap at
+      // the end of the exit. Pull that gap in over the same 150ms — but only
+      // when a neighbour on the same wrapped line actually contributes one,
+      // otherwise the compensation would itself shift the row.
+      const parent = el.parentElement;
+      const gap = parent
+        ? parseFloat(window.getComputedStyle(parent).columnGap) || 0
+        : 0;
+      if (gap > 0) {
+        const prev = el.previousElementSibling;
+        const after = el.nextElementSibling;
+        if (prev && sharesLineWith(el, prev)) {
+          next.marginInlineStart = -gap;
+        } else if (after && sharesLineWith(el, after)) {
+          next.marginInlineEnd = -gap;
+        }
+      }
+
       el.getBoundingClientRect();
     }
+
+    setExitStyle(next);
     setExiting(true);
     setTimeout(() => onRemove(filterKey, value), EXIT_MS);
   };
@@ -61,10 +102,12 @@ function AnimatedTag({
     <div
       ref={ref}
       style={{
-        transitionProperty: 'width, opacity, transform',
+        transitionProperty:
+          'width, opacity, transform, margin-inline-start, margin-inline-end',
         transitionDuration: `${EXIT_MS}ms`,
-        transitionTimingFunction: 'cubic-bezier(0.2, 0, 0, 1)',
-        ...(exiting ? { width: 0, opacity: 0, transform: 'scale(0.9)' } : {}),
+        // ease-out in both directions, like the rest of the registry
+        transitionTimingFunction: 'ease-out',
+        ...(exiting ? exitStyle : {}),
       }}
       className={cn(
         'inline-flex overflow-hidden',

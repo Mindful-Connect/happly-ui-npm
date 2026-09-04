@@ -5,7 +5,11 @@
   "title": "Dropdown",
   "description": "A dropdown menu component built on Radix UI with items, groups, labels, sub-menus, error variants, and a composed shorthand. Uses namespace exports: Dropdown.Root, Dropdown.Trigger, Dropdown.Content, Dropdown.Item, Dropdown.Composed.",
   "version": "1.1.0",
-  "dependencies": ["@radix-ui/react-dropdown-menu", "@remixicon/react"],
+  "dependencies": [
+    "@radix-ui/react-dropdown-menu",
+    "@remixicon/react",
+    "tailwindcss-animate"
+  ],
   "registryDependencies": ["happly-ui-utils", "polymorphic"],
   "docs": {
     "lead": "A dropdown menu component with items, groups, sub-menus, error variants, and a composed shorthand for common patterns.",

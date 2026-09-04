@@ -45,8 +45,13 @@
     "api": [
       {
         "name": "FadeScroll.Root",
-        "description": "Scroll container with hidden native scrollbar and gradient mask fades on edges with overflowing content. Forwards a ref to the underlying div and accepts all standard div props (className, style, onScroll, etc.).",
+        "description": "Scroll container with hidden native scrollbar and gradient mask fades on edges with overflowing content. Forwards a ref to the underlying div and accepts all standard div props (className, style, onScroll, etc.). While the content actually overflows, the container becomes a keyboard-reachable scroll region (tabIndex 0, role=\"region\"); with nothing to scroll it adds no tab stop.",
         "props": [
+          {
+            "name": "label",
+            "type": "string",
+            "description": "Accessible name for the scroll region, applied as aria-label while the content overflows. Supply one whenever the region is not already described by a nearby heading — an unnamed region is not announced as a landmark."
+          },
           {
             "name": "orientation",
             "type": "'vertical' | 'horizontal'",

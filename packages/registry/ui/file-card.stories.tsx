@@ -19,7 +19,7 @@ export const UploadStates = {
           <FileCard.UploadBody>
             <FileCard.InfoGroup>
               <FileCard.Name>DataAnalysis.pdf</FileCard.Name>
-              <FileCard.Status status='uploading'>Uploading...</FileCard.Status>
+              <FileCard.Status status='uploading'>Uploading…</FileCard.Status>
             </FileCard.InfoGroup>
             <FileCard.Progress value={10} />
           </FileCard.UploadBody>
@@ -177,7 +177,7 @@ export const Compact = {
               <FileCard.Meta>0 KB of 120 KB</FileCard.Meta>
               <FileCard.Dot />
               <FileCard.CompactStatus status='uploading'>
-                Uploading...
+                Uploading…
               </FileCard.CompactStatus>
             </FileCard.CompactDescription>
           </FileCard.CompactBody>

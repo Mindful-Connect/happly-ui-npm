@@ -12,7 +12,8 @@
     "@radix-ui/react-select",
     "@radix-ui/react-scroll-area",
     "@radix-ui/react-slot",
-    "@remixicon/react"
+    "@remixicon/react",
+    "tailwindcss-animate"
   ],
   "registryDependencies": [
     "form-field-context",
@@ -23,24 +24,24 @@
   ],
   "docs": {
     "lead": "A select component with multiple variants, sizes, scroll area, and item icons.",
-    "usage": "import * as Select from \"@/components/ui/select\"\n\n<Select.Root>\n  <Select.Trigger>\n    <Select.Value placeholder=\"Select...\" />\n  </Select.Trigger>\n  <Select.Content>\n    <Select.Item value=\"one\">Option One</Select.Item>\n    <Select.Item value=\"two\">Option Two</Select.Item>\n  </Select.Content>\n</Select.Root>",
+    "usage": "import * as Select from \"@/components/ui/select\"\n\n<Select.Root>\n  <Select.Trigger>\n    <Select.Value placeholder=\"Select…\" />\n  </Select.Trigger>\n  <Select.Content>\n    <Select.Item value=\"one\">Option One</Select.Item>\n    <Select.Item value=\"two\">Option Two</Select.Item>\n  </Select.Content>\n</Select.Root>",
     "examples": [
       {
         "title": "Default",
         "description": "Basic select with text options.",
-        "code": "<Select.Root>\n  <Select.Trigger>\n    <Select.Value placeholder=\"Select your favorite fruit...\" />\n  </Select.Trigger>\n  <Select.Content>\n    <Select.Item value=\"apple\">Apple</Select.Item>\n    <Select.Item value=\"banana\">Banana</Select.Item>\n  </Select.Content>\n</Select.Root>",
+        "code": "<Select.Root>\n  <Select.Trigger>\n    <Select.Value placeholder=\"Select your favorite fruit…\" />\n  </Select.Trigger>\n  <Select.Content>\n    <Select.Item value=\"apple\">Apple</Select.Item>\n    <Select.Item value=\"banana\">Banana</Select.Item>\n  </Select.Content>\n</Select.Root>",
         "stories": ["Demo"]
       },
       {
         "title": "With Label and Hint",
         "description": "Select with a label and hint text.",
-        "code": "<FormField.Root\n  label=\"Fruit\"\n  htmlFor=\"fruit\"\n  hint=\"This is a hint text to help user.\"\n>\n  <Select.Root>\n    <Select.Trigger id=\"fruit\">\n      <Select.Value placeholder=\"Select your favorite fruit...\" />\n    </Select.Trigger>\n    <Select.Content>\n      <Select.Item value=\"apple\">Apple</Select.Item>\n      <Select.Item value=\"banana\">Banana</Select.Item>\n    </Select.Content>\n  </Select.Root>\n</FormField.Root>",
+        "code": "<FormField.Root\n  label=\"Fruit\"\n  htmlFor=\"fruit\"\n  hint=\"This is a hint text to help user.\"\n>\n  <Select.Root>\n    <Select.Trigger id=\"fruit\">\n      <Select.Value placeholder=\"Select your favorite fruit…\" />\n    </Select.Trigger>\n    <Select.Content>\n      <Select.Item value=\"apple\">Apple</Select.Item>\n      <Select.Item value=\"banana\">Banana</Select.Item>\n    </Select.Content>\n  </Select.Root>\n</FormField.Root>",
         "stories": ["WithLabelHint"]
       },
       {
         "title": "With Icons",
         "description": "Select items with leading icons.",
-        "code": "<Select.Root defaultValue=\"utility-payment\">\n  <Select.Trigger>\n    <Select.Value placeholder=\"Select a payment...\" />\n  </Select.Trigger>\n  <Select.Content>\n    <Select.Item value=\"utility-payment\">\n      <Select.ItemIcon as={RiFlashlightLine} />\n      Utility Payment\n    </Select.Item>\n  </Select.Content>\n</Select.Root>",
+        "code": "<Select.Root defaultValue=\"utility-payment\">\n  <Select.Trigger>\n    <Select.Value placeholder=\"Select a payment…\" />\n  </Select.Trigger>\n  <Select.Content>\n    <Select.Item value=\"utility-payment\">\n      <Select.ItemIcon as={RiFlashlightLine} />\n      Utility Payment\n    </Select.Item>\n  </Select.Content>\n</Select.Root>",
         "stories": ["WithIcons"]
       },
       {
@@ -64,13 +65,13 @@
       {
         "title": "Disabled",
         "description": "Disabled select states with placeholder and filled values.",
-        "code": "<Select.Root disabled>\n  <Select.Trigger>\n    <Select.Value placeholder=\"Select...\" />\n  </Select.Trigger>\n  <Select.Content>...</Select.Content>\n</Select.Root>",
+        "code": "<Select.Root disabled>\n  <Select.Trigger>\n    <Select.Value placeholder=\"Select…\" />\n  </Select.Trigger>\n  <Select.Content>...</Select.Content>\n</Select.Root>",
         "stories": ["Disabled"]
       },
       {
         "title": "Readonly",
         "description": "Readonly select states with placeholder and filled values.",
-        "code": "<Select.Root readOnly>\n  <Select.Trigger>\n    <Select.Value placeholder=\"Select...\" />\n  </Select.Trigger>\n  <Select.Content>...</Select.Content>\n</Select.Root>",
+        "code": "<Select.Root readOnly>\n  <Select.Trigger>\n    <Select.Value placeholder=\"Select…\" />\n  </Select.Trigger>\n  <Select.Content>...</Select.Content>\n</Select.Root>",
         "stories": ["Readonly"]
       },
       {
@@ -100,7 +101,7 @@
       {
         "title": "Input with Inline Select",
         "description": "Inline select inside an input wrapper.",
-        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Input placeholder=\"Placeholder...\" />\n    <Select.Root variant=\"inline\" defaultValue=\"view\">\n      <Select.Trigger>\n        <Select.Value />\n      </Select.Trigger>\n      <Select.Content>...</Select.Content>\n    </Select.Root>\n  </Input.Wrapper>\n</Input.Root>",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Input placeholder=\"Placeholder…\" />\n    <Select.Root variant=\"inline\" defaultValue=\"view\">\n      <Select.Trigger>\n        <Select.Value />\n      </Select.Trigger>\n      <Select.Content>...</Select.Content>\n    </Select.Root>\n  </Input.Wrapper>\n</Input.Root>",
         "stories": ["InputWithInlineSelect"]
       },
       {

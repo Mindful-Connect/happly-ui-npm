@@ -2,8 +2,6 @@
 
 import * as React from 'react';
 
-import { motion } from 'framer-motion';
-
 import type { PolymorphicComponentProps } from '@/lib/polymorphic';
 import { recursiveCloneChildren } from '@/lib/recursive-clone-children';
 import { tv, type VariantProps } from '@/lib/tv';
@@ -34,12 +32,93 @@ const maskCompositeStyle = {
   WebkitMaskComposite: 'source-in',
 } as React.CSSProperties;
 
+function isEnabledTab(tab: HTMLElement) {
+  return (
+    !tab.hasAttribute('disabled') &&
+    tab.getAttribute('aria-disabled') !== 'true'
+  );
+}
+
+/**
+ * Roving `tabindex` (ARIA APG): a tablist is one Tab stop, not one per tab.
+ * The stop belongs to the selected tab, or — when nothing is selected, which
+ * this component allows on every item — to the first enabled tab, so the list
+ * is never dropped out of the tab order entirely. Driven from the Root over
+ * the rendered nodes rather than as an `Item` prop, because items are cloned
+ * children of arbitrary depth and the Root cannot address them individually.
+ */
+function setTabStop(tabs: HTMLElement[], stop: HTMLElement | undefined) {
+  for (const tab of tabs) {
+    tab.tabIndex = tab === stop ? 0 : -1;
+  }
+}
+
+function syncRovingTabIndex(container: HTMLElement | null) {
+  if (!container) return;
+
+  const tabs = Array.from(
+    container.querySelectorAll<HTMLElement>('[role="tab"]')
+  );
+  if (tabs.length === 0) return;
+
+  const enabled = tabs.filter(isEnabledTab);
+  const selected = enabled.find(
+    (tab) => tab.getAttribute('aria-selected') === 'true'
+  );
+
+  setTabStop(tabs, selected ?? enabled[0]);
+}
+
+/**
+ * ARIA APG tabs keyboard model: arrow keys move focus between tabs (wrapping),
+ * Home/End jump to the first/last. Activation stays manual — the native
+ * `<button>` already handles Enter and Space. The tab that receives focus also
+ * takes over the tablist's single Tab stop.
+ */
+function moveTabFocus(
+  event: React.KeyboardEvent<HTMLElement>,
+  container: HTMLElement | null
+) {
+  const { key } = event;
+  if (
+    !container ||
+    (key !== 'ArrowRight' &&
+      key !== 'ArrowLeft' &&
+      key !== 'Home' &&
+      key !== 'End')
+  ) {
+    return;
+  }
+
+  const allTabs = Array.from(
+    container.querySelectorAll<HTMLElement>('[role="tab"]')
+  );
+  const tabs = allTabs.filter(isEnabledTab);
+  const current = tabs.indexOf(document.activeElement as HTMLElement);
+  if (tabs.length === 0 || current === -1) return;
+
+  event.preventDefault();
+  const isRtl = getComputedStyle(container).direction === 'rtl';
+  const forward = isRtl ? key === 'ArrowLeft' : key === 'ArrowRight';
+  const next =
+    key === 'Home'
+      ? 0
+      : key === 'End'
+        ? tabs.length - 1
+        : (current + (forward ? 1 : -1) + tabs.length) % tabs.length;
+
+  const target = tabs[next];
+  target.focus();
+  setTabStop(allTabs, target);
+}
+
 export const tabMenuHorizontalVariants = tv({
   slots: {
     root: '-m-1 flex items-center gap-2 overflow-x-auto p-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
     item: [
       'flex shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border px-4 py-2 text-label-sm',
       'transition-colors duration-150 ease-out',
+      'outline-none focus-visible:shadow-button-important-focus',
       'disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
     ],
     icon: 'w-5 h-5 shrink-0',
@@ -117,6 +196,7 @@ function TabMenuHorizontalRoot({
   children,
   className,
   variant,
+  onKeyDown,
   ...rest
 }: TabMenuHorizontalRootProps) {
   const uniqueId = React.useId();
@@ -142,6 +222,12 @@ function TabMenuHorizontalRoot({
     return () => observer.disconnect();
   }, [updateScrollState]);
 
+  // Runs after every render, so a change of selection (or of the item list)
+  // moves the single Tab stop with it. Intentionally has no dependency array.
+  React.useEffect(() => {
+    syncRovingTabIndex(scrollRef.current);
+  });
+
   const sharedProps: TabMenuHorizontalSharedProps = { variant };
 
   const extendedChildren = recursiveCloneChildren(
@@ -159,6 +245,10 @@ function TabMenuHorizontalRoot({
       role='tablist'
       className={root({ class: className })}
       onScroll={updateScrollState}
+      onKeyDown={(event) => {
+        onKeyDown?.(event);
+        if (!event.defaultPrevented) moveTabFocus(event, scrollRef.current);
+      }}
       style={
         maskImage !== 'none'
           ? { maskImage, WebkitMaskImage: maskImage, ...maskCompositeStyle }
@@ -174,10 +264,7 @@ TabMenuHorizontalRoot.displayName = TAB_MENU_ROOT_NAME;
 
 type TabMenuHorizontalItemProps = TabMenuHorizontalSharedProps &
   VariantProps<typeof tabMenuHorizontalVariants> &
-  Omit<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    'onDrag' | 'onDragStart' | 'onDragEnd' | 'onAnimationStart'
-  >;
+  React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const TabMenuHorizontalItem = React.forwardRef<
   HTMLButtonElement,
@@ -196,18 +283,16 @@ const TabMenuHorizontalItem = React.forwardRef<
   );
 
   return (
-    <motion.button
+    <button
       ref={ref}
       type='button'
       role='tab'
       aria-selected={selected === true}
-      whileTap={{ scale: 1.05 }}
-      transition={{ type: 'spring', stiffness: 400, damping: 17 }}
       className={item({ class: className })}
       {...rest}
     >
       {extendedChildren}
-    </motion.button>
+    </button>
   );
 });
 TabMenuHorizontalItem.displayName = TAB_MENU_ITEM_NAME;

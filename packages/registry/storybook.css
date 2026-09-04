@@ -1,8 +1,12 @@
 @import 'tailwindcss';
 @import './styles/happly-theme.css';
 
+/* enter/exit utilities (animate-in, fade-*, zoom-*, slide-*) used by the overlay components */
+@plugin 'tailwindcss-animate';
+
 @source './ui';
 @source './lib';
+@source './showcase';
 
 @custom-variant dark (&:where(.dark, .dark *));
 

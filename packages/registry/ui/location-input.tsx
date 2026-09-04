@@ -110,6 +110,53 @@ function resolvePlace(
 
 const DEFAULT_COUNTRY_RESTRICTIONS = ['ca', 'us', 'fr'];
 
+// ─── Suggestion row ────────────────────────────────────────
+
+function LocationSuggestion({
+  id,
+  suggestion,
+  selected,
+  highlighted,
+  onSelect,
+  onHighlight,
+}: {
+  id: string;
+  suggestion: Suggestion;
+  selected: boolean;
+  highlighted: boolean;
+  onSelect: () => void;
+  onHighlight: () => void;
+}) {
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    if (highlighted) ref.current?.scrollIntoView({ block: 'nearest' });
+  }, [highlighted]);
+
+  return (
+    <div
+      ref={ref}
+      id={id}
+      role='option'
+      aria-selected={selected}
+      data-highlighted={highlighted || undefined}
+      onClick={onSelect}
+      onMouseEnter={onHighlight}
+      className={cn(
+        // rounded-lg: the popover is a 16px-radius surface with 8px of
+        // padding, so a concentric row radius is 16 − 8 = 8px.
+        'text-paragraph-sm text-text-strong-950 flex w-full cursor-pointer items-center gap-2 rounded-lg p-2 text-left select-none',
+        'transition-[background-color] duration-150 ease-out',
+        'hover:bg-bg-weak-50',
+        highlighted && 'bg-bg-weak-50'
+      )}
+      title={suggestion.description}
+    >
+      <span className='line-clamp-1'>{suggestion.description}</span>
+    </div>
+  );
+}
+
 // ─── LocationInput ─────────────────────────────────────────
 
 type LocationInputProps = Omit<
@@ -149,7 +196,7 @@ const LocationInputRoot = React.forwardRef<
     {
       location: locationProp,
       onLocationChange: onLocationChangeProp,
-      placeholder = 'Search address...',
+      placeholder = 'Search address…',
       icon: Icon = RiMapPinLine,
       size,
       hasError,
@@ -189,7 +236,15 @@ const LocationInputRoot = React.forwardRef<
       location?.formatted_address ?? ''
     );
     const [suggestions, setSuggestions] = React.useState<Suggestion[]>([]);
+    const [noResults, setNoResults] = React.useState(false);
+    const [highlightedIndex, setHighlightedIndex] = React.useState(-1);
     const [anchorWidth, setAnchorWidth] = React.useState(0);
+    const instanceId = React.useId();
+    const listboxId = `location-listbox-${instanceId}`;
+    const getItemId = React.useCallback(
+      (index: number) => `location-item-${instanceId}-${index}`,
+      [instanceId]
+    );
     const anchorRef = React.useRef<HTMLDivElement>(null);
     const searchActiveRef = React.useRef(false);
     const countryRestrictionsKey = (
@@ -229,6 +284,7 @@ const LocationInputRoot = React.forwardRef<
 
       if (debouncedSearch.length < 3) {
         setSuggestions([]);
+        setNoResults(false);
         if (debouncedSearch.length === 0) onLocationChangeRef.current?.(null);
         return;
       }
@@ -248,7 +304,11 @@ const LocationInputRoot = React.forwardRef<
             ? predictions.filter((p) => !excluded.includes(p.place_id))
             : predictions;
           setSuggestions(filtered);
-          if (filtered.length > 0) handleOpenChange(true);
+          setHighlightedIndex(-1);
+          // Open on an empty result too — silence after typing reads as a
+          // broken field. The panel says which query found nothing.
+          setNoResults(filtered.length === 0);
+          handleOpenChange(true);
         })
         .catch(() => {});
     }, [debouncedSearch, countryRestrictionsKey, excludePlaceIdsKey, typesKey]);
@@ -259,8 +319,59 @@ const LocationInputRoot = React.forwardRef<
         onLocationChange?.(resolved);
         selectingRef.current = true;
         setOpen(false);
+        setHighlightedIndex(-1);
+        setNoResults(false);
         searchActiveRef.current = false;
       });
+    }
+
+    // The suggestion list is a listbox the field owns: arrows move the active
+    // option, Enter takes it, Escape closes. Without this the list is
+    // pointer-only and a keyboard user can never pick an address.
+    function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+      const count = suggestions.length;
+
+      switch (event.key) {
+        case 'ArrowDown': {
+          if (count === 0) return;
+          event.preventDefault();
+          if (!open) handleOpenChange(true);
+          setHighlightedIndex((index) => (index < count - 1 ? index + 1 : 0));
+          break;
+        }
+        case 'ArrowUp': {
+          if (count === 0) return;
+          event.preventDefault();
+          if (!open) handleOpenChange(true);
+          setHighlightedIndex((index) => (index > 0 ? index - 1 : count - 1));
+          break;
+        }
+        case 'Home': {
+          if (!open || count === 0) return;
+          event.preventDefault();
+          setHighlightedIndex(0);
+          break;
+        }
+        case 'End': {
+          if (!open || count === 0) return;
+          event.preventDefault();
+          setHighlightedIndex(count - 1);
+          break;
+        }
+        case 'Enter': {
+          const active = open ? suggestions[highlightedIndex] : undefined;
+          if (!active) return;
+          event.preventDefault();
+          handleSelect(active);
+          break;
+        }
+        case 'Escape': {
+          if (!open) return;
+          event.preventDefault();
+          handleOpenChange(false);
+          break;
+        }
+      }
     }
 
     return (
@@ -275,11 +386,21 @@ const LocationInputRoot = React.forwardRef<
                   role='combobox'
                   aria-expanded={open}
                   aria-haspopup='listbox'
+                  aria-autocomplete='list'
+                  aria-controls={open ? listboxId : undefined}
+                  aria-activedescendant={
+                    open && highlightedIndex >= 0
+                      ? getItemId(highlightedIndex)
+                      : undefined
+                  }
+                  autoComplete='off'
+                  spellCheck={false}
                   value={search}
                   onChange={(e) => {
                     searchActiveRef.current = true;
                     setSearch(e.target.value);
                   }}
+                  onKeyDown={handleKeyDown}
                   onFocus={() => {
                     if (!resolvedDisabled && suggestions.length > 0) {
                       handleOpenChange(true);
@@ -298,7 +419,7 @@ const LocationInputRoot = React.forwardRef<
           </div>
         </Popover.Anchor>
 
-        {suggestions.length > 0 && (
+        {(suggestions.length > 0 || noResults) && (
           <Popover.Content
             align='start'
             sideOffset={8}
@@ -319,29 +440,29 @@ const LocationInputRoot = React.forwardRef<
                   style={{ overflowY: undefined }}
                   className='max-h-[196px] w-full scroll-py-2 overflow-auto p-2'
                   role='listbox'
+                  id={listboxId}
+                  aria-label='Address suggestions'
                 >
-                  <div className='flex flex-col gap-1'>
-                    {suggestions.map((suggestion) => (
-                      <div
-                        key={suggestion.place_id}
-                        role='option'
-                        aria-selected={
-                          location?.place_id === suggestion.place_id
-                        }
-                        onClick={() => handleSelect(suggestion)}
-                        className={cn(
-                          'rounded-10 text-paragraph-sm text-text-strong-950 flex w-full cursor-pointer items-center gap-2 p-2 text-left select-none',
-                          'transition duration-200 ease-out',
-                          'hover:bg-bg-weak-50'
-                        )}
-                        title={suggestion.description}
-                      >
-                        <span className='line-clamp-1'>
-                          {suggestion.description}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                  {noResults ? (
+                    <div className='text-paragraph-sm text-text-sub-600 py-6 text-center text-pretty'>
+                      No matches for “{search.trim()}”. Try a shorter address or
+                      a nearby street.
+                    </div>
+                  ) : (
+                    <div className='flex flex-col gap-1'>
+                      {suggestions.map((suggestion, index) => (
+                        <LocationSuggestion
+                          key={suggestion.place_id}
+                          id={getItemId(index)}
+                          suggestion={suggestion}
+                          selected={location?.place_id === suggestion.place_id}
+                          highlighted={index === highlightedIndex}
+                          onSelect={() => handleSelect(suggestion)}
+                          onHighlight={() => setHighlightedIndex(index)}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </ScrollAreaPrimitives.Viewport>
                 <ScrollAreaPrimitives.Scrollbar orientation='vertical'>
                   <ScrollAreaPrimitives.Thumb className='bg-bg-soft-200 !w-1 rounded' />
@@ -519,18 +640,20 @@ function LocationInputMulti({
             canRemove ? (
               <button
                 type='button'
-                tabIndex={-1}
                 onClick={() => handleRemove(row.id)}
                 disabled={resolvedDisabled}
                 aria-label='Remove location'
                 className={cn(
-                  'flex size-5 shrink-0 items-center justify-center',
-                  'text-text-soft-400 transition duration-200 ease-out',
+                  'relative flex size-5 shrink-0 items-center justify-center rounded-md',
+                  'text-text-soft-400 transition-[color,box-shadow] duration-150 ease-out',
                   'hover:text-text-strong-950',
-                  'disabled:text-text-disabled-300 disabled:pointer-events-none'
+                  'focus-visible:shadow-button-important-focus focus-visible:outline-none',
+                  'disabled:text-text-disabled-300 disabled:pointer-events-none',
+                  // 24px hit area around the 20px glyph (WCAG 2.5.8)
+                  'after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
                 )}
               >
-                <RiSubtractLine className='size-5' />
+                <RiSubtractLine aria-hidden='true' className='size-5' />
               </button>
             ) : null
           }
@@ -542,14 +665,16 @@ function LocationInputMulti({
         onClick={handleAdd}
         disabled={resolvedDisabled || !canAdd}
         className={cn(
-          'rounded-8 flex w-fit items-center gap-0.5 py-1.5',
+          // rounded-8 is not a radius token in this theme, so it compiled to
+          // nothing — rounded-lg is the 8px step it was reaching for.
+          'flex w-fit items-center gap-0.5 rounded-lg py-1.5',
           'text-text-sub-600',
-          'transition duration-200 ease-out',
+          'transition-[color] duration-150 ease-out',
           'hover:text-text-strong-950',
           'disabled:text-text-disabled-300 disabled:pointer-events-none'
         )}
       >
-        <RiAddLine className='size-5' />
+        <RiAddLine aria-hidden='true' className='size-5' />
         <span className='text-label-sm px-1'>{addLabel}</span>
       </button>
     </div>

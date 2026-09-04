@@ -14,10 +14,17 @@ const BANNER_CLOSE_BUTTON_NAME = 'BannerCloseButton';
 
 export const bannerVariants = tv({
   slots: {
-    root: 'relative grid h-11 w-full grid-cols-[1fr,auto,1fr] items-center justify-center gap-3 px-3',
+    // `min-h` (not `h`) so a longer or translated message wraps instead of
+    // being clipped. Track list uses underscores: commas produce invalid CSS.
+    root: 'relative grid min-h-11 w-full grid-cols-[1fr_auto_1fr] items-center justify-center gap-3 px-3 py-2',
     content: 'col-start-2 flex items-center justify-center gap-3',
     icon: 'w-5 h-5 shrink-0',
-    closeButton: 'col-start-3 row-start-1 ml-auto w-5 h-5',
+    // 20px visual, 24px hit area (WCAG 2.5.8) via a transparent overlay.
+    // The resting opacity is AlignUI's treatment; hover and keyboard focus
+    // restore it to full so the only control in the banner is legible while
+    // it is being used.
+    closeButton:
+      'relative col-start-3 row-start-1 ml-auto w-5 h-5 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2 transition-opacity duration-150 ease-out hover:opacity-100 focus-visible:opacity-100',
   },
   variants: {
     variant: {
@@ -58,8 +65,8 @@ export const bannerVariants = tv({
       variant: 'filled',
       status: 'error',
       class: {
-        icon: 'text-static-white',
-        root: 'bg-error-base text-static-white',
+        icon: 'text-error-contrast',
+        root: 'bg-error-base text-error-contrast',
       },
     },
     {
@@ -92,8 +99,8 @@ export const bannerVariants = tv({
       variant: 'filled',
       status: 'warning',
       class: {
-        icon: 'text-static-white',
-        root: 'bg-warning-base text-static-white',
+        icon: 'text-warning-contrast',
+        root: 'bg-warning-base text-warning-contrast',
       },
     },
     {
@@ -126,8 +133,8 @@ export const bannerVariants = tv({
       variant: 'filled',
       status: 'success',
       class: {
-        icon: 'text-static-white',
-        root: 'bg-success-base text-static-white',
+        icon: 'text-success-contrast',
+        root: 'bg-success-base text-success-contrast',
       },
     },
     {
@@ -160,8 +167,8 @@ export const bannerVariants = tv({
       variant: 'filled',
       status: 'information',
       class: {
-        icon: 'text-static-white',
-        root: 'bg-information-base text-static-white',
+        icon: 'text-information-contrast',
+        root: 'bg-information-base text-information-contrast',
       },
     },
     {
@@ -194,8 +201,8 @@ export const bannerVariants = tv({
       variant: 'filled',
       status: 'feature',
       class: {
-        icon: 'text-static-white',
-        root: 'bg-faded-base text-static-white',
+        icon: 'text-faded-contrast',
+        root: 'bg-faded-base text-faded-contrast',
       },
     },
     {
@@ -343,6 +350,8 @@ const BannerCloseButton = React.forwardRef<
     return (
       <Component
         ref={forwardedRef}
+        type={asChild ? undefined : 'button'}
+        aria-label='Dismiss'
         className={closeButton({ class: className })}
         {...rest}
       >

@@ -12,18 +12,18 @@
   "registryDependencies": ["happly-ui-utils", "tooltip"],
   "docs": {
     "lead": "A label component with required asterisk indicator, optional sub-text, info tooltip, and a composed shorthand for common usage.",
-    "usage": "import * as Label from \"@/components/ui/label\"\n\n<Label.Composed required sub=\"(Optional)\" info=\"Helpful tooltip\">\n  Field Name\n</Label.Composed>",
+    "usage": "import * as Label from \"@/components/ui/label\"\n\n<Label.Composed required sub=\"(Optional)\" info=\"Helpful tooltip\">\n  Field name\n</Label.Composed>",
     "examples": [
       {
         "title": "Demo",
         "description": "Label with asterisk, sub-text, and info icon.",
-        "code": "<Label.Root>\n  Last Name\n  <Label.Asterisk />\n  <Label.Sub>(Optional)</Label.Sub>\n  <Label.InfoIcon />\n</Label.Root>",
+        "code": "<Label.Root>\n  Last name\n  <Label.Asterisk />\n  <Label.InfoIcon />\n</Label.Root>",
         "stories": ["Demo"]
       },
       {
         "title": "Composed",
         "description": "Props-driven label with required, sub, and info.",
-        "code": "<Label.Composed required sub=\"(Optional)\" info=\"We will use this email to send you updates.\">\n  Email\n</Label.Composed>",
+        "code": "<Label.Composed required sub=\"(Optional)\" info=\"We use this address for account and billing updates.\">\n  Email\n</Label.Composed>",
         "stories": ["Composed"]
       }
     ],
@@ -42,7 +42,7 @@
       },
       {
         "name": "Label.Asterisk",
-        "description": "Required field asterisk indicator in primary color.",
+        "description": "Required-field asterisk. The glyph is aria-hidden and paired with visually hidden \"(required)\" text so assistive technology announces the state.",
         "props": []
       },
       {
@@ -68,6 +68,12 @@
             "name": "iconClassName",
             "type": "string",
             "description": "Override the default icon className"
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "default": "'More information'",
+            "description": "Accessible name for the icon-only tooltip trigger"
           }
         ]
       },
@@ -90,6 +96,12 @@
             "name": "info",
             "type": "React.ReactNode",
             "description": "Info tooltip content"
+          },
+          {
+            "name": "infoLabel",
+            "type": "string",
+            "default": "'More information'",
+            "description": "Accessible name for the info tooltip trigger"
           },
           {
             "name": "disabled",

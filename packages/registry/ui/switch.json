@@ -36,7 +36,7 @@
       {
         "title": "With Label",
         "description": "Switch composed with Label component.",
-        "code": "<div className=\"flex items-center gap-2\">\n  <Switch.Root id=\"s1\" />\n  <Label.Root htmlFor=\"s1\">SMS Verification</Label.Root>\n</div>",
+        "code": "<div className=\"flex items-center gap-2\">\n  <Switch.Root id=\"s1\" />\n  <Label.Root htmlFor=\"s1\">SMS verification</Label.Root>\n</div>",
         "stories": ["WithLabel"]
       },
       {
@@ -48,7 +48,7 @@
       {
         "title": "With Form Field",
         "description": "Switch group composed with FormField for consistent label and hint.",
-        "code": "<FormField.Root label=\"Settings\" hint=\"Manage your account preferences.\">\n  <div className=\"flex flex-col gap-3\">\n    <div className=\"flex items-center gap-2\">\n      <Switch.Root id=\"s1\" defaultChecked />\n      <Label.Root htmlFor=\"s1\" className=\"text-paragraph-sm\">\n        SMS Verification\n      </Label.Root>\n    </div>\n    <div className=\"flex items-center gap-2\">\n      <Switch.Root id=\"s2\" />\n      <Label.Root htmlFor=\"s2\" className=\"text-paragraph-sm\">\n        Authenticator App\n      </Label.Root>\n    </div>\n  </div>\n</FormField.Root>",
+        "code": "<FormField.Root label=\"Settings\" hint=\"Manage your account preferences.\">\n  <div className=\"flex flex-col gap-3\">\n    <div className=\"flex items-center gap-2\">\n      <Switch.Root id=\"s1\" defaultChecked />\n      <Label.Root htmlFor=\"s1\" className=\"text-paragraph-sm\">\n        SMS verification\n      </Label.Root>\n    </div>\n    <div className=\"flex items-center gap-2\">\n      <Switch.Root id=\"s2\" />\n      <Label.Root htmlFor=\"s2\" className=\"text-paragraph-sm\">\n        Authenticator app\n      </Label.Root>\n    </div>\n  </div>\n</FormField.Root>",
         "stories": ["WithFormField"]
       }
     ],

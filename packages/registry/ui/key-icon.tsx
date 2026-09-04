@@ -17,7 +17,7 @@ const keyIconVariants = tv({
       stroke:
         'bg-bg-white-0 ring-1 ring-inset ring-stroke-soft-200 shadow-regular-xs',
       lighter: 'ring-1 ring-inset',
-      filled: 'text-static-white',
+      filled: '',
     },
     color: {
       gray: '',
@@ -76,15 +76,51 @@ const keyIconVariants = tv({
       class: 'bg-verified-lighter ring-sky-200',
     },
     // filled color variants
-    { style: 'filled', color: 'gray', class: 'bg-faded-base' },
-    { style: 'filled', color: 'blue', class: 'bg-information-base' },
-    { style: 'filled', color: 'orange', class: 'bg-warning-base' },
-    { style: 'filled', color: 'red', class: 'bg-error-base' },
-    { style: 'filled', color: 'green', class: 'bg-success-base' },
-    { style: 'filled', color: 'yellow', class: 'bg-away-base' },
-    { style: 'filled', color: 'purple', class: 'bg-feature-base' },
-    { style: 'filled', color: 'pink', class: 'bg-highlighted-base' },
-    { style: 'filled', color: 'teal', class: 'bg-verified-base' },
+    {
+      style: 'filled',
+      color: 'gray',
+      class: 'bg-faded-base text-faded-contrast',
+    },
+    {
+      style: 'filled',
+      color: 'blue',
+      class: 'bg-information-base text-information-contrast',
+    },
+    {
+      style: 'filled',
+      color: 'orange',
+      class: 'bg-warning-base text-warning-contrast',
+    },
+    {
+      style: 'filled',
+      color: 'red',
+      class: 'bg-error-base text-error-contrast',
+    },
+    {
+      style: 'filled',
+      color: 'green',
+      class: 'bg-success-base text-success-contrast',
+    },
+    {
+      style: 'filled',
+      color: 'yellow',
+      class: 'bg-away-base text-away-contrast',
+    },
+    {
+      style: 'filled',
+      color: 'purple',
+      class: 'bg-feature-base text-feature-contrast',
+    },
+    {
+      style: 'filled',
+      color: 'pink',
+      class: 'bg-highlighted-base text-highlighted-contrast',
+    },
+    {
+      style: 'filled',
+      color: 'teal',
+      class: 'bg-verified-base text-verified-contrast',
+    },
     {
       style: 'filled',
       color: 'primary',

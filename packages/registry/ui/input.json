@@ -18,18 +18,18 @@
   ],
   "docs": {
     "lead": "A compound input component with wrapper, icons, affixes, and size/error variants.",
-    "usage": "import * as Input from \"@/components/ui/input\"\n\n<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiSearchLine} />\n    <Input.Input placeholder=\"Search...\" />\n  </Input.Wrapper>\n</Input.Root>",
+    "usage": "import * as Input from \"@/components/ui/input\"\n\n<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiSearchLine} />\n    <Input.Input placeholder=\"Search…\" />\n  </Input.Wrapper>\n</Input.Root>",
     "examples": [
       {
         "title": "With Icon",
         "description": "Input with leading or trailing icons.",
-        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiUser6Line} />\n    <Input.Input placeholder=\"Placeholder text...\" />\n  </Input.Wrapper>\n</Input.Root>",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiUser6Line} />\n    <Input.Input placeholder=\"Placeholder text…\" />\n  </Input.Wrapper>\n</Input.Root>",
         "stories": ["WithIcon"]
       },
       {
         "title": "Sizes",
         "description": "Available size variants: medium, small, and xsmall.",
-        "code": "<Input.Root size=\"small\">\n  <Input.Wrapper>\n    <Input.Icon as={RiUser6Line} />\n    <Input.Input placeholder=\"Placeholder text...\" />\n  </Input.Wrapper>\n</Input.Root>",
+        "code": "<Input.Root size=\"small\">\n  <Input.Wrapper>\n    <Input.Icon as={RiUser6Line} />\n    <Input.Input placeholder=\"Placeholder text…\" />\n  </Input.Wrapper>\n</Input.Root>",
         "stories": ["Sizes"]
       },
       {
@@ -53,7 +53,7 @@
       {
         "title": "With Kbd",
         "description": "Input with a keyboard shortcut indicator.",
-        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiSearch2Line} />\n    <Input.Input placeholder=\"Search...\" />\n    <Kbd.Root>⌘1</Kbd.Root>\n  </Input.Wrapper>\n</Input.Root>",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiSearch2Line} />\n    <Input.Input placeholder=\"Search…\" />\n    <Kbd.Root>⌘1</Kbd.Root>\n  </Input.Wrapper>\n</Input.Root>",
         "stories": ["WithKbd"]
       },
       {
@@ -71,13 +71,13 @@
       {
         "title": "Disabled",
         "description": "Disabled input state.",
-        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Input placeholder=\"Placeholder text...\" disabled />\n  </Input.Wrapper>\n</Input.Root>",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Input placeholder=\"Placeholder text…\" disabled />\n  </Input.Wrapper>\n</Input.Root>",
         "stories": ["Disabled"]
       },
       {
         "title": "Error State",
         "description": "Input with error styling.",
-        "code": "<Input.Root hasError>\n  <Input.Wrapper>\n    <Input.Input placeholder=\"Placeholder text...\" />\n  </Input.Wrapper>\n</Input.Root>",
+        "code": "<Input.Root hasError>\n  <Input.Wrapper>\n    <Input.Input placeholder=\"Placeholder text…\" />\n  </Input.Wrapper>\n</Input.Root>",
         "stories": ["ErrorState"]
       },
       {
@@ -89,7 +89,7 @@
       {
         "title": "With Tags",
         "description": "Input that creates tags on Enter key press.",
-        "code": "const [tags, setTags] = React.useState(['Berlin', 'London', 'Paris']);\nconst [inputValue, setInputValue] = React.useState('');\n\n<Input.Root>\n  <Input.Wrapper>\n    <Input.Input\n      placeholder=\"Add tags...\"\n      value={inputValue}\n      onChange={(e) => setInputValue(e.target.value)}\n      onKeyDown={(e) => {\n        if (e.key === 'Enter' && inputValue.trim()) {\n          setTags([...tags, inputValue.trim()]);\n          setInputValue('');\n        }\n      }}\n    />\n  </Input.Wrapper>\n</Input.Root>\n\n<div className=\"mt-2 flex flex-wrap gap-2\">\n  {tags.map((tag) => (\n    <Tag.Root key={tag}>\n      {tag}\n      <Tag.DismissButton onClick={() => removeTag(tag)} />\n    </Tag.Root>\n  ))}\n</div>",
+        "code": "const [tags, setTags] = React.useState(['Berlin', 'London', 'Paris']);\nconst [inputValue, setInputValue] = React.useState('');\n\n<Input.Root>\n  <Input.Wrapper>\n    <Input.Input\n      placeholder=\"Add tags…\"\n      value={inputValue}\n      onChange={(e) => setInputValue(e.target.value)}\n      onKeyDown={(e) => {\n        if (e.key === 'Enter' && inputValue.trim()) {\n          setTags([...tags, inputValue.trim()]);\n          setInputValue('');\n        }\n      }}\n    />\n  </Input.Wrapper>\n</Input.Root>\n\n<div className=\"mt-2 flex flex-wrap gap-2\">\n  {tags.map((tag) => (\n    <Tag.Root key={tag}>\n      {tag}\n      <Tag.DismissButton onClick={() => removeTag(tag)} />\n    </Tag.Root>\n  ))}\n</div>",
         "stories": ["WithTags"]
       },
       {
@@ -119,7 +119,7 @@
       {
         "title": "With Inline Select",
         "description": "Input with an inline select for permissions inside the wrapper.",
-        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiUser6Line} />\n    <Input.Input placeholder=\"Placeholder text...\" />\n    <Select.Root variant=\"inline\" defaultValue=\"view\">\n      <Select.Trigger>\n        <Select.TriggerIcon as={RiGlobalLine} />\n        <Select.Value />\n      </Select.Trigger>\n      <Select.Content>\n        <Select.Item value=\"view\">can view</Select.Item>\n        <Select.Item value=\"edit\">can edit</Select.Item>\n      </Select.Content>\n    </Select.Root>\n  </Input.Wrapper>\n</Input.Root>",
+        "code": "<Input.Root>\n  <Input.Wrapper>\n    <Input.Icon as={RiUser6Line} />\n    <Input.Input placeholder=\"Placeholder text…\" />\n    <Select.Root variant=\"inline\" defaultValue=\"view\">\n      <Select.Trigger>\n        <Select.TriggerIcon as={RiGlobalLine} />\n        <Select.Value />\n      </Select.Trigger>\n      <Select.Content>\n        <Select.Item value=\"view\">can view</Select.Item>\n        <Select.Item value=\"edit\">can edit</Select.Item>\n      </Select.Content>\n    </Select.Root>\n  </Input.Wrapper>\n</Input.Root>",
         "stories": ["WithInlineSelect"]
       },
       {

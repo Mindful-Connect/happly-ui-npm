@@ -125,7 +125,7 @@ const FilterDropdownSearch = React.forwardRef<
   FilterDropdownSearchProps
 >(
   (
-    { className, placeholder = 'Search...', size = 'small', value, onChange },
+    { className, placeholder = 'Search…', size = 'small', value, onChange },
     forwardedRef
   ) => (
     <div className={cn('px-3 pt-4', className)}>
@@ -134,6 +134,7 @@ const FilterDropdownSearch = React.forwardRef<
           <Input.Icon as={RiSearchLine} />
           <Input.Input
             ref={forwardedRef}
+            aria-label='Search options'
             placeholder={placeholder}
             value={value}
             onChange={onChange}
@@ -164,8 +165,8 @@ function FilterDropdownSelectAll({
     <div className={cn('flex flex-col gap-2 px-3 pt-2', className)}>
       <label
         className={cn(
-          'flex cursor-pointer items-center gap-2 rounded-lg p-2 text-left',
-          'transition duration-200 ease-out',
+          'flex cursor-pointer items-center gap-2 rounded-lg p-2 text-start',
+          'transition-[background-color] duration-150 ease-out',
           'hover:bg-bg-weak-50'
         )}
       >
@@ -218,7 +219,7 @@ function FilterDropdownGroup({
       <ScrollAreaPrimitives.Root type='auto'>
         <ScrollAreaPrimitives.Viewport
           ref={viewportRef}
-          className='w-full overflow-auto'
+          className='w-full overflow-auto overscroll-contain'
           style={{ maxHeight }}
         >
           <div className='flex flex-col gap-1'>
@@ -260,11 +261,10 @@ const FilterDropdownItem = React.forwardRef<
   ) => (
     <label
       ref={forwardedRef}
-      aria-selected={checked}
       aria-disabled={disabled || undefined}
       className={cn(
-        'flex w-full cursor-pointer items-center gap-2 rounded-[10px] p-2 text-left',
-        'transition duration-200 ease-out',
+        'flex w-full cursor-pointer items-center gap-2 rounded-lg p-2 text-start',
+        'transition-[background-color] duration-150 ease-out',
         'hover:bg-bg-weak-50',
         'aria-disabled:pointer-events-none aria-disabled:opacity-50',
         className
@@ -302,13 +302,13 @@ function FilterDropdownCategoryItem({
       type='button'
       className={cn(
         // matches Dropdown.Item styling
-        'group/item text-paragraph-sm text-text-strong-950 relative cursor-pointer rounded-lg p-2 outline-none select-none',
+        'group/item text-paragraph-sm text-text-strong-950 relative cursor-pointer rounded-lg p-2 outline-none',
         'flex w-full items-center gap-2',
-        'transition duration-200 ease-out',
+        'transition-[background-color] duration-150 ease-out',
         // hover
         'hover:bg-bg-weak-50',
         // focus
-        'focus:outline-none',
+        'focus-visible:shadow-button-important-focus',
         // disabled
         'disabled:text-text-disabled-300',
         className
@@ -324,7 +324,7 @@ function FilterDropdownCategoryItem({
           )}
         />
       )}
-      <span className='flex-1 text-left'>{children}</span>
+      <span className='flex-1 text-start'>{children}</span>
     </button>
   );
 }
@@ -338,11 +338,7 @@ function FilterDropdownCategoryList({
   ...rest
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div
-      className={cn('flex flex-col gap-1 p-2', className)}
-      role='listbox'
-      {...rest}
-    >
+    <div className={cn('flex flex-col gap-1 p-2', className)} {...rest}>
       {children}
     </div>
   );
@@ -703,6 +699,15 @@ function FilterDropdownComposed({
     }
   };
 
+  // Exit route out of a search that matched nothing — keeps the selection.
+  const clearSearch = (filter: FilterConfig) => {
+    setSearchTerms((prev) => ({ ...prev, [filter.key]: '' }));
+    if (filter.remote) {
+      clearTimeout(debounceTimers.current[filter.key]);
+      fetchRemote(filter, '', 1);
+    }
+  };
+
   const getAllChecked = (filter: FilterConfig): boolean | 'indeterminate' => {
     const options = getOptionsForFilter(filter);
     const currentSet = new Set(selected[filter.key] ?? []);
@@ -810,10 +815,21 @@ function FilterDropdownComposed({
                   <Loader.Root size={20} color='neutral' />
                 </div>
               ) : activeOptions.length === 0 ? (
-                <div className='flex items-center justify-center py-4'>
-                  <span className='text-paragraph-sm text-text-soft-400'>
-                    No results found
+                <div className='flex flex-col items-center justify-center gap-1 py-4'>
+                  <span className='text-paragraph-sm text-text-soft-400 text-center text-pretty'>
+                    {searchTerms[activeFilter.key]
+                      ? `No results for “${searchTerms[activeFilter.key]}”`
+                      : `No ${activeFilter.label.toLowerCase()} to choose from yet`}
                   </span>
+                  {searchTerms[activeFilter.key] && (
+                    <LinkButton.Root
+                      variant='gray'
+                      size='small'
+                      onClick={() => clearSearch(activeFilter)}
+                    >
+                      Clear search
+                    </LinkButton.Root>
+                  )}
                 </div>
               ) : (
                 activeOptions.map((option) => (

@@ -114,7 +114,12 @@ function WithTooltipRender() {
             <Tooltip.Trigger asChild>
               <Slider.Thumb />
             </Tooltip.Trigger>
-            <Tooltip.Content size='xsmall' side='top' forceMount>
+            <Tooltip.Content
+              size='xsmall'
+              side='top'
+              forceMount
+              className='tabular-nums'
+            >
               {formatCurrency(value[0] ?? 0)}
             </Tooltip.Content>
           </Tooltip.Root>
@@ -122,7 +127,12 @@ function WithTooltipRender() {
             <Tooltip.Trigger asChild>
               <Slider.Thumb />
             </Tooltip.Trigger>
-            <Tooltip.Content size='xsmall' side='top' forceMount>
+            <Tooltip.Content
+              size='xsmall'
+              side='top'
+              forceMount
+              className='tabular-nums'
+            >
               {formatCurrency(value[1] ?? 0)}
             </Tooltip.Content>
           </Tooltip.Root>

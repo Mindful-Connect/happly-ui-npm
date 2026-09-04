@@ -26,9 +26,9 @@ export const Playground = {
       defaultValue='r1'
       className='flex gap-2'
     >
-      <Radio.Item value='r1' disabled={args.disabled} />
-      <Radio.Item value='r2' disabled={args.disabled} />
-      <Radio.Item value='r3' disabled={args.disabled} />
+      <Radio.Item value='r1' disabled={args.disabled} aria-label='Option 1' />
+      <Radio.Item value='r2' disabled={args.disabled} aria-label='Option 2' />
+      <Radio.Item value='r3' disabled={args.disabled} aria-label='Option 3' />
     </Radio.Group>
   ),
 };
@@ -36,8 +36,8 @@ export const Playground = {
 export const Demo = {
   render: () => (
     <Radio.Group defaultValue='r1' className='flex gap-2'>
-      <Radio.Item value='r1' />
-      <Radio.Item value='r2' />
+      <Radio.Item value='r1' aria-label='Option 1' />
+      <Radio.Item value='r2' aria-label='Option 2' />
     </Radio.Group>
   ),
 };
@@ -48,15 +48,15 @@ export const Variants = {
       <div className='flex flex-col gap-3'>
         <span className='text-subheading-xs text-text-sub-600'>Primary</span>
         <Radio.Group variant='primary' defaultValue='p1' className='flex gap-2'>
-          <Radio.Item value='p1' />
-          <Radio.Item value='p2' />
+          <Radio.Item value='p1' aria-label='Primary, option 1' />
+          <Radio.Item value='p2' aria-label='Primary, option 2' />
         </Radio.Group>
       </div>
       <div className='flex flex-col gap-3'>
         <span className='text-subheading-xs text-text-sub-600'>Neutral</span>
         <Radio.Group variant='neutral' defaultValue='n1' className='flex gap-2'>
-          <Radio.Item value='n1' />
-          <Radio.Item value='n2' />
+          <Radio.Item value='n1' aria-label='Neutral, option 1' />
+          <Radio.Item value='n2' aria-label='Neutral, option 2' />
         </Radio.Group>
       </div>
     </div>
@@ -66,8 +66,8 @@ export const Variants = {
 export const Disabled = {
   render: () => (
     <Radio.Group defaultValue='r1' className='flex gap-2'>
-      <Radio.Item value='r1' disabled />
-      <Radio.Item value='r2' disabled />
+      <Radio.Item value='r1' disabled aria-label='Disabled, option 1' />
+      <Radio.Item value='r2' disabled aria-label='Disabled, option 2' />
     </Radio.Group>
   ),
 };
@@ -86,12 +86,12 @@ export const WithLabel = {
       </div>
 
       <div className='group/radio flex items-start gap-2'>
-        <Radio.Item value='harrassment' id='l2' />
+        <Radio.Item value='harassment' id='l2' />
         <Label.Root
           htmlFor='l2'
           className='text-text-sub-600 group-has-[[data-state=checked]]/radio:text-text-strong-950 flex-col gap-1'
         >
-          Harrassment
+          Harassment
         </Label.Root>
       </div>
 
@@ -101,7 +101,7 @@ export const WithLabel = {
           htmlFor='l3'
           className='text-text-sub-600 group-has-[[data-state=checked]]/radio:text-text-strong-950 flex-col gap-1'
         >
-          Violation of Rules
+          Violation of rules
         </Label.Root>
       </div>
     </Radio.Group>
@@ -148,11 +148,11 @@ function WithLabelExtendedRender() {
                 </Badge.Root>
               </div>
               <div className='text-paragraph-xs text-text-sub-600 mt-1'>
-                Insert the radio description here.
+                A short description of what this option does.
               </div>
             </LabelPrimitives.Root>
             <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
-              Link Button
+              Learn more
             </LinkButton.Root>
           </div>
         </div>
@@ -189,11 +189,11 @@ function WithLabelExtendedRender() {
                 </Badge.Root>
               </div>
               <div className='text-paragraph-xs text-text-sub-600 mt-1'>
-                Insert the radio description here.
+                A short description of what this option does.
               </div>
             </LabelPrimitives.Root>
             <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
-              Link Button
+              Learn more
             </LinkButton.Root>
           </div>
           <Radio.Item value={`${uniqueId}-r4`} id={`${uniqueId}-r4`} />
@@ -210,7 +210,7 @@ export const WithLabelExtended = {
 export const WithFormField = {
   render: () => (
     <FormField.Root
-      label='Report Reason'
+      label='Report reason'
       required
       hint='Select the reason for your report.'
     >
@@ -230,7 +230,7 @@ export const WithFormField = {
         <div className='flex items-center gap-2'>
           <Radio.Item value='violation' id='report-violation' />
           <Label.Root htmlFor='report-violation' className='text-paragraph-sm'>
-            Violation of Rules
+            Violation of rules
           </Label.Root>
         </div>
       </Radio.Group>

@@ -66,6 +66,12 @@
             "description": "Renders as child element using Radix Slot"
           },
           {
+            "name": "static",
+            "type": "boolean",
+            "default": "false",
+            "description": "Turns off the scale-on-press feedback, for places where the motion would distract."
+          },
+          {
             "name": "disabled",
             "type": "boolean",
             "default": "false",

@@ -22,8 +22,10 @@ const DrawerOverlay = React.forwardRef<
       className={cn(
         // base
         'bg-overlay fixed inset-0 z-50 grid grid-cols-1 place-items-end overflow-hidden backdrop-blur-[10px]',
-        // animation
-        'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+        // animation — the overlay is timed with the panel it carries: enter
+        // 200ms, exit 150ms, ease-out both ways.
+        'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:duration-200 data-[state=open]:ease-out',
+        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:duration-150 data-[state=closed]:ease-out',
         className
       )}
       {...rest}
@@ -43,11 +45,12 @@ const DrawerContent = React.forwardRef<
           ref={forwardedRef}
           className={cn(
             // base
-            'h-full w-full max-w-[400px] overflow-y-auto',
+            'h-full w-full max-w-[400px] overflow-y-auto overscroll-contain',
             'border-stroke-soft-200 bg-bg-white-0 border-l',
-            // animation
+            // animation — the exit is shorter and eases out, so closing never
+            // competes for attention with whatever the user moves on to.
             'data-[state=open]:animate-in data-[state=open]:duration-200 data-[state=open]:ease-out',
-            'data-[state=closed]:animate-out data-[state=closed]:duration-200 data-[state=closed]:ease-in',
+            'data-[state=closed]:animate-out data-[state=closed]:duration-150 data-[state=closed]:ease-out',
             'data-[state=open]:slide-in-from-right-full',
             'data-[state=closed]:slide-out-to-right-full',
             className
@@ -73,7 +76,7 @@ function DrawerHeader({
   return (
     <div
       className={cn(
-        'border-stroke-soft-200 flex items-center gap-3 p-5',
+        'border-stroke-soft-200 flex items-center gap-3 border-b p-5',
         className
       )}
       {...rest}
@@ -82,8 +85,8 @@ function DrawerHeader({
 
       {showCloseButton && (
         <DrawerClose asChild>
-          <CompactButton.Root variant='ghost' size='large'>
-            <CompactButton.Icon as={RiCloseLine} />
+          <CompactButton.Root variant='ghost' size='large' aria-label='Close'>
+            <CompactButton.Icon as={RiCloseLine} aria-hidden='true' />
           </CompactButton.Root>
         </DrawerClose>
       )}
@@ -99,7 +102,10 @@ const DrawerTitle = React.forwardRef<
   return (
     <DialogPrimitive.Title
       ref={forwardedRef}
-      className={cn('text-label-lg text-text-strong-950 flex-1', className)}
+      className={cn(
+        'text-label-lg text-text-strong-950 flex-1 text-balance',
+        className
+      )}
       {...rest}
     />
   );
@@ -126,7 +132,7 @@ function DrawerFooter({
   return (
     <div
       className={cn(
-        'border-stroke-soft-200 flex items-center gap-4 p-5',
+        'border-stroke-soft-200 flex items-center gap-4 border-t p-5',
         className
       )}
       {...rest}

@@ -17,6 +17,11 @@ type ChatShape = 'bubble' | 'pill';
 // -----------------------------------------------------------------------------
 
 const MessageContext = React.createContext<{ side: ChatSide } | null>(null);
+
+// True once the list has painted. A message that first renders while this is
+// false is part of the loaded history and must not animate — otherwise opening
+// a conversation replays an entrance for every message in it at once.
+const ListPaintedContext = React.createContext(false);
 const BubbleContext = React.createContext<{
   tone: ChatTone;
   shape: ChatShape;
@@ -87,6 +92,9 @@ const ChatList = React.forwardRef<HTMLDivElement, ChatListProps>(
       }
     });
 
+    const [painted, setPainted] = React.useState(false);
+    React.useEffect(() => setPainted(true), []);
+
     return (
       <div
         ref={setRefs}
@@ -95,12 +103,14 @@ const ChatList = React.forwardRef<HTMLDivElement, ChatListProps>(
         aria-live='polite'
         aria-relevant='additions'
         className={cn(
-          'flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto',
+          'flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-contain',
           className
         )}
         {...rest}
       >
-        {children}
+        <ListPaintedContext.Provider value={painted}>
+          {children}
+        </ListPaintedContext.Provider>
       </div>
     );
   }
@@ -122,6 +132,12 @@ const ChatMessage = React.forwardRef<HTMLDivElement, ChatMessageProps>(
     const isSent = side === 'sent';
     const ctx = React.useMemo(() => ({ side }), [side]);
 
+    // Captured on this message's first render and never recomputed, so a
+    // message that mounted with the history stays still even after the list
+    // flips to painted.
+    const listPainted = React.useContext(ListPaintedContext);
+    const [isNew] = React.useState(listPainted);
+
     return (
       <MessageContext.Provider value={ctx}>
         <div
@@ -129,6 +145,11 @@ const ChatMessage = React.forwardRef<HTMLDivElement, ChatMessageProps>(
           className={cn(
             'flex w-full items-end gap-3',
             isSent ? 'justify-end' : 'justify-start',
+            // A message arriving is infrequent and meaningful, so it gets an
+            // entrance. opacity + blur + translateY together over 400ms, per
+            // better-ui/enter-exit.md — without the blur it reads as a jump
+            // cut. Suppressed by the theme's reduced-motion rule.
+            isNew && 'animate-item-in',
             // far-side gutter (always 44px)
             isSent ? 'pl-11' : 'pr-11',
             // near-side gutter when there's no avatar to fill it
@@ -176,8 +197,8 @@ ChatAvatar.displayName = 'ChatAvatar';
 
 export const chatBubbleVariants = tv({
   slots: {
-    root: 'text-paragraph-sm break-words',
-    timestamp: 'text-paragraph-xs shrink-0',
+    root: 'text-paragraph-sm break-words text-pretty',
+    timestamp: 'text-paragraph-xs shrink-0 tabular-nums',
   },
   variants: {
     shape: {
@@ -337,7 +358,7 @@ const ChatIconButton = React.forwardRef<HTMLButtonElement, ChatIconButtonProps>(
       variant={variant}
       mode={mode}
       size='medium'
-      className={cn('text-text-soft-400 w-10 px-0', className)}
+      className={cn('text-text-soft-400 w-10 rounded-lg px-0', className)}
       {...rest}
     >
       <Button.Icon as={icon} className='mx-0 size-6' />
@@ -366,7 +387,7 @@ const ChatSendButton = React.forwardRef<HTMLButtonElement, ChatSendButtonProps>(
       variant={variant}
       mode={mode}
       size='medium'
-      className={cn('w-10 px-0', className)}
+      className={cn('w-10 rounded-lg px-0', className)}
       {...rest}
     >
       {children ?? <Button.Icon as={RiArrowUpLine} className='mx-0 size-5' />}
@@ -414,7 +435,7 @@ const ChatInput = React.forwardRef<HTMLTextAreaElement, ChatInputProps>(
       onAttach,
       onEmoji,
       onKeyDown,
-      placeholder = 'Write a message...',
+      placeholder = 'Write a message…',
       showAttachment = true,
       showEmoji = true,
       leading,
@@ -481,6 +502,7 @@ const ChatInput = React.forwardRef<HTMLTextAreaElement, ChatInputProps>(
         className={cn(
           'bg-bg-white-0 flex w-full items-end gap-2 rounded-2xl p-2',
           'shadow-regular-xs ring-stroke-soft-200 ring-1 ring-inset',
+          'has-[textarea:focus-visible]:shadow-button-important-focus has-[textarea:focus-visible]:ring-stroke-sub-300',
           'has-[textarea:disabled]:bg-bg-weak-50 has-[textarea:disabled]:ring-transparent',
           containerClassName
         )}
@@ -497,6 +519,7 @@ const ChatInput = React.forwardRef<HTMLTextAreaElement, ChatInputProps>(
 
         <textarea
           ref={setRefs}
+          aria-label='Message'
           value={value}
           onChange={(event) => setValue(event.target.value)}
           onKeyDown={handleKeyDown}

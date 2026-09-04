@@ -10,16 +10,17 @@ import { tv, type VariantProps } from '@/lib/tv';
 const COMPACT_BUTTON_ROOT_NAME = 'CompactButtonRoot';
 const COMPACT_BUTTON_ICON_NAME = 'CompactButtonIcon';
 
+// Tactile press feedback. Disable per-instance with the `static` prop.
+const PRESS_SCALE = 'active:not-disabled:scale-[0.96]';
+
 export const compactButtonVariants = tv({
   slots: {
     root: [
       // base
       'relative flex shrink-0 items-center justify-center outline-none',
-      'transition duration-200 ease-out',
+      'transition-[background-color,color,box-shadow,scale] duration-150 ease-out',
       // disabled
       'disabled:pointer-events-none disabled:border-transparent disabled:bg-transparent disabled:text-text-disabled-300 disabled:shadow-none',
-      // focus
-      'focus:outline-none',
     ],
     icon: '',
   },
@@ -63,7 +64,8 @@ export const compactButtonVariants = tv({
         icon: 'w-5 h-5',
       },
       medium: {
-        root: 'w-5 h-5',
+        // 20px visual, 24px hit area (WCAG 2.5.8) via a transparent overlay.
+        root: 'w-5 h-5 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2',
         icon: 'size-[18px]',
       },
     },
@@ -91,6 +93,8 @@ type CompactButtonSharedProps = Omit<
 type CompactButtonProps = VariantProps<typeof compactButtonVariants> &
   React.ButtonHTMLAttributes<HTMLButtonElement> & {
     asChild?: boolean;
+    /** Disables the scale-on-press feedback. */
+    static?: boolean;
   };
 
 const CompactButtonRoot = React.forwardRef<
@@ -98,7 +102,16 @@ const CompactButtonRoot = React.forwardRef<
   CompactButtonProps
 >(
   (
-    { asChild, variant, size, fullRadius, children, className, ...rest },
+    {
+      asChild,
+      variant,
+      size,
+      fullRadius,
+      children,
+      className,
+      static: isStatic,
+      ...rest
+    },
     forwardedRef
   ) => {
     const uniqueId = React.useId();
@@ -121,7 +134,7 @@ const CompactButtonRoot = React.forwardRef<
     return (
       <Component
         ref={forwardedRef}
-        className={root({ class: className })}
+        className={root({ class: [!isStatic && PRESS_SCALE, className] })}
         {...rest}
       >
         {extendedChildren}

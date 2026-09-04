@@ -16,9 +16,19 @@ const PAGINATION_NAV_ICON_NAME = 'PaginationNavIcon';
 export const paginationVariants = tv({
   slots: {
     root: 'flex flex-wrap items-center justify-center',
-    item: 'flex items-center justify-center text-center text-label-sm text-text-sub-600 transition duration-200 ease-out',
-    navButton:
-      'flex items-center justify-center text-text-sub-600 transition duration-200 ease-out',
+    item: [
+      'flex items-center justify-center text-center text-label-sm tabular-nums text-text-sub-600',
+      'transition-[background-color,color,box-shadow] duration-150 ease-out',
+      'outline-none focus-visible:shadow-button-important-focus',
+      // a disabled page / arrow looked identical to an enabled one
+      'disabled:pointer-events-none disabled:text-text-disabled-300',
+    ],
+    navButton: [
+      'flex items-center justify-center text-text-sub-600',
+      'transition-[background-color,color,box-shadow] duration-150 ease-out',
+      'outline-none focus-visible:shadow-button-important-focus',
+      'disabled:pointer-events-none disabled:text-text-disabled-300',
+    ],
     navIcon: 'w-5 h-5',
   },
   variants: {
@@ -87,10 +97,13 @@ function PaginationRoot({
   children,
   className,
   variant,
+  'aria-label': ariaLabel = 'Pagination',
   ...rest
 }: PaginationRootProps) {
   const uniqueId = React.useId();
-  const Component = asChild ? Slot : 'div';
+  // A pagination control is a navigation landmark (ARIA APG); multiple
+  // landmarks of one type need distinguishing labels.
+  const Component = asChild ? Slot : 'nav';
   const { root } = paginationVariants({ variant });
 
   const sharedProps: PaginationSharedProps = {
@@ -110,7 +123,11 @@ function PaginationRoot({
   );
 
   return (
-    <Component className={root({ class: className })} {...rest}>
+    <Component
+      aria-label={ariaLabel}
+      className={root({ class: className })}
+      {...rest}
+    >
       {extendedChildren}
     </Component>
   );
@@ -134,6 +151,7 @@ const PaginationItem = React.forwardRef<HTMLButtonElement, PaginationItemProps>(
     return (
       <Component
         ref={forwardedRef}
+        aria-current={current ? 'page' : undefined}
         className={cn(item({ class: className }), {
           'text-text-strong-950': current,
         })}

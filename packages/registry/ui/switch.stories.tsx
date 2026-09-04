@@ -35,15 +35,23 @@ export const Variants = {
       <div className='flex flex-col gap-3'>
         <span className='text-subheading-xs text-text-sub-600'>Primary</span>
         <div className='flex items-center gap-4'>
-          <Switch.Root variant='primary' />
-          <Switch.Root variant='primary' defaultChecked />
+          <Switch.Root variant='primary' aria-label='Primary, off' />
+          <Switch.Root
+            variant='primary'
+            defaultChecked
+            aria-label='Primary, on'
+          />
         </div>
       </div>
       <div className='flex flex-col gap-3'>
         <span className='text-subheading-xs text-text-sub-600'>Neutral</span>
         <div className='flex items-center gap-4'>
-          <Switch.Root variant='neutral' />
-          <Switch.Root variant='neutral' defaultChecked />
+          <Switch.Root variant='neutral' aria-label='Neutral, off' />
+          <Switch.Root
+            variant='neutral'
+            defaultChecked
+            aria-label='Neutral, on'
+          />
         </div>
       </div>
     </div>
@@ -53,8 +61,8 @@ export const Variants = {
 export const Disabled = {
   render: () => (
     <div className='flex flex-col items-center gap-6'>
-      <Switch.Root disabled />
-      <Switch.Root disabled checked />
+      <Switch.Root disabled aria-label='Disabled, off' />
+      <Switch.Root disabled checked aria-label='Disabled, on' />
     </div>
   ),
 };
@@ -67,13 +75,13 @@ function WithLabelRender() {
       <div className='flex items-center gap-2'>
         <Switch.Root id={`${uniqueId}-s1`} />
         <Label.Root className='text-paragraph-sm' htmlFor={`${uniqueId}-s1`}>
-          SMS Verification
+          SMS verification
         </Label.Root>
       </div>
       <div className='flex items-center gap-2'>
         <Switch.Root id={`${uniqueId}-s2`} />
         <Label.Root className='text-paragraph-sm' htmlFor={`${uniqueId}-s2`}>
-          Authenticator App
+          Authenticator app
         </Label.Root>
       </div>
       <div className='flex items-center gap-2'>
@@ -85,7 +93,7 @@ function WithLabelRender() {
       <div className='flex items-center gap-2'>
         <Switch.Root id={`${uniqueId}-s4`} disabled defaultChecked />
         <Label.Root className='text-paragraph-sm' htmlFor={`${uniqueId}-s4`}>
-          Disabled but default checked
+          Disabled, already on
         </Label.Root>
       </div>
     </div>
@@ -147,11 +155,11 @@ function WithLabelExtendedRender() {
                 </Badge.Root>
               </div>
               <div className='text-paragraph-xs text-text-sub-600 mt-1'>
-                Insert the Switch description here.
+                A short description of what this setting does.
               </div>
             </LabelPrimitives.Root>
             <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
-              Link Button
+              Learn more
             </LinkButton.Root>
           </div>
         </div>
@@ -173,11 +181,11 @@ function WithLabelExtendedRender() {
                 </Badge.Root>
               </div>
               <div className='text-paragraph-xs text-text-sub-600 mt-1'>
-                Insert the Switch description here.
+                A short description of what this setting does.
               </div>
             </LabelPrimitives.Root>
             <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
-              Link Button
+              Learn more
             </LinkButton.Root>
           </div>
         </div>
@@ -228,11 +236,11 @@ function WithLabelExtendedRender() {
                 </Badge.Root>
               </div>
               <div className='text-paragraph-xs text-text-sub-600 mt-1'>
-                Insert the Switch description here.
+                A short description of what this setting does.
               </div>
             </LabelPrimitives.Root>
             <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
-              Link Button
+              Learn more
             </LinkButton.Root>
           </div>
           <Switch.Root id={`${uniqueId}-s7`} />
@@ -254,11 +262,11 @@ function WithLabelExtendedRender() {
                 </Badge.Root>
               </div>
               <div className='text-paragraph-xs text-text-sub-600 mt-1'>
-                Insert the Switch description here.
+                A short description of what this setting does.
               </div>
             </LabelPrimitives.Root>
             <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
-              Link Button
+              Learn more
             </LinkButton.Root>
           </div>
           <Switch.Root id={`${uniqueId}-s8`} defaultChecked />
@@ -281,13 +289,13 @@ function WithFormFieldRender() {
         <div className='flex items-center gap-2'>
           <Switch.Root id={`${uniqueId}-s1`} defaultChecked />
           <Label.Root htmlFor={`${uniqueId}-s1`} className='text-paragraph-sm'>
-            SMS Verification
+            SMS verification
           </Label.Root>
         </div>
         <div className='flex items-center gap-2'>
           <Switch.Root id={`${uniqueId}-s2`} />
           <Label.Root htmlFor={`${uniqueId}-s2`} className='text-paragraph-sm'>
-            Authenticator App
+            Authenticator app
           </Label.Root>
         </div>
       </div>

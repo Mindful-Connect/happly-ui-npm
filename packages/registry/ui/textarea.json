@@ -12,12 +12,12 @@
   "registryDependencies": ["form-field-context", "happly-ui-utils"],
   "docs": {
     "lead": "A textarea component with character counter, resize handle, error state, and simple mode.",
-    "usage": "import * as Textarea from \"@/components/ui/textarea\"\n\n<Textarea.Root placeholder=\"Jot down your thoughts...\">\n  <Textarea.CharCounter current={78} max={200} />\n</Textarea.Root>",
+    "usage": "import * as Textarea from \"@/components/ui/textarea\"\n\n<Textarea.Root placeholder=\"Jot down your thoughts…\">\n  <Textarea.CharCounter current={78} max={200} />\n</Textarea.Root>",
     "examples": [
       {
         "title": "Demo",
         "description": "Textarea with character counter.",
-        "code": "<Textarea.Root placeholder=\"Jot down your thoughts...\">\n  <Textarea.CharCounter current={78} max={200} />\n</Textarea.Root>",
+        "code": "<Textarea.Root placeholder=\"Jot down your thoughts…\">\n  <Textarea.CharCounter current={78} max={200} />\n</Textarea.Root>",
         "stories": ["Demo"]
       },
       {
@@ -35,7 +35,7 @@
       {
         "title": "With Label and Hint",
         "description": "Textarea composed with Label and Hint components.",
-        "code": "<FormField.Root\n  label=\"Enter Your Message\"\n  htmlFor=\"message\"\n  required\n  labelSub=\"Optional\"\n  labelSubParens\n  hint=\"This is a hint text to help user.\"\n>\n  <Textarea.Root id=\"message\" placeholder=\"Jot down your thoughts...\">\n    <Textarea.CharCounter current={78} max={200} />\n  </Textarea.Root>\n</FormField.Root>",
+        "code": "<FormField.Root\n  label=\"Enter Your Message\"\n  htmlFor=\"message\"\n  required\n  labelSub=\"Optional\"\n  labelSubParens\n  hint=\"This is a hint text to help user.\"\n>\n  <Textarea.Root id=\"message\" placeholder=\"Jot down your thoughts…\">\n    <Textarea.CharCounter current={78} max={200} />\n  </Textarea.Root>\n</FormField.Root>",
         "stories": ["WithLabelAndHint"]
       },
       {

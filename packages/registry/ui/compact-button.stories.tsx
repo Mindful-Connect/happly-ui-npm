@@ -12,6 +12,8 @@ export const Playground = {
     size: 'large',
     fullRadius: false,
     disabled: false,
+    // Icon-only: the label is what a screen reader and voice control announce.
+    'aria-label': 'Add item',
   },
   argTypes: {
     variant: {
@@ -21,10 +23,11 @@ export const Playground = {
     size: { control: 'select', options: ['large', 'medium'] },
     fullRadius: { control: 'boolean' },
     disabled: { control: 'boolean' },
+    'aria-label': { control: 'text' },
   },
   render: (args: any) => (
     <CompactButton.Root {...args}>
-      <CompactButton.Icon as={RiAddLine} />
+      <CompactButton.Icon as={RiAddLine} aria-hidden='true' />
     </CompactButton.Root>
   ),
 };
@@ -32,23 +35,24 @@ export const Playground = {
 export const Variants = {
   render: () => (
     <div className='flex items-center gap-4'>
-      <CompactButton.Root variant='stroke'>
-        <CompactButton.Icon as={RiAddLine} />
+      <CompactButton.Root variant='stroke' aria-label='Add item'>
+        <CompactButton.Icon as={RiAddLine} aria-hidden='true' />
       </CompactButton.Root>
 
-      <CompactButton.Root variant='ghost'>
-        <CompactButton.Icon as={RiAddLine} />
+      <CompactButton.Root variant='ghost' aria-label='Add item'>
+        <CompactButton.Icon as={RiAddLine} aria-hidden='true' />
       </CompactButton.Root>
 
-      <CompactButton.Root variant='white'>
-        <CompactButton.Icon as={RiAddLine} />
+      <CompactButton.Root variant='white' aria-label='Add item'>
+        <CompactButton.Icon as={RiAddLine} aria-hidden='true' />
       </CompactButton.Root>
 
       <CompactButton.Root
         variant='modifiable'
+        aria-label='Remove item'
         className='text-error-base hover:bg-error-lighter'
       >
-        <CompactButton.Icon as={RiAddLine} />
+        <CompactButton.Icon as={RiAddLine} aria-hidden='true' />
       </CompactButton.Root>
     </div>
   ),
@@ -57,12 +61,12 @@ export const Variants = {
 export const Sizes = {
   render: () => (
     <div className='flex flex-col items-center gap-4'>
-      <CompactButton.Root>
-        <CompactButton.Icon as={RiAddLine} />
+      <CompactButton.Root aria-label='Add item'>
+        <CompactButton.Icon as={RiAddLine} aria-hidden='true' />
       </CompactButton.Root>
 
-      <CompactButton.Root size='medium'>
-        <CompactButton.Icon as={RiAddLine} />
+      <CompactButton.Root size='medium' aria-label='Add item'>
+        <CompactButton.Icon as={RiAddLine} aria-hidden='true' />
       </CompactButton.Root>
     </div>
   ),
@@ -70,16 +74,16 @@ export const Sizes = {
 
 export const FullRadius = {
   render: () => (
-    <CompactButton.Root fullRadius>
-      <CompactButton.Icon as={RiAddLine} />
+    <CompactButton.Root fullRadius aria-label='Add item'>
+      <CompactButton.Icon as={RiAddLine} aria-hidden='true' />
     </CompactButton.Root>
   ),
 };
 
 export const Disabled = {
   render: () => (
-    <CompactButton.Root disabled>
-      <CompactButton.Icon as={RiAddLine} />
+    <CompactButton.Root disabled aria-label='Add item'>
+      <CompactButton.Icon as={RiAddLine} aria-hidden='true' />
     </CompactButton.Root>
   ),
 };
@@ -87,8 +91,8 @@ export const Disabled = {
 export const AsChild = {
   render: () => (
     <CompactButton.Root asChild>
-      <a href='#'>
-        <CompactButton.Icon as={RiAddLine} />
+      <a href='#' aria-label='Add item'>
+        <CompactButton.Icon as={RiAddLine} aria-hidden='true' />
       </a>
     </CompactButton.Root>
   ),

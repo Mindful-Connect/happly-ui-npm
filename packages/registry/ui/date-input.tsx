@@ -46,6 +46,7 @@ function DateInput({
   const [internalDate, setInternalDate] = React.useState<Date | undefined>(
     defaultValue
   );
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const date = value ?? internalDate;
 
@@ -83,11 +84,28 @@ function DateInput({
             <Input.Wrapper className='cursor-pointer'>
               <Input.Icon as={LeadingIcon} />
               <Input.Input
+                ref={inputRef}
                 readOnly
                 disabled={resolvedDisabled}
                 value={date ? format(date, formatStr) : ''}
                 placeholder={placeholder}
-                className='cursor-pointer'
+                className='cursor-pointer tabular-nums'
+                // The Trigger is a div, so it takes clicks but no keyboard.
+                // The input is the field's only tab stop — it has to open the
+                // calendar too, and announce that it opens one.
+                aria-haspopup='dialog'
+                aria-expanded={open}
+                onKeyDown={(event) => {
+                  if (resolvedDisabled) return;
+                  if (
+                    event.key === 'Enter' ||
+                    event.key === ' ' ||
+                    event.key === 'ArrowDown'
+                  ) {
+                    event.preventDefault();
+                    setOpen(true);
+                  }
+                }}
               />
             </Input.Wrapper>
           </Input.Root>
@@ -98,6 +116,12 @@ function DateInput({
         side={popoverSide}
         className='p-0'
         showArrow={false}
+        // Radix returns focus to the Trigger, which is a non-focusable div —
+        // focus would fall back to <body>. Send it to the field instead.
+        onCloseAutoFocus={(event) => {
+          event.preventDefault();
+          inputRef.current?.focus();
+        }}
       >
         <Calendar
           mode='single'

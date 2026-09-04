@@ -10,14 +10,15 @@ import { tv, type VariantProps } from '@/lib/tv';
 const FANCY_BUTTON_ROOT_NAME = 'FancyButtonRoot';
 const FANCY_BUTTON_ICON_NAME = 'FancyButtonIcon';
 
+// Tactile press feedback. Disable per-instance with the `static` prop.
+const PRESS_SCALE = 'active:not-disabled:scale-[0.96]';
+
 export const fancyButtonVariants = tv({
   slots: {
     root: [
       // base
       'group relative inline-flex items-center justify-center whitespace-nowrap text-label-sm outline-none',
-      'transition duration-200 ease-out',
-      // focus
-      'focus:outline-none',
+      'transition-[background-color,color,box-shadow,scale] duration-150 ease-out',
       // disabled
       'disabled:pointer-events-none disabled:text-text-disabled-300',
       'disabled:bg-bg-weak-50 disabled:bg-none disabled:shadow-none disabled:before:hidden disabled:after:hidden',
@@ -27,13 +28,25 @@ export const fancyButtonVariants = tv({
   variants: {
     variant: {
       neutral: {
-        root: 'bg-bg-strong-950 text-text-white-0 shadow-fancy-buttons-neutral',
+        root: [
+          'bg-bg-strong-950 text-text-white-0 shadow-fancy-buttons-neutral',
+          // focus
+          'focus-visible:shadow-button-important-focus',
+        ],
       },
       primary: {
-        root: 'bg-primary-base text-primary-contrast shadow-fancy-buttons-primary',
+        root: [
+          'bg-primary-base text-primary-contrast shadow-fancy-buttons-primary',
+          // focus
+          'focus-visible:shadow-button-primary-focus',
+        ],
       },
       error: {
-        root: 'bg-error-base text-static-white shadow-fancy-buttons-error',
+        root: [
+          'bg-error-base text-error-contrast shadow-fancy-buttons-error',
+          // focus
+          'focus-visible:shadow-button-error-focus',
+        ],
       },
       basic: {
         root: [
@@ -41,6 +54,8 @@ export const fancyButtonVariants = tv({
           'bg-bg-white-0 text-text-sub-600 shadow-fancy-buttons-stroke',
           // hover
           'hover:bg-bg-weak-50 hover:text-text-strong-950 hover:shadow-none',
+          // focus
+          'focus-visible:shadow-button-important-focus',
         ],
       },
     },
@@ -72,7 +87,7 @@ export const fancyButtonVariants = tv({
           'before:[mask-clip:content-box,border-box] before:[mask-composite:exclude] before:[mask-image:linear-gradient(#fff_0_0),linear-gradient(#fff_0_0)]',
           // after
           'after:absolute after:inset-0 after:rounded-[inherit] after:bg-gradient-to-b after:from-static-white after:to-transparent',
-          'after:pointer-events-none after:opacity-[.16] after:transition after:duration-200 after:ease-out',
+          'after:pointer-events-none after:opacity-[.16] after:transition-[opacity] after:duration-150 after:ease-out',
           // hover
           'hover:after:opacity-[.24]',
         ],
@@ -90,10 +105,15 @@ type FancyButtonSharedProps = VariantProps<typeof fancyButtonVariants>;
 type FancyButtonProps = VariantProps<typeof fancyButtonVariants> &
   React.ButtonHTMLAttributes<HTMLButtonElement> & {
     asChild?: boolean;
+    /** Disables the scale-on-press feedback. */
+    static?: boolean;
   };
 
 const FancyButtonRoot = React.forwardRef<HTMLButtonElement, FancyButtonProps>(
-  ({ asChild, children, variant, size, className, ...rest }, forwardedRef) => {
+  (
+    { asChild, children, variant, size, className, static: isStatic, ...rest },
+    forwardedRef
+  ) => {
     const uniqueId = React.useId();
     const Component = asChild ? Slot : 'button';
     const { root } = fancyButtonVariants({ variant, size });
@@ -114,7 +134,7 @@ const FancyButtonRoot = React.forwardRef<HTMLButtonElement, FancyButtonProps>(
     return (
       <Component
         ref={forwardedRef}
-        className={root({ class: className })}
+        className={root({ class: [!isStatic && PRESS_SCALE, className] })}
         {...rest}
       >
         {extendedChildren}

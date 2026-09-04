@@ -5,7 +5,7 @@
   "title": "Tab Menu Horizontal",
   "description": "A horizontal pill-shaped tab menu with selected/unselected states, icon and counter support. Uses namespace exports: TabMenuHorizontal.Root, TabMenuHorizontal.Item, TabMenuHorizontal.Icon, TabMenuHorizontal.Counter, TabMenuHorizontal.Composed.",
   "version": "1.0.0",
-  "dependencies": ["framer-motion"],
+  "dependencies": [],
   "registryDependencies": [
     "tv",
     "polymorphic",

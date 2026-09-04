@@ -59,12 +59,19 @@ export const SearchNoResults = {
     <EmptyState.Root bordered>
       <EmptyState.Icon icon={<RiSearchLine />} />
       <div className='flex flex-col items-center gap-1'>
-        <EmptyState.Title>No results found</EmptyState.Title>
+        {/* Name the query and offer the way out, so the state is a step
+            rather than a dead end. */}
+        <EmptyState.Title>No results for “quarterly”</EmptyState.Title>
         <EmptyState.Description>
-          We couldn&apos;t find anything matching your search. Try different
-          keywords or remove some filters.
+          Try a shorter search term, or clear the filters to see everything
+          again.
         </EmptyState.Description>
       </div>
+      <EmptyState.Actions>
+        <Button.Root size='xsmall' variant='neutral' mode='stroke'>
+          Clear filters
+        </Button.Root>
+      </EmptyState.Actions>
     </EmptyState.Root>
   ),
 };

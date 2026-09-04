@@ -8,7 +8,7 @@
   "migration": {
     "guide": "API changed: import as namespace `import * as ProgressBar from ...`, use `<ProgressBar.Root value={50} />` instead of `<ProgressBar progress={50} />`. The `variant` prop is replaced by `color` ('blue' | 'red' | 'orange' | 'green' | 'primary'). The `progress` prop is renamed to `value` with a configurable `max`."
   },
-  "dependencies": [],
+  "dependencies": ["tailwindcss-animate"],
   "registryDependencies": ["tv"],
   "docs": {
     "lead": "A progress bar component to show the completion status of a task or process, with multiple color options.",
@@ -79,6 +79,11 @@
             "type": "boolean",
             "default": "false",
             "description": "When true, renders a continuous sliding animation and ignores value/max. Use when progress is in-progress but not measurable."
+          },
+          {
+            "name": "aria-label",
+            "type": "string",
+            "description": "Names the progressbar, e.g. “Upload progress”. The role and its values live on the root, so any aria-* prop lands on the right element."
           }
         ]
       }

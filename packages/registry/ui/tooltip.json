@@ -5,7 +5,7 @@
   "title": "Tooltip",
   "description": "A tooltip component built on Radix UI with dark/light variants, multiple sizes, and arrow indicator. Uses namespace exports: Tooltip.Root, Tooltip.Trigger, Tooltip.Content.",
   "version": "1.0.0",
-  "dependencies": ["@radix-ui/react-tooltip"],
+  "dependencies": ["@radix-ui/react-tooltip", "tailwindcss-animate"],
   "registryDependencies": ["tv"],
   "docs": {
     "lead": "A tooltip component with dark/light variants, multiple sizes, positioned arrow, and rich HTML content support.",

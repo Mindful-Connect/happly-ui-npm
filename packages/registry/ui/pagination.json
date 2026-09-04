@@ -44,7 +44,7 @@
     "api": [
       {
         "name": "Pagination.Root",
-        "description": "The container for pagination items. Propagates variant to children.",
+        "description": "The container for pagination items. Propagates variant to children. Renders a <nav> landmark.",
         "props": [
           {
             "name": "variant",
@@ -57,6 +57,12 @@
             "type": "boolean",
             "default": "false",
             "description": "Render as child element using Radix Slot"
+          },
+          {
+            "name": "aria-label",
+            "type": "string",
+            "default": "'Pagination'",
+            "description": "Names the navigation landmark; give each pagination control on a page its own label"
           }
         ]
       },
@@ -68,7 +74,7 @@
             "name": "current",
             "type": "boolean",
             "default": "false",
-            "description": "Whether this is the current active page"
+            "description": "Whether this is the current active page Also sets aria-current=\"page\"."
           },
           {
             "name": "asChild",

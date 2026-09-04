@@ -45,8 +45,14 @@ const PopoverContent = React.forwardRef<
               'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 w-max rounded-2xl p-5 ring-1 ring-inset',
           ],
           'pointer-events-auto z-50',
-          // animation
-          'data-[state=open]:animate-in data-[state=closed]:animate-out',
+          // The default width is `w-max`, so a long unbroken message would lay
+          // itself out past the viewport with no scrollbar to reach it. Cap it
+          // at the space Radix measured; anything shorter is unchanged, and a
+          // consumer's own `max-w-*` still wins through tailwind-merge.
+          'max-w-[var(--radix-popover-content-available-width)]',
+          // animation — exit is shorter and softer than the enter
+          'data-[state=open]:animate-in data-[state=open]:duration-200 data-[state=open]:ease-out',
+          'data-[state=closed]:animate-out data-[state=closed]:duration-150 data-[state=closed]:ease-out',
           'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
           'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
           className

@@ -55,14 +55,12 @@ const CommandMenuInput = React.forwardRef<
       className={cn(
         // base
         'text-paragraph-sm text-text-strong-950 w-full border-none bg-transparent shadow-none ring-0 outline-none',
-        'transition duration-200 ease-out',
+        'transition-[color] duration-150 ease-out',
         // placeholder
         'placeholder:[transition:inherit]',
         'placeholder:text-text-soft-400',
         // hover
         'group-hover/cmd-input:placeholder:text-text-sub-600',
-        // focus
-        'focus:outline-none',
         className
       )}
       {...rest}
@@ -81,7 +79,7 @@ const CommandMenuList = React.forwardRef<
       className={cn(
         'flex max-h-min min-h-0 flex-1 flex-col',
         '[&>[cmdk-list-sizer]]:divide-stroke-soft-200 [&>[cmdk-list-sizer]]:divide-y',
-        '[&>[cmdk-list-sizer]]:overflow-auto',
+        '[&>[cmdk-list-sizer]]:overflow-auto [&>[cmdk-list-sizer]]:overscroll-contain',
         className
       )}
       {...rest}
@@ -114,7 +112,7 @@ const commandMenuItemVariants = tv({
   base: [
     'flex items-center gap-3 rounded-10 bg-bg-white-0',
     'cursor-pointer text-paragraph-sm text-text-strong-950',
-    'transition duration-200 ease-out',
+    'transition-[background-color,color] duration-150 ease-out',
     // hover/selected
     'data-[selected=true]:bg-bg-weak-50',
   ],

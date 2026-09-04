@@ -79,9 +79,9 @@ const SwitchToggleTrigger = React.forwardRef<
         'peer',
         'text-label-sm text-text-sub-600 relative z-10 h-7 rounded-full px-3 whitespace-nowrap outline-none',
         'flex items-center justify-center gap-1.5',
-        'transition duration-300 ease-out',
+        'transition-[background-color,color,box-shadow] duration-150 ease-out',
         // focus
-        'focus:outline-none',
+        'focus-visible:shadow-button-important-focus',
         // active
         'data-[state=active]:text-text-strong-950',
         // inactive hover — one step darker than the default weak-50 track

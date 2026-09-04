@@ -47,15 +47,22 @@ export const dividerVariants = tv({
   },
 });
 
+// `role="separator"` makes its children presentational, so a variant that
+// carries a label or a control must not claim it — otherwise the "OR" text and
+// the button in the `content` variant disappear from the accessibility tree.
+const CONTENT_BEARING_VARIANTS = ['line-text', 'content', 'text', 'solid-text'];
+
 function Divider({
   className,
   variant,
   ...rest
 }: React.HTMLAttributes<HTMLDivElement> &
   VariantProps<typeof dividerVariants>) {
+  const carriesContent = CONTENT_BEARING_VARIANTS.includes(variant ?? 'line');
+
   return (
     <div
-      role='separator'
+      role={carriesContent ? undefined : 'separator'}
       className={dividerVariants({ variant, class: className })}
       {...rest}
     />

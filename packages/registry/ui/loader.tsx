@@ -46,6 +46,7 @@ const LoaderRoot = React.forwardRef<HTMLDivElement, LoaderRootProps>(
         {...rest}
       >
         <svg
+          aria-hidden='true'
           width={size}
           height={size}
           viewBox={`0 0 ${size} ${size}`}

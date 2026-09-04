@@ -196,7 +196,7 @@ export const BadgeOptions = {
 
 const STATUS_OPTIONS = [
   'Waiting for review',
-  'Require changes',
+  'Changes requested',
   'Declined',
 ] as const;
 
@@ -543,7 +543,7 @@ export const ComposedWithSearch = {
             label: 'Created by',
             icon: RiUserLine,
             searchable: true,
-            searchPlaceholder: 'Search people...',
+            searchPlaceholder: 'Search people…',
             options: PEOPLE.map((p) => ({ value: p, label: p })),
           },
         ]}
@@ -686,7 +686,7 @@ export const ComposedWithRemoteSearch = {
             label: 'Providers',
             icon: RiUserLine,
             searchable: true,
-            searchPlaceholder: 'Search providers...',
+            searchPlaceholder: 'Search providers…',
             options: [],
             remote: {
               onFetch: fetchProviders,
@@ -737,7 +737,7 @@ export const ComposedTwoLevelWithRemote = {
             label: 'Types',
             icon: RiPuzzle2Line,
             searchable: true,
-            searchPlaceholder: 'Search types...',
+            searchPlaceholder: 'Search types…',
             options: TYPE_OPTIONS.map((o) => ({ value: o, label: o })),
           },
           {
@@ -745,7 +745,7 @@ export const ComposedTwoLevelWithRemote = {
             label: 'Providers',
             icon: RiUserLine,
             searchable: true,
-            searchPlaceholder: 'Search providers...',
+            searchPlaceholder: 'Search providers…',
             options: [],
             remote: {
               onFetch: fetchProviders,

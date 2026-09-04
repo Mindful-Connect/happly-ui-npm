@@ -15,7 +15,7 @@ function PlaygroundRender(args: any) {
       {Array.from({ length: args.steps }, (_, idx) => (
         <DotStepper.Item
           key={idx}
-          aria-label={`Go to step ${idx}`}
+          aria-label={`Go to step ${idx + 1}`}
           active={activeStep === idx}
           onClick={() => setActiveStep(idx)}
         />
@@ -49,7 +49,7 @@ function DemoRender() {
         {Array.from({ length: 4 }, (_, i) => i).map((_, idx) => (
           <DotStepper.Item
             key={idx}
-            aria-label={`Go to step ${idx}`}
+            aria-label={`Go to step ${idx + 1}`}
             active={activeStep === idx}
             onClick={() => setActiveStep(idx)}
           />
@@ -60,7 +60,7 @@ function DemoRender() {
         {Array.from({ length: 4 }, (_, i) => i).map((_, idx) => (
           <DotStepper.Item
             key={idx}
-            aria-label={`Go to step ${idx}`}
+            aria-label={`Go to step ${idx + 1}`}
             active={activeStep === idx}
             onClick={() => setActiveStep(idx)}
           />

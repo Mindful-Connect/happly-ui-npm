@@ -16,23 +16,26 @@ const TAG_DISMISS_ICON_NAME = 'TagDismissIcon';
 export const tagVariants = tv({
   slots: {
     root: [
-      'group/tag inline-flex h-6 items-center gap-2 px-2 text-label-xs text-text-sub-600',
-      'transition duration-200 ease-out',
+      'group/tag inline-flex h-6 items-center gap-2 whitespace-nowrap px-2 text-label-xs text-text-sub-600',
+      'transition-[background-color,color,box-shadow] duration-150 ease-out',
       'ring-1 ring-inset',
     ],
     icon: [
       // base
-      '-mx-1 w-4 h-4 shrink-0 text-text-soft-400 transition duration-200 ease-out',
+      '-mx-1 w-4 h-4 shrink-0 text-text-soft-400 transition-[color] duration-150 ease-out',
       // hover
       'group-hover/tag:text-text-sub-600',
     ],
     dismissButton: [
       // base
-      'group/dismiss-button -ml-1.5 -mr-1 w-4 h-4 shrink-0 hover:cursor-pointer',
+      'group/dismiss-button relative -ml-1.5 -mr-1 w-4 h-4 shrink-0 rounded-full hover:cursor-pointer',
+      // 16px glyph → 24px hit area (WCAG 2.5.8); neighbours sit ≥8px away
+      'after:absolute after:-inset-1',
       // focus
-      'focus:outline-none',
+      'outline-none focus-visible:shadow-button-important-focus',
     ],
-    dismissIcon: 'w-4 h-4 text-text-soft-400 transition duration-200 ease-out',
+    dismissIcon:
+      'w-4 h-4 text-text-soft-400 transition-[color] duration-150 ease-out',
   },
   variants: {
     variant: {
@@ -151,7 +154,15 @@ const TagDismissButton = React.forwardRef<
   TagDismissButtonProps
 >(
   (
-    { asChild, children, className, variant, disabled, ...rest },
+    {
+      asChild,
+      children,
+      className,
+      variant,
+      disabled,
+      'aria-label': ariaLabel = 'Remove',
+      ...rest
+    },
     forwardedRef
   ) => {
     const Component = asChild ? Slot : 'button';
@@ -160,6 +171,7 @@ const TagDismissButton = React.forwardRef<
     return (
       <Component
         ref={forwardedRef}
+        aria-label={ariaLabel}
         className={dismissButton({ class: className })}
         {...rest}
       >

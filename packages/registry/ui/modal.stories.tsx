@@ -37,7 +37,7 @@ export const Playground = {
         closeVariant={args.closeVariant}
       >
         <Modal.Body>
-          <div className='text-label-md text-text-strong-950'>Modal Title</div>
+          <div className='text-label-md text-text-strong-950'>Modal title</div>
           <div className='text-paragraph-sm text-text-sub-600'>
             Modal content goes here.
           </div>
@@ -73,7 +73,7 @@ function DemoRender() {
           mode='stroke'
           onClick={() => setOpen(true)}
         >
-          Click to open
+          Open modal
         </Button.Root>
       </Modal.Trigger>
       <Modal.Content className='max-w-[440px]'>
@@ -83,7 +83,7 @@ function DemoRender() {
           </div>
           <div className='space-y-1'>
             <div className='text-label-md text-text-strong-950'>
-              Payment Received
+              Payment received
             </div>
             <div className='text-paragraph-sm text-text-sub-600'>
               Your payment has been successfully received. You have unlocked
@@ -103,7 +103,7 @@ function DemoRender() {
             </Button.Root>
           </Modal.Close>
           <Button.Root size='small' className='w-full'>
-            View Receipt
+            View receipt
           </Button.Root>
         </Modal.Footer>
       </Modal.Content>
@@ -126,13 +126,13 @@ function WithHeaderRender() {
           mode='stroke'
           onClick={() => setOpen(true)}
         >
-          Click to open
+          Open modal
         </Button.Root>
       </Modal.Trigger>
       <Modal.Content>
         <Modal.Header
           icon={RiChatSettingsLine}
-          title='Communication Preferences'
+          title='Communication preferences'
           description='Choose contact preferences for companies.'
         />
         <Modal.Body>
@@ -186,7 +186,7 @@ function WithHeaderRender() {
             </Button.Root>
           </Modal.Close>
           <Button.Root size='small' className='w-full'>
-            Update Changes
+            Save changes
           </Button.Root>
         </Modal.Footer>
       </Modal.Content>
@@ -209,7 +209,7 @@ function PatternRender() {
           mode='stroke'
           onClick={() => setOpen(true)}
         >
-          Click to open
+          Open modal
         </Button.Root>
       </Modal.Trigger>
       <Modal.Content

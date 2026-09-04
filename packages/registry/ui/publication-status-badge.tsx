@@ -6,7 +6,7 @@ import {
   RiCheckboxCircleFill,
   RiEditCircleFill,
   RiErrorWarningFill,
-  RiForbidFill,
+  RiTimeFill,
 } from '@remixicon/react';
 
 const MODERATION_STATUSES = [
@@ -30,7 +30,8 @@ const STATUS_CONFIG: Record<
 > = {
   draft: { icon: RiEditCircleFill, status: 'disabled', label: 'Draft' },
   waiting_for_review: {
-    icon: RiForbidFill,
+    // waiting reads as time passing, not as a blocked/forbidden state
+    icon: RiTimeFill,
     status: 'disabled',
     label: 'Waiting for review',
   },
@@ -42,7 +43,7 @@ const STATUS_CONFIG: Record<
   require_changes: {
     icon: RiAlertFill,
     status: 'pending',
-    label: 'Require changes',
+    label: 'Changes requested',
   },
   declined: {
     icon: RiErrorWarningFill,

@@ -34,8 +34,8 @@ export const CustomOverrides = {
     <FileUpload.Dropzone
       type='image'
       title='Upload your banner image'
-      description='Recommended size: 1200 × 675 px (16:9 ratio, horizontal layout)'
-      buttonText='Choose Image'
+      description='Recommended size: 1200 × 675 px (16:9, horizontal). Max size: 3 MB.'
+      buttonText='Choose image'
       inputProps={{ accept: 'image/*' }}
       className='min-w-[480px]'
     />
@@ -47,9 +47,11 @@ export const Dragging = {
     <FileUpload.Root dragging className='min-w-[480px]'>
       <FileUpload.Content>
         <FileUpload.Title>Drop your file here</FileUpload.Title>
-        <FileUpload.Description>Release to upload</FileUpload.Description>
+        <FileUpload.Description>
+          Release to start the upload.
+        </FileUpload.Description>
       </FileUpload.Content>
-      <FileUpload.Button>Browse File</FileUpload.Button>
+      <FileUpload.Button>Choose file</FileUpload.Button>
     </FileUpload.Root>
   ),
 };

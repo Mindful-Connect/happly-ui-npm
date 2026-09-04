@@ -23,16 +23,20 @@ export const alertVariants = tv({
     root: 'w-full',
     wrapper: [
       'grid w-full auto-cols-auto grid-flow-col grid-cols-[auto_minmax(0,1fr)] items-start',
-      'transition duration-200 ease-out',
+      'transition-[background-color,color] duration-150 ease-out',
     ],
     icon: 'shrink-0',
-    closeIcon: '',
+    // The resting opacity is AlignUI's treatment. Hover and keyboard focus on
+    // the button that wraps the glyph restore it to full, so the only control
+    // in the alert is legible while it is being used — same rule as
+    // `Banner.CloseButton`.
+    closeIcon:
+      'transition-opacity duration-150 ease-out [:hover>&]:opacity-100 [:focus-visible>&]:opacity-100',
   },
   variants: {
     variant: {
       filled: {
-        root: 'text-static-white',
-        closeIcon: 'text-static-white opacity-[.72]',
+        closeIcon: 'opacity-[.72]',
       },
       light: {
         root: 'text-text-strong-950',
@@ -58,20 +62,20 @@ export const alertVariants = tv({
       xsmall: {
         root: 'rounded-lg p-2 text-paragraph-xs',
         wrapper: 'gap-2',
-        icon: '!w-4 !h-4',
-        closeIcon: '!w-4 !h-4',
+        icon: 'w-4 h-4',
+        closeIcon: 'w-4 h-4',
       },
       small: {
         root: 'rounded-lg px-2.5 py-2 text-paragraph-sm',
         wrapper: 'gap-2',
-        icon: '!w-5 !h-5',
-        closeIcon: '!w-5 !h-5',
+        icon: 'w-5 h-5',
+        closeIcon: 'w-5 h-5',
       },
       large: {
         root: 'rounded-xl p-3.5 pb-4 text-paragraph-sm',
         wrapper: 'items-start gap-3',
-        icon: '!w-5 !h-5',
-        closeIcon: '!w-5 !h-5',
+        icon: 'w-5 h-5',
+        closeIcon: 'w-5 h-5',
       },
     },
   },
@@ -81,35 +85,35 @@ export const alertVariants = tv({
       variant: 'filled',
       status: 'error',
       class: {
-        root: 'bg-error-base',
+        root: 'bg-error-base text-error-contrast',
       },
     },
     {
       variant: 'filled',
       status: 'warning',
       class: {
-        root: 'bg-warning-base',
+        root: 'bg-warning-base text-warning-contrast',
       },
     },
     {
       variant: 'filled',
       status: 'success',
       class: {
-        root: 'bg-success-base',
+        root: 'bg-success-base text-success-contrast',
       },
     },
     {
       variant: 'filled',
       status: 'information',
       class: {
-        root: 'bg-information-base',
+        root: 'bg-information-base text-information-contrast',
       },
     },
     {
       variant: 'filled',
       status: 'feature',
       class: {
-        root: 'bg-faded-base',
+        root: 'bg-faded-base text-faded-contrast',
       },
     },
     //#endregion
@@ -288,11 +292,20 @@ function AlertIcon<T extends React.ElementType>({
   status,
   className,
   as,
+  ...rest
 }: PolymorphicComponentProps<T, AlertSharedProps>) {
   const Component = as || STATUS_ICONS[status ?? 'information'];
   const { icon } = alertVariants({ size, variant, status });
 
-  return <Component className={icon({ class: className })} />;
+  // The status is already carried by the alert's text and background, so the
+  // glyph is decorative. Pass `aria-hidden={false}` to override.
+  return (
+    <Component
+      aria-hidden='true'
+      className={icon({ class: className })}
+      {...rest}
+    />
+  );
 }
 AlertIcon.displayName = ALERT_ICON_NAME;
 
@@ -302,11 +315,20 @@ function AlertCloseIcon<T extends React.ElementType>({
   status,
   className,
   as,
+  ...rest
 }: PolymorphicComponentProps<T, AlertSharedProps>) {
   const Component = as || RiCloseLine;
   const { closeIcon } = alertVariants({ size, variant, status });
 
-  return <Component className={closeIcon({ class: className })} />;
+  // Render inside a <button aria-label="Dismiss">; the glyph itself is
+  // decorative, and `rest` is forwarded so consumers can wire it up.
+  return (
+    <Component
+      aria-hidden='true'
+      className={closeIcon({ class: className })}
+      {...rest}
+    />
+  );
 }
 AlertCloseIcon.displayName = ALERT_CLOSE_ICON_NAME;
 
