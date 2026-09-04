@@ -176,9 +176,33 @@ const RadioCardItem = React.forwardRef<HTMLLabelElement, RadioCardItemProps>(
     const isChecked = groupValue === value;
     const resolvedDisabled = disabled ?? groupDisabled;
 
+    // A click on the label also produces a synthesized click on the radio it
+    // wraps, which bubbles back to the label — so this handler ran twice for
+    // one user click. With `allowDeselect` that deselected and immediately
+    // re-selected, making the card impossible to turn off. The flag swallows
+    // the echo (cleared on the next tick, so the following real click is
+    // handled normally); clicks that originate on a button inside the card are
+    // left alone, since those never produce the echo.
+    const isHandlingLabelClickRef = React.useRef(false);
+
     const handleClick = React.useCallback(
       (e: React.MouseEvent<HTMLLabelElement>) => {
         onClick?.(e);
+
+        if (isHandlingLabelClickRef.current) {
+          return;
+        }
+
+        const isClickOnButton =
+          e.target instanceof Element && !!e.target.closest('button');
+
+        if (!isClickOnButton) {
+          isHandlingLabelClickRef.current = true;
+          setTimeout(() => {
+            isHandlingLabelClickRef.current = false;
+          }, 0);
+        }
+
         if (allowDeselect && groupValue === value) {
           e.preventDefault();
           onValueChange?.('');
@@ -188,7 +212,9 @@ const RadioCardItem = React.forwardRef<HTMLLabelElement, RadioCardItemProps>(
     );
 
     return (
-      <RadioCardItemContext.Provider value={{ value, disabled: resolvedDisabled }}>
+      <RadioCardItemContext.Provider
+        value={{ value, disabled: resolvedDisabled }}
+      >
         <label
           ref={forwardedRef}
           className={item({ class: className })}
