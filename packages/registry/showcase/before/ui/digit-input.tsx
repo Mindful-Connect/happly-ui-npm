@@ -1,0 +1,87 @@
+'use client';
+
+import * as React from 'react';
+import OtpInput, { type OTPInputProps } from 'react-otp-input';
+
+import { useFormField } from '../lib/form-field-context';
+import { cn } from '../lib/happly-ui-utils';
+import { useFormFieldBinding } from '../lib/use-form-field-binding';
+
+type OtpOptions = Omit<OTPInputProps, 'renderInput'>;
+
+type DigitInputProps = {
+  className?: string;
+  disabled?: boolean;
+  hasError?: boolean;
+} & OtpOptions;
+
+function DigitInput({
+  className,
+  disabled,
+  hasError,
+  value: valueProp,
+  onChange: onChangeProp,
+  ...rest
+}: DigitInputProps) {
+  const formField = useFormField();
+  const resolvedHasError = hasError ?? formField.hasError;
+  const resolvedDisabled = disabled ?? formField.disabled;
+  const binding = useFormFieldBinding<string>();
+
+  // Priority: explicit props > RHF binding > undefined
+  const resolvedValue =
+    valueProp !== undefined ? valueProp : (binding?.value ?? '');
+  const resolvedOnChange = onChangeProp ?? binding?.onChange;
+
+  return (
+    <OtpInput
+      value={resolvedValue}
+      onChange={resolvedOnChange}
+      containerStyle={cn('flex w-full items-center gap-2.5', className)}
+      skipDefaultStyles
+      renderInput={(inputProps) => (
+        <DigitInputSlot
+          disabled={resolvedDisabled}
+          hasError={resolvedHasError}
+          {...inputProps}
+        />
+      )}
+      {...rest}
+    />
+  );
+}
+DigitInput.displayName = 'DigitInput';
+
+const DigitInputSlot = React.forwardRef<
+  React.ComponentRef<'input'>,
+  React.ComponentPropsWithoutRef<'input'> & {
+    hasError?: boolean;
+  }
+>(({ className, hasError, ...rest }, forwardedRef) => {
+  return (
+    <input
+      ref={forwardedRef}
+      className={cn(
+        'rounded-10 bg-bg-white-0 text-title-h5 text-text-strong-950 shadow-regular-xs ring-stroke-soft-200 h-16 w-full min-w-0 border-0 text-center ring-1 outline-none ring-inset',
+        'transition duration-200 ease-out',
+        // hover
+        'hover:bg-bg-weak-50 hover:shadow-none hover:ring-transparent',
+        // focus
+        'focus:shadow-button-important-focus focus:ring-stroke-strong-950 focus:outline-none',
+        // selection
+        'selection:bg-none',
+        // disabled
+        'disabled:bg-bg-weak-50 disabled:text-text-disabled-300 disabled:shadow-none disabled:ring-transparent',
+        {
+          'ring-error-base hover:ring-error-base focus:ring-error-base focus:shadow-button-error-focus':
+            hasError,
+        },
+        className
+      )}
+      {...rest}
+    />
+  );
+});
+DigitInputSlot.displayName = 'DigitInputSlot';
+
+export { DigitInput as Root };
