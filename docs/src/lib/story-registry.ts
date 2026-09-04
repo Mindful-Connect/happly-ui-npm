@@ -72,7 +72,7 @@ import { default as stepIndicatorMeta, FirstStepActive as stepIndicator_FirstSte
 import { default as switchToggleMeta, Default as switchToggle_Default, Rounded as switchToggle_Rounded, GroupDefault as switchToggle_GroupDefault, GroupTextOnly as switchToggle_GroupTextOnly, Disabled as switchToggle_Disabled } from '@/components/ui/switch-toggle.stories';
 import { default as switchMeta, Playground as switch_Playground, Demo as switch_Demo, Variants as switch_Variants, Disabled as switch_Disabled, WithLabel as switch_WithLabel, WithLabelExtended as switch_WithLabelExtended, WithFormField as switch_WithFormField } from '@/components/ui/switch.stories';
 import { default as tabMenuHorizontalMeta, Default as tabMenuHorizontal_Default, Primary as tabMenuHorizontal_Primary, WithIcons as tabMenuHorizontal_WithIcons, WithCounter as tabMenuHorizontal_WithCounter, Composed as tabMenuHorizontal_Composed, Overflow as tabMenuHorizontal_Overflow, Disabled as tabMenuHorizontal_Disabled } from '@/components/ui/tab-menu-horizontal.stories';
-import { default as tableMeta, Default as table_Default } from '@/components/ui/table.stories';
+import { default as tableMeta, Default as table_Default, NumericColumns as table_NumericColumns, EmptyState as table_EmptyState } from '@/components/ui/table.stories';
 import { default as tagInputMeta, Playground as tagInput_Playground, Default as tagInput_Default, Controlled as tagInput_Controlled, MaxTags as tagInput_MaxTags, GrayVariant as tagInput_GrayVariant, Sizes as tagInput_Sizes, WithFormField as tagInput_WithFormField } from '@/components/ui/tag-input.stories';
 import { default as tagMeta, Playground as tag_Playground, Stroke as tag_Stroke, Gray as tag_Gray, Rounded as tag_Rounded, Disabled as tag_Disabled, WithImage as tag_WithImage, WithAvatar as tag_WithAvatar, Dismissable as tag_Dismissable } from '@/components/ui/tag.stories';
 import { default as textareaMeta, Playground as textarea_Playground, Demo as textarea_Demo, InteractiveCounter as textarea_InteractiveCounter, HasError as textarea_HasError, WithLabelAndHint as textarea_WithLabelAndHint, Disabled as textarea_Disabled, Simple as textarea_Simple, SimpleResize as textarea_SimpleResize } from '@/components/ui/textarea.stories';
@@ -928,7 +928,9 @@ export const storyRegistry: Record<string, {
   'table': {
     meta: tableMeta,
     stories: {
-    'Default': table_Default
+    'Default': table_Default,
+    'NumericColumns': table_NumericColumns,
+    'EmptyState': table_EmptyState
     }
   },
   'tag-input': {
