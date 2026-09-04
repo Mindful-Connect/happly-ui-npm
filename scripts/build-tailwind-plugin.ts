@@ -15,6 +15,7 @@ import path from 'path';
 import {
   texts,
   shadows,
+  dropShadows,
   borderRadii,
   colors,
   fontFamilies,
@@ -39,6 +40,7 @@ const config = {
       colors,
       fontSize: texts,
       boxShadow: shadows,
+      dropShadow: dropShadows,
       borderRadius: borderRadii,
       fontFamily: fontFamilies,
       backgroundImage,
