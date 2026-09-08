@@ -81,7 +81,7 @@
             "name": "disabled",
             "type": "boolean",
             "default": "false",
-            "description": "Disables the entire control: dims it (opacity) and blocks pointer interaction on all triggers. Sets aria-disabled."
+            "description": "Disables the entire control: natively disables every trigger (so the keyboard cannot reach or switch them), takes the list out of the tab order, and fades the labels \u2014 the selected one stays readable so the chosen option is still visible. Sets aria-disabled."
           }
         ]
       },
@@ -141,7 +141,7 @@
             "name": "disabled",
             "type": "boolean",
             "default": "false",
-            "description": "Disables the entire group: dims it and blocks pointer interaction on all triggers."
+            "description": "Disables the entire group: natively disables every trigger in every list, takes them out of the tab order, and fades the labels, keeping the selected one readable."
           },
           {
             "name": "defaultValue",

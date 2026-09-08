@@ -356,6 +356,8 @@ function FilterDropdownApply({
   className,
   label = 'Apply',
   children,
+  disabled,
+  onClick,
   ...rest
 }: FilterDropdownApplyProps) {
   return (
@@ -364,7 +366,28 @@ function FilterDropdownApply({
         variant='neutral'
         mode='filled'
         size='small'
-        className={cn('w-full', className)}
+        // `aria-disabled` rather than the native `disabled`, following
+        // `Button.Root`'s own loading state. Apply is the last control in the
+        // panel and it flips to unavailable at the moment it is activated — a
+        // native `disabled` button drops focus to `<body>` right then, and the
+        // panel is portalled, so a keyboard user loses their place entirely.
+        // Staying focusable keeps focus on the button; the styling below and
+        // the guard on `onClick` block the interaction instead.
+        aria-disabled={disabled || undefined}
+        className={cn(
+          'w-full',
+          disabled &&
+            'bg-bg-weak-50 text-text-disabled-300 pointer-events-none shadow-none ring-transparent',
+          className
+        )}
+        onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+          if (disabled) {
+            event.preventDefault();
+            event.stopPropagation();
+            return;
+          }
+          onClick?.(event);
+        }}
         {...rest}
       >
         {children ?? label}
@@ -471,6 +494,20 @@ type FilterDropdownComposedProps = {
   onOpenChange?: (open: boolean) => void;
 };
 
+// Applying does not close the panel and may not visibly change anything a
+// screen-reader user is on, so the outcome has to be spoken. Full sentences per
+// branch rather than a count glued into a fragment, so the string survives
+// translation.
+function applyAnnouncement(selected: Record<string, string[]>) {
+  const count = Object.values(selected).reduce(
+    (total, values) => total + values.length,
+    0
+  );
+  if (count === 0) return 'Filters cleared';
+  if (count === 1) return '1 filter applied';
+  return `${count} filters applied`;
+}
+
 function FilterDropdownComposed({
   children,
   filters,
@@ -493,10 +530,26 @@ function FilterDropdownComposed({
     {}
   );
 
-  // Snapshot of selections when the popover opened, used to detect changes and revert on cancel
+  // The last committed selection: taken when the popover opens and retaken on
+  // every Apply. Everything the panel says about "unapplied changes" is
+  // measured against it, and closing the panel rewinds to it.
   const openSnapshot = React.useRef<Record<string, string[]>>({});
-  const didApply = React.useRef(false);
-  const [openCount, setOpenCount] = React.useState(0);
+  // `openSnapshot` is a ref, so writing to it cannot invalidate the
+  // `hasChanges` memo on its own. This counter is the memo's dependency:
+  // without it the button stays enabled after Apply, claiming there is still
+  // something to apply.
+  const [baselineVersion, setBaselineVersion] = React.useState(0);
+  const [applyStatus, setApplyStatus] = React.useState('');
+
+  const commitBaseline = React.useCallback(
+    (values: Record<string, string[]>) => {
+      openSnapshot.current = Object.fromEntries(
+        Object.entries(values).map(([k, v]) => [k, [...v]])
+      );
+      setBaselineVersion((v) => v + 1);
+    },
+    []
+  );
 
   // Remote filter state per key
   const [remoteStates, setRemoteStates] = React.useState<
@@ -572,34 +625,31 @@ function FilterDropdownComposed({
     (open: boolean) => {
       onOpenChangeProp?.(open);
       if (open) {
-        // Snapshot current selections so we can detect changes and revert on cancel
-        openSnapshot.current = Object.fromEntries(
-          Object.entries(selected).map(([k, v]) => [k, [...v]])
-        );
-        didApply.current = false;
-        setOpenCount((c) => c + 1);
+        commitBaseline(selected);
       } else {
-        // Revert unapplied changes by restoring the snapshot
-        if (!didApply.current) {
-          const snapshot = openSnapshot.current;
-          const allKeys = Array.from(
-            new Set([...Object.keys(snapshot), ...Object.keys(selected)])
-          );
-          for (let i = 0; i < allKeys.length; i++) {
-            const key = allKeys[i];
-            const prev = snapshot[key] ?? [];
-            const curr = selected[key] ?? [];
-            if (
-              prev.length !== curr.length ||
-              prev.some((v, idx) => v !== curr[idx])
-            ) {
-              onSelectedChange(key, prev);
-            }
+        // Rewind to the last committed selection. The snapshot tracks Apply, so
+        // this reverts edits made before the first Apply and edits made after
+        // one — otherwise a change made after applying would survive the close
+        // and leave the checkboxes describing a filter the list never received.
+        const snapshot = openSnapshot.current;
+        const allKeys = Array.from(
+          new Set([...Object.keys(snapshot), ...Object.keys(selected)])
+        );
+        for (let i = 0; i < allKeys.length; i++) {
+          const key = allKeys[i];
+          const prev = snapshot[key] ?? [];
+          const curr = selected[key] ?? [];
+          if (
+            prev.length !== curr.length ||
+            prev.some((v, idx) => v !== curr[idx])
+          ) {
+            onSelectedChange(key, prev);
           }
         }
 
         setView(isSingleFilter ? filters[0].key : 'categories');
         setSearchTerms({});
+        setApplyStatus('');
         setRemoteStates({});
         fetchedRemoteKeys.current.clear();
         loadMoreLock.current = {};
@@ -607,7 +657,14 @@ function FilterDropdownComposed({
         debounceTimers.current = {};
       }
     },
-    [onOpenChangeProp, isSingleFilter, filters, selected, onSelectedChange]
+    [
+      onOpenChangeProp,
+      isSingleFilter,
+      filters,
+      selected,
+      onSelectedChange,
+      commitBaseline,
+    ]
   );
 
   // Clean up debounce timers on unmount
@@ -718,7 +775,7 @@ function FilterDropdownComposed({
     return 'indeterminate';
   };
 
-  // Detect whether selections have changed from the snapshot taken on open
+  // Detect whether selections have changed from the last committed baseline
   const hasChanges = React.useMemo(() => {
     const snapshot = openSnapshot.current;
     const allKeys = Array.from(
@@ -734,7 +791,7 @@ function FilterDropdownComposed({
     }
     return false;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selected, openCount]);
+  }, [selected, baselineVersion]);
 
   const activeFilter = filters.find((f) => f.key === view);
   const activeRemoteState = activeFilter?.remote
@@ -762,6 +819,13 @@ function FilterDropdownComposed({
         sideOffset={sideOffset}
         className={cn(view === 'categories' && 'w-[224px]', contentClassName)}
       >
+        {/* Rendered empty for the life of the panel and updated in place —
+            a live region inserted at the moment it has something to say is
+            unreliably announced. */}
+        <span role='status' className='sr-only'>
+          {applyStatus}
+        </span>
+
         {view === 'categories' && (
           <FilterDropdownCategoryList>
             {filters.map((filter) => (
@@ -849,20 +913,18 @@ function FilterDropdownComposed({
               label={applyLabel}
               disabled={!hasChanges}
               onClick={() => {
-                didApply.current = true;
                 onApply?.(selected);
-                // Re-baseline the snapshot to what we just committed. The panel
-                // stays OPEN after Apply, and `hasChanges` compares `selected`
-                // against this snapshot — which was taken on open. Without this
-                // line the snapshot still describes the pre-Apply state, so any
-                // edit that returns the selection to that state (most obviously
-                // "Reset filter", which clears the group back to empty) leaves
-                // `hasChanges` false and DISABLES Apply, while the committed
-                // filter is still the applied one. The list stays filtered with
-                // no way to clear it short of reloading the page.
-                openSnapshot.current = Object.fromEntries(
-                  Object.entries(selected).map(([k, v]) => [k, [...v]])
-                );
+                // Re-baseline to what we just committed. The panel stays OPEN
+                // after Apply, and `hasChanges` compares `selected` against the
+                // baseline. Without this the baseline still describes the
+                // pre-Apply state, so any edit that returns the selection to
+                // that state (most obviously "Reset filter", which clears the
+                // group back to empty) leaves `hasChanges` false and DISABLES
+                // Apply, while the committed filter is still the applied one.
+                // The list stays filtered with no way to clear it short of
+                // reloading the page.
+                commitBaseline(selected);
+                setApplyStatus(applyAnnouncement(selected));
               }}
             />
           </>

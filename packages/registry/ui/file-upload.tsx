@@ -640,7 +640,7 @@ const AttachmentUploadIcon = () => (
 // ─── Dropzone presets ────────────────────────────────────────────────────────
 
 /**
- * The dropzone presets below, exported so a consumer can type its own mapping
+ * The dropzone presets below. Exported so a consumer can type its own mapping
  * onto them — e.g. a form builder resolving a stored "file kind" to the type it
  * passes here. It was internal, which left callers hand-writing the union.
  */
@@ -688,9 +688,9 @@ const DROPZONE_PRESETS: Record<
   },
   archive: {
     icon: <AttachmentUploadIcon />,
-    title: 'Choose an existing archive file or upload a new one.',
-    description: 'Supported formats: ZIP, RAR, 7z. Max size: 50MB.',
-    button: 'Browse File',
+    title: 'Drop an archive here, or choose one from your computer.',
+    description: 'Supported formats: ZIP, RAR, 7Z. Max size: 50 MB.',
+    button: 'Choose archive',
   },
   attachment: {
     icon: <AttachmentUploadIcon />,
@@ -821,10 +821,16 @@ const FileUploadRoot = React.forwardRef<
           // dropzone itself carries the keyboard focus indicator
           'has-[:focus-visible]:shadow-button-primary-focus',
           disabled
-            ? // Dimmed as well as unclickable: without it a disabled dropzone is
-              // pixel-identical to an enabled one, so nothing tells the user why
-              // clicking does nothing.
-              'pointer-events-none opacity-60'
+            ? // Dimmed as well as unclickable: without a visual change a
+              // hand-composed disabled dropzone is pixel-identical to an
+              // enabled one, so nothing tells the user why clicking does
+              // nothing. Same recipe Button and Select use for `disabled:` — a
+              // weak ground plus an inherited disabled text colour — rather
+              // than a group `opacity`, which composites on top of the slots'
+              // own disabled tokens and dropped the dashed frame to 1.30:1 and
+              // the button's ring to 1.10:1 against the page, erasing the
+              // shape that makes this read as a dropzone at all.
+              'bg-bg-weak-50 text-text-disabled-300 pointer-events-none'
             : 'hover:bg-bg-weak-50 cursor-pointer',
           isDragging && !disabled && 'bg-primary-alpha-10',
           className

@@ -96,6 +96,20 @@ const iconSizeMap = {
   lg: 'xl',
 } as const;
 
+/**
+ * The variants the slots share with Root, in the registry's `*SharedProps`
+ * shape (see `AlertSharedProps`, `InputSharedProps`). Repeated on each slot
+ * because tv() is called per component: without it every slot resolves
+ * `defaultVariants` (`md`), so a Root marked `size='lg'` still rendered `md`
+ * type and spacing. `bordered` and `filled` only style `root`, so they stay on
+ * Root alone. Composed passes `size` through automatically; hand-composed
+ * usage passes each slot the same value it gives Root.
+ */
+type EmptyStateSharedProps = Pick<
+  VariantProps<typeof emptyStateVariants>,
+  'size'
+>;
+
 type EmptyStateRootProps = VariantProps<typeof emptyStateVariants> &
   React.HTMLAttributes<HTMLDivElement>;
 
@@ -136,16 +150,8 @@ function EmptyStateIcon({ icon, size = 'lg' }: EmptyStateIconProps) {
 }
 EmptyStateIcon.displayName = EMPTY_STATE_ICON_NAME;
 
-type EmptyStateTitleProps = React.HTMLAttributes<HTMLHeadingElement> & {
-  /**
-   * The `size` the parent Root was given. Repeated on the slot because tv() is
-   * called per component: without it every slot resolves `defaultVariants`
-   * (`md`), so a Root marked `size='lg'` still rendered `md` typography and
-   * spacing. Composed passes it through automatically; hand-composed usage
-   * should pass the same value it gives Root.
-   */
-  size?: VariantProps<typeof emptyStateVariants>['size'];
-};
+type EmptyStateTitleProps = React.HTMLAttributes<HTMLHeadingElement> &
+  EmptyStateSharedProps;
 
 function EmptyStateTitle({ className, size, ...rest }: EmptyStateTitleProps) {
   const { title } = emptyStateVariants({ size });
@@ -154,10 +160,8 @@ function EmptyStateTitle({ className, size, ...rest }: EmptyStateTitleProps) {
 }
 EmptyStateTitle.displayName = EMPTY_STATE_TITLE_NAME;
 
-type EmptyStateDescriptionProps = React.HTMLAttributes<HTMLParagraphElement> & {
-  /** See {@link EmptyStateTitleProps.size}. */
-  size?: VariantProps<typeof emptyStateVariants>['size'];
-};
+type EmptyStateDescriptionProps = React.HTMLAttributes<HTMLParagraphElement> &
+  EmptyStateSharedProps;
 
 function EmptyStateDescription({
   className,
@@ -170,10 +174,8 @@ function EmptyStateDescription({
 }
 EmptyStateDescription.displayName = EMPTY_STATE_DESCRIPTION_NAME;
 
-type EmptyStateActionsProps = React.HTMLAttributes<HTMLDivElement> & {
-  /** See {@link EmptyStateTitleProps.size}. */
-  size?: VariantProps<typeof emptyStateVariants>['size'];
-};
+type EmptyStateActionsProps = React.HTMLAttributes<HTMLDivElement> &
+  EmptyStateSharedProps;
 
 function EmptyStateActions({
   className,

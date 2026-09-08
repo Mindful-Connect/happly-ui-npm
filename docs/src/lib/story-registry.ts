@@ -32,7 +32,7 @@ import { default as fadeScrollMeta, Vertical as fadeScroll_Vertical, Horizontal 
 import { default as fancyButtonMeta, Playground as fancyButton_Playground, Variants as fancyButton_Variants, WithIcon as fancyButton_WithIcon, Sizes as fancyButton_Sizes, Disabled as fancyButton_Disabled, AsChild as fancyButton_AsChild } from '@/components/ui/fancy-button.stories';
 import { default as fileCardMeta, UploadStates as fileCard_UploadStates, CompletedMediaTypes as fileCard_CompletedMediaTypes, Download as fileCard_Download, Compact as fileCard_Compact, Item as fileCard_Item, ItemDownload as fileCard_ItemDownload, ItemCompact as fileCard_ItemCompact } from '@/components/ui/file-card.stories';
 import { default as fileFormatIconMeta, Default as fileFormatIcon_Default, Colors as fileFormatIcon_Colors, Sizes as fileFormatIcon_Sizes } from '@/components/ui/file-format-icon.stories';
-import { default as fileUploadMeta, Document as fileUpload_Document, Image as fileUpload_Image, Video as fileUpload_Video, Audio as fileUpload_Audio, Attachment as fileUpload_Attachment, CustomOverrides as fileUpload_CustomOverrides, Dragging as fileUpload_Dragging, Disabled as fileUpload_Disabled } from '@/components/ui/file-upload.stories';
+import { default as fileUploadMeta, Document as fileUpload_Document, Image as fileUpload_Image, Video as fileUpload_Video, Audio as fileUpload_Audio, Archive as fileUpload_Archive, Attachment as fileUpload_Attachment, CustomOverrides as fileUpload_CustomOverrides, Dragging as fileUpload_Dragging, Disabled as fileUpload_Disabled } from '@/components/ui/file-upload.stories';
 import { default as filterDropdownMeta, CategoryMenu as filterDropdown_CategoryMenu, TextOptions as filterDropdown_TextOptions, BadgeOptions as filterDropdown_BadgeOptions, StatusBadgeOptions as filterDropdown_StatusBadgeOptions, WithSearch as filterDropdown_WithSearch, TwoLevelNavigation as filterDropdown_TwoLevelNavigation, FlatFilter as filterDropdown_FlatFilter, ComposedTwoLevel as filterDropdown_ComposedTwoLevel, ComposedFlat as filterDropdown_ComposedFlat, ComposedWithSearch as filterDropdown_ComposedWithSearch, ComposedWithBadges as filterDropdown_ComposedWithBadges, ComposedWithRemoteSearch as filterDropdown_ComposedWithRemoteSearch, ComposedTwoLevelWithRemote as filterDropdown_ComposedTwoLevelWithRemote } from '@/components/ui/filter-dropdown.stories';
 import { default as formFieldMeta, Playground as formField_Playground, Demo as formField_Demo, WithError as formField_WithError, Disabled as formField_Disabled, CompoundMode as formField_CompoundMode, FormValidation as formField_FormValidation, AutoBindingShowcase as formField_AutoBindingShowcase } from '@/components/ui/form-field.stories';
 import { default as hintMeta, Playground as hint_Playground, Demo as hint_Demo, Disabled as hint_Disabled, HasError as hint_HasError, CustomIcon as hint_CustomIcon, Composed as hint_Composed } from '@/components/ui/hint.stories';
@@ -466,6 +466,7 @@ export const storyRegistry: Record<string, {
     'Image': fileUpload_Image,
     'Video': fileUpload_Video,
     'Audio': fileUpload_Audio,
+    'Archive': fileUpload_Archive,
     'Attachment': fileUpload_Attachment,
     'CustomOverrides': fileUpload_CustomOverrides,
     'Dragging': fileUpload_Dragging,

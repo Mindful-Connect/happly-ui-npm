@@ -852,7 +852,7 @@ const EmojiDialogBubble = React.forwardRef<
         )}
       >
         {icon && (
-          <div className='bg-bg-white-0 text-text-strong-950 flex h-8 w-8 shrink-0 items-center justify-center rounded-full shadow-[0_15px_50px_0_var(--color-black-alpha-16)] [&>*]:w-5'>
+          <div className='bg-bg-white-0 text-text-strong-950 flex h-8 w-8 shrink-0 items-center justify-center rounded-full shadow-[0_15px_50px_0_var(--color-black-alpha-16)] [&>*]:size-5'>
             {icon}
           </div>
         )}

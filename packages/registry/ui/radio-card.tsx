@@ -68,6 +68,10 @@ const radioCardVariants = tv({
   },
 });
 
+// Interactive content: a label does not forward a click that started inside
+// one of these to its control, so no forwarded click follows.
+const NO_LABEL_FORWARDING = 'a[href],button,input,select,textarea';
+
 type RadioCardSharedProps = VariantProps<typeof radioCardVariants>;
 
 // ─── Context ──────────────────────────────────────────────
@@ -182,39 +186,76 @@ const RadioCardItem = React.forwardRef<HTMLLabelElement, RadioCardItemProps>(
     const titleId = `${contentId}-title`;
     const descriptionId = `${contentId}-description`;
 
-    // A click on the label also produces a synthesized click on the radio it
-    // wraps, which bubbles back to the label — so this handler ran twice for
-    // one user click. With `allowDeselect` that deselected and immediately
-    // re-selected, making the card impossible to turn off. The flag swallows
-    // the echo (cleared on the next tick, so the following real click is
-    // handled normally); clicks that originate on a button inside the card are
-    // left alone, since those never produce the echo.
-    const isHandlingLabelClickRef = React.useRef(false);
+    // A click anywhere on the card is forwarded by the browser to the control
+    // the label wraps — the Radix radio button — and that forwarded click
+    // bubbles back through the label, so this handler saw two clicks per
+    // gesture. With `allowDeselect` the pair deselected and immediately
+    // re-selected, making a selected card impossible to turn off.
+    //
+    // Verified in Storybook (Chrome): the forwarded click carries
+    // `detail: 1` and `isTrusted: true` exactly like the real one, so only
+    // state can tell them apart. We arm on a click the browser will forward,
+    // and swallow the one click that comes back targeting the radio. The
+    // timer is a safety net for an arm whose echo never arrives.
+    //
+    // Paths checked — 1 handled call each, none swallowed by mistake:
+    // click on the card body (real click handled, forwarded click swallowed) ·
+    // click on the Indicator, Space on the Indicator, click on a button or
+    // link inside the card (a label never forwards a click that started on
+    // interactive content, so no echo and nothing is armed) · deselect click
+    // (its `preventDefault` cancels the forwarding, so nothing is armed) ·
+    // two clicks in quick succession (the echo is dispatched inside the first
+    // click's own task, so the flag is always disarmed before the second
+    // click — the previous version relied on a `setTimeout(0)` for this and
+    // swallowed a second click that landed ~9ms later) · click while disabled
+    // (blocked by `pointer-events-none`, and the deselect is guarded below).
+    //
+    // The swallow now runs before `onClick`, so a consumer's own handler is
+    // called once per gesture rather than once per click event.
+    const isEchoPendingRef = React.useRef(false);
+    const echoTimerRef = React.useRef<ReturnType<typeof setTimeout>>(undefined);
+
+    React.useEffect(() => () => clearTimeout(echoTimerRef.current), []);
 
     const handleClick = React.useCallback(
       (e: React.MouseEvent<HTMLLabelElement>) => {
-        onClick?.(e);
+        const target = e.target instanceof Element ? e.target : null;
 
-        if (isHandlingLabelClickRef.current) {
+        if (isEchoPendingRef.current && target?.closest('[role="radio"]')) {
+          isEchoPendingRef.current = false;
+          clearTimeout(echoTimerRef.current);
           return;
         }
 
-        const isClickOnButton =
-          e.target instanceof Element && !!e.target.closest('button');
+        onClick?.(e);
 
-        if (!isClickOnButton) {
-          isHandlingLabelClickRef.current = true;
-          setTimeout(() => {
-            isHandlingLabelClickRef.current = false;
-          }, 0);
-        }
-
-        if (allowDeselect && groupValue === value) {
+        if (!resolvedDisabled && allowDeselect && groupValue === value) {
           e.preventDefault();
           onValueChange?.('');
         }
+
+        // The click is forwarded unless it was cancelled above or started on
+        // interactive content, which a label never forwards from.
+        if (
+          !e.isDefaultPrevented() &&
+          target &&
+          !target.closest(NO_LABEL_FORWARDING)
+        ) {
+          isEchoPendingRef.current = true;
+          clearTimeout(echoTimerRef.current);
+          echoTimerRef.current = setTimeout(() => {
+            isEchoPendingRef.current = false;
+          }, 0);
+        }
       },
-      [allowDeselect, groupValue, value, onValueChange, onClick]
+      [
+        allowDeselect,
+        groupValue,
+        value,
+        onValueChange,
+        onClick,
+        resolvedDisabled,
+      ]
     );
 
     return (
