@@ -216,6 +216,34 @@ The page now carries **35 demos**. The `markdown-editor` demo deliberately execu
 the before pane — that is the only way the fix is visible. The payload is static, writes a single
 sentence into its own container, and makes no network call.
 
+## Sixth pass — merging #76 and sweeping what it brought (2026-09-08)
+
+`production` gained the six Education Center QA fixes (#76) while this branch was open. All seven
+files it touched are files this branch had also rewritten, so the merge came first: two real
+conflicts, both resolved in our favour because our side was a superset (we had already dropped
+emoji-dialog's duplicate `h-5` *and* tokenised the shadow; our radio-card context carries the
+titleId/descriptionId the label wiring needs). Each of the six QA fixes was then checked
+individually rather than trusting a clean merge — all six present.
+
+Three agents then ran the skills over the code the merge introduced. **Every QA fix is preserved.
+Two of them were re-implemented, because both had a defect their own pass had not surfaced:**
+
+| Component | What the skills found in the new code |
+| --- | --- |
+| `radio-card` | The echo guard mis-swallowed real input. Two clicks 10ms apart left an `allowDeselect` card stuck ON — the `setTimeout(0)` had not fired, so the second *real* click was eaten. Rebuilt to arm only when the browser will actually forward the click and to swallow exactly the one echo returning on `[role="radio"]`. Verified by count: 1, 2 and 3 rapid clicks now produce exactly 1, 2 and 3 toggles. |
+| `filter-dropdown` | The re-baseline wrote to a **ref**, which cannot invalidate the `hasChanges` memo — so Apply stayed enabled after Apply and re-fired `onApply`. Baseline is now state. Closing also always rewinds to it: previously open → change → Apply → change again → close left the checkboxes showing a filter the list never received. Driven end to end in the browser; a `role="status"` region now announces the result, which nothing did before. |
+| `switch-toggle` | QA's `disabled` reached `Group` but not the documented `<List disabled>` path, which still shipped `tabindex="0"` with fully operable triggers. Fixed via a List→Trigger context; both disabled lists now report `tabindex="-1"` with every trigger natively disabled. Separately, the selected option now keeps `text-sub-600` when disabled (7.14:1) instead of fading to `disabled-300` with everything else — matching `radio-card.tsx:39`. Fading them equally left `aria-selected` as the only cue. |
+| `file-upload` | `opacity-60` on a disabled dropzone composited on top of slots that already swap to disabled tokens: description 1.30:1, dashed frame 1.30:1, Button chip ring **1.10:1**. Replaced with button/select's own `bg-bg-weak-50 text-text-disabled-300` recipe. The `archive` preset was also written in the pre-sweep voice ("Browse File", "50MB") and now matches its five siblings. |
+| `empty-state` | Three duplicated inline `size` prop types collapsed into a shared type, matching `AlertSharedProps`. |
+| `emoji-dialog` | `[&>*]:w-5` sized width only, so a Remixicon child kept its 24px height attribute and rendered 20×24. Now `size-5`. |
+
+**Left for Ari:** `empty-state` still needs `size` passed by hand in composed usage; every other slotted
+component auto-propagates through `recursiveCloneChildren`, but adopting that here means adding a
+registry dependency to a component the QA team just touched, so it is a follow-up rather than part
+of this branch. Separately, inside a `<form>` Radix's radio calls `stopPropagation()`, so
+`allowDeselect` does nothing when the click starts on the Indicator — pre-existing, and a fix would
+change Radix-level behaviour.
+
 ## Before/after showcase
 
 `packages/registry/showcase/skills-before-after.stories.tsx` renders every visible change as a jakub.kr/skills-style page: the real component from `production` (verbatim snapshot in `showcase/before/`, with the old focus-ring and dark-accent token values restored) next to the current one. Open it in Storybook under **Skills → Before and after**, or directly at `http://localhost:6006/iframe.html?id=skills-before-and-after--before-and-after&viewMode=story`. The snapshot is not part of the registry, is excluded from lint, and should be deleted together with the story when it has served its purpose.
