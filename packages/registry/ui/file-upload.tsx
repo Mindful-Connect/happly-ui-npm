@@ -639,7 +639,18 @@ const AttachmentUploadIcon = () => (
 
 // ─── Dropzone presets ────────────────────────────────────────────────────────
 
-type FileUploadType = 'document' | 'image' | 'video' | 'audio' | 'attachment';
+/**
+ * The dropzone presets below, exported so a consumer can type its own mapping
+ * onto them — e.g. a form builder resolving a stored "file kind" to the type it
+ * passes here. It was internal, which left callers hand-writing the union.
+ */
+export type FileUploadType =
+  | 'document'
+  | 'image'
+  | 'video'
+  | 'audio'
+  | 'archive'
+  | 'attachment';
 
 const DROPZONE_PRESETS: Record<
   FileUploadType,
@@ -674,6 +685,12 @@ const DROPZONE_PRESETS: Record<
     title: 'Drop an audio file here, or choose one from your computer.',
     description: 'Supported formats: MP3, WAV. Max size: 50 MB.',
     button: 'Choose audio file',
+  },
+  archive: {
+    icon: <AttachmentUploadIcon />,
+    title: 'Choose an existing archive file or upload a new one.',
+    description: 'Supported formats: ZIP, RAR, 7z. Max size: 50MB.',
+    button: 'Browse File',
   },
   attachment: {
     icon: <AttachmentUploadIcon />,
@@ -804,7 +821,10 @@ const FileUploadRoot = React.forwardRef<
           // dropzone itself carries the keyboard focus indicator
           'has-[:focus-visible]:shadow-button-primary-focus',
           disabled
-            ? 'pointer-events-none'
+            ? // Dimmed as well as unclickable: without it a disabled dropzone is
+              // pixel-identical to an enabled one, so nothing tells the user why
+              // clicking does nothing.
+              'pointer-events-none opacity-60'
             : 'hover:bg-bg-weak-50 cursor-pointer',
           isDragging && !disabled && 'bg-primary-alpha-10',
           className

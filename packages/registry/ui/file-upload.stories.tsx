@@ -23,6 +23,12 @@ export const Audio = {
   render: () => <FileUpload.Dropzone type='audio' className='min-w-[480px]' />,
 };
 
+export const Archive = {
+  render: () => (
+    <FileUpload.Dropzone type='archive' className='min-w-[480px]' />
+  ),
+};
+
 export const Attachment = {
   render: () => (
     <FileUpload.Dropzone type='attachment' className='min-w-[480px]' />

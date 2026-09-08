@@ -851,6 +851,18 @@ function FilterDropdownComposed({
               onClick={() => {
                 didApply.current = true;
                 onApply?.(selected);
+                // Re-baseline the snapshot to what we just committed. The panel
+                // stays OPEN after Apply, and `hasChanges` compares `selected`
+                // against this snapshot — which was taken on open. Without this
+                // line the snapshot still describes the pre-Apply state, so any
+                // edit that returns the selection to that state (most obviously
+                // "Reset filter", which clears the group back to empty) leaves
+                // `hasChanges` false and DISABLES Apply, while the committed
+                // filter is still the applied one. The list stays filtered with
+                // no way to clear it short of reloading the page.
+                openSnapshot.current = Object.fromEntries(
+                  Object.entries(selected).map(([k, v]) => [k, [...v]])
+                );
               }}
             />
           </>

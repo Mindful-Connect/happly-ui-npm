@@ -155,6 +155,11 @@ const SwitchToggleGroup = React.forwardRef<
                 key={item.value}
                 value={item.value}
                 className={triggerClassName}
+                // Also on the trigger, not just the List. The List only gets
+                // `aria-disabled` + `pointer-events-none`, which stops the mouse
+                // and nothing else — Radix Tabs triggers stay reachable by Tab
+                // and switchable with the arrow keys.
+                disabled={disabled}
               >
                 {Icon && <Icon className='h-5 w-5 shrink-0' />}
                 {item.label}

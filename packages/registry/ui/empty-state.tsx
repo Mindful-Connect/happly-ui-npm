@@ -136,31 +136,51 @@ function EmptyStateIcon({ icon, size = 'lg' }: EmptyStateIconProps) {
 }
 EmptyStateIcon.displayName = EMPTY_STATE_ICON_NAME;
 
-type EmptyStateTitleProps = React.HTMLAttributes<HTMLHeadingElement>;
+type EmptyStateTitleProps = React.HTMLAttributes<HTMLHeadingElement> & {
+  /**
+   * The `size` the parent Root was given. Repeated on the slot because tv() is
+   * called per component: without it every slot resolves `defaultVariants`
+   * (`md`), so a Root marked `size='lg'` still rendered `md` typography and
+   * spacing. Composed passes it through automatically; hand-composed usage
+   * should pass the same value it gives Root.
+   */
+  size?: VariantProps<typeof emptyStateVariants>['size'];
+};
 
-function EmptyStateTitle({ className, ...rest }: EmptyStateTitleProps) {
-  const { title } = emptyStateVariants();
+function EmptyStateTitle({ className, size, ...rest }: EmptyStateTitleProps) {
+  const { title } = emptyStateVariants({ size });
 
   return <h3 className={title({ class: className })} {...rest} />;
 }
 EmptyStateTitle.displayName = EMPTY_STATE_TITLE_NAME;
 
-type EmptyStateDescriptionProps = React.HTMLAttributes<HTMLParagraphElement>;
+type EmptyStateDescriptionProps = React.HTMLAttributes<HTMLParagraphElement> & {
+  /** See {@link EmptyStateTitleProps.size}. */
+  size?: VariantProps<typeof emptyStateVariants>['size'];
+};
 
 function EmptyStateDescription({
   className,
+  size,
   ...rest
 }: EmptyStateDescriptionProps) {
-  const { description } = emptyStateVariants();
+  const { description } = emptyStateVariants({ size });
 
   return <p className={description({ class: className })} {...rest} />;
 }
 EmptyStateDescription.displayName = EMPTY_STATE_DESCRIPTION_NAME;
 
-type EmptyStateActionsProps = React.HTMLAttributes<HTMLDivElement>;
+type EmptyStateActionsProps = React.HTMLAttributes<HTMLDivElement> & {
+  /** See {@link EmptyStateTitleProps.size}. */
+  size?: VariantProps<typeof emptyStateVariants>['size'];
+};
 
-function EmptyStateActions({ className, ...rest }: EmptyStateActionsProps) {
-  const { actions } = emptyStateVariants();
+function EmptyStateActions({
+  className,
+  size,
+  ...rest
+}: EmptyStateActionsProps) {
+  const { actions } = emptyStateVariants({ size });
 
   return <div className={actions({ class: className })} {...rest} />;
 }
@@ -186,13 +206,15 @@ function EmptyStateComposed({
       {icon && <EmptyStateIcon size={iconSizeMap[size ?? 'md']} icon={icon} />}
       {(title || description) && (
         <div className='flex flex-col items-center gap-1'>
-          {title && <EmptyStateTitle>{title}</EmptyStateTitle>}
+          {title && <EmptyStateTitle size={size}>{title}</EmptyStateTitle>}
           {description && (
-            <EmptyStateDescription>{description}</EmptyStateDescription>
+            <EmptyStateDescription size={size}>
+              {description}
+            </EmptyStateDescription>
           )}
         </div>
       )}
-      {actions && <EmptyStateActions>{actions}</EmptyStateActions>}
+      {actions && <EmptyStateActions size={size}>{actions}</EmptyStateActions>}
     </EmptyStateRoot>
   );
 }
