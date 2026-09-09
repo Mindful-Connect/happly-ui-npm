@@ -527,6 +527,35 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
       asChild
     );
 
+    // The loading treatment replaces the button's *content*, never the element
+    // it is rendered as. With `asChild`, Radix Slot merges this component's
+    // props onto whatever single element it receives — hand it
+    // `ButtonLoadingContent` (a function component that ignores props) and the
+    // slotted `<a>` disappears along with its href, its handlers and every
+    // class the button contributed. So keep the child and swap the content
+    // *inside* it instead.
+    let content: React.ReactNode;
+    if (!loading) {
+      content = extendedChildren;
+    } else if (asChild && React.isValidElement(children)) {
+      const child = children as React.ReactElement<{
+        children?: React.ReactNode;
+      }>;
+      content = React.cloneElement(
+        child,
+        undefined,
+        <ButtonLoadingContent loadingText={loadingText}>
+          {child.props.children}
+        </ButtonLoadingContent>
+      );
+    } else {
+      content = (
+        <ButtonLoadingContent loadingText={loadingText}>
+          {children}
+        </ButtonLoadingContent>
+      );
+    }
+
     return (
       <Component
         ref={forwardedRef}
@@ -540,6 +569,7 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
         })}
         disabled={disabled}
         aria-disabled={loading || undefined}
+        aria-busy={loading || undefined}
         // `pointer-events-none` only stops the mouse. The button stays in the
         // tab order while loading (that is the point of `aria-disabled`), so
         // Enter and Space would still fire a second submit — block activation
@@ -560,13 +590,7 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
         }}
         {...rest}
       >
-        {loading ? (
-          <ButtonLoadingContent loadingText={loadingText}>
-            {children}
-          </ButtonLoadingContent>
-        ) : (
-          extendedChildren
-        )}
+        {content}
       </Component>
     );
   }

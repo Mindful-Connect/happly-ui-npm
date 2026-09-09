@@ -125,7 +125,7 @@
             "name": "asChild",
             "type": "boolean",
             "default": "false",
-            "description": "Renders as child element using Radix Slot"
+            "description": "Renders as child element using Radix Slot. Combines with loading: the slotted element keeps its href, handlers and button classes, and only its content is replaced by the loading treatment."
           },
           {
             "name": "static",
@@ -137,7 +137,7 @@
             "name": "loading",
             "type": "boolean",
             "default": "false",
-            "description": "Triggers an animated loading transition with a wave text effect, spinner, and typewriter dots"
+            "description": "Triggers an animated loading transition with a wave text effect, spinner, and typewriter dots. Also sets aria-busy and aria-disabled, and blocks clicks and keyboard activation while it is on."
           },
           {
             "name": "loadingText",
