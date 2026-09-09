@@ -8,7 +8,6 @@ import prettier from 'eslint-config-prettier';
 export default tseslint.config(
   {
     ignores: [
-      'packages/registry/showcase/before/**',
       'dist',
       'node_modules',
       'coverage',

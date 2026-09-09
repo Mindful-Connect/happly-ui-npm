@@ -246,7 +246,7 @@ change Radix-level behaviour.
 
 ## Before/after showcase
 
-`packages/registry/showcase/skills-before-after.stories.tsx` renders every visible change as a jakub.kr/skills-style page: the real component from `production` (verbatim snapshot in `showcase/before/`, with the old focus-ring and dark-accent token values restored) next to the current one. Open it in Storybook under **Skills → Before and after**, or directly at `http://localhost:6006/iframe.html?id=skills-before-and-after--before-and-after&viewMode=story`. The snapshot is not part of the registry, is excluded from lint, and should be deleted together with the story when it has served its purpose.
+**Removed (issue #81).** While this review was open, `packages/registry/showcase/skills-before-after.stories.tsx` rendered every visible change as a jakub.kr/skills-style page: the real component from `production` (verbatim snapshot in `showcase/before/`, with the old focus-ring and dark-accent token values restored) next to the current one. It was always meant to be temporary — a `production` snapshot goes stale the moment `production` moves — so the story, the snapshot and the `showcase:page` build script came out once the review was signed off. Read the per-change tables above for the same before/after detail.
 
 ## Verdict
 

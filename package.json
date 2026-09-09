@@ -9,7 +9,6 @@
     "dev": "bun run --filter './packages/*' dev",
     "build:registry": "bun run scripts/build-registry.ts && bun run scripts/build-tailwind-plugin.ts && bun run scripts/sync-theme-templates.ts",
     "sync:theme": "bun run scripts/sync-theme-templates.ts",
-    "showcase:page": "bun run scripts/build-showcase-page.ts",
     "clean": "rm -rf packages/*/dist packages/*/.turbo",
     "lint": "eslint .",
     "storybook": "bun run --cwd packages/registry storybook",
