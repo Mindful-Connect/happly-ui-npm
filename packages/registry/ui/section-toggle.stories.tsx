@@ -5,11 +5,11 @@ import * as SectionToggle from './section-toggle';
 
 const CONTENT = (
   <div className='flex items-end gap-3'>
-    <div className='border-stroke-soft-200 bg-bg-white-0 text-paragraph-sm text-text-soft-400 shadow-regular-xs h-10 flex-1 rounded-[10px] border px-3 py-2.5'>
+    <div className='border-stroke-soft-200 bg-bg-white-0 text-paragraph-sm text-text-soft-400 shadow-regular-xs h-10 flex-1 rounded-lg border px-3 py-2.5'>
       Select a date
     </div>
     <span className='text-paragraph-xs text-text-soft-400 pb-2.5'>To</span>
-    <div className='border-stroke-soft-200 bg-bg-white-0 text-paragraph-sm text-text-soft-400 shadow-regular-xs h-10 flex-1 rounded-[10px] border px-3 py-2.5'>
+    <div className='border-stroke-soft-200 bg-bg-white-0 text-paragraph-sm text-text-soft-400 shadow-regular-xs h-10 flex-1 rounded-lg border px-3 py-2.5'>
       Select a time
     </div>
   </div>
@@ -38,7 +38,7 @@ function PlaygroundRender(args: any) {
 
 export const Playground = {
   args: {
-    title: 'Toggle Section Title',
+    title: 'Toggle section title',
     description: 'Toggle this section open or closed.',
     defaultOpen: true,
   },
@@ -61,13 +61,14 @@ function DefaultRender() {
             Do you want to set a closing date for offers?
           </SectionToggle.Title>
           <SectionToggle.Description>
-            Set the end dates for when Offer will be accepted for the program.
+            Set the date when offers stop being accepted for this program.
           </SectionToggle.Description>
         </SectionToggle.TextGroup>
         <Switch.Root
           variant='neutral'
           checked={open}
           onCheckedChange={setOpen}
+          aria-label='Set a closing date for offers'
         />
       </SectionToggle.Header>
       <SectionToggle.Content open={open}>{CONTENT}</SectionToggle.Content>
@@ -90,13 +91,14 @@ function CollapsedRender() {
             Do you want to set a closing date for offers?
           </SectionToggle.Title>
           <SectionToggle.Description>
-            Set the end dates for when Offer will be accepted for the program.
+            Set the date when offers stop being accepted for this program.
           </SectionToggle.Description>
         </SectionToggle.TextGroup>
         <Switch.Root
           variant='neutral'
           checked={open}
           onCheckedChange={setOpen}
+          aria-label='Set a closing date for offers'
         />
       </SectionToggle.Header>
       <SectionToggle.Content open={open}>{CONTENT}</SectionToggle.Content>
@@ -115,7 +117,7 @@ function ComposedRender() {
     <SectionToggle.Composed
       className='w-full max-w-[682px]'
       title='Do you want to set a closing date for offers?'
-      description='Set the end dates for when Offer will be accepted for the program.'
+      description='Set the date when offers stop being accepted for this program.'
       open={open}
       onOpenChange={setOpen}
     >

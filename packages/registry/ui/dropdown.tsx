@@ -32,9 +32,9 @@ const DropdownContent = React.forwardRef<
         'flex flex-col gap-1',
         // origin
         'data-[side=bottom]:origin-top data-[side=left]:origin-right data-[side=right]:origin-left data-[side=top]:origin-bottom',
-        // animation
-        'data-[state=open]:animate-in data-[state=open]:fade-in-0',
-        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
+        // animation — exit is shorter and softer than the enter
+        'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:duration-200 data-[state=open]:ease-out',
+        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:duration-150 data-[state=closed]:ease-out',
         'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
         'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
         className
@@ -59,11 +59,9 @@ const DropdownItem = React.forwardRef<
       // base
       'group/item text-paragraph-sm text-text-strong-950 relative cursor-pointer rounded-lg p-2 outline-none select-none',
       'flex items-center gap-2',
-      'transition duration-200 ease-out',
-      // hover
+      'transition-[background-color,color] duration-150 ease-out',
+      // hover / roving focus
       'data-[highlighted]:bg-bg-weak-50',
-      // focus
-      'focus:outline-none',
       // disabled
       'data-[disabled]:text-text-disabled-300',
       // variant
@@ -137,9 +135,9 @@ const DropdownMenuSubTrigger = React.forwardRef<
     ref={forwardedRef}
     className={cn(
       // base
-      'group/item text-paragraph-sm text-text-strong-950 relative cursor-pointer rounded-lg p-2 outline-0 select-none',
+      'group/item text-paragraph-sm text-text-strong-950 relative cursor-pointer rounded-lg p-2 outline-none select-none',
       'flex items-center gap-2',
-      'transition duration-200 ease-out',
+      'transition-[background-color,color] duration-150 ease-out',
       // hover
       'data-[highlighted]:bg-bg-weak-50',
       // disabled
@@ -167,9 +165,9 @@ const DropdownMenuSubContent = React.forwardRef<
       // viewport-available width so it never overflows the screen.
       'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 pointer-events-auto z-50 w-max max-w-[var(--radix-dropdown-menu-content-available-width)] min-w-[224px] overflow-hidden rounded-2xl p-2 ring-1 ring-inset',
       'flex flex-col gap-1',
-      // animation
-      'data-[state=open]:animate-in data-[state=open]:fade-in-0',
-      'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
+      // animation — exit is shorter and softer than the enter
+      'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:duration-200 data-[state=open]:ease-out',
+      'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:duration-150 data-[state=closed]:ease-out',
       'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
       'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
       className

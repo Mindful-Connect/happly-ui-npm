@@ -51,13 +51,18 @@
             "name": "active",
             "type": "boolean",
             "default": "false",
-            "description": "Whether this step is currently active"
+            "description": "Whether this step is currently active Also sets aria-current=\"step\"."
           },
           {
             "name": "asChild",
             "type": "boolean",
             "default": "false",
             "description": "Render as child element using Radix Slot"
+          },
+          {
+            "name": "aria-label",
+            "type": "string",
+            "description": "Required — the dot has no text, so give each one a name such as \"Go to step 2\""
           }
         ]
       }

@@ -115,13 +115,13 @@ function ColorPickerPanel() {
         <Select.Root
           value={space}
           onValueChange={(s) => setSpace(s as ColorSpace)}
-          aria-label='Color Space'
+          aria-label='Color space'
           variant='inline'
         >
           <Select.Trigger>
             <Select.Value />
           </Select.Trigger>
-          <Select.Content aria-label='items'>
+          <Select.Content aria-label='Color formats'>
             <Select.Item id='hex' value='hex'>
               HEX
             </Select.Item>
@@ -193,7 +193,7 @@ function ColorPickerPanel() {
 
       <div className='flex flex-col gap-2'>
         <div className='text-paragraph-xs text-text-sub-600'>
-          Recommended Colors
+          Recommended colors
         </div>
         <ColorPicker.SwatchPicker>
           {colorSwatches.map((color) => (
@@ -236,7 +236,7 @@ function PopoverDemoRender() {
         <Popover.Trigger asChild>
           <Button.Root variant='neutral' mode='stroke'>
             <Button.Icon as={ColorPicker.Swatch} className='rounded' />
-            Pick Color
+            Pick color
           </Button.Root>
         </Popover.Trigger>
         <Popover.Content className='bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 flex w-[272px] flex-col gap-3 rounded-2xl p-4 ring-1 ring-inset'>
@@ -255,7 +255,7 @@ function WithFormFieldRender() {
   const [color, setColor] = React.useState(parseColor('hsl(228, 100%, 60%)'));
 
   return (
-    <FormField.Root label='Brand Color' hint='Choose your brand primary color.'>
+    <FormField.Root label='Brand color' hint='Choose your brand primary color.'>
       <div className='bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 flex w-[272px] flex-col gap-3 rounded-2xl p-4 ring-1 ring-inset'>
         <ColorPicker.Root value={color} onChange={setColor}>
           <ColorPicker.Area

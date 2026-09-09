@@ -51,6 +51,7 @@ type FadeScrollOrientation = 'vertical' | 'horizontal';
 type FadeScrollRootProps = React.HTMLAttributes<HTMLDivElement> & {
   orientation?: FadeScrollOrientation;
   fadeSize?: number;
+  label?: string;
 };
 
 const FadeScrollRoot = React.forwardRef<HTMLDivElement, FadeScrollRootProps>(
@@ -60,6 +61,7 @@ const FadeScrollRoot = React.forwardRef<HTMLDivElement, FadeScrollRootProps>(
       children,
       orientation = 'vertical',
       fadeSize = DEFAULT_FADE_SIZE,
+      label,
       onScroll,
       style,
       ...rest
@@ -102,6 +104,12 @@ const FadeScrollRoot = React.forwardRef<HTMLDivElement, FadeScrollRootProps>(
       ? buildVerticalMaskImage(canScrollStart, canScrollEnd, fadeSize)
       : buildHorizontalMaskImage(canScrollStart, canScrollEnd, fadeSize);
 
+    // The native scrollbar is hidden, so without a tab stop a keyboard user
+    // cannot reach this content unless it happens to contain focusable
+    // children. The scroll flags already tell us whether there is anything to
+    // scroll, so the tab stop only exists while it is useful.
+    const isScrollable = canScrollStart || canScrollEnd;
+
     return (
       <div
         ref={innerRef}
@@ -109,6 +117,11 @@ const FadeScrollRoot = React.forwardRef<HTMLDivElement, FadeScrollRootProps>(
           updateScrollState();
           onScroll?.(e);
         }}
+        {...(isScrollable && {
+          tabIndex: 0,
+          role: 'region',
+          'aria-label': label,
+        })}
         className={cn(
           // Hide the native scrollbar — fades replace it visually.
           '[scrollbar-width:none] [&::-webkit-scrollbar]:hidden',

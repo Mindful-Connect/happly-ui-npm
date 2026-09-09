@@ -20,7 +20,7 @@ const accordionItemVariants = tv({
   base: [
     'group/accordion',
     'rounded-10 overflow-hidden ring-1 ring-inset',
-    'transition duration-200 ease-out',
+    'transition-[background-color,box-shadow] duration-150 ease-out',
   ],
   variants: {
     variant: {
@@ -102,7 +102,9 @@ const AccordionTrigger = React.forwardRef<
         'text-label-sm text-text-strong-950 w-full text-left',
         'grid auto-cols-auto grid-flow-col grid-cols-[auto_minmax(0,1fr)] items-center gap-2.5',
         'p-3.5',
-        'outline-none focus:outline-none',
+        // The item's `overflow-hidden` would clip an outset ring, so the
+        // keyboard indicator is drawn inside the trigger.
+        'focus-visible:ring-stroke-strong-950 outline-none focus-visible:ring-2 focus-visible:ring-inset',
         className
       )}
       {...rest}
@@ -134,6 +136,14 @@ type AccordionArrowProps = React.HTMLAttributes<HTMLDivElement> & {
   closeIcon?: React.ElementType;
 };
 
+// Both glyphs stay in the DOM and cross-fade with opacity, scale and blur, so
+// the swap animates in both directions without a motion dependency. The swap
+// runs at the icon-transition recipe's 300ms cubic-bezier(0.2,0,0,1); `color`
+// is a hover change and rides the item's own 200ms ease-out instead, so the
+// glyph and the row it sits in recolor together.
+const ICON_SWAP =
+  '[transition:opacity_300ms_cubic-bezier(0.2,0,0,1),filter_300ms_cubic-bezier(0.2,0,0,1),scale_300ms_cubic-bezier(0.2,0,0,1),color_200ms_cubic-bezier(0,0,0.2,1)]';
+
 function AccordionArrow({
   className,
   openIcon: OpenIcon = RiAddLine,
@@ -141,24 +151,26 @@ function AccordionArrow({
   ...rest
 }: AccordionArrowProps) {
   return (
-    <span className='flex shrink-0'>
+    <span className='relative flex h-5 w-5 shrink-0' {...rest}>
       <OpenIcon
+        aria-hidden='true'
         className={cn(
           'text-text-soft-400 h-5 w-5',
-          'transition duration-200 ease-out',
+          ICON_SWAP,
           'group-hover/accordion:text-text-sub-600',
-          'group-data-[state=open]/accordion:hidden',
+          'group-data-[state=open]/accordion:scale-[0.25] group-data-[state=open]/accordion:opacity-0 group-data-[state=open]/accordion:blur-[4px]',
           className
         )}
-        {...rest}
       />
       <CloseIcon
+        aria-hidden='true'
         className={cn(
-          'text-text-sub-600 h-5 w-5',
-          'hidden group-data-[state=open]/accordion:block',
+          'text-text-sub-600 absolute inset-0 h-5 w-5',
+          ICON_SWAP,
+          'scale-[0.25] opacity-0 blur-[4px]',
+          'group-data-[state=open]/accordion:scale-100 group-data-[state=open]/accordion:opacity-100 group-data-[state=open]/accordion:blur-none',
           className
         )}
-        {...rest}
       />
     </span>
   );
@@ -179,15 +191,16 @@ function AccordionChevron({
       className={cn(
         'flex shrink-0 items-center justify-center rounded-lg p-1.5',
         'border-stroke-soft-200 bg-bg-white-0 shadow-regular-xs border',
-        'transition duration-200 ease-out',
+        'transition-[background-color,border-color,box-shadow] duration-150 ease-out',
         className
       )}
       {...rest}
     >
       <Icon
+        aria-hidden='true'
         className={cn(
           'text-text-sub-600 h-5 w-5',
-          'transition-transform duration-200 ease-out',
+          'transition-transform duration-150 ease-out',
           'group-data-[state=open]/accordion:rotate-180'
         )}
       />
@@ -203,7 +216,9 @@ const AccordionContent = React.forwardRef<
   return (
     <AccordionPrimitive.Content
       ref={forwardedRef}
-      className='data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden'
+      // The shared token runs both directions at 200ms; the collapse is
+      // shortened here so the exit stays softer than the enter.
+      className='data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden data-[state=closed]:[animation-duration:150ms]'
       {...rest}
     >
       <div

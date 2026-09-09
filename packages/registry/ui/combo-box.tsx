@@ -10,7 +10,10 @@ import * as Popover from '@/components/ui/popover';
 import * as Tag from '@/components/ui/tag';
 import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
-import { useFormFieldBinding } from '@/lib/use-form-field-binding';
+import { useControllableFieldValue } from '@/lib/use-controllable-field-value';
+
+/** Module-level so the RHF binding options keep one identity across renders. */
+const emptyArrayBinding = { defaultValue: [] as string[] };
 
 // ─── Types ─────────────────────────────────────────────────
 
@@ -112,7 +115,7 @@ type ComboBoxRootProps = {
    * values render as tags using the value as the label. Pass `options=[]`
    * for a pure free-form chip input — no dropdown, just type and press Enter. */
   creatable?: boolean;
-  /** Customize the create item's label — defaults to `Add "<query>"`. */
+  /** Customize the create item's label — defaults to `Add “<query>”`. */
   createLabel?: (query: string) => string;
   /** Callback when popover open state changes */
   onOpenChange?: (open: boolean) => void;
@@ -142,7 +145,6 @@ function ComboBoxRoot({
   const formField = useFormField();
   const hasError = hasErrorProp || formField.hasError;
   const disabled = disabledProp || formField.disabled;
-  const binding = useFormFieldBinding<string[]>({ defaultValue: [] });
 
   // Dedupe by `value` so an upstream API returning multiple rows with the same
   // value (e.g. the same slug under different IDs) doesn't render twice. First
@@ -158,27 +160,28 @@ function ComboBoxRoot({
     return out;
   }, [rawOptions]);
 
-  // Priority: explicit props > RHF binding > internal state
-  const hasExplicitValue = valueProp !== undefined;
-  const hasExplicitOnChange = onValueChange !== undefined;
-
-  const [internalValue, setInternalValue] = React.useState(defaultValue);
-  const value = hasExplicitValue
-    ? valueProp
-    : (binding?.value ?? internalValue);
-  const setValue = React.useCallback(
+  // `onValueChange` receives the resolved options alongside the values, so it
+  // is wrapped before the shared resolver hands it the next value.
+  const handleExplicitChange = React.useCallback(
     (next: string[]) => {
-      if (!hasExplicitValue && !binding) setInternalValue(next);
-      if (hasExplicitOnChange) {
-        const selectedOptions = next
-          .map((v) => options.find((o) => o.value === v))
-          .filter(Boolean) as ComboBoxOption[];
-        onValueChange?.(next, selectedOptions);
-      } else {
-        binding?.onChange(next);
-      }
+      const selectedOptions = next
+        .map((v) => options.find((o) => o.value === v))
+        .filter(Boolean) as ComboBoxOption[];
+      onValueChange?.(next, selectedOptions);
     },
-    [hasExplicitValue, hasExplicitOnChange, binding, onValueChange, options]
+    [onValueChange, options]
+  );
+
+  // Explicit props > RHF binding > internal state
+  const {
+    value,
+    onChange: setValue,
+    isFormBound,
+  } = useControllableFieldValue<string[]>(
+    valueProp,
+    onValueChange ? handleExplicitChange : undefined,
+    defaultValue,
+    emptyArrayBinding
   );
 
   const [open, setOpen] = React.useState(preview);
@@ -265,7 +268,7 @@ function ComboBoxRoot({
     if (value.some((v) => v.toLowerCase() === lower)) return null;
     return {
       value: trimmed,
-      label: createLabel ? createLabel(trimmed) : `Add "${trimmed}"`,
+      label: createLabel ? createLabel(trimmed) : `Add “${trimmed}”`,
     };
   }, [creatable, search, options, value, createLabel]);
 
@@ -363,7 +366,7 @@ function ComboBoxRoot({
 
           {/* Hidden inputs for native form submission (skip when RHF-bound) */}
           {name &&
-            !binding &&
+            !isFormBound &&
             value.map((v) => (
               <input key={v} type='hidden' name={name} value={v} />
             ))}
@@ -394,7 +397,7 @@ const ComboBoxSearchTrigger = React.forwardRef<
     {
       leadingIcon = RiSearchLine,
       trailingIcon = RiArrowDownSLine,
-      placeholder = 'Choose or search...',
+      placeholder = 'Choose or search…',
       className,
     },
     forwardedRef
@@ -490,6 +493,8 @@ const ComboBoxSearchTrigger = React.forwardRef<
               aria-controls={ctx.open ? ctx.listboxId : undefined}
               aria-activedescendant={activeDescendant}
               aria-autocomplete='list'
+              autoComplete='off'
+              spellCheck={false}
               value={ctx.search}
               onChange={(e) => ctx.setSearch(e.target.value)}
               onFocus={() =>
@@ -507,7 +512,10 @@ const ComboBoxSearchTrigger = React.forwardRef<
               <Input.Icon
                 as={trailingIcon}
                 className={cn(
-                  'transition duration-200 ease-out',
+                  // Merged with Input.Icon's own classes, so this has to carry the
+                  // colour too — tailwind-merge keeps only the last
+                  // transition-property and would drop the icon's colour easing.
+                  'transition-[color,rotate,transform] duration-150 ease-out',
                   ctx.open && 'rotate-180'
                 )}
               />
@@ -526,8 +534,19 @@ ComboBoxSearchTrigger.displayName = 'ComboBoxSearchTrigger';
 
 // ─── Content ────────────────────────────────────────────────
 
+/**
+ * A search empty state names the query it failed on and points at the way
+ * back to the full list, instead of a dead "No results found."
+ */
+function defaultEmptyMessage(search: string) {
+  const query = search.trim();
+  return query
+    ? `No results for “${query}”. Clear the search to see every option.`
+    : 'No options available.';
+}
+
 type ComboBoxContentProps = {
-  /** Message shown when no options match the search */
+  /** Message shown when no options match the search. Defaults to a message naming the current query. */
   emptyMessage?: string;
   /** Message shown when the typed query is already in the selected values (creatable mode). */
   alreadyAddedMessage?: string;
@@ -536,7 +555,7 @@ type ComboBoxContentProps = {
 };
 
 function ComboBoxContent({
-  emptyMessage = 'No results found.',
+  emptyMessage,
   alreadyAddedMessage = 'Already added.',
   className,
   children,
@@ -550,7 +569,7 @@ function ComboBoxContent({
   const isEmpty = ctx.filteredOptions.length === 0 && !ctx.createItem;
   const emptyText = ctx.isQueryAlreadySelected
     ? alreadyAddedMessage
-    : emptyMessage;
+    : (emptyMessage ?? defaultEmptyMessage(ctx.search));
 
   const items =
     children ??
@@ -595,7 +614,9 @@ function ComboBoxContent({
     return (
       <div
         className={cn(
-          'border-stroke-soft-200 overflow-hidden rounded-xl border [--combobox-content-max-height:196px]',
+          // rounded-2xl matches the popover surface the same list renders in,
+          // keeping the 8px padding concentric with the 8px item radius.
+          'border-stroke-soft-200 overflow-hidden rounded-2xl border [--combobox-content-max-height:196px]',
           className
         )}
       >
@@ -686,8 +707,10 @@ function ComboBoxItem({
         }
       }}
       className={cn(
-        'text-paragraph-sm text-text-strong-950 relative flex w-full cursor-pointer items-center gap-2 rounded-[0.625rem] p-2 text-left font-medium select-none',
-        'transition duration-200 ease-out outline-none',
+        // rounded-lg: the menu is a 16px-radius surface with 8px of padding,
+        // so a concentric item radius is 16 − 8 = 8px.
+        'text-paragraph-sm text-text-strong-950 relative flex w-full cursor-pointer items-center gap-2 rounded-lg p-2 text-left font-medium select-none',
+        'transition-[background-color] duration-150 ease-out outline-none',
         'hover:bg-bg-weak-50',
         isHighlighted && 'bg-bg-weak-50',
         isDisabled && 'text-text-disabled-300 pointer-events-none',
@@ -698,7 +721,9 @@ function ComboBoxItem({
       {children ?? (
         <>
           {option?.icon && <ComboBoxItemIcon as={option.icon} />}
-          <span className='line-clamp-1'>{option?.label ?? itemValue}</span>
+          <span className='line-clamp-1' title={option?.label ?? itemValue}>
+            {option?.label ?? itemValue}
+          </span>
         </>
       )}
       {showIndicator && <ComboBoxItemIndicator selected={selected} />}
@@ -756,12 +781,19 @@ function ComboBoxItemIndicator({
     <span
       className={cn(
         'absolute top-1/2 right-2 flex h-5 w-5 shrink-0 -translate-y-1/2 items-center justify-center',
-        'transition duration-200 ease-out',
-        selected ? 'opacity-100' : 'opacity-0',
+        // A state icon that appears and disappears — cross-fade it with
+        // opacity + scale + blur rather than dropping opacity alone. The mark
+        // itself (not the motion) is what carries "selected".
+        'transition-[opacity,filter,scale,transform] duration-300 ease-[cubic-bezier(0.2,0,0,1)]',
+        selected
+          ? 'scale-100 opacity-100 blur-none'
+          : 'scale-[0.25] opacity-0 blur-[4px]',
         className
       )}
     >
-      {children ?? <RiCheckLine className='text-text-sub-600 h-5 w-5' />}
+      {children ?? (
+        <RiCheckLine aria-hidden='true' className='text-text-sub-600 h-5 w-5' />
+      )}
     </span>
   );
 }
@@ -796,13 +828,15 @@ function ComboBoxCreateItem({
       onClick={() => ctx.commitCreate()}
       onMouseEnter={() => ctx.setHighlightedIndex(index)}
       className={cn(
-        'text-paragraph-sm text-text-strong-950 relative flex w-full cursor-pointer items-center gap-2 rounded-[0.625rem] p-2 text-left select-none',
-        'transition duration-200 ease-out outline-none',
+        'text-paragraph-sm text-text-strong-950 relative flex w-full cursor-pointer items-center gap-2 rounded-lg p-2 text-left select-none',
+        'transition-[background-color] duration-150 ease-out outline-none',
         'hover:bg-bg-weak-50',
         isHighlighted && 'bg-bg-weak-50'
       )}
     >
-      <span className='line-clamp-1'>{item.label}</span>
+      <span className='line-clamp-1' title={item.label}>
+        {item.label}
+      </span>
     </div>
   );
 }
@@ -816,14 +850,17 @@ type ComboBoxEmptyProps = {
 };
 
 function ComboBoxEmpty({ className, children }: ComboBoxEmptyProps) {
+  // Read the context loosely so Empty still renders outside a Root.
+  const ctx = React.useContext(ComboBoxContext);
+
   return (
     <div
       className={cn(
-        'text-paragraph-sm text-text-sub-600 py-6 text-center',
+        'text-paragraph-sm text-text-sub-600 py-6 text-center text-pretty',
         className
       )}
     >
-      {children ?? 'No results found.'}
+      {children ?? defaultEmptyMessage(ctx?.search ?? '')}
     </div>
   );
 }
@@ -862,7 +899,10 @@ function ComboBoxTags({
       {showSelectAll ? (
         <Tag.Root variant={variant} disabled={ctx.disabled}>
           <span>{selectAllLabel}</span>
-          <Tag.DismissButton onClick={ctx.removeAll} />
+          <Tag.DismissButton
+            onClick={ctx.removeAll}
+            aria-label={`Remove ${selectAllLabel}`}
+          />
         </Tag.Root>
       ) : (
         selectedOptions.map((opt) => (
@@ -881,7 +921,10 @@ function ComboBoxTags({
                 <Tag.Icon as={opt.icon} />
               ))}
             <span>{opt.label}</span>
-            <Tag.DismissButton onClick={() => ctx.remove(opt.value)} />
+            <Tag.DismissButton
+              onClick={() => ctx.remove(opt.value)}
+              aria-label={`Remove ${opt.label}`}
+            />
           </Tag.Root>
         ))
       )}

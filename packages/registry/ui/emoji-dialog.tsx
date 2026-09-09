@@ -3,7 +3,7 @@
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { RiCloseLine } from '@remixicon/react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 import { tv, type VariantProps } from '@/lib/tv';
 import { cn } from '@/lib/happly-ui-utils';
@@ -17,7 +17,27 @@ import type {
 } from '@/lib/memoji';
 
 // Animation spring configs
-const entrySpring = { stiffness: 180, damping: 22, mass: 0.6 };
+// Timing source for every entrance in this file. framer-motion ignores a
+// `duration` passed alongside stiffness/damping/mass ("stiffness/damping/mass
+// overrides duration/bounce" — motion-dom `getSpringOptions`), so the springs
+// below carry no duration; these three numbers are what to tune.
+// ζ = 22 / (2·√(180·0.6)) ≈ 1.06 — critically damped, i.e. no bounce.
+const entrySpring = {
+  type: 'spring',
+  stiffness: 180,
+  damping: 22,
+  mass: 0.6,
+} as const;
+
+// Entrance ladder: one semantic chunk every ~100–120ms, decoration last, so
+// nothing lands on top of anything else.
+const ENTER_DELAY = {
+  glassCircle: 0,
+  memoji: 0.12,
+  header: 0.25,
+  footer: 0.35,
+  bubble: 0.45,
+} as const;
 
 // 7 hardcoded floating satellite memojis
 const FLOATING_MEMOJIS = [
@@ -116,7 +136,16 @@ const AnimationContext = React.createContext<AnimationContextType>({
   disableAnimations: false,
 });
 
-const useAnimationContext = () => React.useContext(AnimationContext);
+// The dialog's motion is JS-driven (framer-motion), so the theme's global
+// `prefers-reduced-motion` kill-switch does not reach it — including the
+// infinite float/rotate loops. Fold the preference into the same flag the
+// `disableAnimations` prop sets.
+const useAnimationContext = (): AnimationContextType => {
+  const { disableAnimations } = React.useContext(AnimationContext);
+  const prefersReducedMotion = useReducedMotion();
+
+  return { disableAnimations: disableAnimations || !!prefersReducedMotion };
+};
 
 // --- Root ---
 
@@ -144,7 +173,7 @@ const EmojiDialogOverlay = React.forwardRef<
     ref={forwardedRef}
     className={cn(
       // base
-      'bg-overlay fixed inset-0 z-50 flex flex-col items-center justify-center overflow-y-auto p-4 backdrop-blur-[10px]',
+      'bg-overlay fixed inset-0 z-50 flex flex-col items-center justify-center overflow-y-auto overscroll-contain p-4 backdrop-blur-[10px]',
       // animation
       'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
       className
@@ -188,8 +217,12 @@ const EmojiDialogContent = React.forwardRef<
               // base
               'relative flex w-[calc(100%-2rem)] max-w-[526px] flex-col gap-8 sm:w-full',
               'rounded-20 border-stroke-soft-200 bg-bg-white-0 shadow-regular-md overflow-hidden border p-10',
-              // animation
+              // animation — enter 200ms, exit 150ms (softer and shorter on the
+              // way out, matching Drawer). The staged framer-motion entrance of
+              // the contents starts once this container has landed.
               'data-[state=open]:animate-in data-[state=closed]:animate-out',
+              'data-[state=closed]:duration-150 data-[state=open]:duration-200',
+              'data-[state=closed]:ease-out data-[state=open]:ease-out',
               'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
               'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
               className
@@ -204,13 +237,13 @@ const EmojiDialogContent = React.forwardRef<
                   'absolute top-[34px] right-[34px] z-10',
                   'flex h-8 w-8 items-center justify-center rounded-full',
                   'bg-bg-weak-50 text-text-sub-600',
-                  'hover:text-text-strong-950 transition-colors hover:bg-neutral-100',
-                  'focus:ring-stroke-soft-200 focus:ring-2 focus:ring-offset-2 focus:outline-none',
+                  'hover:text-text-strong-950 hover:bg-bg-soft-200 transition-[background-color,color,box-shadow] duration-150 ease-out',
+                  'focus-visible:shadow-button-important-focus outline-none',
                   'disabled:pointer-events-none'
                 )}
               >
                 <div className='border-stroke-soft-200 bg-bg-white-0 flex h-6 w-6 items-center justify-center rounded-full border'>
-                  <RiCloseLine className='h-4 w-4' />
+                  <RiCloseLine className='h-4 w-4' aria-hidden='true' />
                 </div>
                 <span className='sr-only'>Close</span>
               </DialogPrimitive.Close>
@@ -250,12 +283,7 @@ function EmojiDialogHeader({
     <motion.div
       initial={{ opacity: 0, y: 15, filter: 'blur(4px)' }}
       animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      transition={{
-        delay: 0.25,
-        duration: 0.5,
-        type: 'spring',
-        ...entrySpring,
-      }}
+      transition={{ delay: ENTER_DELAY.header, ...entrySpring }}
       className={cn(
         'relative z-10 flex flex-col items-center gap-2 text-center',
         className
@@ -294,12 +322,7 @@ function EmojiDialogFooter({
     <motion.div
       initial={{ opacity: 0, y: 15, filter: 'blur(4px)' }}
       animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      transition={{
-        delay: 0.35,
-        duration: 0.5,
-        type: 'spring',
-        ...entrySpring,
-      }}
+      transition={{ delay: ENTER_DELAY.footer, ...entrySpring }}
       className={cn(
         'relative z-10 flex w-full flex-col-reverse gap-4 sm:flex-row [&>*]:flex-1',
         className
@@ -319,7 +342,10 @@ const EmojiDialogTitle = React.forwardRef<
 >(({ className, ...rest }, forwardedRef) => (
   <DialogPrimitive.Title
     ref={forwardedRef}
-    className={cn('text-title-h6 text-text-strong-950 text-center', className)}
+    className={cn(
+      'text-title-h6 text-text-strong-950 text-center text-balance break-words',
+      className
+    )}
     {...rest}
   />
 ));
@@ -339,7 +365,10 @@ const EmojiDialogDescription = React.forwardRef<
 >(({ className, children, lines, ...rest }, forwardedRef) => (
   <DialogPrimitive.Description
     ref={forwardedRef}
-    className={cn('text-label-sm text-text-sub-600 text-center', className)}
+    className={cn(
+      'text-label-sm text-text-sub-600 text-center text-pretty break-words',
+      className
+    )}
     {...rest}
   >
     {lines
@@ -360,6 +389,10 @@ interface EmojiDialogBackgroundProps extends React.HTMLAttributes<HTMLDivElement
   opacity?: number;
 }
 
+/** Grid rule colour that inverts with the theme. */
+const gridLine = (alpha: number) =>
+  `color-mix(in srgb, var(--color-text-strong-950) ${(alpha * 100).toFixed(2)}%, transparent)`;
+
 const EmojiDialogBackground = React.forwardRef<
   HTMLDivElement,
   EmojiDialogBackgroundProps
@@ -371,10 +404,12 @@ const EmojiDialogBackground = React.forwardRef<
       className
     )}
     style={{
+      // Tokenised so the scrim and grid follow the dialog surface in dark mode
+      // (hardcoded white/black rendered as a bright band on a dark dialog).
       backgroundImage: [
-        `linear-gradient(to top, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%)`,
-        `repeating-linear-gradient(90deg, rgba(0,0,0,${opacity}) 0px, rgba(0,0,0,${opacity * 0.15}) 1px, transparent 1px, transparent 60px)`,
-        `repeating-linear-gradient(0deg, rgba(0,0,0,${opacity}) 0px, rgba(0,0,0,${opacity * 0.15}) 1px, transparent 1px, transparent 60px)`,
+        `linear-gradient(to top, var(--color-bg-white-0) 50%, transparent 100%)`,
+        `repeating-linear-gradient(90deg, ${gridLine(opacity)} 0px, ${gridLine(opacity * 0.15)} 1px, transparent 1px, transparent 60px)`,
+        `repeating-linear-gradient(0deg, ${gridLine(opacity)} 0px, ${gridLine(opacity * 0.15)} 1px, transparent 1px, transparent 60px)`,
       ].join(','),
       backgroundSize: 'auto, 60px 60px, 60px 60px',
       backgroundRepeat: 'no-repeat, repeat, repeat',
@@ -457,8 +492,8 @@ function GlassmorphismCircle({
       <g filter='url(#stroke-inner-shadow)'>
         <path
           d='M31.9338 85.8339C31.9338 85.8339 24.5633 99.4199 34.5498 111.214'
-          stroke='#F3F3F3'
           strokeWidth='6'
+          className='stroke-bg-weak-50'
           strokeMiterlimit='10'
           strokeLinecap='round'
         />
@@ -466,8 +501,8 @@ function GlassmorphismCircle({
       <g filter='url(#stroke-inner-shadow)'>
         <path
           d='M53.8471 46.5431C53.8471 46.5431 39.028 50.9386 37.7512 66.3414'
-          stroke='#F3F3F3'
           strokeWidth='6'
+          className='stroke-bg-weak-50'
           strokeMiterlimit='10'
           strokeLinecap='round'
         />
@@ -475,8 +510,8 @@ function GlassmorphismCircle({
       <g filter='url(#stroke-inner-shadow)'>
         <path
           d='M97.1195 34.2558C97.1195 34.2558 83.5335 26.8853 71.7394 36.8719'
-          stroke='#F3F3F3'
           strokeWidth='6'
+          className='stroke-bg-weak-50'
           strokeMiterlimit='10'
           strokeLinecap='round'
         />
@@ -484,8 +519,8 @@ function GlassmorphismCircle({
       <g filter='url(#stroke-inner-shadow)'>
         <path
           d='M136.409 56.1676C136.409 56.1676 132.013 41.3485 116.61 40.0717'
-          stroke='#F3F3F3'
           strokeWidth='6'
+          className='stroke-bg-weak-50'
           strokeMiterlimit='10'
           strokeLinecap='round'
         />
@@ -493,8 +528,8 @@ function GlassmorphismCircle({
       <g filter='url(#stroke-inner-shadow)'>
         <path
           d='M148.695 99.4417C148.695 99.4417 156.065 85.8557 146.079 74.0616'
-          stroke='#F3F3F3'
           strokeWidth='6'
+          className='stroke-bg-weak-50'
           strokeMiterlimit='10'
           strokeLinecap='round'
         />
@@ -502,8 +537,8 @@ function GlassmorphismCircle({
       <g filter='url(#stroke-inner-shadow)'>
         <path
           d='M126.789 138.729C126.789 138.729 141.608 134.334 142.885 118.931'
-          stroke='#F3F3F3'
           strokeWidth='6'
+          className='stroke-bg-weak-50'
           strokeMiterlimit='10'
           strokeLinecap='round'
         />
@@ -511,8 +546,8 @@ function GlassmorphismCircle({
       <g filter='url(#stroke-inner-shadow)'>
         <path
           d='M83.5135 151.017C83.5135 151.017 97.0996 158.387 108.894 148.401'
-          stroke='#F3F3F3'
           strokeWidth='6'
+          className='stroke-bg-weak-50'
           strokeMiterlimit='10'
           strokeLinecap='round'
         />
@@ -520,8 +555,8 @@ function GlassmorphismCircle({
       <g filter='url(#stroke-inner-shadow)'>
         <path
           d='M44.2217 129.108C44.2217 129.108 48.6171 143.927 64.02 145.204'
-          stroke='#F3F3F3'
           strokeWidth='6'
+          className='stroke-bg-weak-50'
           strokeMiterlimit='10'
           strokeLinecap='round'
         />
@@ -532,8 +567,8 @@ function GlassmorphismCircle({
           cx='90.6364'
           cy='90.6364'
           r='46.6364'
-          fill='#F1F1F1'
           fillOpacity='0.8'
+          className='fill-bg-weak-50'
         />
       </g>
       <g filter='url(#circle-blur)'>
@@ -541,8 +576,8 @@ function GlassmorphismCircle({
           cx='91.1281'
           cy='90.6364'
           r='46.6364'
-          fill='#F1F1F1'
           fillOpacity='0.8'
+          className='fill-bg-weak-50'
         />
       </g>
 
@@ -550,15 +585,15 @@ function GlassmorphismCircle({
         cx='90.6364'
         cy='90.6364'
         r='46.6364'
-        fill='#5B5B59'
         fillOpacity='0.06'
+        className='fill-bg-strong-950'
       />
       <circle
         cx='91.1281'
         cy='90.6364'
         r='46.6364'
-        fill='#5B5B59'
         fillOpacity='0.06'
+        className='fill-bg-strong-950'
       />
     </svg>
   );
@@ -571,12 +606,7 @@ function GlassmorphismCircle({
     <motion.div
       initial={{ scale: 0.5, rotate: -25, opacity: 0 }}
       animate={{ scale: 1, rotate: 0, opacity: 1 }}
-      transition={{
-        delay: 0,
-        duration: 0.6,
-        type: 'spring',
-        ...entrySpring,
-      }}
+      transition={{ delay: ENTER_DELAY.glassCircle, ...entrySpring }}
       className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
     >
       <motion.div
@@ -614,12 +644,7 @@ function AnimatedMemoji({
     <motion.div
       initial={{ y: 30, opacity: 0, scale: 0.7 }}
       animate={{ y: 0, opacity: 1, scale: 1 }}
-      transition={{
-        delay: 0.12,
-        duration: 0.6,
-        type: 'spring',
-        ...entrySpring,
-      }}
+      transition={{ delay: ENTER_DELAY.memoji, ...entrySpring }}
       className='relative z-10 flex h-28 w-28 items-center justify-center'
     >
       <motion.div
@@ -660,12 +685,12 @@ function FloatingMemoji({
       }}
     >
       <div
-        className='relative h-full w-full overflow-hidden rounded-full'
+        className='outline-image-outline relative h-full w-full overflow-hidden rounded-full outline outline-1 -outline-offset-1'
         style={{ background: entry.gradient }}
       >
         <img
           src={getMemojiUrl(entry.memoji)}
-          alt={entry.memoji.person}
+          alt=''
           className='absolute inset-0 h-full w-full object-cover'
         />
       </div>
@@ -723,9 +748,11 @@ const EmojiDialogEmojiArea = React.forwardRef<
     }
 
     const avatarContent = memoji ? (
+      // decorative: the memoji key ("ezra", "chris") is not a description, and
+      // the dialog title carries the meaning
       <img
         src={getMemojiUrl(memoji)}
-        alt={memoji.person}
+        alt=''
         className='h-full w-full object-contain'
       />
     ) : (
@@ -741,14 +768,14 @@ const EmojiDialogEmojiArea = React.forwardRef<
           className='absolute top-0 left-0 h-full w-[157px]'
           style={{
             background:
-              'linear-gradient(to right, white 0%, rgba(255,255,255,0) 100%)',
+              'linear-gradient(to right, var(--color-bg-white-0) 0%, transparent 100%)',
           }}
         />
         <div
           className='absolute top-0 right-0 h-full w-[157px]'
           style={{
             background:
-              'linear-gradient(to left, white 0%, rgba(255,255,255,0) 100%)',
+              'linear-gradient(to left, var(--color-bg-white-0) 0%, transparent 100%)',
           }}
         />
       </div>
@@ -789,9 +816,9 @@ const bubbleVariants = tv({
   base: '',
   variants: {
     variant: {
-      secondary: 'bg-bg-strong-950',
-      warning: 'bg-warning-base',
-      danger: 'bg-error-base',
+      secondary: 'bg-bg-strong-950 text-static-white',
+      warning: 'bg-warning-base text-warning-contrast',
+      danger: 'bg-error-base text-error-contrast',
     },
   },
   defaultVariants: {
@@ -819,13 +846,13 @@ const EmojiDialogBubble = React.forwardRef<
     <>
       <div
         className={cn(
-          'text-label-xs text-static-white flex items-center gap-2 rounded-full py-1 pr-3 pl-1 whitespace-nowrap',
-          'shadow-[0_4px_15px_rgba(0,0,0,0.1)]',
+          'text-label-xs flex items-center gap-2 rounded-full py-1 pr-3 pl-1 whitespace-nowrap',
+          'shadow-[0_4px_15px_var(--color-black-alpha-10)]',
           bubbleVariants({ variant })
         )}
       >
         {icon && (
-          <div className='bg-bg-white-0 text-text-strong-950 flex h-8 w-8 shrink-0 items-center justify-center rounded-full shadow-[0_15px_50px_0_rgba(0,0,0,0.15)] [&>*]:w-5'>
+          <div className='bg-bg-white-0 text-text-strong-950 flex h-8 w-8 shrink-0 items-center justify-center rounded-full shadow-[0_15px_50px_0_var(--color-black-alpha-16)] [&>*]:size-5'>
             {icon}
           </div>
         )}
@@ -864,9 +891,11 @@ const EmojiDialogBubble = React.forwardRef<
       ref={forwardedRef}
       initial={{ scale: 0.3, opacity: 0, rotate: 18.286, y: 10 }}
       animate={{ scale: 1, opacity: 1, rotate: 18.286, y: 0 }}
+      // Its own springier spring (bounce ≈ 0.5): the bubble pops in, which
+      // is the dialog's character. Landing last in the ladder keeps it from
+      // colliding with the footer.
       transition={{
-        delay: 0.35,
-        duration: 0.5,
+        delay: ENTER_DELAY.bubble,
         type: 'spring',
         stiffness: 350,
         damping: 18,

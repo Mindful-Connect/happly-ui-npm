@@ -1,0 +1,15 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "use-formatted-caret",
+  "type": "registry:lib",
+  "title": "useFormattedCaret",
+  "description": "Hook that keeps the caret in place in a controlled input whose value is reformatted as it is typed (phone numbers, thousands separators).",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "lib/use-formatted-caret.ts",
+      "type": "registry:lib"
+    }
+  ]
+}

@@ -135,7 +135,7 @@ const InfoGridGroup = React.forwardRef<HTMLDivElement, InfoGridGroupProps>(
                 }
               >
                 <KeyIcon.Root icon={item.icon} />
-                <div className='text-paragraph-sm text-text-sub-600 flex flex-col items-start gap-1'>
+                <div className='text-paragraph-sm text-text-sub-600 flex flex-col items-start gap-1 text-pretty'>
                   <p className='text-label-xs text-text-strong-950'>
                     {item.label}
                   </p>

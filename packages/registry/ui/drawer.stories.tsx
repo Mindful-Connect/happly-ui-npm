@@ -35,7 +35,7 @@ export const Playground = {
             Drawer body content goes here.
           </div>
         </Drawer.Body>
-        <Drawer.Footer className='border-t'>
+        <Drawer.Footer>
           <Drawer.Close asChild>
             <Button.Root
               variant='neutral'
@@ -60,12 +60,12 @@ const TransactionItem = React.forwardRef<
     <button
       type='button'
       ref={forwardedRef}
-      className='hover:bg-bg-weak-50 flex w-full items-center gap-3 rounded-xl py-2 text-left transition-all duration-200 ease-out hover:px-3'
+      className='hover:bg-bg-weak-50 flex w-full items-center gap-3 rounded-xl py-2 text-start transition-[background-color,padding] duration-200 ease-out hover:px-3'
       {...rest}
     >
       {children}
       <CompactButton.Root asChild size='medium' variant='ghost'>
-        <div>
+        <div aria-hidden='true'>
           <CompactButton.Icon as={RiArrowRightSLine} />
         </div>
       </CompactButton.Root>
@@ -116,7 +116,7 @@ export const Basic = {
           </div>
         </Drawer.Body>
 
-        <Drawer.Footer className='border-t'>
+        <Drawer.Footer>
           <Button.Root
             variant='neutral'
             mode='stroke'
@@ -253,7 +253,7 @@ export const Demo = {
           </div>
         </Drawer.Body>
 
-        <Drawer.Footer className='border-t'>
+        <Drawer.Footer>
           <Button.Root
             variant='neutral'
             mode='stroke'

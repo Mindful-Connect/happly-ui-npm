@@ -33,7 +33,7 @@
     "api": [
       {
         "name": "Skeleton.Root",
-        "description": "The skeleton placeholder element.",
+        "description": "The skeleton placeholder element. Rendered aria-hidden: announce loading from the surrounding region instead.",
         "props": [
           {
             "name": "variant",

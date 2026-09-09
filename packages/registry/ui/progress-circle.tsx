@@ -73,12 +73,12 @@ const ProgressCircleRoot = React.forwardRef<
               strokeDasharray={`${circumference} ${circumference}`}
               strokeDashoffset={offset}
               fill='none'
-              className={`${color} transition-all duration-300 ease-out`}
+              className={`${color} transition-[stroke-dashoffset] duration-300 ease-out`}
             />
           )}
         </svg>
         {children && (
-          <div className='absolute inset-0 flex items-center justify-center text-center'>
+          <div className='absolute inset-0 flex items-center justify-center text-center tabular-nums'>
             {children}
           </div>
         )}

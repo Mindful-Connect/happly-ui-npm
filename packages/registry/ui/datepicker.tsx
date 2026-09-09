@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { DayPicker } from 'react-day-picker';
 
 import { compactButtonVariants } from '@/components/ui/compact-button';
@@ -33,10 +33,12 @@ const navButtonClass = compactButtonVariants({
 }).root({ class: 'absolute' });
 
 const gridCellClass = cn(
-  'flex items-center justify-center rounded-lg text-label-sm text-text-sub-600 outline-none',
-  'transition duration-200 ease-out cursor-pointer select-none',
+  'flex items-center justify-center rounded-lg text-label-sm text-text-sub-600 tabular-nums outline-none',
+  'transition-[background-color,color,box-shadow] duration-150 ease-out cursor-pointer select-none',
   'hover:bg-bg-weak-50 hover:text-text-strong-950',
-  'focus:outline-none focus-visible:bg-bg-weak-50 focus-visible:text-text-strong-950'
+  // The background swap alone is a ~1.03:1 change — the focus ring is what
+  // makes the keyboard position visible.
+  'focus:outline-none focus-visible:bg-bg-weak-50 focus-visible:text-text-strong-950 focus-visible:shadow-button-important-focus'
 );
 
 const gridCellActiveClass =
@@ -64,24 +66,26 @@ function MonthGrid({
       <div className='bg-bg-weak-50 relative flex h-9 shrink-0 items-center justify-center rounded-lg'>
         <button
           type='button'
+          aria-label='Previous year'
           className={cn(navButtonClass, 'top-1/2 left-1.5 -translate-y-1/2')}
           onClick={onPrevYear}
         >
-          <RiArrowLeftSLine className='h-5 w-5' />
+          <RiArrowLeftSLine aria-hidden='true' className='h-5 w-5' />
         </button>
         <button
           type='button'
-          className='text-label-sm text-text-sub-600 hover:text-text-strong-950 cursor-pointer transition-colors select-none'
+          className='text-label-sm text-text-sub-600 hover:text-text-strong-950 cursor-pointer tabular-nums transition-colors select-none'
           onClick={onClickCaption}
         >
           {displayYear}
         </button>
         <button
           type='button'
+          aria-label='Next year'
           className={cn(navButtonClass, 'top-1/2 right-1.5 -translate-y-1/2')}
           onClick={onNextYear}
         >
-          <RiArrowRightSLine className='h-5 w-5' />
+          <RiArrowRightSLine aria-hidden='true' className='h-5 w-5' />
         </button>
       </div>
 
@@ -130,20 +134,22 @@ function YearGrid({
       <div className='bg-bg-weak-50 relative flex h-9 shrink-0 items-center justify-center rounded-lg'>
         <button
           type='button'
+          aria-label='Previous 12 years'
           className={cn(navButtonClass, 'top-1/2 left-1.5 -translate-y-1/2')}
           onClick={onPrevChunk}
         >
-          <RiArrowLeftSLine className='h-5 w-5' />
+          <RiArrowLeftSLine aria-hidden='true' className='h-5 w-5' />
         </button>
-        <span className='text-label-sm text-text-sub-600 select-none'>
+        <span className='text-label-sm text-text-sub-600 tabular-nums'>
           {startYear} – {endYear}
         </span>
         <button
           type='button'
+          aria-label='Next 12 years'
           className={cn(navButtonClass, 'top-1/2 right-1.5 -translate-y-1/2')}
           onClick={onNextChunk}
         >
-          <RiArrowRightSLine className='h-5 w-5' />
+          <RiArrowRightSLine aria-hidden='true' className='h-5 w-5' />
         </button>
       </div>
 
@@ -233,27 +239,44 @@ function Calendar({
     setView('months');
   };
 
+  const shouldReduceMotion = useReducedMotion();
   const contentRef = React.useRef<HTMLDivElement>(null);
-  const [animatedHeight, setAnimatedHeight] = React.useState<number | 'auto'>(
-    'auto'
-  );
+  // `collapsing` rides along with the height so the exit (a view shrinking back
+  // to a smaller grid) can be shorter than the enter, the way every other
+  // surface in the registry animates.
+  const [heightState, setHeightState] = React.useState<{
+    height: number | 'auto';
+    collapsing: boolean;
+  }>({ height: 'auto', collapsing: false });
 
   React.useLayoutEffect(() => {
     if (!contentRef.current) return;
     const el = contentRef.current;
-    setAnimatedHeight(el.scrollHeight);
 
-    const observer = new ResizeObserver(() => {
-      setAnimatedHeight(el.scrollHeight);
-    });
+    const measure = () =>
+      setHeightState((prev) => {
+        const next = el.scrollHeight;
+        if (prev.height === next) return prev;
+        return {
+          height: next,
+          collapsing: typeof prev.height === 'number' && next < prev.height,
+        };
+      });
+
+    measure();
+    const observer = new ResizeObserver(measure);
     observer.observe(el);
     return () => observer.disconnect();
   }, [view]);
 
   return (
     <motion.div
-      animate={{ height: animatedHeight }}
-      transition={{ duration: 0.2, ease: 'easeInOut' }}
+      animate={{ height: heightState.height }}
+      // JS-driven height is not covered by the CSS reduced-motion switch.
+      transition={{
+        duration: shouldReduceMotion ? 0 : heightState.collapsing ? 0.15 : 0.2,
+        ease: 'easeInOut',
+      }}
       className={cn('overflow-hidden', className)}
     >
       <div ref={contentRef} className='flex min-h-[292px] flex-col'>
@@ -317,7 +340,7 @@ function Calendar({
               table: 'w-full border-collapse',
               head_row: 'flex gap-2',
               head_cell:
-                'text-text-soft-400 text-label-sm uppercase w-9 h-8 flex items-center justify-center text-center select-none',
+                'text-text-soft-400 text-label-sm uppercase w-9 h-8 flex items-center justify-center text-center',
               root: 'grow flex flex-col',
               row: 'grid grid-flow-col auto-cols-auto w-full mt-1 gap-1',
               cell: cn(
@@ -344,14 +367,15 @@ function Calendar({
               ),
               day: cn(
                 // base
-                'flex w-9 h-8 shrink-0 items-center justify-center rounded-lg text-center text-label-sm text-text-sub-600 outline-none',
-                'transition duration-200 ease-out',
+                'flex w-9 h-8 shrink-0 items-center justify-center rounded-lg text-center text-label-sm text-text-sub-600 tabular-nums outline-none',
+                'transition-[background-color,color,box-shadow] duration-150 ease-out',
                 // hover
                 'hover:bg-bg-weak-50 hover:text-text-strong-950',
                 // selected
                 'aria-[selected]:bg-primary-base aria-[selected]:text-primary-contrast',
-                // focus visible
-                'focus:outline-none focus-visible:bg-bg-weak-50 focus-visible:text-text-strong-950'
+                // focus visible — the ring carries the keyboard position; the
+                // background swap alone is not a visible indicator.
+                'focus:outline-none focus-visible:bg-bg-weak-50 focus-visible:text-text-strong-950 focus-visible:shadow-button-important-focus'
               ),
               day_range_start: 'day-range-start',
               day_range_end: 'day-range-end',

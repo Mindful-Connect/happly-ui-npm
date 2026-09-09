@@ -27,7 +27,7 @@
     "api": [
       {
         "name": "StatusIndicator.Root",
-        "description": "The status indicator element. Renders a default icon based on the status variant. Pass children to override the default content (useful for company logos).",
+        "description": "The status indicator element. Renders a default icon based on the status variant. Pass children to override the default content (useful for company logos). Without children it announces its status via role=\"img\" and an aria-label.",
         "props": [
           {
             "name": "status",

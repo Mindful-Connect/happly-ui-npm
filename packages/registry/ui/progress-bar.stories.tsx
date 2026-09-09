@@ -45,8 +45,14 @@ export const WithLabel = {
   render: () => (
     <div className='w-96'>
       <div className='flex items-center gap-2'>
-        <ProgressBar.Root value={55} color='primary' />
-        <span className='text-paragraph-xs text-text-sub-600'>55%</span>
+        <ProgressBar.Root
+          value={55}
+          color='primary'
+          aria-label='Upload progress'
+        />
+        <span className='text-paragraph-xs text-text-sub-600 tabular-nums'>
+          55%
+        </span>
       </div>
     </div>
   ),
@@ -58,11 +64,17 @@ export const DataStorage = {
       <div className='space-y-1.5'>
         <div className='flex justify-between gap-1.5'>
           <span className='text-label-sm text-text-strong-950'>
-            Data Storage
+            Data storage
           </span>
-          <span className='text-paragraph-xs text-text-sub-600'>55%</span>
+          <span className='text-paragraph-xs text-text-sub-600 tabular-nums'>
+            55%
+          </span>
         </div>
-        <ProgressBar.Root value={55} color='primary' />
+        <ProgressBar.Root
+          value={55}
+          color='primary'
+          aria-label='Data storage used'
+        />
         <div className='text-paragraph-xs text-text-sub-600'>
           <LinkButton.Root variant='primary' underline>
             Upgrade
@@ -77,7 +89,7 @@ export const DataStorage = {
 export const Indeterminate = {
   render: () => (
     <div className='w-96'>
-      <ProgressBar.Root indeterminate color='primary' />
+      <ProgressBar.Root indeterminate color='primary' aria-label='Loading' />
     </div>
   ),
 };
@@ -99,7 +111,7 @@ export const IndeterminateWithFinalizing = {
     <div className='w-96'>
       <div className='space-y-1.5'>
         <span className='text-label-sm text-text-strong-950'>
-          Finalizing your matches...
+          Finalizing your matches…
         </span>
         <ProgressBar.Root indeterminate color='primary' />
       </div>

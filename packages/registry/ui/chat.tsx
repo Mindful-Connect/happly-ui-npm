@@ -17,6 +17,14 @@ type ChatShape = 'bubble' | 'pill';
 // -----------------------------------------------------------------------------
 
 const MessageContext = React.createContext<{ side: ChatSide } | null>(null);
+
+// Set by List around each of its children, from a diff of message keys: true
+// only for a message that appeared in a list that was already showing other
+// messages. Anything that arrives as a batch — the first render, a fetch that
+// resolves, a conversation swapped in — is history and must not animate,
+// otherwise opening a conversation replays an entrance for every message at
+// once. `Message` can override it with the `animateIn` prop.
+const AnimateInContext = React.createContext(false);
 const BubbleContext = React.createContext<{
   tone: ChatTone;
   shape: ChatShape;
@@ -44,6 +52,31 @@ ChatRoot.displayName = 'ChatRoot';
 // List — scroll container that sticks to the bottom as new messages arrive,
 // unless the user has scrolled up to read history.
 // -----------------------------------------------------------------------------
+
+const NONE_ANIMATED: ReadonlySet<string> = new Set<string>();
+
+// `Children.toArray` gives every element a stable key (its own, prefixed, or
+// its position); plain text children keep their position.
+function childKeys(children: React.ReactNode[]): string[] {
+  return children.map((child, index) =>
+    React.isValidElement(child) && child.key != null ? child.key : `.${index}`
+  );
+}
+
+function sameKeys(a: string[], b: string[]) {
+  return a.length === b.length && a.every((key, index) => key === b[index]);
+}
+
+// Keys that appeared in a list that already had content. An empty previous
+// list (first render, or a fetch that had not resolved yet) and a wholesale
+// replacement (switching conversation) are batches, not new mail.
+function addedKeys(prev: string[], next: string[]): ReadonlySet<string> {
+  if (prev.length === 0) return NONE_ANIMATED;
+  const previous = new Set(prev);
+  const added = next.filter((key) => !previous.has(key));
+  if (added.length === 0 || added.length === next.length) return NONE_ANIMATED;
+  return new Set(added);
+}
 
 type ChatListProps = React.HTMLAttributes<HTMLDivElement> & {
   /** Auto-scroll to the newest message when near the bottom. Default `true`. */
@@ -87,6 +120,23 @@ const ChatList = React.forwardRef<HTMLDivElement, ChatListProps>(
       }
     });
 
+    const items = React.Children.toArray(children);
+    const keys = childKeys(items);
+
+    // Derived during render rather than in an effect: a message reads its flag
+    // as it mounts, which happens before any effect runs. Recomputing from
+    // state (not a ref) keeps it idempotent under StrictMode's double render.
+    const [tracked, setTracked] = React.useState<{
+      keys: string[];
+      animated: ReadonlySet<string>;
+    }>(() => ({ keys, animated: NONE_ANIMATED }));
+
+    let animated = tracked.animated;
+    if (!sameKeys(tracked.keys, keys)) {
+      animated = addedKeys(tracked.keys, keys);
+      setTracked({ keys, animated });
+    }
+
     return (
       <div
         ref={setRefs}
@@ -95,12 +145,19 @@ const ChatList = React.forwardRef<HTMLDivElement, ChatListProps>(
         aria-live='polite'
         aria-relevant='additions'
         className={cn(
-          'flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto',
+          'flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-contain',
           className
         )}
         {...rest}
       >
-        {children}
+        {items.map((child, index) => (
+          <AnimateInContext.Provider
+            key={keys[index]}
+            value={animated.has(keys[index])}
+          >
+            {child}
+          </AnimateInContext.Provider>
+        ))}
       </div>
     );
   }
@@ -115,12 +172,25 @@ ChatList.displayName = 'ChatList';
 type ChatMessageProps = React.HTMLAttributes<HTMLDivElement> & {
   side: ChatSide;
   avatar?: React.ReactNode;
+  /**
+   * Play the entrance animation on mount. Defaults to what the parent List
+   * works out from its message keys: a message added to a list that was
+   * already showing messages animates; a batch (the first render, a fetch
+   * resolving, a conversation swapped in) does not.
+   */
+  animateIn?: boolean;
 };
 
 const ChatMessage = React.forwardRef<HTMLDivElement, ChatMessageProps>(
-  ({ side, avatar, className, children, ...rest }, forwardedRef) => {
+  ({ side, avatar, animateIn, className, children, ...rest }, forwardedRef) => {
     const isSent = side === 'sent';
     const ctx = React.useMemo(() => ({ side }), [side]);
+
+    // Read once, on mount: the List flags a key only on the render where it
+    // appears, and the class has to stay put for the whole animation.
+    const listAnimateIn = React.useContext(AnimateInContext);
+    const [autoAnimateIn] = React.useState(listAnimateIn);
+    const isNew = animateIn ?? autoAnimateIn;
 
     return (
       <MessageContext.Provider value={ctx}>
@@ -129,6 +199,11 @@ const ChatMessage = React.forwardRef<HTMLDivElement, ChatMessageProps>(
           className={cn(
             'flex w-full items-end gap-3',
             isSent ? 'justify-end' : 'justify-start',
+            // A message arriving is infrequent and meaningful, so it gets an
+            // entrance. opacity + blur + translateY together over 400ms, per
+            // better-ui/enter-exit.md — without the blur it reads as a jump
+            // cut. Suppressed by the theme's reduced-motion rule.
+            isNew && 'animate-item-in',
             // far-side gutter (always 44px)
             isSent ? 'pl-11' : 'pr-11',
             // near-side gutter when there's no avatar to fill it
@@ -176,8 +251,8 @@ ChatAvatar.displayName = 'ChatAvatar';
 
 export const chatBubbleVariants = tv({
   slots: {
-    root: 'text-paragraph-sm break-words',
-    timestamp: 'text-paragraph-xs shrink-0',
+    root: 'text-paragraph-sm break-words text-pretty',
+    timestamp: 'text-paragraph-xs shrink-0 tabular-nums',
   },
   variants: {
     shape: {
@@ -337,7 +412,7 @@ const ChatIconButton = React.forwardRef<HTMLButtonElement, ChatIconButtonProps>(
       variant={variant}
       mode={mode}
       size='medium'
-      className={cn('text-text-soft-400 w-10 px-0', className)}
+      className={cn('text-text-soft-400 w-10 rounded-lg px-0', className)}
       {...rest}
     >
       <Button.Icon as={icon} className='mx-0 size-6' />
@@ -366,7 +441,7 @@ const ChatSendButton = React.forwardRef<HTMLButtonElement, ChatSendButtonProps>(
       variant={variant}
       mode={mode}
       size='medium'
-      className={cn('w-10 px-0', className)}
+      className={cn('w-10 rounded-lg px-0', className)}
       {...rest}
     >
       {children ?? <Button.Icon as={RiArrowUpLine} className='mx-0 size-5' />}
@@ -414,7 +489,7 @@ const ChatInput = React.forwardRef<HTMLTextAreaElement, ChatInputProps>(
       onAttach,
       onEmoji,
       onKeyDown,
-      placeholder = 'Write a message...',
+      placeholder = 'Write a message…',
       showAttachment = true,
       showEmoji = true,
       leading,
@@ -481,6 +556,7 @@ const ChatInput = React.forwardRef<HTMLTextAreaElement, ChatInputProps>(
         className={cn(
           'bg-bg-white-0 flex w-full items-end gap-2 rounded-2xl p-2',
           'shadow-regular-xs ring-stroke-soft-200 ring-1 ring-inset',
+          'has-[textarea:focus-visible]:shadow-button-important-focus has-[textarea:focus-visible]:ring-stroke-sub-300',
           'has-[textarea:disabled]:bg-bg-weak-50 has-[textarea:disabled]:ring-transparent',
           containerClassName
         )}
@@ -497,6 +573,7 @@ const ChatInput = React.forwardRef<HTMLTextAreaElement, ChatInputProps>(
 
         <textarea
           ref={setRefs}
+          aria-label='Message'
           value={value}
           onChange={(event) => setValue(event.target.value)}
           onKeyDown={handleKeyDown}

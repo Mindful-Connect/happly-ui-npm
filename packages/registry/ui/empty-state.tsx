@@ -3,11 +3,37 @@ import * as React from 'react';
 import { tv, type VariantProps } from '@/lib/tv';
 import * as KeyIcon from '@/components/ui/key-icon';
 
-// SVG-drawn dashed border so the dash pattern matches the design spec instead
-// of browser defaults. stroke-width=2 because half is clipped by the element
-// edge, leaving a crisp 1px visible stroke. Color: stroke-soft-200 (#EAECF0),
-// radius matches rounded-2xl (16px).
-const DASHED_BORDER_IMAGE = `url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='100%25'%20height='100%25'%20fill='none'%3E%3Crect%20width='100%25'%20height='100%25'%20rx='16'%20ry='16'%20stroke='%23EAECF0'%20stroke-width='2'%20stroke-dasharray='6%204'/%3E%3C/svg%3E")`;
+// Inline SVG dashed border so the dash pattern matches the design spec instead
+// of the browser default, and so the stroke can read `stroke-sub-300` from the
+// theme (a data: URI would have to hardcode a hex and stay light-mode grey).
+// The rect is inset by half the stroke width and the SVG does not clip, so the
+// whole 1px line is drawn — a stroke centred on the element edge loses its
+// outer half and shaves the rounded corners. rx/ry match rounded-2xl (16px)
+// minus the half-stroke inset.
+function DashedBorder() {
+  return (
+    // The wrapper is inset by half the stroke width and the SVG fills it, so
+    // the stroke — centred on the SVG's edge and never clipped — lands wholly
+    // inside the card. `calc()` in the rect's own geometry does the same thing
+    // but only in Chromium.
+    <div
+      aria-hidden='true'
+      className='text-stroke-sub-300 pointer-events-none absolute inset-[0.5px]'
+    >
+      <svg fill='none' className='h-full w-full overflow-visible'>
+        <rect
+          width='100%'
+          height='100%'
+          rx='15.5'
+          ry='15.5'
+          stroke='currentColor'
+          strokeWidth='1'
+          strokeDasharray='6 4'
+        />
+      </svg>
+    </div>
+  );
+}
 
 const EMPTY_STATE_ROOT_NAME = 'EmptyStateRoot';
 const EMPTY_STATE_ICON_NAME = 'EmptyStateIcon';
@@ -17,9 +43,9 @@ const EMPTY_STATE_ACTIONS_NAME = 'EmptyStateActions';
 
 export const emptyStateVariants = tv({
   slots: {
-    root: 'flex flex-col items-center justify-center text-center',
-    title: 'text-text-sub-600',
-    description: 'max-w-xs text-text-soft-400',
+    root: 'relative flex flex-col items-center justify-center text-center',
+    title: 'text-text-sub-600 text-balance',
+    description: 'max-w-xs text-text-soft-400 text-pretty',
     actions: 'flex items-center',
   },
   variants: {
@@ -70,6 +96,20 @@ const iconSizeMap = {
   lg: 'xl',
 } as const;
 
+/**
+ * The variants the slots share with Root, in the registry's `*SharedProps`
+ * shape (see `AlertSharedProps`, `InputSharedProps`). Repeated on each slot
+ * because tv() is called per component: without it every slot resolves
+ * `defaultVariants` (`md`), so a Root marked `size='lg'` still rendered `md`
+ * type and spacing. `bordered` and `filled` only style `root`, so they stay on
+ * Root alone. Composed passes `size` through automatically; hand-composed
+ * usage passes each slot the same value it gives Root.
+ */
+type EmptyStateSharedProps = Pick<
+  VariantProps<typeof emptyStateVariants>,
+  'size'
+>;
+
 type EmptyStateRootProps = VariantProps<typeof emptyStateVariants> &
   React.HTMLAttributes<HTMLDivElement>;
 
@@ -79,19 +119,13 @@ function EmptyStateRoot({
   size,
   bordered,
   filled,
-  style,
   ...rest
 }: EmptyStateRootProps) {
   const { root } = emptyStateVariants({ size, bordered, filled });
 
   return (
-    <div
-      className={root({ class: className })}
-      style={
-        bordered ? { backgroundImage: DASHED_BORDER_IMAGE, ...style } : style
-      }
-      {...rest}
-    >
+    <div className={root({ class: className })} {...rest}>
+      {bordered && <DashedBorder />}
       {children}
     </div>
   );
@@ -116,16 +150,8 @@ function EmptyStateIcon({ icon, size = 'lg' }: EmptyStateIconProps) {
 }
 EmptyStateIcon.displayName = EMPTY_STATE_ICON_NAME;
 
-type EmptyStateTitleProps = React.HTMLAttributes<HTMLHeadingElement> & {
-  /**
-   * The `size` the parent Root was given. Repeated on the slot because tv() is
-   * called per component: without it every slot resolves `defaultVariants`
-   * (`md`), so a Root marked `size='lg'` still rendered `md` typography and
-   * spacing. Composed passes it through automatically; hand-composed usage
-   * should pass the same value it gives Root.
-   */
-  size?: VariantProps<typeof emptyStateVariants>['size'];
-};
+type EmptyStateTitleProps = React.HTMLAttributes<HTMLHeadingElement> &
+  EmptyStateSharedProps;
 
 function EmptyStateTitle({ className, size, ...rest }: EmptyStateTitleProps) {
   const { title } = emptyStateVariants({ size });
@@ -134,10 +160,8 @@ function EmptyStateTitle({ className, size, ...rest }: EmptyStateTitleProps) {
 }
 EmptyStateTitle.displayName = EMPTY_STATE_TITLE_NAME;
 
-type EmptyStateDescriptionProps = React.HTMLAttributes<HTMLParagraphElement> & {
-  /** See {@link EmptyStateTitleProps.size}. */
-  size?: VariantProps<typeof emptyStateVariants>['size'];
-};
+type EmptyStateDescriptionProps = React.HTMLAttributes<HTMLParagraphElement> &
+  EmptyStateSharedProps;
 
 function EmptyStateDescription({
   className,
@@ -150,10 +174,8 @@ function EmptyStateDescription({
 }
 EmptyStateDescription.displayName = EMPTY_STATE_DESCRIPTION_NAME;
 
-type EmptyStateActionsProps = React.HTMLAttributes<HTMLDivElement> & {
-  /** See {@link EmptyStateTitleProps.size}. */
-  size?: VariantProps<typeof emptyStateVariants>['size'];
-};
+type EmptyStateActionsProps = React.HTMLAttributes<HTMLDivElement> &
+  EmptyStateSharedProps;
 
 function EmptyStateActions({
   className,

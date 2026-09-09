@@ -24,7 +24,7 @@
   "docs": {
     "lead": "A Google Maps address autocomplete input with async search and place resolution. Use `Multi` to collect a list of locations.",
     "setup": "The consuming app must load the Google Maps Places library once at startup before using this component:\n\n```ts\nimport { setOptions, importLibrary } from '@googlemaps/js-api-loader';\n\nsetOptions({ key: process.env.NEXT_PUBLIC_GOOGLE_API_KEY || '' });\nimportLibrary('places').catch(() => {});\n```\n\nPlace this at module level (e.g. in a global context provider) so it runs exactly once.",
-    "usage": "import * as LocationInput from \"@/components/ui/location-input\"\n\n// Single\nconst [location, setLocation] = useState<LocationRequest>(null)\n\n<LocationInput.Root\n  location={location}\n  onLocationChange={setLocation}\n  placeholder=\"Search address...\"\n/>\n\n// Multi\nconst [locations, setLocations] = useState<NonNullable<LocationRequest>[]>([])\n\n<LocationInput.Multi\n  locations={locations}\n  onLocationsChange={setLocations}\n/>",
+    "usage": "import * as LocationInput from \"@/components/ui/location-input\"\n\n// Single\nconst [location, setLocation] = useState<LocationRequest>(null)\n\n<LocationInput.Root\n  location={location}\n  onLocationChange={setLocation}\n  placeholder=\"Search address…\"\n/>\n\n// Multi\nconst [locations, setLocations] = useState<NonNullable<LocationRequest>[]>([])\n\n<LocationInput.Multi\n  locations={locations}\n  onLocationsChange={setLocations}\n/>",
     "examples": [
       {
         "title": "Default",
@@ -80,7 +80,7 @@
           {
             "name": "placeholder",
             "type": "string",
-            "default": "'Search address...'",
+            "default": "'Search address…'",
             "description": "Input placeholder text."
           },
           {
@@ -189,7 +189,7 @@
           {
             "name": "placeholder",
             "type": "string",
-            "default": "'Search address...'",
+            "default": "'Search address…'",
             "description": "Placeholder for each row's input."
           }
         ]

@@ -15,7 +15,7 @@ const levelBarVariants = tv({
   slots: {
     root: 'relative flex gap-2 overflow-hidden rounded-full',
     segment: 'h-1 w-full rounded-full bg-bg-soft-200',
-    fill: 'absolute left-0 top-0 h-full w-0 rounded-full bg-current duration-500 ease-out',
+    fill: 'absolute left-0 top-0 h-full w-0 rounded-full bg-current transition-[width] duration-300 ease-out',
   },
 });
 
@@ -34,6 +34,12 @@ function LevelBar({
 } & React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
+      role='meter'
+      aria-label='Level'
+      aria-valuenow={level}
+      aria-valuemin={0}
+      aria-valuemax={levels}
+      aria-valuetext={`Level ${level} of ${levels}`}
       className={cn(root(), levelColors[1], className, levelColors[level])}
       {...rest}
     >
@@ -45,10 +51,7 @@ function LevelBar({
         >
           <div
             className={fill()}
-            style={{
-              transitionProperty: 'width',
-              width: `calc((100% / ${levels}) * ${level})`,
-            }}
+            style={{ width: `calc((100% / ${levels}) * ${level})` }}
           />
         </div>
       ))}

@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 
 import * as FormField from './form-field';
 import * as PhoneInput from './phone-input';
@@ -104,4 +105,47 @@ export const WithFormField = {
       </FormField.Root>
     </div>
   ),
+};
+
+/**
+ * Inside a react-hook-form form. The first field gives the country select no
+ * name of its own, the second does. Issue #79 hid here: with no `countryName`
+ * the select used to fall back to the parent field's binding and read the
+ * phone number as its own value, so the flag went blank as soon as a number
+ * was typed. Both flags must stay put while you type.
+ */
+function WithFormStory() {
+  const methods = useForm({
+    defaultValues: { phone: '', mobile: '', mobileCountry: 'fr' },
+  });
+  const values = useWatch({ control: methods.control });
+
+  return (
+    <FormProvider {...methods}>
+      <form className='flex w-[320px] flex-col gap-5' noValidate>
+        <FormField.Root
+          name='phone'
+          label='Phone'
+          required
+          hint='Country select is not bound to the form.'
+        >
+          <PhoneInput.Root defaultCountry='ca' />
+        </FormField.Root>
+        <FormField.Root
+          name='mobile'
+          label='Mobile'
+          hint='Country select is bound as “mobileCountry”.'
+        >
+          <PhoneInput.Root countryName='mobileCountry' />
+        </FormField.Root>
+        <pre className='bg-bg-weak-50 text-paragraph-xs text-text-sub-600 rounded-lg p-3'>
+          {JSON.stringify(values, null, 2)}
+        </pre>
+      </form>
+    </FormProvider>
+  );
+}
+
+export const WithForm = {
+  render: () => <WithFormStory />,
 };

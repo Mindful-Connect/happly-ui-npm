@@ -59,10 +59,19 @@ const Textarea = React.forwardRef<
       onScroll,
       onInput,
       style,
+      'aria-describedby': ariaDescribedBy,
+      'aria-required': ariaRequired,
       ...rest
     },
     forwardedRef
   ) => {
+    const formField = useFormField();
+    // The field's hint/error is announced with the control, alongside any
+    // description the consumer passed in.
+    const resolvedDescribedBy =
+      [ariaDescribedBy, formField.describedBy].filter(Boolean).join(' ') ||
+      undefined;
+    const resolvedRequired = ariaRequired ?? (formField.required || undefined);
     const innerRef = React.useRef<HTMLTextAreaElement>(null);
     React.useImperativeHandle(forwardedRef, () => innerRef.current!, []);
 
@@ -121,8 +130,11 @@ const Textarea = React.forwardRef<
         }
         className={cn(
           [
-            // base
-            'text-paragraph-sm text-text-strong-950 block w-full resize-none border-none shadow-none ring-0 outline-none',
+            // base — 16px below `sm`, 14px from `sm` up. iOS Safari zooms the
+            // page whenever a focused field is under 16px and does not zoom
+            // back out on blur; phones are the only viewport where that can
+            // happen. Deliberate, and the same step `input` makes.
+            'text-paragraph-md sm:text-paragraph-sm text-text-strong-950 block w-full resize-none border-none shadow-none ring-0 outline-none',
             !simple && [
               'pointer-events-auto h-full min-h-[82px] bg-transparent pt-2.5 pr-2.5 pl-3',
             ],
@@ -131,7 +143,7 @@ const Textarea = React.forwardRef<
             simple && [
               'bg-bg-white-0 shadow-regular-xs min-h-28 rounded-xl px-3 py-2.5',
               'ring-stroke-soft-200 ring-1 ring-inset',
-              'transition duration-200 ease-out',
+              'transition-[background-color,box-shadow] duration-150 ease-out',
               // When resizing is enabled (consumer adds resize-y / resize),
               // swap the native grabber for the same handle glyph the wrapped
               // variant renders (ResizeHandle), inset 10px like the wrapped
@@ -151,7 +163,10 @@ const Textarea = React.forwardRef<
               !hasError && [
                 // hover
                 'hover:[&:not(:focus)]:ring-transparent',
-                // focus
+                // focus — bare `focus:` is deliberate on a textarea, not an
+                // oversight. Browsers match `:focus-visible` on text fields for
+                // pointer focus too, so `focus-visible:` is identical here.
+                // Do not "fix" this.
                 'focus:shadow-button-important-focus focus:ring-stroke-strong-950',
               ],
               hasError && [
@@ -164,7 +179,7 @@ const Textarea = React.forwardRef<
             ],
             !disabled && [
               // placeholder
-              'placeholder:text-text-soft-400 placeholder:transition placeholder:duration-200 placeholder:ease-out placeholder:select-none',
+              'placeholder:text-text-soft-400 placeholder:transition-[color] placeholder:duration-150 placeholder:ease-out placeholder:select-none',
               // hover placeholder
               'group-hover/textarea:placeholder:text-text-sub-600',
               // focus — neutralize any upstream :focus ring/shadow bleed (the
@@ -183,6 +198,11 @@ const Textarea = React.forwardRef<
         )}
         ref={innerRef}
         disabled={disabled}
+        // The error state has to live on the control itself — `aria-invalid` on
+        // the wrapper div is not exposed for the textarea by assistive tech.
+        aria-invalid={hasError || undefined}
+        aria-describedby={resolvedDescribedBy}
+        aria-required={resolvedRequired}
         {...rest}
       />
     );
@@ -264,7 +284,7 @@ const TextareaRoot = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             // base
             'group/textarea bg-bg-white-0 shadow-regular-xs relative flex w-full flex-col rounded-xl pb-2.5',
             'ring-stroke-soft-200 ring-1 ring-inset',
-            'transition duration-200 ease-out',
+            'transition-[background-color,box-shadow] duration-150 ease-out',
             // hover
             'hover:[&:not(:focus-within)]:bg-bg-weak-50',
             // disabled
@@ -324,7 +344,9 @@ function CharCounter({
   return (
     <span
       className={cn(
-        'text-subheading-2xs text-text-soft-400',
+        // tabular-nums: the count changes on every keystroke and must not
+        // reflow the row it sits in.
+        'text-subheading-2xs text-text-soft-400 tabular-nums',
         // disabled
         'group-has-[[disabled]]/textarea:text-text-disabled-300',
         {

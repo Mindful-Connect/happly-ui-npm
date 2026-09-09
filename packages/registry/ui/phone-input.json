@@ -4,12 +4,17 @@
   "type": "registry:ui",
   "title": "Phone Input",
   "description": "A phone input component with country selection and formatting.",
-  "dependencies": ["react-international-phone", "libphonenumber-js"],
+  "dependencies": [
+    "react-international-phone",
+    "libphonenumber-js",
+    "merge-refs"
+  ],
   "registryDependencies": [
     "form-field-context",
     "use-form-field-binding",
     "input",
-    "select"
+    "select",
+    "use-formatted-caret"
   ],
   "docs": {
     "lead": "A phone input component with country selection and automatic formatting.",
@@ -104,6 +109,11 @@
             "name": "disabled",
             "type": "boolean",
             "description": "Whether the input is disabled."
+          },
+          {
+            "name": "countryName",
+            "type": "string",
+            "description": "Form field name the country select binds to inside a FormField.Root with react-hook-form. Omit it and the select stays internal — it never reads or writes the phone number's own field."
           }
         ]
       }

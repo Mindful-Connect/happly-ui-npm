@@ -51,7 +51,7 @@ export const Playground = {
         hasError={args.hasError}
       >
         <Select.Trigger>
-          <Select.Value placeholder='Select an option...' />
+          <Select.Value placeholder='Select an option…' />
         </Select.Trigger>
         <Select.Content>
           {playgroundItems.map((item) => (
@@ -233,7 +233,7 @@ export const Demo = {
     <div className='w-full max-w-[300px] min-w-[300px]'>
       <Select.Root>
         <Select.Trigger>
-          <Select.Value placeholder='Select your favorite fruit...' />
+          <Select.Value placeholder='Select your favorite fruit…' />
         </Select.Trigger>
         <Select.Content>
           {fruits.map((item) => (
@@ -257,7 +257,7 @@ export const WithLabelHint = {
       >
         <Select.Root>
           <Select.Trigger id='fruit'>
-            <Select.Value placeholder='Select your favorite fruit...' />
+            <Select.Value placeholder='Select your favorite fruit…' />
           </Select.Trigger>
           <Select.Content>
             {fruits.map((item) => (
@@ -277,7 +277,7 @@ export const WithIcons = {
     <div className='w-full max-w-[300px] min-w-[300px]'>
       <Select.Root defaultValue='utility-payment'>
         <Select.Trigger>
-          <Select.Value placeholder='Select a payment...' />
+          <Select.Value placeholder='Select a payment…' />
         </Select.Trigger>
         <Select.Content>
           {payments.map((item) => (
@@ -301,7 +301,7 @@ export const Sizes = {
     <div className='w-full max-w-[300px] min-w-[300px] space-y-6'>
       <Select.Root defaultValue='utility-payment'>
         <Select.Trigger>
-          <Select.Value placeholder='Select a payment...' />
+          <Select.Value placeholder='Select a payment…' />
         </Select.Trigger>
         <Select.Content>
           {payments.map((item) => (
@@ -319,7 +319,7 @@ export const Sizes = {
 
       <Select.Root defaultValue='utility-payment' size='small'>
         <Select.Trigger>
-          <Select.Value placeholder='Select a payment...' />
+          <Select.Value placeholder='Select a payment…' />
         </Select.Trigger>
         <Select.Content>
           {payments.map((item) => (
@@ -337,7 +337,7 @@ export const Sizes = {
 
       <Select.Root defaultValue='utility-payment' size='xsmall'>
         <Select.Trigger>
-          <Select.Value placeholder='Select a payment...' />
+          <Select.Value placeholder='Select a payment…' />
         </Select.Trigger>
         <Select.Content>
           {payments.map((item) => (
@@ -364,7 +364,7 @@ export const WithCountryFlags = {
           <Select.Value
             placeholder={
               <div className='flex items-center gap-2'>
-                <Select.TriggerIcon as={RiGlobalLine} /> Select a country...
+                <Select.TriggerIcon as={RiGlobalLine} /> Select a country…
               </div>
             }
           />
@@ -393,7 +393,7 @@ export const WithUsers = {
     <div className='w-full max-w-[300px] min-w-[300px]'>
       <Select.Root>
         <Select.Trigger>
-          <Select.Value placeholder='Select a user...' />
+          <Select.Value placeholder='Select a user…' />
         </Select.Trigger>
         <Select.Content>
           {users.map((item) => (
@@ -423,7 +423,7 @@ export const Disabled = {
           <Select.Value
             placeholder={
               <div className='flex items-center gap-2'>
-                <Select.TriggerIcon as={RiGlobalLine} /> Select a country...
+                <Select.TriggerIcon as={RiGlobalLine} /> Select a country…
               </div>
             }
           />
@@ -446,7 +446,7 @@ export const Disabled = {
 
       <Select.Root disabled defaultValue='laura-perez'>
         <Select.Trigger>
-          <Select.Value placeholder='Select a user...' />
+          <Select.Value placeholder='Select a user…' />
         </Select.Trigger>
         <Select.Content>
           {users.map((item) => (
@@ -476,7 +476,7 @@ export const Readonly = {
           <Select.Value
             placeholder={
               <div className='flex items-center gap-2'>
-                <Select.TriggerIcon as={RiGlobalLine} /> Select a country...
+                <Select.TriggerIcon as={RiGlobalLine} /> Select a country…
               </div>
             }
           />
@@ -499,7 +499,7 @@ export const Readonly = {
 
       <Select.Root readOnly defaultValue='laura-perez'>
         <Select.Trigger>
-          <Select.Value placeholder='Select a user...' />
+          <Select.Value placeholder='Select a user…' />
         </Select.Trigger>
         <Select.Content>
           {users.map((item) => (
@@ -721,7 +721,7 @@ export const InputWithInlineSelect = {
         <Input.Root>
           <Input.Wrapper>
             <Input.Icon as={RiUser6Line} />
-            <Input.Input placeholder='Placeholder text...' />
+            <Input.Input placeholder='Placeholder text…' />
             <Select.Root variant='inline' defaultValue='view'>
               <Select.Trigger>
                 <Select.TriggerIcon as={RiGlobalLine} />

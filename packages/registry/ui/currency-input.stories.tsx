@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 
 import * as CurrencyInput from './currency-input';
 import * as FormField from './form-field';
@@ -101,4 +102,47 @@ export const WithFormField = {
       </FormField.Root>
     </div>
   ),
+};
+
+/**
+ * Inside a react-hook-form form. The first field gives the currency select no
+ * name of its own, the second does. Issue #79 hid here: with no
+ * `currencyName` the select used to fall back to the parent field's binding
+ * and read the amount as its own value, so the symbol went blank as soon as
+ * an amount was typed. Both symbols must stay put while you type.
+ */
+function WithFormStory() {
+  const methods = useForm({
+    defaultValues: { amount: '', budget: '', budgetCurrency: 'EUR' },
+  });
+  const values = useWatch({ control: methods.control });
+
+  return (
+    <FormProvider {...methods}>
+      <form className='flex w-[320px] flex-col gap-5' noValidate>
+        <FormField.Root
+          name='amount'
+          label='Amount'
+          required
+          hint='Currency select is not bound to the form.'
+        >
+          <CurrencyInput.Root />
+        </FormField.Root>
+        <FormField.Root
+          name='budget'
+          label='Budget'
+          hint='Currency select is bound as “budgetCurrency”.'
+        >
+          <CurrencyInput.Root currencyName='budgetCurrency' />
+        </FormField.Root>
+        <pre className='bg-bg-weak-50 text-paragraph-xs text-text-sub-600 rounded-lg p-3'>
+          {JSON.stringify(values, null, 2)}
+        </pre>
+      </form>
+    </FormProvider>
+  );
+}
+
+export const WithForm = {
+  render: () => <WithFormStory />,
 };

@@ -23,7 +23,8 @@ const logoUploadVariants = tv({
     content: 'flex min-w-0 flex-1 flex-col gap-4',
     header: 'flex flex-col gap-2',
     title: 'text-label-sm text-text-strong-950',
-    description: 'flex flex-col gap-1.5 text-paragraph-xs text-text-sub-600',
+    description:
+      'flex flex-col gap-1.5 text-paragraph-xs text-text-sub-600 text-pretty break-words',
     actions: 'flex items-center',
   },
 });
@@ -93,7 +94,7 @@ function LogoUploadPreview({
       {...rest}
     >
       <div
-        className='transition-all duration-300'
+        className='transition-[opacity,filter] duration-300 ease-out'
         style={{
           opacity: isUploading ? 0.4 : 1,
           filter: isUploading ? 'blur(4px)' : 'none',
@@ -104,7 +105,7 @@ function LogoUploadPreview({
             <Avatar.Image
               src={file.url ?? file.preview}
               alt='Logo'
-              className='rounded-xl object-cover'
+              className='outline-image-outline rounded-xl object-cover outline outline-1 -outline-offset-1'
             />
           </Avatar.Root>
         ) : (

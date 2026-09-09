@@ -5,7 +5,7 @@ import OtpInput, { type OTPInputProps } from 'react-otp-input';
 
 import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
-import { useFormFieldBinding } from '@/lib/use-form-field-binding';
+import { useControllableFieldValue } from '@/lib/use-controllable-field-value';
 
 type OtpOptions = Omit<OTPInputProps, 'renderInput'>;
 
@@ -21,29 +21,42 @@ function DigitInput({
   hasError,
   value: valueProp,
   onChange: onChangeProp,
+  numInputs = 4,
   ...rest
 }: DigitInputProps) {
   const formField = useFormField();
   const resolvedHasError = hasError ?? formField.hasError;
   const resolvedDisabled = disabled ?? formField.disabled;
-  const binding = useFormFieldBinding<string>();
-
-  // Priority: explicit props > RHF binding > undefined
-  const resolvedValue =
-    valueProp !== undefined ? valueProp : (binding?.value ?? '');
-  const resolvedOnChange = onChangeProp ?? binding?.onChange;
+  // Explicit props > RHF binding > internal state. The internal state matters:
+  // without it `<DigitInput.Root />` outside a form has no value source and no
+  // change handler, so the slots cannot be typed into at all.
+  const { value: resolvedValue, onChange: resolvedOnChange } =
+    useControllableFieldValue<string>(valueProp, onChangeProp, '');
 
   return (
     <OtpInput
       value={resolvedValue}
       onChange={resolvedOnChange}
+      numInputs={numInputs}
       containerStyle={cn('flex w-full items-center gap-2.5', className)}
       skipDefaultStyles
-      renderInput={(inputProps) => (
+      renderInput={(inputProps, index) => (
         <DigitInputSlot
           disabled={resolvedDisabled}
           hasError={resolvedHasError}
           {...inputProps}
+          // The library ships `inputMode` unset and `autoComplete='off'`, so a
+          // phone shows a full keyboard and never offers the SMS code. Only the
+          // first slot carries `one-time-code` — the OS fills the rest.
+          inputMode='numeric'
+          autoComplete={index === 0 ? 'one-time-code' : 'off'}
+          aria-label={`Digit ${index + 1} of ${numInputs}`}
+          // The field's hint/error rides on the first slot — the one focus
+          // lands on — rather than repeating on all six.
+          aria-describedby={index === 0 ? formField.describedBy : undefined}
+          aria-required={
+            index === 0 ? formField.required || undefined : undefined
+          }
         />
       )}
       {...rest}
@@ -62,11 +75,15 @@ const DigitInputSlot = React.forwardRef<
     <input
       ref={forwardedRef}
       className={cn(
-        'rounded-10 bg-bg-white-0 text-title-h5 text-text-strong-950 shadow-regular-xs ring-stroke-soft-200 h-16 w-full min-w-0 border-0 text-center ring-1 outline-none ring-inset',
-        'transition duration-200 ease-out',
+        'rounded-10 bg-bg-white-0 text-title-h5 text-text-strong-950 shadow-regular-xs ring-stroke-soft-200 h-16 w-full min-w-0 border-0 text-center tabular-nums ring-1 outline-none ring-inset',
+        'transition-[background-color,color,box-shadow] duration-150 ease-out',
         // hover
         'hover:bg-bg-weak-50 hover:shadow-none hover:ring-transparent',
-        // focus
+        // focus — bare `focus:` is deliberate here, not an oversight. A slot is
+        // a text field, and browsers match `:focus-visible` on text fields for
+        // pointer focus too, so `focus-visible:` would be identical; the library
+        // also moves focus between slots programmatically as digits are typed
+        // and pasted, and the ring has to show for those. Do not "fix" this.
         'focus:shadow-button-important-focus focus:ring-stroke-strong-950 focus:outline-none',
         // selection
         'selection:bg-none',

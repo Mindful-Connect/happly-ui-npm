@@ -28,7 +28,7 @@ export default {
 
 export const Playground = {
   args: {
-    placeholder: 'Search or jump to...',
+    placeholder: 'Search or jump to…',
     itemSize: 'small',
   },
   argTypes: {
@@ -55,14 +55,18 @@ function PlaygroundRender(args: any) {
       </Button.Root>
       <CommandMenu.Dialog open={open} onOpenChange={setOpen}>
         <div className='group/cmd-input bg-bg-white-0 flex h-12 w-full items-center gap-2 px-5'>
-          <RiSearch2Line className='text-text-soft-400 group-focus-within/cmd-input:text-primary-base h-5 w-5 shrink-0 transition duration-200 ease-out' />
+          <RiSearch2Line
+            aria-hidden='true'
+            className='text-text-soft-400 group-focus-within/cmd-input:text-primary-base h-5 w-5 shrink-0 transition-[color] duration-200 ease-out'
+          />
           <CommandMenu.Input placeholder={args.placeholder} />
           <CompactButton.Root
             size='medium'
             variant='ghost'
+            aria-label='Close'
             onClick={() => setOpen(false)}
           >
-            <CompactButton.Icon as={RiCloseLine} />
+            <CompactButton.Icon as={RiCloseLine} aria-hidden='true' />
           </CompactButton.Root>
         </div>
         <CommandMenu.List>
@@ -101,7 +105,10 @@ function DemoRender() {
       <CommandMenu.Dialog open={open} onOpenChange={setOpen}>
         {/* Input wrapper */}
         <div className='group/cmd-input bg-bg-white-0 flex h-12 w-full items-center gap-2 px-5'>
-          <RiSearch2Line className='text-text-soft-400 group-focus-within/cmd-input:text-primary-base h-5 w-5 shrink-0 transition duration-200 ease-out' />
+          <RiSearch2Line
+            aria-hidden='true'
+            className='text-text-soft-400 group-focus-within/cmd-input:text-primary-base h-5 w-5 shrink-0 transition-[color] duration-200 ease-out'
+          />
           <CommandMenu.Input placeholder='Search or jump to' />
           <Kbd.Root>
             {/* ⌘K */}
@@ -125,9 +132,10 @@ function DemoRender() {
           <CompactButton.Root
             size='medium'
             variant='ghost'
+            aria-label='Close'
             onClick={() => setOpen(false)}
           >
-            <CompactButton.Icon as={RiCloseLine} />
+            <CompactButton.Icon as={RiCloseLine} aria-hidden='true' />
           </CompactButton.Root>
         </div>
 

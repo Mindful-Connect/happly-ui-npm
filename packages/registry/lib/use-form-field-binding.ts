@@ -14,6 +14,16 @@ function useFormContextSafe() {
 }
 
 type UseFormFieldBindingOptions<TValue = string> = {
+  /**
+   * Set to `false` to opt out of binding entirely: the hook returns `null`
+   * without falling back to the FormFieldContext name. Secondary controls
+   * (the country select in `phone-input`, the currency select in
+   * `currency-input`) need this — with no name of their own they would
+   * otherwise read and write the *parent* field, so the select would mirror
+   * the phone number or the amount. Passing `null` instead of an options
+   * object does the same thing.
+   */
+  bind?: boolean;
   /** Override name from FormFieldContext (for secondary fields like currencyName) */
   name?: string;
   /** Transform RHF stored value → component display value */
@@ -30,13 +40,18 @@ type UseFormFieldBindingOptions<TValue = string> = {
  * Auto-binds a component to React Hook Form via FormFieldContext.
  * Returns `{ value, onChange }` when inside a FormField.Root with a name
  * and a FormProvider, or `null` otherwise.
+ *
+ * Pass `null` (or `{ bind: false }`) to skip binding altogether — use it for a
+ * secondary control that has no name of its own, so it never inherits the
+ * parent field's name.
  */
 function useFormFieldBinding<TValue = string>(
-  options?: UseFormFieldBindingOptions<TValue>
+  options?: UseFormFieldBindingOptions<TValue> | null
 ): { value: TValue; onChange: (value: TValue) => void } | null {
   const formField = useFormField();
   const form = useFormContextSafe();
-  const name = options?.name ?? formField.name;
+  const bindingEnabled = options !== null && options?.bind !== false;
+  const name = bindingEnabled ? (options?.name ?? formField.name) : undefined;
 
   const onChange = React.useCallback(
     (v: TValue) => {

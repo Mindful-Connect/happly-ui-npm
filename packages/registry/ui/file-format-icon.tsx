@@ -7,7 +7,7 @@ const fileFormatIconVariants = tv({
   slots: {
     root: 'relative shrink-0',
     formatBox:
-      'absolute bottom-1.5 left-0 flex h-4 items-center rounded px-[3px] py-0.5 text-[11px] font-semibold leading-none text-static-white',
+      'absolute bottom-1.5 left-0 flex h-4 items-center rounded px-[3px] py-0.5 text-[11px] font-semibold leading-none',
   },
   variants: {
     size: {
@@ -20,31 +20,31 @@ const fileFormatIconVariants = tv({
     },
     color: {
       red: {
-        formatBox: 'bg-error-base',
+        formatBox: 'bg-error-base text-error-contrast',
       },
       orange: {
-        formatBox: 'bg-warning-base',
+        formatBox: 'bg-warning-base text-warning-contrast',
       },
       yellow: {
-        formatBox: 'bg-away-base',
+        formatBox: 'bg-away-base text-away-contrast',
       },
       green: {
-        formatBox: 'bg-success-base',
+        formatBox: 'bg-success-base text-success-contrast',
       },
       sky: {
-        formatBox: 'bg-verified-base',
+        formatBox: 'bg-verified-base text-verified-contrast',
       },
       blue: {
-        formatBox: 'bg-information-base',
+        formatBox: 'bg-information-base text-information-contrast',
       },
       purple: {
-        formatBox: 'bg-feature-base',
+        formatBox: 'bg-feature-base text-feature-contrast',
       },
       pink: {
-        formatBox: 'bg-highlighted-base',
+        formatBox: 'bg-highlighted-base text-highlighted-contrast',
       },
       gray: {
-        formatBox: 'bg-faded-base',
+        formatBox: 'bg-faded-base text-faded-contrast',
       },
     },
   },
@@ -115,6 +115,8 @@ const FileFormatIconRoot = React.forwardRef<SVGSVGElement, FileFormatIconProps>(
         viewBox='0 0 40 40'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
+        // decorative: the format is repeated in the file name beside it
+        aria-hidden='true'
         className={cn(root(), className)}
         {...rest}
       >

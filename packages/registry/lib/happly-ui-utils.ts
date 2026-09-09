@@ -48,6 +48,7 @@ const customShadows = [
   'custom-input-4',
   'custom-input-active',
   'gray-shadow',
+  'card-raised',
   'complex',
   'complex-2',
   'complex-4',
@@ -84,3 +85,33 @@ export function cn(...classes: ClassValue[]) {
 }
 
 export type ObjectValues<T> = T[keyof T];
+
+/**
+ * Applies a theme change with every CSS transition suppressed, so the repaint
+ * lands in one frame instead of smearing 200ms of `background-color` across
+ * every surface on the page.
+ *
+ * `next-themes` does this internally (`disableTransitionOnChange`); use this
+ * when you toggle `.dark`, an accent, or a token set yourself.
+ *
+ * ```ts
+ * withoutThemeTransitions(() =>
+ *   document.documentElement.classList.toggle('dark')
+ * );
+ * ```
+ */
+export function withoutThemeTransitions(apply: () => void) {
+  if (typeof document === 'undefined') {
+    apply();
+    return;
+  }
+
+  const root = document.documentElement;
+  root.setAttribute('data-theme-switching', '');
+  apply();
+  // Force the new colours to paint while transitions are still off. Reading a
+  // layout property is the cheapest synchronous style flush; without it the
+  // attribute is added and removed inside one task and never takes effect.
+  void root.offsetWidth;
+  root.removeAttribute('data-theme-switching');
+}

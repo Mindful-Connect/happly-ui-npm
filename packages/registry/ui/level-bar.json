@@ -27,7 +27,7 @@
     "api": [
       {
         "name": "LevelBar",
-        "description": "The level bar component.",
+        "description": "The level bar component. Exposed as a `meter` with aria-valuenow/min/max; pass `aria-label` to name it in context.",
         "props": [
           {
             "name": "level",

@@ -17,19 +17,24 @@ const PROMOTIONAL_CARD_LINK_NAME = 'PromotionalCardLink';
 export const promotionalCardVariants = tv({
   slots: {
     root: [
-      'relative h-full min-h-[137px] min-w-72 overflow-hidden rounded-2xl',
-      'transition duration-200 ease-out',
+      // Normal flow, not absolute offsets: the card keeps its 137px floor but
+      // grows with longer or translated copy instead of clipping it.
+      // 15px top/bottom/start + 16px end + a 16px gap reproduce the previous
+      // icon (15,15) and content (63,15) positions exactly.
+      'relative flex h-full min-h-[137px] min-w-72 flex-col gap-4 overflow-hidden rounded-2xl',
+      'py-[15px] ps-[15px] pe-4',
+      'transition-[background-color,box-shadow] duration-150 ease-out',
     ],
-    icon: 'absolute left-[15px] top-[15px] !w-8 h-8',
+    icon: 'h-8 !w-8 shrink-0',
     decoration:
       'pointer-events-none absolute -top-[71px] left-[calc(100%-88px)] !size-[163px] text-icon-strong-950 opacity-[0.03]',
-    content: 'absolute top-[63px] left-[15px] right-4 flex flex-col gap-1',
+    content: 'flex flex-col gap-1',
     title: 'text-label-sm text-text-strong-950 truncate',
     descriptionRow: 'flex items-center gap-1',
-    description: 'text-paragraph-xs text-text-sub-600',
+    description: 'text-paragraph-xs text-text-sub-600 text-pretty',
     link: [
       'text-label-xs text-text-sub-600 underline shrink-0',
-      'transition duration-200 ease-out',
+      'transition-[color] duration-150 ease-out',
       'hover:text-text-strong-950',
     ],
   },
@@ -143,11 +148,22 @@ PromotionalCardContent.displayName = 'PromotionalCardContent';
 
 function PromotionalCardTitle({
   className,
+  children,
+  title: titleAttr,
   ...rest
 }: React.HTMLAttributes<HTMLParagraphElement>) {
   const { title } = promotionalCardVariants();
 
-  return <p className={title({ class: className })} {...rest} />;
+  return (
+    <p
+      className={title({ class: className })}
+      // the title truncates — keep the full string reachable
+      title={titleAttr ?? (typeof children === 'string' ? children : undefined)}
+      {...rest}
+    >
+      {children}
+    </p>
+  );
 }
 PromotionalCardTitle.displayName = PROMOTIONAL_CARD_TITLE_NAME;
 

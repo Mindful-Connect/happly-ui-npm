@@ -75,7 +75,14 @@ function HintIcon<T extends React.ElementType = typeof RiInformationFill>({
   const Component = as || RiInformationFill;
   const { icon } = hintVariants({ hasError, disabled });
 
-  return <Component className={icon({ class: className })} {...rest} />;
+  // Decorative: the hint text beside it carries the meaning.
+  return (
+    <Component
+      aria-hidden='true'
+      className={icon({ class: className })}
+      {...rest}
+    />
+  );
 }
 HintIcon.displayName = HINT_ICON_NAME;
 

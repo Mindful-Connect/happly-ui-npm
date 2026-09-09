@@ -20,6 +20,14 @@ const CHECKED_CLASSES = {
   ],
 } as const;
 
+// The focus fill alone only moves the track from bg-soft-200 to bg-sub-300 —
+// a 1.83:1 change of contrast, under the 3:1 focus-appearance floor. Ring the
+// track as well.
+const FOCUS_CLASSES = {
+  primary: 'group-focus-visible/switch:shadow-button-primary-focus',
+  neutral: 'group-focus-visible/switch:shadow-button-important-focus',
+} as const;
+
 const SwitchRoot = React.forwardRef<
   React.ComponentRef<typeof SwitchPrimitives.Root>,
   React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> & {
@@ -33,6 +41,8 @@ const SwitchRoot = React.forwardRef<
       variant = 'primary',
       checked: checkedProp,
       onCheckedChange: onCheckedChangeProp,
+      'aria-describedby': ariaDescribedBy,
+      'aria-required': ariaRequired,
       ...rest
     },
     forwardedRef
@@ -40,6 +50,13 @@ const SwitchRoot = React.forwardRef<
     const formField = useFormField();
     const binding = useFormFieldBinding<boolean>();
     const disabled = disabledProp ?? formField.disabled;
+
+    // The field's hint/error is announced with the control, alongside any
+    // description the consumer passed in (mirrors Input/Textarea).
+    const describedBy =
+      [ariaDescribedBy, formField.describedBy].filter(Boolean).join(' ') ||
+      undefined;
+    const required = ariaRequired ?? (formField.required || undefined);
 
     // Priority: explicit props > RHF binding > undefined (Radix uncontrolled)
     const checked = checkedProp !== undefined ? checkedProp : binding?.value;
@@ -50,31 +67,34 @@ const SwitchRoot = React.forwardRef<
     return (
       <SwitchPrimitives.Root
         className={cn(
-          'group/switch block h-5 w-8 shrink-0 p-0.5 outline-none focus:outline-none',
+          'group/switch relative block h-5 w-8 shrink-0 p-0.5 outline-none',
+          // 24px-tall hit area around the 20px-tall visual (WCAG 2.5.8)
+          'after:absolute after:inset-x-0 after:-inset-y-0.5',
           className
         )}
         ref={forwardedRef}
         disabled={disabled}
         checked={checked}
         onCheckedChange={onCheckedChange}
+        aria-describedby={describedBy}
+        aria-required={required}
         {...rest}
       >
         <div
           className={cn(
             // base
             'bg-bg-soft-200 h-4 w-7 rounded-full p-0.5 outline-none',
-            'transition duration-200 ease-out',
+            'transition-[background-color,box-shadow] duration-150 ease-out',
             !disabled && [
               // hover
               'group-hover/switch:bg-bg-sub-300',
               // focus
               'group-focus-visible/switch:bg-bg-sub-300',
+              FOCUS_CLASSES[variant],
               // pressed
               'group-active/switch:bg-bg-soft-200',
               // variant-specific checked states
               checkedClasses,
-              // focus
-              'group-focus/switch:outline-none',
             ],
             // disabled
             disabled && [
@@ -86,7 +106,8 @@ const SwitchRoot = React.forwardRef<
             className={cn(
               // base
               'pointer-events-none relative block h-3 w-3',
-              'transition-transform duration-200 ease-out',
+              // exactly what moves: the toggle translate and the press squish
+              'transition-[translate,scale,transform] duration-150 ease-out',
               // checked
               'data-[state=checked]:translate-x-3',
               !disabled && [

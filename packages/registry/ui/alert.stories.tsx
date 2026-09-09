@@ -26,7 +26,7 @@ export const Playground = {
     <div className='w-full max-w-96'>
       <Alert.Root {...args}>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
       </Alert.Root>
     </div>
   ),
@@ -79,13 +79,14 @@ export const Filled = {
     <div className='w-full max-w-96 space-y-6'>
       <Alert.Root variant='filled' status='error'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -93,13 +94,14 @@ export const Filled = {
 
       <Alert.Root variant='filled' status='warning'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -107,13 +109,14 @@ export const Filled = {
 
       <Alert.Root variant='filled' status='success'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -121,13 +124,14 @@ export const Filled = {
 
       <Alert.Root variant='filled' status='information'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -135,13 +139,14 @@ export const Filled = {
 
       <Alert.Root variant='filled' status='feature'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -155,13 +160,14 @@ export const Light = {
     <div className='w-full max-w-96 space-y-6'>
       <Alert.Root variant='light' status='error'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -169,13 +175,14 @@ export const Light = {
 
       <Alert.Root variant='light' status='warning'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -183,13 +190,14 @@ export const Light = {
 
       <Alert.Root variant='light' status='success'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -197,13 +205,14 @@ export const Light = {
 
       <Alert.Root variant='light' status='information'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -211,13 +220,14 @@ export const Light = {
 
       <Alert.Root variant='light' status='feature'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -231,13 +241,14 @@ export const Lighter = {
     <div className='w-full max-w-96 space-y-6'>
       <Alert.Root variant='lighter' status='error'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -245,13 +256,14 @@ export const Lighter = {
 
       <Alert.Root variant='lighter' status='warning'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -259,13 +271,14 @@ export const Lighter = {
 
       <Alert.Root variant='lighter' status='success'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -273,13 +286,14 @@ export const Lighter = {
 
       <Alert.Root variant='lighter' status='information'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -287,13 +301,14 @@ export const Lighter = {
 
       <Alert.Root variant='lighter' status='feature'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -307,13 +322,14 @@ export const Stroke = {
     <div className='w-full max-w-96 space-y-6'>
       <Alert.Root variant='stroke' status='error'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -321,13 +337,14 @@ export const Stroke = {
 
       <Alert.Root variant='stroke' status='warning'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -335,13 +352,14 @@ export const Stroke = {
 
       <Alert.Root variant='stroke' status='success'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -349,13 +367,14 @@ export const Stroke = {
 
       <Alert.Root variant='stroke' status='information'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -363,13 +382,14 @@ export const Stroke = {
 
       <Alert.Root variant='stroke' status='feature'>
         <Alert.Icon />
-        Insert your alert title here!
+        Insert your alert title here
         <LinkButton.Root variant='modifiable' size='medium' underline>
           Upgrade
         </LinkButton.Root>
         <button
           type='button'
-          className='appearance-none border-0 bg-transparent p-0'
+          aria-label='Dismiss'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -386,13 +406,14 @@ export const Sizes = {
         <div className='text-label-xs text-text-sub-600'>XSmall</div>
         <Alert.Root variant='filled' status='error' size='xsmall'>
           <Alert.Icon />
-          Insert your alert title here!
+          Insert your alert title here
           <LinkButton.Root variant='modifiable' size='small' underline>
             Upgrade
           </LinkButton.Root>
           <button
             type='button'
-            className='appearance-none border-0 bg-transparent p-0'
+            aria-label='Dismiss'
+            className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
           >
             <Alert.CloseIcon />
           </button>
@@ -404,13 +425,14 @@ export const Sizes = {
         <div className='text-label-xs text-text-sub-600'>Small (default)</div>
         <Alert.Root variant='light' status='warning' size='small'>
           <Alert.Icon />
-          Insert your alert title here!
+          Insert your alert title here
           <LinkButton.Root variant='modifiable' size='small' underline>
             Upgrade
           </LinkButton.Root>
           <button
             type='button'
-            className='appearance-none border-0 bg-transparent p-0'
+            aria-label='Dismiss'
+            className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
           >
             <Alert.CloseIcon />
           </button>
@@ -424,7 +446,7 @@ export const Sizes = {
           <Alert.Icon />
           <div className='space-y-2.5'>
             <div className='space-y-1'>
-              <div className='text-label-sm'>Insert your alert title here!</div>
+              <div className='text-label-sm'>Insert your alert title here</div>
               <div>
                 Insert the alert description here. It would look better as two
                 lines of text.
@@ -436,7 +458,7 @@ export const Sizes = {
               </LinkButton.Root>
               <span>&#8729;</span>
               <LinkButton.Root variant='modifiable' size='medium'>
-                Learn More
+                Learn more
               </LinkButton.Root>
             </div>
           </div>

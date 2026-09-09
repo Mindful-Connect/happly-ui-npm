@@ -12,7 +12,7 @@
   "registryDependencies": ["tv", "polymorphic", "recursive-clone-children"],
   "docs": {
     "lead": "A versatile alert component with multiple variants, status colors, and sizes for user notifications.",
-    "usage": "import * as Alert from \"@/components/ui/alert\"\n\n<Alert.Root variant=\"filled\" status=\"error\">\n  <Alert.Icon />\n  Insert your alert title here!\n</Alert.Root>",
+    "usage": "import * as Alert from \"@/components/ui/alert\"\n\n<Alert.Root variant=\"filled\" status=\"error\">\n  <Alert.Icon />\n  Insert your alert title here\n</Alert.Root>",
     "examples": [
       {
         "title": "Default Icons",
@@ -89,7 +89,7 @@
       },
       {
         "name": "Alert.Icon",
-        "description": "Renders a status icon. Defaults to a matching icon per status (error → RiErrorWarningFill, warning → RiAlertFill, success → RiCheckboxCircleFill, information → RiInformationFill, feature → RiSparklingFill). Override with the `as` prop.",
+        "description": "Renders a status icon. Defaults to a matching icon per status (error → RiErrorWarningFill, warning → RiAlertFill, success → RiCheckboxCircleFill, information → RiInformationFill, feature → RiSparklingFill). Override with the `as` prop. Rendered aria-hidden — the alert text carries the status.",
         "props": [
           {
             "name": "as",
@@ -100,7 +100,7 @@
       },
       {
         "name": "Alert.CloseIcon",
-        "description": "Renders a close/dismiss icon. Defaults to RiCloseLine.",
+        "description": "Renders a close/dismiss glyph (defaults to RiCloseLine). It is a decorative icon, not a control: wrap it in a <button type=\"button\" aria-label=\"Dismiss\"> with at least a 24x24px hit area.",
         "props": [
           {
             "name": "as",

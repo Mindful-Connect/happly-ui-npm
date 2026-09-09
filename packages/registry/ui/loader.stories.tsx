@@ -61,7 +61,7 @@ export const Inline = {
     <div className='flex flex-col gap-4'>
       <span className='text-paragraph-sm text-text-sub-600 flex items-center gap-2'>
         <Loader.Root size={14} color='current' />
-        Fetching results...
+        Fetching results…
       </span>
       <span className='text-paragraph-md text-text-strong-950 flex items-center gap-2'>
         <Loader.Root size={18} color='primary' />

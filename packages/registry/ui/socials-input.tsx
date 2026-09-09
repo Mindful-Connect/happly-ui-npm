@@ -19,7 +19,7 @@ import * as Hint from '@/components/ui/hint';
 import * as Input from '@/components/ui/input';
 import * as Tag from '@/components/ui/tag';
 import { useFormField } from '@/lib/form-field-context';
-import { useFormFieldBinding } from '@/lib/use-form-field-binding';
+import { useControllableFieldValue } from '@/lib/use-controllable-field-value';
 
 // ─── Types ───────────────────────────────────────────────────────────
 
@@ -195,7 +195,7 @@ export const SOCIAL_CONFIGS: Record<SocialKey, SocialConfig> = {
     key: 'calendar',
     label: 'Calendar',
     icon: RiCalendarTodoLine,
-    inputPlaceholder: 'calendly.com/...',
+    inputPlaceholder: 'calendly.com/you',
     domains: [],
     extractHandle: (url) => {
       try {
@@ -218,10 +218,10 @@ const DEFAULT_SOCIALS: SocialKey[] = [
 ];
 
 const DEFAULT_LABELS: SocialsInputLabels = {
-  placeholder: 'Choose the social media...',
-  errorUrl: 'Please enter a valid URL',
-  errorCalendarUrl: 'Please enter a valid calendar URL',
-  errorZoomUrl: 'Please enter a valid Zoom URL',
+  placeholder: 'Choose a platform…',
+  errorUrl: 'Enter the full profile link for this platform',
+  errorCalendarUrl: 'Enter the full calendar link, like calendly.com/you',
+  errorZoomUrl: 'Enter the full Zoom link, like zoom.us/j/1234567890',
 };
 
 // ─── Validation ──────────────────────────────────────────────────────
@@ -245,7 +245,14 @@ function SocialPickerItems() {
   const ctx = ComboBox.useComboBoxContext();
 
   if (ctx.filteredOptions.length === 0) {
-    return <ComboBox.Empty>No matching platforms.</ComboBox.Empty>;
+    const query = ctx.search.trim();
+    return (
+      <ComboBox.Empty>
+        {query
+          ? `No platform matches “${query}”. Clear the search to see the rest.`
+          : 'Every platform has been added.'}
+      </ComboBox.Empty>
+    );
   }
 
   return (
@@ -265,6 +272,9 @@ function SocialPickerItems() {
 
 type SocialsValue = Partial<Record<SocialKey, string>>;
 
+/** Module-level so the uncontrolled initial state keeps one identity. */
+const EMPTY_SOCIALS_VALUE: SocialsValue = {};
+
 export default function SocialsInput({
   name: nameProp,
   readOnly = false,
@@ -275,19 +285,26 @@ export default function SocialsInput({
   labels: labelsProp,
 }: SocialsInputProps) {
   const formField = useFormField();
-  const binding = useFormFieldBinding<SocialsValue>(
-    nameProp ? { name: nameProp } : undefined
-  );
   const labels = { ...DEFAULT_LABELS, ...labelsProp };
 
-  // Priority: explicit props > RHF binding > empty
-  const formValue: SocialsValue = formValueProp ?? binding?.value ?? {};
-  const setFormValue = setFormValueProp ?? binding?.onChange ?? (() => {});
+  // Explicit props > RHF binding > internal state. The internal state matters:
+  // the fallback used to be a no-op setter, so an uncontrolled `<SocialsInput />`
+  // outside a form silently dropped every link the user added.
+  const { value: formValue, onChange: setFormValue } =
+    useControllableFieldValue<SocialsValue>(
+      formValueProp,
+      setFormValueProp,
+      EMPTY_SOCIALS_VALUE,
+      nameProp ? { name: nameProp } : undefined
+    );
   const name = nameProp ?? formField.name ?? 'socials';
 
   const [editingKey, setEditingKey] = useState<SocialKey | null>(null);
   const [editValue, setEditValue] = useState('');
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
+  // Ties the inline error to the field it belongs to, so it is announced with
+  // the input rather than being loose text on the page.
+  const errorId = React.useId();
 
   // Error state: external prop, form field context, or any internal validation error
   const hasInternalError = Object.values(errors).some(Boolean);
@@ -479,16 +496,14 @@ export default function SocialsInput({
     }
   }
 
-  function handlePaste(e: React.ClipboardEvent<HTMLInputElement>) {
-    e.preventDefault();
-    const text = e.clipboardData.getData('text').trim();
-    if (!text) return;
-    // Strip protocol for display since https:// is shown as a visual prefix
-    setEditValue(text.replace(/^https?:\/\//, ''));
-  }
-
+  // Paste is left to the browser: `onPaste` used to preventDefault and replace
+  // the whole field, which threw away the caret position and any selection.
+  // The protocol is stripped here instead — anywhere in the value, not just at
+  // the start, because a paste lands wherever the caret is: typing "x" and
+  // pasting "https://linkedin.com/in/me" after it used to save the protocol
+  // mid-string ("xhttps://linkedin.com/in/me") and pass validation.
   function handleInputChange(value: string) {
-    setEditValue(value.replace(/^https?:\/\//, ''));
+    setEditValue(value.replace(/https?:\/\//g, ''));
   }
 
   // ─── Render ──────────────────────────────────────────────────────
@@ -523,7 +538,10 @@ export default function SocialsInput({
                 <Tag.Icon as={config.icon} />
                 <span>{displayName}</span>
                 {!readOnly && (
-                  <Tag.DismissButton onClick={() => handleRemoveSocial(key)} />
+                  <Tag.DismissButton
+                    onClick={() => handleRemoveSocial(key)}
+                    aria-label={`Remove ${config.label}`}
+                  />
                 )}
               </Tag.Root>
             );
@@ -546,19 +564,27 @@ export default function SocialsInput({
                 <Input.Input
                   autoFocus
                   spellCheck={false}
+                  autoComplete='off'
+                  autoCapitalize='none'
+                  inputMode='url'
+                  aria-label={`${SOCIAL_CONFIGS[editingKey].label} link`}
+                  aria-invalid={!!errors[`${name}.${editingKey}`] || undefined}
+                  aria-describedby={
+                    errors[`${name}.${editingKey}`] ? errorId : undefined
+                  }
                   placeholder={SOCIAL_CONFIGS[editingKey].inputPlaceholder}
                   value={editValue}
                   onChange={(e) => handleInputChange(e.target.value)}
                   onKeyDown={handleInputKeyDown}
-                  onPaste={handlePaste}
                 />
                 <button
                   type='button'
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={handleConfirmEdit}
-                  className='text-text-sub-600 hover:text-success-base shrink-0 transition duration-200 ease-out'
+                  aria-label={`Save ${SOCIAL_CONFIGS[editingKey].label} link`}
+                  className='text-text-sub-600 hover:text-success-base focus-visible:shadow-button-important-focus relative flex size-5 shrink-0 items-center justify-center rounded-md transition-[color,box-shadow] duration-150 ease-out after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2 focus-visible:outline-none'
                 >
-                  <RiCheckLine className='h-5 w-5' />
+                  <RiCheckLine aria-hidden='true' className='h-5 w-5' />
                 </button>
               </Input.Wrapper>
             </Input.Root>
@@ -569,6 +595,7 @@ export default function SocialsInput({
               size='medium'
               onMouseDown={(e) => e.preventDefault()}
               onClick={handleCancelEdit}
+              aria-label={`Cancel ${SOCIAL_CONFIGS[editingKey].label} link`}
               className='w-10 shrink-0 px-0'
             >
               <Button.Icon as={RiCloseLine} />
@@ -576,7 +603,9 @@ export default function SocialsInput({
           </div>
 
           {errors[`${name}.${editingKey}`] && (
-            <Hint.Root hasError>{errors[`${name}.${editingKey}`]}</Hint.Root>
+            <Hint.Root id={errorId} hasError>
+              {errors[`${name}.${editingKey}`]}
+            </Hint.Root>
           )}
         </div>
       )}

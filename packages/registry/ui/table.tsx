@@ -27,13 +27,18 @@ TableHeader.displayName = 'TableHeader';
 
 const TableHead = React.forwardRef<
   HTMLTableCellElement,
-  React.ThHTMLAttributes<HTMLTableCellElement>
->(({ className, ...rest }, forwardedRef) => {
+  React.ThHTMLAttributes<HTMLTableCellElement> & {
+    /** Align the column trailing and render its digits at a fixed width. */
+    numeric?: boolean;
+  }
+>(({ className, numeric, scope = 'col', ...rest }, forwardedRef) => {
   return (
     <th
       ref={forwardedRef}
+      scope={scope}
       className={cn(
-        'bg-bg-weak-50 text-paragraph-sm text-text-sub-600 px-3 py-2 text-left first:rounded-l-lg last:rounded-r-lg',
+        'bg-bg-weak-50 text-paragraph-sm text-text-sub-600 px-3 py-2 text-start first:rounded-l-lg last:rounded-r-lg',
+        numeric && 'text-end tabular-nums',
         className
       )}
       {...rest}
@@ -98,13 +103,17 @@ TableRowDivider.displayName = 'TableRowDivider';
 
 const TableCell = React.forwardRef<
   HTMLTableCellElement,
-  React.TdHTMLAttributes<HTMLTableCellElement>
->(({ className, ...rest }, forwardedRef) => {
+  React.TdHTMLAttributes<HTMLTableCellElement> & {
+    /** Align the cell trailing and render its digits at a fixed width. */
+    numeric?: boolean;
+  }
+>(({ className, numeric, ...rest }, forwardedRef) => {
   return (
     <td
       ref={forwardedRef}
       className={cn(
-        'group-hover/row:bg-bg-weak-50 h-16 px-3 transition duration-200 ease-out first:rounded-l-xl last:rounded-r-xl',
+        'group-hover/row:bg-bg-weak-50 h-16 px-3 transition-[background-color] duration-150 ease-out first:rounded-l-xl last:rounded-r-xl',
+        numeric && 'text-end tabular-nums',
         className
       )}
       {...rest}

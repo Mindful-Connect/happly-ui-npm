@@ -19,7 +19,7 @@ export const avatarVariants = tv({
   slots: {
     root: [
       'relative flex shrink-0 items-center justify-center rounded-full',
-      'select-none text-center uppercase',
+      'text-center uppercase',
       'ring-1 ring-stroke-soft-200',
     ],
     image: 'w-full h-full overflow-hidden rounded-[inherit] object-cover',
@@ -228,14 +228,25 @@ type AvatarImageProps = AvatarSharedProps &
   };
 
 const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
-  ({ asChild, className, size, color, ...rest }, forwardedRef) => {
+  ({ asChild, className, size, color, alt, ...rest }, forwardedRef) => {
     const Component = asChild ? Slot : 'img';
     const { image } = avatarVariants({ size, color });
 
     return (
       <Component
         ref={forwardedRef}
-        className={image({ class: className })}
+        // an avatar normally sits beside the person's name, so it is
+        // decorative unless the consumer says otherwise — never unnamed
+        alt={asChild ? alt : (alt ?? '')}
+        className={image({
+          class: cn(
+            // real photos get the neutral 1px image outline; `asChild` renders
+            // placeholder artwork, which already sits inside the root's ring
+            !asChild &&
+              'outline-image-outline outline outline-1 -outline-offset-1',
+            className
+          ),
+        })}
         {...rest}
       />
     );

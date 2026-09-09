@@ -16,6 +16,9 @@ const AiOrbRoot = React.forwardRef<SVGSVGElement, AiOrbProps>(
     return (
       <svg
         ref={forwardedRef}
+        // Decoration: it carries no information the surrounding UI doesn't.
+        // Pass `aria-hidden={false}` with a `role`/`aria-label` to override.
+        aria-hidden='true'
         width={size}
         height={size}
         viewBox='0 0 112 112'
@@ -50,6 +53,13 @@ const AiOrbRoot = React.forwardRef<SVGSVGElement, AiOrbProps>(
             }
             .${uid}-shimmer {
               animation: ${uid}-shimmer 6s ease-in-out infinite;
+            }
+            @media (prefers-reduced-motion: reduce) {
+              .${uid}-drift-a,
+              .${uid}-drift-b,
+              .${uid}-shimmer {
+                animation: none;
+              }
             }
           `}</style>
         )}

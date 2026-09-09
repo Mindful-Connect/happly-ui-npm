@@ -36,7 +36,7 @@
       {
         "title": "With Label",
         "description": "Checkboxes paired with Label component for form usage.",
-        "code": "<div className=\"flex items-center gap-2\">\n  <Checkbox.Root id=\"c1\" />\n  <Label.Root htmlFor=\"c1\">SMS Verification</Label.Root>\n</div>",
+        "code": "<div className=\"flex items-center gap-2\">\n  <Checkbox.Root id=\"c1\" />\n  <Label.Root htmlFor=\"c1\">SMS verification</Label.Root>\n</div>",
         "stories": ["WithLabel"]
       },
       {

@@ -37,14 +37,26 @@ export const Rounded = {
         className='w-fit gap-2 rounded-full'
         floatingBgClassName='rounded-full'
       >
-        <SwitchToggle.Trigger value='light' className='aspect-square h-9'>
-          <RiSunLine className='h-6 w-6' />
+        <SwitchToggle.Trigger
+          value='light'
+          aria-label='Light'
+          className='aspect-square h-9'
+        >
+          <RiSunLine className='h-6 w-6' aria-hidden='true' />
         </SwitchToggle.Trigger>
-        <SwitchToggle.Trigger value='dark' className='aspect-square h-9'>
-          <RiMoonLine className='h-6 w-6' />
+        <SwitchToggle.Trigger
+          value='dark'
+          aria-label='Dark'
+          className='aspect-square h-9'
+        >
+          <RiMoonLine className='h-6 w-6' aria-hidden='true' />
         </SwitchToggle.Trigger>
-        <SwitchToggle.Trigger value='system' className='aspect-square h-9'>
-          <RiEqualizer3Fill className='h-6 w-6' />
+        <SwitchToggle.Trigger
+          value='system'
+          aria-label='System'
+          className='aspect-square h-9'
+        >
+          <RiEqualizer3Fill className='h-6 w-6' aria-hidden='true' />
         </SwitchToggle.Trigger>
       </SwitchToggle.List>
     </SwitchToggle.Root>

@@ -26,13 +26,13 @@
       {
         "title": "With Key Icons",
         "description": "Icons wrapped in KeyIcon for a styled container.",
-        "code": "<RadioCard.Item value=\"card\">\n  <KeyIcon.Root icon={<RiBankCardLine />} />\n  <RadioCard.Content>\n    <RadioCard.Title>Credit Card</RadioCard.Title>\n  </RadioCard.Content>\n  <RadioCard.Indicator />\n</RadioCard.Item>",
+        "code": "<RadioCard.Item value=\"card\">\n  <KeyIcon.Root icon={<RiBankCardLine />} />\n  <RadioCard.Content>\n    <RadioCard.Title>Credit card</RadioCard.Title>\n  </RadioCard.Content>\n  <RadioCard.Indicator />\n</RadioCard.Item>",
         "stories": ["WithKeyIcons"]
       },
       {
         "title": "With Simple Icons",
         "description": "Raw icons without KeyIcon wrapper.",
-        "code": "<RadioCard.Item value=\"card\">\n  <RiBankCardLine className=\"w-5 h-5 shrink-0 text-text-sub-600\" />\n  <RadioCard.Content>\n    <RadioCard.Title>Credit Card</RadioCard.Title>\n  </RadioCard.Content>\n  <RadioCard.Indicator />\n</RadioCard.Item>",
+        "code": "<RadioCard.Item value=\"card\">\n  <RiBankCardLine className=\"w-5 h-5 shrink-0 text-text-sub-600\" />\n  <RadioCard.Content>\n    <RadioCard.Title>Credit card</RadioCard.Title>\n  </RadioCard.Content>\n  <RadioCard.Indicator />\n</RadioCard.Item>",
         "stories": ["WithSimpleIcons"]
       },
       {
@@ -68,7 +68,7 @@
       {
         "title": "Composed",
         "description": "Shorthand component that pre-assembles Item, Content, Title, Description, and Indicator. Import as { RadioCard } for direct use.",
-        "code": "<RadioCard\n  value=\"card\"\n  title=\"Credit Card\"\n  description=\"Pay with credit card\"\n  icon={<KeyIcon.Root icon={<RiBankCardLine />} />}\n/>",
+        "code": "<RadioCard\n  value=\"card\"\n  title=\"Credit card\"\n  description=\"Pay with credit card\"\n  icon={<KeyIcon.Root icon={<RiBankCardLine />} />}\n/>",
         "stories": ["Composed"]
       },
       {
@@ -80,7 +80,7 @@
       {
         "title": "With Form Field",
         "description": "Radio cards composed with FormField for consistent label and hint.",
-        "code": "<FormField.Root label=\"Select Plan\" required hint=\"Choose the plan that works for you.\">\n  <RadioCard.Root value={value} onValueChange={setValue}>\n    <RadioCard.Item value=\"personal\">\n      <RadioCard.Content>\n        <RadioCard.Title>Personal</RadioCard.Title>\n        <RadioCard.Description>For individual use</RadioCard.Description>\n      </RadioCard.Content>\n      <RadioCard.Indicator />\n    </RadioCard.Item>\n  </RadioCard.Root>\n</FormField.Root>",
+        "code": "<FormField.Root label=\"Select plan\" required hint=\"Choose the plan that works for you.\">\n  <RadioCard.Root value={value} onValueChange={setValue}>\n    <RadioCard.Item value=\"personal\">\n      <RadioCard.Content>\n        <RadioCard.Title>Personal</RadioCard.Title>\n        <RadioCard.Description>For individual use</RadioCard.Description>\n      </RadioCard.Content>\n      <RadioCard.Indicator />\n    </RadioCard.Item>\n  </RadioCard.Root>\n</FormField.Root>",
         "stories": ["WithFormField"]
       }
     ],
@@ -160,7 +160,7 @@
       },
       {
         "name": "RadioCard.Indicator",
-        "description": "The radio circle indicator. Reads value and disabled from the parent Item context.",
+        "description": "The radio circle indicator, and the radio control itself \u2014 every Item needs one. Reads value and disabled from the parent Item context, and handles selection and `allowDeselect`.",
         "props": []
       },
       {

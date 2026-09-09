@@ -31,6 +31,7 @@ type FormFieldRootProps = React.HTMLAttributes<HTMLDivElement> & {
   labelSub?: React.ReactNode;
   labelSubParens?: boolean;
   labelInfo?: React.ReactNode;
+  labelInfoLabel?: string;
   hint?: React.ReactNode;
   error?: React.ReactNode;
   hasError?: boolean;
@@ -48,6 +49,7 @@ function FormFieldRoot({
   labelSub,
   labelSubParens,
   labelInfo,
+  labelInfoLabel,
   hint,
   error,
   hasError,
@@ -55,12 +57,15 @@ function FormFieldRoot({
   ...rest
 }: FormFieldRootProps) {
   const form = useFormContextSafe();
+  const fallbackId = React.useId();
 
   const fieldError =
     name && form ? getFieldError(form.formState.errors, name) : undefined;
   const resolvedError = error ?? fieldError?.message;
   const computedHasError = hasError || !!resolvedError;
   const resolvedId = htmlFor ?? name;
+  // Stable id so a control can point `aria-describedby` at the hint/error.
+  const messageId = `${resolvedId ?? fallbackId}-message`;
 
   const onBlur = React.useCallback(() => {
     if (name && form) {
@@ -74,9 +79,22 @@ function FormFieldRoot({
       disabled: !!disabled,
       id: resolvedId,
       name,
+      required: !!required,
+      // Only advertise the message id while a hint or error is actually rendered.
+      describedBy: resolvedError || hint ? messageId : undefined,
       onBlur,
     }),
-    [computedHasError, disabled, resolvedId, name, onBlur]
+    [
+      computedHasError,
+      disabled,
+      resolvedId,
+      name,
+      required,
+      resolvedError,
+      hint,
+      messageId,
+      onBlur,
+    ]
   );
 
   return (
@@ -89,6 +107,7 @@ function FormFieldRoot({
             sub={labelSub}
             subParens={labelSubParens}
             info={labelInfo}
+            infoLabel={labelInfoLabel}
             disabled={disabled}
             className={labelClassName}
           >
@@ -96,9 +115,15 @@ function FormFieldRoot({
           </Label.Composed>
         )}
         {children}
-        {resolvedError && <FormFieldError>{resolvedError}</FormFieldError>}
+        {resolvedError && (
+          <FormFieldError id={messageId}>{resolvedError}</FormFieldError>
+        )}
         {hint && !resolvedError && (
-          <Hint.Composed hasError={computedHasError} disabled={disabled}>
+          <Hint.Composed
+            id={messageId}
+            hasError={computedHasError}
+            disabled={disabled}
+          >
             {hint}
           </Hint.Composed>
         )}

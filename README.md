@@ -66,27 +66,35 @@ If you prefer manual setup, you can copy components directly from the `packages/
 
 ### Tailwind CSS Configuration
 
-We provide ready-to-use configuration files for both Tailwind v3 and v4 in the `tailwind-manual-installation` directory.
+We provide ready-to-use configuration files for both Tailwind v3 and v4 in the `tailwind-manual-installation` directory. Every file in it is generated from the same sources the CLI uses, so it never drifts from the published tokens — do not edit them by hand. Contributors regenerate them with `bun run build:registry`.
 
 #### Tailwind v3
 
-1.  Copy `tailwind-manual-installation/v3/happly-tailwind.preset.js` to your project root.
-2.  Add it to your `tailwind.config.js`:
+1.  Install `tailwindcss-animate` — the preset registers it, and the overlay components (modal, drawer, popover, tooltip, dropdown, select) emit nothing without its enter/exit utilities.
+    ```bash
+    npm install -D tailwindcss-animate
+    ```
+2.  Copy `tailwind-manual-installation/v3/happly-tailwind.preset.js` to your project root.
+3.  Add it to your `tailwind.config.js`:
     ```js
     module.exports = {
       presets: [require('./happly-tailwind.preset.js')],
       // ... rest of your config
     };
     ```
-3.  Copy the CSS variables from `tailwind-manual-installation/v3/globals.css` into your global CSS file.
+4.  Copy the CSS variables from `tailwind-manual-installation/v3/globals.css` into your global CSS file. The preset's tokens read these variables, so both files are required.
+
+(`bunx @happlyui/cli init` does all four steps for you, writing an equivalent `happly-ui-tailwind.cjs` plugin instead of the preset.)
 
 #### Tailwind v4
 
 1.  Copy `tailwind-manual-installation/v4/happly-theme.css` to your project (e.g., `src/happly-theme.css`).
-2.  Import it in your main CSS file:
+2.  Import it in your main CSS file, followed by the animate plugin the overlay components rely on:
     ```css
     @import './happly-theme.css';
+    @plugin 'tailwindcss-animate';
     ```
+    (`bunx @happlyui/cli init` writes both lines and installs `tailwindcss-animate` for you.)
 
 ### Conflict Resolution & Overrides
 

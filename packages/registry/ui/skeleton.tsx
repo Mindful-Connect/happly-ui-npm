@@ -24,7 +24,10 @@ function Skeleton({
 }: React.HTMLAttributes<HTMLDivElement> &
   VariantProps<typeof skeletonVariants>) {
   return (
+    // A placeholder block carries no information; keep it out of the
+    // accessibility tree and announce loading from the surrounding region.
     <div
+      aria-hidden='true'
       className={skeletonVariants({ variant, class: className })}
       {...rest}
     />

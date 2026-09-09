@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 
+import { useRovingTablist } from '@/hooks/use-roving-tablist';
 import type { PolymorphicComponentProps } from '@/lib/polymorphic';
 import { cn } from '@/lib/happly-ui-utils';
 import { recursiveCloneChildren } from '@/lib/recursive-clone-children';
@@ -40,17 +41,28 @@ const maskCompositeStyle = {
   WebkitMaskComposite: 'source-in',
 } as React.CSSProperties;
 
+function prefersReducedMotion() {
+  return (
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+}
+
 export const menuTabBarVariants = tv({
   slots: {
     root: 'relative flex items-center gap-8 overflow-x-auto border-b border-stroke-soft-200 px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
     item: [
       'relative flex shrink-0 cursor-pointer items-center justify-center gap-[3px] pb-3.5 text-label-xs',
-      'transition-colors duration-300 ease-out',
+      'transition-colors duration-150 ease-out',
+      'rounded-sm outline-none focus-visible:shadow-button-important-focus',
       'disabled:pointer-events-none disabled:opacity-50',
     ],
     icon: 'size-4 shrink-0',
     indicator:
-      'absolute bottom-0 left-0 h-0.5 rounded-full transition-[transform,width] duration-300',
+      // Switching tabs is high-frequency: the slide stays <=150ms and eases
+      // out. The active tab is also marked by its label color, so the tab
+      // stays identifiable when the transition is suppressed or interrupted.
+      'absolute bottom-0 left-0 h-0.5 rounded-full transition-[transform,width] duration-150 ease-out',
   },
   variants: {
     variant: {
@@ -112,11 +124,14 @@ function MenuTabBarRoot({
   className,
   variant,
   scrollMargin = 16,
+  onKeyDown,
   ...rest
 }: MenuTabBarRootProps) {
   const uniqueId = React.useId();
   const { root, indicator } = menuTabBarVariants({ variant });
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const { onKeyDown: onTabKeyDown, syncTabStop } =
+    useRovingTablist(containerRef);
   const [mounted, setMounted] = React.useState(false);
   const [lineStyle, setLineStyle] = React.useState({ width: 0, left: 0 });
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
@@ -156,6 +171,7 @@ function MenuTabBarRoot({
     const update = () => {
       updateIndicator();
       updateScrollState();
+      syncTabStop();
     };
 
     const resizeObserver = new ResizeObserver(update);
@@ -175,7 +191,7 @@ function MenuTabBarRoot({
       resizeObserver.disconnect();
       mutationObserver.disconnect();
     };
-  }, [updateIndicator, updateScrollState]);
+  }, [updateIndicator, updateScrollState, syncTabStop]);
 
   const handleScroll = React.useCallback(() => {
     updateScrollState();
@@ -207,6 +223,10 @@ function MenuTabBarRoot({
         role='tablist'
         className={root({ class: className })}
         onScroll={handleScroll}
+        onKeyDown={(event) => {
+          onKeyDown?.(event);
+          if (!event.defaultPrevented) onTabKeyDown(event);
+        }}
         style={
           maskImage !== 'none'
             ? { maskImage, WebkitMaskImage: maskImage, ...maskCompositeStyle }
@@ -226,7 +246,6 @@ function MenuTabBarRoot({
           style={{
             width: `${lineStyle.width}px`,
             transform: `translateX(${lineStyle.left}px)`,
-            transitionTimingFunction: 'cubic-bezier(0.65, 0, 0.35, 1)',
           }}
           aria-hidden='true'
         />
@@ -289,6 +308,11 @@ const MenuTabBarItem = React.forwardRef<HTMLButtonElement, MenuTabBarItemProps>(
           if (target) {
             const margin = ctx?.scrollMargin ?? 16;
             const scroller = getScrollableParent(target);
+            // Smooth scrolling is motion; jump straight there when the user
+            // has asked for reduced motion.
+            const behavior: ScrollBehavior = prefersReducedMotion()
+              ? 'auto'
+              : 'smooth';
             if (scroller) {
               // Scroll within the actual scroll container, not the window.
               const top =
@@ -296,12 +320,12 @@ const MenuTabBarItem = React.forwardRef<HTMLButtonElement, MenuTabBarItemProps>(
                 target.getBoundingClientRect().top -
                 scroller.getBoundingClientRect().top -
                 margin;
-              scroller.scrollTo({ top, behavior: 'smooth' });
+              scroller.scrollTo({ top, behavior });
             } else {
               // The page itself is the scroller.
               const top =
                 target.getBoundingClientRect().top + window.scrollY - margin;
-              window.scrollTo({ top, behavior: 'smooth' });
+              window.scrollTo({ top, behavior });
             }
           }
         }

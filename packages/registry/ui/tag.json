@@ -107,6 +107,12 @@
             "type": "boolean",
             "default": "false",
             "description": "Render as child element using Radix Slot"
+          },
+          {
+            "name": "aria-label",
+            "type": "string",
+            "default": "'Remove'",
+            "description": "Accessible name for the icon-only dismiss button. Override it with the value being removed, e.g. \"Remove Design\""
           }
         ]
       },

@@ -23,7 +23,7 @@
       {
         "title": "Inline with Full Width Item",
         "description": "Mix inline and full-width items using className=\"w-full\" on the item.",
-        "code": "<InfoCard.Root className=\"flex-row flex-wrap items-stretch\">\n  <InfoCard.Item>\n    <InfoCard.Label>Submitted date</InfoCard.Label>\n    <InfoCard.Value>...</InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Created by</InfoCard.Label>\n    <InfoCard.Value>...</InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item className=\"w-full\">\n    <InfoCard.Label>Publication status</InfoCard.Label>\n    <InfoCard.Value>\n      <StatusBadge.Root status=\"pending\">\n        <StatusBadge.Icon as={RiAlertFill} />\n        Require changes\n      </StatusBadge.Root>\n    </InfoCard.Value>\n  </InfoCard.Item>\n</InfoCard.Root>",
+        "code": "<InfoCard.Root className=\"flex-row flex-wrap items-stretch\">\n  <InfoCard.Item>\n    <InfoCard.Label>Submitted date</InfoCard.Label>\n    <InfoCard.Value>...</InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item>\n    <InfoCard.Label>Created by</InfoCard.Label>\n    <InfoCard.Value>...</InfoCard.Value>\n  </InfoCard.Item>\n  <InfoCard.Item className=\"w-full\">\n    <InfoCard.Label>Publication status</InfoCard.Label>\n    <InfoCard.Value>\n      <StatusBadge.Root status=\"pending\">\n        <StatusBadge.Icon as={RiAlertFill} />\n        Changes requested\n      </StatusBadge.Root>\n    </InfoCard.Value>\n  </InfoCard.Item>\n</InfoCard.Root>",
         "stories": ["InlineWithFullWidthItem"]
       },
       {
@@ -98,6 +98,12 @@
             "type": "boolean",
             "default": "false",
             "description": "Show a notification dot in the top-right corner."
+          },
+          {
+            "name": "aria-label",
+            "type": "string",
+            "default": "'Open'",
+            "description": "Accessible name used when the action renders its default arrow icon"
           }
         ]
       }

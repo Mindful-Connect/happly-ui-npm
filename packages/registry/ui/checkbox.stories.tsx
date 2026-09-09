@@ -33,15 +33,31 @@ export const Variants = {
   render: () => (
     <div className='flex flex-col gap-4'>
       <div className='flex items-center gap-3'>
-        <Checkbox.Root variant='primary' />
-        <Checkbox.Root variant='primary' defaultChecked />
-        <Checkbox.Root variant='primary' checked='indeterminate' />
+        <Checkbox.Root variant='primary' aria-label='Primary, unchecked' />
+        <Checkbox.Root
+          variant='primary'
+          defaultChecked
+          aria-label='Primary, checked'
+        />
+        <Checkbox.Root
+          variant='primary'
+          checked='indeterminate'
+          aria-label='Primary, indeterminate'
+        />
         <span className='text-paragraph-sm text-text-sub-600'>Primary</span>
       </div>
       <div className='flex items-center gap-3'>
-        <Checkbox.Root variant='neutral' />
-        <Checkbox.Root variant='neutral' defaultChecked />
-        <Checkbox.Root variant='neutral' checked='indeterminate' />
+        <Checkbox.Root variant='neutral' aria-label='Neutral, unchecked' />
+        <Checkbox.Root
+          variant='neutral'
+          defaultChecked
+          aria-label='Neutral, checked'
+        />
+        <Checkbox.Root
+          variant='neutral'
+          checked='indeterminate'
+          aria-label='Neutral, indeterminate'
+        />
         <span className='text-paragraph-sm text-text-sub-600'>Neutral</span>
       </div>
     </div>
@@ -51,9 +67,13 @@ export const Variants = {
 export const Disabled = {
   render: () => (
     <div className='flex gap-2'>
-      <Checkbox.Root disabled />
-      <Checkbox.Root disabled checked />
-      <Checkbox.Root disabled checked='indeterminate' />
+      <Checkbox.Root disabled aria-label='Disabled, unchecked' />
+      <Checkbox.Root disabled checked aria-label='Disabled, checked' />
+      <Checkbox.Root
+        disabled
+        checked='indeterminate'
+        aria-label='Disabled, indeterminate'
+      />
     </div>
   ),
 };
@@ -66,13 +86,13 @@ function WithLabelRender() {
       <div className='flex items-center gap-2'>
         <Checkbox.Root id={`${uniqueId}-c1`} />
         <Label.Root className='text-paragraph-sm' htmlFor={`${uniqueId}-c1`}>
-          SMS Verification
+          SMS verification
         </Label.Root>
       </div>
       <div className='flex items-center gap-2'>
         <Checkbox.Root id={`${uniqueId}-c2`} />
         <Label.Root className='text-paragraph-sm' htmlFor={`${uniqueId}-c2`}>
-          Authenticator App
+          Authenticator app
         </Label.Root>
       </div>
       <div className='flex items-center gap-2'>
@@ -84,7 +104,7 @@ function WithLabelRender() {
       <div className='flex items-center gap-2'>
         <Checkbox.Root id={`${uniqueId}-c4`} disabled defaultChecked />
         <Label.Root className='text-paragraph-sm' htmlFor={`${uniqueId}-c4`}>
-          Disabled but default checked
+          Disabled, already checked
         </Label.Root>
       </div>
     </div>
@@ -146,11 +166,11 @@ function WithLabelExtendedRender() {
                 </Badge.Root>
               </div>
               <div className='text-paragraph-xs text-text-sub-600 mt-1'>
-                Insert the checkbox description here.
+                A short description of what this option does.
               </div>
             </LabelPrimitives.Root>
             <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
-              Link Button
+              Learn more
             </LinkButton.Root>
           </div>
         </div>
@@ -172,11 +192,11 @@ function WithLabelExtendedRender() {
                 </Badge.Root>
               </div>
               <div className='text-paragraph-xs text-text-sub-600 mt-1'>
-                Insert the checkbox description here.
+                A short description of what this option does.
               </div>
             </LabelPrimitives.Root>
             <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
-              Link Button
+              Learn more
             </LinkButton.Root>
           </div>
         </div>
@@ -227,11 +247,11 @@ function WithLabelExtendedRender() {
                 </Badge.Root>
               </div>
               <div className='text-paragraph-xs text-text-sub-600 mt-1'>
-                Insert the checkbox description here.
+                A short description of what this option does.
               </div>
             </LabelPrimitives.Root>
             <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
-              Link Button
+              Learn more
             </LinkButton.Root>
           </div>
           <Checkbox.Root id={`${uniqueId}-c7`} />
@@ -253,11 +273,11 @@ function WithLabelExtendedRender() {
                 </Badge.Root>
               </div>
               <div className='text-paragraph-xs text-text-sub-600 mt-1'>
-                Insert the checkbox description here.
+                A short description of what this option does.
               </div>
             </LabelPrimitives.Root>
             <LinkButton.Root variant='primary' size='small' className='mt-2.5'>
-              Link Button
+              Learn more
             </LinkButton.Root>
           </div>
           <Checkbox.Root id={`${uniqueId}-c8`} defaultChecked />

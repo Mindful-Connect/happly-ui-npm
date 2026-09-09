@@ -25,11 +25,11 @@ const STATUS_CONFIG: Record<
   }
 > = {
   open: { color: 'green', icon: RiCheckboxCircleFill, label: 'Open' },
-  open_soon: { color: 'purple', icon: RiTimeFill, label: 'Opening Soon' },
+  open_soon: { color: 'purple', icon: RiTimeFill, label: 'Opening soon' },
   closing_soon: {
     color: 'yellow',
     icon: RiAlarmWarningFill,
-    label: 'Closing Soon',
+    label: 'Closing soon',
   },
   closed: { color: 'red', icon: RiCloseCircleFill, label: 'Closed' },
 };

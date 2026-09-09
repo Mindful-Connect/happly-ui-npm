@@ -27,7 +27,7 @@ export const Playground = {
     <Popover.Root defaultOpen>
       <Popover.Trigger asChild>
         <Button.Root variant='neutral' mode='stroke'>
-          Open Popover
+          Open popover
         </Button.Root>
       </Popover.Trigger>
       <Popover.Content
@@ -51,13 +51,13 @@ export const Demo = {
     <Popover.Root>
       <Popover.Trigger asChild>
         <Button.Root variant='neutral' mode='stroke'>
-          Open Popover
+          Open popover
         </Button.Root>
       </Popover.Trigger>
       <Popover.Content className='w-80'>
         <Popover.Close asChild>
-          <CompactButton.Root size='large' variant='ghost'>
-            <CompactButton.Icon as={RiCloseLine} />
+          <CompactButton.Root size='large' variant='ghost' aria-label='Close'>
+            <CompactButton.Icon as={RiCloseLine} aria-hidden='true' />
           </CompactButton.Root>
         </Popover.Close>
 
@@ -67,7 +67,7 @@ export const Demo = {
 
         <div className='mt-4'>
           <div className='text-label-md text-text-strong-950'>
-            Insert Popover
+            Insert popover
           </div>
           <p className='text-paragraph-sm text-text-sub-600 mt-1'>
             Insert popover description here. It would look much better as three
@@ -110,8 +110,8 @@ export const Position = {
         </Popover.Trigger>
         <Popover.Content className='w-80' side='top'>
           <Popover.Close asChild>
-            <CompactButton.Root size='large' variant='ghost'>
-              <CompactButton.Icon as={RiCloseLine} />
+            <CompactButton.Root size='large' variant='ghost' aria-label='Close'>
+              <CompactButton.Icon as={RiCloseLine} aria-hidden='true' />
             </CompactButton.Root>
           </Popover.Close>
 
@@ -121,7 +121,7 @@ export const Position = {
 
           <div className='mt-4'>
             <div className='text-label-md text-text-strong-950'>
-              Insert Popover
+              Insert popover
             </div>
             <p className='text-paragraph-sm text-text-sub-600 mt-1'>
               Insert popover description here. It would look much better as
@@ -159,8 +159,8 @@ export const Position = {
         </Popover.Trigger>
         <Popover.Content className='w-80' side='left'>
           <Popover.Close asChild>
-            <CompactButton.Root size='large' variant='ghost'>
-              <CompactButton.Icon as={RiCloseLine} />
+            <CompactButton.Root size='large' variant='ghost' aria-label='Close'>
+              <CompactButton.Icon as={RiCloseLine} aria-hidden='true' />
             </CompactButton.Root>
           </Popover.Close>
 
@@ -170,7 +170,7 @@ export const Position = {
 
           <div className='mt-4'>
             <div className='text-label-md text-text-strong-950'>
-              Insert Popover
+              Insert popover
             </div>
             <p className='text-paragraph-sm text-text-sub-600 mt-1'>
               Insert popover description here. It would look much better as
@@ -208,8 +208,8 @@ export const Position = {
         </Popover.Trigger>
         <Popover.Content className='w-80' side='right'>
           <Popover.Close asChild>
-            <CompactButton.Root size='large' variant='ghost'>
-              <CompactButton.Icon as={RiCloseLine} />
+            <CompactButton.Root size='large' variant='ghost' aria-label='Close'>
+              <CompactButton.Icon as={RiCloseLine} aria-hidden='true' />
             </CompactButton.Root>
           </Popover.Close>
 
@@ -219,7 +219,7 @@ export const Position = {
 
           <div className='mt-4'>
             <div className='text-label-md text-text-strong-950'>
-              Insert Popover
+              Insert popover
             </div>
             <p className='text-paragraph-sm text-text-sub-600 mt-1'>
               Insert popover description here. It would look much better as

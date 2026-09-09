@@ -47,7 +47,7 @@ const mockFailedFile: UploadFile = {
   type: 'image/png',
   progress: 0,
   status: 'failed',
-  error: 'File exceeds maximum size of 3MB',
+  error: 'Choose a logo smaller than 3 MB.',
 };
 
 export const Default = {
@@ -59,7 +59,7 @@ export const Default = {
           <div className='flex flex-col gap-2'>
             <LogoUpload.Title>Business logo</LogoUpload.Title>
             <LogoUpload.Description>
-              <p>Supports JPEG or PNG files (max 3MB).</p>
+              <p>Supports JPEG or PNG files (max 3 MB).</p>
               <p>Use a horizontal image (16:9). Best size: 1200 × 675 px.</p>
             </LogoUpload.Description>
           </div>
@@ -83,7 +83,7 @@ export const WithLogo = {
           <div className='flex flex-col gap-2'>
             <LogoUpload.Title>Business logo</LogoUpload.Title>
             <LogoUpload.Description>
-              <p>Supports JPEG or PNG files (max 3MB).</p>
+              <p>Supports JPEG or PNG files (max 3 MB).</p>
               <p>Use a horizontal image (16:9). Best size: 1200 × 675 px.</p>
             </LogoUpload.Description>
           </div>
@@ -107,7 +107,7 @@ export const Uploading = {
           <div className='flex flex-col gap-2'>
             <LogoUpload.Title>Business logo</LogoUpload.Title>
             <LogoUpload.Description>
-              <p>Uploading new-logo.png… 45%</p>
+              <p className='tabular-nums'>Uploading new-logo.png… 45%</p>
             </LogoUpload.Description>
           </div>
         </LogoUpload.Content>
@@ -125,7 +125,7 @@ export const UploadingWithPreview = {
           <div className='flex flex-col gap-2'>
             <LogoUpload.Title>Business logo</LogoUpload.Title>
             <LogoUpload.Description>
-              <p>Uploading new-logo.png… 45%</p>
+              <p className='tabular-nums'>Uploading new-logo.png… 45%</p>
             </LogoUpload.Description>
           </div>
         </LogoUpload.Content>
@@ -163,15 +163,15 @@ export const CustomPreview = {
       <LogoUpload.Root>
         <LogoUpload.Preview
           placeholder={
-            <RiBuildingLine className='size-[60px] text-[#B8ACF6]' />
+            <RiBuildingLine className='text-primary-200 size-[60px]' />
           }
-          avatarClassName='bg-[#EFEBFF] ring-[1.26px] ring-[rgba(14,18,27,0.1)]'
+          avatarClassName='bg-primary-alpha-10 ring-black-alpha-10 ring-[1.26px]'
         />
         <LogoUpload.Content>
           <div className='flex flex-col gap-2'>
             <LogoUpload.Title>Business logo</LogoUpload.Title>
             <LogoUpload.Description>
-              <p>Supports JPEG or PNG files (max 3MB).</p>
+              <p>Supports JPEG or PNG files (max 3 MB).</p>
               <p>Use a horizontal image (16:9). Best size: 1200 × 675 px.</p>
             </LogoUpload.Description>
           </div>
@@ -195,7 +195,7 @@ export const UserAvatar = {
           <div className='flex flex-col gap-2'>
             <LogoUpload.Title>Profile photo</LogoUpload.Title>
             <LogoUpload.Description>
-              <p>Supports JPEG or PNG files (max 3MB).</p>
+              <p>Supports JPEG or PNG files (max 3 MB).</p>
               <p>Use a square image. Best size: 400 × 400 px.</p>
             </LogoUpload.Description>
           </div>
@@ -217,7 +217,7 @@ export const Composed = {
         label='Business logo'
         description={
           <>
-            <p>Supports JPEG or PNG files (max 3MB).</p>
+            <p>Supports JPEG or PNG files (max 3 MB).</p>
             <p>Use a horizontal image (16:9). Best size: 1200 × 675 px.</p>
           </>
         }
@@ -237,20 +237,17 @@ export const WithFormField = {
           label='Upload a logo'
           description={
             <>
-              <p>Supports JPEG or PNG files (max 3MB).</p>
+              <p>Supports JPEG or PNG files (max 3 MB).</p>
               <p>Use a horizontal image (16:9). Best size: 1200 × 675 px.</p>
             </>
           }
         />
       </FormField.Root>
 
-      <FormField.Root
-        label='Business logo'
-        error='Please upload a logo before continuing.'
-      >
+      <FormField.Root label='Business logo' error='Add a logo to continue.'>
         <LogoUpload.Item
           label='Upload a logo'
-          description={<p>Supports JPEG or PNG files (max 3MB).</p>}
+          description={<p>Supports JPEG or PNG files (max 3 MB).</p>}
         />
       </FormField.Root>
     </div>
@@ -265,7 +262,7 @@ export const ComposedWithLogo = {
         label='Business logo'
         description={
           <>
-            <p>Supports JPEG or PNG files (max 3MB).</p>
+            <p>Supports JPEG or PNG files (max 3 MB).</p>
             <p>Use a horizontal image (16:9). Best size: 1200 × 675 px.</p>
           </>
         }

@@ -74,7 +74,11 @@ const FileCardImage = React.forwardRef<
     <img
       ref={forwardedRef}
       alt={alt}
-      className={cn('h-full w-full object-cover', className)}
+      className={cn(
+        'h-full w-full object-cover',
+        'outline-image-outline outline outline-1 -outline-offset-1',
+        className
+      )}
       {...rest}
     />
   );
@@ -93,7 +97,11 @@ const FileCardVideo = React.forwardRef<
       className={cn('relative h-full w-full', className)}
       {...rest}
     >
-      <img src={src} alt={alt} className='h-full w-full object-cover' />
+      <img
+        src={src}
+        alt={alt}
+        className='outline-image-outline h-full w-full object-cover outline outline-1 -outline-offset-1'
+      />
       <div className='absolute inset-0 flex items-center justify-center'>
         <RiVideoFill className='text-text-soft-400 h-8 w-8' />
       </div>
@@ -118,7 +126,7 @@ const FileCardAudio = React.forwardRef<
       )}
       {...rest}
     >
-      <div className='flex items-center justify-center rounded-full bg-white/40 p-2.5'>
+      <div className='bg-static-white/40 flex items-center justify-center rounded-full p-2.5'>
         <RiVolumeUpFill className='text-text-sub-600 h-8 w-8' />
       </div>
     </div>
@@ -204,13 +212,17 @@ FileCardInfoGroup.displayName = 'FileCardInfoGroup';
 const FileCardName = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...rest }, forwardedRef) => {
+>(({ className, children, title, ...rest }, forwardedRef) => {
   return (
     <p
       ref={forwardedRef}
       className={cn('text-label-sm text-text-strong-950 truncate', className)}
+      // file names truncate — keep the full name reachable on hover
+      title={title ?? (typeof children === 'string' ? children : undefined)}
       {...rest}
-    />
+    >
+      {children}
+    </p>
   );
 });
 FileCardName.displayName = 'FileCardName';
@@ -224,7 +236,10 @@ const FileCardMeta = React.forwardRef<
   return (
     <p
       ref={forwardedRef}
-      className={cn('text-paragraph-xs text-text-sub-600 truncate', className)}
+      className={cn(
+        'text-paragraph-xs text-text-sub-600 truncate tabular-nums',
+        className
+      )}
       {...rest}
     />
   );
@@ -299,10 +314,12 @@ const FileCardProgress = React.forwardRef<
       {...rest}
     >
       <div
-        className='bg-information-base h-full rounded-full transition-all duration-300 ease-out'
+        className='bg-information-base h-full rounded-full transition-[width] duration-300 ease-out'
         style={{ width: `${(safeValue / max) * 100}%` }}
         role='progressbar'
+        aria-label='Upload progress'
         aria-valuenow={safeValue}
+        aria-valuemin={0}
         aria-valuemax={max}
       />
     </div>
@@ -352,22 +369,29 @@ FileCardRemoveButton.displayName = 'FileCardRemoveButton';
 const FileCardDownloadButton = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ className, ...rest }, forwardedRef) => {
-  return (
-    <button
-      ref={forwardedRef}
-      type='button'
-      className={cn(
-        'text-text-sub-600 flex shrink-0 items-center justify-center rounded-md p-0.5',
-        'hover:text-text-strong-950 transition duration-200 ease-out',
-        className
-      )}
-      {...rest}
-    >
-      <RiDownloadLine className='h-5 w-5' />
-    </button>
-  );
-});
+>(
+  (
+    { className, 'aria-label': ariaLabel = 'Download', ...rest },
+    forwardedRef
+  ) => {
+    return (
+      <button
+        ref={forwardedRef}
+        type='button'
+        aria-label={ariaLabel}
+        className={cn(
+          'text-text-sub-600 flex shrink-0 items-center justify-center rounded-md p-0.5',
+          'hover:text-text-strong-950 transition-colors duration-150 ease-out',
+          'focus-visible:shadow-button-important-focus outline-none',
+          className
+        )}
+        {...rest}
+      >
+        <RiDownloadLine aria-hidden='true' className='h-5 w-5' />
+      </button>
+    );
+  }
+);
 FileCardDownloadButton.displayName = 'FileCardDownloadButton';
 
 // ─── Close Button ────────────────────────────────────────────────────────────
@@ -375,19 +399,21 @@ FileCardDownloadButton.displayName = 'FileCardDownloadButton';
 const FileCardCloseButton = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ className, ...rest }, forwardedRef) => {
+>(({ className, 'aria-label': ariaLabel = 'Close', ...rest }, forwardedRef) => {
   return (
     <button
       ref={forwardedRef}
       type='button'
+      aria-label={ariaLabel}
       className={cn(
         'text-text-sub-600 flex shrink-0 items-center justify-center rounded-md p-0.5',
-        'hover:text-text-strong-950 transition duration-200 ease-out',
+        'hover:text-text-strong-950 transition-colors duration-150 ease-out',
+        'focus-visible:shadow-button-important-focus outline-none',
         className
       )}
       {...rest}
     >
-      <RiCloseLine className='h-5 w-5' />
+      <RiCloseLine aria-hidden='true' className='h-5 w-5' />
     </button>
   );
 });
@@ -398,14 +424,15 @@ FileCardCloseButton.displayName = 'FileCardCloseButton';
 const FileCardRetryLink = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ className, children = 'Try Again', ...rest }, forwardedRef) => {
+>(({ className, children = 'Try again', ...rest }, forwardedRef) => {
   return (
     <button
       ref={forwardedRef}
       type='button'
       className={cn(
         'text-label-sm text-error-base self-start underline decoration-solid',
-        'hover:text-error-dark transition duration-200 ease-out',
+        'hover:text-error-dark transition-colors duration-150 ease-out',
+        'focus-visible:shadow-button-error-focus rounded-sm outline-none',
         className
       )}
       {...rest}
@@ -529,6 +556,7 @@ FileCardCompactDescription.displayName = 'FileCardCompactDescription';
 function FileCardDot({ className }: { className?: string }) {
   return (
     <span
+      aria-hidden='true'
       className={cn('text-paragraph-xs text-text-sub-600 shrink-0', className)}
     >
       ∙
@@ -573,22 +601,29 @@ FileCardCompactStatus.displayName = 'FileCardCompactStatus';
 const FileCardDeleteButton = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ className, ...rest }, forwardedRef) => {
-  return (
-    <button
-      ref={forwardedRef}
-      type='button'
-      className={cn(
-        'text-text-sub-600 flex shrink-0 items-center justify-center rounded-md p-0.5',
-        'hover:text-text-strong-950 transition duration-200 ease-out',
-        className
-      )}
-      {...rest}
-    >
-      <RiDeleteBinLine className='h-5 w-5' />
-    </button>
-  );
-});
+>(
+  (
+    { className, 'aria-label': ariaLabel = 'Delete', ...rest },
+    forwardedRef
+  ) => {
+    return (
+      <button
+        ref={forwardedRef}
+        type='button'
+        aria-label={ariaLabel}
+        className={cn(
+          'text-text-sub-600 flex shrink-0 items-center justify-center rounded-md p-0.5',
+          'hover:text-text-strong-950 transition-colors duration-150 ease-out',
+          'focus-visible:shadow-button-important-focus outline-none',
+          className
+        )}
+        {...rest}
+      >
+        <RiDeleteBinLine aria-hidden='true' className='h-5 w-5' />
+      </button>
+    );
+  }
+);
 FileCardDeleteButton.displayName = 'FileCardDeleteButton';
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -693,11 +728,13 @@ function FileCardItem({
               <FileCardCompactStatus
                 status={file.status === 'completed' ? 'completed' : 'uploading'}
               >
-                {file.status === 'completed' ? 'Completed' : 'Uploading...'}
+                {file.status === 'completed' ? 'Completed' : 'Uploading…'}
               </FileCardCompactStatus>
             </FileCardCompactDescription>
           </FileCardCompactBody>
-          {isActive && onClose && <FileCardCloseButton onClick={onClose} />}
+          {isActive && onClose && (
+            <FileCardCloseButton onClick={onClose} aria-label='Cancel upload' />
+          )}
           {file.status === 'completed' && onDownload && (
             <FileCardDownloadButton onClick={onDownload} />
           )}
@@ -722,12 +759,17 @@ function FileCardItem({
           <FileCardUploadBody>
             <FileCardInfoGroup>
               <FileCardName>{file.name}</FileCardName>
-              <FileCardStatus status='uploading'>Uploading...</FileCardStatus>
+              <FileCardStatus status='uploading'>Uploading…</FileCardStatus>
             </FileCardInfoGroup>
             <FileCardProgress value={file.progress} />
           </FileCardUploadBody>
           <FileCardActions>
-            {onClose && <FileCardCloseButton onClick={onClose} />}
+            {onClose && (
+              <FileCardCloseButton
+                onClick={onClose}
+                aria-label='Cancel upload'
+              />
+            )}
           </FileCardActions>
         </FileCardContent>
       </FileCardRoot>

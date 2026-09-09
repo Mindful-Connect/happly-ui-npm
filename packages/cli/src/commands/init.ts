@@ -19,6 +19,9 @@ import { fetchThemeCSS } from '../utils/theme.js';
 import { fetchOrReadRaw, isLocalRegistry } from '../utils/registry.js';
 
 const HAPPLY_THEME_FILE = 'happly-theme.css';
+// Tailwind v4 plugin line that enables the enter/exit utilities (animate-in, fade-*, zoom-*, slide-*)
+// used by the overlay components (modal, drawer, popover, tooltip, dropdown, select …).
+const ANIMATE_PLUGIN_LINE = '@plugin "tailwindcss-animate";';
 
 // Fallback templates used only when registry fetch fails
 const UTILS_FALLBACK = `import clsx, { type ClassValue } from 'clsx';
@@ -275,7 +278,10 @@ export async function init(options: InitOptions): Promise<void> {
 
       // Add import for happly-theme.css if not already present
       if (!existingCss.includes(HAPPLY_THEME_FILE)) {
-        const importStatement = `@import "./${HAPPLY_THEME_FILE}";\n`;
+        const importStatement =
+          projectInfo.tailwindVersion === 4
+            ? `@import "./${HAPPLY_THEME_FILE}";\n${ANIMATE_PLUGIN_LINE}\n`
+            : `@import "./${HAPPLY_THEME_FILE}";\n`;
 
         if (projectInfo.tailwindVersion === 4) {
           // For v4: add after @import "tailwindcss" if present
@@ -299,7 +305,7 @@ export async function init(options: InitOptions): Promise<void> {
       // Create CSS file with import
       const cssContent =
         projectInfo.tailwindVersion === 4
-          ? `@import "tailwindcss";\n@import "./${HAPPLY_THEME_FILE}";\n`
+          ? `@import "tailwindcss";\n@import "./${HAPPLY_THEME_FILE}";\n${ANIMATE_PLUGIN_LINE}\n`
           : `@import "./${HAPPLY_THEME_FILE}";\n\n@tailwind base;\n@tailwind components;\n@tailwind utilities;\n`;
       await writeComponentFile(cwd, cssPath, cssContent);
       writeSpinner.text = `Created ${cssPath}`;
@@ -319,7 +325,7 @@ export async function init(options: InitOptions): Promise<void> {
   const installSpinner = ora('Installing dependencies...').start();
 
   try {
-    const deps = ['clsx', 'tailwind-merge'];
+    const deps = ['clsx', 'tailwind-merge', 'tailwindcss-animate'];
     await installDependencies(cwd, deps, {
       packageManager: projectInfo.packageManager,
     });
@@ -327,7 +333,9 @@ export async function init(options: InitOptions): Promise<void> {
     installSpinner.succeed('Dependencies installed');
   } catch {
     installSpinner.fail('Failed to install dependencies');
-    logger.warn('Please install manually: clsx tailwind-merge');
+    logger.warn(
+      'Please install manually: clsx tailwind-merge tailwindcss-animate'
+    );
   }
 
   logger.break();

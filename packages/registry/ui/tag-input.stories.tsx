@@ -12,7 +12,7 @@ export const Playground = {
     size: 'medium',
     hasError: false,
     disabled: false,
-    placeholder: 'Add tags...',
+    placeholder: 'Add tags…',
     tagVariant: 'stroke',
   },
   argTypes: {
@@ -67,7 +67,7 @@ export const MaxTags = {
       <TagInput.Root
         defaultValue={['Tag 1']}
         maxTags={3}
-        placeholder='Max 3 tags...'
+        placeholder='Max 3 tags…'
       />
     </div>
   ),

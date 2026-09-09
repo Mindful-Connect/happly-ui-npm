@@ -14,7 +14,7 @@ const BADGE_DOT_NAME = 'BadgeDot';
 
 export const badgeVariants = tv({
   slots: {
-    root: 'inline-flex items-center justify-center rounded-full leading-none transition duration-200 ease-out',
+    root: 'inline-flex items-center justify-center whitespace-nowrap rounded-full tabular-nums transition-[background-color,color,box-shadow] duration-150 ease-out',
     icon: 'shrink-0',
     dot: [
       // base
@@ -46,7 +46,7 @@ export const badgeVariants = tv({
         root: 'ring-1 ring-inset',
       },
       stroke: {
-        root: 'ring-1 ring-inset ring-neutral-200 bg-white',
+        root: 'ring-1 ring-inset ring-stroke-soft-200 bg-bg-white-0',
       },
     },
     color: {
@@ -91,7 +91,7 @@ export const badgeVariants = tv({
     {
       variant: 'filled',
       color: 'orange',
-      class: { root: 'bg-orange-500' },
+      class: { root: 'bg-orange-500 text-static-black' },
     },
     {
       variant: 'filled',
@@ -101,12 +101,12 @@ export const badgeVariants = tv({
     {
       variant: 'filled',
       color: 'green',
-      class: { root: 'bg-green-500' },
+      class: { root: 'bg-green-500 text-static-black' },
     },
     {
       variant: 'filled',
       color: 'yellow',
-      class: { root: 'bg-yellow-500' },
+      class: { root: 'bg-yellow-500 text-static-black' },
     },
     {
       variant: 'filled',
@@ -116,7 +116,7 @@ export const badgeVariants = tv({
     {
       variant: 'filled',
       color: 'sky',
-      class: { root: 'bg-sky-500' },
+      class: { root: 'bg-sky-500 text-static-black' },
     },
     {
       variant: 'filled',
@@ -126,7 +126,7 @@ export const badgeVariants = tv({
     {
       variant: 'filled',
       color: 'teal',
-      class: { root: 'bg-teal-500' },
+      class: { root: 'bg-teal-500 text-static-black' },
     },
     //#endregion
 
@@ -459,7 +459,14 @@ function BadgeIcon<T extends React.ElementType>({
   const Component = as || 'div';
   const { icon } = badgeVariants({ size, variant, color });
 
-  return <Component className={icon({ class: className })} {...rest} />;
+  // Decorative by default — the badge label beside it carries the meaning.
+  return (
+    <Component
+      aria-hidden='true'
+      className={icon({ class: className })}
+      {...rest}
+    />
+  );
 }
 BadgeIcon.displayName = BADGE_ICON_NAME;
 
@@ -551,7 +558,13 @@ const BadgeGroup = React.forwardRef<HTMLDivElement, BadgeGroupProps>(
           >
             <button
               type='button'
-              className='cursor-pointer transition-opacity hover:opacity-70'
+              aria-expanded={expanded}
+              className={cn(
+                'relative cursor-pointer transition-opacity duration-150 ease-out hover:opacity-70',
+                // 20px-tall badge → 24px hit area (WCAG 2.5.8)
+                'after:absolute after:inset-x-0 after:-inset-y-0.5',
+                'focus-visible:shadow-button-important-focus outline-none'
+              )}
               onClick={() => setExpanded((prev) => !prev)}
             >
               {expanded ? 'Show less' : `+${hiddenCount} more`}

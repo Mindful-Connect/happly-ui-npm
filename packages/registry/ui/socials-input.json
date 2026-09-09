@@ -13,10 +13,10 @@
     "button",
     "combo-box",
     "form-field-context",
-    "use-form-field-binding",
     "hint",
     "input",
-    "tag"
+    "tag",
+    "use-controllable-field-value"
   ],
   "docs": {
     "lead": "A searchable social media URL picker with tag chips and inline URL editing. Supports Instagram, X (Twitter), LinkedIn, Facebook, YouTube, TikTok, Zoom, and Calendar. Uses ComboBox for platform selection with search filtering.",
@@ -49,7 +49,7 @@
       {
         "title": "Error State",
         "description": "Error state using FormField error prop for form-level validation messages.",
-        "code": "<FormField.Root\n  label=\"Social Media\"\n  required\n  error=\"Please add at least one social media profile.\"\n>\n  <SocialsInput name=\"socials-error\" />\n</FormField.Root>",
+        "code": "<FormField.Root\n  label=\"Social Media\"\n  required\n  error=\"Add at least one social media profile.\"\n>\n  <SocialsInput name=\"socials-error\" />\n</FormField.Root>",
         "stories": ["ErrorState"]
       },
       {
@@ -61,7 +61,7 @@
       {
         "title": "Custom Labels",
         "description": "Override labels for internationalization.",
-        "code": "<SocialsInput\n  name=\"socials\"\n  formValue={values}\n  setFormValue={setValues}\n  labels={{\n    placeholder: 'Ajouter un réseau social...',\n    errorUrl: 'Veuillez saisir une URL valide',\n  }}\n/>",
+        "code": "<SocialsInput\n  name=\"socials\"\n  formValue={values}\n  setFormValue={setValues}\n  labels={{\n    placeholder: 'Ajouter un réseau social…',\n    errorUrl: 'Veuillez saisir une URL valide',\n  }}\n/>",
         "stories": ["CustomLabels"]
       }
     ],

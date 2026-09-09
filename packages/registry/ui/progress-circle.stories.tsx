@@ -17,7 +17,9 @@ export const Playground = {
     size: { control: { type: 'range', min: 16, max: 120, step: 1 } },
   },
   render: (args: any) => (
-    <ProgressCircle.Root {...args}>{args.value}%</ProgressCircle.Root>
+    <ProgressCircle.Root aria-label='Progress' {...args}>
+      {args.value}%
+    </ProgressCircle.Root>
   ),
 };
 
@@ -34,9 +36,9 @@ export const Sizes = {
         <ProgressCircle.Root size={48} value={75}>
           75%
         </ProgressCircle.Root>
-        <ProgressCircle.Root size={32} value={75} />
-        <ProgressCircle.Root size={24} value={75} />
-        <ProgressCircle.Root size={16} value={75} />
+        <ProgressCircle.Root size={32} value={75} aria-label='Progress' />
+        <ProgressCircle.Root size={24} value={75} aria-label='Progress' />
+        <ProgressCircle.Root size={16} value={75} aria-label='Progress' />
       </div>
     </div>
   ),

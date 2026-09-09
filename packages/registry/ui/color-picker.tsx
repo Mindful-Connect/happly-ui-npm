@@ -73,7 +73,13 @@ function ColorThumb({ className, ...props }: AriaColorThumbProps) {
   return (
     <AriaColorThumb
       className={composeRenderProps(className, (className) =>
-        cn('ring-stroke-white-0 z-50 h-3 w-3 rounded-full ring-2', className)
+        cn(
+          'ring-stroke-white-0 z-50 h-3 w-3 rounded-full ring-2 outline-none',
+          // 24×24 hit area around the 12px thumb (WCAG 2.5.8)
+          'after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2',
+          'focus-visible:shadow-button-important-focus data-[focus-visible]:shadow-button-important-focus',
+          className
+        )
       )}
       {...props}
     />
@@ -101,7 +107,12 @@ function ColorSwatchPickerItem({
   return (
     <AriaColorSwatchPickerItem
       className={composeRenderProps(className, (className) =>
-        cn('group/swatch-item cursor-pointer p-1 focus:outline-none', className)
+        cn(
+          // p-1 around the 16px swatch gives a 24×24 target
+          'group/swatch-item cursor-pointer rounded-full p-1 outline-none',
+          'focus-visible:shadow-button-important-focus data-[focus-visible]:shadow-button-important-focus',
+          className
+        )
       )}
       {...props}
     />
@@ -145,7 +156,8 @@ const EyeDropperButton = React.forwardRef<
   return (
     <button
       ref={forwardedRef}
-      aria-label='Eye dropper'
+      type='button'
+      aria-label='Pick a color from the screen'
       onClick={() => {
         // eslint-disable-next-line
         // @ts-ignore

@@ -26,13 +26,13 @@ export default { title: 'Form/Form Field' };
 
 export const Playground = {
   args: {
-    label: 'Email Address',
+    label: 'Email address',
     placeholder: 'hello@example.com',
-    hint: 'This is a hint text to help user.',
-    required: true,
-    labelSub: 'Required',
+    hint: 'Use the address you check most often.',
+    required: false,
+    labelSub: 'Optional',
     labelSubParens: true,
-    labelInfo: "We'll use this to contact you.",
+    labelInfo: 'We’ll use this to contact you.',
     error: '',
     disabled: false,
   },
@@ -86,13 +86,11 @@ function DemoRender() {
   return (
     <div className='flex w-[300px] flex-col gap-6'>
       <FormField.Root
-        label='Email Address'
+        label='Email address'
         htmlFor='email'
         required
-        labelSub='Required'
-        labelSubParens
-        labelInfo="We'll use this to contact you."
-        hint='This is a hint text to help user.'
+        labelInfo='We’ll use this to contact you.'
+        hint='Use the address you check most often.'
       >
         <Input.Composed
           id='email'
@@ -111,7 +109,7 @@ function DemoRender() {
         />
       </FormField.Root>
 
-      <FormField.Root label='Full Name' htmlFor='name'>
+      <FormField.Root label='Full name' htmlFor='name'>
         <Input.Composed id='name' placeholder='John Doe' />
       </FormField.Root>
     </div>
@@ -128,11 +126,11 @@ export const WithError = {
   render: () => (
     <div className='w-[300px]'>
       <FormField.Root
-        label='Email Address'
+        label='Email address'
         htmlFor='error-email'
         required
-        hint='This is a hint text to help user.'
-        error='Please enter a valid email address.'
+        hint='Use the address you check most often.'
+        error='Enter a valid email address, like name@example.com.'
       >
         <Input.Composed
           leadingIcon={RiMailLine}
@@ -148,10 +146,10 @@ export const Disabled = {
   render: () => (
     <div className='w-[300px]'>
       <FormField.Root
-        label='Email Address'
+        label='Email address'
         htmlFor='disabled-email'
         required
-        hint='This is a hint text to help user.'
+        hint='Use the address you check most often.'
         disabled
       >
         <Input.Composed
@@ -168,9 +166,7 @@ export const CompoundMode = {
   render: () => (
     <div className='w-[300px]'>
       <FormField.Root htmlFor='compound-email' hasError>
-        <FormField.Label required sub='Required' subParens>
-          Email Address
-        </FormField.Label>
+        <FormField.Label required>Email address</FormField.Label>
         <Input.Root>
           <Input.Wrapper>
             <Input.Icon as={RiMailLine} />
@@ -181,7 +177,9 @@ export const CompoundMode = {
             />
           </Input.Wrapper>
         </Input.Root>
-        <FormField.Error>Please enter a valid email address.</FormField.Error>
+        <FormField.Error>
+          Enter a valid email address, like name@example.com.
+        </FormField.Error>
       </FormField.Root>
     </div>
   ),
@@ -196,19 +194,23 @@ export const CompoundMode = {
 
 const signUpSchema = z
   .object({
-    fullName: z.string().min(2, 'Name must be at least 2 characters.'),
-    email: z.string().email('Please enter a valid email address.'),
-    role: z.string().min(1, 'Please select a role.'),
-    password: z.string().min(8, 'Password must be at least 8 characters.'),
+    fullName: z.string().min(2, 'Enter at least 2 characters.'),
+    email: z
+      .string()
+      .email('Enter a valid email address, like name@example.com.'),
+    role: z.string().min(1, 'Select a role.'),
+    password: z
+      .string()
+      .min(8, 'Choose a password with at least 8 characters.'),
     confirmPassword: z.string(),
     bio: z
       .string()
-      .max(200, 'Bio must be 200 characters or less.')
+      .max(200, 'Use 200 characters or fewer.')
       .optional()
       .or(z.literal('')),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match.',
+    message: 'Enter the same password in both fields.',
     path: ['confirmPassword'],
   });
 
@@ -240,7 +242,7 @@ function FormValidationRender() {
         {/* Native input — uses register() */}
         <FormField.Root
           name='fullName'
-          label='Full Name'
+          label='Full name'
           required
           hint='Your first and last name.'
         >
@@ -254,9 +256,9 @@ function FormValidationRender() {
         {/* Native input — uses register() */}
         <FormField.Root
           name='email'
-          label='Email Address'
+          label='Email address'
           required
-          hint="We'll never share your email."
+          hint='We’ll never share your email.'
         >
           <Input.Composed
             leadingIcon={RiMailLine}
@@ -270,7 +272,7 @@ function FormValidationRender() {
         <FormField.Root name='role' label='Role' required>
           <Select.Root>
             <Select.Trigger>
-              <Select.Value placeholder='Select a role...' />
+              <Select.Value placeholder='Select a role…' />
             </Select.Trigger>
             <Select.Content>
               <Select.Item value='developer'>Developer</Select.Item>
@@ -294,7 +296,7 @@ function FormValidationRender() {
         {/* Native input — uses register() */}
         <FormField.Root
           name='confirmPassword'
-          label='Confirm Password'
+          label='Confirm password'
           required
         >
           <PasswordInput.Root {...register('confirmPassword')} />
@@ -310,13 +312,13 @@ function FormValidationRender() {
         >
           <Textarea.Root
             simple
-            placeholder='A few words about you...'
+            placeholder='A few words about you…'
             {...register('bio')}
           />
         </FormField.Root>
 
         <Button.Root type='submit' disabled={isSubmitting}>
-          {isSubmitting ? 'Submitting...' : 'Create Account'}
+          {isSubmitting ? 'Submitting…' : 'Create account'}
         </Button.Root>
       </form>
     </FormProvider>
@@ -346,12 +348,12 @@ const PRIORITY_OPTIONS = ['low', 'medium', 'high', 'critical'] as const;
 
 const showcaseSchema = z.object({
   // Native inputs (register)
-  name: z.string().min(2, 'Name is required.'),
+  name: z.string().min(2, 'Enter a project name.'),
   foundedYear: z.coerce.number().min(1900).max(new Date().getFullYear()),
   // Select (auto-bind)
-  category: z.string().min(1, 'Please select a category.'),
+  category: z.string().min(1, 'Select a category.'),
   // RadioCard (auto-bind)
-  priority: z.string().min(1, 'Please select a priority.'),
+  priority: z.string().min(1, 'Select a priority.'),
   // ComboBox (auto-bind)
   industries: z.array(z.string()).min(1, 'Select at least one industry.'),
   // TagInput (auto-bind)
@@ -362,12 +364,12 @@ const showcaseSchema = z.object({
   // Switch (auto-bind)
   isPublic: z.boolean(),
   // Checkbox (auto-bind)
-  termsAccepted: z.boolean().refine((v) => v, 'You must accept the terms.'),
+  termsAccepted: z.boolean().refine((v) => v, 'Accept the terms to continue.'),
   // MarkdownEditor single-lang (auto-bind)
   notes: z.string().optional(),
   // MarkdownEditor multi-lang (auto-bind via name override)
   description: z.object({
-    en: z.string().min(1, 'English description is required.'),
+    en: z.string().min(1, 'Add an English description.'),
     fr: z.string().optional(),
   }),
 });
@@ -418,7 +420,7 @@ function AutoBindingShowcaseRender() {
 
         {/* ── Native inputs: use register() ──────────────── */}
 
-        <FormField.Root name='name' label='Project Name' required>
+        <FormField.Root name='name' label='Project name' required>
           <Input.Composed
             leadingIcon={RiUser6Line}
             placeholder='My Project'
@@ -426,7 +428,7 @@ function AutoBindingShowcaseRender() {
           />
         </FormField.Root>
 
-        <FormField.Root name='foundedYear' label='Founded Year' required>
+        <FormField.Root name='foundedYear' label='Founded year' required>
           <Input.Composed
             leadingIcon={RiCalendarEventLine}
             type='number'
@@ -440,7 +442,7 @@ function AutoBindingShowcaseRender() {
         <FormField.Root name='category' label='Category' required>
           <Select.Root>
             <Select.Trigger>
-              <Select.Value placeholder='Select a category...' />
+              <Select.Value placeholder='Select a category…' />
             </Select.Trigger>
             <Select.Content>
               <Select.Item value='startup'>Startup</Select.Item>
@@ -470,7 +472,7 @@ function AutoBindingShowcaseRender() {
         <FormField.Root name='industries' label='Industries' required>
           <ComboBox.Composed
             options={INDUSTRY_OPTIONS}
-            placeholder='Search industries...'
+            placeholder='Search industries…'
             min={1}
           />
         </FormField.Root>
@@ -482,7 +484,7 @@ function AutoBindingShowcaseRender() {
           label='Keywords'
           hint='Press Enter to add a tag.'
         >
-          <TagInput.Root placeholder='Add keyword...' />
+          <TagInput.Root placeholder='Add keyword…' />
         </FormField.Root>
 
         {/* ── CurrencyInput: auto-binds with currencyName ── */}
@@ -519,13 +521,13 @@ function AutoBindingShowcaseRender() {
 
         <FormField.Root
           name='notes'
-          label='Internal Notes'
+          label='Internal notes'
           labelSub='Optional'
           labelSubParens
         >
           <MarkdownEditor.Composed
             toggleItems={false}
-            placeholder='Add any notes...'
+            placeholder='Add any notes…'
             height='120px'
           />
         </FormField.Root>
@@ -540,7 +542,7 @@ function AutoBindingShowcaseRender() {
         >
           <MarkdownEditor.Composed
             name='description'
-            placeholder='Describe the project...'
+            placeholder='Describe the project…'
             height='150px'
           />
         </FormField.Root>
@@ -557,7 +559,7 @@ function AutoBindingShowcaseRender() {
         </FormField.Root>
 
         <Button.Root type='submit' disabled={isSubmitting}>
-          {isSubmitting ? 'Submitting...' : 'Submit'}
+          {isSubmitting ? 'Submitting…' : 'Submit'}
         </Button.Root>
       </form>
     </FormProvider>

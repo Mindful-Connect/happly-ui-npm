@@ -2,8 +2,7 @@
 
 import * as React from 'react';
 
-import { motion } from 'framer-motion';
-
+import { useRovingTablist } from '@/hooks/use-roving-tablist';
 import type { PolymorphicComponentProps } from '@/lib/polymorphic';
 import { recursiveCloneChildren } from '@/lib/recursive-clone-children';
 import { tv, type VariantProps } from '@/lib/tv';
@@ -40,6 +39,7 @@ export const tabMenuHorizontalVariants = tv({
     item: [
       'flex shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border px-4 py-2 text-label-sm',
       'transition-colors duration-150 ease-out',
+      'outline-none focus-visible:shadow-button-important-focus',
       'disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
     ],
     icon: 'w-5 h-5 shrink-0',
@@ -117,11 +117,13 @@ function TabMenuHorizontalRoot({
   children,
   className,
   variant,
+  onKeyDown,
   ...rest
 }: TabMenuHorizontalRootProps) {
   const uniqueId = React.useId();
   const { root } = tabMenuHorizontalVariants();
   const scrollRef = React.useRef<HTMLDivElement>(null);
+  const { onKeyDown: onTabKeyDown } = useRovingTablist(scrollRef);
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(false);
 
@@ -159,6 +161,10 @@ function TabMenuHorizontalRoot({
       role='tablist'
       className={root({ class: className })}
       onScroll={updateScrollState}
+      onKeyDown={(event) => {
+        onKeyDown?.(event);
+        if (!event.defaultPrevented) onTabKeyDown(event);
+      }}
       style={
         maskImage !== 'none'
           ? { maskImage, WebkitMaskImage: maskImage, ...maskCompositeStyle }
@@ -174,10 +180,7 @@ TabMenuHorizontalRoot.displayName = TAB_MENU_ROOT_NAME;
 
 type TabMenuHorizontalItemProps = TabMenuHorizontalSharedProps &
   VariantProps<typeof tabMenuHorizontalVariants> &
-  Omit<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    'onDrag' | 'onDragStart' | 'onDragEnd' | 'onAnimationStart'
-  >;
+  React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const TabMenuHorizontalItem = React.forwardRef<
   HTMLButtonElement,
@@ -196,18 +199,16 @@ const TabMenuHorizontalItem = React.forwardRef<
   );
 
   return (
-    <motion.button
+    <button
       ref={ref}
       type='button'
       role='tab'
       aria-selected={selected === true}
-      whileTap={{ scale: 1.05 }}
-      transition={{ type: 'spring', stiffness: 400, damping: 17 }}
       className={item({ class: className })}
       {...rest}
     >
       {extendedChildren}
-    </motion.button>
+    </button>
   );
 });
 TabMenuHorizontalItem.displayName = TAB_MENU_ITEM_NAME;

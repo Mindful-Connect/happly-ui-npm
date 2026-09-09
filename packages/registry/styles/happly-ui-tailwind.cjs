@@ -41,48 +41,60 @@ module.exports = plugin(function() {
           "faded-base": "var(--color-faded-base)",
           "faded-light": "var(--color-faded-light)",
           "faded-lighter": "var(--color-faded-lighter)",
+          "faded-contrast": "var(--color-faded-contrast)",
           "information-dark": "var(--color-information-dark)",
           "information-base": "var(--color-information-base)",
           "information-light": "var(--color-information-light)",
           "information-lighter": "var(--color-information-lighter)",
+          "information-contrast": "var(--color-information-contrast)",
           "warning-dark": "var(--color-warning-dark)",
           "warning-darker": "var(--color-warning-darker)",
           "warning-base": "var(--color-warning-base)",
           "warning-light": "var(--color-warning-light)",
           "warning-lighter": "var(--color-warning-lighter)",
+          "warning-contrast": "var(--color-warning-contrast)",
           "warning-alpha-10": "var(--color-warning-alpha-10)",
           "error-darker": "var(--color-error-darker)",
           "error-dark": "var(--color-error-dark)",
           "error-base": "var(--color-error-base)",
           "error-light": "var(--color-error-light)",
           "error-lighter": "var(--color-error-lighter)",
+          "error-contrast": "var(--color-error-contrast)",
           "error-alpha-10": "var(--color-error-alpha-10)",
           "success-dark": "var(--color-success-dark)",
           "success-darker": "var(--color-success-darker)",
           "success-base": "var(--color-success-base)",
           "success-light": "var(--color-success-light)",
           "success-lighter": "var(--color-success-lighter)",
+          "success-solid": "var(--color-success-solid)",
+          "success-solid-contrast": "var(--color-success-solid-contrast)",
+          "success-contrast": "var(--color-success-contrast)",
           "success-alpha-10": "var(--color-success-alpha-10)",
           "away-dark": "var(--color-away-dark)",
           "away-base": "var(--color-away-base)",
           "away-light": "var(--color-away-light)",
           "away-lighter": "var(--color-away-lighter)",
+          "away-contrast": "var(--color-away-contrast)",
           "feature-dark": "var(--color-feature-dark)",
           "feature-base": "var(--color-feature-base)",
           "feature-light": "var(--color-feature-light)",
           "feature-lighter": "var(--color-feature-lighter)",
+          "feature-contrast": "var(--color-feature-contrast)",
           "verified-dark": "var(--color-verified-dark)",
           "verified-base": "var(--color-verified-base)",
           "verified-light": "var(--color-verified-light)",
           "verified-lighter": "var(--color-verified-lighter)",
+          "verified-contrast": "var(--color-verified-contrast)",
           "highlighted-dark": "var(--color-highlighted-dark)",
           "highlighted-base": "var(--color-highlighted-base)",
           "highlighted-light": "var(--color-highlighted-light)",
           "highlighted-lighter": "var(--color-highlighted-lighter)",
+          "highlighted-contrast": "var(--color-highlighted-contrast)",
           "stable-dark": "var(--color-stable-dark)",
           "stable-base": "var(--color-stable-base)",
           "stable-light": "var(--color-stable-light)",
           "stable-lighter": "var(--color-stable-lighter)",
+          "stable-contrast": "var(--color-stable-contrast)",
           "primary": {
             "50": "var(--color-primary-50)",
             "100": "var(--color-primary-100)",
@@ -227,13 +239,15 @@ module.exports = plugin(function() {
           "dark": "var(--color-faded-dark)",
           "base": "var(--color-faded-base)",
           "light": "var(--color-faded-light)",
-          "lighter": "var(--color-faded-lighter)"
+          "lighter": "var(--color-faded-lighter)",
+          "contrast": "var(--color-faded-contrast)"
         },
         "information": {
           "dark": "var(--color-information-dark)",
           "base": "var(--color-information-base)",
           "light": "var(--color-information-light)",
-          "lighter": "var(--color-information-lighter)"
+          "lighter": "var(--color-information-lighter)",
+          "contrast": "var(--color-information-contrast)"
         },
         "warning": {
           "darker": "var(--color-warning-darker)",
@@ -241,7 +255,8 @@ module.exports = plugin(function() {
           "base": "var(--color-warning-base)",
           "light": "var(--color-warning-light)",
           "lighter": "var(--color-warning-lighter)",
-          "alpha-10": "var(--color-warning-alpha-10)"
+          "alpha-10": "var(--color-warning-alpha-10)",
+          "contrast": "var(--color-warning-contrast)"
         },
         "error": {
           "darker": "var(--color-error-darker)",
@@ -249,7 +264,8 @@ module.exports = plugin(function() {
           "base": "var(--color-error-base)",
           "light": "var(--color-error-light)",
           "lighter": "var(--color-error-lighter)",
-          "alpha-10": "var(--color-error-alpha-10)"
+          "alpha-10": "var(--color-error-alpha-10)",
+          "contrast": "var(--color-error-contrast)"
         },
         "success": {
           "darker": "var(--color-success-darker)",
@@ -257,37 +273,45 @@ module.exports = plugin(function() {
           "base": "var(--color-success-base)",
           "light": "var(--color-success-light)",
           "lighter": "var(--color-success-lighter)",
-          "alpha-10": "var(--color-success-alpha-10)"
+          "solid": "var(--color-success-solid)",
+          "solid-contrast": "var(--color-success-solid-contrast)",
+          "alpha-10": "var(--color-success-alpha-10)",
+          "contrast": "var(--color-success-contrast)"
         },
         "away": {
           "dark": "var(--color-away-dark)",
           "base": "var(--color-away-base)",
           "light": "var(--color-away-light)",
-          "lighter": "var(--color-away-lighter)"
+          "lighter": "var(--color-away-lighter)",
+          "contrast": "var(--color-away-contrast)"
         },
         "feature": {
           "dark": "var(--color-feature-dark)",
           "base": "var(--color-feature-base)",
           "light": "var(--color-feature-light)",
-          "lighter": "var(--color-feature-lighter)"
+          "lighter": "var(--color-feature-lighter)",
+          "contrast": "var(--color-feature-contrast)"
         },
         "verified": {
           "dark": "var(--color-verified-dark)",
           "base": "var(--color-verified-base)",
           "light": "var(--color-verified-light)",
-          "lighter": "var(--color-verified-lighter)"
+          "lighter": "var(--color-verified-lighter)",
+          "contrast": "var(--color-verified-contrast)"
         },
         "highlighted": {
           "dark": "var(--color-highlighted-dark)",
           "base": "var(--color-highlighted-base)",
           "light": "var(--color-highlighted-light)",
-          "lighter": "var(--color-highlighted-lighter)"
+          "lighter": "var(--color-highlighted-lighter)",
+          "contrast": "var(--color-highlighted-contrast)"
         },
         "stable": {
           "dark": "var(--color-stable-dark)",
           "base": "var(--color-stable-base)",
           "light": "var(--color-stable-light)",
-          "lighter": "var(--color-stable-lighter)"
+          "lighter": "var(--color-stable-lighter)",
+          "contrast": "var(--color-stable-contrast)"
         },
         "neutral": {
           "0": "var(--color-neutral-0)",
@@ -308,6 +332,7 @@ module.exports = plugin(function() {
           "gray": "var(--color-overlay-gray)",
           "slate": "var(--color-overlay-slate)"
         },
+        "image-outline": "var(--color-image-outline)",
         "gray": {
           "0": "#ffffff",
           "50": "#f7f7f7",
@@ -646,11 +671,11 @@ module.exports = plugin(function() {
         "regular-sm": "0 2px 4px #1b1c1d0a",
         "regular-md": "0 16px 32px -12px #0e121b1a",
         "regular-deep": "0 0 0 1px rgba(14, 18, 27, 0.04), 0 1px 1px 0.5px rgba(14, 18, 27, 0.04), 0 3px 3px -1.5px rgba(14, 18, 27, 0.02), 0 6px 6px -3px rgba(14, 18, 27, 0.04), 0 12px 12px -6px rgba(14, 18, 27, 0.04), 0 24px 24px -12px rgba(14, 18, 27, 0.04), 0 48px 48px -24px rgba(14, 18, 27, 0.04), inset 0 -1px 1px -0.5px rgba(14, 18, 27, 0.06)",
-        "button-primary-focus": "0 0 0 2px var(--color-bg-white-0), 0 0 0 4px var(--color-primary-alpha-10)",
-        "button-important-focus": "0 0 0 2px var(--color-bg-white-0), 0 0 0 4px var(--color-neutral-alpha-16)",
-        "button-error-focus": "0 0 0 2px var(--color-bg-white-0), 0 0 0 4px var(--color-red-alpha-10)",
-        "button-warning-focus": "0 0 0 2px var(--color-bg-white-0), 0 0 0 4px var(--color-orange-alpha-10)",
-        "button-success-focus": "0 0 0 2px var(--color-bg-white-0), 0 0 0 4px var(--color-green-alpha-10)",
+        "button-primary-focus": "0 0 0 2px var(--color-bg-white-0), 0 0 0 4px var(--color-primary-base)",
+        "button-important-focus": "0 0 0 2px var(--color-bg-white-0), 0 0 0 4px var(--color-neutral-500)",
+        "button-error-focus": "0 0 0 2px var(--color-bg-white-0), 0 0 0 4px var(--color-error-base)",
+        "button-warning-focus": "0 0 0 2px var(--color-bg-white-0), 0 0 0 4px var(--color-orange-600)",
+        "button-success-focus": "0 0 0 2px var(--color-bg-white-0), 0 0 0 4px var(--color-green-700)",
         "fancy-buttons-neutral": "0 1px 2px 0 #1b1c1d7a, 0 0 0 1px #242628",
         "fancy-buttons-primary": "0 1px 2px 0 #0e121b3d, 0 0 0 1px var(--color-primary-base)",
         "fancy-buttons-error": "0 1px 2px 0 #0e121b3d, 0 0 0 1px var(--color-error-base)",
@@ -668,7 +693,7 @@ module.exports = plugin(function() {
         "complex-4": "0 3px 3px -1.5px rgba(23, 23, 23, 0.04), 0 1px 1px -0.5px rgba(23, 23, 23, 0.04), 0 0 0 1px rgba(23, 23, 23, 0.02)",
         "complex-5": "0 0 6px 0 rgba(255, 255, 255, 0.24) inset, 0 40px 40px -20px rgba(23, 23, 23, 0.06), 0 10px 10px -5px rgba(23, 23, 23, 0.06), 0 6px 6px -3px rgba(23, 23, 23, 0.04), 0 3px 3px -1.5px rgba(23, 23, 23, 0.04), 0 1px 1px -0.5px rgba(23, 23, 23, 0.04)",
         "complex-6": "0 40px 40px -20px rgba(23, 23, 23, 0.06), 0 10px 10px -5px rgba(23, 23, 23, 0.06), 0 6px 6px -3px rgba(23, 23, 23, 0.04), 0 3px 3px -1.5px rgba(23, 23, 23, 0.04), 0 1px 1px -0.5px rgba(23, 23, 23, 0.04), 0 0 6px 0 rgba(255, 255, 255, 0.24) inset",
-        "complex-7": "0 1px 2px 0 rgba(14, 18, 27, 0.24), 0 0 0 1px #335cff",
+        "complex-7": "0 1px 2px 0 rgba(14, 18, 27, 0.24), 0 0 0 1px var(--color-primary-base)",
         "complex-8": "0 20px 20px -10px rgba(23, 23, 23, 0), 0 10px 10px -5px rgba(23, 23, 23, 0), 0 6px 6px -3px rgba(23, 23, 23, 0), 0 3px 3px -1.5px rgba(23, 23, 23, 0), 0 1px 1px -0.5px rgba(23, 23, 23, 0), 0 0 0 1px rgba(23, 23, 23, 0.08), 0 -1px 1px -0.5px rgba(23, 23, 23, 0.06) inset",
         "complex-9": "0 80px 40px -20px rgba(23, 23, 23, 0.06), 0 40px 40px -20px rgba(23, 23, 23, 0.06), 0 10px 10px -5px rgba(23, 23, 23, 0.06), 0 6px 6px -3px rgba(23, 23, 23, 0.04), 0 3px 3px -1.5px rgba(23, 23, 23, 0.04), 0 1px 1px -0.5px rgba(23, 23, 23, 0.04), 0 0 6px 0 rgba(255, 255, 255, 0.04) inset",
         "complex-10": "0 3px 3px -1.5px rgba(23, 23, 23, 0.04), 0 1px 1px -0.5px rgba(23, 23, 23, 0.04)",
@@ -676,8 +701,12 @@ module.exports = plugin(function() {
         "custom-input": "0 3px 3px -1.5px rgba(23, 23, 23, 0.04), 0 1px 1px -0.5px rgba(23, 23, 23, 0.04), 0 0 0 1px rgba(23, 23, 23, 0.08)",
         "custom-input-2": "0 3px 3px -1.5px rgba(23, 23, 23, 0.04), 0 1px 1px -0.5px rgba(23, 23, 23, 0.04), 0 0 0 1px var(--color-bg-soft-200)",
         "custom-input-4": "0 3px 3px -1.5px rgba(23, 23, 23, 0.06), 0 1px 1px -0.5px rgba(23, 23, 23, 0.06), 0 0 0 1px rgba(23, 23, 23, 0.02)",
-        "custom-input-active": "0 6px 6px -3px rgba(23, 23, 23, 0.02), 0 3px 3px -1.5px rgba(23, 23, 23, 0.04), 0 1px 1px -0.5px rgba(23, 23, 23, 0.04), 0 0 0 1.4px #335cff",
-        "gray-shadow": "0 0 0 1px rgba(23, 23, 23, 0.08)"
+        "custom-input-active": "0 6px 6px -3px rgba(23, 23, 23, 0.02), 0 3px 3px -1.5px rgba(23, 23, 23, 0.04), 0 1px 1px -0.5px rgba(23, 23, 23, 0.04), 0 0 0 1.4px var(--color-primary-base)",
+        "gray-shadow": "0 0 0 1px rgba(23, 23, 23, 0.08)",
+        "card-raised": "0 2px 5px -1px rgba(0, 0, 0, 0.04), 0 12px 40px -8px rgba(0, 0, 0, 0.08), 0 0 0 1px var(--color-bg-white-0), 0 0 0 1.5px var(--color-neutral-alpha-10)"
+      },
+      "dropShadow": {
+        "regular-sm": "0 2px 4px rgba(27, 28, 29, 0.04)"
       },
       "borderRadius": {
         "8": "0.5rem",
@@ -750,6 +779,18 @@ module.exports = plugin(function() {
             "height": "0"
           }
         },
+        "item-in": {
+          "from": {
+            "opacity": "0",
+            "transform": "translateY(12px)",
+            "filter": "blur(4px)"
+          },
+          "to": {
+            "opacity": "1",
+            "transform": "translateY(0)",
+            "filter": "blur(0)"
+          }
+        },
         "spin-smooth": {
           "0%": {
             "transform": "rotate(0deg)"
@@ -794,7 +835,8 @@ module.exports = plugin(function() {
         "spin-smooth": "spin-smooth 1s linear infinite",
         "copy-success": "copy-success 0.3s ease-out forwards",
         "shimmer": "shimmer 2s infinite linear",
-        "indeterminate-slide": "indeterminate-slide 2s linear infinite"
+        "indeterminate-slide": "indeterminate-slide 2s linear infinite",
+        "item-in": "item-in 400ms ease-out both"
       }
     }
   }

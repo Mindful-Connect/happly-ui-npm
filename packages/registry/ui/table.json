@@ -16,6 +16,18 @@
         "description": "A full data table example with sortable columns, avatars, and action buttons using @tanstack/react-table.",
         "code": "<Table.Root>\n  <Table.Header>\n    <Table.Row>\n      <Table.Head>Member</Table.Head>\n      <Table.Head>Title</Table.Head>\n      <Table.Head>Status</Table.Head>\n    </Table.Row>\n  </Table.Header>\n  <Table.Body>\n    <Table.Row>\n      <Table.Cell>...</Table.Cell>\n    </Table.Row>\n    <Table.RowDivider />\n    <Table.Row>\n      <Table.Cell>...</Table.Cell>\n    </Table.Row>\n  </Table.Body>\n</Table.Root>",
         "stories": ["Default"]
+      },
+      {
+        "title": "Numeric columns",
+        "description": "Pass `numeric` to a header and its cells so figures align on their trailing edge with fixed-width digits.",
+        "code": "<Table.Head numeric>Amount</Table.Head>\n<Table.Cell numeric>$1,188.00</Table.Cell>",
+        "stories": ["NumericColumns"]
+      },
+      {
+        "title": "Empty state",
+        "description": "An empty table says what belongs here and how it gets filled, spanning every column.",
+        "code": "<Table.Row>\n  <Table.Cell colSpan={3} className=\"h-32 text-center\">\n    <p>No invoices yet</p>\n    <p>Invoices appear here once a subscription renews.</p>\n  </Table.Cell>\n</Table.Row>",
+        "stories": ["EmptyState"]
       }
     ],
     "api": [
@@ -31,8 +43,21 @@
       },
       {
         "name": "Table.Head",
-        "description": "A table header cell with subtle background and rounded corners.",
-        "props": []
+        "description": "A table header cell with subtle background and rounded corners. Renders scope=\"col\" by default.",
+        "props": [
+          {
+            "name": "numeric",
+            "type": "boolean",
+            "default": "false",
+            "description": "Aligns the column to the trailing edge and renders its digits at a fixed width (tabular-nums)"
+          },
+          {
+            "name": "scope",
+            "type": "'col' | 'row' | 'colgroup' | 'rowgroup'",
+            "default": "'col'",
+            "description": "The cells this header applies to"
+          }
+        ]
       },
       {
         "name": "Table.Body",
@@ -64,8 +89,15 @@
       },
       {
         "name": "Table.Cell",
-        "description": "A table data cell with hover background transition.",
-        "props": []
+        "description": "A table data cell with a 150ms hover background transition.",
+        "props": [
+          {
+            "name": "numeric",
+            "type": "boolean",
+            "default": "false",
+            "description": "Aligns the cell to the trailing edge and renders its digits at a fixed width (tabular-nums)"
+          }
+        ]
       },
       {
         "name": "Table.Caption",

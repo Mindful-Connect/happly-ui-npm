@@ -30,7 +30,7 @@
         "stories": ["Approved"]
       },
       {
-        "title": "Require Changes",
+        "title": "Changes Requested",
         "description": "Warning badge for content that needs changes.",
         "code": "<PublicationStatusBadge status=\"require_changes\" />",
         "stories": ["RequireChanges"]

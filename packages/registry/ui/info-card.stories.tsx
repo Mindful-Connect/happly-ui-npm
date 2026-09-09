@@ -67,7 +67,7 @@ export const InlineWithFullWidthItem = {
           <InfoCard.Value>
             <StatusBadge.Root status='pending'>
               <StatusBadge.Icon as={RiAlertFill} />
-              Require changes
+              Changes requested
             </StatusBadge.Root>
           </InfoCard.Value>
         </InfoCard.Item>

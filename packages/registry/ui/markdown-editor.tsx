@@ -13,6 +13,7 @@ import {
   RiEditLine,
 } from '@remixicon/react';
 
+import DOMPurify from 'dompurify';
 import { marked } from 'marked';
 
 import * as SwitchToggle from '@/components/ui/switch-toggle';
@@ -166,7 +167,7 @@ function useMarkdownFormatting(
 }
 
 // ---------------------------------------------------------------------------
-// Markdown → HTML renderer (uses marked)
+// Markdown → HTML renderer (uses marked, sanitised with DOMPurify)
 // ---------------------------------------------------------------------------
 
 marked.setOptions({
@@ -175,7 +176,35 @@ marked.setOptions({
 });
 
 function renderMarkdown(md: string): string {
-  return marked.parse(md, { async: false }) as string;
+  const html = marked.parse(md, { async: false }) as string;
+
+  // `marked` does not sanitize: `<img src=x onerror=…>` typed into the editor
+  // would execute in the preview. DOMPurify strips scripts, event handlers and
+  // `javascript:` URLs, but its default profile is wider than a markdown
+  // preview needs — it keeps `<style>`, `<form>` and its controls, and `id` /
+  // `name`. Those are not XSS, but in a preview pane they are still the
+  // author's markup reaching out of the box: `<style>body{display:none}</style>`
+  // blanks the host page, `<form action=…>` renders a working form inside the
+  // consumer's own form, and an authored `id` can collide with the field id a
+  // <label for> points at. So: the HTML profile only (no SVG / MathML), minus
+  // the tags and attributes markdown never emits.
+  //
+  // `input` is deliberately NOT forbidden: a GFM task list — what the
+  // toolbar's checklist button writes — renders as
+  // `<input type=checkbox disabled>`, and forbidding the tag would strip the
+  // checkboxes out of the preview. With `form` and `name` gone it has nothing
+  // to submit to and no value to carry.
+  //
+  // DOMPurify needs a DOM. On the server `isSupported` is false and
+  // `sanitize()` would return the input unchanged, so render nothing until the
+  // client takes over rather than shipping unsanitised HTML.
+  if (!DOMPurify.isSupported) return '';
+
+  return DOMPurify.sanitize(html, {
+    USE_PROFILES: { html: true },
+    FORBID_TAGS: ['style', 'form', 'button', 'textarea', 'select'],
+    FORBID_ATTR: ['id', 'name'],
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -257,7 +286,9 @@ function Toolbar({ className, children, ...rest }: ToolbarProps) {
           'flex flex-wrap items-center justify-center gap-2 px-2 py-1 @[450px]/mde:justify-between',
           className
         )}
-        role='toolbar'
+        // `role="toolbar"` promises arrow-key navigation between items; these
+        // buttons are a plain Tab sequence, so `group` is the honest role.
+        role='group'
         aria-label='Formatting options'
         {...rest}
       >
@@ -282,9 +313,10 @@ const ToolbarButton = React.forwardRef<HTMLButtonElement, ToolbarButtonProps>(
         ref={forwardedRef}
         type='button'
         disabled={disabled}
+        aria-pressed={active}
         className={cn(
           'text-text-sub-600 flex h-7 w-7 items-center justify-center rounded-md outline-none',
-          'transition duration-200 ease-out',
+          'transition-[background-color,color,box-shadow] duration-150 ease-out',
           'hover:bg-bg-soft-200 hover:text-text-strong-950',
           'focus-visible:ring-stroke-strong-950 focus-visible:ring-2',
           active && 'bg-bg-soft-200 text-text-strong-950',
@@ -358,7 +390,7 @@ function Toggle({ listClassName, triggerClassName, ...props }: ToggleProps) {
         // active pill) — the component's default darker hover would vanish
         // against bg-soft-200.
         triggerClassName={cn(
-          'data-[state=inactive]:hover:bg-neutral-100',
+          'data-[state=inactive]:hover:bg-bg-weak-50',
           triggerClassName
         )}
         disabled={disabled}
@@ -383,6 +415,30 @@ type ContentProps = Omit<
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
+// Props the preview <div> keeps when it stands in for the textarea. The
+// textarea-only attributes (rows, placeholder, maxLength, …) mean nothing on a
+// div and would render as invalid attributes, so only the ones that identify
+// the field to assistive tech and to a <label for> are carried over.
+function pickPreviewProps(
+  props: Record<string, unknown>
+): React.HTMLAttributes<HTMLDivElement> & { id?: string } {
+  const preview: Record<string, unknown> = {};
+  for (const key of Object.keys(props)) {
+    if (
+      key === 'id' ||
+      key === 'title' ||
+      key === 'lang' ||
+      key === 'dir' ||
+      key === 'tabIndex' ||
+      key.startsWith('aria-') ||
+      key.startsWith('data-')
+    ) {
+      preview[key] = props[key];
+    }
+  }
+  return preview as React.HTMLAttributes<HTMLDivElement> & { id?: string };
+}
+
 const Content = React.forwardRef<HTMLTextAreaElement, ContentProps>(
   (
     {
@@ -391,6 +447,9 @@ const Content = React.forwardRef<HTMLTextAreaElement, ContentProps>(
       height = '200px',
       value = '',
       onChange,
+      'aria-describedby': ariaDescribedBy,
+      'aria-invalid': ariaInvalid,
+      'aria-required': ariaRequired,
       ...rest
     },
     forwardedRef
@@ -400,7 +459,8 @@ const Content = React.forwardRef<HTMLTextAreaElement, ContentProps>(
       disabled,
       previewing,
     } = useMarkdownEditorContext();
-    const hasError = hasErrorProp ?? contextHasError;
+    const formField = useFormField();
+    const hasError = hasErrorProp ?? (contextHasError || formField.hasError);
 
     const internalRef = React.useRef<HTMLTextAreaElement | null>(null);
     const lastValueRef = React.useRef(value);
@@ -429,19 +489,48 @@ const Content = React.forwardRef<HTMLTextAreaElement, ContentProps>(
       [forwardedRef]
     );
 
+    // marked's parse plus DOMPurify's parse/serialise on every render of a
+    // component that re-renders on every keystroke. Only the value matters,
+    // and only while the preview is on screen.
+    const previewHtml = React.useMemo(
+      () => (previewing ? renderMarkdown(value) : ''),
+      [previewing, value]
+    );
+
     if (previewing) {
+      // The preview replaces the textarea in the DOM, so it has to keep the
+      // props that point at the field: with `<FormField.Root htmlFor="bio">`
+      // around `<MarkdownEditor.Composed id="bio">`, dropping the id here
+      // leaves the label's `for` (and any `aria-describedby`) dangling for as
+      // long as Preview is on.
+      //
+      // The aria set is resolved here rather than left to `pickPreviewProps`
+      // so the preview carries the same describedby/invalid/required the
+      // textarea gets from `FormFieldContext` in edit mode — otherwise the
+      // hint or error is announced with the field only while editing.
+      // Explicit props still win — they are folded into the values below.
       return (
         <div
+          {...pickPreviewProps(rest)}
+          aria-describedby={
+            [ariaDescribedBy, formField.describedBy]
+              .filter(Boolean)
+              .join(' ') || undefined
+          }
+          aria-invalid={ariaInvalid ?? (hasError || undefined)}
+          aria-required={ariaRequired ?? (formField.required || undefined)}
           className={cn(
             'markdown-editor-preview',
             'bg-bg-white-0 shadow-regular-xs w-full overflow-y-auto rounded-xl px-3 py-2.5',
             'ring-stroke-soft-200 ring-1 ring-inset',
             'text-paragraph-sm text-text-strong-950',
+            // authored images get the same 1px outline as every other image
+            '[&_img]:outline-image-outline [&_img]:outline [&_img]:outline-1 [&_img]:-outline-offset-1',
             disabled && 'bg-bg-white-0/80 ring-transparent',
             className
           )}
           style={{ minHeight: height }}
-          dangerouslySetInnerHTML={{ __html: renderMarkdown(value) }}
+          dangerouslySetInnerHTML={{ __html: previewHtml }}
         />
       );
     }
@@ -459,6 +548,14 @@ const Content = React.forwardRef<HTMLTextAreaElement, ContentProps>(
           className
         )}
         style={{ minHeight: height }}
+        // Passed through unresolved on purpose: `Textarea` reads the same
+        // `FormFieldContext` and merges `describedBy` / `required` itself, so
+        // merging here too would repeat the hint id in `aria-describedby`.
+        // `aria-invalid` is spread only when set — `Textarea` derives it from
+        // `hasError`, and passing the key as `undefined` would clear that.
+        aria-describedby={ariaDescribedBy}
+        aria-required={ariaRequired}
+        {...(ariaInvalid !== undefined ? { 'aria-invalid': ariaInvalid } : {})}
         {...rest}
       />
     );
@@ -510,8 +607,7 @@ const DEFAULT_FLAG_TOGGLE_ITEMS: SwitchToggleGroupItem[] = [
       <img
         src='https://mindful-connect.github.io/circle-flags/flags/ca.svg'
         alt='English'
-        aria-label='English'
-        className='h-5 w-5 shrink-0 rounded-full transition-[filter,opacity] duration-200 [[data-state=inactive]_&]:opacity-60 [[data-state=inactive]_&]:grayscale'
+        className='outline-image-outline h-5 w-5 shrink-0 rounded-full outline outline-1 -outline-offset-1 transition-[filter,opacity] duration-150 [[data-state=inactive]_&]:opacity-60 [[data-state=inactive]_&]:grayscale'
       />
     ),
   },
@@ -521,8 +617,7 @@ const DEFAULT_FLAG_TOGGLE_ITEMS: SwitchToggleGroupItem[] = [
       <img
         src='https://mindful-connect.github.io/circle-flags/flags/fr.svg'
         alt='French'
-        aria-label='French'
-        className='h-5 w-5 shrink-0 rounded-full transition-[filter,opacity] duration-200 [[data-state=inactive]_&]:opacity-60 [[data-state=inactive]_&]:grayscale'
+        className='outline-image-outline h-5 w-5 shrink-0 rounded-full outline outline-1 -outline-offset-1 transition-[filter,opacity] duration-150 [[data-state=inactive]_&]:opacity-60 [[data-state=inactive]_&]:grayscale'
       />
     ),
   },
@@ -725,7 +820,6 @@ function ComposedSingle({
       disabled={disabled}
       previewing={previewing}
       className={containerClassName}
-      id={id}
     >
       <Toolbar>
         <ToolbarGroup>
@@ -757,6 +851,7 @@ function ComposedSingle({
       </Toolbar>
       <Content
         ref={textareaRef}
+        id={id}
         className={contentClassName}
         height={height}
         value={value}
@@ -870,7 +965,6 @@ function ComposedMulti({
       disabled={disabled}
       previewing={previewing}
       className={containerClassName}
-      id={id}
     >
       <Toolbar>
         <ToolbarGroup>
@@ -907,6 +1001,7 @@ function ComposedMulti({
       </Toolbar>
       <Content
         ref={textareaRef}
+        id={id}
         className={contentClassName}
         height={height}
         value={activeValue}

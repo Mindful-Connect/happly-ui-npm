@@ -520,6 +520,12 @@
       "description": "Tailwind Variants wrapper with cn() for class merging."
     },
     {
+      "name": "use-controllable-field-value",
+      "type": "registry:lib",
+      "title": "useControllableFieldValue",
+      "description": "Hook that resolves a field's value and change handler in one priority order: explicit prop > React Hook Form binding > internal state."
+    },
+    {
       "name": "use-file-download",
       "type": "registry:hook",
       "title": "useFileDownload",
@@ -541,7 +547,19 @@
       "name": "use-form-field-binding",
       "type": "registry:lib",
       "title": "useFormFieldBinding",
-      "description": "Hook that auto-binds happly-ui components to React Hook Form via FormFieldContext. Eliminates manual watch/setValue wiring."
+      "description": "Hook that auto-binds happly-ui components to React Hook Form via FormFieldContext. Eliminates manual watch/setValue wiring; pass null or { bind: false } to opt a secondary control out of binding."
+    },
+    {
+      "name": "use-formatted-caret",
+      "type": "registry:lib",
+      "title": "useFormattedCaret",
+      "description": "Hook that keeps the caret in place in a controlled input whose value is reformatted as it is typed (phone numbers, thousands separators)."
+    },
+    {
+      "name": "use-roving-tablist",
+      "type": "registry:hook",
+      "title": "useRovingTablist",
+      "description": "Hook that gives a role=\"tablist\" container the ARIA APG roving-tabindex keyboard model: arrow/Home/End move focus and the list keeps a single Tab stop."
     },
     {
       "name": "use-tab-observer",

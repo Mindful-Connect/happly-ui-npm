@@ -39,12 +39,12 @@ export const Playground = {
     <Banner.Root {...args}>
       <Banner.Content>
         <Banner.Icon as={RiInformationFill} />
-        <span className='text-label-sm'>Insert your alert title here!</span>
+        <span className='text-label-sm'>Insert your alert title here</span>
         <span>&#8901;</span>
         <span className='text-paragraph-sm'>Insert your description here.</span>
       </Banner.Content>
       <Banner.CloseButton>
-        <RiCloseLine className='h-5 w-5' />
+        <RiCloseLine aria-hidden='true' className='h-5 w-5' />
       </Banner.CloseButton>
     </Banner.Root>
   ),
@@ -56,7 +56,7 @@ export const Error = {
       <Banner.Root variant='filled' status='error'>
         <Banner.Content>
           <Banner.Icon as={RiErrorWarningFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -66,14 +66,14 @@ export const Error = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
       <Banner.Root variant='light' status='error'>
         <Banner.Content>
           <Banner.Icon as={RiErrorWarningFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -83,14 +83,14 @@ export const Error = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
       <Banner.Root variant='lighter' status='error'>
         <Banner.Content>
           <Banner.Icon as={RiErrorWarningFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -100,14 +100,14 @@ export const Error = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
       <Banner.Root variant='stroke' status='error'>
         <Banner.Content>
           <Banner.Icon as={RiErrorWarningFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -117,7 +117,7 @@ export const Error = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
     </div>
@@ -130,7 +130,7 @@ export const Warning = {
       <Banner.Root variant='filled' status='warning'>
         <Banner.Content>
           <Banner.Icon as={RiAlertFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -140,14 +140,14 @@ export const Warning = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
       <Banner.Root variant='light' status='warning'>
         <Banner.Content>
           <Banner.Icon as={RiAlertFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -157,14 +157,14 @@ export const Warning = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
       <Banner.Root variant='lighter' status='warning'>
         <Banner.Content>
           <Banner.Icon as={RiAlertFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -174,14 +174,14 @@ export const Warning = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
       <Banner.Root variant='stroke' status='warning'>
         <Banner.Content>
           <Banner.Icon as={RiAlertFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -191,7 +191,7 @@ export const Warning = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
     </div>
@@ -204,7 +204,7 @@ export const Success = {
       <Banner.Root variant='filled' status='success'>
         <Banner.Content>
           <Banner.Icon as={RiCheckboxCircleFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -214,14 +214,14 @@ export const Success = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
       <Banner.Root variant='light' status='success'>
         <Banner.Content>
           <Banner.Icon as={RiCheckboxCircleFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -231,14 +231,14 @@ export const Success = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
       <Banner.Root variant='lighter' status='success'>
         <Banner.Content>
           <Banner.Icon as={RiCheckboxCircleFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -248,14 +248,14 @@ export const Success = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
       <Banner.Root variant='stroke' status='success'>
         <Banner.Content>
           <Banner.Icon as={RiCheckboxCircleFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -265,7 +265,7 @@ export const Success = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
     </div>
@@ -278,7 +278,7 @@ export const Information = {
       <Banner.Root variant='filled' status='information'>
         <Banner.Content>
           <Banner.Icon as={RiInformationFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -288,14 +288,14 @@ export const Information = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
       <Banner.Root variant='light' status='information'>
         <Banner.Content>
           <Banner.Icon as={RiInformationFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -305,14 +305,14 @@ export const Information = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
       <Banner.Root variant='lighter' status='information'>
         <Banner.Content>
           <Banner.Icon as={RiInformationFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -322,14 +322,14 @@ export const Information = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
       <Banner.Root variant='stroke' status='information'>
         <Banner.Content>
           <Banner.Icon as={RiInformationFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -339,7 +339,7 @@ export const Information = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
     </div>
@@ -352,7 +352,7 @@ export const Feature = {
       <Banner.Root variant='filled' status='feature'>
         <Banner.Content>
           <Banner.Icon as={RiMagicFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -362,14 +362,14 @@ export const Feature = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
       <Banner.Root variant='light' status='feature'>
         <Banner.Content>
           <Banner.Icon as={RiMagicFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -379,14 +379,14 @@ export const Feature = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
       <Banner.Root variant='lighter' status='feature'>
         <Banner.Content>
           <Banner.Icon as={RiMagicFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -396,14 +396,14 @@ export const Feature = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
       <Banner.Root variant='stroke' status='feature'>
         <Banner.Content>
           <Banner.Icon as={RiMagicFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -413,7 +413,7 @@ export const Feature = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
     </div>
@@ -426,7 +426,7 @@ export const Primary = {
       <Banner.Root variant='filled' status='primary'>
         <Banner.Content>
           <Banner.Icon as={RiSparklingFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -436,14 +436,14 @@ export const Primary = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
       <Banner.Root variant='light' status='primary'>
         <Banner.Content>
           <Banner.Icon as={RiSparklingFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -453,14 +453,14 @@ export const Primary = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
       <Banner.Root variant='lighter' status='primary'>
         <Banner.Content>
           <Banner.Icon as={RiSparklingFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -470,14 +470,14 @@ export const Primary = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
 
       <Banner.Root variant='stroke' status='primary'>
         <Banner.Content>
           <Banner.Icon as={RiSparklingFill} />
-          <span className='text-label-sm'>Insert your alert title here!</span>
+          <span className='text-label-sm'>Insert your alert title here</span>
           <span>&#8901;</span>
           <span className='text-paragraph-sm'>
             Insert your description here.
@@ -487,7 +487,7 @@ export const Primary = {
           </LinkButton.Root>
         </Banner.Content>
         <Banner.CloseButton>
-          <RiCloseLine className='h-5 w-5' />
+          <RiCloseLine aria-hidden='true' className='h-5 w-5' />
         </Banner.CloseButton>
       </Banner.Root>
     </div>

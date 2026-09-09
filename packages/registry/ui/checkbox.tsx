@@ -15,6 +15,7 @@ function IconCheck({ ...rest }: React.SVGProps<SVGSVGElement>) {
       viewBox='0 0 10 8'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
+      aria-hidden='true'
       {...rest}
     >
       <path
@@ -34,6 +35,7 @@ function IconIndeterminate({ ...rest }: React.SVGProps<SVGSVGElement>) {
       viewBox='0 0 8 2'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
+      aria-hidden='true'
       {...rest}
     >
       <path d='M0 1H8' strokeWidth='1.5' className='stroke-inherit' />
@@ -53,6 +55,7 @@ const FILL_CLASSES = {
       'group-data-[state=indeterminate]/checkbox:fill-primary-base',
     ],
     stroke: 'stroke-primary-contrast',
+    focusRing: 'focus-visible:before:shadow-button-primary-focus',
   },
   neutral: {
     outer: [
@@ -65,6 +68,7 @@ const FILL_CLASSES = {
       'group-data-[state=indeterminate]/checkbox:fill-text-strong-950',
     ],
     stroke: 'stroke-static-white',
+    focusRing: 'focus-visible:before:shadow-button-important-focus',
   },
 } as const;
 
@@ -81,6 +85,8 @@ const CheckboxRoot = React.forwardRef<
       onCheckedChange: onCheckedChangeProp,
       variant = 'primary',
       disabled: disabledProp,
+      'aria-describedby': ariaDescribedBy,
+      'aria-required': ariaRequired,
       ...rest
     },
     forwardedRef
@@ -88,6 +94,13 @@ const CheckboxRoot = React.forwardRef<
     const formField = useFormField();
     const binding = useFormFieldBinding<boolean>();
     const disabled = disabledProp ?? formField.disabled;
+
+    // The field's hint/error is announced with the control, alongside any
+    // description the consumer passed in (mirrors Input/Textarea).
+    const describedBy =
+      [ariaDescribedBy, formField.describedBy].filter(Boolean).join(' ') ||
+      undefined;
+    const required = ariaRequired ?? (formField.required || undefined);
 
     // Priority: explicit props > RHF binding > undefined (Radix uncontrolled)
     const checked = checkedProp !== undefined ? checkedProp : binding?.value;
@@ -107,9 +120,16 @@ const CheckboxRoot = React.forwardRef<
         checked={checked}
         onCheckedChange={onCheckedChange}
         disabled={disabled}
+        aria-describedby={describedBy}
+        aria-required={required}
         className={cn(
           'group/checkbox relative flex h-5 w-5 shrink-0 items-center justify-center outline-none',
-          'focus:outline-none',
+          // 24×24 hit area around the 20px visual (WCAG 2.5.8)
+          'after:absolute after:-inset-0.5',
+          // focus ring traced on the 16px visual box, so checked+focus stays
+          // distinguishable from checked (the fill alone is too close)
+          'before:pointer-events-none before:absolute before:top-1/2 before:left-1/2 before:size-4 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-[4px]',
+          fills.focusRing,
           className
         )}
         {...rest}
@@ -128,7 +148,7 @@ const CheckboxRoot = React.forwardRef<
             height='16'
             rx='4'
             className={cn(
-              'fill-bg-soft-200 transition duration-200 ease-out',
+              'fill-bg-soft-200 transition-[fill] duration-150 ease-out',
               // hover
               'group-hover/checkbox:fill-bg-sub-300',
               // disabled
@@ -148,7 +168,7 @@ const CheckboxRoot = React.forwardRef<
               height='13'
               rx='2.6'
               className={cn(
-                'fill-bg-white-0 transition duration-200 ease-out',
+                'fill-bg-white-0 transition-[opacity] duration-150 ease-out',
                 // disabled
                 'group-disabled/checkbox:hidden',
                 // checked
@@ -196,7 +216,12 @@ const CheckboxRoot = React.forwardRef<
         </svg>
         <CheckboxPrimitive.Indicator
           forceMount
-          className='[&_path]:transition-all [&_path]:duration-300 [&_path]:ease-out [&_svg]:opacity-0'
+          // The glyph swap is the `stroke-dashoffset` draw-on, not a cross-fade:
+          // both glyphs share one 20px box and draw themselves in, so the
+          // scale/blur icon recipe would make the tick grow while it is being
+          // drawn. `opacity-0` alone hides the inactive glyph (the `invisible`
+          // classes that used to sit alongside it were redundant — measured).
+          className='[&_path]:transition-[stroke-dashoffset] [&_path]:duration-300 [&_path]:ease-out [&_svg]:opacity-0'
         >
           <IconCheck
             className={cn(
@@ -207,7 +232,6 @@ const CheckboxRoot = React.forwardRef<
               'group-data-[state=checked]/checkbox:[&>path]:[stroke-dashoffset:0]',
               // path
               '[&>path]:[stroke-dasharray:var(--total-length)] [&>path]:[stroke-dashoffset:var(--total-length)]',
-              'group-data-[state=indeterminate]/checkbox:invisible',
               // disabled
               'group-disabled/checkbox:!stroke-text-disabled-300'
             )}
@@ -224,7 +248,6 @@ const CheckboxRoot = React.forwardRef<
               'group-data-[state=indeterminate]/checkbox:[&>path]:[stroke-dashoffset:0]',
               // path
               '[&>path]:[stroke-dasharray:var(--total-length)] [&>path]:[stroke-dashoffset:var(--total-length)]',
-              'invisible group-data-[state=indeterminate]/checkbox:visible',
               // disabled
               'group-disabled/checkbox:!stroke-text-disabled-300'
             )}

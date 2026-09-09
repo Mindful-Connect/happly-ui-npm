@@ -46,6 +46,10 @@ function DateInput({
   const [internalDate, setInternalDate] = React.useState<Date | undefined>(
     defaultValue
   );
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  // Set when the popover closes because the user interacted with something
+  // outside it (see `onCloseAutoFocus` below).
+  const closedByOutsideInteraction = React.useRef(false);
 
   const date = value ?? internalDate;
 
@@ -74,6 +78,7 @@ function DateInput({
       open={!resolvedDisabled && open}
       onOpenChange={(next) => {
         if (resolvedDisabled) return;
+        if (next) closedByOutsideInteraction.current = false;
         setOpen(next);
       }}
     >
@@ -83,11 +88,28 @@ function DateInput({
             <Input.Wrapper className='cursor-pointer'>
               <Input.Icon as={LeadingIcon} />
               <Input.Input
+                ref={inputRef}
                 readOnly
                 disabled={resolvedDisabled}
                 value={date ? format(date, formatStr) : ''}
                 placeholder={placeholder}
-                className='cursor-pointer'
+                className='cursor-pointer tabular-nums'
+                // The Trigger is a div, so it takes clicks but no keyboard.
+                // The input is the field's only tab stop — it has to open the
+                // calendar too, and announce that it opens one.
+                aria-haspopup='dialog'
+                aria-expanded={open}
+                onKeyDown={(event) => {
+                  if (resolvedDisabled) return;
+                  if (
+                    event.key === 'Enter' ||
+                    event.key === ' ' ||
+                    event.key === 'ArrowDown'
+                  ) {
+                    event.preventDefault();
+                    setOpen(true);
+                  }
+                }}
               />
             </Input.Wrapper>
           </Input.Root>
@@ -98,6 +120,26 @@ function DateInput({
         side={popoverSide}
         className='p-0'
         showArrow={false}
+        onInteractOutside={() => {
+          closedByOutsideInteraction.current = true;
+        }}
+        // Radix returns focus to the Trigger, which is a non-focusable div —
+        // focus would fall back to <body>. Send it to the field instead.
+        //
+        // Except when the close came from an interaction outside the popover:
+        // that click already put focus where the user asked for it (a textarea
+        // further down the form), and the exit animation means this fires
+        // ~150ms later — long enough to read as the page yanking focus back.
+        // Radix's own handler skips the trigger refocus in that case, so
+        // leaving the event alone keeps the focus the user chose.
+        onCloseAutoFocus={(event) => {
+          if (closedByOutsideInteraction.current) {
+            closedByOutsideInteraction.current = false;
+            return;
+          }
+          event.preventDefault();
+          inputRef.current?.focus();
+        }}
       >
         <Calendar
           mode='single'

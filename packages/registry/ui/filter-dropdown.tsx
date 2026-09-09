@@ -125,7 +125,7 @@ const FilterDropdownSearch = React.forwardRef<
   FilterDropdownSearchProps
 >(
   (
-    { className, placeholder = 'Search...', size = 'small', value, onChange },
+    { className, placeholder = 'Search…', size = 'small', value, onChange },
     forwardedRef
   ) => (
     <div className={cn('px-3 pt-4', className)}>
@@ -134,6 +134,7 @@ const FilterDropdownSearch = React.forwardRef<
           <Input.Icon as={RiSearchLine} />
           <Input.Input
             ref={forwardedRef}
+            aria-label='Search options'
             placeholder={placeholder}
             value={value}
             onChange={onChange}
@@ -164,8 +165,8 @@ function FilterDropdownSelectAll({
     <div className={cn('flex flex-col gap-2 px-3 pt-2', className)}>
       <label
         className={cn(
-          'flex cursor-pointer items-center gap-2 rounded-lg p-2 text-left',
-          'transition duration-200 ease-out',
+          'flex cursor-pointer items-center gap-2 rounded-lg p-2 text-start',
+          'transition-[background-color] duration-150 ease-out',
           'hover:bg-bg-weak-50'
         )}
       >
@@ -218,7 +219,7 @@ function FilterDropdownGroup({
       <ScrollAreaPrimitives.Root type='auto'>
         <ScrollAreaPrimitives.Viewport
           ref={viewportRef}
-          className='w-full overflow-auto'
+          className='w-full overflow-auto overscroll-contain'
           style={{ maxHeight }}
         >
           <div className='flex flex-col gap-1'>
@@ -260,11 +261,10 @@ const FilterDropdownItem = React.forwardRef<
   ) => (
     <label
       ref={forwardedRef}
-      aria-selected={checked}
       aria-disabled={disabled || undefined}
       className={cn(
-        'flex w-full cursor-pointer items-center gap-2 rounded-[10px] p-2 text-left',
-        'transition duration-200 ease-out',
+        'flex w-full cursor-pointer items-center gap-2 rounded-lg p-2 text-start',
+        'transition-[background-color] duration-150 ease-out',
         'hover:bg-bg-weak-50',
         'aria-disabled:pointer-events-none aria-disabled:opacity-50',
         className
@@ -302,13 +302,13 @@ function FilterDropdownCategoryItem({
       type='button'
       className={cn(
         // matches Dropdown.Item styling
-        'group/item text-paragraph-sm text-text-strong-950 relative cursor-pointer rounded-lg p-2 outline-none select-none',
+        'group/item text-paragraph-sm text-text-strong-950 relative cursor-pointer rounded-lg p-2 outline-none',
         'flex w-full items-center gap-2',
-        'transition duration-200 ease-out',
+        'transition-[background-color] duration-150 ease-out',
         // hover
         'hover:bg-bg-weak-50',
         // focus
-        'focus:outline-none',
+        'focus-visible:shadow-button-important-focus',
         // disabled
         'disabled:text-text-disabled-300',
         className
@@ -324,7 +324,7 @@ function FilterDropdownCategoryItem({
           )}
         />
       )}
-      <span className='flex-1 text-left'>{children}</span>
+      <span className='flex-1 text-start'>{children}</span>
     </button>
   );
 }
@@ -338,11 +338,7 @@ function FilterDropdownCategoryList({
   ...rest
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div
-      className={cn('flex flex-col gap-1 p-2', className)}
-      role='listbox'
-      {...rest}
-    >
+    <div className={cn('flex flex-col gap-1 p-2', className)} {...rest}>
       {children}
     </div>
   );
@@ -360,6 +356,8 @@ function FilterDropdownApply({
   className,
   label = 'Apply',
   children,
+  disabled,
+  onClick,
   ...rest
 }: FilterDropdownApplyProps) {
   return (
@@ -368,7 +366,28 @@ function FilterDropdownApply({
         variant='neutral'
         mode='filled'
         size='small'
-        className={cn('w-full', className)}
+        // `aria-disabled` rather than the native `disabled`, following
+        // `Button.Root`'s own loading state. Apply is the last control in the
+        // panel and it flips to unavailable at the moment it is activated — a
+        // native `disabled` button drops focus to `<body>` right then, and the
+        // panel is portalled, so a keyboard user loses their place entirely.
+        // Staying focusable keeps focus on the button; the styling below and
+        // the guard on `onClick` block the interaction instead.
+        aria-disabled={disabled || undefined}
+        className={cn(
+          'w-full',
+          disabled &&
+            'bg-bg-weak-50 text-text-disabled-300 pointer-events-none shadow-none ring-transparent',
+          className
+        )}
+        onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+          if (disabled) {
+            event.preventDefault();
+            event.stopPropagation();
+            return;
+          }
+          onClick?.(event);
+        }}
         {...rest}
       >
         {children ?? label}
@@ -475,6 +494,41 @@ type FilterDropdownComposedProps = {
   onOpenChange?: (open: boolean) => void;
 };
 
+// Applying does not close the panel and may not visibly change anything a
+// screen-reader user is on, so the outcome has to be spoken. Full sentences per
+// branch rather than a count glued into a fragment, so the string survives
+// translation.
+function applyAnnouncement(selected: Record<string, string[]>) {
+  const count = Object.values(selected).reduce(
+    (total, values) => total + values.length,
+    0
+  );
+  if (count === 0) return 'Filters cleared';
+  if (count === 1) return '1 filter applied';
+  return `${count} filters applied`;
+}
+
+// One filter group's values, compared as a set: a value unchecked and checked
+// again lands at the end of the array without being a change.
+function valuesEqual(a: string[], b: string[]) {
+  if (a.length !== b.length) return false;
+  const set = new Set(a);
+  return b.every((v) => set.has(v));
+}
+
+// Whole selections, used both to enable/disable Apply and to decide which
+// groups the close handler has to rewind.
+function selectionsEqual(
+  a: Record<string, string[]>,
+  b: Record<string, string[]>
+) {
+  const keys = new Set([...Object.keys(a), ...Object.keys(b)]);
+  for (const key of keys) {
+    if (!valuesEqual(a[key] ?? [], b[key] ?? [])) return false;
+  }
+  return true;
+}
+
 function FilterDropdownComposed({
   children,
   filters,
@@ -497,10 +551,30 @@ function FilterDropdownComposed({
     {}
   );
 
-  // Snapshot of selections when the popover opened, used to detect changes and revert on cancel
-  const openSnapshot = React.useRef<Record<string, string[]>>({});
-  const didApply = React.useRef(false);
-  const [openCount, setOpenCount] = React.useState(0);
+  // The last committed selection: taken when the popover opens and retaken on
+  // every Apply. Everything the panel says about "unapplied changes" is
+  // measured against it, and closing the panel rewinds to it. State, not a
+  // ref, so committing it re-renders and `hasChanges` is a plain derivation.
+  const [baseline, setBaseline] = React.useState<Record<string, string[]>>({});
+
+  // Two Applies in a row can produce the identical sentence ("1 filter
+  // applied", swap the one value, "1 filter applied"). Setting the same string
+  // mutates nothing, and a live region with no mutation is not re-announced —
+  // the second Apply would be silent. The nonce makes every Apply a real text
+  // change; it renders as a zero-width space, which is invisible and unspoken.
+  const [applyStatus, setApplyStatus] = React.useState({
+    message: '',
+    nonce: 0,
+  });
+
+  const commitBaseline = React.useCallback(
+    (values: Record<string, string[]>) => {
+      setBaseline(
+        Object.fromEntries(Object.entries(values).map(([k, v]) => [k, [...v]]))
+      );
+    },
+    []
+  );
 
   // Remote filter state per key
   const [remoteStates, setRemoteStates] = React.useState<
@@ -562,6 +636,10 @@ function FilterDropdownComposed({
 
   // Track which remote filters have been initially fetched
   const fetchedRemoteKeys = React.useRef<Set<string>>(new Set());
+  // Declared here, above `handleOpenChange` — which clears it — rather than
+  // next to the loader below: a ref first captured by a hook callback and
+  // created afterwards reads as a hook argument being mutated.
+  const loadMoreLock = React.useRef<Record<string, boolean>>({});
 
   // Fetch first page when navigating to a remote filter
   React.useEffect(() => {
@@ -576,34 +654,26 @@ function FilterDropdownComposed({
     (open: boolean) => {
       onOpenChangeProp?.(open);
       if (open) {
-        // Snapshot current selections so we can detect changes and revert on cancel
-        openSnapshot.current = Object.fromEntries(
-          Object.entries(selected).map(([k, v]) => [k, [...v]])
-        );
-        didApply.current = false;
-        setOpenCount((c) => c + 1);
+        commitBaseline(selected);
       } else {
-        // Revert unapplied changes by restoring the snapshot
-        if (!didApply.current) {
-          const snapshot = openSnapshot.current;
-          const allKeys = Array.from(
-            new Set([...Object.keys(snapshot), ...Object.keys(selected)])
-          );
-          for (let i = 0; i < allKeys.length; i++) {
-            const key = allKeys[i];
-            const prev = snapshot[key] ?? [];
-            const curr = selected[key] ?? [];
-            if (
-              prev.length !== curr.length ||
-              prev.some((v, idx) => v !== curr[idx])
-            ) {
-              onSelectedChange(key, prev);
-            }
+        // Rewind to the last committed selection. The baseline tracks Apply, so
+        // this reverts edits made before the first Apply and edits made after
+        // one — otherwise a change made after applying would survive the close
+        // and leave the checkboxes describing a filter the list never received.
+        const allKeys = Array.from(
+          new Set([...Object.keys(baseline), ...Object.keys(selected)])
+        );
+        for (let i = 0; i < allKeys.length; i++) {
+          const key = allKeys[i];
+          const prev = baseline[key] ?? [];
+          if (!valuesEqual(prev, selected[key] ?? [])) {
+            onSelectedChange(key, prev);
           }
         }
 
         setView(isSingleFilter ? filters[0].key : 'categories');
         setSearchTerms({});
+        setApplyStatus((prev) => ({ ...prev, message: '' }));
         setRemoteStates({});
         fetchedRemoteKeys.current.clear();
         loadMoreLock.current = {};
@@ -611,7 +681,15 @@ function FilterDropdownComposed({
         debounceTimers.current = {};
       }
     },
-    [onOpenChangeProp, isSingleFilter, filters, selected, onSelectedChange]
+    [
+      onOpenChangeProp,
+      isSingleFilter,
+      filters,
+      selected,
+      onSelectedChange,
+      commitBaseline,
+      baseline,
+    ]
   );
 
   // Clean up debounce timers on unmount
@@ -637,8 +715,6 @@ function FilterDropdownComposed({
     },
     [fetchRemote]
   );
-
-  const loadMoreLock = React.useRef<Record<string, boolean>>({});
 
   const handleLoadMore = React.useCallback(
     (filter: FilterConfig) => {
@@ -703,6 +779,15 @@ function FilterDropdownComposed({
     }
   };
 
+  // Exit route out of a search that matched nothing — keeps the selection.
+  const clearSearch = (filter: FilterConfig) => {
+    setSearchTerms((prev) => ({ ...prev, [filter.key]: '' }));
+    if (filter.remote) {
+      clearTimeout(debounceTimers.current[filter.key]);
+      fetchRemote(filter, '', 1);
+    }
+  };
+
   const getAllChecked = (filter: FilterConfig): boolean | 'indeterminate' => {
     const options = getOptionsForFilter(filter);
     const currentSet = new Set(selected[filter.key] ?? []);
@@ -713,23 +798,8 @@ function FilterDropdownComposed({
     return 'indeterminate';
   };
 
-  // Detect whether selections have changed from the snapshot taken on open
-  const hasChanges = React.useMemo(() => {
-    const snapshot = openSnapshot.current;
-    const allKeys = Array.from(
-      new Set([...Object.keys(snapshot), ...Object.keys(selected)])
-    );
-    for (let i = 0; i < allKeys.length; i++) {
-      const key = allKeys[i];
-      const prev = snapshot[key] ?? [];
-      const curr = selected[key] ?? [];
-      if (prev.length !== curr.length) return true;
-      const prevSet = new Set(prev);
-      if (curr.some((v) => !prevSet.has(v))) return true;
-    }
-    return false;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selected, openCount]);
+  // Whether the selection has moved away from the last committed baseline.
+  const hasChanges = !selectionsEqual(selected, baseline);
 
   const activeFilter = filters.find((f) => f.key === view);
   const activeRemoteState = activeFilter?.remote
@@ -757,6 +827,13 @@ function FilterDropdownComposed({
         sideOffset={sideOffset}
         className={cn(view === 'categories' && 'w-[224px]', contentClassName)}
       >
+        {/* Rendered empty for the life of the panel and updated in place —
+            a live region inserted at the moment it has something to say is
+            unreliably announced. */}
+        <span role='status' className='sr-only'>
+          {applyStatus.message + (applyStatus.nonce % 2 === 1 ? '\u200B' : '')}
+        </span>
+
         {view === 'categories' && (
           <FilterDropdownCategoryList>
             {filters.map((filter) => (
@@ -810,10 +887,21 @@ function FilterDropdownComposed({
                   <Loader.Root size={20} color='neutral' />
                 </div>
               ) : activeOptions.length === 0 ? (
-                <div className='flex items-center justify-center py-4'>
-                  <span className='text-paragraph-sm text-text-soft-400'>
-                    No results found
+                <div className='flex flex-col items-center justify-center gap-1 py-4'>
+                  <span className='text-paragraph-sm text-text-soft-400 text-center text-pretty'>
+                    {searchTerms[activeFilter.key]
+                      ? `No results for “${searchTerms[activeFilter.key]}”`
+                      : `No ${activeFilter.label.toLowerCase()} to choose from yet`}
                   </span>
+                  {searchTerms[activeFilter.key] && (
+                    <LinkButton.Root
+                      variant='gray'
+                      size='small'
+                      onClick={() => clearSearch(activeFilter)}
+                    >
+                      Clear search
+                    </LinkButton.Root>
+                  )}
                 </div>
               ) : (
                 activeOptions.map((option) => (
@@ -833,20 +921,21 @@ function FilterDropdownComposed({
               label={applyLabel}
               disabled={!hasChanges}
               onClick={() => {
-                didApply.current = true;
                 onApply?.(selected);
-                // Re-baseline the snapshot to what we just committed. The panel
-                // stays OPEN after Apply, and `hasChanges` compares `selected`
-                // against this snapshot — which was taken on open. Without this
-                // line the snapshot still describes the pre-Apply state, so any
-                // edit that returns the selection to that state (most obviously
-                // "Reset filter", which clears the group back to empty) leaves
-                // `hasChanges` false and DISABLES Apply, while the committed
-                // filter is still the applied one. The list stays filtered with
-                // no way to clear it short of reloading the page.
-                openSnapshot.current = Object.fromEntries(
-                  Object.entries(selected).map(([k, v]) => [k, [...v]])
-                );
+                // Re-baseline to what we just committed. The panel stays OPEN
+                // after Apply, and `hasChanges` compares `selected` against the
+                // baseline. Without this the baseline still describes the
+                // pre-Apply state, so any edit that returns the selection to
+                // that state (most obviously "Reset filter", which clears the
+                // group back to empty) leaves `hasChanges` false and DISABLES
+                // Apply, while the committed filter is still the applied one.
+                // The list stays filtered with no way to clear it short of
+                // reloading the page.
+                commitBaseline(selected);
+                setApplyStatus((prev) => ({
+                  message: applyAnnouncement(selected),
+                  nonce: prev.nonce + 1,
+                }));
               }}
             />
           </>

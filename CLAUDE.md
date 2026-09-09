@@ -194,6 +194,18 @@ bun run --cwd docs scripts/generate-story-registry.ts
 - Namespace exports pattern: `Button.Root`, `Button.Icon` (compound components)
 - `docs.usage` field in JSON drives the CLI usage hint
 
+### Interface conventions (from the `better-*` skills sweep, 2026-09-03)
+
+- **Motion:** never `transition-all`; name the properties (`transition-[background-color,color,box-shadow,scale,transform]`). Real buttons (Button, FancyButton, CompactButton) scale to `0.96` on press via `active:[&:not(:disabled)]:scale-[0.96]` and expose a `static` prop that turns it off. Exits are shorter and softer than enters (≤150ms). Components that use framer-motion call `useReducedMotion()`.
+- **Focus:** style `focus-visible:`, never bare `focus:` — except on text fields (Input, Textarea, DigitInput, and anything wrapping a text `<input>`), where bare `focus:` is the intended spelling: browsers already match `:focus-visible` on a text field for pointer focus, and DigitInput also moves focus between slots programmatically. Every focusable control shows one of the `shadow-button-*-focus` rings. Do not add `outline-none` without a `focus-visible` replacement.
+- **Hit areas:** ≥ 24×24 CSS px. A smaller visual (20px checkbox, 16px dismiss icon) extends its target with a pseudo-element on the `relative` button/root (`after:absolute after:-inset-0.5`).
+- **Names:** icon-only buttons take an `aria-label`; decorative SVGs get `aria-hidden`; status is never carried by color alone.
+- **Type:** `tabular-nums` on numbers that change or align; `text-balance` on titles, `text-pretty` on descriptions; truncated text keeps the full value in `title`; `select-none` only on placeholders and drag surfaces.
+- **Surfaces:** nested rounded surfaces are concentric (outer radius = inner radius + padding); every `<img>` gets `outline-1 -outline-offset-1 outline-image-outline` (the semantic token — it already resolves to the light/dark hairline, so no `black/10` primitive and no `dark:` variant). Keep the `ring-1 ring-stroke-soft-200 shadow-regular-xs` card treatment — it is the system's surface language.
+- **Color usage:** components reference semantic tokens (`bg-bg-white-0`, `text-text-sub-600`, `ring-stroke-soft-200`), never raw hex or a primitive step; a token is used only in its role (no `stroke-*` as text).
+- **Copy:** verb-first buttons, confirmations repeat the consequence (`Delete project` / `Cancel`), errors say how to fix, empty states point forward, sentence case, the `…` character.
+- **Layout:** new classes use logical utilities (`ps-`, `pe-`, `ms-`, `me-`, `text-start`); the existing physical ones are not mass-migrated.
+
 ## Release Workflow
 
 **IMPORTANT: Never create GitHub tags/releases or bump npm versions without explicit user permission.**
@@ -258,7 +270,7 @@ Design tokens are defined in these files:
 | `packages/registry/styles/happly-theme.css`        | **V4 theme** — Tailwind v4 `@theme` syntax (source of truth for Storybook + CLI fetch) | Storybook, V4 user projects                 |
 | `packages/registry/styles/happly-theme-v3.css`     | **V3 theme** — `:root {}` CSS custom properties (fetched by CLI for V3 projects)       | V3 user projects                            |
 | `packages/cli/src/utils/templates/happly-theme.ts` | **Offline fallback only** — bundled copies of V4/V3 themes used when fetch fails       | CLI offline/network failure                 |
-| `packages/cli/src/utils/templates/tokens.ts`       | Tailwind v3 plugin tokens (typography, shadows, colors)                                | V3 projects via `tailwind.config.js` extend |
+| `packages/cli/src/utils/templates/tokens.ts`       | **V3 plugin/preset tokens** — source of truth for typography, shadows, colors          | V3 projects via `tailwind.config.js` extend |
 
 **When adding or changing a design token (color, shadow, keyframe, etc.):**
 
@@ -269,9 +281,25 @@ Design tokens are defined in these files:
    - V3 uses `:root {}` block — only CSS custom properties (colors); shadows/typography/keyframes go as raw `@keyframes` blocks outside `:root`
    - Both must include dark mode overrides (`@media (prefers-color-scheme: dark)` + `.dark` class)
    - Both include `@keyframes` animations at the bottom (button loading, accordion, shimmer, etc.)
-3. Update the fallback templates in `packages/cli/src/utils/templates/happly-theme.ts` (`HAPPLY_THEME_V4` and `HAPPLY_THEME_V3`) to match the registry CSS files
-4. If the token is a new Tailwind class name (e.g., new shadow or color), also add it to `packages/cli/src/utils/templates/tokens.ts` so the V3 Tailwind plugin registers it
+3. Run `bun run sync:theme` (also part of `bun run build:registry`). It regenerates the CLI fallback templates in `packages/cli/src/utils/templates/happly-theme.ts` and the copies in `tailwind-manual-installation/` from the two registry CSS files — never edit those generated files by hand
+4. If the token is a new Tailwind class name (e.g., new shadow or color), also add it to `packages/cli/src/utils/templates/tokens.ts`, then run `bun run build:registry`. `scripts/build-tailwind-plugin.ts` regenerates both consumers of that file — `packages/registry/styles/happly-ui-tailwind.cjs` (the plugin the CLI fetches for V3 projects) and `tailwind-manual-installation/v3/happly-tailwind.preset.js` (the preset README points manual installs at) — so neither can drift. Never edit those two by hand
 5. Rebuild and type-check the CLI: `cd packages/cli && bun run typecheck`
+
+**Token conventions (since 2026-09-03):**
+
+- Colors are written in `oklch(L C H)` / `oklch(L C H / alpha)` with 3-decimal channels (`oklch(0.577 0.229 289.43)` is `#7d52f4`). Convert a new hex with a color library (culori), never by eye; keep the ramp's hue constant and check chroma stays inside sRGB. The V3 plugin palette in `tokens.ts` stays hex because Tailwind v3 cannot apply `/opacity` modifiers to `oklch()` strings.
+- Focus rings are the `--shadow-button-*-focus` tokens: a 2px page-colored gap plus a 2px solid ring (`primary-base`, `neutral-500`, `error-base`, `orange-600`, `green-700`) that measures ≥ 3:1 on both light and dark grounds. Use them on `focus-visible:`; never replace them with alpha rings.
+- Dark mode keeps the purple accent (`primary-base` = purple-500, hover purple-600, white contrast label). The `@media (prefers-color-scheme: dark)` block targets `:root:not(.light)` so an explicit `light` class (next-themes) wins over the OS setting; `.dark` still forces dark.
+- Reduced motion: the theme ships a global `@media (prefers-reduced-motion: reduce)` kill-switch for CSS animations/transitions. JS-driven motion (framer-motion) must check `useReducedMotion()` itself.
+- A **filled status surface** takes its label colour from `--color-{role}-contrast`, never from `text-static-white`. White is below the 3:1 floor on the light-end hues, so `warning`, `success`, `away`, `verified` and `stable` resolve to `static-black` and the rest to `static-white`; the fills themselves are unchanged. The tokens are deliberately theme-invariant — the choice follows the fill's own lightness, and every one of those roles stays light in dark mode too. `error` (4.15:1) and `highlighted` (3.91:1) still keep white and remain below AA; that is on record as a design decision, not an oversight.
+- Reduced motion is a kill-switch, not a design: any indicator whose _meaning_ lives in its movement needs a `motion-reduce:` fallback that still communicates. The indeterminate progress bar is the worked example — frozen mid-slide it reads as a static "40% done", so it goes `motion-reduce:w-full`.
+- Theme switching must not animate. Wrap the change in `withoutThemeTransitions()` (`lib/happly-ui-utils.ts`), which sets `data-theme-switching` on `<html>` for one frame; the theme suppresses every transition under that attribute. `next-themes` consumers get the same thing from `disableTransitionOnChange`.
+- Motion durations are not a matter of taste; `better-ui` prescribes them. **High-frequency** state changes (hover, press, focus on any control, menu row or cell) transition at **150ms**; overlay **enter** animations are 200ms in / 150ms out. Icon cross-fades use the exact recipe: `transition-[opacity,filter,scale,transform] duration-300 ease-[cubic-bezier(0.2,0,0,1)]` between `scale-100 opacity-100 blur-none` and `scale-[0.25] opacity-0 blur-[4px]` (`blur-0` does not exist in Tailwind v4). A single item arriving uses `animate-item-in` — opacity + `blur(4px)` + `translateY(12px)` over 400ms.
+- Never ship a bare `transition`. It covers sixteen properties including `transform`, `filter` and `backdrop-filter`; name what actually changes. When an element's classes merge with another component's (anything passed as `as=` or into a slot), `tailwind-merge` keeps only the **last** `transition-property` — so the inner class has to name every property both layers need, as `combo-box`'s chevron does with `transition-[color,rotate,transform]`.
+- Press feedback is `active:[&:not(:disabled)]:scale-[0.96]`, exactly 0.96, behind a `static` prop.
+- Text inputs are 16px below the `sm` breakpoint (`text-paragraph-md sm:text-paragraph-sm`). iOS Safari zooms the page whenever a focused field is under 16px and does not zoom back out on blur.
+- CSS comments in the theme files end up inside a TS template literal in `packages/cli/src/utils/templates/happly-theme.ts`. The sync script escapes backticks, so they are safe — but it matches the block's closing delimiter with a `(?<!\\)` lookbehind for exactly that reason; do not simplify that regex.
+- `body` sets `-webkit-font-smoothing: antialiased` / `-moz-osx-font-smoothing: grayscale` once; do not repeat `antialiased` per component.
 
 **Key differences between V3 and V4:**
 

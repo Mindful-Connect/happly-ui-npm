@@ -72,10 +72,21 @@
             "description": "Renders as child element using Radix Slot"
           },
           {
+            "name": "static",
+            "type": "boolean",
+            "default": "false",
+            "description": "Turns off the scale-on-press feedback, for places where the motion would distract."
+          },
+          {
             "name": "disabled",
             "type": "boolean",
             "default": "false",
             "description": "Disables the button"
+          },
+          {
+            "name": "aria-label",
+            "type": "string",
+            "description": "Required whenever the button renders an icon on its own — it is the only name a screen reader or voice-control user gets. Mark the icon aria-hidden."
           }
         ]
       },

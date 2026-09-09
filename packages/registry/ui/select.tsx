@@ -19,15 +19,17 @@ export const selectVariants = tv({
       'group/trigger min-w-0 shrink-0 bg-bg-white-0 shadow-regular-xs outline-none ring-1 ring-inset ring-stroke-soft-200',
       'text-paragraph-sm text-text-strong-950',
       'flex items-center text-left',
-      'transition duration-200 ease-out',
+      'transition-[background-color,color,box-shadow] duration-150 ease-out',
       'cursor-pointer',
       // hover
       'hover:bg-bg-weak-50 hover:ring-transparent hover:shadow-none',
       // hover override inside section toggle (bg-weak-50 clashes with toggle bg)
       '[[data-section-toggle-open]_&]:hover:bg-bg-white-0 [[data-section-toggle-open]_&]:hover:ring-stroke-soft-200',
-      // focus
-      'focus:shadow-button-important-focus focus:outline-none focus:ring-stroke-strong-950',
-      'focus:text-text-strong-950 data-[placeholder]:focus:text-text-strong-950',
+      // focus (focus-visible only: the trigger takes DOM focus on every mouse
+      // click and after the menu closes — a ring there reads as stuck)
+      'focus:outline-none',
+      'focus-visible:shadow-button-important-focus focus-visible:ring-stroke-strong-950',
+      'focus-visible:text-text-strong-950 data-[placeholder]:focus-visible:text-text-strong-950',
       // open (maintain focus appearance when dropdown is open and DOM focus moves to content)
       'data-[state=open]:shadow-button-important-focus data-[state=open]:ring-stroke-strong-950',
       'data-[state=open]:text-text-strong-950 data-[placeholder]:data-[state=open]:text-text-strong-950',
@@ -39,7 +41,7 @@ export const selectVariants = tv({
     triggerArrow: [
       // base
       'ml-auto w-5 h-5 shrink-0',
-      'transition duration-200 ease-out',
+      'transition-[color] duration-150 ease-out',
       // placeholder state
       'group-data-[placeholder]/trigger:text-text-soft-400',
       // filled state
@@ -47,7 +49,7 @@ export const selectVariants = tv({
       // hover
       'group-hover/trigger:text-text-sub-600 group-data-[placeholder]/trigger:group-hover:text-text-sub-600',
       // focus
-      'group-focus/trigger:text-text-strong-950 group-data-[placeholder]/trigger:group-focus/trigger:text-text-strong-950',
+      'group-focus-visible/trigger:text-text-strong-950 group-data-[placeholder]/trigger:group-focus-visible/trigger:text-text-strong-950',
       // disabled
       'group-disabled/trigger:text-text-disabled-300 group-data-[placeholder]/trigger:group-disabled/trigger:text-text-disabled-300',
       // open
@@ -56,7 +58,7 @@ export const selectVariants = tv({
     triggerIcon: [
       // base
       'h-5 w-auto min-w-0 shrink-0 object-contain text-text-sub-600',
-      'transition duration-200 ease-out',
+      'transition-[color,opacity] duration-150 ease-out',
       // placeholder state
       'group-data-[placeholder]/trigger:text-text-soft-400',
       // hover
@@ -89,7 +91,7 @@ export const selectVariants = tv({
           // base
           'w-auto rounded-none shadow-none ring-0',
           // focus
-          'focus:bg-bg-weak-50 focus:shadow-none focus:ring-0 focus:ring-transparent',
+          'focus-visible:bg-bg-weak-50 focus-visible:shadow-none focus-visible:ring-0 focus-visible:ring-transparent',
           // open
           'data-[state=open]:bg-bg-weak-50 data-[state=open]:shadow-none data-[state=open]:ring-0 data-[state=open]:ring-transparent',
         ],
@@ -101,7 +103,7 @@ export const selectVariants = tv({
           // hover
           'hover:bg-transparent hover:text-text-strong-950',
           // focus
-          'focus:shadow-none focus:ring-0 focus:text-text-strong-950 focus:underline focus:underline-offset-2 focus:decoration-stroke-strong-950',
+          'focus-visible:shadow-none focus-visible:ring-0 focus-visible:text-text-strong-950 focus-visible:underline focus-visible:underline-offset-2 focus-visible:decoration-stroke-strong-950',
           // open
           'data-[state=open]:shadow-none data-[state=open]:ring-0 data-[state=open]:text-text-strong-950 data-[state=open]:underline data-[state=open]:underline-offset-2 data-[state=open]:decoration-stroke-strong-950',
         ],
@@ -131,7 +133,7 @@ export const selectVariants = tv({
           // base
           'ring-error-base',
           // focus
-          'focus:shadow-button-error-focus focus:ring-error-base',
+          'focus-visible:shadow-button-error-focus focus-visible:ring-error-base',
           // open
           'data-[state=open]:shadow-button-error-focus data-[state=open]:ring-error-base',
         ],
@@ -293,34 +295,47 @@ SelectGroupLabel.displayName = 'SelectGroupLabel';
 const SelectTrigger = React.forwardRef<
   React.ComponentRef<typeof SelectPrimitives.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitives.Trigger>
->(({ className, children, ...rest }, forwardedRef) => {
-  const { size, variant, hasError, readOnly } = useSelectContext();
+>(
+  (
+    { className, children, 'aria-describedby': ariaDescribedBy, ...rest },
+    forwardedRef
+  ) => {
+    const { size, variant, hasError, readOnly } = useSelectContext();
+    const formField = useFormField();
+    // The field's hint/error is announced with the trigger, alongside any
+    // description the consumer passed in.
+    const resolvedDescribedBy =
+      [ariaDescribedBy, formField.describedBy].filter(Boolean).join(' ') ||
+      undefined;
 
-  const { triggerRoot, triggerArrow } = selectVariants({
-    size,
-    variant,
-    hasError,
-  });
+    const { triggerRoot, triggerArrow } = selectVariants({
+      size,
+      variant,
+      hasError,
+    });
 
-  return (
-    <SelectPrimitives.Trigger
-      ref={forwardedRef}
-      className={cn(
-        triggerRoot({ class: className }),
-        readOnly && 'pointer-events-none'
-      )}
-      aria-invalid={hasError || undefined}
-      tabIndex={readOnly ? -1 : undefined}
-      aria-readonly={readOnly || undefined}
-      {...rest}
-    >
-      <Slottable>{children}</Slottable>
-      <SelectPrimitives.Icon asChild>
-        <RiArrowDownSLine className={triggerArrow()} />
-      </SelectPrimitives.Icon>
-    </SelectPrimitives.Trigger>
-  );
-});
+    return (
+      <SelectPrimitives.Trigger
+        ref={forwardedRef}
+        className={cn(
+          triggerRoot({ class: className }),
+          readOnly && 'pointer-events-none'
+        )}
+        aria-invalid={hasError || undefined}
+        tabIndex={readOnly ? -1 : undefined}
+        aria-readonly={readOnly || undefined}
+        aria-describedby={resolvedDescribedBy}
+        aria-required={formField.required || undefined}
+        {...rest}
+      >
+        <Slottable>{children}</Slottable>
+        <SelectPrimitives.Icon asChild>
+          <RiArrowDownSLine className={triggerArrow()} />
+        </SelectPrimitives.Icon>
+      </SelectPrimitives.Trigger>
+    );
+  }
+);
 SelectTrigger.displayName = 'SelectTrigger';
 
 function TriggerIcon<T extends React.ElementType = 'div'>({
@@ -362,9 +377,15 @@ const SelectContent = React.forwardRef<
           'max-w-[max(var(--radix-select-trigger-width),320px)] min-w-[var(--radix-select-trigger-width)]',
           // heights
           'max-h-[var(--radix-select-content-available-height)]',
-          // animation
-          'data-[state=open]:animate-in data-[state=open]:fade-in-0',
-          'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
+          // animation — the exit is shorter and softer than the enter, matching
+          // popover/dropdown/drawer/tooltip. Attention is already moving to the
+          // chosen value by the time the menu closes.
+          // NOTE: Radix's Select.Content has no Presence wrapper — on close it
+          // moves straight to a detached fragment, so the `data-[state=closed]`
+          // half never runs today. Kept so the values are already right if the
+          // content is ever force-mounted; see the sweep notes.
+          'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:duration-200 data-[state=open]:ease-out',
+          'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:duration-150 data-[state=closed]:ease-out',
           'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
           'data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2',
           className
@@ -405,7 +426,7 @@ const SelectItem = React.forwardRef<
       className={cn(
         // base
         'group text-paragraph-sm text-text-strong-950 relative cursor-pointer rounded-lg p-2 pr-9 select-none',
-        'flex items-center gap-2 transition duration-200 ease-out',
+        'flex items-center gap-2 transition-[background-color,color] duration-150 ease-out',
         // disabled
         'data-[disabled]:text-text-disabled-300 data-[disabled]:pointer-events-none',
         // hover, focus
@@ -430,7 +451,10 @@ const SelectItem = React.forwardRef<
           )}
         >
           {typeof children === 'string' ? (
-            <span className='line-clamp-1'>{children}</span>
+            // The label clamps to one line — keep the full value reachable.
+            <span className='line-clamp-1' title={children}>
+              {children}
+            </span>
           ) : (
             children
           )}

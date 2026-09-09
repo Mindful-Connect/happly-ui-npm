@@ -46,7 +46,10 @@ function SectionTitle({
 }: React.HTMLAttributes<HTMLHeadingElement>) {
   return (
     <h3
-      className={cn('text-label-md text-text-strong-950', className)}
+      className={cn(
+        'text-label-md text-text-strong-950 text-balance',
+        className
+      )}
       {...rest}
     >
       {children}
@@ -62,7 +65,10 @@ function SectionDescription({
 }: React.HTMLAttributes<HTMLParagraphElement>) {
   return (
     <p
-      className={cn('text-paragraph-xs text-text-sub-600', className)}
+      className={cn(
+        'text-paragraph-xs text-text-sub-600 text-pretty',
+        className
+      )}
       {...rest}
     >
       {children}

@@ -24,6 +24,9 @@ function extractText(node: React.ReactNode): string {
 const LETTER_DELAY = 40;
 const LETTER_DURATION = 300;
 
+// Tactile press feedback. Disable per-instance with the `static` prop.
+const PRESS_SCALE = 'active:[&:not(:disabled)]:scale-[0.96]';
+
 function ButtonLoadingContent({
   children,
   loadingText = 'Loading',
@@ -40,10 +43,20 @@ function ButtonLoadingContent({
 
   return (
     <span className='relative inline-flex items-center gap-1.5 overflow-hidden'>
+      {/* Every visual part of the loading state is hidden from assistive
+          technology — the spinner, the per-letter animation and the outgoing
+          label are all echoes of one fact. A single `sr-only` string carries
+          the button's accessible name instead, so it announces "Loading" and
+          not the loading letters concatenated with the label they replaced.
+          The Loader's own `role="status"` is suppressed here: a live region
+          inside a button would announce a second time. */}
+      <span className='sr-only'>{loadingText}</span>
+
       {/* Spinner — delayed until exit completes */}
       <Loader.Root
         size={14}
         color='current'
+        aria-hidden='true'
         style={{
           animation: `btn-fade-in 200ms ease-out ${exitEndMs}ms forwards`,
           opacity: 0,
@@ -51,7 +64,7 @@ function ButtonLoadingContent({
       />
 
       {/* Enter text (determines layout width) */}
-      <span className='inline-flex'>
+      <span className='inline-flex' aria-hidden='true'>
         {loadingLetters.map((letter, i) => (
           <span
             key={i}
@@ -91,7 +104,10 @@ function ButtonLoadingContent({
       </span>
 
       {/* Exit text (absolute overlay, animates away) */}
-      <span className='absolute inset-0 inline-flex items-center justify-center'>
+      <span
+        aria-hidden='true'
+        className='absolute inset-0 inline-flex items-center justify-center'
+      >
         {exitLetters.map((letter, i) => (
           <span
             key={i}
@@ -113,9 +129,7 @@ export const buttonVariants = tv({
     root: [
       // base
       'group relative inline-flex items-center justify-center whitespace-nowrap outline-none',
-      'transition-all duration-300 ease-out [interpolate-size:allow-keywords]',
-      // focus
-      'focus:outline-none',
+      'transition-[background-color,color,box-shadow,scale,width,transform] duration-150 ease-out [interpolate-size:allow-keywords]',
       // disabled
       'disabled:pointer-events-none disabled:bg-bg-weak-50 disabled:text-text-disabled-300 disabled:ring-transparent',
     ],
@@ -289,7 +303,7 @@ export const buttonVariants = tv({
       class: {
         root: [
           // base
-          'bg-error-base text-static-white',
+          'bg-error-base text-error-contrast',
           // hover
           'hover:bg-error-darker',
           // focus
@@ -348,7 +362,7 @@ export const buttonVariants = tv({
       class: {
         root: [
           // base
-          'bg-warning-base text-static-white',
+          'bg-warning-base text-warning-contrast',
           // hover
           'hover:bg-warning-darker',
           // focus
@@ -407,7 +421,7 @@ export const buttonVariants = tv({
       class: {
         root: [
           // base
-          'bg-success-base text-static-white',
+          'bg-success-base text-success-contrast',
           // hover
           'hover:bg-success-darker',
           // focus
@@ -473,6 +487,8 @@ type ButtonRootProps = VariantProps<typeof buttonVariants> &
     asChild?: boolean;
     loading?: boolean;
     loadingText?: string;
+    /** Disables the scale-on-press feedback. */
+    static?: boolean;
   };
 
 const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
@@ -487,6 +503,8 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
       loadingText,
       className,
       disabled,
+      static: isStatic,
+      onClickCapture,
       ...rest
     },
     forwardedRef
@@ -509,11 +527,41 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
       asChild
     );
 
+    // The loading treatment replaces the button's *content*, never the element
+    // it is rendered as. With `asChild`, Radix Slot merges this component's
+    // props onto whatever single element it receives — hand it
+    // `ButtonLoadingContent` (a function component that ignores props) and the
+    // slotted `<a>` disappears along with its href, its handlers and every
+    // class the button contributed. So keep the child and swap the content
+    // *inside* it instead.
+    let content: React.ReactNode;
+    if (!loading) {
+      content = extendedChildren;
+    } else if (asChild && React.isValidElement(children)) {
+      const child = children as React.ReactElement<{
+        children?: React.ReactNode;
+      }>;
+      content = React.cloneElement(
+        child,
+        undefined,
+        <ButtonLoadingContent loadingText={loadingText}>
+          {child.props.children}
+        </ButtonLoadingContent>
+      );
+    } else {
+      content = (
+        <ButtonLoadingContent loadingText={loadingText}>
+          {children}
+        </ButtonLoadingContent>
+      );
+    }
+
     return (
       <Component
         ref={forwardedRef}
         className={root({
           class: [
+            !isStatic && PRESS_SCALE,
             loading &&
               'bg-bg-weak-50 text-text-disabled-300 pointer-events-none shadow-none ring-transparent',
             className,
@@ -521,15 +569,28 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
         })}
         disabled={disabled}
         aria-disabled={loading || undefined}
+        aria-busy={loading || undefined}
+        // `pointer-events-none` only stops the mouse. The button stays in the
+        // tab order while loading (that is the point of `aria-disabled`), so
+        // Enter and Space would still fire a second submit — block activation
+        // here instead.
+        //
+        // It has to be the capture phase. With `asChild`, Radix Slot composes
+        // handlers child-first, so a bubble-phase guard on this element runs
+        // *after* the child's own `onClick` has already submitted. Stopping
+        // propagation while capturing takes the native event out of play
+        // before any bubble-phase handler — ours, the child's, or a parent's.
+        onClickCapture={(event: React.MouseEvent<HTMLButtonElement>) => {
+          if (loading) {
+            event.preventDefault();
+            event.stopPropagation();
+            return;
+          }
+          onClickCapture?.(event);
+        }}
         {...rest}
       >
-        {loading ? (
-          <ButtonLoadingContent loadingText={loadingText}>
-            {children}
-          </ButtonLoadingContent>
-        ) : (
-          extendedChildren
-        )}
+        {content}
       </Component>
     );
   }

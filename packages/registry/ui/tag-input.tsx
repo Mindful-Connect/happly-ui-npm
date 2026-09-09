@@ -31,7 +31,7 @@ const TagInputRoot = React.forwardRef<HTMLInputElement, TagInputProps>(
       onValueChange,
       size,
       hasError,
-      placeholder = 'Add tags...',
+      placeholder = 'Add a tag…',
       tagVariant = 'gray',
       maxTags,
       allowDuplicates = false,
@@ -129,6 +129,7 @@ const TagInputRoot = React.forwardRef<HTMLInputElement, TagInputProps>(
                 <Tag.DismissButton
                   onClick={() => removeTag(index)}
                   disabled={resolvedDisabled}
+                  aria-label={`Remove ${tag}`}
                 />
               </Tag.Root>
             ))}

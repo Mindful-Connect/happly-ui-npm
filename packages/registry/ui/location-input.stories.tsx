@@ -28,7 +28,7 @@ function PlaygroundRender(args: any) {
 
 export const Playground = {
   args: {
-    placeholder: 'Search address...',
+    placeholder: 'Search address…',
     size: 'medium',
     hasError: false,
     disabled: false,

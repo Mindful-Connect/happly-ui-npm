@@ -66,7 +66,7 @@ export const TextOnly = {
 export const SolidText = {
   render: () => (
     <div className='w-96'>
-      <Divider.Root variant='solid-text'>Amount &amp; Account</Divider.Root>
+      <Divider.Root variant='solid-text'>Amount &amp; account</Divider.Root>
     </div>
   ),
 };
@@ -75,8 +75,13 @@ export const Content = {
   render: () => (
     <div className='w-96'>
       <Divider.Root variant='content'>
-        <Button.Root variant='neutral' mode='stroke' size='xsmall'>
-          <Button.Icon as={RiAddLine} />
+        <Button.Root
+          variant='neutral'
+          mode='stroke'
+          size='xsmall'
+          aria-label='Add item'
+        >
+          <Button.Icon as={RiAddLine} aria-hidden='true' />
         </Button.Root>
       </Divider.Root>
     </div>

@@ -49,7 +49,7 @@ export const Playground = {
   args: {
     size: 'medium',
     hasError: false,
-    placeholder: 'Placeholder text...',
+    placeholder: 'Placeholder text…',
     disabled: false,
   },
   argTypes: {
@@ -78,13 +78,13 @@ export const WithIcon = {
       <Input.Root>
         <Input.Wrapper>
           <Input.Icon as={RiUser6Line} />
-          <Input.Input type='text' placeholder='Placeholder text...' />
+          <Input.Input type='text' placeholder='Placeholder text…' />
         </Input.Wrapper>
       </Input.Root>
 
       <Input.Root>
         <Input.Wrapper>
-          <Input.Input type='text' placeholder='Placeholder text...' />
+          <Input.Input type='text' placeholder='Placeholder text…' />
           <Input.Icon as={RiSearchLine} />
         </Input.Wrapper>
       </Input.Root>
@@ -98,21 +98,21 @@ export const Sizes = {
       <Input.Root size='medium'>
         <Input.Wrapper>
           <Input.Icon as={RiUser6Line} />
-          <Input.Input type='text' placeholder='Placeholder text...' />
+          <Input.Input type='text' placeholder='Placeholder text…' />
         </Input.Wrapper>
       </Input.Root>
 
       <Input.Root size='small'>
         <Input.Wrapper>
           <Input.Icon as={RiUser6Line} />
-          <Input.Input type='text' placeholder='Placeholder text...' />
+          <Input.Input type='text' placeholder='Placeholder text…' />
         </Input.Wrapper>
       </Input.Root>
 
       <Input.Root size='xsmall'>
         <Input.Wrapper>
           <Input.Icon as={RiUser6Line} />
-          <Input.Input type='text' placeholder='Placeholder text...' />
+          <Input.Input type='text' placeholder='Placeholder text…' />
         </Input.Wrapper>
       </Input.Root>
     </div>
@@ -199,7 +199,7 @@ export const WithKbd = {
       <Input.Root>
         <Input.Wrapper>
           <Input.Icon as={RiSearch2Line} />
-          <Input.Input placeholder='Search...' />
+          <Input.Input placeholder='Search…' />
           <Kbd.Root>
             <IconCmd className='h-2.5 w-2.5' />1
           </Kbd.Root>
@@ -412,7 +412,7 @@ export const Disabled = {
       <Input.Root>
         <Input.Wrapper>
           <Input.Icon as={RiUser6Line} />
-          <Input.Input type='text' placeholder='Placeholder text...' disabled />
+          <Input.Input type='text' placeholder='Placeholder text…' disabled />
         </Input.Wrapper>
       </Input.Root>
     </div>
@@ -425,7 +425,7 @@ export const ErrorState = {
       <Input.Root hasError>
         <Input.Wrapper>
           <Input.Icon as={RiUser6Line} />
-          <Input.Input type='text' placeholder='Placeholder text...' />
+          <Input.Input type='text' placeholder='Placeholder text…' />
         </Input.Wrapper>
       </Input.Root>
     </div>
@@ -483,7 +483,7 @@ function WithTagsRender() {
           <Input.Wrapper>
             <Input.Input
               id='tags'
-              placeholder='Add tags...'
+              placeholder='Add tags…'
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={addTag}
@@ -567,6 +567,7 @@ function PaymentInputRender() {
             <Input.Input
               {...getCardNumberProps()}
               id='card-number'
+              autoComplete='cc-number'
               placeholder='0000 0000 0000 0000'
             />
             <img src={cardIcon} alt='' className='h-6 w-8 shrink-0' />
@@ -640,7 +641,7 @@ export const WithInlineSelect = {
       <Input.Root>
         <Input.Wrapper>
           <Input.Icon as={RiUser6Line} />
-          <Input.Input placeholder='Placeholder text...' />
+          <Input.Input placeholder='Placeholder text…' />
           <Select.Root variant='inline' defaultValue='view'>
             <Select.Trigger>
               <Select.TriggerIcon as={RiGlobalLine} />

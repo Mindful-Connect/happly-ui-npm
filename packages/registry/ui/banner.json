@@ -93,6 +93,12 @@
             "type": "boolean",
             "default": "false",
             "description": "Renders as child element using Radix Slot"
+          },
+          {
+            "name": "aria-label",
+            "type": "string",
+            "default": "'Dismiss'",
+            "description": "Name announced for the icon-only dismiss control. Override it when the banner dismisses something more specific."
           }
         ]
       }

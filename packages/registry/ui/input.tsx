@@ -20,12 +20,12 @@ export const inputVariants = tv({
     root: [
       // base
       'group relative flex w-full overflow-hidden bg-bg-white-0 text-text-strong-950 shadow-regular-xs',
-      'transition duration-200 ease-out',
+      'transition-[box-shadow] duration-150 ease-out',
       'divide-x divide-stroke-soft-200',
       // before
       'before:absolute before:inset-0 before:ring-1 before:ring-inset before:ring-stroke-soft-200',
       'before:pointer-events-none before:rounded-[inherit]',
-      'before:transition before:duration-200 before:ease-out',
+      'before:transition-[box-shadow] before:duration-150 before:ease-out',
       // hover
       'hover:shadow-none',
       // hover override inside section toggle (keep shadow + ring visible against toggle bg)
@@ -38,7 +38,7 @@ export const inputVariants = tv({
     wrapper: [
       // base
       'group/input-wrapper flex w-full cursor-text items-center bg-bg-white-0',
-      'transition duration-200 ease-out',
+      'transition-[background-color] duration-150 ease-out',
       // hover
       'hover:[&:not(&:has(input:focus))]:bg-bg-weak-50',
       // hover override inside section toggle (bg-weak-50 clashes with toggle bg)
@@ -47,14 +47,17 @@ export const inputVariants = tv({
       'has-[input:disabled]:pointer-events-none has-[input:disabled]:bg-bg-weak-50',
     ],
     input: [
-      // base
-      'w-full border-0 bg-transparent bg-none p-0 text-paragraph-sm text-text-strong-950 outline-none ring-0 focus:border-0 focus:ring-0',
-      'transition duration-200 ease-out',
+      // base — the font size lives in the `size` variants below, not here
+      'w-full border-0 bg-transparent bg-none p-0 text-text-strong-950 outline-none ring-0 focus:border-0 focus:ring-0',
+      'transition-[color] duration-150 ease-out',
       // placeholder
-      'placeholder:select-none placeholder:text-text-soft-400 placeholder:transition placeholder:duration-200 placeholder:ease-out',
+      'placeholder:select-none placeholder:text-text-soft-400 placeholder:transition-[color] placeholder:duration-150 placeholder:ease-out',
       // hover placeholder
       'group-hover/input-wrapper:placeholder:text-text-sub-600',
-      // focus
+      // focus — bare `focus:` is deliberate on text inputs, not an oversight.
+      // Browsers match `:focus-visible` on a text field for pointer focus too,
+      // so `focus-visible:` here is a no-op with a regression risk. The visible
+      // ring is painted by the wrapper anyway. Do not "fix" this.
       'focus:outline-none',
       // focus placeholder
       'group-has-[input:focus]:placeholder:text-text-sub-600',
@@ -64,7 +67,7 @@ export const inputVariants = tv({
     icon: [
       // base
       'flex w-5 h-5 shrink-0 select-none items-center justify-center',
-      'transition duration-200 ease-out',
+      'transition-[color] duration-150 ease-out',
       // placeholder state
       'group-has-[:placeholder-shown]:text-text-soft-400',
       // filled state
@@ -80,7 +83,7 @@ export const inputVariants = tv({
       // base
       'shrink-0 bg-bg-white-0 text-paragraph-sm text-text-sub-600',
       'flex items-center justify-center truncate',
-      'transition duration-200 ease-out',
+      'transition-[color] duration-150 ease-out',
       // placeholder state
       'group-has-[:placeholder-shown]:text-text-soft-400',
       // focus state
@@ -98,21 +101,29 @@ export const inputVariants = tv({
     ],
   },
   variants: {
+    // Every size renders 16px below `sm` and its own size from `sm` up. iOS
+    // Safari zooms the page whenever a focused field is under 16px and does
+    // not zoom back out on blur, and phones are the only viewport where that
+    // can happen — so the phone step is deliberate, and identical across
+    // sizes, even for `xsmall`. It is spelled out per size rather than once on
+    // the base slot so that a project that never renders on a phone (or that
+    // handles the zoom another way) can drop it from one size without
+    // touching the others.
     size: {
       medium: {
         root: 'rounded-10',
         wrapper: 'gap-2 px-3',
-        input: 'h-10',
+        input: 'h-10 text-paragraph-md sm:text-paragraph-sm',
       },
       small: {
         root: 'rounded-lg',
         wrapper: 'gap-2 px-2.5',
-        input: 'h-9',
+        input: 'h-9 text-paragraph-md sm:text-paragraph-sm',
       },
       xsmall: {
         root: 'rounded-lg',
         wrapper: 'gap-1.5 px-2',
-        input: 'h-8',
+        input: 'h-8 text-paragraph-md sm:text-paragraph-sm',
       },
     },
     hasError: {
@@ -251,6 +262,8 @@ const InputEl = React.forwardRef<
       asChild,
       placeholder,
       disabled,
+      'aria-describedby': ariaDescribedBy,
+      'aria-required': ariaRequired,
       ...rest
     },
     forwardedRef
@@ -258,10 +271,17 @@ const InputEl = React.forwardRef<
     const Component = asChild ? Slot : 'input';
     const formField = useFormField();
     const resolvedDisabled = disabled ?? formField.disabled;
+    const resolvedHasError = hasError ?? formField.hasError;
+    // The field's hint/error is announced with the control, alongside any
+    // description the consumer passed in.
+    const resolvedDescribedBy =
+      [ariaDescribedBy, formField.describedBy].filter(Boolean).join(' ') ||
+      undefined;
+    const resolvedRequired = ariaRequired ?? (formField.required || undefined);
 
     const { input } = inputVariants({
       size,
-      hasError,
+      hasError: resolvedHasError,
     });
 
     return (
@@ -271,6 +291,11 @@ const InputEl = React.forwardRef<
         ref={forwardedRef}
         placeholder={placeholder ?? '\u200B'}
         disabled={resolvedDisabled}
+        // The error state has to live on the control itself — `aria-invalid` on
+        // the wrapper div is not exposed for the input by assistive tech.
+        aria-invalid={resolvedHasError || undefined}
+        aria-describedby={resolvedDescribedBy}
+        aria-required={resolvedRequired}
         {...rest}
       />
     );
@@ -305,7 +330,12 @@ function InputAffix({
   });
 
   return (
-    <div className={affix({ class: className })} {...rest}>
+    <div
+      className={affix({ class: className })}
+      // The affix truncates, so keep the full value reachable on hover.
+      title={typeof children === 'string' ? children : undefined}
+      {...rest}
+    >
       {children}
     </div>
   );

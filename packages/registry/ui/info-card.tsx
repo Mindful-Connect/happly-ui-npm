@@ -12,20 +12,22 @@ export const infoCardVariants = tv({
   slots: {
     root: [
       '@container',
-      'relative overflow-clip rounded-2xl border border-stroke-soft-200/50 bg-bg-white-0/60 p-2',
+      // concentric radius: 20px outer = 12px inner (rounded-xl) + 8px padding
+      'relative overflow-clip rounded-20 border border-stroke-soft-200/50 bg-bg-white-0/60 p-2',
       'flex flex-col gap-2',
     ],
     item: [
       'flex flex-1 flex-col justify-center gap-1.5 overflow-clip rounded-xl bg-bg-white-0 p-3.5',
-      'shadow-[0px_2px_5px_-1px_rgba(0,0,0,0.04),0px_12px_40px_-8px_rgba(0,0,0,0.08),0px_0px_0px_1px_var(--color-bg-white-0),0px_0px_0px_1.5px_rgba(153,160,174,0.1)]',
+      'shadow-card-raised',
     ],
     action: [
       'flex aspect-square min-h-[70px] items-center justify-center overflow-visible rounded-xl bg-bg-white-0 p-2',
-      'shadow-[0px_2px_5px_-1px_rgba(0,0,0,0.04),0px_12px_40px_-8px_rgba(0,0,0,0.08),0px_0px_0px_1px_var(--color-bg-white-0),0px_0px_0px_1.5px_rgba(153,160,174,0.1)]',
-      'transition-colors hover:bg-bg-weak-50 cursor-pointer',
+      'shadow-card-raised',
+      'transition-colors duration-150 ease-out hover:bg-bg-weak-50 cursor-pointer',
     ],
     label: 'text-label-xs font-medium text-text-strong-950',
-    value: 'flex items-center gap-1 text-label-xs text-text-sub-600',
+    value:
+      'flex items-center gap-1 text-label-xs tabular-nums text-text-sub-600',
   },
 });
 
@@ -109,38 +111,57 @@ const ActionNotification = () => (
 const InfoCardAction = React.forwardRef<
   HTMLButtonElement | HTMLAnchorElement,
   InfoCardActionProps
->(({ className, children, href, notification, ...rest }, forwardedRef) => {
-  const { action } = infoCardVariants();
-  const cls = action({ class: cn('relative', className) });
-  const content = children ?? (
-    <RiArrowRightUpLine className='text-icon-sub-600 size-5' />
-  );
+>(
+  (
+    {
+      className,
+      children,
+      href,
+      notification,
+      'aria-label': ariaLabel,
+      ...rest
+    },
+    forwardedRef
+  ) => {
+    const { action } = infoCardVariants();
+    const cls = action({ class: cn('relative', className) });
+    const content = children ?? (
+      <RiArrowRightUpLine
+        aria-hidden='true'
+        className='text-icon-sub-600 size-5'
+      />
+    );
+    // The default content is an icon with no text, so the control needs a name.
+    const name = ariaLabel ?? (children ? undefined : 'Open');
 
-  if (href) {
+    if (href) {
+      return (
+        <a
+          ref={forwardedRef as React.Ref<HTMLAnchorElement>}
+          href={href}
+          aria-label={name}
+          className={cls}
+          {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+        >
+          {content}
+          {notification && <ActionNotification />}
+        </a>
+      );
+    }
+
     return (
-      <a
-        ref={forwardedRef as React.Ref<HTMLAnchorElement>}
-        href={href}
+      <button
+        ref={forwardedRef as React.Ref<HTMLButtonElement>}
+        aria-label={name}
         className={cls}
-        {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+        {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
       >
         {content}
         {notification && <ActionNotification />}
-      </a>
+      </button>
     );
   }
-
-  return (
-    <button
-      ref={forwardedRef as React.Ref<HTMLButtonElement>}
-      className={cls}
-      {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
-    >
-      {content}
-      {notification && <ActionNotification />}
-    </button>
-  );
-});
+);
 InfoCardAction.displayName = 'InfoCardAction';
 
 export {

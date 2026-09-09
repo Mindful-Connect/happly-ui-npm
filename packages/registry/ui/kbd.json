@@ -21,7 +21,7 @@
     "api": [
       {
         "name": "Kbd.Root",
-        "description": "The keyboard key container. Renders as a styled div.",
+        "description": "Renders a <kbd> element for a key or shortcut, with tabular figures so digit and letter keys keep the same width.",
         "props": []
       }
     ]

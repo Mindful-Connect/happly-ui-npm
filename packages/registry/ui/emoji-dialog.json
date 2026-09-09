@@ -8,7 +8,8 @@
   "dependencies": [
     "@radix-ui/react-dialog",
     "@remixicon/react",
-    "framer-motion"
+    "framer-motion",
+    "tailwindcss-animate"
   ],
   "registryDependencies": ["tv", "happly-ui-utils", "memoji"],
   "docs": {
@@ -18,17 +19,17 @@
       {
         "title": "Welcome Dialog",
         "description": "A welcoming onboarding dialog with a friendly memoji and tour prompt.",
-        "code": "<EmojiDialog.Root>\n  <EmojiDialog.Trigger asChild>\n    <Button.Root>Open Welcome Dialog</Button.Root>\n  </EmojiDialog.Trigger>\n  <EmojiDialog.Content>\n    <EmojiDialog.EmojiArea memoji={{ gender: 'female', person: 'angela', skinTone: 'black', posture: 'happy-1' }}>\n      <EmojiDialog.Bubble icon={<RiSparklingLine />}>Welcome aboard!</EmojiDialog.Bubble>\n    </EmojiDialog.EmojiArea>\n    <EmojiDialog.Header>\n      <EmojiDialog.Title>Welcome to Happly!</EmojiDialog.Title>\n      <EmojiDialog.Description>Your workspace is ready.</EmojiDialog.Description>\n    </EmojiDialog.Header>\n    <EmojiDialog.Footer>\n      <EmojiDialog.Close asChild><Button.Root variant='neutral' mode='stroke'>Skip Tour</Button.Root></EmojiDialog.Close>\n      <Button.Root>Start Tour</Button.Root>\n    </EmojiDialog.Footer>\n  </EmojiDialog.Content>\n</EmojiDialog.Root>",
+        "code": "<EmojiDialog.Root>\n  <EmojiDialog.Trigger asChild>\n    <Button.Root>Open Welcome Dialog</Button.Root>\n  </EmojiDialog.Trigger>\n  <EmojiDialog.Content>\n    <EmojiDialog.EmojiArea memoji={{ gender: 'female', person: 'angela', skinTone: 'black', posture: 'happy-1' }}>\n      <EmojiDialog.Bubble icon={<RiSparklingLine />}>Welcome aboard!</EmojiDialog.Bubble>\n    </EmojiDialog.EmojiArea>\n    <EmojiDialog.Header>\n      <EmojiDialog.Title>Welcome to Happly!</EmojiDialog.Title>\n      <EmojiDialog.Description>Your workspace is ready.</EmojiDialog.Description>\n    </EmojiDialog.Header>\n    <EmojiDialog.Footer>\n      <EmojiDialog.Close asChild><Button.Root variant='neutral' mode='stroke'>Skip tour</Button.Root></EmojiDialog.Close>\n      <Button.Root>Start tour</Button.Root>\n    </EmojiDialog.Footer>\n  </EmojiDialog.Content>\n</EmojiDialog.Root>",
         "stories": ["Default"]
       },
       {
         "title": "Delete Confirmation",
         "description": "Danger-variant bubble for irreversible destructive actions with multi-line description.",
-        "code": "<EmojiDialog.Content>\n  <EmojiDialog.EmojiArea memoji={{ ... posture: 'sad-3' }}>\n    <EmojiDialog.Bubble variant='danger' icon={<RiDeleteBinLine />}>This can't be undone</EmojiDialog.Bubble>\n  </EmojiDialog.EmojiArea>\n  <EmojiDialog.Header>\n    <EmojiDialog.Title>Delete Your Account?</EmojiDialog.Title>\n    <EmojiDialog.Description lines={['All data will be removed.', 'This cannot be reversed.']} />\n  </EmojiDialog.Header>\n  ...\n</EmojiDialog.Content>",
+        "code": "<EmojiDialog.Content>\n  <EmojiDialog.EmojiArea memoji={{ ... posture: 'sad-3' }}>\n    <EmojiDialog.Bubble variant='danger' icon={<RiDeleteBinLine />}>This can't be undone</EmojiDialog.Bubble>\n  </EmojiDialog.EmojiArea>\n  <EmojiDialog.Header>\n    <EmojiDialog.Title>Delete your account?</EmojiDialog.Title>\n    <EmojiDialog.Description lines={['All data will be removed.', 'This cannot be reversed.']} />\n  </EmojiDialog.Header>\n  ...\n</EmojiDialog.Content>",
         "stories": ["DeleteConfirmation"]
       },
       {
-        "title": "Unsaved Changes",
+        "title": "Unsaved changes",
         "description": "Warning-variant bubble prompting users to save before navigating away.",
         "code": "<EmojiDialog.EmojiArea memoji={{ ... posture: 'thinking-28' }}>\n  <EmojiDialog.Bubble variant='warning' icon={<RiAlertLine />}>Wait a moment!</EmojiDialog.Bubble>\n</EmojiDialog.EmojiArea>",
         "stories": ["UnsavedChanges"]
@@ -42,7 +43,7 @@
       {
         "title": "With Form Content",
         "description": "Demonstrates custom form fields between header and footer for data collection dialogs.",
-        "code": "<EmojiDialog.Content>\n  <EmojiDialog.EmojiArea memoji={{ ... }} />\n  <EmojiDialog.Header>\n    <EmojiDialog.Title>Invite a Teammate</EmojiDialog.Title>\n    <EmojiDialog.Description>Send an invite.</EmojiDialog.Description>\n  </EmojiDialog.Header>\n  <div className='relative z-10 flex flex-col gap-4'>\n    <Label.Root>Email</Label.Root>\n    <Input.Root>...</Input.Root>\n  </div>\n  <EmojiDialog.Footer>...</EmojiDialog.Footer>\n</EmojiDialog.Content>",
+        "code": "<EmojiDialog.Content>\n  <EmojiDialog.EmojiArea memoji={{ ... }} />\n  <EmojiDialog.Header>\n    <EmojiDialog.Title>Invite a teammate</EmojiDialog.Title>\n    <EmojiDialog.Description>Send an invite.</EmojiDialog.Description>\n  </EmojiDialog.Header>\n  <div className='relative z-10 flex flex-col gap-4'>\n    <Label.Root>Email</Label.Root>\n    <Input.Root>...</Input.Root>\n  </div>\n  <EmojiDialog.Footer>...</EmojiDialog.Footer>\n</EmojiDialog.Content>",
         "stories": ["WithFormContent"]
       },
       {
@@ -53,7 +54,7 @@
       },
       {
         "title": "Static (No Animations)",
-        "description": "All entry and floating animations disabled for reduced-motion or static contexts.",
+        "description": "All entry and floating animations disabled. `prefers-reduced-motion: reduce` applies the same treatment on its own; this prop is for static contexts such as screenshots.",
         "code": "<EmojiDialog.Content disableAnimations>...</EmojiDialog.Content>",
         "stories": ["StaticNoAnimations"]
       },
@@ -101,7 +102,7 @@
             "name": "disableAnimations",
             "type": "boolean",
             "default": "false",
-            "description": "Disable all entry and floating animations"
+            "description": "Disable all entry and floating animations. Animations are also disabled automatically when the reader has `prefers-reduced-motion: reduce` set."
           }
         ]
       },

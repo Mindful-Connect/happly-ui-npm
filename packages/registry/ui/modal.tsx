@@ -13,11 +13,17 @@ type ModalCloseVariant = 'default' | 'badge';
 
 const PATTERN_BACKGROUND_OPACITY = 0.15;
 
+// Decorative hairlines follow the text color so the grid stays visible on both themes
+// (black on the light surface, white on the dark one) instead of a fixed rgba(0,0,0).
+const patternLine = (opacity: number) =>
+  `color-mix(in srgb, var(--color-text-strong-950) ${Math.round(opacity * 1000) / 10}%, transparent)`;
+
 const PATTERN_BACKGROUND_STYLE: React.CSSProperties = {
   backgroundImage: [
-    `linear-gradient(to top, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%)`,
-    `repeating-linear-gradient(90deg, rgba(0,0,0,${PATTERN_BACKGROUND_OPACITY}) 0px, rgba(0,0,0,${PATTERN_BACKGROUND_OPACITY * 0.15}) 1px, transparent 1px, transparent 60px)`,
-    `repeating-linear-gradient(0deg, rgba(0,0,0,${PATTERN_BACKGROUND_OPACITY}) 0px, rgba(0,0,0,${PATTERN_BACKGROUND_OPACITY * 0.15}) 1px, transparent 1px, transparent 60px)`,
+    // Fades into the modal surface, so it follows the theme in dark mode.
+    `linear-gradient(to top, var(--color-bg-white-0) 50%, transparent 100%)`,
+    `repeating-linear-gradient(90deg, ${patternLine(PATTERN_BACKGROUND_OPACITY)} 0px, ${patternLine(PATTERN_BACKGROUND_OPACITY * 0.15)} 1px, transparent 1px, transparent 60px)`,
+    `repeating-linear-gradient(0deg, ${patternLine(PATTERN_BACKGROUND_OPACITY)} 0px, ${patternLine(PATTERN_BACKGROUND_OPACITY * 0.15)} 1px, transparent 1px, transparent 60px)`,
   ].join(','),
   backgroundSize: 'auto, 60px 60px, 60px 60px',
   backgroundRepeat: 'no-repeat, repeat, repeat',
@@ -39,8 +45,10 @@ const ModalOverlay = React.forwardRef<
       className={cn(
         // base
         'bg-overlay fixed inset-0 z-50 flex flex-col items-center justify-center overflow-y-auto p-4 backdrop-blur-[10px]',
-        // animation
-        'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+        // animation — enter 200ms, exit 150ms, ease-out both ways, matching
+        // every other overlay in the set.
+        'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:duration-200 data-[state=open]:ease-out',
+        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:duration-150 data-[state=closed]:ease-out',
         className
       )}
       {...rest}
@@ -86,9 +94,9 @@ const ModalContent = React.forwardRef<
               'rounded-20 bg-bg-white-0 shadow-regular-md',
               // focus
               'focus:outline-none',
-              // animation
-              'data-[state=open]:animate-in data-[state=closed]:animate-out',
-              'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+              // animation — enter 200ms, exit 150ms, ease-out both ways.
+              'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:duration-200 data-[state=open]:ease-out',
+              'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:duration-150 data-[state=closed]:ease-out',
               'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
               // pattern
               isPattern && 'border-stroke-soft-200 overflow-hidden border',
@@ -118,8 +126,8 @@ const ModalContent = React.forwardRef<
                     'absolute top-[34px] right-[34px] z-10',
                     'flex h-8 w-8 items-center justify-center rounded-full',
                     'bg-bg-weak-50 text-text-sub-600',
-                    'hover:text-text-strong-950 transition-colors hover:bg-neutral-100',
-                    'focus:ring-stroke-soft-200 focus:ring-2 focus:ring-offset-2 focus:outline-none',
+                    'hover:text-text-strong-950 hover:bg-bg-soft-200 transition-colors',
+                    'focus-visible:shadow-button-important-focus outline-none',
                     'disabled:pointer-events-none'
                   )}
                 >
@@ -133,9 +141,10 @@ const ModalContent = React.forwardRef<
                   <CompactButton.Root
                     variant='ghost'
                     size='large'
+                    aria-label='Close'
                     className='absolute top-4 right-4'
                   >
-                    <CompactButton.Icon as={RiCloseLine} />
+                    <CompactButton.Icon as={RiCloseLine} aria-hidden='true' />
                   </CompactButton.Root>
                 </ModalClose>
               ))}
@@ -196,7 +205,10 @@ const ModalTitle = React.forwardRef<
   return (
     <DialogPrimitive.Title
       ref={forwardedRef}
-      className={cn('text-label-sm text-text-strong-950', className)}
+      className={cn(
+        'text-label-sm text-text-strong-950 text-balance',
+        className
+      )}
       {...rest}
     />
   );
@@ -210,7 +222,10 @@ const ModalDescription = React.forwardRef<
   return (
     <DialogPrimitive.Description
       ref={forwardedRef}
-      className={cn('text-paragraph-xs text-text-sub-600', className)}
+      className={cn(
+        'text-paragraph-xs text-text-sub-600 text-pretty',
+        className
+      )}
       {...rest}
     />
   );

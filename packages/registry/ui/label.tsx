@@ -17,6 +17,8 @@ const LabelRoot = React.forwardRef<
       ref={forwardedRef}
       className={cn(
         'group text-label-sm text-text-strong-950 cursor-default',
+        // a label bound to a control shares its hit target, so it points
+        '[&[for]]:cursor-pointer',
         'inline',
         className
       )}
@@ -33,9 +35,16 @@ function LabelAsterisk({
   ...rest
 }: React.HTMLAttributes<HTMLSpanElement>) {
   return (
-    <span className={cn('text-error-base ml-px', className)} {...rest}>
-      {children || '*'}
-    </span>
+    <>
+      <span
+        aria-hidden='true'
+        className={cn('text-error-base ml-px', className)}
+        {...rest}
+      >
+        {children || '*'}
+      </span>
+      <span className='sr-only'> (required)</span>
+    </>
   );
 }
 
@@ -64,6 +73,7 @@ function LabelInfoIcon({ className, ...rest }: React.SVGProps<SVGSVGElement>) {
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
       className={cn('text-text-disabled-300 h-5 w-5', className)}
+      aria-hidden='true'
       {...rest}
     >
       <path
@@ -79,9 +89,12 @@ function LabelInfoIcon({ className, ...rest }: React.SVGProps<SVGSVGElement>) {
 function LabelInfo({
   children,
   iconClassName,
+  label = 'More information',
 }: {
   children: React.ReactNode;
   iconClassName?: string;
+  /** Accessible name for the icon-only tooltip trigger. */
+  label?: string;
 }) {
   return (
     <Tooltip.Provider>
@@ -89,7 +102,16 @@ function LabelInfo({
         <Tooltip.Trigger asChild>
           <button
             type='button'
-            className='-mt-0.5 ml-px inline-flex align-middle'
+            aria-label={label}
+            // the trigger lives inside <label>; without this a click on the
+            // info icon also toggles the associated control
+            onClick={(event) => event.preventDefault()}
+            className={cn(
+              'relative -mt-0.5 ml-px inline-flex rounded-full align-middle outline-none',
+              // 24×24 hit area around the 20px icon
+              'after:absolute after:-inset-0.5',
+              'focus-visible:shadow-button-important-focus'
+            )}
           >
             <LabelInfoIcon className={iconClassName} />
           </button>
@@ -109,6 +131,8 @@ type LabelComposedProps = React.ComponentPropsWithoutRef<
   sub?: React.ReactNode;
   subParens?: boolean;
   info?: React.ReactNode;
+  /** Accessible name for the `info` tooltip trigger. */
+  infoLabel?: string;
   disabled?: boolean;
 };
 
@@ -117,7 +141,7 @@ const LabelComposed = React.forwardRef<
   LabelComposedProps
 >(
   (
-    { children, required, sub, subParens, info, disabled, ...rest },
+    { children, required, sub, subParens, info, infoLabel, disabled, ...rest },
     forwardedRef
   ) => {
     return (
@@ -125,7 +149,7 @@ const LabelComposed = React.forwardRef<
         {children}
         {required && <LabelAsterisk />}
         {sub && <LabelSub parens={subParens}>{sub}</LabelSub>}
-        {info && <LabelInfo>{info}</LabelInfo>}
+        {info && <LabelInfo label={infoLabel}>{info}</LabelInfo>}
       </LabelRoot>
     );
   }
