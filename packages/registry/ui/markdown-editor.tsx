@@ -447,6 +447,9 @@ const Content = React.forwardRef<HTMLTextAreaElement, ContentProps>(
       height = '200px',
       value = '',
       onChange,
+      'aria-describedby': ariaDescribedBy,
+      'aria-invalid': ariaInvalid,
+      'aria-required': ariaRequired,
       ...rest
     },
     forwardedRef
@@ -456,7 +459,8 @@ const Content = React.forwardRef<HTMLTextAreaElement, ContentProps>(
       disabled,
       previewing,
     } = useMarkdownEditorContext();
-    const hasError = hasErrorProp ?? contextHasError;
+    const formField = useFormField();
+    const hasError = hasErrorProp ?? (contextHasError || formField.hasError);
 
     const internalRef = React.useRef<HTMLTextAreaElement | null>(null);
     const lastValueRef = React.useRef(value);
@@ -499,9 +503,22 @@ const Content = React.forwardRef<HTMLTextAreaElement, ContentProps>(
       // around `<MarkdownEditor.Composed id="bio">`, dropping the id here
       // leaves the label's `for` (and any `aria-describedby`) dangling for as
       // long as Preview is on.
+      //
+      // The aria set is resolved here rather than left to `pickPreviewProps`
+      // so the preview carries the same describedby/invalid/required the
+      // textarea gets from `FormFieldContext` in edit mode — otherwise the
+      // hint or error is announced with the field only while editing.
+      // Explicit props still win — they are folded into the values below.
       return (
         <div
           {...pickPreviewProps(rest)}
+          aria-describedby={
+            [ariaDescribedBy, formField.describedBy]
+              .filter(Boolean)
+              .join(' ') || undefined
+          }
+          aria-invalid={ariaInvalid ?? (hasError || undefined)}
+          aria-required={ariaRequired ?? (formField.required || undefined)}
           className={cn(
             'markdown-editor-preview',
             'bg-bg-white-0 shadow-regular-xs w-full overflow-y-auto rounded-xl px-3 py-2.5',
@@ -531,6 +548,14 @@ const Content = React.forwardRef<HTMLTextAreaElement, ContentProps>(
           className
         )}
         style={{ minHeight: height }}
+        // Passed through unresolved on purpose: `Textarea` reads the same
+        // `FormFieldContext` and merges `describedBy` / `required` itself, so
+        // merging here too would repeat the hint id in `aria-describedby`.
+        // `aria-invalid` is spread only when set — `Textarea` derives it from
+        // `hasError`, and passing the key as `undefined` would clear that.
+        aria-describedby={ariaDescribedBy}
+        aria-required={ariaRequired}
+        {...(ariaInvalid !== undefined ? { 'aria-invalid': ariaInvalid } : {})}
         {...rest}
       />
     );

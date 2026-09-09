@@ -159,7 +159,7 @@
       },
       {
         "name": "MarkdownEditor.Content",
-        "description": "The editor content area. Renders a textarea in edit mode and rendered HTML in preview mode.",
+        "description": "The editor content area. Renders a textarea in edit mode and rendered HTML in preview mode. Both modes keep the props that identify the field — `id`, `aria-*`, `data-*` — and pick up `aria-describedby`, `aria-invalid`, and `aria-required` from a surrounding FormField.Root, so the hint or error is announced with the field in preview as well as in edit. Explicit props win.",
         "props": [
           {
             "name": "hasError",
