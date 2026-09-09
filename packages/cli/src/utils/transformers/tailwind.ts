@@ -18,6 +18,10 @@ import { fetchOrReadRaw, isLocalRegistry } from '../registry.js';
 import { logger } from '../logger.js';
 
 const HAPPLY_PLUGIN_FILE = 'happly-ui-tailwind.cjs';
+// `init` installs this for every project; v4 registers it with `@plugin` in the
+// theme CSS, so v3 has to register it here or the animate-in/out utilities that
+// the overlay components rely on emit nothing.
+const ANIMATE_PLUGIN_PACKAGE = 'tailwindcss-animate';
 
 /**
  * Update Tailwind configuration based on version.
@@ -66,40 +70,48 @@ async function updateConfigV3(
   await writeFile(pluginPath, pluginContent, 'utf-8');
   logger.success(`Created ${HAPPLY_PLUGIN_FILE}`);
 
-  // Register plugin in tailwind config
+  // Register plugins in tailwind config
   let content = await readFile(configPath, 'utf-8');
 
-  if (content.includes(HAPPLY_PLUGIN_FILE)) {
-    logger.info(`${HAPPLY_PLUGIN_FILE} already registered in tailwind config.`);
+  const missing: string[] = [];
+  if (!content.includes(HAPPLY_PLUGIN_FILE)) {
+    missing.push(`require('./${HAPPLY_PLUGIN_FILE}')`);
+  }
+  if (!content.includes(ANIMATE_PLUGIN_PACKAGE)) {
+    missing.push(`require('${ANIMATE_PLUGIN_PACKAGE}')`);
+  }
+
+  if (missing.length === 0) {
+    logger.info(
+      `${HAPPLY_PLUGIN_FILE} and ${ANIMATE_PLUGIN_PACKAGE} already registered in tailwind config.`
+    );
     return;
   }
 
+  const registered = missing.join(' and ');
+
   const pluginsRegex = /plugins:\s*\[/;
   if (pluginsRegex.test(content)) {
-    content = content.replace(
-      pluginsRegex,
-      (match) => `${match}\n    require('./${HAPPLY_PLUGIN_FILE}'),`
-    );
+    const inserted = missing.map((entry) => `\n    ${entry},`).join('');
+    content = content.replace(pluginsRegex, (match) => `${match}${inserted}`);
     await writeFile(configPath, content, 'utf-8');
-    logger.success(
-      `Registered ${HAPPLY_PLUGIN_FILE} in ${config.tailwind.config}`
-    );
+    logger.success(`Registered ${registered} in ${config.tailwind.config}`);
   } else {
     // No plugins array — try to add one before the closing brace of the config
     const closingBrace = /}\s*;?\s*$/;
     if (closingBrace.test(content)) {
       content = content.replace(
         closingBrace,
-        `  plugins: [require('./${HAPPLY_PLUGIN_FILE}')],\n};`
+        `  plugins: [${missing.join(', ')}],\n};`
       );
       await writeFile(configPath, content, 'utf-8');
       logger.success(
-        `Added plugins array with ${HAPPLY_PLUGIN_FILE} to ${config.tailwind.config}`
+        `Added plugins array with ${registered} to ${config.tailwind.config}`
       );
     } else {
       logger.warn(
         `Could not update ${config.tailwind.config}. Add manually:\n` +
-          `  plugins: [require('./${HAPPLY_PLUGIN_FILE}')]`
+          `  plugins: [${missing.join(', ')}]`
       );
     }
   }

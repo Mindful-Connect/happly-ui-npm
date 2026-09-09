@@ -332,6 +332,7 @@ module.exports = plugin(function() {
           "gray": "var(--color-overlay-gray)",
           "slate": "var(--color-overlay-slate)"
         },
+        "image-outline": "var(--color-image-outline)",
         "gray": {
           "0": "#ffffff",
           "50": "#f7f7f7",

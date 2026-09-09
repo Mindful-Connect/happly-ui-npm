@@ -642,6 +642,10 @@ export const colors = {
     slate: 'var(--color-overlay-slate)',
   },
 
+  // Image hairline — flat key so the class is `outline-image-outline`, matching
+  // the v4 `--color-image-outline` token that auto-generates the same name.
+  'image-outline': 'var(--color-image-outline)',
+
   // Raw palette colors (hex) — for Tailwind v3 utility classes
   gray: {
     0: '#ffffff',

@@ -98,7 +98,7 @@ const SwitchToggleTrigger = React.forwardRef<
         // inactive hover — one step darker than the default weak-50 track
         // (bg-100 is indistinguishable from it). Darker-track contexts flip
         // the hover lighter via Group's triggerClassName instead.
-        'data-[state=inactive]:not-disabled:hover:bg-bg-soft-200',
+        'data-[state=inactive]:enabled:hover:bg-bg-soft-200',
         // disabled — the trigger's own `disabled` (set by the List, or per
         // trigger) and the List's aria-disabled resolve to the same colour.
         // The active pairing needs two variants to outrank the rule above.

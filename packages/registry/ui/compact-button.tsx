@@ -11,14 +11,14 @@ const COMPACT_BUTTON_ROOT_NAME = 'CompactButtonRoot';
 const COMPACT_BUTTON_ICON_NAME = 'CompactButtonIcon';
 
 // Tactile press feedback. Disable per-instance with the `static` prop.
-const PRESS_SCALE = 'active:not-disabled:scale-[0.96]';
+const PRESS_SCALE = 'active:[&:not(:disabled)]:scale-[0.96]';
 
 export const compactButtonVariants = tv({
   slots: {
     root: [
       // base
       'relative flex shrink-0 items-center justify-center outline-none',
-      'transition-[background-color,color,box-shadow,scale] duration-150 ease-out',
+      'transition-[background-color,border-color,color,box-shadow,scale,transform] duration-150 ease-out',
       // disabled
       'disabled:pointer-events-none disabled:border-transparent disabled:bg-transparent disabled:text-text-disabled-300 disabled:shadow-none',
     ],
@@ -65,7 +65,7 @@ export const compactButtonVariants = tv({
       },
       medium: {
         // 20px visual, 24px hit area (WCAG 2.5.8) via a transparent overlay.
-        root: 'w-5 h-5 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2',
+        root: 'w-5 h-5 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2',
         icon: 'size-[18px]',
       },
     },

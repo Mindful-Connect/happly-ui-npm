@@ -110,6 +110,9 @@ function resolvePlace(
 
 const DEFAULT_COUNTRY_RESTRICTIONS = ['ca', 'us', 'fr'];
 
+/** What last moved the active option — only the keyboard may scroll the list. */
+type HighlightSource = 'keyboard' | 'pointer';
+
 // ─── Suggestion row ────────────────────────────────────────
 
 function LocationSuggestion({
@@ -117,6 +120,7 @@ function LocationSuggestion({
   suggestion,
   selected,
   highlighted,
+  highlightSource,
   onSelect,
   onHighlight,
 }: {
@@ -124,14 +128,20 @@ function LocationSuggestion({
   suggestion: Suggestion;
   selected: boolean;
   highlighted: boolean;
+  highlightSource: React.RefObject<HighlightSource>;
   onSelect: () => void;
   onHighlight: () => void;
 }) {
   const ref = React.useRef<HTMLDivElement>(null);
 
+  // Only the keyboard scrolls the list. `onMouseEnter` highlights too, and
+  // scrolling under a stationary pointer slides the next row under the
+  // cursor, which highlights it, which scrolls again.
   React.useEffect(() => {
-    if (highlighted) ref.current?.scrollIntoView({ block: 'nearest' });
-  }, [highlighted]);
+    if (highlighted && highlightSource.current === 'keyboard') {
+      ref.current?.scrollIntoView({ block: 'nearest' });
+    }
+  }, [highlighted, highlightSource]);
 
   return (
     <div
@@ -238,6 +248,7 @@ const LocationInputRoot = React.forwardRef<
     const [suggestions, setSuggestions] = React.useState<Suggestion[]>([]);
     const [noResults, setNoResults] = React.useState(false);
     const [highlightedIndex, setHighlightedIndex] = React.useState(-1);
+    const highlightSourceRef = React.useRef<HighlightSource>('keyboard');
     const [anchorWidth, setAnchorWidth] = React.useState(0);
     const instanceId = React.useId();
     const listboxId = `location-listbox-${instanceId}`;
@@ -330,6 +341,7 @@ const LocationInputRoot = React.forwardRef<
     // pointer-only and a keyboard user can never pick an address.
     function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
       const count = suggestions.length;
+      highlightSourceRef.current = 'keyboard';
 
       switch (event.key) {
         case 'ArrowDown': {
@@ -399,6 +411,11 @@ const LocationInputRoot = React.forwardRef<
                   onChange={(e) => {
                     searchActiveRef.current = true;
                     setSearch(e.target.value);
+                    // The list still answers the previous query until the
+                    // debounced fetch returns 500ms later. Drop the active
+                    // option so Enter cannot commit a stale address over
+                    // what is being typed.
+                    setHighlightedIndex(-1);
                   }}
                   onKeyDown={handleKeyDown}
                   onFocus={() => {
@@ -458,7 +475,11 @@ const LocationInputRoot = React.forwardRef<
                           selected={location?.place_id === suggestion.place_id}
                           highlighted={index === highlightedIndex}
                           onSelect={() => handleSelect(suggestion)}
-                          onHighlight={() => setHighlightedIndex(index)}
+                          highlightSource={highlightSourceRef}
+                          onHighlight={() => {
+                            highlightSourceRef.current = 'pointer';
+                            setHighlightedIndex(index);
+                          }}
                         />
                       ))}
                     </div>
@@ -650,7 +671,7 @@ function LocationInputMulti({
                   'focus-visible:shadow-button-important-focus focus-visible:outline-none',
                   'disabled:text-text-disabled-300 disabled:pointer-events-none',
                   // 24px hit area around the 20px glyph (WCAG 2.5.8)
-                  'after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+                  'after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
                 )}
               >
                 <RiSubtractLine aria-hidden='true' className='size-5' />

@@ -24,7 +24,7 @@ export const bannerVariants = tv({
     // restore it to full so the only control in the banner is legible while
     // it is being used.
     closeButton:
-      'relative col-start-3 row-start-1 ml-auto w-5 h-5 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2 transition-opacity duration-150 ease-out hover:opacity-100 focus-visible:opacity-100',
+      'relative col-start-3 row-start-1 ml-auto w-5 h-5 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2 transition-opacity duration-150 ease-out hover:opacity-100 focus-visible:opacity-100',
   },
   variants: {
     variant: {

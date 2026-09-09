@@ -128,7 +128,7 @@ const CheckboxRoot = React.forwardRef<
           'after:absolute after:-inset-0.5',
           // focus ring traced on the 16px visual box, so checked+focus stays
           // distinguishable from checked (the fill alone is too close)
-          'before:pointer-events-none before:absolute before:top-1/2 before:left-1/2 before:size-4 before:-translate-1/2 before:rounded-[4px]',
+          'before:pointer-events-none before:absolute before:top-1/2 before:left-1/2 before:size-4 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-[4px]',
           fills.focusRing,
           className
         )}

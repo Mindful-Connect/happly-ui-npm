@@ -76,7 +76,7 @@ function ColorThumb({ className, ...props }: AriaColorThumbProps) {
         cn(
           'ring-stroke-white-0 z-50 h-3 w-3 rounded-full ring-2 outline-none',
           // 24×24 hit area around the 12px thumb (WCAG 2.5.8)
-          'after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2',
+          'after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2',
           'focus-visible:shadow-button-important-focus data-[focus-visible]:shadow-button-important-focus',
           className
         )

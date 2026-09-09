@@ -15,11 +15,11 @@
   ],
   "registryDependencies": [
     "form-field-context",
-    "use-form-field-binding",
     "popover",
     "input",
     "tag",
-    "happly-ui-utils"
+    "happly-ui-utils",
+    "use-controllable-field-value"
   ],
   "docs": {
     "lead": "A searchable multi-select combo box with compound components. Use ComboBox.Composed for the simple flat-props API, or compose with Root, SearchTrigger, Content, Item, and Tags for full control over item rendering and tag display.",

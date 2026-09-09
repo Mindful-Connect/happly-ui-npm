@@ -142,7 +142,7 @@ type AccordionArrowProps = React.HTMLAttributes<HTMLDivElement> & {
 // is a hover change and rides the item's own 200ms ease-out instead, so the
 // glyph and the row it sits in recolor together.
 const ICON_SWAP =
-  '[transition:opacity_300ms_cubic-bezier(0.2,0,0,1),filter_300ms_cubic-bezier(0.2,0,0,1),scale_300ms_cubic-bezier(0.2,0,0,1),color_200ms_var(--ease-out)]';
+  '[transition:opacity_300ms_cubic-bezier(0.2,0,0,1),filter_300ms_cubic-bezier(0.2,0,0,1),scale_300ms_cubic-bezier(0.2,0,0,1),color_200ms_cubic-bezier(0,0,0.2,1)]';
 
 function AccordionArrow({
   className,

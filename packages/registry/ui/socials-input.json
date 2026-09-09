@@ -13,10 +13,10 @@
     "button",
     "combo-box",
     "form-field-context",
-    "use-form-field-binding",
     "hint",
     "input",
-    "tag"
+    "tag",
+    "use-controllable-field-value"
   ],
   "docs": {
     "lead": "A searchable social media URL picker with tag chips and inline URL editing. Supports Instagram, X (Twitter), LinkedIn, Facebook, YouTube, TikTok, Zoom, and Calendar. Uses ComboBox for platform selection with search filtering.",

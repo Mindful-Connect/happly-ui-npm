@@ -25,7 +25,7 @@ const LETTER_DELAY = 40;
 const LETTER_DURATION = 300;
 
 // Tactile press feedback. Disable per-instance with the `static` prop.
-const PRESS_SCALE = 'active:not-disabled:scale-[0.96]';
+const PRESS_SCALE = 'active:[&:not(:disabled)]:scale-[0.96]';
 
 function ButtonLoadingContent({
   children,
@@ -129,7 +129,7 @@ export const buttonVariants = tv({
     root: [
       // base
       'group relative inline-flex items-center justify-center whitespace-nowrap outline-none',
-      'transition-[background-color,color,box-shadow,scale,width] duration-150 ease-out [interpolate-size:allow-keywords]',
+      'transition-[background-color,color,box-shadow,scale,width,transform] duration-150 ease-out [interpolate-size:allow-keywords]',
       // disabled
       'disabled:pointer-events-none disabled:bg-bg-weak-50 disabled:text-text-disabled-300 disabled:ring-transparent',
     ],
@@ -504,7 +504,7 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
       className,
       disabled,
       static: isStatic,
-      onClick,
+      onClickCapture,
       ...rest
     },
     forwardedRef
@@ -544,13 +544,19 @@ const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
         // tab order while loading (that is the point of `aria-disabled`), so
         // Enter and Space would still fire a second submit — block activation
         // here instead.
-        onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+        //
+        // It has to be the capture phase. With `asChild`, Radix Slot composes
+        // handlers child-first, so a bubble-phase guard on this element runs
+        // *after* the child's own `onClick` has already submitted. Stopping
+        // propagation while capturing takes the native event out of play
+        // before any bubble-phase handler — ours, the child's, or a parent's.
+        onClickCapture={(event: React.MouseEvent<HTMLButtonElement>) => {
           if (loading) {
             event.preventDefault();
             event.stopPropagation();
             return;
           }
-          onClick?.(event);
+          onClickCapture?.(event);
         }}
         {...rest}
       >

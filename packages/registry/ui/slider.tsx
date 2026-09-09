@@ -104,7 +104,7 @@ const SliderThumb = React.forwardRef<
           // base — 16px visual (6px core + 5px border each side)
           'border-static-white shadow-toggle-switch box-content block h-1.5 w-1.5 shrink-0 cursor-pointer rounded-full border-[5px] outline-none',
           // 24×24 hit area (WCAG 2.5.8)
-          'after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2',
+          'after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2',
           // focus
           THUMB_FOCUS_CLASSES[variant],
           // variant

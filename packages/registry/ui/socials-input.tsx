@@ -19,7 +19,7 @@ import * as Hint from '@/components/ui/hint';
 import * as Input from '@/components/ui/input';
 import * as Tag from '@/components/ui/tag';
 import { useFormField } from '@/lib/form-field-context';
-import { useFormFieldBinding } from '@/lib/use-form-field-binding';
+import { useControllableFieldValue } from '@/lib/use-controllable-field-value';
 
 // ─── Types ───────────────────────────────────────────────────────────
 
@@ -272,6 +272,9 @@ function SocialPickerItems() {
 
 type SocialsValue = Partial<Record<SocialKey, string>>;
 
+/** Module-level so the uncontrolled initial state keeps one identity. */
+const EMPTY_SOCIALS_VALUE: SocialsValue = {};
+
 export default function SocialsInput({
   name: nameProp,
   readOnly = false,
@@ -282,25 +285,18 @@ export default function SocialsInput({
   labels: labelsProp,
 }: SocialsInputProps) {
   const formField = useFormField();
-  const binding = useFormFieldBinding<SocialsValue>(
-    nameProp ? { name: nameProp } : undefined
-  );
   const labels = { ...DEFAULT_LABELS, ...labelsProp };
 
-  // Priority: explicit props > RHF binding > internal state. The internal state
-  // matters: the fallback used to be a no-op setter, so an uncontrolled
-  // `<SocialsInput />` outside a form silently dropped every link the user added.
-  const [uncontrolledValue, setUncontrolledValue] = useState<SocialsValue>({});
-  const formValue: SocialsValue =
-    formValueProp ?? binding?.value ?? uncontrolledValue;
-  const setFormValue = React.useCallback(
-    (next: SocialsValue) => {
-      if (formValueProp === undefined && !binding) setUncontrolledValue(next);
-      if (setFormValueProp) setFormValueProp(next);
-      else binding?.onChange(next);
-    },
-    [formValueProp, setFormValueProp, binding]
-  );
+  // Explicit props > RHF binding > internal state. The internal state matters:
+  // the fallback used to be a no-op setter, so an uncontrolled `<SocialsInput />`
+  // outside a form silently dropped every link the user added.
+  const { value: formValue, onChange: setFormValue } =
+    useControllableFieldValue<SocialsValue>(
+      formValueProp,
+      setFormValueProp,
+      EMPTY_SOCIALS_VALUE,
+      nameProp ? { name: nameProp } : undefined
+    );
   const name = nameProp ?? formField.name ?? 'socials';
 
   const [editingKey, setEditingKey] = useState<SocialKey | null>(null);
@@ -502,9 +498,12 @@ export default function SocialsInput({
 
   // Paste is left to the browser: `onPaste` used to preventDefault and replace
   // the whole field, which threw away the caret position and any selection.
-  // The protocol is stripped in the change handler either way.
+  // The protocol is stripped here instead — anywhere in the value, not just at
+  // the start, because a paste lands wherever the caret is: typing "x" and
+  // pasting "https://linkedin.com/in/me" after it used to save the protocol
+  // mid-string ("xhttps://linkedin.com/in/me") and pass validation.
   function handleInputChange(value: string) {
-    setEditValue(value.replace(/^https?:\/\//, ''));
+    setEditValue(value.replace(/https?:\/\//g, ''));
   }
 
   // ─── Render ──────────────────────────────────────────────────────
@@ -583,7 +582,7 @@ export default function SocialsInput({
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={handleConfirmEdit}
                   aria-label={`Save ${SOCIAL_CONFIGS[editingKey].label} link`}
-                  className='text-text-sub-600 hover:text-success-base focus-visible:shadow-button-important-focus relative flex size-5 shrink-0 items-center justify-center rounded-md transition-[color,box-shadow] duration-150 ease-out after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2 focus-visible:outline-none'
+                  className='text-text-sub-600 hover:text-success-base focus-visible:shadow-button-important-focus relative flex size-5 shrink-0 items-center justify-center rounded-md transition-[color,box-shadow] duration-150 ease-out after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2 focus-visible:outline-none'
                 >
                   <RiCheckLine aria-hidden='true' className='h-5 w-5' />
                 </button>

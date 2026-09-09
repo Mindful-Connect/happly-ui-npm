@@ -11,14 +11,14 @@ const FANCY_BUTTON_ROOT_NAME = 'FancyButtonRoot';
 const FANCY_BUTTON_ICON_NAME = 'FancyButtonIcon';
 
 // Tactile press feedback. Disable per-instance with the `static` prop.
-const PRESS_SCALE = 'active:not-disabled:scale-[0.96]';
+const PRESS_SCALE = 'active:[&:not(:disabled)]:scale-[0.96]';
 
 export const fancyButtonVariants = tv({
   slots: {
     root: [
       // base
       'group relative inline-flex items-center justify-center whitespace-nowrap text-label-sm outline-none',
-      'transition-[background-color,color,box-shadow,scale] duration-150 ease-out',
+      'transition-[background-color,color,box-shadow,scale,transform] duration-150 ease-out',
       // disabled
       'disabled:pointer-events-none disabled:text-text-disabled-300',
       'disabled:bg-bg-weak-50 disabled:bg-none disabled:shadow-none disabled:before:hidden disabled:after:hidden',

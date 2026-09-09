@@ -10,7 +10,10 @@ import * as Popover from '@/components/ui/popover';
 import * as Tag from '@/components/ui/tag';
 import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
-import { useFormFieldBinding } from '@/lib/use-form-field-binding';
+import { useControllableFieldValue } from '@/lib/use-controllable-field-value';
+
+/** Module-level so the RHF binding options keep one identity across renders. */
+const emptyArrayBinding = { defaultValue: [] as string[] };
 
 // ─── Types ─────────────────────────────────────────────────
 
@@ -142,7 +145,6 @@ function ComboBoxRoot({
   const formField = useFormField();
   const hasError = hasErrorProp || formField.hasError;
   const disabled = disabledProp || formField.disabled;
-  const binding = useFormFieldBinding<string[]>({ defaultValue: [] });
 
   // Dedupe by `value` so an upstream API returning multiple rows with the same
   // value (e.g. the same slug under different IDs) doesn't render twice. First
@@ -158,27 +160,28 @@ function ComboBoxRoot({
     return out;
   }, [rawOptions]);
 
-  // Priority: explicit props > RHF binding > internal state
-  const hasExplicitValue = valueProp !== undefined;
-  const hasExplicitOnChange = onValueChange !== undefined;
-
-  const [internalValue, setInternalValue] = React.useState(defaultValue);
-  const value = hasExplicitValue
-    ? valueProp
-    : (binding?.value ?? internalValue);
-  const setValue = React.useCallback(
+  // `onValueChange` receives the resolved options alongside the values, so it
+  // is wrapped before the shared resolver hands it the next value.
+  const handleExplicitChange = React.useCallback(
     (next: string[]) => {
-      if (!hasExplicitValue && !binding) setInternalValue(next);
-      if (hasExplicitOnChange) {
-        const selectedOptions = next
-          .map((v) => options.find((o) => o.value === v))
-          .filter(Boolean) as ComboBoxOption[];
-        onValueChange?.(next, selectedOptions);
-      } else {
-        binding?.onChange(next);
-      }
+      const selectedOptions = next
+        .map((v) => options.find((o) => o.value === v))
+        .filter(Boolean) as ComboBoxOption[];
+      onValueChange?.(next, selectedOptions);
     },
-    [hasExplicitValue, hasExplicitOnChange, binding, onValueChange, options]
+    [onValueChange, options]
+  );
+
+  // Explicit props > RHF binding > internal state
+  const {
+    value,
+    onChange: setValue,
+    isFormBound,
+  } = useControllableFieldValue<string[]>(
+    valueProp,
+    onValueChange ? handleExplicitChange : undefined,
+    defaultValue,
+    emptyArrayBinding
   );
 
   const [open, setOpen] = React.useState(preview);
@@ -363,7 +366,7 @@ function ComboBoxRoot({
 
           {/* Hidden inputs for native form submission (skip when RHF-bound) */}
           {name &&
-            !binding &&
+            !isFormBound &&
             value.map((v) => (
               <input key={v} type='hidden' name={name} value={v} />
             ))}
@@ -512,7 +515,7 @@ const ComboBoxSearchTrigger = React.forwardRef<
                   // Merged with Input.Icon's own classes, so this has to carry the
                   // colour too — tailwind-merge keeps only the last
                   // transition-property and would drop the icon's colour easing.
-                  'transition-[color,rotate] duration-150 ease-out',
+                  'transition-[color,rotate,transform] duration-150 ease-out',
                   ctx.open && 'rotate-180'
                 )}
               />
@@ -781,7 +784,7 @@ function ComboBoxItemIndicator({
         // A state icon that appears and disappears — cross-fade it with
         // opacity + scale + blur rather than dropping opacity alone. The mark
         // itself (not the motion) is what carries "selected".
-        'transition-[opacity,filter,scale] duration-300 ease-[cubic-bezier(0.2,0,0,1)]',
+        'transition-[opacity,filter,scale,transform] duration-300 ease-[cubic-bezier(0.2,0,0,1)]',
         selected
           ? 'scale-100 opacity-100 blur-none'
           : 'scale-[0.25] opacity-0 blur-[4px]',

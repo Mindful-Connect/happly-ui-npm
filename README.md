@@ -80,6 +80,7 @@ We provide ready-to-use configuration files for both Tailwind v3 and v4 in the `
     ```
 3.  Copy the CSS variables from `tailwind-manual-installation/v3/globals.css` into your global CSS file.
 4.  Add `require('tailwindcss-animate')` to your `plugins` — the overlay components (modal, drawer, popover, tooltip, dropdown, select) use its enter/exit utilities.
+    (`bunx @happlyui/cli init` adds this line and installs `tailwindcss-animate` for you.)
 
 #### Tailwind v4
 

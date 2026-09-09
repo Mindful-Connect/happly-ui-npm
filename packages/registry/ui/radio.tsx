@@ -103,7 +103,7 @@ const RadioGroupItem = React.forwardRef<
         // 24×24 hit area around the 20px visual (WCAG 2.5.8)
         'after:absolute after:-inset-0.5',
         // focus ring on the 16px visual circle
-        'before:pointer-events-none before:absolute before:top-1/2 before:left-1/2 before:size-4 before:-translate-1/2 before:rounded-full',
+        'before:pointer-events-none before:absolute before:top-1/2 before:left-1/2 before:size-4 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full',
         FOCUS_RING_CLASSES[variant],
         className
       )}

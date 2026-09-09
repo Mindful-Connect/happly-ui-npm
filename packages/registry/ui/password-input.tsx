@@ -19,7 +19,7 @@ import { LevelBar } from './level-bar';
 // so the swap animates in and out without a motion dependency.
 const EYE_ICON = [
   'h-5 w-5',
-  'transition-[opacity,filter,scale] duration-300 ease-[cubic-bezier(0.2,0,0,1)]',
+  'transition-[opacity,filter,scale,transform] duration-300 ease-[cubic-bezier(0.2,0,0,1)]',
 ];
 // `blur-0` does not exist in Tailwind v4 — `blur-none` is the "no blur" utility.
 const EYE_ICON_SHOWN = 'scale-100 opacity-100 blur-none';
@@ -98,7 +98,7 @@ const PasswordInputRoot = React.forwardRef<
                 'focus-visible:shadow-button-important-focus focus-visible:outline-none',
                 'disabled:text-text-disabled-300',
                 // 24px hit area around the 20px glyph (WCAG 2.5.8)
-                'after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+                'after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
               )}
             >
               <HideIcon

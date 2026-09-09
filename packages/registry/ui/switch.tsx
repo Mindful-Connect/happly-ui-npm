@@ -107,7 +107,7 @@ const SwitchRoot = React.forwardRef<
               // base
               'pointer-events-none relative block h-3 w-3',
               // exactly what moves: the toggle translate and the press squish
-              'transition-[translate,scale] duration-150 ease-out',
+              'transition-[translate,scale,transform] duration-150 ease-out',
               // checked
               'data-[state=checked]:translate-x-3',
               !disabled && [

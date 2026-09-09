@@ -86,7 +86,7 @@ export const Filled = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -101,7 +101,7 @@ export const Filled = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -116,7 +116,7 @@ export const Filled = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -131,7 +131,7 @@ export const Filled = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -146,7 +146,7 @@ export const Filled = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -167,7 +167,7 @@ export const Light = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -182,7 +182,7 @@ export const Light = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -197,7 +197,7 @@ export const Light = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -212,7 +212,7 @@ export const Light = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -227,7 +227,7 @@ export const Light = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -248,7 +248,7 @@ export const Lighter = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -263,7 +263,7 @@ export const Lighter = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -278,7 +278,7 @@ export const Lighter = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -293,7 +293,7 @@ export const Lighter = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -308,7 +308,7 @@ export const Lighter = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -329,7 +329,7 @@ export const Stroke = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -344,7 +344,7 @@ export const Stroke = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -359,7 +359,7 @@ export const Stroke = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -374,7 +374,7 @@ export const Stroke = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -389,7 +389,7 @@ export const Stroke = {
         <button
           type='button'
           aria-label='Dismiss'
-          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+          className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
         >
           <Alert.CloseIcon />
         </button>
@@ -413,7 +413,7 @@ export const Sizes = {
           <button
             type='button'
             aria-label='Dismiss'
-            className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+            className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
           >
             <Alert.CloseIcon />
           </button>
@@ -432,7 +432,7 @@ export const Sizes = {
           <button
             type='button'
             aria-label='Dismiss'
-            className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-1/2'
+            className='relative appearance-none border-0 bg-transparent p-0 after:absolute after:top-1/2 after:left-1/2 after:size-6 after:-translate-x-1/2 after:-translate-y-1/2'
           >
             <Alert.CloseIcon />
           </button>

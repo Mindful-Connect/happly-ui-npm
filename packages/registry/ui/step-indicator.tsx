@@ -380,7 +380,7 @@ function DefaultStatusAdornment({
       <div
         aria-hidden
         className={cn(
-          'border-bg-soft-200 absolute inset-0 rounded-full border-[1.5px] transition-[opacity,filter,scale] duration-300 ease-[cubic-bezier(0.2,0,0,1)]',
+          'border-bg-soft-200 absolute inset-0 rounded-full border-[1.5px] transition-[opacity,filter,scale,transform] duration-300 ease-[cubic-bezier(0.2,0,0,1)]',
           status === 'pending'
             ? 'scale-100 opacity-100 blur-none'
             : 'scale-[0.25] opacity-0 blur-[4px]'
@@ -389,7 +389,7 @@ function DefaultStatusAdornment({
       <div
         aria-hidden
         className={cn(
-          'absolute inset-0 transition-[opacity,filter,scale] duration-300 ease-[cubic-bezier(0.2,0,0,1)]',
+          'absolute inset-0 transition-[opacity,filter,scale,transform] duration-300 ease-[cubic-bezier(0.2,0,0,1)]',
           status === 'active'
             ? 'scale-100 opacity-100 blur-none'
             : 'scale-[0.25] opacity-0 blur-[4px]'
@@ -404,7 +404,7 @@ function DefaultStatusAdornment({
       <div
         aria-hidden
         className={cn(
-          'bg-success-solid text-success-solid-contrast absolute inset-0 flex items-center justify-center rounded-full transition-[opacity,filter,scale] duration-300 ease-[cubic-bezier(0.2,0,0,1)]',
+          'bg-success-solid text-success-solid-contrast absolute inset-0 flex items-center justify-center rounded-full transition-[opacity,filter,scale,transform] duration-300 ease-[cubic-bezier(0.2,0,0,1)]',
           status === 'completed'
             ? 'scale-100 opacity-100 blur-none'
             : 'scale-[0.25] opacity-0 blur-[4px]'
