@@ -547,7 +547,7 @@
       "name": "use-form-field-binding",
       "type": "registry:lib",
       "title": "useFormFieldBinding",
-      "description": "Hook that auto-binds happly-ui components to React Hook Form via FormFieldContext. Eliminates manual watch/setValue wiring."
+      "description": "Hook that auto-binds happly-ui components to React Hook Form via FormFieldContext. Eliminates manual watch/setValue wiring; pass null or { bind: false } to opt a secondary control out of binding."
     },
     {
       "name": "use-formatted-caret",
