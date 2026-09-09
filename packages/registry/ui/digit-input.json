@@ -8,8 +8,8 @@
   "dependencies": ["react-otp-input"],
   "registryDependencies": [
     "form-field-context",
-    "use-form-field-binding",
-    "happly-ui-utils"
+    "happly-ui-utils",
+    "use-controllable-field-value"
   ],
   "docs": {
     "lead": "An OTP/digit input component with configurable number of slots, error, and disabled states.",

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "use-roving-tablist",
+  "type": "registry:hook",
+  "title": "useRovingTablist",
+  "description": "Hook that gives a role=\"tablist\" container the ARIA APG roving-tabindex keyboard model: arrow/Home/End move focus and the list keeps a single Tab stop.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": [],
+  "docs": {
+    "lead": "A React hook that implements the ARIA Authoring Practices tabs keyboard model over the DOM nodes of a tablist container. Arrow keys move focus between enabled tabs (wrapping, RTL-aware), Home/End jump to the first/last, and the tablist keeps exactly one Tab stop — on the focused tab, otherwise the selected tab, otherwise the first enabled one. Works with tabs that are cloned children of arbitrary depth, which the container cannot address individually.",
+    "usage": "import { useRovingTablist } from \"@/hooks/use-roving-tablist\"\n\nconst containerRef = React.useRef<HTMLDivElement>(null)\nconst { onKeyDown, syncTabStop } = useRovingTablist(containerRef)\n\n<div ref={containerRef} role=\"tablist\" onKeyDown={onKeyDown}>\n  {tabs}\n</div>",
+    "examples": [],
+    "api": [
+      {
+        "name": "useRovingTablist Parameters",
+        "description": "Arguments passed to the hook.",
+        "props": [
+          {
+            "name": "containerRef",
+            "type": "React.RefObject<T | null>",
+            "required": true,
+            "description": "Ref to the element carrying role=\"tablist\". Its `[role=\"tab\"]` descendants are the tabs; tabs with `disabled` or `aria-disabled=\"true\"` are skipped."
+          }
+        ]
+      },
+      {
+        "name": "useRovingTablist Return Value",
+        "description": "The object returned by the hook.",
+        "props": [
+          {
+            "name": "onKeyDown",
+            "type": "(event: React.KeyboardEvent<HTMLElement>) => void",
+            "description": "Keydown handler for the container. Handles ArrowLeft/ArrowRight (direction-aware), Home and End; ignores every other key so activation stays with the native button."
+          },
+          {
+            "name": "syncTabStop",
+            "type": "() => void",
+            "description": "Re-applies the single Tab stop. Called automatically after every render; call it from a ResizeObserver or MutationObserver that already watches the tab nodes."
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "hooks/use-roving-tablist.ts",
+      "type": "registry:hook"
+    }
+  ]
+}

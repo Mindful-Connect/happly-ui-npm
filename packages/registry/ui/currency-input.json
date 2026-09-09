@@ -8,12 +8,14 @@
   "migration": {
     "guide": "API changed: import as namespace `import * as CurrencyInput from ...`, use `<CurrencyInput.Root />`. The `onChange` callback is split into `onValueChange` (amount) and `onCurrencyChange` (currency code). The `defaultCurrency` now takes a currency code string ('EUR') instead of a label. Dependencies changed: removed @headlessui/react, lucide-react, flag-icons; now uses Input + Select primitives. The lib/currency-input-utils file is no longer needed."
   },
-  "dependencies": [],
+  "dependencies": ["merge-refs"],
   "registryDependencies": [
     "form-field-context",
     "use-form-field-binding",
     "input",
-    "select"
+    "select",
+    "use-controllable-field-value",
+    "use-formatted-caret"
   ],
   "docs": {
     "lead": "A composed currency input with inline currency symbol and currency selector dropdown. Built on Input and Select primitives.",

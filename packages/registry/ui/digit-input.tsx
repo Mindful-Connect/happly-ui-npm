@@ -5,7 +5,7 @@ import OtpInput, { type OTPInputProps } from 'react-otp-input';
 
 import { useFormField } from '@/lib/form-field-context';
 import { cn } from '@/lib/happly-ui-utils';
-import { useFormFieldBinding } from '@/lib/use-form-field-binding';
+import { useControllableFieldValue } from '@/lib/use-controllable-field-value';
 
 type OtpOptions = Omit<OTPInputProps, 'renderInput'>;
 
@@ -27,26 +27,11 @@ function DigitInput({
   const formField = useFormField();
   const resolvedHasError = hasError ?? formField.hasError;
   const resolvedDisabled = disabled ?? formField.disabled;
-  const binding = useFormFieldBinding<string>();
-
-  // Priority: explicit props > RHF binding > internal state. The internal state
-  // matters: without it `<DigitInput.Root />` outside a form had no value source
-  // and no change handler, so the slots could not be typed into at all.
-  const hasExplicitValue = valueProp !== undefined;
-  const hasExplicitOnChange = onChangeProp !== undefined;
-  const [uncontrolledValue, setUncontrolledValue] = React.useState('');
-  const resolvedValue = hasExplicitValue
-    ? valueProp
-    : (binding?.value ?? uncontrolledValue);
-
-  const resolvedOnChange = React.useCallback(
-    (next: string) => {
-      if (!hasExplicitValue && !binding) setUncontrolledValue(next);
-      if (hasExplicitOnChange) onChangeProp?.(next);
-      else binding?.onChange(next);
-    },
-    [hasExplicitValue, hasExplicitOnChange, onChangeProp, binding]
-  );
+  // Explicit props > RHF binding > internal state. The internal state matters:
+  // without it `<DigitInput.Root />` outside a form has no value source and no
+  // change handler, so the slots cannot be typed into at all.
+  const { value: resolvedValue, onChange: resolvedOnChange } =
+    useControllableFieldValue<string>(valueProp, onChangeProp, '');
 
   return (
     <OtpInput

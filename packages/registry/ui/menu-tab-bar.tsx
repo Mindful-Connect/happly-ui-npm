@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 
+import { useRovingTablist } from '@/hooks/use-roving-tablist';
 import type { PolymorphicComponentProps } from '@/lib/polymorphic';
 import { cn } from '@/lib/happly-ui-utils';
 import { recursiveCloneChildren } from '@/lib/recursive-clone-children';
@@ -45,86 +46,6 @@ function prefersReducedMotion() {
     typeof window !== 'undefined' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
-}
-
-function isEnabledTab(tab: HTMLElement) {
-  return (
-    !tab.hasAttribute('disabled') &&
-    tab.getAttribute('aria-disabled') !== 'true'
-  );
-}
-
-/**
- * Roving `tabindex` (ARIA APG): a tablist is one Tab stop, not one per tab.
- * The stop belongs to the selected tab, or — when nothing is selected, which
- * this component allows on every item — to the first enabled tab, so the list
- * is never dropped out of the tab order entirely. Driven from the Root over
- * the rendered nodes rather than as an `Item` prop, because items are cloned
- * children of arbitrary depth and the Root cannot address them individually.
- */
-function setTabStop(tabs: HTMLElement[], stop: HTMLElement | undefined) {
-  for (const tab of tabs) {
-    tab.tabIndex = tab === stop ? 0 : -1;
-  }
-}
-
-function syncRovingTabIndex(container: HTMLElement | null) {
-  if (!container) return;
-
-  const tabs = Array.from(
-    container.querySelectorAll<HTMLElement>('[role="tab"]')
-  );
-  if (tabs.length === 0) return;
-
-  const enabled = tabs.filter(isEnabledTab);
-  const selected = enabled.find(
-    (tab) => tab.getAttribute('aria-selected') === 'true'
-  );
-
-  setTabStop(tabs, selected ?? enabled[0]);
-}
-
-/**
- * ARIA APG tabs keyboard model: arrow keys move focus between tabs (wrapping),
- * Home/End jump to the first/last. Activation stays manual — the native
- * `<button>` already handles Enter and Space. The tab that receives focus also
- * takes over the tablist's single Tab stop.
- */
-function moveTabFocus(
-  event: React.KeyboardEvent<HTMLElement>,
-  container: HTMLElement | null
-) {
-  const { key } = event;
-  if (
-    !container ||
-    (key !== 'ArrowRight' &&
-      key !== 'ArrowLeft' &&
-      key !== 'Home' &&
-      key !== 'End')
-  ) {
-    return;
-  }
-
-  const allTabs = Array.from(
-    container.querySelectorAll<HTMLElement>('[role="tab"]')
-  );
-  const tabs = allTabs.filter(isEnabledTab);
-  const current = tabs.indexOf(document.activeElement as HTMLElement);
-  if (tabs.length === 0 || current === -1) return;
-
-  event.preventDefault();
-  const isRtl = getComputedStyle(container).direction === 'rtl';
-  const forward = isRtl ? key === 'ArrowLeft' : key === 'ArrowRight';
-  const next =
-    key === 'Home'
-      ? 0
-      : key === 'End'
-        ? tabs.length - 1
-        : (current + (forward ? 1 : -1) + tabs.length) % tabs.length;
-
-  const target = tabs[next];
-  target.focus();
-  setTabStop(allTabs, target);
 }
 
 export const menuTabBarVariants = tv({
@@ -209,6 +130,8 @@ function MenuTabBarRoot({
   const uniqueId = React.useId();
   const { root, indicator } = menuTabBarVariants({ variant });
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const { onKeyDown: onTabKeyDown, syncTabStop } =
+    useRovingTablist(containerRef);
   const [mounted, setMounted] = React.useState(false);
   const [lineStyle, setLineStyle] = React.useState({ width: 0, left: 0 });
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
@@ -248,7 +171,7 @@ function MenuTabBarRoot({
     const update = () => {
       updateIndicator();
       updateScrollState();
-      syncRovingTabIndex(container);
+      syncTabStop();
     };
 
     const resizeObserver = new ResizeObserver(update);
@@ -268,13 +191,7 @@ function MenuTabBarRoot({
       resizeObserver.disconnect();
       mutationObserver.disconnect();
     };
-  }, [updateIndicator, updateScrollState]);
-
-  // Runs after every render, so a change of selection (or of the item list)
-  // moves the single Tab stop with it. Intentionally has no dependency array.
-  React.useEffect(() => {
-    syncRovingTabIndex(containerRef.current);
-  });
+  }, [updateIndicator, updateScrollState, syncTabStop]);
 
   const handleScroll = React.useCallback(() => {
     updateScrollState();
@@ -308,8 +225,7 @@ function MenuTabBarRoot({
         onScroll={handleScroll}
         onKeyDown={(event) => {
           onKeyDown?.(event);
-          if (!event.defaultPrevented)
-            moveTabFocus(event, containerRef.current);
+          if (!event.defaultPrevented) onTabKeyDown(event);
         }}
         style={
           maskImage !== 'none'

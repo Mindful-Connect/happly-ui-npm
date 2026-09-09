@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import parsePhoneNumber, { AsYouType, CountryCode } from 'libphonenumber-js';
+import mergeRefs from 'merge-refs';
 import {
   CountryIso2,
   defaultCountries,
@@ -10,6 +11,7 @@ import {
 
 import { FormFieldContext, useFormField } from '@/lib/form-field-context';
 import { useFormFieldBinding } from '@/lib/use-form-field-binding';
+import { useFormattedCaret } from '@/lib/use-formatted-caret';
 
 import * as Input from './input';
 import * as Select from './select';
@@ -69,6 +71,9 @@ const formatNorthAmericanNationalNumber = (digits: string): string => {
   return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
 };
 
+/** Formatting only adds brackets, spaces and dashes, so digits are the anchor. */
+const isDigit = (char: string) => /\d/.test(char);
+
 const formatNationalDigits = (
   digits: string,
   countryCode: CountryCode
@@ -108,27 +113,6 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
     const countryLabelId = React.useId();
     const countryValueId = React.useId();
 
-    // Caret preservation: this is a controlled input whose displayed value is
-    // reformatted ("(416) 555-1234") on every keystroke. Without this the
-    // browser collapses the caret to the END after each controlled re-render,
-    // so editing mid-number pushes the rest of the digits to the end. Same
-    // recipe as `currency-input.tsx` — record how many digits precede the caret
-    // on change, restore that position once the reformat has rendered.
-    const inputRef = React.useRef<HTMLInputElement | null>(null);
-    const pendingCaretRef = React.useRef<number | null>(null);
-
-    const setInputRef = React.useCallback(
-      (node: HTMLInputElement | null) => {
-        inputRef.current = node;
-        if (typeof forwardedRef === 'function') {
-          forwardedRef(node);
-        } else if (forwardedRef) {
-          forwardedRef.current = node;
-        }
-      },
-      [forwardedRef]
-    );
-
     // Phone value binding (e164 string)
     const phoneBinding = useFormFieldBinding<string>();
 
@@ -151,6 +135,12 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
       React.useState<CountryIso2>(defaultCountry);
     const [displayValue, setDisplayValue] = React.useState('');
     const lastEmittedRef = React.useRef<string>('');
+
+    // Caret preservation: this is a controlled input whose displayed value is
+    // reformatted ("(416) 555-1234") on every keystroke, which would otherwise
+    // collapse the caret to the end after each controlled re-render. Shared
+    // with `currency-input` — only the significant-character class differs.
+    const { inputRef, queueCaret } = useFormattedCaret(displayValue, isDigit);
 
     const isCountryControlled = controlledCountry !== undefined;
     const activeCountryIso2 = isCountryControlled
@@ -281,8 +271,9 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
             setUncontrolledCountry(iso2);
         }
 
-        pendingCaretRef.current = pendingCaret;
-        setDisplayValue(formatNationalDigits(digits, cc));
+        const formatted = formatNationalDigits(digits, cc);
+        queueCaret(pendingCaret, formatted);
+        setDisplayValue(formatted);
 
         const dialCode = findCountry(iso2)?.dialCode ?? '';
         const e164 = `+${dialCode}${digits}`;
@@ -296,36 +287,9 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
         onCountryChange,
         countryBinding,
         onValueChange,
+        queueCaret,
       ]
     );
-
-    // Restore the caret after the reformatted display value has rendered. Runs
-    // every render but only acts when a change just queued a caret position.
-    React.useLayoutEffect(() => {
-      const target = pendingCaretRef.current;
-      if (target == null) return;
-      pendingCaretRef.current = null;
-
-      const el = inputRef.current;
-      if (!el) return;
-
-      // Map "target digits" back to an index in the formatted string.
-      let index = 0;
-      if (target > 0) {
-        let count = 0;
-        index = displayValue.length;
-        for (let i = 0; i < displayValue.length; i++) {
-          if (/\d/.test(displayValue[i])) {
-            count++;
-            if (count === target) {
-              index = i + 1;
-              break;
-            }
-          }
-        }
-      }
-      el.setSelectionRange(index, index);
-    });
 
     const preferred = React.useMemo(
       () => allCountries.filter((c) => preferredCountries.includes(c.iso2)),
@@ -401,7 +365,7 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
         </FormFieldContext.Provider>
         <Input.Wrapper>
           <Input.Input
-            ref={setInputRef}
+            ref={mergeRefs(forwardedRef, inputRef)}
             type='tel'
             inputMode='tel'
             autoComplete='tel-national'

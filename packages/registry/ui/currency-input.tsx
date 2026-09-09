@@ -1,9 +1,12 @@
 'use client';
 
 import * as React from 'react';
+import mergeRefs from 'merge-refs';
 
 import { FormFieldContext, useFormField } from '@/lib/form-field-context';
+import { useControllableFieldValue } from '@/lib/use-controllable-field-value';
 import { useFormFieldBinding } from '@/lib/use-form-field-binding';
+import { useFormattedCaret } from '@/lib/use-formatted-caret';
 
 import * as Input from './input';
 import * as Select from './select';
@@ -25,6 +28,9 @@ function formatDisplay(raw: string): string {
 function stripFormatting(val: string): string {
   return val.replace(/[^0-9.]/g, '');
 }
+
+/** Formatting only adds thousands separators, so digits and `.` are the anchor. */
+const isSignificantChar = (char: string) => /[0-9.]/.test(char);
 
 /** Empty context to isolate the currency Select from the parent FormField */
 const isolatedFormField = {
@@ -109,37 +115,6 @@ const CurrencyInputRoot = React.forwardRef<
     const resolvedHasError = hasError ?? formField.hasError;
     const resolvedDisabled = disabled ?? formField.disabled;
 
-    // Caret preservation: this is a controlled input whose displayed value is
-    // reformatted (thousands separators) on every keystroke. Without this, the
-    // browser collapses the caret to the END after each controlled re-render, so
-    // typing mid-value pushes subsequent characters to the end. We record how
-    // many significant chars (digits + decimal point) precede the caret on
-    // change, then restore that position once the reformatted value has rendered.
-    const inputRef = React.useRef<HTMLInputElement | null>(null);
-    const pendingCaretRef = React.useRef<number | null>(null);
-
-    const setInputRef = React.useCallback(
-      (node: HTMLInputElement | null) => {
-        inputRef.current = node;
-        if (typeof forwardedRef === 'function') {
-          forwardedRef(node);
-        } else if (forwardedRef) {
-          forwardedRef.current = node;
-        }
-      },
-      [forwardedRef]
-    );
-
-    // Amount binding: number ↔ string conversion when valueAsNumber
-    const amountBinding = useFormFieldBinding<string>(
-      valueAsNumber
-        ? {
-            parse: (stored: unknown) => (stored != null ? String(stored) : ''),
-            format: (val: string) => (val ? Number(val) : undefined),
-          }
-        : undefined
-    );
-
     // Currency binding: auto-bind to currencyName if provided
     const currencyBinding = useFormFieldBinding<string>(
       currencyName
@@ -151,26 +126,24 @@ const CurrencyInputRoot = React.forwardRef<
         : undefined
     );
 
-    // Priority: explicit props > RHF binding > internal state.
-    // The internal state matters: without it `<CurrencyInput.Root />` — the
-    // documented uncontrolled usage — had no value source at all, so the amount
-    // never changed and the field could not be typed into. The currency code
-    // below already worked this way; the amount now matches it.
-    const hasExplicitValue = valueProp !== undefined;
-    const hasExplicitOnChange = onValueChangeProp !== undefined;
-    const [uncontrolledAmount, setUncontrolledAmount] = React.useState('');
-    const value = hasExplicitValue
-      ? valueProp
-      : (amountBinding?.value ?? uncontrolledAmount);
-
-    const onValueChange = React.useCallback(
-      (next: string) => {
-        if (!hasExplicitValue && !amountBinding) setUncontrolledAmount(next);
-        if (hasExplicitOnChange) onValueChangeProp?.(next);
-        else amountBinding?.onChange(next);
-      },
-      [hasExplicitValue, hasExplicitOnChange, onValueChangeProp, amountBinding]
-    );
+    // Amount: explicit props > RHF binding (number ↔ string when valueAsNumber)
+    // > internal state. The internal state matters: without it
+    // `<CurrencyInput.Root />` — the documented uncontrolled usage — has no
+    // value source at all, so the amount never changes and the field cannot be
+    // typed into.
+    const { value, onChange: onValueChange } =
+      useControllableFieldValue<string>(
+        valueProp,
+        onValueChangeProp,
+        '',
+        valueAsNumber
+          ? {
+              parse: (stored: unknown) =>
+                stored != null ? String(stored) : '',
+              format: (val: string) => (val ? Number(val) : undefined),
+            }
+          : undefined
+      );
 
     const [uncontrolledCurrency, setUncontrolledCurrency] =
       React.useState(defaultCurrency);
@@ -201,13 +174,22 @@ const CurrencyInputRoot = React.forwardRef<
       [value]
     );
 
+    // Caret preservation: this is a controlled input whose displayed value is
+    // reformatted (thousands separators) on every keystroke, which would
+    // otherwise collapse the caret to the end after each controlled re-render.
+    // Shared with `phone-input` — only the significant-character class differs.
+    const { inputRef, queueCaret } = useFormattedCaret(
+      displayValue,
+      isSignificantChar
+    );
+
     const handleInputChange = React.useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
         const el = e.target;
         const caret = el.selectionStart ?? el.value.length;
         // Significant chars before the caret = the count to restore after
         // reformatting (formatting only adds/removes commas around these).
-        pendingCaretRef.current = stripFormatting(
+        const significantBeforeCaret = stripFormatting(
           el.value.slice(0, caret)
         ).length;
 
@@ -216,45 +198,19 @@ const CurrencyInputRoot = React.forwardRef<
         const parts = raw.split('.');
         const cleaned =
           parts.length > 2 ? `${parts[0]}.${parts.slice(1).join('')}` : raw;
+
+        queueCaret(significantBeforeCaret, formatDisplay(cleaned));
         onValueChange?.(cleaned);
       },
-      [onValueChange]
+      [onValueChange, queueCaret]
     );
-
-    // Restore the caret after the reformatted display value has rendered. Runs
-    // every render but only acts when a change just queued a caret position.
-    React.useLayoutEffect(() => {
-      const target = pendingCaretRef.current;
-      if (target == null) return;
-      pendingCaretRef.current = null;
-
-      const el = inputRef.current;
-      if (!el) return;
-
-      // Map "target significant chars" back to an index in the formatted string.
-      let index = 0;
-      if (target > 0) {
-        let count = 0;
-        index = displayValue.length;
-        for (let i = 0; i < displayValue.length; i++) {
-          if (/[0-9.]/.test(displayValue[i])) {
-            count++;
-            if (count === target) {
-              index = i + 1;
-              break;
-            }
-          }
-        }
-      }
-      el.setSelectionRange(index, index);
-    });
 
     return (
       <Input.Root size={size} hasError={resolvedHasError}>
         <Input.Wrapper>
           <Input.InlineAffix>{symbol}</Input.InlineAffix>
           <Input.Input
-            ref={setInputRef}
+            ref={mergeRefs(forwardedRef, inputRef)}
             inputMode='decimal'
             // The amount is reformatted on every keystroke — proportional
             // digits would shift the caret's neighbours as it grows.
