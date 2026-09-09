@@ -740,6 +740,21 @@ function DashedBorder({ className }: { className?: string }) {
   );
 }
 
+// ─── Disabled context ───────────────────────────────────────────────────────
+
+// Root dims itself, but Title, Description, Button and Icon each paint their
+// own colour, so inheritance cannot reach them. The composed Dropzone threads
+// `disabled` to every slot by hand; this context does the same for a
+// hand-composed `<FileUpload.Root disabled>`, which otherwise only changed its
+// background. An explicit `disabled` on a slot still wins, so nothing about
+// the composed path changes.
+const FileUploadDisabledContext = React.createContext(false);
+
+function useFileUploadDisabled(disabled?: boolean) {
+  const inherited = React.useContext(FileUploadDisabledContext);
+  return disabled ?? inherited;
+}
+
 const FileUploadRoot = React.forwardRef<
   HTMLLabelElement,
   React.LabelHTMLAttributes<HTMLLabelElement> & {
@@ -811,56 +826,58 @@ const FileUploadRoot = React.forwardRef<
     );
 
     return (
-      <Component
-        ref={forwardedRef}
-        {...rest}
-        className={cn(
-          'bg-bg-white-0 relative flex w-full flex-col items-center gap-5 rounded-xl p-8 text-center',
-          'transition-[background-color,box-shadow] duration-150 ease-out',
-          // the file input inside is visually hidden but focusable, so the
-          // dropzone itself carries the keyboard focus indicator
-          'has-[:focus-visible]:shadow-button-primary-focus',
-          disabled
-            ? // Dimmed as well as unclickable: without a visual change a
-              // hand-composed disabled dropzone is pixel-identical to an
-              // enabled one, so nothing tells the user why clicking does
-              // nothing. Same recipe Button and Select use for `disabled:` — a
-              // weak ground plus an inherited disabled text colour — rather
-              // than a group `opacity`, which composites on top of the slots'
-              // own disabled tokens and dropped the dashed frame to 1.30:1 and
-              // the button's ring to 1.10:1 against the page, erasing the
-              // shape that makes this read as a dropzone at all.
-              'bg-bg-weak-50 text-text-disabled-300 pointer-events-none'
-            : 'hover:bg-bg-weak-50 cursor-pointer',
-          isDragging && !disabled && 'bg-primary-alpha-10',
-          className
-        )}
-        style={style}
-        onDragOver={handleDragOver}
-        onDragEnter={handleDragEnter}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-      >
-        {/* Slot accepts a single child, so the frame is only added to the
-            component's own <label>; an `asChild` consumer draws its own. */}
-        {asChild ? (
-          children
-        ) : (
-          <>
-            <DashedBorder
-              // `currentColor` on the frame itself, not on the <label>: a
-              // `text-*` on the root would also be inherited by any content a
-              // consumer puts in the dropzone, painting it stroke-grey.
-              className={
-                isDragging && !disabled
-                  ? 'text-primary-base'
-                  : 'text-stroke-sub-300'
-              }
-            />
-            {children}
-          </>
-        )}
-      </Component>
+      <FileUploadDisabledContext.Provider value={disabled ?? false}>
+        <Component
+          ref={forwardedRef}
+          {...rest}
+          className={cn(
+            'bg-bg-white-0 relative flex w-full flex-col items-center gap-5 rounded-xl p-8 text-center',
+            'transition-[background-color,box-shadow] duration-150 ease-out',
+            // the file input inside is visually hidden but focusable, so the
+            // dropzone itself carries the keyboard focus indicator
+            'has-[:focus-visible]:shadow-button-primary-focus',
+            disabled
+              ? // Dimmed as well as unclickable: without a visual change a
+                // hand-composed disabled dropzone is pixel-identical to an
+                // enabled one, so nothing tells the user why clicking does
+                // nothing. Same recipe Button and Select use for `disabled:` — a
+                // weak ground plus an inherited disabled text colour — rather
+                // than a group `opacity`, which composites on top of the slots'
+                // own disabled tokens and dropped the dashed frame to 1.30:1 and
+                // the button's ring to 1.10:1 against the page, erasing the
+                // shape that makes this read as a dropzone at all.
+                'bg-bg-weak-50 text-text-disabled-300 pointer-events-none'
+              : 'hover:bg-bg-weak-50 cursor-pointer',
+            isDragging && !disabled && 'bg-primary-alpha-10',
+            className
+          )}
+          style={style}
+          onDragOver={handleDragOver}
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
+          {/* Slot accepts a single child, so the frame is only added to the
+              component's own <label>; an `asChild` consumer draws its own. */}
+          {asChild ? (
+            children
+          ) : (
+            <>
+              <DashedBorder
+                // `currentColor` on the frame itself, not on the <label>: a
+                // `text-*` on the root would also be inherited by any content a
+                // consumer puts in the dropzone, painting it stroke-grey.
+                className={
+                  isDragging && !disabled
+                    ? 'text-primary-base'
+                    : 'text-stroke-sub-300'
+                }
+              />
+              {children}
+            </>
+          )}
+        </Component>
+      </FileUploadDisabledContext.Provider>
     );
   }
 );
@@ -874,6 +891,7 @@ const FileUploadButton = React.forwardRef<
   }
 >(({ className, asChild, disabled, ...rest }, forwardedRef) => {
   const Component = asChild ? Slot : 'div';
+  const isDisabled = useFileUploadDisabled(disabled);
 
   return (
     <Component
@@ -881,7 +899,7 @@ const FileUploadButton = React.forwardRef<
       className={cn(
         'bg-bg-white-0 text-label-sm text-text-sub-600 inline-flex h-8 items-center justify-center gap-2.5 rounded-lg px-2.5 whitespace-nowrap',
         'ring-stroke-soft-200 shadow-regular-xs pointer-events-none ring-1 ring-inset',
-        disabled && 'text-text-disabled-300',
+        isDisabled && 'text-text-disabled-300',
         className
       )}
       {...rest}
@@ -893,13 +911,19 @@ FileUploadButton.displayName = 'FileUploadButton';
 function FileUploadIcon<T extends React.ElementType>({
   className,
   as,
+  disabled,
   ...rest
-}: PolymorphicComponentProps<T>) {
+}: PolymorphicComponentProps<T> & { disabled?: boolean }) {
   const Component = as || 'div';
+  const isDisabled = useFileUploadDisabled(disabled);
 
   return (
     <Component
-      className={cn('text-text-sub-600 h-6 w-6', className)}
+      className={cn(
+        'text-text-sub-600 h-6 w-6',
+        isDisabled && 'text-text-disabled-300',
+        className
+      )}
       {...rest}
     />
   );
@@ -910,12 +934,14 @@ const FileUploadTitle = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & { disabled?: boolean }
 >(({ className, disabled, ...rest }, forwardedRef) => {
+  const isDisabled = useFileUploadDisabled(disabled);
+
   return (
     <div
       ref={forwardedRef}
       className={cn(
         'text-label-sm text-text-strong-950 text-balance break-words',
-        disabled && 'text-text-soft-400',
+        isDisabled && 'text-text-soft-400',
         className
       )}
       {...rest}
@@ -928,12 +954,14 @@ const FileUploadDescription = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & { disabled?: boolean }
 >(({ className, disabled, ...rest }, forwardedRef) => {
+  const isDisabled = useFileUploadDisabled(disabled);
+
   return (
     <div
       ref={forwardedRef}
       className={cn(
         'text-paragraph-xs text-text-sub-600 text-pretty break-words',
-        disabled && 'text-text-disabled-300',
+        isDisabled && 'text-text-disabled-300',
         className
       )}
       {...rest}

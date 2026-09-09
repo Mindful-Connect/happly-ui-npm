@@ -508,6 +508,27 @@ function applyAnnouncement(selected: Record<string, string[]>) {
   return `${count} filters applied`;
 }
 
+// One filter group's values, compared as a set: a value unchecked and checked
+// again lands at the end of the array without being a change.
+function valuesEqual(a: string[], b: string[]) {
+  if (a.length !== b.length) return false;
+  const set = new Set(a);
+  return b.every((v) => set.has(v));
+}
+
+// Whole selections, used both to enable/disable Apply and to decide which
+// groups the close handler has to rewind.
+function selectionsEqual(
+  a: Record<string, string[]>,
+  b: Record<string, string[]>
+) {
+  const keys = new Set([...Object.keys(a), ...Object.keys(b)]);
+  for (const key of keys) {
+    if (!valuesEqual(a[key] ?? [], b[key] ?? [])) return false;
+  }
+  return true;
+}
+
 function FilterDropdownComposed({
   children,
   filters,
@@ -532,21 +553,25 @@ function FilterDropdownComposed({
 
   // The last committed selection: taken when the popover opens and retaken on
   // every Apply. Everything the panel says about "unapplied changes" is
-  // measured against it, and closing the panel rewinds to it.
-  const openSnapshot = React.useRef<Record<string, string[]>>({});
-  // `openSnapshot` is a ref, so writing to it cannot invalidate the
-  // `hasChanges` memo on its own. This counter is the memo's dependency:
-  // without it the button stays enabled after Apply, claiming there is still
-  // something to apply.
-  const [baselineVersion, setBaselineVersion] = React.useState(0);
-  const [applyStatus, setApplyStatus] = React.useState('');
+  // measured against it, and closing the panel rewinds to it. State, not a
+  // ref, so committing it re-renders and `hasChanges` is a plain derivation.
+  const [baseline, setBaseline] = React.useState<Record<string, string[]>>({});
+
+  // Two Applies in a row can produce the identical sentence ("1 filter
+  // applied", swap the one value, "1 filter applied"). Setting the same string
+  // mutates nothing, and a live region with no mutation is not re-announced —
+  // the second Apply would be silent. The nonce makes every Apply a real text
+  // change; it renders as a zero-width space, which is invisible and unspoken.
+  const [applyStatus, setApplyStatus] = React.useState({
+    message: '',
+    nonce: 0,
+  });
 
   const commitBaseline = React.useCallback(
     (values: Record<string, string[]>) => {
-      openSnapshot.current = Object.fromEntries(
-        Object.entries(values).map(([k, v]) => [k, [...v]])
+      setBaseline(
+        Object.fromEntries(Object.entries(values).map(([k, v]) => [k, [...v]]))
       );
-      setBaselineVersion((v) => v + 1);
     },
     []
   );
@@ -611,6 +636,10 @@ function FilterDropdownComposed({
 
   // Track which remote filters have been initially fetched
   const fetchedRemoteKeys = React.useRef<Set<string>>(new Set());
+  // Declared here, above `handleOpenChange` — which clears it — rather than
+  // next to the loader below: a ref first captured by a hook callback and
+  // created afterwards reads as a hook argument being mutated.
+  const loadMoreLock = React.useRef<Record<string, boolean>>({});
 
   // Fetch first page when navigating to a remote filter
   React.useEffect(() => {
@@ -627,29 +656,24 @@ function FilterDropdownComposed({
       if (open) {
         commitBaseline(selected);
       } else {
-        // Rewind to the last committed selection. The snapshot tracks Apply, so
+        // Rewind to the last committed selection. The baseline tracks Apply, so
         // this reverts edits made before the first Apply and edits made after
         // one — otherwise a change made after applying would survive the close
         // and leave the checkboxes describing a filter the list never received.
-        const snapshot = openSnapshot.current;
         const allKeys = Array.from(
-          new Set([...Object.keys(snapshot), ...Object.keys(selected)])
+          new Set([...Object.keys(baseline), ...Object.keys(selected)])
         );
         for (let i = 0; i < allKeys.length; i++) {
           const key = allKeys[i];
-          const prev = snapshot[key] ?? [];
-          const curr = selected[key] ?? [];
-          if (
-            prev.length !== curr.length ||
-            prev.some((v, idx) => v !== curr[idx])
-          ) {
+          const prev = baseline[key] ?? [];
+          if (!valuesEqual(prev, selected[key] ?? [])) {
             onSelectedChange(key, prev);
           }
         }
 
         setView(isSingleFilter ? filters[0].key : 'categories');
         setSearchTerms({});
-        setApplyStatus('');
+        setApplyStatus((prev) => ({ ...prev, message: '' }));
         setRemoteStates({});
         fetchedRemoteKeys.current.clear();
         loadMoreLock.current = {};
@@ -664,6 +688,7 @@ function FilterDropdownComposed({
       selected,
       onSelectedChange,
       commitBaseline,
+      baseline,
     ]
   );
 
@@ -690,8 +715,6 @@ function FilterDropdownComposed({
     },
     [fetchRemote]
   );
-
-  const loadMoreLock = React.useRef<Record<string, boolean>>({});
 
   const handleLoadMore = React.useCallback(
     (filter: FilterConfig) => {
@@ -775,23 +798,8 @@ function FilterDropdownComposed({
     return 'indeterminate';
   };
 
-  // Detect whether selections have changed from the last committed baseline
-  const hasChanges = React.useMemo(() => {
-    const snapshot = openSnapshot.current;
-    const allKeys = Array.from(
-      new Set([...Object.keys(snapshot), ...Object.keys(selected)])
-    );
-    for (let i = 0; i < allKeys.length; i++) {
-      const key = allKeys[i];
-      const prev = snapshot[key] ?? [];
-      const curr = selected[key] ?? [];
-      if (prev.length !== curr.length) return true;
-      const prevSet = new Set(prev);
-      if (curr.some((v) => !prevSet.has(v))) return true;
-    }
-    return false;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selected, baselineVersion]);
+  // Whether the selection has moved away from the last committed baseline.
+  const hasChanges = !selectionsEqual(selected, baseline);
 
   const activeFilter = filters.find((f) => f.key === view);
   const activeRemoteState = activeFilter?.remote
@@ -823,7 +831,7 @@ function FilterDropdownComposed({
             a live region inserted at the moment it has something to say is
             unreliably announced. */}
         <span role='status' className='sr-only'>
-          {applyStatus}
+          {applyStatus.message + (applyStatus.nonce % 2 === 1 ? '\u200B' : '')}
         </span>
 
         {view === 'categories' && (
@@ -924,7 +932,10 @@ function FilterDropdownComposed({
                 // The list stays filtered with no way to clear it short of
                 // reloading the page.
                 commitBaseline(selected);
-                setApplyStatus(applyAnnouncement(selected));
+                setApplyStatus((prev) => ({
+                  message: applyAnnouncement(selected),
+                  nonce: prev.nonce + 1,
+                }));
               }}
             />
           </>

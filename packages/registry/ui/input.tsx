@@ -47,11 +47,8 @@ export const inputVariants = tv({
       'has-[input:disabled]:pointer-events-none has-[input:disabled]:bg-bg-weak-50',
     ],
     input: [
-      // base
-      // 16px below `sm`: iOS Safari zooms the page whenever a focused field
-      // is under 16px, and the zoom does not come back on blur. 14px from
-      // `sm` up, which is every viewport where the zoom cannot happen.
-      'w-full border-0 bg-transparent bg-none p-0 text-paragraph-md sm:text-paragraph-sm text-text-strong-950 outline-none ring-0 focus:border-0 focus:ring-0',
+      // base — the font size lives in the `size` variants below, not here
+      'w-full border-0 bg-transparent bg-none p-0 text-text-strong-950 outline-none ring-0 focus:border-0 focus:ring-0',
       'transition-[color] duration-150 ease-out',
       // placeholder
       'placeholder:select-none placeholder:text-text-soft-400 placeholder:transition-[color] placeholder:duration-150 placeholder:ease-out',
@@ -104,21 +101,29 @@ export const inputVariants = tv({
     ],
   },
   variants: {
+    // Every size renders 16px below `sm` and its own size from `sm` up. iOS
+    // Safari zooms the page whenever a focused field is under 16px and does
+    // not zoom back out on blur, and phones are the only viewport where that
+    // can happen — so the phone step is deliberate, and identical across
+    // sizes, even for `xsmall`. It is spelled out per size rather than once on
+    // the base slot so that a project that never renders on a phone (or that
+    // handles the zoom another way) can drop it from one size without
+    // touching the others.
     size: {
       medium: {
         root: 'rounded-10',
         wrapper: 'gap-2 px-3',
-        input: 'h-10',
+        input: 'h-10 text-paragraph-md sm:text-paragraph-sm',
       },
       small: {
         root: 'rounded-lg',
         wrapper: 'gap-2 px-2.5',
-        input: 'h-9',
+        input: 'h-9 text-paragraph-md sm:text-paragraph-sm',
       },
       xsmall: {
         root: 'rounded-lg',
         wrapper: 'gap-1.5 px-2',
-        input: 'h-8',
+        input: 'h-8 text-paragraph-md sm:text-paragraph-sm',
       },
     },
     hasError: {

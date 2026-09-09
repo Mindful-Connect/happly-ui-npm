@@ -180,15 +180,31 @@ function renderMarkdown(md: string): string {
 
   // `marked` does not sanitize: `<img src=x onerror=…>` typed into the editor
   // would execute in the preview. DOMPurify strips scripts, event handlers and
-  // `javascript:` URLs while leaving ordinary markup (headings, links, lists,
-  // code, images, tables) untouched.
+  // `javascript:` URLs, but its default profile is wider than a markdown
+  // preview needs — it keeps `<style>`, `<form>` and its controls, and `id` /
+  // `name`. Those are not XSS, but in a preview pane they are still the
+  // author's markup reaching out of the box: `<style>body{display:none}</style>`
+  // blanks the host page, `<form action=…>` renders a working form inside the
+  // consumer's own form, and an authored `id` can collide with the field id a
+  // <label for> points at. So: the HTML profile only (no SVG / MathML), minus
+  // the tags and attributes markdown never emits.
+  //
+  // `input` is deliberately NOT forbidden: a GFM task list — what the
+  // toolbar's checklist button writes — renders as
+  // `<input type=checkbox disabled>`, and forbidding the tag would strip the
+  // checkboxes out of the preview. With `form` and `name` gone it has nothing
+  // to submit to and no value to carry.
   //
   // DOMPurify needs a DOM. On the server `isSupported` is false and
   // `sanitize()` would return the input unchanged, so render nothing until the
   // client takes over rather than shipping unsanitised HTML.
   if (!DOMPurify.isSupported) return '';
 
-  return DOMPurify.sanitize(html);
+  return DOMPurify.sanitize(html, {
+    USE_PROFILES: { html: true },
+    FORBID_TAGS: ['style', 'form', 'button', 'textarea', 'select'],
+    FORBID_ATTR: ['id', 'name'],
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -399,6 +415,30 @@ type ContentProps = Omit<
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
+// Props the preview <div> keeps when it stands in for the textarea. The
+// textarea-only attributes (rows, placeholder, maxLength, …) mean nothing on a
+// div and would render as invalid attributes, so only the ones that identify
+// the field to assistive tech and to a <label for> are carried over.
+function pickPreviewProps(
+  props: Record<string, unknown>
+): React.HTMLAttributes<HTMLDivElement> & { id?: string } {
+  const preview: Record<string, unknown> = {};
+  for (const key of Object.keys(props)) {
+    if (
+      key === 'id' ||
+      key === 'title' ||
+      key === 'lang' ||
+      key === 'dir' ||
+      key === 'tabIndex' ||
+      key.startsWith('aria-') ||
+      key.startsWith('data-')
+    ) {
+      preview[key] = props[key];
+    }
+  }
+  return preview as React.HTMLAttributes<HTMLDivElement> & { id?: string };
+}
+
 const Content = React.forwardRef<HTMLTextAreaElement, ContentProps>(
   (
     {
@@ -445,9 +485,23 @@ const Content = React.forwardRef<HTMLTextAreaElement, ContentProps>(
       [forwardedRef]
     );
 
+    // marked's parse plus DOMPurify's parse/serialise on every render of a
+    // component that re-renders on every keystroke. Only the value matters,
+    // and only while the preview is on screen.
+    const previewHtml = React.useMemo(
+      () => (previewing ? renderMarkdown(value) : ''),
+      [previewing, value]
+    );
+
     if (previewing) {
+      // The preview replaces the textarea in the DOM, so it has to keep the
+      // props that point at the field: with `<FormField.Root htmlFor="bio">`
+      // around `<MarkdownEditor.Composed id="bio">`, dropping the id here
+      // leaves the label's `for` (and any `aria-describedby`) dangling for as
+      // long as Preview is on.
       return (
         <div
+          {...pickPreviewProps(rest)}
           className={cn(
             'markdown-editor-preview',
             'bg-bg-white-0 shadow-regular-xs w-full overflow-y-auto rounded-xl px-3 py-2.5',
@@ -459,7 +513,7 @@ const Content = React.forwardRef<HTMLTextAreaElement, ContentProps>(
             className
           )}
           style={{ minHeight: height }}
-          dangerouslySetInnerHTML={{ __html: renderMarkdown(value) }}
+          dangerouslySetInnerHTML={{ __html: previewHtml }}
         />
       );
     }

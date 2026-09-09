@@ -130,7 +130,10 @@ const Textarea = React.forwardRef<
         }
         className={cn(
           [
-            // base
+            // base — 16px below `sm`, 14px from `sm` up. iOS Safari zooms the
+            // page whenever a focused field is under 16px and does not zoom
+            // back out on blur; phones are the only viewport where that can
+            // happen. Deliberate, and the same step `input` makes.
             'text-paragraph-md sm:text-paragraph-sm text-text-strong-950 block w-full resize-none border-none shadow-none ring-0 outline-none',
             !simple && [
               'pointer-events-auto h-full min-h-[82px] bg-transparent pt-2.5 pr-2.5 pl-3',
