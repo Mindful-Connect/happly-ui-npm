@@ -115,7 +115,10 @@ const CurrencyInputRoot = React.forwardRef<
     const resolvedHasError = hasError ?? formField.hasError;
     const resolvedDisabled = disabled ?? formField.disabled;
 
-    // Currency binding: auto-bind to currencyName if provided
+    // Currency binding: auto-bind to currencyName if provided. Without a name
+    // of its own the select must opt out (`bind: false`) rather than pass no
+    // options — the hook's default is to fall back to the FormFieldContext
+    // name, which is the amount's, so the currency would read the amount.
     const currencyBinding = useFormFieldBinding<string>(
       currencyName
         ? {
@@ -123,7 +126,7 @@ const CurrencyInputRoot = React.forwardRef<
             defaultValue: defaultCurrency,
             setValueOptions: { shouldValidate: false, shouldDirty: true },
           }
-        : undefined
+        : { bind: false }
     );
 
     // Amount: explicit props > RHF binding (number ↔ string when valueAsNumber)

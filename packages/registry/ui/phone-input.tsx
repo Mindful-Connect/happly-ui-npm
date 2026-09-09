@@ -116,7 +116,10 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
     // Phone value binding (e164 string)
     const phoneBinding = useFormFieldBinding<string>();
 
-    // Country binding: auto-bind to countryName if provided
+    // Country binding: auto-bind to countryName if provided. Without a name of
+    // its own the select must opt out (`bind: false`) rather than pass no
+    // options — the hook's default is to fall back to the FormFieldContext
+    // name, which is the phone number's, so the flag would follow the digits.
     const countryBinding = useFormFieldBinding<CountryIso2>(
       countryName
         ? {
@@ -124,7 +127,7 @@ const PhoneInputRoot = React.forwardRef<HTMLInputElement, PhoneInputProps>(
             defaultValue: defaultCountry,
             setValueOptions: { shouldValidate: false, shouldDirty: true },
           }
-        : undefined
+        : { bind: false }
     );
 
     // Priority: explicit props > RHF binding > undefined

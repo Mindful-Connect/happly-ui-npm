@@ -122,6 +122,11 @@
             "type": "boolean",
             "default": "false",
             "description": "Disabled state"
+          },
+          {
+            "name": "currencyName",
+            "type": "string",
+            "description": "Form field name the currency select binds to inside a FormField.Root with react-hook-form. Omit it and the select stays internal — it never reads or writes the amount's own field."
           }
         ]
       }

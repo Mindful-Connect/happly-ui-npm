@@ -109,6 +109,11 @@
             "name": "disabled",
             "type": "boolean",
             "description": "Whether the input is disabled."
+          },
+          {
+            "name": "countryName",
+            "type": "string",
+            "description": "Form field name the country select binds to inside a FormField.Root with react-hook-form. Omit it and the select stays internal — it never reads or writes the phone number's own field."
           }
         ]
       }
