@@ -58,6 +58,11 @@
         "description": "Blocks interaction (the hidden file input is disabled so the file picker cannot open). The title, description, and button shift to muted disabled colors while the icon stays as-is — the dropzone is not uniformly dimmed.",
         "code": "<FileUpload.Dropzone type=\"image\" disabled />",
         "stories": ["Disabled"]
+      },
+      {
+        "title": "Disabled (hand-composed)",
+        "description": "`disabled` on Root is passed down through context, so Button, Icon, Title, and Description mute themselves without being told individually. Pass `disabled` on a slot to override what it inherits — an explicit value always wins, so `disabled={false}` keeps that one slot at full strength.",
+        "code": "<FileUpload.Root disabled>\n  <FileUpload.Icon as={RiImageLine} />\n  <FileUpload.Content>\n    <FileUpload.Title>Upload your banner image</FileUpload.Title>\n    <FileUpload.Description>Recommended size: 1200 × 675 px</FileUpload.Description>\n  </FileUpload.Content>\n  <FileUpload.Button>Choose file</FileUpload.Button>\n</FileUpload.Root>"
       }
     ],
     "api": [
@@ -118,7 +123,7 @@
             "name": "disabled",
             "type": "boolean",
             "default": "false",
-            "description": "Blocks click/drag interaction via pointer-events and removes the pointer cursor and hover state. Does not change child colors on its own — the Dropzone preset handles muting the title/description/button."
+            "description": "Blocks click/drag interaction via pointer-events, removes the pointer cursor and hover state, and puts the dropzone on the weak background. Also provided through context: Button, Icon, Title, and Description mute themselves from it, so a hand-composed dropzone dims without threading `disabled` to every slot. An explicit `disabled` on a slot wins over the inherited value."
           }
         ]
       },
@@ -130,17 +135,35 @@
       {
         "name": "FileUpload.Title",
         "description": "The main heading text inside the dropzone.",
-        "props": []
+        "props": [
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "description": "Mutes the title to the disabled color. Inherited from a disabled Root when omitted; set it here to override that."
+          }
+        ]
       },
       {
         "name": "FileUpload.Description",
         "description": "Secondary description text (e.g., accepted formats, size limits).",
-        "props": []
+        "props": [
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "description": "Mutes the description to the disabled color. Inherited from a disabled Root when omitted; set it here to override that."
+          }
+        ]
       },
       {
         "name": "FileUpload.Button",
         "description": "A visual button inside the dropzone.",
-        "props": []
+        "props": [
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "description": "Mutes the button label to the disabled color. Inherited from a disabled Root when omitted; set it here to override that."
+          }
+        ]
       },
       {
         "name": "FileUpload.Icon",
@@ -151,6 +174,11 @@
             "type": "React.ElementType",
             "default": "'div'",
             "description": "The element or component to render."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "description": "Mutes the icon to the disabled color. Inherited from a disabled Root when omitted; set it here to override that. The Dropzone presets render their own illustration rather than this slot, so their icon keeps its color when disabled."
           }
         ]
       }
