@@ -84,6 +84,12 @@
             "name": "avatar",
             "type": "React.ReactNode",
             "description": "Optional avatar rendered in the gutter on the message's side (e.g. <Chat.Avatar src=\"…\" />)"
+          },
+          {
+            "name": "animateIn",
+            "type": "boolean",
+            "default": "auto",
+            "description": "Play the entrance animation on mount. By default the List works this out from the message keys: a message added to a list that was already showing messages animates, while a batch (the first render, a fetch resolving, a conversation swapped in) does not."
           }
         ]
       },

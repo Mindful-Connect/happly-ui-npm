@@ -160,7 +160,7 @@
       },
       {
         "name": "RadioCard.Indicator",
-        "description": "The radio circle indicator. Reads value and disabled from the parent Item context.",
+        "description": "The radio circle indicator, and the radio control itself \u2014 every Item needs one. Reads value and disabled from the parent Item context, and handles selection and `allowDeselect`.",
         "props": []
       },
       {

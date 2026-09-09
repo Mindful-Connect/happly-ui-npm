@@ -68,9 +68,9 @@ const radioCardVariants = tv({
   },
 });
 
-// Interactive content: a label does not forward a click that started inside
-// one of these to its control, so no forwarded click follows.
-const NO_LABEL_FORWARDING = 'a[href],button,input,select,textarea';
+// The Radix radio control: its `role="radio"` button, plus the hidden
+// `input[type="radio"]` it keeps in sync inside a `<form>`.
+const RADIO_CONTROL = '[role="radio"], input[type="radio"][aria-hidden]';
 
 type RadioCardSharedProps = VariantProps<typeof radioCardVariants>;
 
@@ -172,9 +172,7 @@ const RadioCardItem = React.forwardRef<HTMLLabelElement, RadioCardItemProps>(
   ) => {
     const {
       hasError,
-      allowDeselect,
       disabled: groupDisabled,
-      onValueChange,
       value: groupValue,
     } = React.useContext(RadioCardContext);
     const { item } = radioCardVariants({ hasError });
@@ -186,76 +184,24 @@ const RadioCardItem = React.forwardRef<HTMLLabelElement, RadioCardItemProps>(
     const titleId = `${contentId}-title`;
     const descriptionId = `${contentId}-description`;
 
-    // A click anywhere on the card is forwarded by the browser to the control
-    // the label wraps — the Radix radio button — and that forwarded click
-    // bubbles back through the label, so this handler saw two clicks per
-    // gesture. With `allowDeselect` the pair deselected and immediately
-    // re-selected, making a selected card impossible to turn off.
+    // One gesture can reach this label as up to three clicks: the real one,
+    // the copy the browser forwards to the control the label wraps (the Radix
+    // radio button), and — inside a `<form>` — the click Radix re-dispatches
+    // on its hidden `input[type="radio"]` once the value commits. Only the
+    // first is the user's, so ignore anything coming from the control and a
+    // consumer's `onClick` runs once per gesture on every path.
     //
-    // Verified in Storybook (Chrome): the forwarded click carries
-    // `detail: 1` and `isTrusted: true` exactly like the real one, so only
-    // state can tell them apart. We arm on a click the browser will forward,
-    // and swallow the one click that comes back targeting the radio. The
-    // timer is a safety net for an arm whose echo never arrives.
-    //
-    // Paths checked — 1 handled call each, none swallowed by mistake:
-    // click on the card body (real click handled, forwarded click swallowed) ·
-    // click on the Indicator, Space on the Indicator, click on a button or
-    // link inside the card (a label never forwards a click that started on
-    // interactive content, so no echo and nothing is armed) · deselect click
-    // (its `preventDefault` cancels the forwarding, so nothing is armed) ·
-    // two clicks in quick succession (the echo is dispatched inside the first
-    // click's own task, so the flag is always disarmed before the second
-    // click — the previous version relied on a `setTimeout(0)` for this and
-    // swallowed a second click that landed ~9ms later) · click while disabled
-    // (blocked by `pointer-events-none`, and the deselect is guarded below).
-    //
-    // The swallow now runs before `onClick`, so a consumer's own handler is
-    // called once per gesture rather than once per click event.
-    const isEchoPendingRef = React.useRef(false);
-    const echoTimerRef = React.useRef<ReturnType<typeof setTimeout>>(undefined);
-
-    React.useEffect(() => () => clearTimeout(echoTimerRef.current), []);
-
+    // Selecting and deselecting are handled on the Indicator, which receives
+    // exactly one click per gesture: the label forwards a body click to it,
+    // and forwards nothing at all from a nested button or link.
     const handleClick = React.useCallback(
       (e: React.MouseEvent<HTMLLabelElement>) => {
         const target = e.target instanceof Element ? e.target : null;
-
-        if (isEchoPendingRef.current && target?.closest('[role="radio"]')) {
-          isEchoPendingRef.current = false;
-          clearTimeout(echoTimerRef.current);
-          return;
-        }
+        if (target?.closest(RADIO_CONTROL)) return;
 
         onClick?.(e);
-
-        if (!resolvedDisabled && allowDeselect && groupValue === value) {
-          e.preventDefault();
-          onValueChange?.('');
-        }
-
-        // The click is forwarded unless it was cancelled above or started on
-        // interactive content, which a label never forwards from.
-        if (
-          !e.isDefaultPrevented() &&
-          target &&
-          !target.closest(NO_LABEL_FORWARDING)
-        ) {
-          isEchoPendingRef.current = true;
-          clearTimeout(echoTimerRef.current);
-          echoTimerRef.current = setTimeout(() => {
-            isEchoPendingRef.current = false;
-          }, 0);
-        }
       },
-      [
-        allowDeselect,
-        groupValue,
-        value,
-        onValueChange,
-        onClick,
-        resolvedDisabled,
-      ]
+      [onClick]
     );
 
     return (
@@ -305,12 +251,31 @@ const RadioCardIndicator = React.forwardRef<
       'aria-label': ariaLabel,
       'aria-labelledby': ariaLabelledBy,
       'aria-describedby': ariaDescribedBy,
+      onClick,
       ...props
     },
     forwardedRef
   ) => {
+    const {
+      allowDeselect,
+      onValueChange,
+      value: groupValue,
+    } = React.useContext(RadioCardContext);
     const { value, disabled, titleId, descriptionId } =
       React.useContext(RadioCardItemContext);
+
+    // Deselect belongs on the control, not on the card: exactly one click per
+    // gesture reaches it, whether the user hit the radio, the card body (the
+    // label forwards it here) or pressed Space. Radix only calls `onCheck`
+    // when the item is not already checked, so clearing here cannot race it.
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      onClick?.(event);
+      if (event.defaultPrevented) return;
+
+      if (!disabled && allowDeselect && groupValue === value) {
+        onValueChange?.('');
+      }
+    };
 
     return (
       <Radio.Item
@@ -320,6 +285,7 @@ const RadioCardIndicator = React.forwardRef<
         aria-label={ariaLabel}
         aria-labelledby={ariaLabel ? undefined : (ariaLabelledBy ?? titleId)}
         aria-describedby={ariaDescribedBy ?? descriptionId}
+        onClick={handleClick}
         {...props}
       />
     );

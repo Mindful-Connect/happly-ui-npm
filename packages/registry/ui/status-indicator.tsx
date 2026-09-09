@@ -97,7 +97,10 @@ const StatusIndicatorRoot = React.forwardRef<
 
   // Consumer content (e.g. a company logo) carries its own semantics; the
   // built-in indicators are color-only, so they announce their status instead.
-  const hasCustomContent = children !== undefined;
+  // A `{show && <Logo />}` that resolved to `false` (or `null`) renders
+  // nothing, so it is not custom content: fall back to the built-in indicator,
+  // name and all, rather than leaving an unlabelled colored dot.
+  const hasCustomContent = children != null && children !== false;
 
   return (
     <div
@@ -107,7 +110,7 @@ const StatusIndicatorRoot = React.forwardRef<
       className={cn(statusIndicatorVariants({ status }), className)}
       {...rest}
     >
-      {children ?? defaultContent}
+      {hasCustomContent ? children : defaultContent}
     </div>
   );
 });

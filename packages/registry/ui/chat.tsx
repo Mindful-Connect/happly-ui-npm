@@ -18,10 +18,13 @@ type ChatShape = 'bubble' | 'pill';
 
 const MessageContext = React.createContext<{ side: ChatSide } | null>(null);
 
-// True once the list has painted. A message that first renders while this is
-// false is part of the loaded history and must not animate — otherwise opening
-// a conversation replays an entrance for every message in it at once.
-const ListPaintedContext = React.createContext(false);
+// Set by List around each of its children, from a diff of message keys: true
+// only for a message that appeared in a list that was already showing other
+// messages. Anything that arrives as a batch — the first render, a fetch that
+// resolves, a conversation swapped in — is history and must not animate,
+// otherwise opening a conversation replays an entrance for every message at
+// once. `Message` can override it with the `animateIn` prop.
+const AnimateInContext = React.createContext(false);
 const BubbleContext = React.createContext<{
   tone: ChatTone;
   shape: ChatShape;
@@ -49,6 +52,31 @@ ChatRoot.displayName = 'ChatRoot';
 // List — scroll container that sticks to the bottom as new messages arrive,
 // unless the user has scrolled up to read history.
 // -----------------------------------------------------------------------------
+
+const NONE_ANIMATED: ReadonlySet<string> = new Set<string>();
+
+// `Children.toArray` gives every element a stable key (its own, prefixed, or
+// its position); plain text children keep their position.
+function childKeys(children: React.ReactNode[]): string[] {
+  return children.map((child, index) =>
+    React.isValidElement(child) && child.key != null ? child.key : `.${index}`
+  );
+}
+
+function sameKeys(a: string[], b: string[]) {
+  return a.length === b.length && a.every((key, index) => key === b[index]);
+}
+
+// Keys that appeared in a list that already had content. An empty previous
+// list (first render, or a fetch that had not resolved yet) and a wholesale
+// replacement (switching conversation) are batches, not new mail.
+function addedKeys(prev: string[], next: string[]): ReadonlySet<string> {
+  if (prev.length === 0) return NONE_ANIMATED;
+  const previous = new Set(prev);
+  const added = next.filter((key) => !previous.has(key));
+  if (added.length === 0 || added.length === next.length) return NONE_ANIMATED;
+  return new Set(added);
+}
 
 type ChatListProps = React.HTMLAttributes<HTMLDivElement> & {
   /** Auto-scroll to the newest message when near the bottom. Default `true`. */
@@ -92,8 +120,22 @@ const ChatList = React.forwardRef<HTMLDivElement, ChatListProps>(
       }
     });
 
-    const [painted, setPainted] = React.useState(false);
-    React.useEffect(() => setPainted(true), []);
+    const items = React.Children.toArray(children);
+    const keys = childKeys(items);
+
+    // Derived during render rather than in an effect: a message reads its flag
+    // as it mounts, which happens before any effect runs. Recomputing from
+    // state (not a ref) keeps it idempotent under StrictMode's double render.
+    const [tracked, setTracked] = React.useState<{
+      keys: string[];
+      animated: ReadonlySet<string>;
+    }>(() => ({ keys, animated: NONE_ANIMATED }));
+
+    let animated = tracked.animated;
+    if (!sameKeys(tracked.keys, keys)) {
+      animated = addedKeys(tracked.keys, keys);
+      setTracked({ keys, animated });
+    }
 
     return (
       <div
@@ -108,9 +150,14 @@ const ChatList = React.forwardRef<HTMLDivElement, ChatListProps>(
         )}
         {...rest}
       >
-        <ListPaintedContext.Provider value={painted}>
-          {children}
-        </ListPaintedContext.Provider>
+        {items.map((child, index) => (
+          <AnimateInContext.Provider
+            key={keys[index]}
+            value={animated.has(keys[index])}
+          >
+            {child}
+          </AnimateInContext.Provider>
+        ))}
       </div>
     );
   }
@@ -125,18 +172,25 @@ ChatList.displayName = 'ChatList';
 type ChatMessageProps = React.HTMLAttributes<HTMLDivElement> & {
   side: ChatSide;
   avatar?: React.ReactNode;
+  /**
+   * Play the entrance animation on mount. Defaults to what the parent List
+   * works out from its message keys: a message added to a list that was
+   * already showing messages animates; a batch (the first render, a fetch
+   * resolving, a conversation swapped in) does not.
+   */
+  animateIn?: boolean;
 };
 
 const ChatMessage = React.forwardRef<HTMLDivElement, ChatMessageProps>(
-  ({ side, avatar, className, children, ...rest }, forwardedRef) => {
+  ({ side, avatar, animateIn, className, children, ...rest }, forwardedRef) => {
     const isSent = side === 'sent';
     const ctx = React.useMemo(() => ({ side }), [side]);
 
-    // Captured on this message's first render and never recomputed, so a
-    // message that mounted with the history stays still even after the list
-    // flips to painted.
-    const listPainted = React.useContext(ListPaintedContext);
-    const [isNew] = React.useState(listPainted);
+    // Read once, on mount: the List flags a key only on the render where it
+    // appears, and the class has to stay put for the whole animation.
+    const listAnimateIn = React.useContext(AnimateInContext);
+    const [autoAnimateIn] = React.useState(listAnimateIn);
+    const isNew = animateIn ?? autoAnimateIn;
 
     return (
       <MessageContext.Provider value={ctx}>
