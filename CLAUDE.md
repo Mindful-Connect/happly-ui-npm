@@ -270,7 +270,7 @@ Design tokens are defined in these files:
 | `packages/registry/styles/happly-theme.css`        | **V4 theme** — Tailwind v4 `@theme` syntax (source of truth for Storybook + CLI fetch) | Storybook, V4 user projects                 |
 | `packages/registry/styles/happly-theme-v3.css`     | **V3 theme** — `:root {}` CSS custom properties (fetched by CLI for V3 projects)       | V3 user projects                            |
 | `packages/cli/src/utils/templates/happly-theme.ts` | **Offline fallback only** — bundled copies of V4/V3 themes used when fetch fails       | CLI offline/network failure                 |
-| `packages/cli/src/utils/templates/tokens.ts`       | Tailwind v3 plugin tokens (typography, shadows, colors)                                | V3 projects via `tailwind.config.js` extend |
+| `packages/cli/src/utils/templates/tokens.ts`       | **V3 plugin/preset tokens** — source of truth for typography, shadows, colors          | V3 projects via `tailwind.config.js` extend |
 
 **When adding or changing a design token (color, shadow, keyframe, etc.):**
 
@@ -282,7 +282,7 @@ Design tokens are defined in these files:
    - Both must include dark mode overrides (`@media (prefers-color-scheme: dark)` + `.dark` class)
    - Both include `@keyframes` animations at the bottom (button loading, accordion, shimmer, etc.)
 3. Run `bun run sync:theme` (also part of `bun run build:registry`). It regenerates the CLI fallback templates in `packages/cli/src/utils/templates/happly-theme.ts` and the copies in `tailwind-manual-installation/` from the two registry CSS files — never edit those generated files by hand
-4. If the token is a new Tailwind class name (e.g., new shadow or color), also add it to `packages/cli/src/utils/templates/tokens.ts` so the V3 Tailwind plugin registers it
+4. If the token is a new Tailwind class name (e.g., new shadow or color), also add it to `packages/cli/src/utils/templates/tokens.ts`, then run `bun run build:registry`. `scripts/build-tailwind-plugin.ts` regenerates both consumers of that file — `packages/registry/styles/happly-ui-tailwind.cjs` (the plugin the CLI fetches for V3 projects) and `tailwind-manual-installation/v3/happly-tailwind.preset.js` (the preset README points manual installs at) — so neither can drift. Never edit those two by hand
 5. Rebuild and type-check the CLI: `cd packages/cli && bun run typecheck`
 
 **Token conventions (since 2026-09-03):**
