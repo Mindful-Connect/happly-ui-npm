@@ -45,3 +45,18 @@ export const WithTotal = {
     </Card>
   ),
 };
+
+export const WithShortLabels = {
+  render: () => (
+    <Card height='h-[280px]'>
+      <DonutChart.Root
+        items={[
+          { label: 'Category Alpha (CA)', shortLabel: 'CA', value: 18 },
+          { label: 'Category Beta (CB)', shortLabel: 'CB', value: 24 },
+          { label: 'Category Gamma (CG)', shortLabel: 'CG', value: 8 },
+        ]}
+        highlighted='Category Beta (CB)'
+      />
+    </Card>
+  ),
+};

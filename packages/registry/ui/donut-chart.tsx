@@ -13,7 +13,10 @@ import * as ChartTooltip from '@/components/ui/chart-tooltip';
 import { cn } from '@/lib/happly-ui-utils';
 
 export type DonutChartItem = {
+  /** The full name, in the tooltip. */
   label: string;
+  /** Shown instead of `label` in the legend and the centre ("B2B"). */
+  shortLabel?: string;
   value: number;
   /** Overrides the segment's colour from the series ramp. */
   color?: string;
@@ -23,7 +26,7 @@ type DonutChartProps = React.HTMLAttributes<HTMLDivElement> & {
   /** Segments left to right along the arc. Keep labels short; the legend is one row. */
   items: DonutChartItem[];
   /**
-   * Label of the segment to feature: its value and label fill the centre and
+   * `label` of the segment to feature: its value and label fill the centre and
    * its legend entry gets a pill. Omitted or null leaves the centre bare,
    * which is right when no single segment is an honest headline.
    */
@@ -185,7 +188,7 @@ function DonutChart({
               {leading.value.toLocaleString()}
             </span>
             <span className='text-label-xs text-text-soft-400 tracking-[0.48px]'>
-              {leading.label}
+              {leading.shortLabel ?? leading.label}
             </span>
           </div>
         ) : null}
@@ -212,10 +215,10 @@ function DonutChart({
                   : 'text-text-sub-600 font-normal'
               }
             >
-              {item.label}
+              {item.shortLabel ?? item.label}
             </span>
             <span className='sr-only'>
-              : {item.value.toLocaleString()}
+              {item.shortLabel ? `, ${item.label}` : null}: {item.value.toLocaleString()}
               {unit ? ` ${unit}` : null}
             </span>
           </li>

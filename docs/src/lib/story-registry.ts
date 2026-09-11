@@ -25,7 +25,7 @@ import { default as dateInputMeta, Default as dateInput_Default, WithPlaceholder
 import { default as datepickerMeta, Playground as datepicker_Playground, Demo as datepicker_Demo, PopoverDemo as datepicker_PopoverDemo, ApprovalDemo as datepicker_ApprovalDemo, RangeDemo as datepicker_RangeDemo, WithFormField as datepicker_WithFormField } from '@/components/ui/datepicker.stories';
 import { default as digitInputMeta, Playground as digitInput_Playground, Demo as digitInput_Demo, HasError as digitInput_HasError, Disabled as digitInput_Disabled, Square as digitInput_Square, WithFormField as digitInput_WithFormField } from '@/components/ui/digit-input.stories';
 import { default as dividerMeta, Playground as divider_Playground, Line as divider_Line, LineSpacing as divider_LineSpacing, LineText as divider_LineText, TextOnly as divider_TextOnly, SolidText as divider_SolidText, Content as divider_Content } from '@/components/ui/divider.stories';
-import { default as donutChartMeta, Default as donutChart_Default, WithTotal as donutChart_WithTotal } from '@/components/ui/donut-chart.stories';
+import { default as donutChartMeta, Default as donutChart_Default, WithTotal as donutChart_WithTotal, WithShortLabels as donutChart_WithShortLabels } from '@/components/ui/donut-chart.stories';
 import { default as dotStepperMeta, Playground as dotStepper_Playground, Demo as dotStepper_Demo, WithRadixTabs as dotStepper_WithRadixTabs } from '@/components/ui/dot-stepper.stories';
 import { default as drawerMeta, Playground as drawer_Playground, Basic as drawer_Basic, Demo as drawer_Demo } from '@/components/ui/drawer.stories';
 import { default as dropdownMeta, Default as dropdown_Default, WithGroups as dropdown_WithGroups, WithHeaderAndFooter as dropdown_WithHeaderAndFooter, WithErrorItem as dropdown_WithErrorItem, WithDisabledItems as dropdown_WithDisabledItems, SubMenu as dropdown_SubMenu, Composed as dropdown_Composed, ComposedWithHeaderFooter as dropdown_ComposedWithHeaderFooter, ComposedWithLabels as dropdown_ComposedWithLabels, ComposedWithLinks as dropdown_ComposedWithLinks } from '@/components/ui/dropdown.stories';
@@ -388,7 +388,8 @@ export const storyRegistry: Record<string, {
     meta: donutChartMeta,
     stories: {
     'Default': donutChart_Default,
-    'WithTotal': donutChart_WithTotal
+    'WithTotal': donutChart_WithTotal,
+    'WithShortLabels': donutChart_WithShortLabels
     }
   },
   'dot-stepper': {
