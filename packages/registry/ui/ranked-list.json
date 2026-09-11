@@ -1,0 +1,52 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "ranked-list",
+  "type": "registry:ui",
+  "title": "Ranked List",
+  "description": "A numbered list of labels and counts with column headers, for top-N breakdowns. Rows spread to fill the card and scroll past that. Uses namespace exports: RankedList.Root.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": ["happly-ui-utils"],
+  "docs": {
+    "lead": "Labels ranked by count, each behind a numbered badge. Pass the rows already in order; the list numbers them as given.",
+    "usage": "import * as RankedList from \"@/components/ui/ranked-list\"\n\n<RankedList.Root\n  items={[{ label: \"Category A\", value: 3264 }]}\n  columnLabels={[\"Category\", \"Count\"]}\n/>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Four rows spread evenly down the card.",
+        "code": "<RankedList.Root items={items} columnLabels={[\"Category\", \"Count\"]} />",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Many rows",
+        "description": "Rows past what the card fits scroll inside it. A long label truncates and keeps its full text in a tooltip.",
+        "code": "<RankedList.Root items={manyItems} columnLabels={[\"Category\", \"Count\"]} />",
+        "stories": ["ManyRows"]
+      }
+    ],
+    "api": [
+      {
+        "name": "RankedList.Root",
+        "description": "The list and its header.",
+        "props": [
+          {
+            "name": "items",
+            "type": "{ label: string; value: number }[]",
+            "description": "Rows in rank order. Not sorted for you"
+          },
+          {
+            "name": "columnLabels",
+            "type": "[string, string]",
+            "description": "Headers over the label column and the value column"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/ranked-list.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

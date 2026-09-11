@@ -1,0 +1,78 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "chart-tooltip",
+  "type": "registry:ui",
+  "title": "Chart Tooltip",
+  "description": "The hover readout shared by the chart components: a muted caption over a value row, with a tail pointing at the anchor. Uses namespace exports: ChartTooltip.Root, ChartTooltip.Value, ChartTooltip.Unit, ChartTooltip.Delta.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": ["happly-ui-utils"],
+  "docs": {
+    "lead": "A caption over a value, with a tail pointing down at what it describes. The chart components render it on hover; use it directly when you build a custom chart.",
+    "usage": "import * as ChartTooltip from \"@/components/ui/chart-tooltip\"\n\n<ChartTooltip.Root caption=\"10 - 19 Group\">\n  <ChartTooltip.Value>168</ChartTooltip.Value>\n  <ChartTooltip.Unit>Items</ChartTooltip.Unit>\n</ChartTooltip.Root>",
+    "examples": [
+      {
+        "title": "With unit",
+        "description": "A caption, a value and what the value counts. The bar chart and the donut use this shape.",
+        "code": "<ChartTooltip.Root caption=\"10 - 19 Group\">\n  <ChartTooltip.Value>168</ChartTooltip.Value>\n  <ChartTooltip.Unit>Items</ChartTooltip.Unit>\n</ChartTooltip.Root>",
+        "stories": ["WithUnit"]
+      },
+      {
+        "title": "Without unit",
+        "description": "Leave the unit out when the card title already names what's being counted.",
+        "code": "<ChartTooltip.Root caption=\"Tue, Aug 12\">\n  <ChartTooltip.Value>1,284</ChartTooltip.Value>\n</ChartTooltip.Root>",
+        "stories": ["WithoutUnit"]
+      },
+      {
+        "title": "With change",
+        "description": "Add a Delta after the value to show its change, and what the change is measured against. The line chart uses this shape.",
+        "code": "<ChartTooltip.Root caption=\"Tue, Aug 12\">\n  <ChartTooltip.Value>1,284</ChartTooltip.Value>\n  <ChartTooltip.Delta value={4.2}>vs prev.</ChartTooltip.Delta>\n</ChartTooltip.Root>",
+        "stories": ["WithChange"]
+      }
+    ],
+    "api": [
+      {
+        "name": "ChartTooltip.Root",
+        "description": "The box and its tail. Position it above the anchor; it ignores the pointer so it never steals hover.",
+        "props": [
+          {
+            "name": "caption",
+            "type": "ReactNode",
+            "description": "The muted line above the value"
+          },
+          {
+            "name": "tailOffset",
+            "type": "number",
+            "default": "0",
+            "description": "Px to slide the tail off-centre, when the box is shifted off its anchor (e.g. clamped inside the chart)"
+          }
+        ]
+      },
+      {
+        "name": "ChartTooltip.Value",
+        "description": "The figure, in tabular numerals."
+      },
+      {
+        "name": "ChartTooltip.Unit",
+        "description": "What the figure counts, beside it."
+      },
+      {
+        "name": "ChartTooltip.Delta",
+        "description": "A change beside the figure, green when it is zero or up and red when down. Children name what it is measured against.",
+        "props": [
+          {
+            "name": "value",
+            "type": "number",
+            "description": "The change in percent: 100 reads \"+100.0%\""
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/chart-tooltip.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

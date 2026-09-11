@@ -646,6 +646,30 @@ export const colors = {
   // the v4 `--color-image-outline` token that auto-generates the same name.
   'image-outline': 'var(--color-image-outline)',
 
+  // Chart colours (Charts components) — classes like bg-chart-2,
+  // text-chart-highlight, bg-chart-highlight-bg, stroke-chart-line
+  chart: {
+    1: 'var(--color-chart-1)',
+    2: 'var(--color-chart-2)',
+    3: 'var(--color-chart-3)',
+    4: 'var(--color-chart-4)',
+    5: 'var(--color-chart-5)',
+    6: 'var(--color-chart-6)',
+    7: 'var(--color-chart-7)',
+    8: 'var(--color-chart-8)',
+    highlight: 'var(--color-chart-highlight)',
+    'highlight-bg': 'var(--color-chart-highlight-bg)',
+    line: 'var(--color-chart-line)',
+    muted: 'var(--color-chart-muted)',
+    'trend-up': 'var(--color-chart-trend-up)',
+    'trend-down': 'var(--color-chart-trend-down)',
+    'trend-flat': 'var(--color-chart-trend-flat)',
+    'map-land': 'var(--color-chart-map-land)',
+    marker: 'var(--color-chart-marker)',
+    'marker-active': 'var(--color-chart-marker-active)',
+    'marker-halo': 'var(--color-chart-marker-halo)',
+  },
+
   // Raw palette colors (hex) — for Tailwind v3 utility classes
   gray: {
     0: '#ffffff',

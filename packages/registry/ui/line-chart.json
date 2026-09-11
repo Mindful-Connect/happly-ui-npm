@@ -1,0 +1,57 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "line-chart",
+  "type": "registry:ui",
+  "title": "Line Chart",
+  "description": "A gridded line chart over time with an optional total header, an optional change against the previous period, and a hover tooltip. Uses namespace exports: LineChart.Root.",
+  "version": "1.0.0",
+  "dependencies": ["recharts", "@remixicon/react"],
+  "registryDependencies": ["happly-ui-utils", "chart-tooltip"],
+  "docs": {
+    "lead": "A single series over time on a light grid. Pass a total to show a figure above the chart; add a delta to show how it moved.",
+    "usage": "import * as LineChart from \"@/components/ui/line-chart\"\n\n<LineChart.Root\n  points={[{ label: \"Mon, Aug 11\", value: 12 }]}\n  total={{ label: \"Total\", value: 68, delta: 33.3, comparison: \"vs previous period\" }}\n/>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "A total with its change, and a tooltip that also compares each point with the one before.",
+        "code": "<LineChart.Root\n  points={points}\n  total={{ label: \"Total\", value: 68, delta: 33.3, comparison: \"vs previous period\" }}\n  pointComparison=\"vs prev.\"\n/>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Without delta",
+        "description": "A total on its own, for a range with nothing before it to compare against.",
+        "code": "<LineChart.Root points={points} total={{ label: \"Total\", value: 68 }} />",
+        "stories": ["WithoutDelta"]
+      }
+    ],
+    "api": [
+      {
+        "name": "LineChart.Root",
+        "description": "The header and chart. Fills its container's height.",
+        "props": [
+          {
+            "name": "points",
+            "type": "{ label: string; value: number }[]",
+            "description": "Points oldest first. label is the tooltip caption, so format dates first"
+          },
+          {
+            "name": "total",
+            "type": "{ label: string; value: number; delta?: number | null; comparison?: string }",
+            "description": "A caption over a figure above the chart. Omit it and the chart takes the whole height"
+          },
+          {
+            "name": "pointComparison",
+            "type": "string",
+            "description": "When set, the tooltip shows each point's change from the one before, followed by this text"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/line-chart.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

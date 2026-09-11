@@ -1,0 +1,62 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "donut-chart",
+  "type": "registry:ui",
+  "title": "Donut Chart",
+  "description": "A half-donut gauge with rounded, separated segments, an optional total header, the featured segment in the centre, and a one-row legend. Uses namespace exports: DonutChart.Root.",
+  "version": "1.0.0",
+  "dependencies": ["recharts"],
+  "registryDependencies": ["happly-ui-utils", "chart-tooltip"],
+  "docs": {
+    "lead": "Segments along a half-donut. The featured segment's value and label fill the centre; pass a total to show a figure above the arc.",
+    "usage": "import * as DonutChart from \"@/components/ui/donut-chart\"\n\n<DonutChart.Root\n  items={[{ label: \"Category A\", value: 10 }, { label: \"Category B\", value: 55 }]}\n  highlighted=\"Category B\"\n  total={{ label: \"Total\", value: 65 }}\n  unit=\"Items\"\n/>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "One segment per item, with the highlighted one's value and label in the centre. Past two segments the colours continue the series ramp. Keep labels short, since the legend is one row.",
+        "code": "<DonutChart.Root items={items} highlighted=\"Category A\" />",
+        "stories": ["Default"]
+      },
+      {
+        "title": "With total",
+        "description": "Pass total and the header shows above the arc. Pass unit and hovering a segment names what it counts.",
+        "code": "<DonutChart.Root\n  items={items}\n  highlighted=\"Category B\"\n  total={{ label: \"Total\", value: 65 }}\n  unit=\"Items\"\n/>",
+        "stories": ["WithTotal"]
+      }
+    ],
+    "api": [
+      {
+        "name": "DonutChart.Root",
+        "description": "The optional header, the arc and the legend. Sized for a 352px card.",
+        "props": [
+          {
+            "name": "items",
+            "type": "{ label: string; value: number; color?: string }[]",
+            "description": "Segments along the arc, left to right"
+          },
+          {
+            "name": "highlighted",
+            "type": "string | null",
+            "description": "Label of the segment to feature. Omitted or null leaves the centre bare"
+          },
+          {
+            "name": "total",
+            "type": "{ label: string; value: number }",
+            "description": "A caption over a figure above the arc. Shown only when passed"
+          },
+          {
+            "name": "unit",
+            "type": "string",
+            "description": "What the values count, beside the value in the tooltip"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/donut-chart.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

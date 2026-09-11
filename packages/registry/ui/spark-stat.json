@@ -1,0 +1,74 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "spark-stat",
+  "type": "registry:ui",
+  "title": "Spark Stat",
+  "description": "A KPI card: a figure, its change as a coloured pill, and a sparkline of its recent shape. Uses namespace exports: SparkStat.Root.",
+  "version": "1.0.0",
+  "dependencies": ["recharts"],
+  "registryDependencies": ["happly-ui-utils", "widget-card"],
+  "docs": {
+    "lead": "A figure with its change against the previous period and a sparkline. The pill and the line take their colour from the trend.",
+    "usage": "import * as SparkStat from \"@/components/ui/spark-stat\"\n\n<SparkStat.Root\n  title=\"Metric title\"\n  value={65}\n  delta={23}\n  points={[2, 3, 5, 8, 12]}\n/>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "A positive change turns the pill and line green. The trend follows the sign of delta unless you pass one.",
+        "code": "<SparkStat.Root title=\"Metric title\" value={65} delta={23} points={points} />",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Down",
+        "description": "A negative change turns the pill and line red.",
+        "code": "<SparkStat.Root title=\"Metric title\" value={1284} delta={-8} points={points} />",
+        "stories": ["Down"]
+      },
+      {
+        "title": "Flat",
+        "description": "No change keeps the pill and line grey.",
+        "code": "<SparkStat.Root title=\"Metric title\" value={2} delta={0} points={points} />",
+        "stories": ["Flat"]
+      }
+    ],
+    "api": [
+      {
+        "name": "SparkStat.Root",
+        "description": "The whole card, 96px tall. Size its width with className.",
+        "props": [
+          {
+            "name": "title",
+            "type": "string",
+            "description": "The metric's name"
+          },
+          {
+            "name": "value",
+            "type": "number",
+            "description": "The figure, formatted with toLocaleString"
+          },
+          {
+            "name": "delta",
+            "type": "number",
+            "description": "Change against the previous period, in percent"
+          },
+          {
+            "name": "trend",
+            "type": "'up' | 'down' | 'flat'",
+            "default": "sign of delta",
+            "description": "Colours the pill and line. Pass your data source's own direction when it has one"
+          },
+          {
+            "name": "points",
+            "type": "number[]",
+            "description": "The sparkline's values, oldest first"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/spark-stat.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}
