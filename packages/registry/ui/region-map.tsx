@@ -84,8 +84,10 @@ function themeColor(element: HTMLElement, token: string) {
   const ctx = document.createElement('canvas').getContext('2d')!;
   ctx.fillStyle = getComputedStyle(element).getPropertyValue(token).trim();
   ctx.fillRect(0, 0, 1, 1);
-  const [r, g, b, a] = ctx.getImageData(0, 0, 1, 1).data;
-  return `rgba(${r}, ${g}, ${b}, ${a / 255})`;
+  // Indexed rather than destructured: a typed array only destructures with
+  // downlevelIteration, which an ES5-target project may not have.
+  const { data } = ctx.getImageData(0, 0, 1, 1);
+  return `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
 }
 
 /**
