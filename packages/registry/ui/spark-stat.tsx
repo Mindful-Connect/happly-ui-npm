@@ -63,7 +63,7 @@ function SparkStat({
       </WidgetCard.Header>
       <WidgetCard.Content className='flex items-center justify-between gap-4'>
         <div className='flex items-center gap-2'>
-          <span className='text-title-h4 text-text-strong-950 leading-none font-semibold tabular-nums'>
+          <span className='text-title-h5 text-text-strong-950 tabular-nums'>
             {value.toLocaleString()}
           </span>
           <span
