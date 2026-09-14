@@ -484,6 +484,12 @@
       "description": "A KPI card: a figure, its change as a coloured pill, and a sparkline of its recent shape. Uses namespace exports: SparkStat.Root."
     },
     {
+      "name": "stat-strip",
+      "type": "registry:ui",
+      "title": "Stat Strip",
+      "description": "A row of figures in equal sections split by dividers, each with an icon, a label and an optional change pill. Uses namespace exports: StatStrip.Root, StatStrip.Item."
+    },
+    {
       "name": "status-badge",
       "type": "registry:ui",
       "title": "Status Badge",

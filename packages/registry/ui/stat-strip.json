@@ -1,0 +1,79 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "stat-strip",
+  "type": "registry:ui",
+  "title": "Stat Strip",
+  "description": "A row of figures in equal sections split by dividers, each with an icon, a label and an optional change pill. Uses namespace exports: StatStrip.Root, StatStrip.Item.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": ["happly-ui-utils"],
+  "docs": {
+    "lead": "A row of figures between a hairline above and below. Each section shows an icon, a label and its value, with an optional pill for the change against the previous period.",
+    "usage": "import * as KeyIcon from \"@/components/ui/key-icon\"\nimport * as StatStrip from \"@/components/ui/stat-strip\"\n\n<StatStrip.Root>\n  <StatStrip.Item\n    icon={<KeyIcon.Root icon={<RiTimeFill />} />}\n    label=\"Label\"\n    value={3654}\n  />\n</StatStrip.Root>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Stroke key icons with a tinted glyph. Number values are formatted with toLocaleString.",
+        "code": "<StatStrip.Root>\n  <StatStrip.Item\n    icon={<KeyIcon.Root icon={<RiTimeFill className=\"text-warning-base\" />} />}\n    label=\"Review\"\n    value={3654}\n  />\n</StatStrip.Root>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Coloured icons",
+        "description": "Any KeyIcon style works in the icon slot, such as lighter with a colour.",
+        "code": "<StatStrip.Item\n  icon={<KeyIcon.Root style=\"lighter\" color=\"red\" icon={<RiPlayFill className=\"text-error-dark\" />} />}\n  label=\"Category A\"\n  value={15}\n/>",
+        "stories": ["ColouredIcons"]
+      },
+      {
+        "title": "With delta",
+        "description": "Pass a pre-formatted string for currency, and a delta for a change pill. Leave delta out and the section has no pill.",
+        "code": "<StatStrip.Item\n  icon={<KeyIcon.Root icon={<RiMoneyDollarCircleLine />} />}\n  label=\"Metric A\"\n  value=\"$96,000.00\"\n  delta={5}\n/>",
+        "stories": ["WithDelta"]
+      }
+    ],
+    "api": [
+      {
+        "name": "StatStrip.Root",
+        "description": "The row. Its sections share the width equally.",
+        "props": []
+      },
+      {
+        "name": "StatStrip.Item",
+        "description": "One section. Every section but the first gets a divider before it.",
+        "props": [
+          {
+            "name": "icon",
+            "type": "ReactNode",
+            "description": "Usually a KeyIcon"
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "description": "The figure's name"
+          },
+          {
+            "name": "value",
+            "type": "number | string",
+            "description": "A number is formatted with toLocaleString; a string is shown as given"
+          },
+          {
+            "name": "delta",
+            "type": "number",
+            "description": "Change against the previous period, in percent. Leave out for no pill"
+          },
+          {
+            "name": "trend",
+            "type": "'up' | 'down' | 'flat'",
+            "default": "sign of delta",
+            "description": "Colours the pill. Pass your data source's own direction when it has one"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/stat-strip.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

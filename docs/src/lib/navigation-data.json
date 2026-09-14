@@ -446,6 +446,10 @@
           }
         ],
         "collapsed": false
+      },
+      {
+        "title": "Stat Strip",
+        "href": "/docs/components/stat-strip"
       }
     ]
   },
