@@ -36,8 +36,8 @@ type StatStripItemProps = React.HTMLAttributes<HTMLDivElement> & {
   label: string;
   /** A number is formatted with toLocaleString; a string is shown as given. */
   value: number | string;
-  /** Change against the previous period, in percent: 5 reads "+5%". Leave out for no pill. */
-  delta?: number;
+  /** Change against the previous period, in percent: 5 reads "+5%". Leave out, or pass null, for no pill. */
+  delta?: number | null;
   /** Colours the pill. Follows the sign of `delta` by default. */
   trend?: Trend;
 };
@@ -69,7 +69,7 @@ function StatStripItem({
           <span className='text-label-md text-text-strong-950 font-bold tabular-nums'>
             {typeof value === 'number' ? value.toLocaleString() : value}
           </span>
-          {delta === undefined ? null : (
+          {delta == null ? null : (
             <span
               className={cn(
                 'text-subheading-2xs rounded-full px-2 py-1 tracking-[-0.11px] tabular-nums',

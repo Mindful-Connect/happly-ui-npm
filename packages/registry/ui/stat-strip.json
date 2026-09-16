@@ -57,8 +57,8 @@
           },
           {
             "name": "delta",
-            "type": "number",
-            "description": "Change against the previous period, in percent. Leave out for no pill"
+            "type": "number | null",
+            "description": "Change against the previous period, in percent. Leave out, or pass null, for no pill"
           },
           {
             "name": "trend",

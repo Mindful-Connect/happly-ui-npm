@@ -28,6 +28,12 @@
         "description": "No change keeps the pill and line grey.",
         "code": "<SparkStat.Root title=\"Metric title\" value={2} delta={0} points={points} />",
         "stories": ["Flat"]
+      },
+      {
+        "title": "No delta",
+        "description": "Leave delta out, or pass null, when there is no previous period to compare against. The pill is hidden and the line turns grey unless you pass a trend.",
+        "code": "<SparkStat.Root title=\"Metric title\" value={8241} delta={null} points={points} />",
+        "stories": ["NoDelta"]
       }
     ],
     "api": [
@@ -47,8 +53,8 @@
           },
           {
             "name": "delta",
-            "type": "number",
-            "description": "Change against the previous period, in percent"
+            "type": "number | null",
+            "description": "Change against the previous period, in percent. Leave out, or pass null, for no pill"
           },
           {
             "name": "trend",

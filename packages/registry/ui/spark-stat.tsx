@@ -30,8 +30,8 @@ function formatDelta(delta: number) {
 type SparkStatProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> & {
   title: string;
   value: number;
-  /** Change against the previous period, in percent: 23 reads "+23%". */
-  delta: number;
+  /** Change against the previous period, in percent: 23 reads "+23%". Leave out, or pass null, for no pill. */
+  delta?: number | null;
   /**
    * Colours the pill and the line. Follows the sign of `delta` by default;
    * pass the direction your data source reports when it has one.
@@ -46,7 +46,7 @@ function SparkStat({
   title,
   value,
   delta,
-  trend = delta > 0 ? 'up' : delta < 0 ? 'down' : 'flat',
+  trend = (delta ?? 0) > 0 ? 'up' : (delta ?? 0) < 0 ? 'down' : 'flat',
   points,
   className,
   ...rest
@@ -66,14 +66,16 @@ function SparkStat({
           <span className='text-title-h5 text-text-strong-950 tabular-nums'>
             {value.toLocaleString()}
           </span>
-          <span
-            className={cn(
-              'text-subheading-2xs rounded-full px-2 py-1 tracking-[-0.11px] tabular-nums',
-              tone.badge
-            )}
-          >
-            {formatDelta(delta)}
-          </span>
+          {delta == null ? null : (
+            <span
+              className={cn(
+                'text-subheading-2xs rounded-full px-2 py-1 tracking-[-0.11px] tabular-nums',
+                tone.badge
+              )}
+            >
+              {formatDelta(delta)}
+            </span>
+          )}
         </div>
         {/* The pill states the change; the line only shows its shape. */}
         <div aria-hidden className='h-10 w-[140px] shrink-0'>

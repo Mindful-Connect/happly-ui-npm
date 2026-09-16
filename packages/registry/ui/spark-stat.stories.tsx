@@ -29,3 +29,11 @@ export const Flat = {
     </div>
   ),
 };
+
+export const NoDelta = {
+  render: () => (
+    <div className='w-[352px]'>
+      <SparkStat.Root title='Metric title' value={8241} delta={null} points={rising} />
+    </div>
+  ),
+};
