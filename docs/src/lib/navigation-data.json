@@ -448,6 +448,10 @@
         "collapsed": false
       },
       {
+        "title": "Performance Card",
+        "href": "/docs/components/performance-card"
+      },
+      {
         "title": "Stat Strip",
         "href": "/docs/components/stat-strip"
       }

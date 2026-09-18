@@ -364,6 +364,12 @@
       "description": "A composed password input with show/hide toggle and optional strength indicator with criteria checklist."
     },
     {
+      "name": "performance-card",
+      "type": "registry:ui",
+      "title": "Performance Card",
+      "description": "A card whose header pairs a thumbnail or avatar with a title, a meta row and stat tiles, and whose border also wraps whatever follows, such as a table. Uses namespace exports: PerformanceCard.Root, Header, Media, Title, Rule, Meta, Stats, Stat, Metric."
+    },
+    {
       "name": "phone-input",
       "type": "registry:ui",
       "title": "Phone Input",

@@ -56,6 +56,7 @@ import { default as menuTabBarMeta, Default as menuTabBar_Default, Primary as me
 import { default as modalMeta, Playground as modal_Playground, Demo as modal_Demo, WithHeader as modal_WithHeader, Pattern as modal_Pattern } from '@/components/ui/modal.stories';
 import { default as paginationMeta, Playground as pagination_Playground, Demo as pagination_Demo, Rounded as pagination_Rounded, Group as pagination_Group, AsLink as pagination_AsLink } from '@/components/ui/pagination.stories';
 import { default as passwordInputMeta, Playground as passwordInput_Playground, Default as passwordInput_Default, WithStrength as passwordInput_WithStrength, Sizes as passwordInput_Sizes, ErrorState as passwordInput_ErrorState, WithFormField as passwordInput_WithFormField } from '@/components/ui/password-input.stories';
+import { default as performanceCardMeta, Default as performanceCard_Default, WithSublabels as performanceCard_WithSublabels, WithMetrics as performanceCard_WithMetrics, WithContentBelow as performanceCard_WithContentBelow } from '@/components/ui/performance-card.stories';
 import { default as phoneInputMeta, Playground as phoneInput_Playground, Default as phoneInput_Default, Controlled as phoneInput_Controlled, Sizes as phoneInput_Sizes, ErrorState as phoneInput_ErrorState, Disabled as phoneInput_Disabled, WithFormField as phoneInput_WithFormField, WithForm as phoneInput_WithForm } from '@/components/ui/phone-input.stories';
 import { default as popoverMeta, Playground as popover_Playground, Demo as popover_Demo, Position as popover_Position } from '@/components/ui/popover.stories';
 import { default as progressBarMeta, Playground as progressBar_Playground, Color as progressBar_Color, WithLabel as progressBar_WithLabel, DataStorage as progressBar_DataStorage, Indeterminate as progressBar_Indeterminate, IndeterminateColors as progressBar_IndeterminateColors, IndeterminateWithFinalizing as progressBar_IndeterminateWithFinalizing } from '@/components/ui/progress-bar.stories';
@@ -738,6 +739,15 @@ export const storyRegistry: Record<string, {
     'Sizes': passwordInput_Sizes,
     'ErrorState': passwordInput_ErrorState,
     'WithFormField': passwordInput_WithFormField
+    }
+  },
+  'performance-card': {
+    meta: performanceCardMeta,
+    stories: {
+    'Default': performanceCard_Default,
+    'WithSublabels': performanceCard_WithSublabels,
+    'WithMetrics': performanceCard_WithMetrics,
+    'WithContentBelow': performanceCard_WithContentBelow
     }
   },
   'phone-input': {

@@ -1,0 +1,150 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "performance-card",
+  "type": "registry:ui",
+  "title": "Performance Card",
+  "description": "A card whose header pairs a thumbnail or avatar with a title, a meta row and stat tiles, and whose border also wraps whatever follows, such as a table. Uses namespace exports: PerformanceCard.Root, Header, Media, Title, Rule, Meta, Stats, Stat, Metric.",
+  "version": "1.0.0",
+  "dependencies": ["@remixicon/react"],
+  "registryDependencies": ["happly-ui-utils"],
+  "docs": {
+    "lead": "One border around a subject and its numbers. The header holds the media, title, meta row and stat tiles; anything after it, such as a table, meets the border directly.",
+    "usage": "import * as PerformanceCard from \"@/components/ui/performance-card\"\n\n<PerformanceCard.Root>\n  <PerformanceCard.Header media={<PerformanceCard.Media className=\"size-36\" />}>\n    <PerformanceCard.Title>Person name</PerformanceCard.Title>\n    <PerformanceCard.Meta>In-person meeting</PerformanceCard.Meta>\n    <PerformanceCard.Stats>\n      <PerformanceCard.Stat value={214} label=\"Bookings\" />\n      <PerformanceCard.Metric value={240} label=\"Tickets sold\" delta={-5.4} comparison=\"vs last week\" />\n    </PerformanceCard.Stats>\n  </PerformanceCard.Header>\n</PerformanceCard.Root>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "A wide thumbnail, a truncating title, a meta row of icons, text and badges, and tiles of a figure and its label.",
+        "code": "<PerformanceCard.Header\n  media={<PerformanceCard.Media className=\"h-[152px] w-[270px]\" />}\n  action={<Button.Root>Details</Button.Root>}\n>\n  <PerformanceCard.Title className=\"text-title-h6 truncate\">Session title</PerformanceCard.Title>\n</PerformanceCard.Header>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "With sub-labels",
+        "description": "Sub-labels sit on the title's baseline, each behind a rule. The media falls back to its placeholder when there is no image.",
+        "code": "<PerformanceCard.Title sublabels={['Role', 'name@example.com']}>\n  Person name\n</PerformanceCard.Title>",
+        "stories": ["WithSublabels"]
+      },
+      {
+        "title": "With a change",
+        "description": "Use Metric instead of Stat when the figure carries its change against another period. The arrow gives the direction, green up and red down, and the percentage is unsigned.",
+        "code": "<PerformanceCard.Metric\n  value={240}\n  label=\"Total tickets sold\"\n  delta={-5.4}\n  comparison=\"vs last week\"\n/>",
+        "stories": ["WithMetrics"]
+      },
+      {
+        "title": "With content below",
+        "description": "Root has no padding, so a table under the header runs edge to edge to the border.",
+        "code": "<PerformanceCard.Root>\n  <PerformanceCard.Header>…</PerformanceCard.Header>\n  <YourTable />\n</PerformanceCard.Root>",
+        "stories": ["WithContentBelow"]
+      }
+    ],
+    "api": [
+      {
+        "name": "PerformanceCard.Root",
+        "description": "The card's single border. No padding of its own, so content below the header reaches it.",
+        "props": []
+      },
+      {
+        "name": "PerformanceCard.Header",
+        "description": "The padded top of the card. 24px padding, 16px between the media and the rest.",
+        "props": [
+          {
+            "name": "media",
+            "type": "ReactNode",
+            "description": "A Media, to the left of the children"
+          },
+          {
+            "name": "action",
+            "type": "ReactNode",
+            "description": "Sits top right, level with the title. Usually a Button"
+          }
+        ]
+      },
+      {
+        "name": "PerformanceCard.Media",
+        "description": "The thumbnail or avatar. Size it with className.",
+        "props": [
+          {
+            "name": "src",
+            "type": "string",
+            "description": "The image"
+          },
+          {
+            "name": "alt",
+            "type": "string",
+            "default": "''",
+            "description": "The image's description"
+          },
+          {
+            "name": "placeholder",
+            "type": "ReactNode",
+            "description": "Shown instead of the image when there is no src"
+          }
+        ]
+      },
+      {
+        "name": "PerformanceCard.Title",
+        "description": "The card's name. Size it with className: text-title-h6 for a wide card, the default text-label-lg for a compact one.",
+        "props": [
+          {
+            "name": "sublabels",
+            "type": "ReactNode[]",
+            "default": "[]",
+            "description": "Sit on the title's baseline, each behind a rule"
+          }
+        ]
+      },
+      {
+        "name": "PerformanceCard.Rule",
+        "description": "The 1px rule between a title's sub-labels, or between groups in the meta row.",
+        "props": []
+      },
+      {
+        "name": "PerformanceCard.Meta",
+        "description": "The wrapping row of icons, text and badges under the title, 8px below it.",
+        "props": []
+      },
+      {
+        "name": "PerformanceCard.Stats",
+        "description": "The row of tiles, 12px under the meta row. Tiles share the width equally.",
+        "props": []
+      },
+      {
+        "name": "PerformanceCard.Stat",
+        "description": "One tile: the figure and its label.",
+        "props": [
+          {
+            "name": "value",
+            "type": "number | string",
+            "description": "A number is formatted with toLocaleString; a string is shown as given"
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "description": "What the figure counts"
+          }
+        ]
+      },
+      {
+        "name": "PerformanceCard.Metric",
+        "description": "A tile that also carries its change against another period. Takes Stat's props too.",
+        "props": [
+          {
+            "name": "delta",
+            "type": "number",
+            "description": "Change against the comparison period, in percent. The arrow carries the direction, so the percentage is shown unsigned"
+          },
+          {
+            "name": "comparison",
+            "type": "string",
+            "description": "What the delta compares against, such as \"vs last week\""
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/performance-card.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}
