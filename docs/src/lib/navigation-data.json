@@ -448,6 +448,10 @@
         "collapsed": false
       },
       {
+        "title": "Metric List",
+        "href": "/docs/components/metric-list"
+      },
+      {
         "title": "Performance Card",
         "href": "/docs/components/performance-card"
       },

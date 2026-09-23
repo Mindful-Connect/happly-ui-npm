@@ -346,6 +346,12 @@
       "description": "An underline-style horizontal tab bar with icon support. Uses namespace exports: MenuTabBar.Root, MenuTabBar.Item, MenuTabBar.Icon, MenuTabBar.Composed."
     },
     {
+      "name": "metric-list",
+      "type": "registry:ui",
+      "title": "Metric List",
+      "description": "A compact table of entities and their figures for the preview inside a card: a leading avatar or thumbnail, a name with an optional sublabel, and one or more figure columns. Uses namespace exports: MetricList.Root, Header, Column, Body, Row, Entity, Value."
+    },
+    {
       "name": "modal",
       "type": "registry:ui",
       "title": "Modal",
