@@ -8,6 +8,7 @@ import {
 import * as Badge from './badge';
 import * as Button from './button';
 import * as PerformanceCard from './performance-card';
+import * as Table from './table';
 
 export default {
   title: 'Charts/Performance Card',
@@ -18,7 +19,7 @@ export const Default = {
   render: () => (
     <PerformanceCard.Root className='w-[900px]'>
       <PerformanceCard.Header
-        media={<PerformanceCard.Media className='h-[152px] w-[270px]' />}
+        media={<PerformanceCard.Media className='w-[270px]' />}
         action={
           <Button.Root variant='neutral' mode='stroke' size='xsmall'>
             Details
@@ -103,7 +104,7 @@ export const WithMetrics = {
   render: () => (
     <PerformanceCard.Root className='w-[900px]'>
       <PerformanceCard.Header
-        media={<PerformanceCard.Media className='h-[152px] w-[270px]' />}
+        media={<PerformanceCard.Media className='w-[270px]' />}
         action={
           <Button.Root variant='neutral' mode='stroke' size='xsmall'>
             Details
@@ -147,7 +148,7 @@ export const WithContentBelow = {
   render: () => (
     <PerformanceCard.Root className='w-[900px]'>
       <PerformanceCard.Header
-        media={<PerformanceCard.Media className='h-[152px] w-[270px]' />}
+        media={<PerformanceCard.Media className='w-[270px]' />}
       >
         <PerformanceCard.Title className='text-title-h6'>
           Session title
@@ -161,11 +162,32 @@ export const WithContentBelow = {
           <PerformanceCard.Stat value={128} label='Comments' />
         </PerformanceCard.Stats>
       </PerformanceCard.Header>
-      {/* Anything can follow the header; it meets the card's border directly. */}
-      <div className='bg-bg-weak-50 border-stroke-soft-200 text-paragraph-xs text-text-sub-600 border-y px-6 py-3'>
-        A table's header band runs edge to edge
+      {/* The table carries the header's inset, so its band sits inside the
+          card instead of running to the border. */}
+      <div className='px-6 pb-6'>
+        <Table.Root>
+          <Table.Header>
+            <Table.Row>
+              <Table.Head>Name</Table.Head>
+              <Table.Head>Region</Table.Head>
+              <Table.Head numeric>Views</Table.Head>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {[
+              { name: 'Person one', region: 'Montreal, Canada', views: 1240 },
+              { name: 'Person two', region: 'Vancouver, Canada', views: 980 },
+              { name: 'Person three', region: 'Toronto, Canada', views: 612 },
+            ].map((row) => (
+              <Table.Row key={row.name}>
+                <Table.Cell>{row.name}</Table.Cell>
+                <Table.Cell>{row.region}</Table.Cell>
+                <Table.Cell numeric>{row.views.toLocaleString()}</Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table.Root>
       </div>
-      <div className='text-paragraph-sm text-text-sub-600 px-6 py-4'>A row</div>
     </PerformanceCard.Root>
   ),
 };

@@ -8,13 +8,13 @@
   "dependencies": ["@remixicon/react"],
   "registryDependencies": ["happly-ui-utils"],
   "docs": {
-    "lead": "One border around a subject and its numbers. The header holds the media, title, meta row and stat tiles; anything after it, such as a table, meets the border directly.",
+    "lead": "One border around a subject and its numbers. The header holds the media, title, meta row and stat tiles; anything after it, such as a table, carries the header's inset.",
     "usage": "import * as PerformanceCard from \"@/components/ui/performance-card\"\n\n<PerformanceCard.Root>\n  <PerformanceCard.Header media={<PerformanceCard.Media className=\"size-36\" />}>\n    <PerformanceCard.Title>Person name</PerformanceCard.Title>\n    <PerformanceCard.Meta>In-person meeting</PerformanceCard.Meta>\n    <PerformanceCard.Stats>\n      <PerformanceCard.Stat value={214} label=\"Bookings\" />\n      <PerformanceCard.Metric value={240} label=\"Tickets sold\" delta={-5.4} comparison=\"vs last week\" />\n    </PerformanceCard.Stats>\n  </PerformanceCard.Header>\n</PerformanceCard.Root>",
     "examples": [
       {
         "title": "Default",
-        "description": "A wide thumbnail, a truncating title, a meta row of icons, text and badges, and tiles of a figure and its label.",
-        "code": "<PerformanceCard.Header\n  media={<PerformanceCard.Media className=\"h-[152px] w-[270px]\" />}\n  action={<Button.Root>Details</Button.Root>}\n>\n  <PerformanceCard.Title className=\"text-title-h6 truncate\">Session title</PerformanceCard.Title>\n</PerformanceCard.Header>",
+        "description": "A wide thumbnail, a truncating title, a meta row of icons, text and badges, and tiles of a figure and its label. The media takes a width only, so it fills the header's height and its bottom edge lines up with the tiles.",
+        "code": "<PerformanceCard.Header\n  media={<PerformanceCard.Media className=\"w-[270px]\" />}\n  action={<Button.Root>Details</Button.Root>}\n>\n  <PerformanceCard.Title className=\"text-title-h6 truncate\">Session title</PerformanceCard.Title>\n</PerformanceCard.Header>",
         "stories": ["Default"]
       },
       {
@@ -31,15 +31,15 @@
       },
       {
         "title": "With content below",
-        "description": "Root has no padding, so a table under the header runs edge to edge to the border.",
-        "code": "<PerformanceCard.Root>\n  <PerformanceCard.Header>…</PerformanceCard.Header>\n  <YourTable />\n</PerformanceCard.Root>",
+        "description": "Root has no padding, so content under the header sets its own. Match the header's 24px inset and a table's header band sits inside the card, as the design draws it.",
+        "code": "<PerformanceCard.Root>\n  <PerformanceCard.Header>\u2026</PerformanceCard.Header>\n  <div className=\"px-6 pb-6\">\n    <Table.Root>\u2026</Table.Root>\n  </div>\n</PerformanceCard.Root>",
         "stories": ["WithContentBelow"]
       }
     ],
     "api": [
       {
         "name": "PerformanceCard.Root",
-        "description": "The card's single border. No padding of its own, so content below the header reaches it.",
+        "description": "The card's single border. No padding of its own, so each part sets its own: the header's 24px inset is what content below it should match.",
         "props": []
       },
       {
@@ -60,7 +60,7 @@
       },
       {
         "name": "PerformanceCard.Media",
-        "description": "The thumbnail or avatar. Size it with className.",
+        "description": "The thumbnail or avatar. Give it a width and it fills the header's height, so its bottom edge lines up with the stat tiles. A square avatar can take size- instead.",
         "props": [
           {
             "name": "src",

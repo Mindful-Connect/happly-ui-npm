@@ -6,8 +6,8 @@ import { cn } from '@/lib/happly-ui-utils';
 type PerformanceCardRootProps = React.HTMLAttributes<HTMLDivElement>;
 
 /**
- * The card's single border. It has no padding of its own, so a table below the
- * header can run edge to edge.
+ * The card's single border. It has no padding of its own, so each part sets its
+ * own: content below the header carries the header's inset, not the border.
  */
 function PerformanceCardRoot({ className, ...rest }: PerformanceCardRootProps) {
   return (
@@ -63,7 +63,7 @@ type PerformanceCardMediaProps = React.HTMLAttributes<HTMLDivElement> & {
   placeholder?: React.ReactNode;
 };
 
-/** The thumbnail or avatar. Size it with className. */
+/** The thumbnail or avatar. Give it a width; it fills the header's height. */
 function PerformanceCardMedia({
   src,
   alt = '',
