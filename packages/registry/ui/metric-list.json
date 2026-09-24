@@ -19,7 +19,7 @@
       },
       {
         "title": "Two figures",
-        "description": "Add a Column and a Value per figure. The width on the Column sizes the cells under it, so the header and the rows cannot drift apart.",
+        "description": "Add a Column and a Value per figure. The width on the Column is a minimum for the cells under it, so the header and the rows cannot drift apart and a long value still fits on one line.",
         "code": "<MetricList.Header>\n  <MetricList.Column>Name</MetricList.Column>\n  <MetricList.Column className=\"w-[88px]\">Sessions</MetricList.Column>\n  <MetricList.Column className=\"w-[72px]\">Booked %</MetricList.Column>\n</MetricList.Header>",
         "stories": ["TwoFigures"]
       },
@@ -50,7 +50,7 @@
       },
       {
         "name": "MetricList.Column",
-        "description": "One column's label. The first column takes the slack; the rest align to the end. Size a figure's column with className and the cells below follow.",
+        "description": "One column's label. The first column takes the slack; the rest align to the end. A width set with className is a minimum \u2014 the column grows if a value needs more, and the first column gives up the difference.",
         "props": []
       },
       {

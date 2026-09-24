@@ -30,15 +30,7 @@ function MetricListRoot({
 }: MetricListRootProps) {
   return (
     <SizeContext.Provider value={size}>
-      <table
-        className={cn(
-          // Fixed, so a width set on a figure's header holds and the first
-          // column takes whatever is left instead of squeezing the figures.
-          'w-full table-fixed',
-          className
-        )}
-        {...rest}
-      />
+      <table className={cn('w-full', className)} {...rest} />
     </SizeContext.Provider>
   );
 }
@@ -58,8 +50,8 @@ function MetricListHeader({
 MetricListHeader.displayName = 'MetricListHeader';
 
 /**
- * One column's label. Size a figure's column with className: the cells below
- * follow it, so the width is written once.
+ * One column's label. A width set on a figure's column is a minimum: the column
+ * grows if a value needs more, and the first column gives up the difference.
  */
 function MetricListColumn({
   className,
@@ -69,10 +61,11 @@ function MetricListColumn({
     <th
       scope='col'
       className={cn(
-        'text-label-xs text-text-soft-400 text-start font-normal',
+        'text-label-xs text-text-soft-400 text-start font-normal whitespace-nowrap',
         // The first column names the entity and takes the slack; the figures
         // after it are read against their values, at the end.
-        '[&:not(:first-child)]:text-end',
+        // The gap between figure columns, which now size to their own content.
+        '[&:not(:first-child)]:ps-4 [&:not(:first-child)]:text-end',
         className
       )}
       {...rest}
@@ -110,7 +103,9 @@ function MetricListEntity({
   const size = React.useContext(SizeContext);
 
   return (
-    <td className={cn(GAP[size], className)} {...rest}>
+    // max-w-0 keeps the name out of the table's width: the column takes the
+    // slack left by the figures, and a name too long for it truncates.
+    <td className={cn('w-full max-w-0', GAP[size], className)} {...rest}>
       <span
         className={cn(
           'flex items-center gap-3',
@@ -154,7 +149,9 @@ function MetricListValue({
   return (
     <td
       className={cn(
-        'text-label-sm text-text-sub-600 text-end align-middle tabular-nums',
+        // Never wrapped: a long value widens its column and the name truncates
+        // instead, rather than the figure stacking and growing the row.
+        'text-label-sm text-text-sub-600 ps-4 text-end align-middle whitespace-nowrap tabular-nums',
         GAP[size],
         className
       )}
