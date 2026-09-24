@@ -5,7 +5,7 @@
   "title": "Spark Stat",
   "description": "A KPI card: a figure, its change as a coloured pill, and a sparkline of its recent shape. Uses namespace exports: SparkStat.Root.",
   "version": "1.0.0",
-  "dependencies": ["recharts"],
+  "dependencies": ["recharts@^3.8.1"],
   "registryDependencies": ["happly-ui-utils", "widget-card"],
   "docs": {
     "lead": "A figure with its change against the previous period and a sparkline. The pill and the line take their colour from the trend.",
@@ -34,6 +34,12 @@
         "description": "Leave delta out, or pass null, when there is no previous period to compare against. The pill is hidden and the line turns grey unless you pass a trend.",
         "code": "<SparkStat.Root title=\"Metric title\" value={8241} delta={null} points={points} />",
         "stories": ["NoDelta"]
+      },
+      {
+        "title": "Narrow range",
+        "description": "The sparkline scales to its data, so a small change between large values remains visible. A change that rounds to 0% gets a neutral pill and line.",
+        "code": "<SparkStat.Root title=\"Recent activity\" value={8241} delta={0.3} points={[8100, 8138, 8110, 8205, 8241]} />",
+        "stories": ["NarrowRange"]
       }
     ],
     "api": [
@@ -59,8 +65,8 @@
           {
             "name": "trend",
             "type": "'up' | 'down' | 'flat'",
-            "default": "sign of delta",
-            "description": "Colours the pill and line. Pass your data source's own direction when it has one"
+            "default": "sign of rounded delta",
+            "description": "Colours the pill and line. Pass your data source's own direction when it has one; a displayed 0% stays neutral"
           },
           {
             "name": "points",

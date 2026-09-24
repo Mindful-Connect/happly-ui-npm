@@ -238,6 +238,7 @@ function PerformanceCardMetric({
             up ? 'text-success-base' : 'text-error-base'
           )}
         >
+          <span className='sr-only'>{up ? '+' : '−'}</span>
           {Math.abs(delta).toFixed(1)}%
         </span>
         {comparison ? (

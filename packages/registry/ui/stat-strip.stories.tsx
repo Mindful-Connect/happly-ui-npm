@@ -190,3 +190,22 @@ export const WithDelta = {
     </StatStrip.Root>
   ),
 };
+
+export const RoundedZero = {
+  render: () => (
+    <StatStrip.Root className='w-[480px]'>
+      <StatStrip.Item
+        icon={<KeyIcon.Root icon={<RiStarLine />} />}
+        label='Small increase'
+        value={120}
+        delta={0.3}
+      />
+      <StatStrip.Item
+        icon={<KeyIcon.Root icon={<RiStarLine />} />}
+        label='Small decrease'
+        value={120}
+        delta={-0.3}
+      />
+    </StatStrip.Root>
+  ),
+};

@@ -67,7 +67,7 @@ import { default as publicationStatusBadgeMeta, Draft as publicationStatusBadge_
 import { default as radioCardMeta, Playground as radioCard_Playground, Default as radioCard_Default, WithKeyIcons as radioCard_WithKeyIcons, WithSimpleIcons as radioCard_WithSimpleIcons, WithBadges as radioCard_WithBadges, InlineDescription as radioCard_InlineDescription, AllowDeselect as radioCard_AllowDeselect, Disabled as radioCard_Disabled, ErrorState as radioCard_ErrorState, Composed as radioCard_Composed, PrimaryVariant as radioCard_PrimaryVariant, WithFormField as radioCard_WithFormField } from '@/components/ui/radio-card.stories';
 import { default as radioMeta, Playground as radio_Playground, Demo as radio_Demo, Variants as radio_Variants, Disabled as radio_Disabled, WithLabel as radio_WithLabel, WithLabelExtended as radio_WithLabelExtended, WithFormField as radio_WithFormField } from '@/components/ui/radio.stories';
 import { default as rankedListMeta, Default as rankedList_Default, ManyRows as rankedList_ManyRows } from '@/components/ui/ranked-list.stories';
-import { default as regionMapMeta, Default as regionMap_Default, WithTopRegion as regionMap_WithTopRegion } from '@/components/ui/region-map.stories';
+import { default as regionMapMeta, Default as regionMap_Default, WithTopRegion as regionMap_WithTopRegion, Updates as regionMap_Updates } from '@/components/ui/region-map.stories';
 import { default as sectionToggleMeta, Playground as sectionToggle_Playground, Default as sectionToggle_Default, Collapsed as sectionToggle_Collapsed, Composed as sectionToggle_Composed } from '@/components/ui/section-toggle.stories';
 import { default as sectionMeta, Playground as section_Playground, Default as section_Default, WithCustomHeaderWidth as section_WithCustomHeaderWidth, Composed as section_Composed } from '@/components/ui/section.stories';
 import { default as segmentBarMeta, Default as segmentBar_Default, RowsLegend as segmentBar_RowsLegend } from '@/components/ui/segment-bar.stories';
@@ -75,8 +75,8 @@ import { default as selectMeta, Playground as select_Playground, Demo as select_
 import { default as skeletonMeta, Default as skeleton_Default, Card as skeleton_Card, Circular as skeleton_Circular } from '@/components/ui/skeleton.stories';
 import { default as sliderMeta, Playground as slider_Playground, Demo as slider_Demo, Variants as slider_Variants, Range as slider_Range, WithTooltip as slider_WithTooltip, WithFormField as slider_WithFormField } from '@/components/ui/slider.stories';
 import { default as socialsInputMeta, Default as socialsInput_Default, WithExistingValues as socialsInput_WithExistingValues, AllSocials as socialsInput_AllSocials, CustomSocials as socialsInput_CustomSocials, ReadOnly as socialsInput_ReadOnly, WithFormField as socialsInput_WithFormField, ErrorState as socialsInput_ErrorState, CustomLabels as socialsInput_CustomLabels } from '@/components/ui/socials-input.stories';
-import { default as sparkStatMeta, Default as sparkStat_Default, Down as sparkStat_Down, Flat as sparkStat_Flat, NoDelta as sparkStat_NoDelta } from '@/components/ui/spark-stat.stories';
-import { default as statStripMeta, Default as statStrip_Default, ColouredIcons as statStrip_ColouredIcons, WithDelta as statStrip_WithDelta } from '@/components/ui/stat-strip.stories';
+import { default as sparkStatMeta, Default as sparkStat_Default, Down as sparkStat_Down, Flat as sparkStat_Flat, NoDelta as sparkStat_NoDelta, NarrowRange as sparkStat_NarrowRange } from '@/components/ui/spark-stat.stories';
+import { default as statStripMeta, Default as statStrip_Default, ColouredIcons as statStrip_ColouredIcons, WithDelta as statStrip_WithDelta, RoundedZero as statStrip_RoundedZero } from '@/components/ui/stat-strip.stories';
 import { default as statusBadgeMeta, Playground as statusBadge_Playground, Completed as statusBadge_Completed, Pending as statusBadge_Pending, Failed as statusBadge_Failed, Disabled as statusBadge_Disabled, AsChild as statusBadge_AsChild } from '@/components/ui/status-badge.stories';
 import { default as statusIndicatorMeta, TopVariants as statusIndicator_TopVariants, BottomVariants as statusIndicator_BottomVariants } from '@/components/ui/status-indicator.stories';
 import { default as stepIndicatorMeta, FirstStepActive as stepIndicator_FirstStepActive, MidProgress as stepIndicator_MidProgress, LastStepActive as stepIndicator_LastStepActive, AllCompleted as stepIndicator_AllCompleted, Compound as stepIndicator_Compound, Clickable as stepIndicator_Clickable, CustomRailColors as stepIndicator_CustomRailColors } from '@/components/ui/step-indicator.stories';
@@ -863,7 +863,8 @@ export const storyRegistry: Record<string, {
     meta: regionMapMeta,
     stories: {
     'Default': regionMap_Default,
-    'WithTopRegion': regionMap_WithTopRegion
+    'WithTopRegion': regionMap_WithTopRegion,
+    'Updates': regionMap_Updates
     }
   },
   'section-toggle': {
@@ -950,7 +951,8 @@ export const storyRegistry: Record<string, {
     'Default': sparkStat_Default,
     'Down': sparkStat_Down,
     'Flat': sparkStat_Flat,
-    'NoDelta': sparkStat_NoDelta
+    'NoDelta': sparkStat_NoDelta,
+    'NarrowRange': sparkStat_NarrowRange
     }
   },
   'stat-strip': {
@@ -958,7 +960,8 @@ export const storyRegistry: Record<string, {
     stories: {
     'Default': statStrip_Default,
     'ColouredIcons': statStrip_ColouredIcons,
-    'WithDelta': statStrip_WithDelta
+    'WithDelta': statStrip_WithDelta,
+    'RoundedZero': statStrip_RoundedZero
     }
   },
   'status-badge': {

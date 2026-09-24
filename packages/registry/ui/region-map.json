@@ -5,7 +5,7 @@
   "title": "Region Map",
   "description": "A dotted world map with a marker per point, its count in a tooltip on hover, and zoom buttons, optionally headed by the top region and its three biggest parts. Tile-less: the land outline is bundled. Uses namespace exports: RegionMap.Root.",
   "version": "1.0.0",
-  "dependencies": ["maplibre-gl", "@remixicon/react"],
+  "dependencies": ["maplibre-gl@^5.9.0", "@remixicon/react@^4.6.0"],
   "registryDependencies": [
     "happly-ui-utils",
     "chart-tooltip",
@@ -26,6 +26,12 @@
         "description": "Pass top to head the map with the leading place: its figure, a tag with its name and an optional image such as a flag, and a strip of its three biggest parts with their shares. Work out the shares before passing them; the map shows them as given.",
         "code": "<RegionMap.Root\n  points={points}\n  unit=\"Items\"\n  top={{\n    label: \"Top region\",\n    value: 120,\n    name: \"Region A\",\n    image: flagUrl,\n    shares: [\n      { label: \"Location A\", percent: 50 },\n      { label: \"Location B\", percent: 30 },\n      { label: \"Location C\", percent: 20 },\n    ],\n  }}\n/>",
         "stories": ["WithTopRegion"]
+      },
+      {
+        "title": "Updates",
+        "description": "Changing points clears the current hover without resetting the view. Theme changes recolour the map while it remains mounted.",
+        "code": "<RegionMap.Root points={updated ? updatedPoints : points} unit=\"Items\" />",
+        "stories": ["Updates"]
       }
     ],
     "api": [

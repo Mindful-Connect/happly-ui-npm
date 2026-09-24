@@ -28,6 +28,12 @@
         "description": "Pass a pre-formatted string for currency, and a delta for a change pill. Leave delta out and the section has no pill.",
         "code": "<StatStrip.Item\n  icon={<KeyIcon.Root icon={<RiMoneyDollarCircleLine />} />}\n  label=\"Metric A\"\n  value=\"$96,000.00\"\n  delta={5}\n/>",
         "stories": ["WithDelta"]
+      },
+      {
+        "title": "Rounded zero",
+        "description": "A change smaller than half a percent displays as a neutral 0% pill.",
+        "code": "<StatStrip.Item icon={<KeyIcon.Root icon={<RiStarLine />} />} label=\"Small increase\" value={120} delta={0.3} />",
+        "stories": ["RoundedZero"]
       }
     ],
     "api": [
@@ -63,8 +69,8 @@
           {
             "name": "trend",
             "type": "'up' | 'down' | 'flat'",
-            "default": "sign of delta",
-            "description": "Colours the pill. Pass your data source's own direction when it has one"
+            "default": "sign of rounded delta",
+            "description": "Colours the pill. Pass your data source's own direction when it has one; a displayed 0% stays neutral"
           }
         ]
       }

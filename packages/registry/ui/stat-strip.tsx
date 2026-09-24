@@ -10,8 +10,8 @@ const BADGE: Record<Trend, string> = {
   flat: 'bg-bg-weak-50 text-text-sub-600',
 };
 
-function formatDelta(delta: number) {
-  return `${delta > 0 ? '+' : ''}${Math.round(delta)}%`;
+function formatDelta(roundedDelta: number) {
+  return `${roundedDelta > 0 ? '+' : ''}${roundedDelta}%`;
 }
 
 type StatStripRootProps = React.HTMLAttributes<HTMLDivElement>;
@@ -38,7 +38,7 @@ type StatStripItemProps = React.HTMLAttributes<HTMLDivElement> & {
   value: number | string;
   /** Change against the previous period, in percent: 5 reads "+5%". Leave out, or pass null, for no pill. */
   delta?: number | null;
-  /** Colours the pill. Follows the sign of `delta` by default. */
+  /** Colours the pill. Follows the displayed delta by default; a displayed zero is always flat. */
   trend?: Trend;
 };
 
@@ -48,10 +48,19 @@ function StatStripItem({
   label,
   value,
   delta,
-  trend = (delta ?? 0) > 0 ? 'up' : (delta ?? 0) < 0 ? 'down' : 'flat',
+  trend,
   className,
   ...rest
 }: StatStripItemProps) {
+  const roundedDelta = delta == null ? null : Math.round(delta);
+  const deltaTrend =
+    roundedDelta == null || roundedDelta === 0
+      ? 'flat'
+      : roundedDelta > 0
+        ? 'up'
+        : 'down';
+  const displayedTrend = roundedDelta === 0 ? 'flat' : (trend ?? deltaTrend);
+
   return (
     <div
       className={cn(
@@ -69,14 +78,14 @@ function StatStripItem({
           <span className='text-label-md text-text-strong-950 font-bold tabular-nums'>
             {typeof value === 'number' ? value.toLocaleString() : value}
           </span>
-          {delta == null ? null : (
+          {roundedDelta == null ? null : (
             <span
               className={cn(
                 'text-subheading-2xs rounded-full px-2 py-1 tracking-[-0.11px] tabular-nums',
-                BADGE[trend]
+                BADGE[displayedTrend]
               )}
             >
-              {formatDelta(delta)}
+              {formatDelta(roundedDelta)}
             </span>
           )}
         </div>

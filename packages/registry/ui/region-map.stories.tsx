@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import * as Button from './button';
 import * as RegionMap from './region-map';
 import * as WidgetCard from './widget-card';
@@ -11,6 +13,11 @@ const points = [
   { label: 'Location D', value: 38, lat: -23.55, lng: -46.63 },
   { label: 'Location E', value: 27, lat: 28.61, lng: 77.21 },
   { label: 'Location F', value: 12, lat: -33.87, lng: 151.21 },
+];
+
+const updatedPoints = [
+  { label: 'Location G', value: 72, lat: 43.65, lng: -79.38 },
+  { label: 'Location H', value: 31, lat: 51.51, lng: -0.13 },
 ];
 
 export const Default = {
@@ -56,3 +63,44 @@ export const WithTopRegion = {
     </WidgetCard.Root>
   ),
 };
+
+function UpdatesStory() {
+  const [updated, setUpdated] = React.useState(false);
+  const [dark, setDark] = React.useState(false);
+
+  return (
+    <div className={dark ? 'dark' : undefined}>
+      <div className='mb-3 flex gap-2'>
+        <Button.Root
+          variant='neutral'
+          mode='stroke'
+          size='xsmall'
+          onClick={() => setUpdated((value) => !value)}
+        >
+          Change points
+        </Button.Root>
+        <Button.Root
+          variant='neutral'
+          mode='stroke'
+          size='xsmall'
+          onClick={() => setDark((value) => !value)}
+        >
+          Toggle dark
+        </Button.Root>
+      </div>
+      <WidgetCard.Root className='h-[288px] w-[352px]'>
+        <WidgetCard.Header>
+          <WidgetCard.Title>Changing map</WidgetCard.Title>
+        </WidgetCard.Header>
+        <WidgetCard.Content>
+          <RegionMap.Root
+            points={updated ? updatedPoints : points}
+            unit='Items'
+          />
+        </WidgetCard.Content>
+      </WidgetCard.Root>
+    </div>
+  );
+}
+
+export const Updates = { render: () => <UpdatesStory /> };

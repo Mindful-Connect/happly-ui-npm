@@ -5,7 +5,7 @@
   "title": "Performance Card",
   "description": "A card whose header pairs a thumbnail or avatar with a title, a meta row and stat tiles, and whose border also wraps whatever follows, such as a table. Uses namespace exports: PerformanceCard.Root, Header, Media, Title, Rule, Meta, Stats, Stat, Metric.",
   "version": "1.0.0",
-  "dependencies": ["@remixicon/react"],
+  "dependencies": ["@remixicon/react@^4.6.0"],
   "registryDependencies": ["happly-ui-utils"],
   "docs": {
     "lead": "One border around a subject and its numbers. The header holds the media, title, meta row and stat tiles; anything after it, such as a table, carries the header's inset.",

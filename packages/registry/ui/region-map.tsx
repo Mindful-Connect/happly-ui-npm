@@ -157,6 +157,9 @@ function RegionMap({
     if (!container) return;
     let map: MapLibreMap | undefined;
     let cancelled = false;
+    let themeObserver: MutationObserver | undefined;
+    let themeMedia: MediaQueryList | undefined;
+    let syncTheme: (() => void) | undefined;
 
     // Loaded here rather than imported at the top: maplibre-gl touches
     // `window` as it loads, so a static import would break server rendering.
@@ -223,7 +226,7 @@ function RegionMap({
       // Capped at 2 so the bitmap stays a power of two, which is what
       // MapLibre's pattern atlas tiles cleanly.
       const bitmapRatio = Math.min(2, Math.ceil(window.devicePixelRatio || 1));
-      const pattern = dotPattern(bitmapRatio, color('--color-chart-map-land'));
+      let pattern = dotPattern(bitmapRatio, color('--color-chart-map-land'));
 
       // MapLibre stretches a fill pattern by the zoom fraction (the bitmap
       // covers 2^(zoom - tileZoom) times its declared size), so the dots would
@@ -238,10 +241,10 @@ function RegionMap({
         });
       };
 
-      const active = color('--color-chart-marker-active');
-
       instance.on('load', () => {
         syncPattern();
+
+        const active = color('--color-chart-marker-active');
 
         instance.addLayer({
           id: 'land',
@@ -293,6 +296,51 @@ function RegionMap({
             ],
           },
         });
+
+        // Canvas paint and the land bitmap cannot follow CSS variables on
+        // their own. Refresh both when a theme class, inline token or system
+        // preference changes, without rebuilding the map or losing its view.
+        syncTheme = () => {
+          pattern = dotPattern(bitmapRatio, color('--color-chart-map-land'));
+          instance.updateImage(PATTERN, pattern);
+          const currentActive = color('--color-chart-marker-active');
+          instance.setPaintProperty(
+            'regions-halo',
+            'circle-color',
+            color('--color-chart-marker-halo')
+          );
+          instance.setPaintProperty(
+            HIT_LAYER,
+            'circle-color',
+            color('--color-bg-white-0')
+          );
+          instance.setPaintProperty(HIT_LAYER, 'circle-stroke-color', [
+            'case',
+            ['boolean', ['feature-state', 'hover'], false],
+            currentActive,
+            color('--color-stroke-soft-200'),
+          ]);
+          instance.setPaintProperty('regions-core', 'circle-color', [
+            'case',
+            ['boolean', ['feature-state', 'hover'], false],
+            currentActive,
+            color('--color-chart-marker'),
+          ]);
+        };
+
+        themeObserver = new MutationObserver(() => syncTheme?.());
+        for (
+          let element: HTMLElement | null = container;
+          element;
+          element = element.parentElement
+        ) {
+          themeObserver.observe(element, {
+            attributes: true,
+            attributeFilter: ['class', 'style'],
+          });
+        }
+        themeMedia = window.matchMedia('(prefers-color-scheme: dark)');
+        themeMedia.addEventListener('change', syncTheme);
       });
 
       instance.on('zoom', syncPattern);
@@ -313,15 +361,26 @@ function RegionMap({
 
     return () => {
       cancelled = true;
+      themeObserver?.disconnect();
+      if (themeMedia && syncTheme)
+        themeMedia.removeEventListener('change', syncTheme);
       map?.remove();
       mapRef.current = null;
     };
   }, []);
 
   React.useEffect(() => {
-    const source = mapRef.current?.getSource(SOURCE) as
-      | GeoJSONSource
-      | undefined;
+    const map = mapRef.current;
+    const source = map?.getSource(SOURCE) as GeoJSONSource | undefined;
+    if (hoveredRef.current !== null && source) {
+      map?.setFeatureState(
+        { source: SOURCE, id: hoveredRef.current },
+        { hover: false }
+      );
+    }
+    hoveredRef.current = null;
+    setTooltip(null);
+    if (map) map.getCanvas().style.cursor = '';
     source?.setData(toFeatureCollection(points));
   }, [points]);
 

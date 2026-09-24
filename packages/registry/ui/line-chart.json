@@ -5,7 +5,7 @@
   "title": "Line Chart",
   "description": "A gridded line chart over time with an optional total header, an optional change against the previous period, and a hover tooltip. Uses namespace exports: LineChart.Root.",
   "version": "1.0.0",
-  "dependencies": ["recharts", "@remixicon/react"],
+  "dependencies": ["recharts@^3.8.1", "@remixicon/react@^4.6.0"],
   "registryDependencies": ["happly-ui-utils", "chart-tooltip"],
   "docs": {
     "lead": "A single series over time on a light grid. Pass a total to show a figure above the chart; add a delta to show how it moved.",

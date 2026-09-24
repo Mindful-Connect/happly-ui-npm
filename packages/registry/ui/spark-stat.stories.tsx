@@ -9,7 +9,12 @@ const steady = [5, 5, 6, 5, 5, 6, 5, 5, 5, 6, 5, 5, 6, 5];
 export const Default = {
   render: () => (
     <div className='w-[352px]'>
-      <SparkStat.Root title='Metric title' value={65} delta={23} points={rising} />
+      <SparkStat.Root
+        title='Metric title'
+        value={65}
+        delta={23}
+        points={rising}
+      />
     </div>
   ),
 };
@@ -17,7 +22,12 @@ export const Default = {
 export const Down = {
   render: () => (
     <div className='w-[352px]'>
-      <SparkStat.Root title='Metric title' value={1284} delta={-8} points={easing} />
+      <SparkStat.Root
+        title='Metric title'
+        value={1284}
+        delta={-8}
+        points={easing}
+      />
     </div>
   ),
 };
@@ -25,7 +35,12 @@ export const Down = {
 export const Flat = {
   render: () => (
     <div className='w-[352px]'>
-      <SparkStat.Root title='Metric title' value={2} delta={0} points={steady} />
+      <SparkStat.Root
+        title='Metric title'
+        value={2}
+        delta={0}
+        points={steady}
+      />
     </div>
   ),
 };
@@ -33,7 +48,25 @@ export const Flat = {
 export const NoDelta = {
   render: () => (
     <div className='w-[352px]'>
-      <SparkStat.Root title='Metric title' value={8241} delta={null} points={rising} />
+      <SparkStat.Root
+        title='Metric title'
+        value={8241}
+        delta={null}
+        points={rising}
+      />
+    </div>
+  ),
+};
+
+export const NarrowRange = {
+  render: () => (
+    <div className='w-[352px]'>
+      <SparkStat.Root
+        title='Recent activity'
+        value={8241}
+        delta={0.3}
+        points={[8100, 8138, 8110, 8205, 8241]}
+      />
     </div>
   ),
 };

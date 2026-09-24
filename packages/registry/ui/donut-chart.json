@@ -5,7 +5,7 @@
   "title": "Donut Chart",
   "description": "A half-donut gauge with rounded, separated segments, an optional total header, the featured segment in the centre, and a one-row legend. Uses namespace exports: DonutChart.Root.",
   "version": "1.0.0",
-  "dependencies": ["recharts"],
+  "dependencies": ["recharts@^3.8.1"],
   "registryDependencies": ["happly-ui-utils", "chart-tooltip"],
   "docs": {
     "lead": "Segments along a half-donut. The featured segment's value and label fill the centre; pass a total to show a figure above the arc.",
