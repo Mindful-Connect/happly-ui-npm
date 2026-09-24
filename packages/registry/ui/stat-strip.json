@@ -38,7 +38,7 @@
       },
       {
         "name": "StatStrip.Item",
-        "description": "One section. Every section but the first gets a divider before it.",
+        "description": "One section. Its icon and figure sit centred in it, and every section but the first gets a divider before it.",
         "props": [
           {
             "name": "icon",

@@ -55,7 +55,7 @@ function StatStripItem({
   return (
     <div
       className={cn(
-        'flex flex-1 items-center gap-2 px-6',
+        'flex flex-1 items-center justify-center gap-2 px-6',
         // A divider before every section but the first, as tall as the figure.
         '[&:not(:first-child)]:border-stroke-soft-200 [&:not(:first-child)]:border-s',
         className
