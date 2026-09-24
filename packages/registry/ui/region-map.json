@@ -1,0 +1,83 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "region-map",
+  "type": "registry:ui",
+  "title": "Region Map",
+  "description": "A dotted world map with a marker per point, its count in a tooltip on hover, and zoom buttons, optionally headed by the top region and its three biggest parts. Tile-less: the land outline is bundled. Uses namespace exports: RegionMap.Root.",
+  "version": "1.0.0",
+  "dependencies": ["maplibre-gl@^5.9.0", "@remixicon/react@^4.6.0"],
+  "registryDependencies": [
+    "happly-ui-utils",
+    "chart-tooltip",
+    "compact-button"
+  ],
+  "docs": {
+    "lead": "Every landmass as a dot pattern, with a marker wherever you pass a point. Hover a marker for its label and count; the buttons zoom, dragging pans. No tile provider or API key: the land outline ships with the component.",
+    "usage": "import * as RegionMap from \"@/components/ui/region-map\"\n\n<RegionMap.Root\n  points={[{ label: \"Location A\", value: 120, lat: 43.65, lng: -79.38 }]}\n  unit=\"Items\"\n/>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "Points carry their own coordinates; turn a country or city into lat/lng before passing it. The map fills its container, so give the card a height.",
+        "code": "<RegionMap.Root points={points} unit=\"Items\" />",
+        "stories": ["Default"]
+      },
+      {
+        "title": "With top region",
+        "description": "Pass top to head the map with the leading place: its figure, a tag with its name and an optional image such as a flag, and a strip of its three biggest parts with their shares. Work out the shares before passing them; the map shows them as given.",
+        "code": "<RegionMap.Root\n  points={points}\n  unit=\"Items\"\n  top={{\n    label: \"Top region\",\n    value: 120,\n    name: \"Region A\",\n    image: flagUrl,\n    shares: [\n      { label: \"Location A\", percent: 50 },\n      { label: \"Location B\", percent: 30 },\n      { label: \"Location C\", percent: 20 },\n    ],\n  }}\n/>",
+        "stories": ["WithTopRegion"]
+      },
+      {
+        "title": "Updates",
+        "description": "Changing points clears the current hover without resetting the view. Theme changes recolour the map while it remains mounted.",
+        "code": "<RegionMap.Root points={updated ? updatedPoints : points} unit=\"Items\" />",
+        "stories": ["Updates"]
+      }
+    ],
+    "api": [
+      {
+        "name": "RegionMap.Root",
+        "description": "The map, its tooltip and its zoom buttons. Fills its container. Loads maplibre-gl in the browser, so it is safe to render on the server.",
+        "props": [
+          {
+            "name": "points",
+            "type": "{ label: string; value: number; lat: number; lng: number }[]",
+            "description": "One marker per point. They can change after mount without resetting the view"
+          },
+          {
+            "name": "unit",
+            "type": "string",
+            "description": "What the values count, beside the value in the tooltip"
+          },
+          {
+            "name": "zoomInLabel",
+            "type": "string",
+            "default": "'Zoom in'",
+            "description": "Accessible name of the zoom-in button"
+          },
+          {
+            "name": "zoomOutLabel",
+            "type": "string",
+            "default": "'Zoom out'",
+            "description": "Accessible name of the zoom-out button"
+          },
+          {
+            "name": "top",
+            "type": "{ label: string; value: number; name: string; image?: string; shares: { label: string; percent: number }[] }",
+            "description": "The leading place above the map: label is the caption over value, name and image make the tag, shares are its three biggest parts. Omit it for the bare map"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/region-map.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "ui/region-map-land.ts",
+      "type": "registry:ui"
+    }
+  ]
+}

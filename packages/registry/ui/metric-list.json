@@ -1,0 +1,100 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "metric-list",
+  "type": "registry:ui",
+  "title": "Metric List",
+  "description": "A compact table of entities and their figures for the preview inside a card: a leading avatar or thumbnail, a name with an optional sublabel, and one or more figure columns. Uses namespace exports: MetricList.Root, Header, Column, Body, Row, Entity, Value.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": ["happly-ui-utils"],
+  "docs": {
+    "lead": "The small table a card shows as a preview: who or what, and the figures beside it. A real table, so each column's width is written once on its header and every row follows it.",
+    "usage": "import * as MetricList from \"@/components/ui/metric-list\"\n\n<MetricList.Root>\n  <MetricList.Header>\n    <MetricList.Column>Name</MetricList.Column>\n    <MetricList.Column className=\"w-[120px]\">Last activity</MetricList.Column>\n  </MetricList.Header>\n  <MetricList.Body>\n    <MetricList.Row>\n      <MetricList.Entity media={<Avatar.Root size=\"32\" />} label=\"Person one\" sublabel=\"Company one\" />\n      <MetricList.Value>5d ago</MetricList.Value>\n    </MetricList.Row>\n  </MetricList.Body>\n</MetricList.Root>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "A 32px avatar, a name with its sublabel, and one figure column. Values are passed already formatted, so a relative date or a fallback reads like any other figure.",
+        "code": "<MetricList.Row>\n  <MetricList.Entity\n    media={<Avatar.Root size=\"32\" color=\"gray\" placeholderType=\"user\" />}\n    label=\"Person one\"\n    sublabel=\"Company one\"\n  />\n  <MetricList.Value>No app activity</MetricList.Value>\n</MetricList.Row>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Two figures",
+        "description": "Add a Column and a Value per figure. The width on the Column is a minimum for the cells under it, so the header and the rows cannot drift apart and a long value still fits on one line.",
+        "code": "<MetricList.Header>\n  <MetricList.Column>Name</MetricList.Column>\n  <MetricList.Column className=\"w-[88px]\">Sessions</MetricList.Column>\n  <MetricList.Column className=\"w-[72px]\">Booked %</MetricList.Column>\n</MetricList.Header>",
+        "stories": ["TwoFigures"]
+      },
+      {
+        "title": "Compact",
+        "description": "size=\"sm\" for rows that are one line, such as a thumbnail and a title. Leave out sublabel and the row keeps a single line.",
+        "code": "<MetricList.Root size=\"sm\">\n  …\n  <MetricList.Entity\n    media={<span className=\"bg-bg-weak-50 h-5 w-9 shrink-0 rounded\" />}\n    label=\"Session one\"\n  />\n</MetricList.Root>",
+        "stories": ["Compact"]
+      }
+    ],
+    "api": [
+      {
+        "name": "MetricList.Root",
+        "description": "The table. Fills its container's width and spaces its rows; it does not scroll, so cap the rows you pass.",
+        "props": [
+          {
+            "name": "size",
+            "type": "'md' | 'sm'",
+            "default": "'md'",
+            "description": "'md' for rows carrying an avatar and a sublabel, 'sm' for single-line rows"
+          }
+        ]
+      },
+      {
+        "name": "MetricList.Header",
+        "description": "The row of column labels. No rule and no band, as the design draws it. Renders its children as one row.",
+        "props": []
+      },
+      {
+        "name": "MetricList.Column",
+        "description": "One column's label. The first column takes the slack; the rest align to the end. A width set with className is a minimum \u2014 the column grows if a value needs more, and the first column gives up the difference.",
+        "props": []
+      },
+      {
+        "name": "MetricList.Body",
+        "description": "Holds the rows.",
+        "props": []
+      },
+      {
+        "name": "MetricList.Row",
+        "description": "One row. Give it one Entity and a Value per figure column.",
+        "props": []
+      },
+      {
+        "name": "MetricList.Entity",
+        "description": "The first cell: what the row is about. The label truncates and keeps its full text in title.",
+        "props": [
+          {
+            "name": "media",
+            "type": "ReactNode",
+            "description": "The leading slot: an Avatar on a person, a thumbnail on a thing"
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "description": "The name of the person or thing"
+          },
+          {
+            "name": "sublabel",
+            "type": "string",
+            "description": "Under the label, in the quieter colour. Leave it out and the row is one line"
+          }
+        ]
+      },
+      {
+        "name": "MetricList.Value",
+        "description": "One figure, aligned to the end with tabular digits. Pass it already formatted — a count, a duration, a percentage or a fallback all read the same.",
+        "props": []
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/metric-list.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

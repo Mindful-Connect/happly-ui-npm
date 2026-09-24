@@ -355,6 +355,41 @@ export const HAPPLY_THEME_V4 = `/* HapplyUI Design Tokens — https://ui.happly.
   --color-verified-contrast: var(--color-static-black);
   --color-stable-contrast: var(--color-static-black);
 
+  /* Chart colours, read off the Reporting Figma rather than the purple ramp
+     above: these sit at hues 291-304 and no \`purple-*\` step matches them.
+     1-5 are the segmented bar's ramp (Organization types, node 1:17110); a
+     two-segment gauge pairs 2 and 5, not 1 and 2. 6-8 extend the gauge past
+     two segments and have not been checked against a Figma node yet.
+     Theme-invariant on purpose: a data colour keeps its meaning across themes. */
+  --color-chart-1: oklch(0.388 0.205 291.115);
+  --color-chart-2: oklch(0.46 0.228 292.77);
+  --color-chart-3: oklch(0.656 0.133 300.933);
+  --color-chart-4: oklch(0.769 0.073 302.967);
+  --color-chart-5: oklch(0.871 0.031 304.221);
+  --color-chart-6: oklch(0.811 0.101 293.571);
+  --color-chart-7: oklch(0.894 0.055 293.283);
+  --color-chart-8: oklch(0.943 0.028 294.588);
+  /* The featured bucket's label pill, and the trend line. */
+  --color-chart-highlight: var(--color-purple-700);
+  --color-chart-highlight-bg: oklch(0.406 0.191 288.422 / 0.16);
+  --color-chart-line: var(--color-purple-700);
+  /* Unfeatured columns. Figma fills them with bg/weak-50, which disappears
+     against the card; the owner portal moved them one step darker, and that
+     value is kept here rather than our lighter bg-soft-200. */
+  --color-chart-muted: oklch(0.918 0.009 264.52);
+  /* KPI sparkline, by the trend's direction. The owner portal's values, which
+     differ from Figma's success-base line; kept per the portal. Invariant. */
+  --color-chart-trend-up: oklch(0.696 0.149 162.48);
+  --color-chart-trend-down: oklch(0.637 0.208 25.331);
+  --color-chart-trend-flat: oklch(0.552 0.014 285.938);
+  /* Region map, from the owner portal: dotted land, and markers drawn as a
+     bg-white-0 disc ringed in stroke-soft-200 around a marker core. Hover
+     turns ring and core to marker-active inside a marker-halo. */
+  --color-chart-map-land: var(--color-neutral-300);
+  --color-chart-marker: var(--color-neutral-400);
+  --color-chart-marker-active: var(--color-purple-800);
+  --color-chart-marker-halo: var(--color-blue-alpha-24);
+
   /* HapplyUI Typography System */
 
   --text-title-h1: 3.5rem;
@@ -741,6 +776,16 @@ export const HAPPLY_THEME_V4 = `/* HapplyUI Design Tokens — https://ui.happly.
     --color-primary-lighter: var(--color-purple-alpha-10);
     --color-primary-contrast: oklch(1 0 0);
 
+    /* purple-700 measures 2.36:1 on the dark card: the pill label moves to
+       purple-300 (6.00:1 on its pill) and the line to purple-400 (5.18:1). */
+    --color-chart-highlight: var(--color-purple-300);
+    --color-chart-highlight-bg: var(--color-purple-alpha-24);
+    --color-chart-line: var(--color-purple-400);
+    --color-chart-muted: var(--color-neutral-700);
+    --color-chart-map-land: var(--color-neutral-700);
+    --color-chart-marker: var(--color-neutral-500);
+    --color-chart-marker-active: var(--color-purple-300);
+
     --color-overlay-gray: oklch(0.321 0 0 / 0.56);
     --color-overlay-slate: oklch(0.309 0.021 265.9 / 0.56);
     --color-overlay: var(--color-overlay-gray);
@@ -916,6 +961,16 @@ export const HAPPLY_THEME_V4 = `/* HapplyUI Design Tokens — https://ui.happly.
   --color-primary-light: var(--color-purple-alpha-16);
   --color-primary-lighter: var(--color-purple-alpha-10);
   --color-primary-contrast: oklch(1 0 0);
+
+  /* purple-700 measures 2.36:1 on the dark card: the pill label moves to
+     purple-300 (6.00:1 on its pill) and the line to purple-400 (5.18:1). */
+  --color-chart-highlight: var(--color-purple-300);
+  --color-chart-highlight-bg: var(--color-purple-alpha-24);
+  --color-chart-line: var(--color-purple-400);
+  --color-chart-muted: var(--color-neutral-700);
+  --color-chart-map-land: var(--color-neutral-700);
+  --color-chart-marker: var(--color-neutral-500);
+  --color-chart-marker-active: var(--color-purple-300);
 
   --color-overlay-gray: oklch(0.321 0 0 / 0.56);
   --color-overlay-slate: oklch(0.309 0.021 265.9 / 0.56);
@@ -1559,6 +1614,41 @@ export const HAPPLY_THEME_V3 = `/* HapplyUI Design Tokens — https://ui.happly.
   --color-away-contrast: var(--color-static-black);
   --color-verified-contrast: var(--color-static-black);
   --color-stable-contrast: var(--color-static-black);
+
+  /* Chart colours, read off the Reporting Figma rather than the purple ramp
+     above: these sit at hues 291-304 and no \`purple-*\` step matches them.
+     1-5 are the segmented bar's ramp (Organization types, node 1:17110); a
+     two-segment gauge pairs 2 and 5, not 1 and 2. 6-8 extend the gauge past
+     two segments and have not been checked against a Figma node yet.
+     Theme-invariant on purpose: a data colour keeps its meaning across themes. */
+  --color-chart-1: oklch(0.388 0.205 291.115);
+  --color-chart-2: oklch(0.46 0.228 292.77);
+  --color-chart-3: oklch(0.656 0.133 300.933);
+  --color-chart-4: oklch(0.769 0.073 302.967);
+  --color-chart-5: oklch(0.871 0.031 304.221);
+  --color-chart-6: oklch(0.811 0.101 293.571);
+  --color-chart-7: oklch(0.894 0.055 293.283);
+  --color-chart-8: oklch(0.943 0.028 294.588);
+  /* The featured bucket's label pill, and the trend line. */
+  --color-chart-highlight: var(--color-purple-700);
+  --color-chart-highlight-bg: oklch(0.406 0.191 288.422 / 0.16);
+  --color-chart-line: var(--color-purple-700);
+  /* Unfeatured columns. Figma fills them with bg/weak-50, which disappears
+     against the card; the owner portal moved them one step darker, and that
+     value is kept here rather than our lighter bg-soft-200. */
+  --color-chart-muted: oklch(0.918 0.009 264.52);
+  /* KPI sparkline, by the trend's direction. The owner portal's values, which
+     differ from Figma's success-base line; kept per the portal. Invariant. */
+  --color-chart-trend-up: oklch(0.696 0.149 162.48);
+  --color-chart-trend-down: oklch(0.637 0.208 25.331);
+  --color-chart-trend-flat: oklch(0.552 0.014 285.938);
+  /* Region map, from the owner portal: dotted land, and markers drawn as a
+     bg-white-0 disc ringed in stroke-soft-200 around a marker core. Hover
+     turns ring and core to marker-active inside a marker-halo. */
+  --color-chart-map-land: var(--color-neutral-300);
+  --color-chart-marker: var(--color-neutral-400);
+  --color-chart-marker-active: var(--color-purple-800);
+  --color-chart-marker-halo: var(--color-blue-alpha-24);
 }
 
 .dark {
@@ -1644,6 +1734,16 @@ export const HAPPLY_THEME_V3 = `/* HapplyUI Design Tokens — https://ui.happly.
   --color-primary-light: var(--color-purple-alpha-16);
   --color-primary-lighter: var(--color-purple-alpha-10);
   --color-primary-contrast: oklch(1 0 0);
+
+  /* purple-700 measures 2.36:1 on the dark card: the pill label moves to
+     purple-300 (6.00:1 on its pill) and the line to purple-400 (5.18:1). */
+  --color-chart-highlight: var(--color-purple-300);
+  --color-chart-highlight-bg: var(--color-purple-alpha-24);
+  --color-chart-line: var(--color-purple-400);
+  --color-chart-muted: var(--color-neutral-700);
+  --color-chart-map-land: var(--color-neutral-700);
+  --color-chart-marker: var(--color-neutral-500);
+  --color-chart-marker-active: var(--color-purple-300);
 
   --color-overlay-gray: oklch(0.321 0 0 / 0.56);
   --color-overlay-slate: oklch(0.309 0.021 265.9 / 0.56);

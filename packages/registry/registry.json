@@ -70,6 +70,12 @@
       "description": "A full-width banner component for alerts and announcements with multiple variants, statuses, and polymorphic icon support. Uses namespace exports: Banner.Root, Banner.Content, Banner.Icon, Banner.CloseButton."
     },
     {
+      "name": "bar-chart",
+      "type": "registry:ui",
+      "title": "Bar Chart",
+      "description": "A column chart for bucketed counts: every column labelled, one optionally featured, a tooltip on hover. Uses namespace exports: BarChart.Root."
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
@@ -80,6 +86,12 @@
       "type": "registry:ui",
       "title": "Button Group",
       "description": "A compound button group component with sizes, icons, and toggle group support via asChild. Uses namespace exports: ButtonGroup.Root, ButtonGroup.Item, ButtonGroup.Icon."
+    },
+    {
+      "name": "chart-tooltip",
+      "type": "registry:ui",
+      "title": "Chart Tooltip",
+      "description": "The hover readout shared by the chart components: a muted caption over a value row, with a tail pointing at the anchor. Uses namespace exports: ChartTooltip.Root, ChartTooltip.Value, ChartTooltip.Unit, ChartTooltip.Delta."
     },
     {
       "name": "chat",
@@ -146,6 +158,12 @@
       "type": "registry:ui",
       "title": "Divider",
       "description": "A versatile divider component for creating visual separation between content elements. Supports multiple variants including line, text, and content dividers."
+    },
+    {
+      "name": "donut-chart",
+      "type": "registry:ui",
+      "title": "Donut Chart",
+      "description": "A half-donut gauge with rounded, separated segments, an optional total header, the featured segment in the centre, and a one-row legend. Uses namespace exports: DonutChart.Root."
     },
     {
       "name": "dot-stepper",
@@ -280,6 +298,12 @@
       "description": "A segmented level indicator for displaying strength, progress, or multi-step status."
     },
     {
+      "name": "line-chart",
+      "type": "registry:ui",
+      "title": "Line Chart",
+      "description": "A gridded line chart over time with an optional total header, an optional change against the previous period, and a hover tooltip. Uses namespace exports: LineChart.Root."
+    },
+    {
       "name": "link-button",
       "type": "registry:ui",
       "title": "Link Button",
@@ -322,6 +346,12 @@
       "description": "An underline-style horizontal tab bar with icon support. Uses namespace exports: MenuTabBar.Root, MenuTabBar.Item, MenuTabBar.Icon, MenuTabBar.Composed."
     },
     {
+      "name": "metric-list",
+      "type": "registry:ui",
+      "title": "Metric List",
+      "description": "A compact table of entities and their figures for the preview inside a card: a leading avatar or thumbnail, a name with an optional sublabel, and one or more figure columns. Uses namespace exports: MetricList.Root, Header, Column, Body, Row, Entity, Value."
+    },
+    {
       "name": "modal",
       "type": "registry:ui",
       "title": "Modal",
@@ -338,6 +368,12 @@
       "type": "registry:ui",
       "title": "Password Input",
       "description": "A composed password input with show/hide toggle and optional strength indicator with criteria checklist."
+    },
+    {
+      "name": "performance-card",
+      "type": "registry:ui",
+      "title": "Performance Card",
+      "description": "A card whose header pairs a thumbnail or avatar with a title, a meta row and stat tiles, and whose border also wraps whatever follows, such as a table. Uses namespace exports: PerformanceCard.Root, Header, Media, Title, Rule, Meta, Stats, Stat, Metric."
     },
     {
       "name": "phone-input",
@@ -394,10 +430,22 @@
       "description": "A composable radio input styled as a card. Compose with Title, Description, Content, Indicator, KeyIcon, and Badge sub-components."
     },
     {
+      "name": "ranked-list",
+      "type": "registry:ui",
+      "title": "Ranked List",
+      "description": "A numbered list of labels and counts with column headers, for top-N breakdowns. Rows spread to fill the card and scroll past that. Uses namespace exports: RankedList.Root."
+    },
+    {
       "name": "recursive-clone-children",
       "type": "registry:lib",
       "title": "Recursive Clone Children",
       "description": "Utility to recursively clone React children and inject shared props."
+    },
+    {
+      "name": "region-map",
+      "type": "registry:ui",
+      "title": "Region Map",
+      "description": "A dotted world map with a marker per point, its count in a tooltip on hover, and zoom buttons, optionally headed by the top region and its three biggest parts. Tile-less: the land outline is bundled. Uses namespace exports: RegionMap.Root."
     },
     {
       "name": "section",
@@ -410,6 +458,12 @@
       "type": "registry:ui",
       "title": "Section Toggle",
       "description": "A collapsible section with a title, description, and switch toggle that reveals content when enabled. Uses namespace exports: SectionToggle.Root, SectionToggle.Header, SectionToggle.TextGroup, SectionToggle.Title, SectionToggle.Description, SectionToggle.Content, SectionToggle.Composed (composed)."
+    },
+    {
+      "name": "segment-bar",
+      "type": "registry:ui",
+      "title": "Segment Bar",
+      "description": "A row of rounded blocks sized by share, over a colour-keyed legend in two columns or as rows with counts. Uses namespace exports: SegmentBar.Root."
     },
     {
       "name": "select",
@@ -434,6 +488,18 @@
       "type": "registry:ui",
       "title": "Socials Input",
       "description": "A searchable social media URL picker with tag chips and inline URL editing."
+    },
+    {
+      "name": "spark-stat",
+      "type": "registry:ui",
+      "title": "Spark Stat",
+      "description": "A KPI card: a figure, its change as a coloured pill, and a sparkline of its recent shape. Uses namespace exports: SparkStat.Root."
+    },
+    {
+      "name": "stat-strip",
+      "type": "registry:ui",
+      "title": "Stat Strip",
+      "description": "A row of figures in equal sections split by dividers, each with an icon, a label and an optional change pill. Uses namespace exports: StatStrip.Root, StatStrip.Item."
     },
     {
       "name": "status-badge",
@@ -566,6 +632,12 @@
       "type": "registry:hook",
       "title": "useTabObserver",
       "description": "Hook to observe active tab changes using ResizeObserver and MutationObserver."
+    },
+    {
+      "name": "widget-card",
+      "type": "registry:ui",
+      "title": "Widget Card",
+      "description": "The card a chart, list or metric sits in: a title row with room for a trailing action, and a content area that can scroll inside a fixed height. Uses namespace exports: WidgetCard.Root, WidgetCard.Header, WidgetCard.Title, WidgetCard.Content."
     }
   ]
 }

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "segment-bar",
+  "type": "registry:ui",
+  "title": "Segment Bar",
+  "description": "A row of rounded blocks sized by share, over a colour-keyed legend in two columns or as rows with counts. Uses namespace exports: SegmentBar.Root.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": ["happly-ui-utils"],
+  "docs": {
+    "lead": "Each segment is its own rounded block, sized by its share. The featured segment prints its value inside its block and gets a pill in the legend.",
+    "usage": "import * as SegmentBar from \"@/components/ui/segment-bar\"\n\n<SegmentBar.Root\n  items={[{ label: \"Category A\", value: 13 }]}\n  highlighted=\"Category A\"\n/>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "A label-only legend split into two columns.",
+        "code": "<SegmentBar.Root items={items} highlighted=\"Category A\" />",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Rows legend",
+        "description": "A full-width legend with each count on the right.",
+        "code": "<SegmentBar.Root items={items} highlighted=\"Category B\" legend=\"rows\" />",
+        "stories": ["RowsLegend"]
+      }
+    ],
+    "api": [
+      {
+        "name": "SegmentBar.Root",
+        "description": "The blocks and their legend. Colours follow item order through the five-step chart ramp.",
+        "props": [
+          {
+            "name": "items",
+            "type": "{ label: string; value: number }[]",
+            "description": "Segments left to right, in the order given"
+          },
+          {
+            "name": "highlighted",
+            "type": "string | null",
+            "description": "Label of the segment to feature. Omitted or null features none"
+          },
+          {
+            "name": "legend",
+            "type": "'columns' | 'rows'",
+            "default": "'columns'",
+            "description": "Two label-only columns, or rows with counts"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/segment-bar.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

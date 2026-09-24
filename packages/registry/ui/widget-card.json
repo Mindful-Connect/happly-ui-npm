@@ -1,0 +1,72 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "widget-card",
+  "type": "registry:ui",
+  "title": "Widget Card",
+  "description": "The card a chart, list or metric sits in: a title row with room for a trailing action, and a content area that can scroll inside a fixed height. Uses namespace exports: WidgetCard.Root, WidgetCard.Header, WidgetCard.Title, WidgetCard.Content.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": ["happly-ui-utils"],
+  "docs": {
+    "lead": "The surface for a single chart, list or metric. Set the card's height on Root; the content area fills what the header leaves and can scroll inside it rather than overflowing the card.",
+    "usage": "import * as WidgetCard from \"@/components/ui/widget-card\"\n\n<WidgetCard.Root className=\"h-[288px]\">\n  <WidgetCard.Header>\n    <WidgetCard.Title>Card title</WidgetCard.Title>\n  </WidgetCard.Header>\n  <WidgetCard.Content>{chart}</WidgetCard.Content>\n</WidgetCard.Root>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "A title and whatever the card holds. The card's height comes from className on Root.",
+        "code": "<WidgetCard.Root className=\"h-[288px]\">\n  <WidgetCard.Header>\n    <WidgetCard.Title>Card title</WidgetCard.Title>\n  </WidgetCard.Header>\n  <WidgetCard.Content>{chart}</WidgetCard.Content>\n</WidgetCard.Root>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "With details",
+        "description": "Anything placed after the title sits at the end of the header row. Use a neutral stroke xxsmall Button for the Details action.",
+        "code": "<WidgetCard.Header>\n  <WidgetCard.Title>Card title</WidgetCard.Title>\n  <Button.Root variant=\"neutral\" mode=\"stroke\" size=\"xxsmall\" onClick={openDetails}>\n    Details\n  </Button.Root>\n</WidgetCard.Header>",
+        "stories": ["WithDetails"]
+      },
+      {
+        "title": "Compact title",
+        "description": "KPI cards use a smaller, muted title and a tighter gap. Both are className overrides.",
+        "code": "<WidgetCard.Root className=\"gap-1\">\n  <WidgetCard.Header>\n    <WidgetCard.Title className=\"text-paragraph-sm text-text-sub-600\">Metric title</WidgetCard.Title>\n  </WidgetCard.Header>\n  <WidgetCard.Content>...</WidgetCard.Content>\n</WidgetCard.Root>",
+        "stories": ["CompactTitle"]
+      }
+    ],
+    "api": [
+      {
+        "name": "WidgetCard.Root",
+        "description": "The card surface. Set its height with className; it has none by default.",
+        "props": [
+          {
+            "name": "className",
+            "type": "string",
+            "description": "Height, width and any other overrides"
+          }
+        ]
+      },
+      {
+        "name": "WidgetCard.Header",
+        "description": "The title row. The first child sits at the start, anything after it at the end."
+      },
+      {
+        "name": "WidgetCard.Title",
+        "description": "The card title, rendered as an h3."
+      },
+      {
+        "name": "WidgetCard.Content",
+        "description": "Fills the space below the header and can shrink below its content, so a fixed-height card constrains it.",
+        "props": [
+          {
+            "name": "className",
+            "type": "string",
+            "description": "Add overflow-y-auto when the content can outgrow the card"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/widget-card.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

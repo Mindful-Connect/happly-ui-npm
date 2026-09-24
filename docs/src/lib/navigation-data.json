@@ -132,6 +132,48 @@
         "collapsed": false
       },
       {
+        "title": "Charts",
+        "links": [
+          {
+            "title": "Bar Chart",
+            "href": "/docs/components/bar-chart"
+          },
+          {
+            "title": "Chart Tooltip",
+            "href": "/docs/components/chart-tooltip"
+          },
+          {
+            "title": "Donut Chart",
+            "href": "/docs/components/donut-chart"
+          },
+          {
+            "title": "Line Chart",
+            "href": "/docs/components/line-chart"
+          },
+          {
+            "title": "Ranked List",
+            "href": "/docs/components/ranked-list"
+          },
+          {
+            "title": "Region Map",
+            "href": "/docs/components/region-map"
+          },
+          {
+            "title": "Segment Bar",
+            "href": "/docs/components/segment-bar"
+          },
+          {
+            "title": "Spark Stat",
+            "href": "/docs/components/spark-stat"
+          },
+          {
+            "title": "Widget Card",
+            "href": "/docs/components/widget-card"
+          }
+        ],
+        "collapsed": false
+      },
+      {
         "title": "Communication",
         "links": [
           {
@@ -404,6 +446,18 @@
           }
         ],
         "collapsed": false
+      },
+      {
+        "title": "Metric List",
+        "href": "/docs/components/metric-list"
+      },
+      {
+        "title": "Performance Card",
+        "href": "/docs/components/performance-card"
+      },
+      {
+        "title": "Stat Strip",
+        "href": "/docs/components/stat-strip"
       }
     ]
   },
@@ -421,6 +475,10 @@
       {
         "title": "useFilterBar",
         "href": "/docs/hooks/use-filter-bar"
+      },
+      {
+        "title": "useRovingTablist",
+        "href": "/docs/hooks/use-roving-tablist"
       },
       {
         "title": "useTabObserver",

@@ -31,6 +31,8 @@
       "@/lib/memoji": ["../packages/registry/lib/memoji"],
       "@/lib/form-field-context": ["../packages/registry/lib/form-field-context"],
       "@/lib/use-form-field-binding": ["../packages/registry/lib/use-form-field-binding"],
+      "@/lib/use-controllable-field-value": ["../packages/registry/lib/use-controllable-field-value"],
+      "@/lib/use-formatted-caret": ["../packages/registry/lib/use-formatted-caret"],
       "@/hooks/*": ["../packages/registry/hooks/*"],
       "@/*": ["./src/*"]
     }

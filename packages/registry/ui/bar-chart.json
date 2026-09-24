@@ -1,0 +1,62 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/gh/Mindful-Connect/happly-ui-npm@production/schemas/registry-item.json",
+  "name": "bar-chart",
+  "type": "registry:ui",
+  "title": "Bar Chart",
+  "description": "A column chart for bucketed counts: every column labelled, one optionally featured, a tooltip on hover. Uses namespace exports: BarChart.Root.",
+  "version": "1.0.0",
+  "dependencies": [],
+  "registryDependencies": ["happly-ui-utils", "chart-tooltip"],
+  "docs": {
+    "lead": "One rounded column per bucket, scaled to the tallest, with every bucket labelled underneath. Built from flex rather than a charting library so no label is ever dropped.",
+    "usage": "import * as BarChart from \"@/components/ui/bar-chart\"\n\n<BarChart.Root\n  items={[{ label: \"0 - 9\", value: 111 }]}\n  highlighted=\"0 - 9\"\n  dimension=\"Group\"\n  unit=\"Items\"\n/>",
+    "examples": [
+      {
+        "title": "Default",
+        "description": "One featured column. Hover a column for its count; dimension and unit name what the tooltip shows.",
+        "code": "<BarChart.Root\n  items={items}\n  highlighted=\"10 - 19\"\n  dimension=\"Group\"\n  unit=\"Items\"\n/>",
+        "stories": ["Default"]
+      },
+      {
+        "title": "Without highlight",
+        "description": "Leave highlighted out when no bucket should stand out. The chart never picks the tallest for you.",
+        "code": "<BarChart.Root items={items} dimension=\"Group\" unit=\"Items\" />",
+        "stories": ["WithoutHighlight"]
+      }
+    ],
+    "api": [
+      {
+        "name": "BarChart.Root",
+        "description": "The columns and their label row. Fills its container's height.",
+        "props": [
+          {
+            "name": "items",
+            "type": "{ label: string; value: number }[]",
+            "description": "Columns left to right, in the order given"
+          },
+          {
+            "name": "highlighted",
+            "type": "string | null",
+            "description": "Label of the column to feature. Omitted or null features none"
+          },
+          {
+            "name": "dimension",
+            "type": "string",
+            "description": "What the buckets are, after the bucket in the tooltip caption (\"10 - 19 Group\"). For ranges; leave it off where the bucket names itself"
+          },
+          {
+            "name": "unit",
+            "type": "string",
+            "description": "What the value counts, beside it in the tooltip"
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "ui/bar-chart.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}
