@@ -147,6 +147,11 @@ export type AvatarRootProps = VariantProps<typeof avatarVariants> &
     placeholder?: React.ReactNode;
   };
 
+// What an Image falls back to when its photo is missing or fails to load.
+const AvatarPlaceholderContext = React.createContext<
+  Pick<AvatarRootProps, 'placeholder' | 'placeholderType'>
+>({});
+
 const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
   (
     {
@@ -215,7 +220,11 @@ const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
         className={root({ class: className })}
         {...rest}
       >
-        {extendedChildren}
+        <AvatarPlaceholderContext.Provider
+          value={{ placeholder, placeholderType }}
+        >
+          {extendedChildren}
+        </AvatarPlaceholderContext.Provider>
       </Component>
     );
   }
@@ -228,13 +237,56 @@ type AvatarImageProps = AvatarSharedProps &
   };
 
 const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
-  ({ asChild, className, size, color, alt, ...rest }, forwardedRef) => {
+  (
+    { asChild, className, size, color, alt, src, onError, ...rest },
+    forwardedRef
+  ) => {
     const Component = asChild ? Slot : 'img';
     const { image } = avatarVariants({ size, color });
+    const { placeholder, placeholderType } = React.useContext(
+      AvatarPlaceholderContext
+    );
+    const innerRef = React.useRef<HTMLImageElement>(null);
+    React.useImperativeHandle(forwardedRef, () => innerRef.current!, []);
+    // The src that failed rather than a flag, so a new src gets a fresh try.
+    const [failedSrc, setFailedSrc] = React.useState<AvatarImageProps['src']>();
+
+    // A server-rendered photo can fail before React attaches onError. A
+    // finished image with no pixels is the sign, but an SVG without intrinsic
+    // size reports the same, so the src is loaded again to tell them apart.
+    React.useEffect(() => {
+      const img = innerRef.current;
+      if (!(img instanceof HTMLImageElement) || typeof src !== 'string') return;
+      if (!img.complete || img.naturalWidth > 0) return;
+      const probe = new window.Image();
+      probe.onerror = () => setFailedSrc(src);
+      probe.src = src;
+      return () => {
+        probe.onerror = null;
+      };
+    }, [src]);
+
+    if (!asChild && (!src || failedSrc === src)) {
+      if (placeholder) return <>{placeholder}</>;
+      return (
+        <AvatarImage asChild>
+          {placeholderType === 'company' ? (
+            <IconEmptyCompany />
+          ) : (
+            <IconEmptyUser />
+          )}
+        </AvatarImage>
+      );
+    }
 
     return (
       <Component
-        ref={forwardedRef}
+        ref={innerRef}
+        src={src}
+        onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+          setFailedSrc(src);
+          onError?.(e);
+        }}
         // an avatar normally sits beside the person's name, so it is
         // decorative unless the consumer says otherwise — never unnamed
         alt={asChild ? alt : (alt ?? '')}

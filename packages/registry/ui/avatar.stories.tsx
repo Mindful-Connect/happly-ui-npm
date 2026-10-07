@@ -115,6 +115,25 @@ export const Placeholder = {
   ),
 };
 
+export const BrokenImage = {
+  render: () => (
+    <div className='flex gap-6'>
+      <Avatar.Root>
+        <Avatar.Image src='https://example.invalid/missing.png' />
+      </Avatar.Root>
+      <Avatar.Root color='yellow' placeholderType='company'>
+        <Avatar.Image src='https://example.invalid/missing.png' />
+      </Avatar.Root>
+      <Avatar.Root>
+        <Avatar.Image src='https://example.invalid/missing.png' />
+        <Avatar.Indicator>
+          <StatusIndicator.Root status='online' />
+        </Avatar.Indicator>
+      </Avatar.Root>
+    </div>
+  ),
+};
+
 export const Status = {
   render: () => (
     <div className='flex w-full max-w-96 flex-wrap justify-center gap-6'>

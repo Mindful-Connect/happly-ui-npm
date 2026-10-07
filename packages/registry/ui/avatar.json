@@ -42,6 +42,12 @@
         "stories": ["Placeholder"]
       },
       {
+        "title": "Broken Image",
+        "description": "An image with no src, or one that fails to load, falls back to the same placeholder. Indicators stay in place.",
+        "code": "<Avatar.Root>\n  <Avatar.Image src=\"/missing.png\" />\n</Avatar.Root>",
+        "stories": ["BrokenImage"]
+      },
+      {
         "title": "Status",
         "description": "Show user status (online, offline, busy, away) using Avatar.Indicator and StatusIndicator.",
         "code": "import * as StatusIndicator from '@/components/ui/status-indicator'\n\n<Avatar.Root>\n  <Avatar.Image src=\"/path/to/image.png\" />\n  <Avatar.Indicator>\n    <StatusIndicator.Root status=\"online\" />\n  </Avatar.Indicator>\n</Avatar.Root>",
@@ -133,7 +139,7 @@
           {
             "name": "src",
             "type": "string",
-            "description": "The image source URL"
+            "description": "The image source URL. When it is empty or fails to load, the root's placeholder is shown instead"
           },
           {
             "name": "asChild",
