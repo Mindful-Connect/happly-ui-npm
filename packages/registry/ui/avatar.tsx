@@ -215,17 +215,19 @@ const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
     );
 
     return (
-      <Component
-        ref={forwardedRef}
-        className={root({ class: className })}
-        {...rest}
+      // Outside the Component: with `asChild` its one child takes the merged
+      // props, and a Provider would discard them.
+      <AvatarPlaceholderContext.Provider
+        value={{ placeholder, placeholderType }}
       >
-        <AvatarPlaceholderContext.Provider
-          value={{ placeholder, placeholderType }}
+        <Component
+          ref={forwardedRef}
+          className={root({ class: className })}
+          {...rest}
         >
           {extendedChildren}
-        </AvatarPlaceholderContext.Provider>
-      </Component>
+        </Component>
+      </AvatarPlaceholderContext.Provider>
     );
   }
 );
@@ -246,8 +248,15 @@ const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
     const { placeholder, placeholderType } = React.useContext(
       AvatarPlaceholderContext
     );
-    const innerRef = React.useRef<HTMLImageElement>(null);
-    React.useImperativeHandle(forwardedRef, () => innerRef.current!, []);
+    const innerRef = React.useRef<HTMLImageElement | null>(null);
+    const setImageRef = React.useCallback(
+      (node: HTMLImageElement | null) => {
+        innerRef.current = node;
+        if (typeof forwardedRef === 'function') forwardedRef(node);
+        else if (forwardedRef) forwardedRef.current = node;
+      },
+      [forwardedRef]
+    );
     // The src that failed rather than a flag, so a new src gets a fresh try.
     const [failedSrc, setFailedSrc] = React.useState<AvatarImageProps['src']>();
 
@@ -281,7 +290,9 @@ const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
 
     return (
       <Component
-        ref={innerRef}
+        // `asChild` hands its ref to the child, which may be a function
+        // component, so it only gets one the caller asked for.
+        ref={asChild ? forwardedRef : setImageRef}
         src={src}
         onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
           setFailedSrc(src);
