@@ -40,3 +40,24 @@ export const RowsLegend = {
     </WidgetCard.Root>
   ),
 };
+
+export const WithoutHighlight = {
+  render: () => (
+    <WidgetCard.Root className='h-[280px] w-[352px]'>
+      <WidgetCard.Header>
+        <WidgetCard.Title>Card title</WidgetCard.Title>
+      </WidgetCard.Header>
+      <WidgetCard.Content>
+        <SegmentBar.Root
+          items={[
+            { label: 'Category A', value: 1300 },
+            { label: 'Category B', value: 900 },
+            { label: 'Category C', value: 700 },
+            { label: 'Category D', value: 12 },
+            { label: 'Category E', value: 0 },
+          ]}
+        />
+      </WidgetCard.Content>
+    </WidgetCard.Root>
+  ),
+};

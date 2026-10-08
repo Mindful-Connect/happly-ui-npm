@@ -24,7 +24,21 @@ export const Default = {
           { label: 'Category A', value: 29 },
           { label: 'Category B', value: 21 },
         ]}
-        highlighted='Category A'
+      />
+    </Card>
+  ),
+};
+
+export const SmallSegment = {
+  render: () => (
+    <Card height='h-[280px]'>
+      <DonutChart.Root
+        items={[
+          { label: 'Category A', value: 120 },
+          { label: 'Category B', value: 64 },
+          { label: 'Category C', value: 1 },
+        ]}
+        unit='Items'
       />
     </Card>
   ),

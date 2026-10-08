@@ -1,19 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import {
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip,
-  useChartWidth,
-} from 'recharts';
+import { Pie, PieChart, ResponsiveContainer } from 'recharts';
 
-import * as ChartTooltip from '@/components/ui/chart-tooltip';
 import { cn } from '@/lib/happly-ui-utils';
 
 export type DonutChartItem = {
-  /** The full name, in the tooltip. */
+  /** The full name. */
   label: string;
   /** Shown instead of `label` in the legend and the centre ("B2B"). */
   shortLabel?: string;
@@ -36,7 +29,7 @@ type DonutChartProps = React.HTMLAttributes<HTMLDivElement> & {
     label: string;
     value: number;
   };
-  /** What the values count, beside the value in the tooltip ("Items"). */
+  /** What the values count, read out with each legend entry ("Items"). */
   unit?: string;
 };
 
@@ -63,6 +56,25 @@ const CORNER_RADIUS = 12;
 // The design separates segments by a fixed 6px; recharts only offers a
 // constant angle, so this matches 6px at the middle of the band.
 const PADDING_ANGLE = 2.8;
+// Below about 13.4 degrees the two inner corners no longer fit and recharts
+// draws the segment as a flat sliver, so a small one is drawn at this size.
+const MIN_ANGLE = 16;
+
+// What each segment is drawn at: its share of the arc, with every non-zero
+// share raised to MIN_ANGLE and the larger ones scaled down to make room.
+function drawnShares(items: DonutChartItem[]) {
+  const sum = items.reduce((s, item) => s + item.value, 0);
+  const gaps = Math.max(items.filter((item) => item.value > 0).length - 1, 0);
+  const minShare = MIN_ANGLE / (180 - PADDING_ANGLE * gaps);
+  const isSmall = (item: DonutChartItem) =>
+    item.value > 0 && item.value / sum < minShare;
+  const small = items.filter(isSmall);
+  const restSum = sum - small.reduce((s, item) => s + item.value, 0);
+  const restShare = 1 - small.length * minShare;
+  return items.map((item) =>
+    isSmall(item) ? minShare : (item.value / restSum) * restShare || 0
+  );
+}
 
 // recharts animates in JavaScript, which the theme's reduced-motion CSS
 // cannot reach.
@@ -70,55 +82,6 @@ function prefersReducedMotion() {
   return (
     typeof window !== 'undefined' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  );
-}
-
-type DonutTooltipProps = {
-  unit?: string;
-  // Filled in by recharts when it renders the tooltip.
-  active?: boolean;
-  payload?: { name?: string; value?: number }[];
-  coordinate?: { x: number; y: number };
-};
-
-/**
- * The hovered segment's readout, its tail on recharts' `coordinate` for a pie:
- * the segment's angular midpoint, halfway across the band. The box is clamped
- * to the chart's width and only the tail stays on the segment, so a long
- * label over an end segment cannot overhang the card.
- */
-function DonutTooltip({ unit, active, payload, coordinate }: DonutTooltipProps) {
-  const chartWidth = useChartWidth() ?? 0;
-  const ref = React.useRef<HTMLDivElement>(null);
-  const [width, setWidth] = React.useState(0);
-  // No deps: re-measured after every render, before paint. React skips the
-  // update when the width hasn't changed, so it doesn't loop.
-  React.useLayoutEffect(() => setWidth(ref.current?.offsetWidth ?? 0));
-
-  const slice = payload?.[0];
-  if (!active || !slice || !coordinate) return null;
-  const left = Math.min(
-    Math.max(coordinate.x - width / 2, 0),
-    chartWidth - width
-  );
-  return (
-    // Only lifted by its own height: the horizontal centring is the clamp
-    // above, which a -50% translate would undo.
-    <div
-      ref={ref}
-      className='absolute w-max -translate-y-full'
-      style={{ left, top: coordinate.y }}
-    >
-      <ChartTooltip.Root
-        caption={slice.name}
-        tailOffset={coordinate.x - left - width / 2}
-      >
-        <ChartTooltip.Value>
-          {Number(slice.value).toLocaleString()}
-        </ChartTooltip.Value>
-        {unit ? <ChartTooltip.Unit>{unit}</ChartTooltip.Unit> : null}
-      </ChartTooltip.Root>
-    </div>
   );
 }
 
@@ -131,12 +94,18 @@ function DonutChart({
   className,
   ...rest
 }: DonutChartProps) {
+  const shares = drawnShares(items);
   const slices = items.map((item, i) => ({
     name: item.label,
     value: item.value,
+    drawn: shares[i],
     fill: colorAt(item, i),
   }));
-  const leading = items.find((item) => item.label === highlighted);
+  const [hovered, setHovered] = React.useState<string | null>(null);
+  const isFeatured = (label: string) =>
+    label === highlighted || label === hovered;
+  // The centre holds one segment, so the hovered one takes it over.
+  const leading = items.find((item) => item.label === (hovered ?? highlighted));
 
   return (
     <div className={cn('flex h-full flex-col gap-6', className)} {...rest}>
@@ -150,7 +119,7 @@ function DonutChart({
       ) : null}
       {/* The legend carries every label and value for a screen reader.
           recharts makes the segments focusable and a click would ring one,
-          so mousedown is cancelled; hover and the tooltip are unaffected. */}
+          so mousedown is cancelled; hover is unaffected. */}
       <div
         aria-hidden
         className='relative h-[152px] w-full shrink-0'
@@ -160,7 +129,7 @@ function DonutChart({
           <PieChart accessibilityLayer={false}>
             <Pie
               data={slices}
-              dataKey='value'
+              dataKey='drawn'
               cx='50%'
               // Bottom-anchored: the arc's baseline is the box's bottom edge.
               cy={OUTER_RADIUS}
@@ -172,12 +141,8 @@ function DonutChart({
               paddingAngle={PADDING_ANGLE}
               stroke='none'
               isAnimationActive={!prefersReducedMotion()}
-            />
-            {/* Pinned at the chart's origin, so recharts never offsets or
-                flips it: DonutTooltip places itself on the hovered segment. */}
-            <Tooltip
-              position={{ x: 0, y: 0 }}
-              content={<DonutTooltip unit={unit} />}
+              onMouseEnter={(_, index) => setHovered(items[index].label)}
+              onMouseLeave={() => setHovered(null)}
             />
           </PieChart>
         </ResponsiveContainer>
@@ -210,10 +175,11 @@ function DonutChart({
                 along: its padding is cancelled by an equal negative margin. */}
             <span
               className={
-                item.label === highlighted
+                isFeatured(item.label)
                   ? 'bg-chart-highlight-bg text-chart-highlight -mx-1.5 -my-1 rounded-lg px-1.5 py-1'
                   : 'text-text-sub-600 font-normal'
               }
+              title={item.shortLabel ? item.label : undefined}
             >
               {item.shortLabel ?? item.label}
             </span>

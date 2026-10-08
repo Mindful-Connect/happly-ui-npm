@@ -22,6 +22,12 @@
         "description": "A full-width legend with each count on the right.",
         "code": "<SegmentBar.Root items={items} highlighted=\"Category B\" legend=\"rows\" />",
         "stories": ["RowsLegend"]
+      },
+      {
+        "title": "Without highlight",
+        "description": "Leave highlighted out and nothing is featured until a block is hovered, when its value prints inside it and its legend entry gets the pill. A block too narrow for its number opens far enough to fit it.",
+        "code": "<SegmentBar.Root items={items} />",
+        "stories": ["WithoutHighlight"]
       }
     ],
     "api": [
@@ -37,7 +43,7 @@
           {
             "name": "highlighted",
             "type": "string | null",
-            "description": "Label of the segment to feature. Omitted or null features none"
+            "description": "Label of the segment to feature. Omitted or null features none. A hovered segment is featured as well"
           },
           {
             "name": "legend",

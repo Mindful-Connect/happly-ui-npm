@@ -69,8 +69,11 @@ function SegmentBar({
   // The featured label bleeds its pill outward instead of pushing the text
   // along: the padding is cancelled by an equal negative margin, so it stays
   // in line with the rows above and below.
+  const [hovered, setHovered] = React.useState<string | null>(null);
+  const isFeatured = (label: string) =>
+    label === highlighted || label === hovered;
   const pill = (label: string) =>
-    label === highlighted
+    isFeatured(label)
       ? '-mx-1.5 -my-1 rounded-lg px-1.5 py-1 bg-chart-highlight-bg text-chart-highlight font-medium'
       : 'text-text-sub-600';
   const half = Math.ceil(items.length / 2);
@@ -93,14 +96,22 @@ function SegmentBar({
             key={item.label}
             className={cn(
               'flex min-w-2 items-center justify-center rounded-xl',
-              SEGMENT_FILL[i % SEGMENT_FILL.length]
+              SEGMENT_FILL[i % SEGMENT_FILL.length],
+              // A hovered block keeps its size unless it is too narrow for
+              // its number, when it opens just far enough to fit it.
+              item.label === hovered &&
+                item.label !== highlighted &&
+                'min-w-fit basis-0'
             )}
             style={{ flexGrow: item.value }}
+            onMouseEnter={() => setHovered(item.label)}
+            onMouseLeave={() => setHovered(null)}
           >
-            {item.label === highlighted ? (
+            {isFeatured(item.label) ? (
               <span
                 className={cn(
                   'text-label-sm tabular-nums',
+                  item.label !== highlighted && 'px-1.5',
                   SEGMENT_LABEL[i % SEGMENT_LABEL.length]
                 )}
               >
@@ -126,7 +137,7 @@ function SegmentBar({
               <span
                 className={cn(
                   'shrink-0 tabular-nums',
-                  item.label === highlighted
+                  isFeatured(item.label)
                     ? 'text-text-strong-950'
                     : 'text-text-soft-400'
                 )}
