@@ -45,6 +45,10 @@ function BarChart({
 }: BarChartProps) {
   // Guarded so an all-zero breakdown cannot produce NaN heights.
   const max = items.reduce((m, item) => Math.max(m, item.value), 0) || 1;
+  // State rather than group-hover: the label sits in a separate row.
+  const [hovered, setHovered] = React.useState<string | null>(null);
+  const isFeatured = (label: string) =>
+    label === highlighted || label === hovered;
 
   return (
     <div
@@ -58,11 +62,13 @@ function BarChart({
           <div
             key={item.label}
             className='group flex h-full min-w-0 flex-1 flex-col items-center justify-end'
+            onMouseEnter={() => setHovered(item.label)}
+            onMouseLeave={() => setHovered(null)}
           >
             <div
               className={cn(
-                'relative w-full rounded-xl',
-                item.label === highlighted ? 'bg-chart-2' : 'bg-chart-muted'
+                'relative w-full rounded-xl transition-[background-color] duration-150',
+                isFeatured(item.label) ? 'bg-chart-2' : 'bg-chart-muted'
               )}
               style={{ height: `${(item.value / max) * 100}%` }}
             >
@@ -82,8 +88,8 @@ function BarChart({
           <li
             key={item.label}
             className={cn(
-              'text-paragraph-xs flex min-w-0 flex-1 items-center justify-center rounded py-0.5',
-              item.label === highlighted
+              'text-paragraph-xs flex min-w-0 flex-1 items-center justify-center rounded py-0.5 transition-[background-color,color] duration-150',
+              isFeatured(item.label)
                 ? 'bg-chart-highlight-bg text-chart-highlight font-medium'
                 : 'text-text-soft-400'
             )}

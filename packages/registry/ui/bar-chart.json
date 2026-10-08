@@ -3,7 +3,7 @@
   "name": "bar-chart",
   "type": "registry:ui",
   "title": "Bar Chart",
-  "description": "A column chart for bucketed counts: every column labelled, one optionally featured, a tooltip on hover. Uses namespace exports: BarChart.Root.",
+  "description": "A column chart for bucketed counts: every column labelled, one optionally featured, a tooltip and highlight on hover. Uses namespace exports: BarChart.Root.",
   "version": "1.0.0",
   "dependencies": [],
   "registryDependencies": ["happly-ui-utils", "chart-tooltip"],
@@ -13,13 +13,13 @@
     "examples": [
       {
         "title": "Default",
-        "description": "One featured column. Hover a column for its count; dimension and unit name what the tooltip shows.",
+        "description": "One featured column. Hover a column for its count; the column and its label take the featured colours while hovered. dimension and unit name what the tooltip shows.",
         "code": "<BarChart.Root\n  items={items}\n  highlighted=\"10 - 19\"\n  dimension=\"Group\"\n  unit=\"Items\"\n/>",
         "stories": ["Default"]
       },
       {
         "title": "Without highlight",
-        "description": "Leave highlighted out when no bucket should stand out. The chart never picks the tallest for you.",
+        "description": "Leave highlighted out when no bucket should stand out: every column is grey until hovered. The chart never picks the tallest for you.",
         "code": "<BarChart.Root items={items} dimension=\"Group\" unit=\"Items\" />",
         "stories": ["WithoutHighlight"]
       }

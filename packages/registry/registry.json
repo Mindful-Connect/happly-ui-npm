@@ -73,7 +73,7 @@
       "name": "bar-chart",
       "type": "registry:ui",
       "title": "Bar Chart",
-      "description": "A column chart for bucketed counts: every column labelled, one optionally featured, a tooltip on hover. Uses namespace exports: BarChart.Root."
+      "description": "A column chart for bucketed counts: every column labelled, one optionally featured, a tooltip and highlight on hover. Uses namespace exports: BarChart.Root."
     },
     {
       "name": "button",
