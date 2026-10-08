@@ -66,7 +66,7 @@ import { default as promotionalCardMeta, Stroke as promotionalCard_Stroke, Fille
 import { default as publicationStatusBadgeMeta, Draft as publicationStatusBadge_Draft, WaitingForReview as publicationStatusBadge_WaitingForReview, Approved as publicationStatusBadge_Approved, RequireChanges as publicationStatusBadge_RequireChanges, Declined as publicationStatusBadge_Declined, AllStatuses as publicationStatusBadge_AllStatuses, LightVariant as publicationStatusBadge_LightVariant, CustomLabel as publicationStatusBadge_CustomLabel } from '@/components/ui/publication-status-badge.stories';
 import { default as radioCardMeta, Playground as radioCard_Playground, Default as radioCard_Default, WithKeyIcons as radioCard_WithKeyIcons, WithSimpleIcons as radioCard_WithSimpleIcons, WithBadges as radioCard_WithBadges, InlineDescription as radioCard_InlineDescription, AllowDeselect as radioCard_AllowDeselect, Disabled as radioCard_Disabled, ErrorState as radioCard_ErrorState, Composed as radioCard_Composed, PrimaryVariant as radioCard_PrimaryVariant, WithFormField as radioCard_WithFormField } from '@/components/ui/radio-card.stories';
 import { default as radioMeta, Playground as radio_Playground, Demo as radio_Demo, Variants as radio_Variants, Disabled as radio_Disabled, WithLabel as radio_WithLabel, WithLabelExtended as radio_WithLabelExtended, WithFormField as radio_WithFormField } from '@/components/ui/radio.stories';
-import { default as rankedListMeta, Default as rankedList_Default, ManyRows as rankedList_ManyRows } from '@/components/ui/ranked-list.stories';
+import { default as rankedListMeta, Default as rankedList_Default } from '@/components/ui/ranked-list.stories';
 import { default as regionMapMeta, Default as regionMap_Default, WithTopRegion as regionMap_WithTopRegion, Updates as regionMap_Updates } from '@/components/ui/region-map.stories';
 import { default as sectionToggleMeta, Playground as sectionToggle_Playground, Default as sectionToggle_Default, Collapsed as sectionToggle_Collapsed, Composed as sectionToggle_Composed } from '@/components/ui/section-toggle.stories';
 import { default as sectionMeta, Playground as section_Playground, Default as section_Default, WithCustomHeaderWidth as section_WithCustomHeaderWidth, Composed as section_Composed } from '@/components/ui/section.stories';
@@ -856,8 +856,7 @@ export const storyRegistry: Record<string, {
   'ranked-list': {
     meta: rankedListMeta,
     stories: {
-    'Default': rankedList_Default,
-    'ManyRows': rankedList_ManyRows
+    'Default': rankedList_Default
     }
   },
   'region-map': {

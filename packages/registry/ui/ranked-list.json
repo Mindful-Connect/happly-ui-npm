@@ -16,12 +16,6 @@
         "description": "Four rows spread evenly down the card.",
         "code": "<RankedList.Root items={items} columnLabels={[\"Category\", \"Count\"]} />",
         "stories": ["Default"]
-      },
-      {
-        "title": "Many rows",
-        "description": "Rows past what the card fits scroll inside it. A long label truncates and keeps its full text in a tooltip.",
-        "code": "<RankedList.Root items={manyItems} columnLabels={[\"Category\", \"Count\"]} />",
-        "stories": ["ManyRows"]
       }
     ],
     "api": [

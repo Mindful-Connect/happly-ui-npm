@@ -26,25 +26,3 @@ export const Default = {
     </WidgetCard.Root>
   ),
 };
-
-export const ManyRows = {
-  render: () => (
-    <WidgetCard.Root className='h-[288px] w-[352px]'>
-      <WidgetCard.Header>
-        <WidgetCard.Title>Card title</WidgetCard.Title>
-      </WidgetCard.Header>
-      <WidgetCard.Content>
-        <RankedList.Root
-          items={[
-            ...items,
-            { label: 'Category E with a much longer name than the rest', value: 912 },
-            { label: 'Category F', value: 640 },
-            { label: 'Category G', value: 215 },
-            { label: 'Category H', value: 88 },
-          ]}
-          columnLabels={['Category', 'Count']}
-        />
-      </WidgetCard.Content>
-    </WidgetCard.Root>
-  ),
-};
