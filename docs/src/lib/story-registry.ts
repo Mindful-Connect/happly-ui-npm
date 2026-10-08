@@ -71,7 +71,7 @@ import { default as regionMapMeta, Default as regionMap_Default, WithTopRegion a
 import { default as sectionToggleMeta, Playground as sectionToggle_Playground, Default as sectionToggle_Default, Collapsed as sectionToggle_Collapsed, Composed as sectionToggle_Composed } from '@/components/ui/section-toggle.stories';
 import { default as sectionMeta, Playground as section_Playground, Default as section_Default, WithCustomHeaderWidth as section_WithCustomHeaderWidth, Composed as section_Composed } from '@/components/ui/section.stories';
 import { default as segmentBarMeta, Default as segmentBar_Default, RowsLegend as segmentBar_RowsLegend } from '@/components/ui/segment-bar.stories';
-import { default as selectMeta, Playground as select_Playground, Demo as select_Demo, WithLabelHint as select_WithLabelHint, WithIcons as select_WithIcons, Sizes as select_Sizes, WithCountryFlags as select_WithCountryFlags, WithUsers as select_WithUsers, Disabled as select_Disabled, Readonly as select_Readonly, Compact as select_Compact, CompactCountry as select_CompactCountry, CompactSizes as select_CompactSizes, InlineCountry as select_InlineCountry, InputWithInlineSelect as select_InputWithInlineSelect, WithInput as select_WithInput, WithInputSizes as select_WithInputSizes } from '@/components/ui/select.stories';
+import { default as selectMeta, Playground as select_Playground, Demo as select_Demo, CustomMaxHeight as select_CustomMaxHeight, WithLabelHint as select_WithLabelHint, WithIcons as select_WithIcons, Sizes as select_Sizes, WithCountryFlags as select_WithCountryFlags, WithUsers as select_WithUsers, Disabled as select_Disabled, Readonly as select_Readonly, Compact as select_Compact, CompactCountry as select_CompactCountry, CompactSizes as select_CompactSizes, InlineCountry as select_InlineCountry, InputWithInlineSelect as select_InputWithInlineSelect, WithInput as select_WithInput, WithInputSizes as select_WithInputSizes } from '@/components/ui/select.stories';
 import { default as skeletonMeta, Default as skeleton_Default, Card as skeleton_Card, Circular as skeleton_Circular } from '@/components/ui/skeleton.stories';
 import { default as sliderMeta, Playground as slider_Playground, Demo as slider_Demo, Variants as slider_Variants, Range as slider_Range, WithTooltip as slider_WithTooltip, WithFormField as slider_WithFormField } from '@/components/ui/slider.stories';
 import { default as socialsInputMeta, Default as socialsInput_Default, WithExistingValues as socialsInput_WithExistingValues, AllSocials as socialsInput_AllSocials, CustomSocials as socialsInput_CustomSocials, ReadOnly as socialsInput_ReadOnly, WithFormField as socialsInput_WithFormField, ErrorState as socialsInput_ErrorState, CustomLabels as socialsInput_CustomLabels } from '@/components/ui/socials-input.stories';
@@ -897,6 +897,7 @@ export const storyRegistry: Record<string, {
     stories: {
     'Playground': select_Playground,
     'Demo': select_Demo,
+    'CustomMaxHeight': select_CustomMaxHeight,
     'WithLabelHint': select_WithLabelHint,
     'WithIcons': select_WithIcons,
     'Sizes': select_Sizes,
