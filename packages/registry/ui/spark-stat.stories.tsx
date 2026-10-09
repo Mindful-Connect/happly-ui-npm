@@ -4,7 +4,6 @@ export default { title: 'Charts/Spark Stat', component: SparkStat.Root };
 
 const rising = [2, 3, 3, 4, 3, 5, 6, 5, 7, 8, 8, 9, 11, 12];
 const easing = [9, 9, 8, 8, 7, 7, 6, 6, 5, 5, 5, 4, 4, 4];
-const steady = [5, 5, 6, 5, 5, 6, 5, 5, 5, 6, 5, 5, 6, 5];
 
 export const Default = {
   render: () => (
@@ -34,13 +33,17 @@ export const Down = {
 
 export const Flat = {
   render: () => (
-    <div className='w-[352px]'>
+    <div className='flex w-[352px] flex-col gap-3'>
       <SparkStat.Root
-        title='Metric title'
-        value={2}
-        delta={0}
-        points={steady}
+        title='Recent activity'
+        value={8241}
+        delta={0.3}
+        points={[8100, 8138, 8110, 8205, 8241]}
       />
+      <p className='text-paragraph-sm text-text-sub-600'>
+        Check: 0.3% rounds to a neutral 0% pill and grey line. Values span
+        8,100–8,241; the sparkline should still show their rises and dip.
+      </p>
     </div>
   ),
 };
@@ -53,19 +56,6 @@ export const NoDelta = {
         value={8241}
         delta={null}
         points={rising}
-      />
-    </div>
-  ),
-};
-
-export const NarrowRange = {
-  render: () => (
-    <div className='w-[352px]'>
-      <SparkStat.Root
-        title='Recent activity'
-        value={8241}
-        delta={0.3}
-        points={[8100, 8138, 8110, 8205, 8241]}
       />
     </div>
   ),

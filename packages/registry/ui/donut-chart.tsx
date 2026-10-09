@@ -21,7 +21,8 @@ type DonutChartProps = React.HTMLAttributes<HTMLDivElement> & {
   /**
    * `label` of the segment to feature: its value and label fill the centre and
    * its legend entry gets a pill. Omitted or null leaves the centre bare,
-   * which is right when no single segment is an honest headline.
+   * which is right when no single segment is an honest headline. With exactly
+   * one positive-value category, that category always holds the centre.
    */
   highlighted?: string | null;
   /** A caption over a figure, above the arc. Pass it and it shows; omit it and it doesn't. */
@@ -102,10 +103,19 @@ function DonutChart({
     fill: colorAt(item, i),
   }));
   const [hovered, setHovered] = React.useState<string | null>(null);
+  const positiveItems = items.filter((item) => item.value > 0);
+  const singleCategory = positiveItems.length === 1 ? positiveItems[0] : null;
+  // Single-category mode removes hover handlers, so clear any earlier hover
+  // before multiple categories return without a mouse-leave to reset it.
+  React.useEffect(() => {
+    if (singleCategory) setHovered(null);
+  }, [singleCategory]);
   const isFeatured = (label: string) =>
     label === highlighted || label === hovered;
   // The centre holds one segment, so the hovered one takes it over.
-  const leading = items.find((item) => item.label === (hovered ?? highlighted));
+  const leading =
+    singleCategory ??
+    items.find((item) => item.label === (hovered ?? highlighted));
 
   return (
     <div className={cn('flex h-full flex-col gap-6', className)} {...rest}>
@@ -141,8 +151,12 @@ function DonutChart({
               paddingAngle={PADDING_ANGLE}
               stroke='none'
               isAnimationActive={!prefersReducedMotion()}
-              onMouseEnter={(_, index) => setHovered(items[index].label)}
-              onMouseLeave={() => setHovered(null)}
+              onMouseEnter={
+                singleCategory
+                  ? undefined
+                  : (_, index) => setHovered(items[index].label)
+              }
+              onMouseLeave={singleCategory ? undefined : () => setHovered(null)}
             />
           </PieChart>
         </ResponsiveContainer>
@@ -158,7 +172,13 @@ function DonutChart({
           </div>
         ) : null}
       </div>
-      <ul className='flex w-full shrink-0 items-center gap-3'>
+      {/* A single positive category needs no visible legend, but every
+          category (including zeros) remains available to screen readers. */}
+      <ul
+        className={
+          singleCategory ? 'sr-only' : 'flex w-full shrink-0 items-center gap-3'
+        }
+      >
         {items.map((item, i) => (
           <li
             key={item.label}
@@ -184,7 +204,8 @@ function DonutChart({
               {item.shortLabel ?? item.label}
             </span>
             <span className='sr-only'>
-              {item.shortLabel ? `, ${item.label}` : null}: {item.value.toLocaleString()}
+              {item.shortLabel ? `, ${item.label}` : null}:{' '}
+              {item.value.toLocaleString()}
               {unit ? ` ${unit}` : null}
             </span>
           </li>

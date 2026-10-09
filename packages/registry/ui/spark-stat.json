@@ -25,8 +25,8 @@
       },
       {
         "title": "Flat",
-        "description": "No change keeps the pill and line grey.",
-        "code": "<SparkStat.Root title=\"Metric title\" value={2} delta={0} points={points} />",
+        "description": "A delta of 0.3% rounds to a neutral 0% pill and grey line. The points span only 8,100–8,241: verify that the sparkline still shows their rises and dip, because its axis scales to the data range.",
+        "code": "<SparkStat.Root title=\"Recent activity\" value={8241} delta={0.3} points={[8100, 8138, 8110, 8205, 8241]} />",
         "stories": ["Flat"]
       },
       {
@@ -34,12 +34,6 @@
         "description": "Leave delta out, or pass null, when there is no previous period to compare against. The pill is hidden and the line turns grey unless you pass a trend.",
         "code": "<SparkStat.Root title=\"Metric title\" value={8241} delta={null} points={points} />",
         "stories": ["NoDelta"]
-      },
-      {
-        "title": "Narrow range",
-        "description": "The sparkline scales to its data, so a small change between large values remains visible. A change that rounds to 0% gets a neutral pill and line.",
-        "code": "<SparkStat.Root title=\"Recent activity\" value={8241} delta={0.3} points={[8100, 8138, 8110, 8205, 8241]} />",
-        "stories": ["NarrowRange"]
       }
     ],
     "api": [

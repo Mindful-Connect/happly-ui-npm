@@ -25,25 +25,27 @@ export const Default = {
         </Button.Root>
       </WidgetCard.Header>
       <WidgetCard.Content>
-        <BarChart.Root
-          items={items}
-          highlighted='10 - 19'
-          dimension='Group'
-          unit='Items'
-        />
+        <BarChart.Root items={items} dimension='Group' unit='Items' />
       </WidgetCard.Content>
     </WidgetCard.Root>
   ),
 };
 
-export const WithoutHighlight = {
+export const MinimumHeight = {
   render: () => (
-    <WidgetCard.Root className='h-[288px] w-[728px]'>
+    <WidgetCard.Root className='h-[288px] w-[352px]'>
       <WidgetCard.Header>
-        <WidgetCard.Title>Card title</WidgetCard.Title>
+        <WidgetCard.Title>Zero and small counts</WidgetCard.Title>
       </WidgetCard.Header>
       <WidgetCard.Content>
-        <BarChart.Root items={items} dimension='Group' unit='Items' />
+        <BarChart.Root
+          items={[
+            { label: 'Zero', value: 0 },
+            { label: 'Small', value: 1 },
+            { label: 'Large', value: 1000 },
+          ]}
+          unit='Items'
+        />
       </WidgetCard.Content>
     </WidgetCard.Root>
   ),

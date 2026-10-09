@@ -67,16 +67,22 @@ function BarChart({
           >
             <div
               className={cn(
-                'relative w-full rounded-xl transition-[background-color] duration-150',
+                'relative min-h-2 w-full rounded-xl transition-[background-color] duration-150',
                 isFeatured(item.label) ? 'bg-chart-2' : 'bg-chart-muted'
               )}
-              style={{ height: `${(item.value / max) * 100}%` }}
+              // 8px + share * (available height - 8px): zero keeps the
+              // baseline, positives rise above it, and the maximum fits.
+              style={{
+                height: `calc(${(item.value / max) * 100}% + ${8 * (1 - item.value / max)}px)`,
+              }}
             >
               <ChartTooltip.Root
                 caption={dimension ? `${item.label} ${dimension}` : item.label}
                 className='absolute bottom-full left-1/2 z-20 -translate-x-1/2 opacity-0 transition-opacity duration-150 group-hover:opacity-100'
               >
-                <ChartTooltip.Value>{item.value.toLocaleString()}</ChartTooltip.Value>
+                <ChartTooltip.Value>
+                  {item.value.toLocaleString()}
+                </ChartTooltip.Value>
                 {unit ? <ChartTooltip.Unit>{unit}</ChartTooltip.Unit> : null}
               </ChartTooltip.Root>
             </div>

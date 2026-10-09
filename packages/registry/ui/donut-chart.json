@@ -8,7 +8,7 @@
   "dependencies": ["recharts@^3.8.1"],
   "registryDependencies": ["happly-ui-utils"],
   "docs": {
-    "lead": "Segments along a half-donut. The featured segment's value and label fill the centre; pass a total to show a figure above the arc.",
+    "lead": "Segments along a half-donut. The featured segment's value and label fill the centre; pass a total to show a figure above the arc. With exactly one positive-value category, its value and label stay fixed in the centre, hover is disabled, and the legend is only available to screen readers.",
     "usage": "import * as DonutChart from \"@/components/ui/donut-chart\"\n\n<DonutChart.Root\n  items={[{ label: \"Category A\", value: 10 }, { label: \"Category B\", value: 55 }]}\n  highlighted=\"Category B\"\n  total={{ label: \"Total\", value: 65 }}\n  unit=\"Items\"\n/>",
     "examples": [
       {
@@ -34,6 +34,18 @@
         "description": "Give an item a shortLabel when its full name won't fit the one-row legend. The legend and centre show the short label; the legend entry's title keeps the full one.",
         "code": "<DonutChart.Root\n  items={[\n    { label: \"Category Alpha (CA)\", shortLabel: \"CA\", value: 18 },\n    { label: \"Category Beta (CB)\", shortLabel: \"CB\", value: 24 },\n    { label: \"Category Gamma (CG)\", shortLabel: \"CG\", value: 8 },\n  ]}\n  highlighted=\"Category Beta (CB)\"\n/>",
         "stories": ["WithShortLabels"]
+      },
+      {
+        "title": "Single positive category",
+        "description": "One positive category and any zero categories: the positive category holds the centre even when highlighted names a zero category. All labels and actual values remain available to screen readers.",
+        "code": "<DonutChart.Root items={[{ label: \"Category Alpha\", shortLabel: \"Alpha\", value: 29 }, { label: \"Category Beta\", value: 0 }]} highlighted=\"Category Beta\" unit=\"Items\" />",
+        "stories": ["SinglePositiveCategory"]
+      },
+      {
+        "title": "All zero",
+        "description": "With no positive categories, the legend remains visible and the centre follows the usual highlight behavior.",
+        "code": "<DonutChart.Root items={[{ label: \"Category A\", value: 0 }, { label: \"Category B\", value: 0 }]} unit=\"Items\" />",
+        "stories": ["AllZero"]
       }
     ],
     "api": [
@@ -49,7 +61,7 @@
           {
             "name": "highlighted",
             "type": "string | null",
-            "description": "Label of the segment to feature, matched against label, not shortLabel. Omitted or null leaves the centre bare. A hovered segment is featured as well, and takes the centre while hovered"
+            "description": "Label of the segment to feature, matched against label, not shortLabel. Omitted or null leaves the centre bare. A hovered segment is featured as well, and takes the centre while hovered. With exactly one positive-value category, that category holds the centre regardless of highlighted, hover is disabled, and the visible legend is hidden"
           },
           {
             "name": "total",

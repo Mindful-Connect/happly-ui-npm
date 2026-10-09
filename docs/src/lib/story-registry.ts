@@ -10,7 +10,7 @@ import { default as avatarGroupMeta, Playground as avatarGroup_Playground, Size 
 import { default as avatarMeta, Playground as avatar_Playground, Color as avatar_Color, Size as avatar_Size, Text as avatar_Text, Placeholder as avatar_Placeholder, BrokenImage as avatar_BrokenImage, Status as avatar_Status, Notification as avatar_Notification, BrandLogo as avatar_BrandLogo, Verified as avatar_Verified, TopIndicators as avatar_TopIndicators, SquareRounded as avatar_SquareRounded, CustomPlaceholder as avatar_CustomPlaceholder, AsLink as avatar_AsLink } from '@/components/ui/avatar.stories';
 import { default as badgeMeta, Playground as badge_Playground, BadgeFilled as badge_BadgeFilled, BadgeLight as badge_BadgeLight, BadgeLighter as badge_BadgeLighter, BadgeStroke as badge_BadgeStroke, BadgeColors as badge_BadgeColors, Size as badge_Size, Square as badge_Square, WithIcon as badge_WithIcon, WithDot as badge_WithDot, Disabled as badge_Disabled, AsChild as badge_AsChild, GroupDefault as badge_GroupDefault, Group as badge_Group, GroupExpanded as badge_GroupExpanded } from '@/components/ui/badge.stories';
 import { default as bannerMeta, Playground as banner_Playground, Error as banner_Error, Warning as banner_Warning, Success as banner_Success, Information as banner_Information, Feature as banner_Feature, Primary as banner_Primary } from '@/components/ui/banner.stories';
-import { default as barChartMeta, Default as barChart_Default, WithoutHighlight as barChart_WithoutHighlight } from '@/components/ui/bar-chart.stories';
+import { default as barChartMeta, Default as barChart_Default, MinimumHeight as barChart_MinimumHeight } from '@/components/ui/bar-chart.stories';
 import { default as buttonGroupMeta, Playground as buttonGroup_Playground, Default as buttonGroup_Default, IconsOnly as buttonGroup_IconsOnly, TextOnly as buttonGroup_TextOnly, Sizes as buttonGroup_Sizes } from '@/components/ui/button-group.stories';
 import { default as buttonMeta, Playground as button_Playground, PrimaryVariant as button_PrimaryVariant, NeutralVariant as button_NeutralVariant, SuccessVariant as button_SuccessVariant, WarningVariant as button_WarningVariant, ErrorVariant as button_ErrorVariant, Sizes as button_Sizes, Disabled as button_Disabled, WithIcon as button_WithIcon, FullWidth as button_FullWidth, AsChild as button_AsChild, Loading as button_Loading, LoadingInteractive as button_LoadingInteractive, Composition as button_Composition } from '@/components/ui/button.stories';
 import { default as chartTooltipMeta, WithUnit as chartTooltip_WithUnit, WithoutUnit as chartTooltip_WithoutUnit, WithChange as chartTooltip_WithChange } from '@/components/ui/chart-tooltip.stories';
@@ -25,7 +25,7 @@ import { default as dateInputMeta, Default as dateInput_Default, WithPlaceholder
 import { default as datepickerMeta, Playground as datepicker_Playground, Demo as datepicker_Demo, PopoverDemo as datepicker_PopoverDemo, ApprovalDemo as datepicker_ApprovalDemo, RangeDemo as datepicker_RangeDemo, WithFormField as datepicker_WithFormField } from '@/components/ui/datepicker.stories';
 import { default as digitInputMeta, Playground as digitInput_Playground, Demo as digitInput_Demo, HasError as digitInput_HasError, Disabled as digitInput_Disabled, Square as digitInput_Square, WithFormField as digitInput_WithFormField } from '@/components/ui/digit-input.stories';
 import { default as dividerMeta, Playground as divider_Playground, Line as divider_Line, LineSpacing as divider_LineSpacing, LineText as divider_LineText, TextOnly as divider_TextOnly, SolidText as divider_SolidText, Content as divider_Content } from '@/components/ui/divider.stories';
-import { default as donutChartMeta, Default as donutChart_Default, SmallSegment as donutChart_SmallSegment, WithTotal as donutChart_WithTotal, WithShortLabels as donutChart_WithShortLabels } from '@/components/ui/donut-chart.stories';
+import { default as donutChartMeta, Default as donutChart_Default, SmallSegment as donutChart_SmallSegment, WithTotal as donutChart_WithTotal, WithShortLabels as donutChart_WithShortLabels, SinglePositiveCategory as donutChart_SinglePositiveCategory, AllZero as donutChart_AllZero, CategoryTransition as donutChart_CategoryTransition } from '@/components/ui/donut-chart.stories';
 import { default as dotStepperMeta, Playground as dotStepper_Playground, Demo as dotStepper_Demo, WithRadixTabs as dotStepper_WithRadixTabs } from '@/components/ui/dot-stepper.stories';
 import { default as drawerMeta, Playground as drawer_Playground, Basic as drawer_Basic, Demo as drawer_Demo } from '@/components/ui/drawer.stories';
 import { default as dropdownMeta, Default as dropdown_Default, WithGroups as dropdown_WithGroups, WithHeaderAndFooter as dropdown_WithHeaderAndFooter, WithErrorItem as dropdown_WithErrorItem, WithDisabledItems as dropdown_WithDisabledItems, SubMenu as dropdown_SubMenu, Composed as dropdown_Composed, ComposedWithHeaderFooter as dropdown_ComposedWithHeaderFooter, ComposedWithLabels as dropdown_ComposedWithLabels, ComposedWithLinks as dropdown_ComposedWithLinks } from '@/components/ui/dropdown.stories';
@@ -70,12 +70,12 @@ import { default as rankedListMeta, Default as rankedList_Default } from '@/comp
 import { default as regionMapMeta, Default as regionMap_Default, WithTopRegion as regionMap_WithTopRegion, Updates as regionMap_Updates } from '@/components/ui/region-map.stories';
 import { default as sectionToggleMeta, Playground as sectionToggle_Playground, Default as sectionToggle_Default, Collapsed as sectionToggle_Collapsed, Composed as sectionToggle_Composed } from '@/components/ui/section-toggle.stories';
 import { default as sectionMeta, Playground as section_Playground, Default as section_Default, WithCustomHeaderWidth as section_WithCustomHeaderWidth, Composed as section_Composed } from '@/components/ui/section.stories';
-import { default as segmentBarMeta, Default as segmentBar_Default, RowsLegend as segmentBar_RowsLegend, WithoutHighlight as segmentBar_WithoutHighlight } from '@/components/ui/segment-bar.stories';
+import { default as segmentBarMeta, Default as segmentBar_Default, RowsLegend as segmentBar_RowsLegend } from '@/components/ui/segment-bar.stories';
 import { default as selectMeta, Playground as select_Playground, Demo as select_Demo, CustomMaxHeight as select_CustomMaxHeight, WithLabelHint as select_WithLabelHint, WithIcons as select_WithIcons, Sizes as select_Sizes, WithCountryFlags as select_WithCountryFlags, WithUsers as select_WithUsers, Disabled as select_Disabled, Readonly as select_Readonly, Compact as select_Compact, CompactCountry as select_CompactCountry, CompactSizes as select_CompactSizes, InlineCountry as select_InlineCountry, InputWithInlineSelect as select_InputWithInlineSelect, WithInput as select_WithInput, WithInputSizes as select_WithInputSizes } from '@/components/ui/select.stories';
 import { default as skeletonMeta, Default as skeleton_Default, Card as skeleton_Card, Circular as skeleton_Circular } from '@/components/ui/skeleton.stories';
 import { default as sliderMeta, Playground as slider_Playground, Demo as slider_Demo, Variants as slider_Variants, Range as slider_Range, WithTooltip as slider_WithTooltip, WithFormField as slider_WithFormField } from '@/components/ui/slider.stories';
 import { default as socialsInputMeta, Default as socialsInput_Default, WithExistingValues as socialsInput_WithExistingValues, AllSocials as socialsInput_AllSocials, CustomSocials as socialsInput_CustomSocials, ReadOnly as socialsInput_ReadOnly, WithFormField as socialsInput_WithFormField, ErrorState as socialsInput_ErrorState, CustomLabels as socialsInput_CustomLabels } from '@/components/ui/socials-input.stories';
-import { default as sparkStatMeta, Default as sparkStat_Default, Down as sparkStat_Down, Flat as sparkStat_Flat, NoDelta as sparkStat_NoDelta, NarrowRange as sparkStat_NarrowRange } from '@/components/ui/spark-stat.stories';
+import { default as sparkStatMeta, Default as sparkStat_Default, Down as sparkStat_Down, Flat as sparkStat_Flat, NoDelta as sparkStat_NoDelta } from '@/components/ui/spark-stat.stories';
 import { default as statStripMeta, Default as statStrip_Default, ColouredIcons as statStrip_ColouredIcons, WithDelta as statStrip_WithDelta, RoundedZero as statStrip_RoundedZero } from '@/components/ui/stat-strip.stories';
 import { default as statusBadgeMeta, Playground as statusBadge_Playground, Completed as statusBadge_Completed, Pending as statusBadge_Pending, Failed as statusBadge_Failed, Disabled as statusBadge_Disabled, AsChild as statusBadge_AsChild } from '@/components/ui/status-badge.stories';
 import { default as statusIndicatorMeta, TopVariants as statusIndicator_TopVariants, BottomVariants as statusIndicator_BottomVariants } from '@/components/ui/status-indicator.stories';
@@ -215,7 +215,7 @@ export const storyRegistry: Record<string, {
     meta: barChartMeta,
     stories: {
     'Default': barChart_Default,
-    'WithoutHighlight': barChart_WithoutHighlight
+    'MinimumHeight': barChart_MinimumHeight
     }
   },
   'button-group': {
@@ -394,7 +394,10 @@ export const storyRegistry: Record<string, {
     'Default': donutChart_Default,
     'SmallSegment': donutChart_SmallSegment,
     'WithTotal': donutChart_WithTotal,
-    'WithShortLabels': donutChart_WithShortLabels
+    'WithShortLabels': donutChart_WithShortLabels,
+    'SinglePositiveCategory': donutChart_SinglePositiveCategory,
+    'AllZero': donutChart_AllZero,
+    'CategoryTransition': donutChart_CategoryTransition
     }
   },
   'dot-stepper': {
@@ -890,8 +893,7 @@ export const storyRegistry: Record<string, {
     meta: segmentBarMeta,
     stories: {
     'Default': segmentBar_Default,
-    'RowsLegend': segmentBar_RowsLegend,
-    'WithoutHighlight': segmentBar_WithoutHighlight
+    'RowsLegend': segmentBar_RowsLegend
     }
   },
   'select': {
@@ -954,8 +956,7 @@ export const storyRegistry: Record<string, {
     'Default': sparkStat_Default,
     'Down': sparkStat_Down,
     'Flat': sparkStat_Flat,
-    'NoDelta': sparkStat_NoDelta,
-    'NarrowRange': sparkStat_NarrowRange
+    'NoDelta': sparkStat_NoDelta
     }
   },
   'stat-strip': {

@@ -1,10 +1,18 @@
+import * as React from 'react';
+
 import * as Button from './button';
 import * as DonutChart from './donut-chart';
 import * as WidgetCard from './widget-card';
 
 export default { title: 'Charts/Donut Chart', component: DonutChart.Root };
 
-const Card = ({ height, children }: { height: string; children: React.ReactNode }) => (
+const Card = ({
+  height,
+  children,
+}: {
+  height: string;
+  children: React.ReactNode;
+}) => (
   <WidgetCard.Root className={`${height} w-[352px]`}>
     <WidgetCard.Header>
       <WidgetCard.Title>Card title</WidgetCard.Title>
@@ -73,4 +81,61 @@ export const WithShortLabels = {
       />
     </Card>
   ),
+};
+
+export const SinglePositiveCategory = {
+  render: () => (
+    <Card height='h-[280px]'>
+      <DonutChart.Root
+        items={[
+          { label: 'Category Alpha', shortLabel: 'Alpha', value: 29 },
+          { label: 'Category Beta', value: 0 },
+        ]}
+        highlighted='Category Beta'
+        unit='Items'
+      />
+    </Card>
+  ),
+};
+
+export const AllZero = {
+  render: () => (
+    <Card height='h-[280px]'>
+      <DonutChart.Root
+        items={[
+          { label: 'Category A', value: 0 },
+          { label: 'Category B', value: 0 },
+        ]}
+        unit='Items'
+      />
+    </Card>
+  ),
+};
+
+function CategoryTransitionExample() {
+  const [single, setSingle] = React.useState(false);
+  return (
+    <div className='flex w-[352px] flex-col gap-4'>
+      <div className='grid grid-cols-2 gap-2'>
+        <Button.Root onClick={() => setSingle(true)}>One category</Button.Root>
+        <Button.Root onClick={() => setSingle(false)}>
+          Two categories
+        </Button.Root>
+      </div>
+      <Card height='h-[280px]'>
+        <DonutChart.Root
+          items={[
+            { label: 'Category A', value: 7 },
+            { label: 'Category B', value: single ? 0 : 3 },
+          ]}
+          highlighted='Category A'
+          unit='Items'
+        />
+      </Card>
+    </div>
+  );
+}
+
+export const CategoryTransition = {
+  render: () => <CategoryTransitionExample />,
 };
