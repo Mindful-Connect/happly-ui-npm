@@ -182,7 +182,12 @@ function LineChart({
       ) : null}
       <div className='min-h-0 flex-1'>
         <ResponsiveContainer width='100%' height='100%'>
-          <RechartsLineChart data={data}>
+          {/* The top gridline sits just clear of the active dot, not
+              recharts' default 5px down; the other sides keep the default. */}
+          <RechartsLineChart
+            data={data}
+            margin={{ top: ACTIVE_DOT_RADIUS, right: 5, bottom: 5, left: 5 }}
+          >
             <CartesianGrid
               vertical={false}
               stroke='var(--color-stroke-soft-200)'

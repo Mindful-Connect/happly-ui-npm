@@ -136,7 +136,12 @@ function DonutChart({
         onMouseDown={(e) => e.preventDefault()}
       >
         <ResponsiveContainer width='100%' height='100%'>
-          <PieChart accessibilityLayer={false}>
+          {/* No margin: recharts' default 5px would push the arc down and clip
+              its base at the box's bottom edge. */}
+          <PieChart
+            accessibilityLayer={false}
+            margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+          >
             <Pie
               data={slices}
               dataKey='drawn'
