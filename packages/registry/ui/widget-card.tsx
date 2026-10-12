@@ -12,7 +12,7 @@ function WidgetCardRoot({
   return (
     <div
       className={cn(
-        'bg-bg-white-0 ring-stroke-soft-200 shadow-regular-xs flex flex-col gap-4 rounded-2xl p-5 ring-1',
+        'bg-bg-white-0 ring-stroke-soft-200 shadow-regular-xs flex flex-col gap-4 rounded-2xl border border-transparent p-[19px] ring-1',
         className
       )}
       {...rest}
