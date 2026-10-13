@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
+import { Line, LineChart, ResponsiveContainer } from 'recharts';
 
 import * as WidgetCard from '@/components/ui/widget-card';
 import { cn } from '@/lib/happly-ui-utils';
@@ -92,7 +92,6 @@ function SparkStat({
             {/* aria-hidden above, so recharts' keyboard layer would only make
                 a click ring the chart. */}
             <LineChart data={data} accessibilityLayer={false}>
-              <YAxis domain={['dataMin', 'dataMax']} hide />
               <Line
                 type='monotone'
                 dataKey='v'
