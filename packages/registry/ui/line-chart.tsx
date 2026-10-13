@@ -180,7 +180,9 @@ function LineChart({
           </div>
         </div>
       ) : null}
-      <div className='min-h-0 flex-1'>
+      {/* recharts makes the chart focusable for arrow-key reading; the ring
+          stays for the keyboard but not for a mouse click. */}
+      <div className='min-h-0 flex-1 [&_.recharts-surface:focus:not(:focus-visible)]:outline-none'>
         <ResponsiveContainer width='100%' height='100%'>
           {/* The top gridline sits just clear of the active dot, not
               recharts' default 5px down; the other sides keep the default. */}

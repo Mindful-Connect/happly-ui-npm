@@ -89,7 +89,9 @@ function SparkStat({
         {/* The pill states the change; the line only shows its shape. */}
         <div aria-hidden className='h-10 w-[140px] shrink-0'>
           <ResponsiveContainer width='100%' height='100%'>
-            <LineChart data={data}>
+            {/* aria-hidden above, so recharts' keyboard layer would only make
+                a click ring the chart. */}
+            <LineChart data={data} accessibilityLayer={false}>
               <YAxis domain={['dataMin', 'dataMax']} hide />
               <Line
                 type='monotone'
