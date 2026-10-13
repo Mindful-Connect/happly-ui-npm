@@ -188,14 +188,17 @@ function DonutChart({
   // reruns the whole chart for each frame of the hover growth and drops most
   // of them.
   const sweep = (angle: number) => 180 - (180 - angle) * swept;
-  let cursor = 180;
-  const arcs = items.flatMap((item, i) => {
-    if (!shares[i]) return [];
-    if (cursor < 180) cursor -= PADDING_ANGLE;
-    const startAngle = cursor;
-    cursor -= shares[i] * span;
-    return [{ item, i, startAngle, endAngle: cursor }];
-  });
+  const arcs = items.reduce<
+    { item: DonutChartItem; i: number; startAngle: number; endAngle: number }[]
+  >((laid, item, i) => {
+    if (!shares[i]) return laid;
+    const previous = laid[laid.length - 1];
+    const startAngle = previous ? previous.endAngle - PADDING_ANGLE : 180;
+    return [
+      ...laid,
+      { item, i, startAngle, endAngle: startAngle - shares[i] * span },
+    ];
+  }, []);
   // Single-category mode removes hover handlers, so clear any earlier hover
   // before multiple categories return without a mouse-leave to reset it.
   React.useEffect(() => {
