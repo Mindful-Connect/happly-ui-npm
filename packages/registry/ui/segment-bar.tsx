@@ -42,6 +42,29 @@ const SEGMENT_LABEL = [
   'text-chart-1',
 ];
 
+// How many px a hovered block grows by.
+const HOVER_GROW = 12;
+
+// Which blocks flexbox holds at their minimum width with none open: a share
+// that comes out under the minimum is held there, and the rest split what is
+// left, which can push another under.
+function heldAtMin(values: number[], space: number, min: number) {
+  let held = values.map(() => false);
+  for (;;) {
+    const free = space - min * held.filter(Boolean).length;
+    const sum = values.reduce((s, v, i) => (held[i] ? s : s + v), 0);
+    const under = values.map((v, i) => !held[i] && !((v / sum) * free >= min));
+    if (!under.includes(true)) return held;
+    held = held.map((h, i) => h || under[i]);
+  }
+}
+
+// Hover motion is for a mouse: a tap on a touch screen fires mouseenter too,
+// and would leave the block open until the next tap elsewhere.
+function canHover() {
+  return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+}
+
 function Dot({ index }: { index: number }) {
   // A 13.333px dot centred in a 20px box, the design system's Color Dots.
   return (
@@ -70,6 +93,8 @@ function SegmentBar({
   // along: the padding is cancelled by an equal negative margin, so it stays
   // in line with the rows above and below.
   const [hovered, setHovered] = React.useState<string | null>(null);
+  // The flex-basis that opens the hovered block to its target width.
+  const [basis, setBasis] = React.useState(0);
   const isFeatured = (label: string) =>
     label === highlighted || label === hovered;
   const pill = (label: string) =>
@@ -95,29 +120,78 @@ function SegmentBar({
           <div
             key={item.label}
             className={cn(
-              'flex min-w-2 items-center justify-center rounded-xl',
-              SEGMENT_FILL[i % SEGMENT_FILL.length],
-              // A hovered block keeps its size unless it is too narrow for
-              // its number, when it opens just far enough to fit it.
-              item.label === hovered &&
-                item.label !== highlighted &&
-                'min-w-fit basis-0'
+              'flex min-w-2 basis-0 cursor-pointer items-center justify-center overflow-hidden rounded-xl',
+              'transition-[flex-basis] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none',
+              SEGMENT_FILL[i % SEGMENT_FILL.length]
             )}
-            style={{ flexGrow: item.value }}
-            onMouseEnter={() => setHovered(item.label)}
+            style={{
+              flexGrow: item.value,
+              // A hovered block grows a little, and further if that is still
+              // too narrow for its number. Basis rather than min-width, which
+              // would animate up from 8px and only show once past the
+              // block's own width.
+              flexBasis:
+                item.label === hovered && item.label !== highlighted
+                  ? basis
+                  : undefined,
+            }}
+            onMouseEnter={(e) => {
+              if (!canHover()) return;
+              const block = e.currentTarget;
+              const row = block.parentElement as HTMLElement;
+              // Worked out from the row rather than read off the block, which
+              // is still mid-transition when the pointer moves straight over
+              // from a neighbour.
+              const gaps =
+                (items.length - 1) *
+                parseFloat(getComputedStyle(row).columnGap);
+              const min = parseFloat(getComputedStyle(block).minWidth);
+              const held = heldAtMin(
+                items.map((it) => it.value),
+                row.clientWidth - gaps,
+                min
+              );
+              // Once open, this block is out of the held set; the rest that
+              // are held keep their minimum out of the free width.
+              const others = items.filter((_, j) => j !== i && held[j]);
+              const free = row.clientWidth - gaps - others.length * min;
+              const unheld = items.reduce(
+                (s, it, j) => (j !== i && held[j] ? s : s + it.value),
+                0
+              );
+              const share = item.value / unheld || 0;
+              const natural = share * free;
+              const target = Math.max(
+                (held[i] ? min : natural) + HOVER_GROW,
+                (block.firstChild as HTMLElement).offsetWidth
+              );
+              // A block of share s with basis b is b + s * (free width - b)
+              // wide, so it reaches the target at
+              // b = (target - s * free width) / (1 - s).
+              // A block holding everything already fills the row.
+              setBasis(share < 1 ? (target - natural) / (1 - share) : 0);
+              setHovered(item.label);
+            }}
             onMouseLeave={() => setHovered(null)}
           >
-            {isFeatured(item.label) ? (
-              <span
-                className={cn(
-                  'text-label-sm tabular-nums',
-                  item.label !== highlighted && 'px-1.5',
-                  SEGMENT_LABEL[i % SEGMENT_LABEL.length]
-                )}
-              >
-                {item.value.toLocaleString()}
-              </span>
-            ) : null}
+            {/* Always rendered, so its width can be read before the block
+                opens; the block clips it until then. */}
+            <span
+              className={cn(
+                // Only the fade: it carries no movement, so it stays under
+                // reduced motion. It waits for the block to open part way, so
+                // the digits never show cut off at its edges, and leaves at
+                // once on the way out.
+                'text-label-sm tabular-nums transition-opacity ease-[ease]',
+                item.label !== highlighted && 'px-1.5',
+                isFeatured(item.label)
+                  ? 'opacity-100 delay-50 duration-150'
+                  : 'opacity-0 duration-100',
+                SEGMENT_LABEL[i % SEGMENT_LABEL.length]
+              )}
+            >
+              {item.value.toLocaleString()}
+            </span>
           </div>
         ))}
       </div>
