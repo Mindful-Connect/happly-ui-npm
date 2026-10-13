@@ -268,6 +268,10 @@ const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
       if (!(img instanceof HTMLImageElement) || typeof src !== 'string') return;
       if (!img.complete || img.naturalWidth > 0) return;
       const probe = new window.Image();
+      // The same request the img made, so it sends no referrer or cookies
+      // the img was told not to.
+      probe.referrerPolicy = img.referrerPolicy;
+      probe.crossOrigin = img.crossOrigin;
       probe.onerror = () => setFailedSrc(src);
       probe.src = src;
       return () => {
