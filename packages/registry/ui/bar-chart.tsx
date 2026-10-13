@@ -61,7 +61,7 @@ function BarChart({
         {items.map((item) => (
           <div
             key={item.label}
-            className='group flex h-full min-w-0 flex-1 flex-col items-center justify-end'
+            className='group flex h-full min-w-0 flex-1 cursor-pointer flex-col items-center justify-end'
             onMouseEnter={() => setHovered(item.label)}
             onMouseLeave={() => setHovered(null)}
           >
