@@ -33,17 +33,13 @@ export const Down = {
 
 export const Flat = {
   render: () => (
-    <div className='flex w-[352px] flex-col gap-3'>
+    <div className='w-[352px]'>
       <SparkStat.Root
         title='Recent activity'
         value={8241}
         delta={0.3}
         points={[8100, 8138, 8110, 8205, 8241]}
       />
-      <p className='text-paragraph-sm text-text-sub-600'>
-        Check: 0.3% rounds to a neutral 0% pill and grey line. Values span
-        8,100–8,241; the sparkline should still show their rises and dip.
-      </p>
     </div>
   ),
 };

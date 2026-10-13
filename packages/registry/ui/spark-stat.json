@@ -25,7 +25,7 @@
       },
       {
         "title": "Flat",
-        "description": "A delta of 0.3% rounds to a neutral 0% pill and grey line. The points span only 8,100–8,241: verify that the sparkline still shows their rises and dip, because its axis scales to the data range.",
+        "description": "A delta of 0.3% rounds to a neutral 0% pill and grey line. The line's axis starts at zero, so a small move between large values, here 8,100 to 8,241, stays small on the line.",
         "code": "<SparkStat.Root title=\"Recent activity\" value={8241} delta={0.3} points={[8100, 8138, 8110, 8205, 8241]} />",
         "stories": ["Flat"]
       },
