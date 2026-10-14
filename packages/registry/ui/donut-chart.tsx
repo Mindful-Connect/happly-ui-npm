@@ -91,8 +91,8 @@ function drawnShares(items: DonutChartItem[]) {
       const shares = items.map((item, i) =>
         held[i] ? minShare : (item.value / restSum) * restShare || 0
       );
-      // With more than 180 / MIN_ANGLE categories the minimums alone overflow
-      // the arc; scale back so it still closes at 180 degrees.
+      // With 10 or more categories the minimums plus the gaps between them
+      // overflow the arc; scale back so it still closes at 180 degrees.
       const total = shares.reduce((s, share) => s + share, 0);
       return total > 1 ? shares.map((share) => share / total) : shares;
     }
