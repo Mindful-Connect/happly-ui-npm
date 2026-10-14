@@ -69,18 +69,35 @@ const SWEEP_MS = 600;
 
 // What each segment is drawn at: its share of the arc, with every non-zero
 // share raised to MIN_ANGLE and the larger ones scaled down to make room.
+// Making room can push another share under the minimum, so shares are held
+// there one round at a time until none come out under, as segment-bar does.
 function drawnShares(items: DonutChartItem[]) {
-  const sum = items.reduce((s, item) => s + item.value, 0);
   const gaps = Math.max(items.filter((item) => item.value > 0).length - 1, 0);
   const minShare = MIN_ANGLE / (180 - PADDING_ANGLE * gaps);
-  const isSmall = (item: DonutChartItem) =>
-    item.value > 0 && item.value / sum < minShare;
-  const small = items.filter(isSmall);
-  const restSum = sum - small.reduce((s, item) => s + item.value, 0);
-  const restShare = 1 - small.length * minShare;
-  return items.map((item) =>
-    isSmall(item) ? minShare : (item.value / restSum) * restShare || 0
-  );
+  let held = items.map(() => false);
+  for (;;) {
+    const restShare = 1 - held.filter(Boolean).length * minShare;
+    const restSum = items.reduce(
+      (s, item, i) => (held[i] ? s : s + item.value),
+      0
+    );
+    const under = items.map(
+      (item, i) =>
+        !held[i] &&
+        item.value > 0 &&
+        !((item.value / restSum) * restShare >= minShare)
+    );
+    if (!under.includes(true)) {
+      const shares = items.map((item, i) =>
+        held[i] ? minShare : (item.value / restSum) * restShare || 0
+      );
+      // With more than 180 / MIN_ANGLE categories the minimums alone overflow
+      // the arc; scale back so it still closes at 180 degrees.
+      const total = shares.reduce((s, share) => s + share, 0);
+      return total > 1 ? shares.map((share) => share / total) : shares;
+    }
+    held = held.map((h, i) => h || under[i]);
+  }
 }
 
 // The arc animates in JavaScript, which the theme's reduced-motion CSS cannot

@@ -29,6 +29,12 @@ type BarChartProps = React.HTMLAttributes<HTMLDivElement> & {
   unit?: string;
 };
 
+// Hover is for a mouse: a tap on a touch screen fires mouseenter too, and
+// would leave the column featured until the next tap elsewhere.
+function canHover() {
+  return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+}
+
 /**
  * Column chart for bucketed counts.
  *
@@ -62,7 +68,7 @@ function BarChart({
           <div
             key={item.label}
             className='group flex h-full min-w-0 flex-1 cursor-pointer flex-col items-center justify-end'
-            onMouseEnter={() => setHovered(item.label)}
+            onMouseEnter={() => canHover() && setHovered(item.label)}
             onMouseLeave={() => setHovered(null)}
           >
             <div
