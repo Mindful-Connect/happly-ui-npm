@@ -28,19 +28,23 @@ function RankedList({
       {...rest}
     >
       {/* No rule under the header and none between rows: the design
-          separates them with spacing alone. Both reserve the scrollbar's
-          gutter so the header's right column ends over the values rather
-          than over the list's scrollbar; the header's overflow-hidden is
-          what lets the gutter apply to it. */}
-      <div className='text-label-xs text-text-soft-400 flex shrink-0 items-start gap-2 overflow-hidden [scrollbar-gutter:stable]'>
+          separates them with spacing alone. Neither reserves a scrollbar
+          gutter, so the value column ends at the card's edge, in line with
+          the header's action. */}
+      <div className='text-label-xs text-text-soft-400 flex shrink-0 items-start gap-2'>
         <span className='min-w-0 flex-1'>{columnLabels[0]}</span>
         <span className='shrink-0 text-end'>{columnLabels[1]}</span>
       </div>
-      {/* Rows spread to fill the card rather than stacking from the top, which
-          keeps four of them evenly spaced; past that the list scrolls. */}
-      <ol className='flex min-h-0 flex-1 flex-col justify-between overflow-y-auto [scrollbar-gutter:stable]'>
+      {/* Rows share the card's spare height, each growing from 43px up to
+          55px, the old 12px spacing. A short list stacks from the top instead
+          of spreading, and the list scrolls only once the rows no longer fit
+          at 43px. */}
+      <ol className='flex min-h-0 flex-1 flex-col overflow-y-auto'>
         {items.map((item, index) => (
-          <li key={item.label} className='flex items-center gap-2'>
+          <li
+            key={item.label}
+            className='flex max-h-[55px] min-h-[43px] flex-1 items-center gap-2'
+          >
             <span className='flex h-[43px] min-w-0 flex-1 items-center gap-3'>
               {/* The <ol> already announces the position. */}
               <span

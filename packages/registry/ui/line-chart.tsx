@@ -8,6 +8,8 @@ import {
   LineChart as RechartsLineChart,
   ResponsiveContainer,
   Tooltip,
+  useChartWidth,
+  useYAxisScale,
   XAxis,
   YAxis,
 } from 'recharts';
@@ -48,6 +50,7 @@ type LineChartProps = React.HTMLAttributes<HTMLDivElement> & {
 const GRID_HORIZONTAL_LINES = 6;
 const GRID_VERTICAL_LINES = 4;
 const GRID_VERTICAL_INSET = 32;
+const ACTIVE_DOT_RADIUS = 3;
 
 // recharts animates in JavaScript, which the theme's reduced-motion CSS
 // cannot reach.
@@ -82,6 +85,70 @@ function Delta({ value, className }: { value: number; className?: string }) {
   );
 }
 
+type LineTooltipProps = {
+  points: LineChartPoint[];
+  pointComparison?: string;
+  // Filled in by recharts when it renders the tooltip.
+  active?: boolean;
+  payload?: { payload?: LineChartPoint & { index: number } }[];
+  coordinate?: { x: number; y: number };
+};
+
+/**
+ * The hovered point's readout, its tail just above the active dot. recharts'
+ * `coordinate` gives the point's x but the pointer's y, so y comes from the
+ * axis scale. The box is clamped to the chart's width and only the tail stays
+ * on the point, so the first and last points cannot overhang the card.
+ */
+function LineTooltip({
+  points,
+  pointComparison,
+  active,
+  payload,
+  coordinate,
+}: LineTooltipProps) {
+  const chartWidth = useChartWidth() ?? 0;
+  const yScale = useYAxisScale();
+  const ref = React.useRef<HTMLDivElement>(null);
+  const [width, setWidth] = React.useState(0);
+  // No deps: re-measured after every render, before paint. React skips the
+  // update when the width hasn't changed, so it doesn't loop.
+  React.useLayoutEffect(() => setWidth(ref.current?.offsetWidth ?? 0));
+
+  const point = payload?.[0]?.payload;
+  const y = point ? yScale?.(point.value) : undefined;
+  if (!active || !point || !coordinate || y == null) return null;
+  const previous = point.index > 0 ? points[point.index - 1].value : null;
+  // A zero previous value has no meaningful percentage change.
+  const change =
+    pointComparison && previous
+      ? ((point.value - previous) / previous) * 100
+      : null;
+  const left = Math.min(
+    Math.max(coordinate.x - width / 2, 0),
+    chartWidth - width
+  );
+  return (
+    // Only lifted by its own height: the horizontal centring is the clamp
+    // above, which a -50% translate would undo.
+    <div
+      ref={ref}
+      className='absolute w-max -translate-y-full'
+      style={{ left, top: y - ACTIVE_DOT_RADIUS - 2 }}
+    >
+      <ChartTooltip.Root
+        caption={point.label}
+        tailOffset={coordinate.x - left - width / 2}
+      >
+        <ChartTooltip.Value>{point.value.toLocaleString()}</ChartTooltip.Value>
+        {change !== null ? (
+          <ChartTooltip.Delta value={change}>{pointComparison}</ChartTooltip.Delta>
+        ) : null}
+      </ChartTooltip.Root>
+    </div>
+  );
+}
+
 function LineChart({
   points,
   total,
@@ -113,9 +180,16 @@ function LineChart({
           </div>
         </div>
       ) : null}
-      <div className='min-h-0 flex-1'>
+      {/* recharts makes the chart focusable for arrow-key reading; the ring
+          stays for the keyboard but not for a mouse click. */}
+      <div className='min-h-0 flex-1 [&_.recharts-surface:focus:not(:focus-visible)]:outline-none'>
         <ResponsiveContainer width='100%' height='100%'>
-          <RechartsLineChart data={data}>
+          {/* The top gridline sits just clear of the active dot, not
+              recharts' default 5px down; the other sides keep the default. */}
+          <RechartsLineChart
+            data={data}
+            margin={{ top: ACTIVE_DOT_RADIUS, right: 5, bottom: 5, left: 5 }}
+          >
             <CartesianGrid
               vertical={false}
               stroke='var(--color-stroke-soft-200)'
@@ -149,31 +223,12 @@ function LineChart({
               // The design draws no crosshair: the tooltip and the active dot
               // are the only hover marks.
               cursor={false}
-              content={({ active, payload }) => {
-                const point = payload?.[0]?.payload as
-                  | (typeof data)[number]
-                  | undefined;
-                if (!active || !point) return null;
-                const previous =
-                  point.index > 0 ? points[point.index - 1].value : null;
-                // A zero previous value has no meaningful percentage change.
-                const change =
-                  pointComparison && previous
-                    ? ((point.value - previous) / previous) * 100
-                    : null;
-                return (
-                  <ChartTooltip.Root caption={point.label}>
-                    <ChartTooltip.Value>
-                      {point.value.toLocaleString()}
-                    </ChartTooltip.Value>
-                    {change !== null ? (
-                      <ChartTooltip.Delta value={change}>
-                        {pointComparison}
-                      </ChartTooltip.Delta>
-                    ) : null}
-                  </ChartTooltip.Root>
-                );
-              }}
+              // Pinned at the chart's origin, so recharts never offsets or
+              // flips it: LineTooltip places itself on the hovered point.
+              position={{ x: 0, y: 0 }}
+              content={
+                <LineTooltip points={points} pointComparison={pointComparison} />
+              }
             />
             <Line
               type='monotone'
@@ -181,7 +236,7 @@ function LineChart({
               stroke='var(--color-chart-line)'
               strokeWidth={1.4}
               dot={false}
-              activeDot={{ r: 3, fill: 'var(--color-chart-line)', strokeWidth: 0 }}
+              activeDot={{ r: ACTIVE_DOT_RADIUS, fill: 'var(--color-chart-line)', strokeWidth: 0 }}
               isAnimationActive={!prefersReducedMotion()}
             />
           </RechartsLineChart>

@@ -73,7 +73,7 @@
       "name": "bar-chart",
       "type": "registry:ui",
       "title": "Bar Chart",
-      "description": "A column chart for bucketed counts: every column labelled, one optionally featured, a tooltip on hover. Uses namespace exports: BarChart.Root."
+      "description": "A column chart for bucketed counts: every column labelled, one optionally featured, a tooltip and highlight on hover. Uses namespace exports: BarChart.Root."
     },
     {
       "name": "button",
@@ -433,7 +433,7 @@
       "name": "ranked-list",
       "type": "registry:ui",
       "title": "Ranked List",
-      "description": "A numbered list of labels and counts with column headers, for top-N breakdowns. Rows spread to fill the card and scroll past that. Uses namespace exports: RankedList.Root."
+      "description": "A numbered list of labels and counts with column headers, for top-N breakdowns. Rows share the card's spare height up to a limit, a short list stacks from the top, and the list scrolls once the rows no longer fit. Uses namespace exports: RankedList.Root."
     },
     {
       "name": "recursive-clone-children",

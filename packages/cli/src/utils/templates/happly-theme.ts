@@ -381,7 +381,8 @@ export const HAPPLY_THEME_V4 = `/* HapplyUI Design Tokens — https://ui.happly.
      differ from Figma's success-base line; kept per the portal. Invariant. */
   --color-chart-trend-up: oklch(0.696 0.149 162.48);
   --color-chart-trend-down: oklch(0.637 0.208 25.331);
-  --color-chart-trend-flat: oklch(0.552 0.014 285.938);
+  /* Figma's neutral SparkStat stroke: icon/soft-400. */
+  --color-chart-trend-flat: var(--color-neutral-400);
   /* Region map, from the owner portal: dotted land, and markers drawn as a
      bg-white-0 disc ringed in stroke-soft-200 around a marker core. Hover
      turns ring and core to marker-active inside a marker-halo. */
@@ -1641,7 +1642,8 @@ export const HAPPLY_THEME_V3 = `/* HapplyUI Design Tokens — https://ui.happly.
      differ from Figma's success-base line; kept per the portal. Invariant. */
   --color-chart-trend-up: oklch(0.696 0.149 162.48);
   --color-chart-trend-down: oklch(0.637 0.208 25.331);
-  --color-chart-trend-flat: oklch(0.552 0.014 285.938);
+  /* Figma's neutral SparkStat stroke: icon/soft-400. */
+  --color-chart-trend-flat: var(--color-neutral-400);
   /* Region map, from the owner portal: dotted land, and markers drawn as a
      bg-white-0 disc ringed in stroke-soft-200 around a marker core. Hover
      turns ring and core to marker-active inside a marker-halo. */

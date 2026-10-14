@@ -1,15 +1,14 @@
-import * as Button from './button';
 import * as SegmentBar from './segment-bar';
 import * as WidgetCard from './widget-card';
 
 export default { title: 'Charts/Segment Bar', component: SegmentBar.Root };
 
 const items = [
-  { label: 'Category A', value: 13 },
-  { label: 'Category B', value: 9 },
-  { label: 'Category C', value: 7 },
-  { label: 'Category D', value: 6 },
-  { label: 'Category E', value: 5 },
+  { label: 'Category A', value: 1300 },
+  { label: 'Category B', value: 900 },
+  { label: 'Category C', value: 700 },
+  { label: 'Category D', value: 12 },
+  { label: 'Category E', value: 0 },
 ];
 
 export const Default = {
@@ -17,12 +16,9 @@ export const Default = {
     <WidgetCard.Root className='h-[280px] w-[352px]'>
       <WidgetCard.Header>
         <WidgetCard.Title>Card title</WidgetCard.Title>
-        <Button.Root variant='neutral' mode='stroke' size='xxsmall'>
-          Details
-        </Button.Root>
       </WidgetCard.Header>
       <WidgetCard.Content>
-        <SegmentBar.Root items={items} highlighted='Category A' />
+        <SegmentBar.Root items={items} />
       </WidgetCard.Content>
     </WidgetCard.Root>
   ),
@@ -35,7 +31,7 @@ export const RowsLegend = {
         <WidgetCard.Title>Card title</WidgetCard.Title>
       </WidgetCard.Header>
       <WidgetCard.Content>
-        <SegmentBar.Root items={items} highlighted='Category B' legend='rows' />
+        <SegmentBar.Root items={items} legend='rows' />
       </WidgetCard.Content>
     </WidgetCard.Root>
   ),

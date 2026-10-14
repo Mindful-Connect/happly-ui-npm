@@ -3,25 +3,25 @@
   "name": "bar-chart",
   "type": "registry:ui",
   "title": "Bar Chart",
-  "description": "A column chart for bucketed counts: every column labelled, one optionally featured, a tooltip on hover. Uses namespace exports: BarChart.Root.",
+  "description": "A column chart for bucketed counts: every column labelled, one optionally featured, a tooltip and highlight on hover. Uses namespace exports: BarChart.Root.",
   "version": "1.0.0",
   "dependencies": [],
   "registryDependencies": ["happly-ui-utils", "chart-tooltip"],
   "docs": {
-    "lead": "One rounded column per bucket, scaled to the tallest, with every bucket labelled underneath. Built from flex rather than a charting library so no label is ever dropped.",
-    "usage": "import * as BarChart from \"@/components/ui/bar-chart\"\n\n<BarChart.Root\n  items={[{ label: \"0 - 9\", value: 111 }]}\n  highlighted=\"0 - 9\"\n  dimension=\"Group\"\n  unit=\"Items\"\n/>",
+    "lead": "One rounded column per bucket, grey until hovered, with every bucket labelled underneath. Built from flex rather than a charting library so no label is ever dropped. Heights use an 8px baseline plus the value’s share of the remaining height: zero stays at 8px and the maximum fills the chart. Extremely small positives may add less than a visible pixel. Tooltips show actual values.",
+    "usage": "import * as BarChart from \"@/components/ui/bar-chart\"\n\n<BarChart.Root\n  items={[{ label: \"0 - 9\", value: 111 }]}\n  dimension=\"Group\"\n  unit=\"Items\"\n/>",
     "examples": [
       {
         "title": "Default",
-        "description": "One featured column. Hover a column for its count; dimension and unit name what the tooltip shows.",
-        "code": "<BarChart.Root\n  items={items}\n  highlighted=\"10 - 19\"\n  dimension=\"Group\"\n  unit=\"Items\"\n/>",
+        "description": "Every column is grey until hovered, when its column and label take the featured colours and its tooltip shows the actual count. dimension and unit name what the tooltip shows.",
+        "code": "<BarChart.Root\n  items={items}\n  dimension=\"Group\"\n  unit=\"Items\"\n/>",
         "stories": ["Default"]
       },
       {
-        "title": "Without highlight",
-        "description": "Leave highlighted out when no bucket should stand out. The chart never picks the tallest for you.",
-        "code": "<BarChart.Root items={items} dimension=\"Group\" unit=\"Items\" />",
-        "stories": ["WithoutHighlight"]
+        "title": "Minimum height",
+        "description": "Zero stays at 8px; positive counts rise proportionally above that baseline. Tiny positives can still look like zero when the extra height is less than a visible pixel. Tooltips keep actual values.",
+        "code": "<BarChart.Root items={[{ label: \"Zero\", value: 0 }, { label: \"Small\", value: 1 }, { label: \"Large\", value: 1000 }]} unit=\"Items\" />",
+        "stories": ["MinimumHeight"]
       }
     ],
     "api": [

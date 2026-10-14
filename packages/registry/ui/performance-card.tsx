@@ -174,7 +174,8 @@ function PerformanceCardStats({
 PerformanceCardStats.displayName = 'PerformanceCardStats';
 
 type PerformanceCardStatProps = React.HTMLAttributes<HTMLDivElement> & {
-  value: number | string;
+  /** A number is formatted with toLocaleString; a string is shown as given; null is a missing value. */
+  value: number | string | null;
   label: string;
 };
 
@@ -194,8 +195,13 @@ function PerformanceCardStat({
       )}
       {...rest}
     >
-      <span className='text-label-md text-text-strong-950 font-bold tabular-nums'>
-        {typeof value === 'number' ? value.toLocaleString() : value}
+      <span
+        className={cn(
+          'text-label-md font-bold tabular-nums',
+          value == null ? 'text-text-disabled-300' : 'text-text-strong-950'
+        )}
+      >
+        {typeof value === 'number' ? value.toLocaleString() : (value ?? '—')}
       </span>
       <div className='flex flex-col gap-0.5'>
         <span className='text-paragraph-xs text-text-sub-600'>{label}</span>

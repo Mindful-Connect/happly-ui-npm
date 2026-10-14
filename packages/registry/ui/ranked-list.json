@@ -3,7 +3,7 @@
   "name": "ranked-list",
   "type": "registry:ui",
   "title": "Ranked List",
-  "description": "A numbered list of labels and counts with column headers, for top-N breakdowns. Rows spread to fill the card and scroll past that. Uses namespace exports: RankedList.Root.",
+  "description": "A numbered list of labels and counts with column headers, for top-N breakdowns. Rows share the card's spare height up to a limit, a short list stacks from the top, and the list scrolls once the rows no longer fit. Uses namespace exports: RankedList.Root.",
   "version": "1.0.0",
   "dependencies": [],
   "registryDependencies": ["happly-ui-utils"],
@@ -16,12 +16,6 @@
         "description": "Four rows spread evenly down the card.",
         "code": "<RankedList.Root items={items} columnLabels={[\"Category\", \"Count\"]} />",
         "stories": ["Default"]
-      },
-      {
-        "title": "Many rows",
-        "description": "Rows past what the card fits scroll inside it. A long label truncates and keeps its full text in a tooltip.",
-        "code": "<RankedList.Root items={manyItems} columnLabels={[\"Category\", \"Count\"]} />",
-        "stories": ["ManyRows"]
       }
     ],
     "api": [

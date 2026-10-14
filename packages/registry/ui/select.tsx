@@ -375,8 +375,9 @@ const SelectContent = React.forwardRef<
           'bg-bg-white-0 shadow-regular-md ring-stroke-soft-200 pointer-events-auto relative z-50 overflow-hidden rounded-2xl py-2 ring-1 ring-inset',
           // widths
           'max-w-[max(var(--radix-select-trigger-width),320px)] min-w-[var(--radix-select-trigger-width)]',
-          // heights
-          'max-h-[var(--radix-select-content-available-height)]',
+          // heights — the list's cap is a variable so one Select can raise it
+          // from Content's className
+          'max-h-[var(--radix-select-content-available-height)] [--select-content-max-height:196px]',
           // animation — the exit is shorter and softer than the enter, matching
           // popover/dropdown/drawer/tooltip. Attention is already moving to the
           // chosen value by the time the menu closes.
@@ -399,7 +400,9 @@ const SelectContent = React.forwardRef<
           <SelectPrimitives.Viewport asChild>
             <ScrollAreaPrimitives.Viewport
               style={{ overflowY: undefined }}
-              className='max-h-[196px] w-full scroll-py-2 overflow-auto px-2'
+              // Capped by the space the popper has too (less Content's py-2), so a
+              // raised cap scrolls on a short screen instead of being clipped.
+              className='max-h-[min(var(--select-content-max-height),calc(var(--radix-select-content-available-height)_-_1rem))] w-full scroll-py-2 overflow-auto px-2'
             >
               {children}
             </ScrollAreaPrimitives.Viewport>

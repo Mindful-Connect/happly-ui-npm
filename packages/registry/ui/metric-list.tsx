@@ -87,7 +87,8 @@ MetricListRow.displayName = 'MetricListRow';
 type MetricListEntityProps = React.TdHTMLAttributes<HTMLTableCellElement> & {
   /** The leading slot: an Avatar on a person, a thumbnail on a thing. */
   media?: React.ReactNode;
-  label: string;
+  /** Null is a missing name. */
+  label: string | null;
   /** Under the label, in the quieter colour. Leave it out and the row is one line. */
   sublabel?: string;
 };
@@ -116,10 +117,13 @@ function MetricListEntity({
         <span className='flex min-w-0 flex-col gap-1'>
           {/* Truncated, so the full name stays reachable on hover. */}
           <span
-            className='text-label-sm text-text-strong-950 truncate font-medium'
-            title={label}
+            className={cn(
+              'text-label-sm truncate font-medium',
+              label == null ? 'text-text-disabled-300' : 'text-text-strong-950'
+            )}
+            title={label ?? undefined}
           >
-            {label}
+            {label ?? '—'}
           </span>
           {sublabel ? (
             <span

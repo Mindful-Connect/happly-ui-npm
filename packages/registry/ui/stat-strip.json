@@ -58,8 +58,8 @@
           },
           {
             "name": "value",
-            "type": "number | string",
-            "description": "A number is formatted with toLocaleString; a string is shown as given"
+            "type": "number | string | null",
+            "description": "A number is formatted with toLocaleString; a string is shown as given; null renders a dash in the disabled colour"
           },
           {
             "name": "delta",
