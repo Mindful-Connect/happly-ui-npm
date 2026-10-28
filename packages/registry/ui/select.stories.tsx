@@ -247,6 +247,35 @@ export const Demo = {
   ),
 };
 
+const periods = [
+  'All time',
+  'Last 7 days',
+  'Last 14 days',
+  'Last month',
+  'Last 6 months',
+  'Last year',
+  'Last 5 years',
+];
+
+export const CustomMaxHeight = {
+  render: () => (
+    <div className='w-full max-w-[300px] min-w-[300px]'>
+      <Select.Root>
+        <Select.Trigger>
+          <Select.Value placeholder='Select a period…' />
+        </Select.Trigger>
+        <Select.Content className='[--select-content-max-height:252px]'>
+          {periods.map((period) => (
+            <Select.Item key={period} value={period}>
+              {period}
+            </Select.Item>
+          ))}
+        </Select.Content>
+      </Select.Root>
+    </div>
+  ),
+};
+
 export const WithLabelHint = {
   render: () => (
     <div className='w-full max-w-[300px] min-w-[300px]'>

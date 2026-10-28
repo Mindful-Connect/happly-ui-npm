@@ -29,6 +29,12 @@ type BarChartProps = React.HTMLAttributes<HTMLDivElement> & {
   unit?: string;
 };
 
+// Hover is for a mouse: a tap on a touch screen fires mouseenter too, and
+// would leave the column featured until the next tap elsewhere.
+function canHover() {
+  return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+}
+
 /**
  * Column chart for bucketed counts.
  *
@@ -45,6 +51,10 @@ function BarChart({
 }: BarChartProps) {
   // Guarded so an all-zero breakdown cannot produce NaN heights.
   const max = items.reduce((m, item) => Math.max(m, item.value), 0) || 1;
+  // State rather than group-hover: the label sits in a separate row.
+  const [hovered, setHovered] = React.useState<string | null>(null);
+  const isFeatured = (label: string) =>
+    label === highlighted || label === hovered;
 
   return (
     <div
@@ -57,20 +67,28 @@ function BarChart({
         {items.map((item) => (
           <div
             key={item.label}
-            className='group flex h-full min-w-0 flex-1 flex-col items-center justify-end'
+            className='group flex h-full min-w-0 flex-1 cursor-pointer flex-col items-center justify-end'
+            onMouseEnter={() => canHover() && setHovered(item.label)}
+            onMouseLeave={() => setHovered(null)}
           >
             <div
               className={cn(
-                'relative w-full rounded-xl',
-                item.label === highlighted ? 'bg-chart-2' : 'bg-chart-muted'
+                'relative min-h-2 w-full rounded-xl transition-[background-color] duration-150',
+                isFeatured(item.label) ? 'bg-chart-2' : 'bg-chart-muted'
               )}
-              style={{ height: `${(item.value / max) * 100}%` }}
+              // 8px + share * (available height - 8px): zero keeps the
+              // baseline, positives rise above it, and the maximum fits.
+              style={{
+                height: `calc(${(item.value / max) * 100}% + ${8 * (1 - item.value / max)}px)`,
+              }}
             >
               <ChartTooltip.Root
                 caption={dimension ? `${item.label} ${dimension}` : item.label}
                 className='absolute bottom-full left-1/2 z-20 -translate-x-1/2 opacity-0 transition-opacity duration-150 group-hover:opacity-100'
               >
-                <ChartTooltip.Value>{item.value.toLocaleString()}</ChartTooltip.Value>
+                <ChartTooltip.Value>
+                  {item.value.toLocaleString()}
+                </ChartTooltip.Value>
                 {unit ? <ChartTooltip.Unit>{unit}</ChartTooltip.Unit> : null}
               </ChartTooltip.Root>
             </div>
@@ -82,8 +100,8 @@ function BarChart({
           <li
             key={item.label}
             className={cn(
-              'text-paragraph-xs flex min-w-0 flex-1 items-center justify-center rounded py-0.5',
-              item.label === highlighted
+              'text-paragraph-xs flex min-w-0 flex-1 items-center justify-center rounded py-0.5 transition-[background-color,color] duration-150',
+              isFeatured(item.label)
                 ? 'bg-chart-highlight-bg text-chart-highlight font-medium'
                 : 'text-text-soft-400'
             )}

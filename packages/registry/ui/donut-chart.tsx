@@ -1,19 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import {
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip,
-  useChartWidth,
-} from 'recharts';
+import { Sector } from 'recharts';
 
-import * as ChartTooltip from '@/components/ui/chart-tooltip';
 import { cn } from '@/lib/happly-ui-utils';
 
 export type DonutChartItem = {
-  /** The full name, in the tooltip. */
+  /** The full name. */
   label: string;
   /** Shown instead of `label` in the legend and the centre ("B2B"). */
   shortLabel?: string;
@@ -28,7 +21,8 @@ type DonutChartProps = React.HTMLAttributes<HTMLDivElement> & {
   /**
    * `label` of the segment to feature: its value and label fill the centre and
    * its legend entry gets a pill. Omitted or null leaves the centre bare,
-   * which is right when no single segment is an honest headline.
+   * which is right when no single segment is an honest headline. With exactly
+   * one positive-value category, that category always holds the centre.
    */
   highlighted?: string | null;
   /** A caption over a figure, above the arc. Pass it and it shows; omit it and it doesn't. */
@@ -36,7 +30,7 @@ type DonutChartProps = React.HTMLAttributes<HTMLDivElement> & {
     label: string;
     value: number;
   };
-  /** What the values count, beside the value in the tooltip ("Items"). */
+  /** What the values count, read out with each legend entry ("Items"). */
   unit?: string;
 };
 
@@ -63,9 +57,54 @@ const CORNER_RADIUS = 12;
 // The design separates segments by a fixed 6px; recharts only offers a
 // constant angle, so this matches 6px at the middle of the band.
 const PADDING_ANGLE = 2.8;
+// Below about 13.4 degrees the two inner corners no longer fit and recharts
+// draws the segment as a flat sliver, so a small one is drawn at this size.
+const MIN_ANGLE = 16;
+// A hovered segment takes this many more degrees of the arc from the rest.
+const HOVER_ANGLE = 8;
+// How long a segment takes to grow or give the angle back.
+const HOVER_MS = 150;
+// How long the arc takes to sweep open on first render.
+const SWEEP_MS = 600;
 
-// recharts animates in JavaScript, which the theme's reduced-motion CSS
-// cannot reach.
+// What each segment is drawn at: its share of the arc, with every non-zero
+// share raised to MIN_ANGLE and the larger ones scaled down to make room.
+// Making room can push another share under the minimum, so shares are held
+// there one round at a time until none come out under, as segment-bar does.
+function drawnShares(items: DonutChartItem[]) {
+  const gaps = Math.max(items.filter((item) => item.value > 0).length - 1, 0);
+  const minShare = MIN_ANGLE / (180 - PADDING_ANGLE * gaps);
+  let held = items.map(() => false);
+  for (;;) {
+    const restShare = 1 - held.filter(Boolean).length * minShare;
+    const restSum = items.reduce(
+      (s, item, i) => (held[i] ? s : s + item.value),
+      0
+    );
+    const under = items.map(
+      (item, i) =>
+        !held[i] &&
+        item.value > 0 &&
+        !((item.value / restSum) * restShare >= minShare)
+    );
+    if (!under.includes(true)) {
+      const shares = items.map((item, i) =>
+        held[i] ? minShare : (item.value / restSum) * restShare || 0
+      );
+      // With 10 or more categories the minimums plus the gaps between them
+      // overflow the arc and every segment ends up held at the same size;
+      // fall back to plain proportions so the largest still reads largest.
+      const total = shares.reduce((s, share) => s + share, 0);
+      if (total <= 1 + 1e-9) return shares;
+      const sum = items.reduce((s, item) => s + item.value, 0);
+      return items.map((item) => item.value / sum);
+    }
+    held = held.map((h, i) => h || under[i]);
+  }
+}
+
+// The arc animates in JavaScript, which the theme's reduced-motion CSS cannot
+// reach.
 function prefersReducedMotion() {
   return (
     typeof window !== 'undefined' &&
@@ -73,53 +112,61 @@ function prefersReducedMotion() {
   );
 }
 
-type DonutTooltipProps = {
-  unit?: string;
-  // Filled in by recharts when it renders the tooltip.
-  active?: boolean;
-  payload?: { name?: string; value?: number }[];
-  coordinate?: { x: number; y: number };
-};
+// Hover motion is for a mouse: a tap on a touch screen fires mouseenter too,
+// and would leave the segment grown until the next tap elsewhere.
+function canHover() {
+  return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+}
 
-/**
- * The hovered segment's readout, its tail on recharts' `coordinate` for a pie:
- * the segment's angular midpoint, halfway across the band. The box is clamped
- * to the chart's width and only the tail stays on the segment, so a long
- * label over an end segment cannot overhang the card.
- */
-function DonutTooltip({ unit, active, payload, coordinate }: DonutTooltipProps) {
-  const chartWidth = useChartWidth() ?? 0;
-  const ref = React.useRef<HTMLDivElement>(null);
-  const [width, setWidth] = React.useState(0);
-  // No deps: re-measured after every render, before paint. React skips the
-  // update when the width hasn't changed, so it doesn't loop.
-  React.useLayoutEffect(() => setWidth(ref.current?.offsetWidth ?? 0));
+// A CSS cubic-bezier as a function of progress, so the arc moves on the same
+// curve as the segment bar's CSS transition.
+function cubicBezier(x1: number, y1: number, x2: number, y2: number) {
+  const at = (a: number, b: number, t: number) =>
+    3 * a * t * (1 - t) ** 2 + 3 * b * t ** 2 * (1 - t) + t ** 3;
+  return (x: number) => {
+    let lo = 0;
+    let hi = 1;
+    for (let i = 0; i < 20; i++) {
+      const mid = (lo + hi) / 2;
+      if (at(x1, x2, mid) < x) lo = mid;
+      else hi = mid;
+    }
+    return at(y1, y2, (lo + hi) / 2);
+  };
+}
 
-  const slice = payload?.[0];
-  if (!active || !slice || !coordinate) return null;
-  const left = Math.min(
-    Math.max(coordinate.x - width / 2, 0),
-    chartWidth - width
-  );
-  return (
-    // Only lifted by its own height: the horizontal centring is the clamp
-    // above, which a -50% translate would undo.
-    <div
-      ref={ref}
-      className='absolute w-max -translate-y-full'
-      style={{ left, top: coordinate.y }}
-    >
-      <ChartTooltip.Root
-        caption={slice.name}
-        tailOffset={coordinate.x - left - width / 2}
-      >
-        <ChartTooltip.Value>
-          {Number(slice.value).toLocaleString()}
-        </ChartTooltip.Value>
-        {unit ? <ChartTooltip.Unit>{unit}</ChartTooltip.Unit> : null}
-      </ChartTooltip.Root>
-    </div>
-  );
+// A strong ease-out: quick to answer the pointer, slow to settle.
+const HOVER_EASE = cubicBezier(0.23, 1, 0.32, 1);
+
+// Eases each value toward its target, starting from wherever it is, so a
+// segment let go mid-grow shrinks back from there. The arc is drawn from these
+// numbers, so CSS cannot transition it.
+function useEased(targets: number[], ms: number) {
+  const [values, setValues] = React.useState(targets);
+  const latest = React.useRef(values);
+  const key = targets.join();
+  React.useEffect(() => {
+    const goal = key.split(',').map(Number);
+    const from = latest.current;
+    const show = (next: number[]) => {
+      latest.current = next;
+      setValues(next);
+    };
+    if (prefersReducedMotion()) {
+      show(goal);
+      return;
+    }
+    let start: number | undefined;
+    let frame = requestAnimationFrame(function step(now) {
+      start ??= now;
+      const t = Math.min((now - start) / ms, 1);
+      const k = HOVER_EASE(t);
+      show(goal.map((g, i) => (from[i] ?? g) + (g - (from[i] ?? g)) * k));
+      if (t < 1) frame = requestAnimationFrame(step);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [key, ms]);
+  return values;
 }
 
 /** A half-donut gauge with a colour-keyed legend, sized for a 352px card. */
@@ -131,12 +178,63 @@ function DonutChart({
   className,
   ...rest
 }: DonutChartProps) {
-  const slices = items.map((item, i) => ({
-    name: item.label,
-    value: item.value,
-    fill: colorAt(item, i),
-  }));
-  const leading = items.find((item) => item.label === highlighted);
+  const [hovered, setHovered] = React.useState<string | null>(null);
+  // How far each segment is into its hover growth, 0 to 1.
+  const positiveItems = items.filter((item) => item.value > 0);
+  // Data can refresh under the pointer; a hovered segment that drops to zero
+  // or goes away no longer counts as hovered.
+  const activeHover = positiveItems.some((item) => item.label === hovered)
+    ? hovered
+    : null;
+  const grown = useEased(
+    items.map((item) => (item.label === activeHover ? 1 : 0)),
+    HOVER_MS
+  );
+  // How far the arc has swept open, 0 to 1. It opens once there is something
+  // to draw, which can be after mount while the data loads.
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+  const [swept] = useEased(
+    [mounted && positiveItems.length > 0 ? 1 : 0],
+    SWEEP_MS
+  );
+  const singleCategory = positiveItems.length === 1 ? positiveItems[0] : null;
+  // The degrees the segments share once the gaps between them are taken out.
+  const span = 180 - PADDING_ANGLE * Math.max(positiveItems.length - 1, 0);
+  // The hovered segment's extra angle comes out of the others in proportion,
+  // so the shared edge slides toward its neighbour and the arc keeps its span.
+  const extra = HOVER_ANGLE / span;
+  const spread = 1 + extra * grown.reduce((s, g) => s + g, 0);
+  const shares = drawnShares(items).map(
+    (share, i) => (share + extra * (grown[i] ?? 0)) / spread
+  );
+  // Laid out left to right as recharts' Pie would, with a gap only between
+  // non-zero segments. The segments are drawn here rather than by Pie, which
+  // reruns the whole chart for each frame of the hover growth and drops most
+  // of them.
+  const sweep = (angle: number) => 180 - (180 - angle) * swept;
+  const arcs = items.reduce<
+    { item: DonutChartItem; i: number; startAngle: number; endAngle: number }[]
+  >((laid, item, i) => {
+    if (!shares[i]) return laid;
+    const previous = laid[laid.length - 1];
+    const startAngle = previous ? previous.endAngle - PADDING_ANGLE : 180;
+    return [
+      ...laid,
+      { item, i, startAngle, endAngle: startAngle - shares[i] * span },
+    ];
+  }, []);
+  // Single-category mode removes hover handlers, so clear any earlier hover
+  // before multiple categories return without a mouse-leave to reset it.
+  React.useEffect(() => {
+    if (singleCategory) setHovered(null);
+  }, [singleCategory]);
+  const isFeatured = (label: string) =>
+    label === highlighted || label === activeHover;
+  // The centre holds one segment, so the hovered one takes it over.
+  const leading =
+    singleCategory ??
+    items.find((item) => item.label === (activeHover ?? highlighted));
 
   return (
     <div className={cn('flex h-full flex-col gap-6', className)} {...rest}>
@@ -148,39 +246,35 @@ function DonutChart({
           </span>
         </div>
       ) : null}
-      {/* The legend carries every label and value for a screen reader.
-          recharts makes the segments focusable and a click would ring one,
-          so mousedown is cancelled; hover and the tooltip are unaffected. */}
-      <div
-        aria-hidden
-        className='relative h-[152px] w-full shrink-0'
-        onMouseDown={(e) => e.preventDefault()}
-      >
-        <ResponsiveContainer width='100%' height='100%'>
-          <PieChart accessibilityLayer={false}>
-            <Pie
-              data={slices}
-              dataKey='value'
-              cx='50%'
-              // Bottom-anchored: the arc's baseline is the box's bottom edge.
+      {/* The legend carries every label and value for a screen reader. */}
+      <div aria-hidden className='relative h-[152px] w-full shrink-0'>
+        {/* Centred on the arc's midpoint, with its baseline on the box's
+            bottom edge. */}
+        <svg
+          className='absolute inset-0 size-full'
+          viewBox={`${-OUTER_RADIUS} 0 ${OUTER_RADIUS * 2} ${OUTER_RADIUS}`}
+        >
+          {arcs.map(({ item, i, startAngle, endAngle }) => (
+            <Sector
+              key={item.label}
+              cx={0}
               cy={OUTER_RADIUS}
               innerRadius={INNER_RADIUS}
               outerRadius={OUTER_RADIUS}
-              startAngle={180}
-              endAngle={0}
+              startAngle={sweep(startAngle)}
+              endAngle={sweep(endAngle)}
               cornerRadius={CORNER_RADIUS}
-              paddingAngle={PADDING_ANGLE}
-              stroke='none'
-              isAnimationActive={!prefersReducedMotion()}
+              fill={colorAt(item, i)}
+              className={singleCategory ? undefined : 'cursor-pointer'}
+              onMouseEnter={
+                singleCategory
+                  ? undefined
+                  : () => canHover() && setHovered(item.label)
+              }
+              onMouseLeave={singleCategory ? undefined : () => setHovered(null)}
             />
-            {/* Pinned at the chart's origin, so recharts never offsets or
-                flips it: DonutTooltip places itself on the hovered segment. */}
-            <Tooltip
-              position={{ x: 0, y: 0 }}
-              content={<DonutTooltip unit={unit} />}
-            />
-          </PieChart>
-        </ResponsiveContainer>
+          ))}
+        </svg>
         {leading ? (
           // Full-width over the arc, so it must not swallow the segments' hover.
           <div className='pointer-events-none absolute inset-x-0 bottom-[5px] flex flex-col items-center gap-[7px] text-center'>
@@ -193,7 +287,13 @@ function DonutChart({
           </div>
         ) : null}
       </div>
-      <ul className='flex w-full shrink-0 items-center gap-3'>
+      {/* A single positive category needs no visible legend, but every
+          category (including zeros) remains available to screen readers. */}
+      <ul
+        className={
+          singleCategory ? 'sr-only' : 'flex w-full shrink-0 items-center gap-3'
+        }
+      >
         {items.map((item, i) => (
           <li
             key={item.label}
@@ -210,15 +310,17 @@ function DonutChart({
                 along: its padding is cancelled by an equal negative margin. */}
             <span
               className={
-                item.label === highlighted
+                isFeatured(item.label)
                   ? 'bg-chart-highlight-bg text-chart-highlight -mx-1.5 -my-1 rounded-lg px-1.5 py-1'
                   : 'text-text-sub-600 font-normal'
               }
+              title={item.shortLabel ? item.label : undefined}
             >
               {item.shortLabel ?? item.label}
             </span>
             <span className='sr-only'>
-              {item.shortLabel ? `, ${item.label}` : null}: {item.value.toLocaleString()}
+              {item.shortLabel ? `, ${item.label}` : null}:{' '}
+              {item.value.toLocaleString()}
               {unit ? ` ${unit}` : null}
             </span>
           </li>

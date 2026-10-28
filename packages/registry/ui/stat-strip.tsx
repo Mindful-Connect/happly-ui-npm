@@ -34,8 +34,8 @@ type StatStripItemProps = React.HTMLAttributes<HTMLDivElement> & {
   /** Usually a KeyIcon. */
   icon: React.ReactNode;
   label: string;
-  /** A number is formatted with toLocaleString; a string is shown as given. */
-  value: number | string;
+  /** A number is formatted with toLocaleString; a string is shown as given; null is a missing value. */
+  value: number | string | null;
   /** Change against the previous period, in percent: 5 reads "+5%". Leave out, or pass null, for no pill. */
   delta?: number | null;
   /** Colours the pill. Follows the displayed delta by default; a displayed zero is always flat. */
@@ -75,8 +75,15 @@ function StatStripItem({
       <div className='flex flex-col gap-0.5 whitespace-nowrap'>
         <span className='text-paragraph-xs text-text-sub-600'>{label}</span>
         <div className='flex items-center gap-2'>
-          <span className='text-label-md text-text-strong-950 font-bold tabular-nums'>
-            {typeof value === 'number' ? value.toLocaleString() : value}
+          <span
+            className={cn(
+              'text-label-md font-bold tabular-nums',
+              value == null ? 'text-text-disabled-300' : 'text-text-strong-950'
+            )}
+          >
+            {typeof value === 'number'
+              ? value.toLocaleString()
+              : (value ?? '—')}
           </span>
           {roundedDelta == null ? null : (
             <span

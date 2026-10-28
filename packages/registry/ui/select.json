@@ -33,6 +33,12 @@
         "stories": ["Demo"]
       },
       {
+        "title": "Custom Max Height",
+        "description": "The list scrolls past 196px. Raise that for one Select with the --select-content-max-height CSS variable on Content; it still never grows past the space available on screen.",
+        "code": "<Select.Root>\n  <Select.Trigger>\n    <Select.Value placeholder=\"Select your favorite fruit…\" />\n  </Select.Trigger>\n  <Select.Content className=\"[--select-content-max-height:252px]\">\n    <Select.Item value=\"apple\">Apple</Select.Item>\n    <Select.Item value=\"banana\">Banana</Select.Item>\n  </Select.Content>\n</Select.Root>",
+        "stories": ["CustomMaxHeight"]
+      },
+      {
         "title": "With Label and Hint",
         "description": "Select with a label and hint text.",
         "code": "<FormField.Root\n  label=\"Fruit\"\n  htmlFor=\"fruit\"\n  hint=\"This is a hint text to help user.\"\n>\n  <Select.Root>\n    <Select.Trigger id=\"fruit\">\n      <Select.Value placeholder=\"Select your favorite fruit…\" />\n    </Select.Trigger>\n    <Select.Content>\n      <Select.Item value=\"apple\">Apple</Select.Item>\n      <Select.Item value=\"banana\">Banana</Select.Item>\n    </Select.Content>\n  </Select.Root>\n</FormField.Root>",
@@ -160,7 +166,7 @@
       },
       {
         "name": "Select.Content",
-        "description": "The dropdown content with scroll area.",
+        "description": "The dropdown content with scroll area. The list is capped at 196px; override with the --select-content-max-height CSS variable in className.",
         "props": []
       },
       {

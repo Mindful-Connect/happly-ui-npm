@@ -65,7 +65,6 @@ type GeoJSONData = Parameters<GeoJSONSource['setData']>[0];
 
 const SOURCE = 'regions';
 const HIT_LAYER = 'regions-ring';
-const PATTERN = 'land-dot';
 
 // The view the map opens on: every landmass at once, whatever the data.
 // Latitudes stop short of the poles because the outline has no Antarctica and
@@ -90,22 +89,40 @@ function themeColor(element: HTMLElement, token: string) {
   return `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
 }
 
+// Web Mercator's latitude limit: the projection runs to infinity at the poles.
+const MAX_LATITUDE = 85.051129;
+
+let landPath: string | undefined;
+
 /**
- * The pattern that fills the land. Drawn rather than shipped so it stays
- * crisp on retina: the ratio is the bitmap's own scale, and the pixelRatio
- * handed to `addImage` decides how many CSS pixels it covers.
+ * The land outline as SVG path data in Mercator world units, the whole world
+ * being 1x1 with its origin at the north-west corner. Mercator is linear in
+ * these units, so the path is built once and placed with a transform as the
+ * map moves.
  */
-function dotPattern(ratio: number, color: string): ImageData {
-  const size = DOT_SPACING * ratio;
-  const canvas = document.createElement('canvas');
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext('2d')!;
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  ctx.arc(size / 2, size / 2, DOT_RADIUS * ratio, 0, Math.PI * 2);
-  ctx.fill();
-  return ctx.getImageData(0, 0, size, size);
+function getLandPath() {
+  if (landPath === undefined) {
+    landPath = WORLD_LAND.geometry.coordinates
+      .map((polygon) =>
+        polygon
+          .map((ring) => {
+            const points = ring.map(([lng, lat]) => {
+              const phi =
+                (Math.max(-MAX_LATITUDE, Math.min(MAX_LATITUDE, lat)) *
+                  Math.PI) /
+                180;
+              const x = (lng + 180) / 360;
+              const y =
+                (1 - Math.log(Math.tan(Math.PI / 4 + phi / 2)) / Math.PI) / 2;
+              return `${x.toFixed(6)},${y.toFixed(6)}`;
+            });
+            return `M${points.join('L')}Z`;
+          })
+          .join('')
+      )
+      .join('');
+  }
+  return landPath;
 }
 
 function toFeatureCollection(points: RegionMapPoint[]): GeoJSONData {
@@ -139,6 +156,9 @@ function RegionMap({
   ...rest
 }: RegionMapProps) {
   const containerRef = React.useRef<HTMLDivElement>(null);
+  const landRef = React.useRef<SVGPathElement>(null);
+  const dotsRef = React.useRef<SVGPatternElement>(null);
+  const svgId = React.useId();
   const mapRef = React.useRef<MapLibreMap | null>(null);
   const hoveredRef = React.useRef<number | null>(null);
   const [tooltip, setTooltip] = React.useState<{
@@ -172,7 +192,6 @@ function RegionMap({
         style: {
           version: 8,
           sources: {
-            land: { type: 'geojson', data: WORLD_LAND as GeoJSONData },
             [SOURCE]: {
               type: 'geojson',
               data: toFeatureCollection(pointsRef.current),
@@ -189,10 +208,15 @@ function RegionMap({
         dragRotate: false,
         pitchWithRotate: false,
         touchZoomRotate: false,
+        maxPitch: 0,
+        maxZoom: 8,
         attributionControl: false,
       });
       map = instance;
       mapRef.current = instance;
+      // The SVG land is placed by translate and scale alone, so the map must
+      // never turn or tilt: Shift+arrows would otherwise do both.
+      instance.keyboard.disableRotation();
 
       const syncTooltip = () => {
         const index = hoveredRef.current;
@@ -223,35 +247,26 @@ function RegionMap({
         syncTooltip();
       };
 
-      // Capped at 2 so the bitmap stays a power of two, which is what
-      // MapLibre's pattern atlas tiles cleanly.
-      const bitmapRatio = Math.min(2, Math.ceil(window.devicePixelRatio || 1));
-      let pattern = dotPattern(bitmapRatio, color('--color-chart-map-land'));
-
-      // MapLibre stretches a fill pattern by the zoom fraction (the bitmap
-      // covers 2^(zoom - tileZoom) times its declared size), so the dots would
-      // grow to double between two integer zooms. Declaring the pixel ratio
-      // against that factor pins the grid at DOT_SPACING at every zoom.
-      const syncPattern = () => {
-        const zoom = instance.getZoom();
-        const scale = 2 ** (zoom - Math.max(0, Math.floor(zoom)));
-        if (instance.hasImage(PATTERN)) instance.removeImage(PATTERN);
-        instance.addImage(PATTERN, pattern, {
-          pixelRatio: bitmapRatio * scale,
-        });
+      // The land is SVG under the transparent canvas, so its dots stay sharp
+      // at any zoom and pixel density. The outline is scaled to the world's
+      // current size; the dot grid is not, so it stays at DOT_SPACING, and it
+      // is offset with the world so the dots travel with the land on a pan.
+      const syncLand = () => {
+        const origin = instance.project([-180, MAX_LATITUDE]);
+        const size = instance.project([180, MAX_LATITUDE]).x - origin.x;
+        landRef.current?.setAttribute(
+          'transform',
+          `translate(${origin.x} ${origin.y}) scale(${size})`
+        );
+        dotsRef.current?.setAttribute('x', String(origin.x));
+        dotsRef.current?.setAttribute('y', String(origin.y));
       };
+      landRef.current?.setAttribute('d', getLandPath());
+      syncLand();
 
       instance.on('load', () => {
-        syncPattern();
-
         const active = color('--color-chart-marker-active');
 
-        instance.addLayer({
-          id: 'land',
-          type: 'fill',
-          source: 'land',
-          paint: { 'fill-pattern': PATTERN },
-        });
         instance.addLayer({
           id: 'regions-halo',
           type: 'circle',
@@ -297,12 +312,10 @@ function RegionMap({
           },
         });
 
-        // Canvas paint and the land bitmap cannot follow CSS variables on
-        // their own. Refresh both when a theme class, inline token or system
-        // preference changes, without rebuilding the map or losing its view.
+        // Canvas paint cannot follow CSS variables on its own. Refresh it
+        // when a theme class, inline token or system preference changes,
+        // without rebuilding the map or losing its view.
         syncTheme = () => {
-          pattern = dotPattern(bitmapRatio, color('--color-chart-map-land'));
-          instance.updateImage(PATTERN, pattern);
           const currentActive = color('--color-chart-marker-active');
           instance.setPaintProperty(
             'regions-halo',
@@ -343,8 +356,6 @@ function RegionMap({
         themeMedia.addEventListener('change', syncTheme);
       });
 
-      instance.on('zoom', syncPattern);
-
       instance.on('mousemove', HIT_LAYER, (event: MapLayerMouseEvent) => {
         const index = event.features?.[0]?.properties?.index;
         instance.getCanvas().style.cursor = 'pointer';
@@ -357,6 +368,8 @@ function RegionMap({
       // The tooltip is anchored to the marker, not the cursor, so it has to
       // follow the marker while the map moves under it.
       instance.on('move', syncTooltip);
+      // Fires for a pan, every frame of a zoom, and a container resize.
+      instance.on('move', syncLand);
     });
 
     return () => {
@@ -444,6 +457,36 @@ function RegionMap({
       <div className='relative min-h-0 w-full flex-1 overflow-clip'>
         {/* The canvas only answers a pointer, so the same counts are listed
           for a screen reader. */}
+        <svg
+          aria-hidden
+          className='pointer-events-none absolute inset-0 size-full'
+        >
+          <defs>
+            <pattern
+              ref={dotsRef}
+              id={`${svgId}dots`}
+              width={DOT_SPACING}
+              height={DOT_SPACING}
+              patternUnits='userSpaceOnUse'
+            >
+              <circle
+                cx={DOT_SPACING / 2}
+                cy={DOT_SPACING / 2}
+                r={DOT_RADIUS}
+                style={{ fill: 'var(--color-chart-map-land)' }}
+              />
+            </pattern>
+            <clipPath id={`${svgId}land`}>
+              <path ref={landRef} clipRule='evenodd' />
+            </clipPath>
+          </defs>
+          <rect
+            width='100%'
+            height='100%'
+            fill={`url(#${svgId}dots)`}
+            clipPath={`url(#${svgId}land)`}
+          />
+        </svg>
         <div ref={containerRef} aria-hidden className='h-full w-full' />
         <ul className='sr-only'>
           {points.map((point) => (

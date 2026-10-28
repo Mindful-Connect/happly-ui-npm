@@ -8,19 +8,19 @@
   "dependencies": [],
   "registryDependencies": ["happly-ui-utils"],
   "docs": {
-    "lead": "Each segment is its own rounded block, sized by its share. The featured segment prints its value inside its block and gets a pill in the legend.",
-    "usage": "import * as SegmentBar from \"@/components/ui/segment-bar\"\n\n<SegmentBar.Root\n  items={[{ label: \"Category A\", value: 13 }]}\n  highlighted=\"Category A\"\n/>",
+    "lead": "Each segment is its own rounded block, sized by its share. Nothing is featured by default; hovering a block prints its value inside it and gives its legend entry a pill. Zero and small segments retain an 8px minimum width.",
+    "usage": "import * as SegmentBar from \"@/components/ui/segment-bar\"\n\n<SegmentBar.Root\n  items={[{ label: \"Category A\", value: 13 }]}\n/>",
     "examples": [
       {
         "title": "Default",
-        "description": "A label-only legend split into two columns.",
-        "code": "<SegmentBar.Root items={items} highlighted=\"Category A\" />",
+        "description": "A label-only legend split into two columns. Nothing is featured until a block is hovered. A block too narrow for its number opens far enough to fit it.",
+        "code": "<SegmentBar.Root items={items} />",
         "stories": ["Default"]
       },
       {
         "title": "Rows legend",
-        "description": "A full-width legend with each count on the right.",
-        "code": "<SegmentBar.Root items={items} highlighted=\"Category B\" legend=\"rows\" />",
+        "description": "A full-width legend with each actual count on the right. Nothing is featured until a block is hovered, when that block and its legend entry are featured.",
+        "code": "<SegmentBar.Root items={items} legend=\"rows\" />",
         "stories": ["RowsLegend"]
       }
     ],
@@ -37,7 +37,7 @@
           {
             "name": "highlighted",
             "type": "string | null",
-            "description": "Label of the segment to feature. Omitted or null features none"
+            "description": "Label of the segment to feature. Omitted or null features none. A hovered segment is featured as well"
           },
           {
             "name": "legend",

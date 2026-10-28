@@ -9,22 +9,30 @@ type ChartTooltipProps = React.HTMLAttributes<HTMLDivElement> & {
   caption: React.ReactNode;
   /** Px to slide the tail off-centre, when the box is shifted off its anchor. */
   tailOffset?: number;
+  /** Which side of the anchor the box sits on; the tail points back at it. */
+  side?: 'top' | 'bottom';
 };
 
 /**
- * A caption over a value row, with a tail pointing down at the thing it
- * describes. Place it above the anchor; the tail sits centred under the box.
+ * A caption over a value row, with a tail pointing at the thing it describes.
+ * Place it above the anchor, the tail centred under the box, or below it with
+ * `side='bottom'`, the tail centred over it.
  */
 function ChartTooltip({
   caption,
   tailOffset,
+  side = 'top',
   children,
   className,
   ...rest
 }: ChartTooltipProps) {
   return (
     <div
-      className={cn('pointer-events-none flex flex-col items-center', className)}
+      className={cn(
+        'pointer-events-none flex items-center',
+        side === 'bottom' ? 'flex-col-reverse' : 'flex-col',
+        className
+      )}
       {...rest}
     >
       <div className='bg-bg-white-0 border-stroke-soft-200 shadow-tooltip flex flex-col items-start gap-1 rounded-[10px] border px-3 py-2.5 whitespace-nowrap'>
@@ -35,7 +43,8 @@ function ChartTooltip({
       </div>
       {/* The tail's top 2px is an opaque strip that hides the box's bottom
           border where the two meet, so it overlaps the box instead of
-          sitting flush under it. */}
+          sitting flush under it. Below the anchor the tail is mirrored, so
+          the strip covers the box's top border instead. */}
       <span
         className='relative block h-1.5 w-3'
         style={tailOffset ? { transform: `translateX(${tailOffset}px)` } : undefined}
@@ -46,7 +55,10 @@ function ChartTooltip({
           height='8.37868'
           viewBox='0 0 18 8.37868'
           fill='none'
-          className='absolute -top-0.5 -start-[3px] overflow-visible'
+          className={cn(
+            'absolute -start-[3px] overflow-visible',
+            side === 'bottom' ? '-bottom-0.5 -scale-y-100' : '-top-0.5'
+          )}
         >
           <path
             d='M10.4141 7.29297C9.63304 8.07387 8.36696 8.07387 7.58594 7.29297L1.79297 1.5L16.207 1.5L10.4141 7.29297Z'
