@@ -402,7 +402,7 @@ const SelectContent = React.forwardRef<
               style={{ overflowY: undefined }}
               // Capped by the space the popper has too (less Content's py-2), so a
               // raised cap scrolls on a short screen instead of being clipped.
-              className='max-h-[min(var(--select-content-max-height),calc(var(--radix-select-content-available-height)_-_1rem))] w-full scroll-py-2 overflow-auto px-2'
+              className='max-h-[min(var(--select-content-max-height),calc(var(--radix-select-content-available-height,100vh)_-_1rem))] w-full scroll-py-2 overflow-auto px-2'
             >
               {children}
             </ScrollAreaPrimitives.Viewport>

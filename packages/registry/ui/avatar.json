@@ -139,7 +139,7 @@
           {
             "name": "src",
             "type": "string",
-            "description": "The image source URL. When it is empty or fails to load, the root's placeholder is shown instead"
+            "description": "The image source URL. An image with only `srcSet` loads too; when neither is set or the image fails to load, the root's placeholder is shown instead"
           },
           {
             "name": "asChild",

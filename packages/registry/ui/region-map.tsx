@@ -209,6 +209,7 @@ function RegionMap({
         pitchWithRotate: false,
         touchZoomRotate: false,
         maxPitch: 0,
+        maxZoom: 8,
         attributionControl: false,
       });
       map = instance;

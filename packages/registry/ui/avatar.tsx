@@ -240,7 +240,7 @@ type AvatarImageProps = AvatarSharedProps &
 
 const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
   (
-    { asChild, className, size, color, alt, src, onError, ...rest },
+    { asChild, className, size, color, alt, src, srcSet, onError, ...rest },
     forwardedRef
   ) => {
     const Component = asChild ? Slot : 'img';
@@ -257,7 +257,9 @@ const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
       },
       [forwardedRef]
     );
-    // The src that failed rather than a flag, so a new src gets a fresh try.
+    // An image can come from srcSet alone.
+    const source = src || srcSet;
+    // The source that failed rather than a flag, so a new one gets a fresh try.
     const [failedSrc, setFailedSrc] = React.useState<AvatarImageProps['src']>();
 
     // A server-rendered photo can fail before React attaches onError. A
@@ -279,10 +281,10 @@ const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
       };
     }, [src]);
 
-    if (!asChild && (!src || failedSrc === src)) {
+    if (!asChild && (!source || failedSrc === source)) {
       if (placeholder) return <>{placeholder}</>;
       return (
-        <AvatarImage asChild>
+        <AvatarImage asChild className={className}>
           {placeholderType === 'company' ? (
             <IconEmptyCompany />
           ) : (
@@ -298,8 +300,9 @@ const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
         // component, so it only gets one the caller asked for.
         ref={asChild ? forwardedRef : setImageRef}
         src={src}
+        srcSet={srcSet}
         onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-          setFailedSrc(src);
+          setFailedSrc(source);
           onError?.(e);
         }}
         // an avatar normally sits beside the person's name, so it is

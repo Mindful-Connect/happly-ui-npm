@@ -121,7 +121,9 @@ function SegmentBar({
             key={item.label}
             className={cn(
               'flex min-w-2 basis-0 cursor-pointer items-center justify-center overflow-hidden rounded-xl',
-              'transition-[flex-basis] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none',
+              // Its number always shows, so it never shrinks below it.
+              item.label === highlighted && 'min-w-fit',
+              'transition-[flex-basis] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none',
               SEGMENT_FILL[i % SEGMENT_FILL.length]
             )}
             style={{

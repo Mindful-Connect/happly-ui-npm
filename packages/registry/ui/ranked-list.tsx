@@ -30,7 +30,8 @@ function RankedList({
       {/* No rule under the header and none between rows: the design
           separates them with spacing alone. Neither reserves a scrollbar
           gutter, so the value column ends at the card's edge, in line with
-          the header's action. */}
+          the header's action. Where scrollbars always show, a scrolling
+          list's values sit about 15px left of the header column. */}
       <div className='text-label-xs text-text-soft-400 flex shrink-0 items-start gap-2'>
         <span className='min-w-0 flex-1'>{columnLabels[0]}</span>
         <span className='shrink-0 text-end'>{columnLabels[1]}</span>

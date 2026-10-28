@@ -63,7 +63,7 @@ const MIN_ANGLE = 16;
 // A hovered segment takes this many more degrees of the arc from the rest.
 const HOVER_ANGLE = 8;
 // How long a segment takes to grow or give the angle back.
-const HOVER_MS = 200;
+const HOVER_MS = 150;
 // How long the arc takes to sweep open on first render.
 const SWEEP_MS = 600;
 
@@ -92,9 +92,12 @@ function drawnShares(items: DonutChartItem[]) {
         held[i] ? minShare : (item.value / restSum) * restShare || 0
       );
       // With 10 or more categories the minimums plus the gaps between them
-      // overflow the arc; scale back so it still closes at 180 degrees.
+      // overflow the arc and every segment ends up held at the same size;
+      // fall back to plain proportions so the largest still reads largest.
       const total = shares.reduce((s, share) => s + share, 0);
-      return total > 1 ? shares.map((share) => share / total) : shares;
+      if (total <= 1) return shares;
+      const sum = items.reduce((s, item) => s + item.value, 0);
+      return items.map((item) => item.value / sum);
     }
     held = held.map((h, i) => h || under[i]);
   }
@@ -177,11 +180,16 @@ function DonutChart({
 }: DonutChartProps) {
   const [hovered, setHovered] = React.useState<string | null>(null);
   // How far each segment is into its hover growth, 0 to 1.
+  const positiveItems = items.filter((item) => item.value > 0);
+  // Data can refresh under the pointer; a hovered segment that drops to zero
+  // or goes away no longer counts as hovered.
+  const activeHover = positiveItems.some((item) => item.label === hovered)
+    ? hovered
+    : null;
   const grown = useEased(
-    items.map((item) => (item.label === hovered ? 1 : 0)),
+    items.map((item) => (item.label === activeHover ? 1 : 0)),
     HOVER_MS
   );
-  const positiveItems = items.filter((item) => item.value > 0);
   // How far the arc has swept open, 0 to 1. It opens once there is something
   // to draw, which can be after mount while the data loads.
   const [mounted, setMounted] = React.useState(false);
@@ -222,11 +230,11 @@ function DonutChart({
     if (singleCategory) setHovered(null);
   }, [singleCategory]);
   const isFeatured = (label: string) =>
-    label === highlighted || label === hovered;
+    label === highlighted || label === activeHover;
   // The centre holds one segment, so the hovered one takes it over.
   const leading =
     singleCategory ??
-    items.find((item) => item.label === (hovered ?? highlighted));
+    items.find((item) => item.label === (activeHover ?? highlighted));
 
   return (
     <div className={cn('flex h-full flex-col gap-6', className)} {...rest}>
