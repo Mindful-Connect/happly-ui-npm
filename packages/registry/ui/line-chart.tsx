@@ -8,6 +8,7 @@ import {
   LineChart as RechartsLineChart,
   ResponsiveContainer,
   Tooltip,
+  useChartHeight,
   useChartWidth,
   useYAxisScale,
   XAxis,
@@ -95,7 +96,8 @@ type LineTooltipProps = {
 };
 
 /**
- * The hovered point's readout, its tail just above the active dot. recharts'
+ * The hovered point's readout, its tail just above the active dot, or just
+ * below it when there is room below but not above inside the chart. recharts'
  * `coordinate` gives the point's x but the pointer's y, so y comes from the
  * axis scale. The box is clamped to the chart's width and only the tail stays
  * on the point, so the first and last points cannot overhang the card.
@@ -108,12 +110,17 @@ function LineTooltip({
   coordinate,
 }: LineTooltipProps) {
   const chartWidth = useChartWidth() ?? 0;
+  const chartHeight = useChartHeight() ?? 0;
   const yScale = useYAxisScale();
   const ref = React.useRef<HTMLDivElement>(null);
   const [width, setWidth] = React.useState(0);
+  const [height, setHeight] = React.useState(0);
   // No deps: re-measured after every render, before paint. React skips the
-  // update when the width hasn't changed, so it doesn't loop.
-  React.useLayoutEffect(() => setWidth(ref.current?.offsetWidth ?? 0));
+  // update when the size hasn't changed, so it doesn't loop.
+  React.useLayoutEffect(() => {
+    setWidth(ref.current?.offsetWidth ?? 0);
+    setHeight(ref.current?.offsetHeight ?? 0);
+  });
 
   const point = payload?.[0]?.payload;
   const y = point ? yScale?.(point.value) : undefined;
@@ -128,17 +135,26 @@ function LineTooltip({
     Math.max(coordinate.x - width / 2, 0),
     chartWidth - width
   );
+  // Near the top it would rise over the card's title, so it drops below,
+  // but only if it fits there; otherwise it stays above.
+  const below =
+    y - ACTIVE_DOT_RADIUS - 2 < height &&
+    y + ACTIVE_DOT_RADIUS + 2 + height <= chartHeight;
   return (
     // Only lifted by its own height: the horizontal centring is the clamp
     // above, which a -50% translate would undo.
     <div
       ref={ref}
-      className='absolute w-max -translate-y-full'
-      style={{ left, top: y - ACTIVE_DOT_RADIUS - 2 }}
+      className={cn('absolute w-max', !below && '-translate-y-full')}
+      style={{
+        left,
+        top: below ? y + ACTIVE_DOT_RADIUS + 2 : y - ACTIVE_DOT_RADIUS - 2,
+      }}
     >
       <ChartTooltip.Root
         caption={point.label}
         tailOffset={coordinate.x - left - width / 2}
+        side={below ? 'bottom' : 'top'}
       >
         <ChartTooltip.Value>{point.value.toLocaleString()}</ChartTooltip.Value>
         {change !== null ? (

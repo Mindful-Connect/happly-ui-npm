@@ -27,3 +27,11 @@ export const WithChange = {
     </ChartTooltip.Root>
   ),
 };
+
+export const Below = {
+  render: () => (
+    <ChartTooltip.Root caption='Tue, Aug 12' side='bottom'>
+      <ChartTooltip.Value>1,284</ChartTooltip.Value>
+    </ChartTooltip.Root>
+  ),
+};

@@ -13,7 +13,7 @@ import { default as bannerMeta, Playground as banner_Playground, Error as banner
 import { default as barChartMeta, Default as barChart_Default, MinimumHeight as barChart_MinimumHeight } from '@/components/ui/bar-chart.stories';
 import { default as buttonGroupMeta, Playground as buttonGroup_Playground, Default as buttonGroup_Default, IconsOnly as buttonGroup_IconsOnly, TextOnly as buttonGroup_TextOnly, Sizes as buttonGroup_Sizes } from '@/components/ui/button-group.stories';
 import { default as buttonMeta, Playground as button_Playground, PrimaryVariant as button_PrimaryVariant, NeutralVariant as button_NeutralVariant, SuccessVariant as button_SuccessVariant, WarningVariant as button_WarningVariant, ErrorVariant as button_ErrorVariant, Sizes as button_Sizes, Disabled as button_Disabled, WithIcon as button_WithIcon, FullWidth as button_FullWidth, AsChild as button_AsChild, Loading as button_Loading, LoadingInteractive as button_LoadingInteractive, Composition as button_Composition } from '@/components/ui/button.stories';
-import { default as chartTooltipMeta, WithUnit as chartTooltip_WithUnit, WithoutUnit as chartTooltip_WithoutUnit, WithChange as chartTooltip_WithChange } from '@/components/ui/chart-tooltip.stories';
+import { default as chartTooltipMeta, WithUnit as chartTooltip_WithUnit, WithoutUnit as chartTooltip_WithoutUnit, WithChange as chartTooltip_WithChange, Below as chartTooltip_Below } from '@/components/ui/chart-tooltip.stories';
 import { default as chatMeta, Default as chat_Default, Bubbles as chat_Bubbles, PillsAndDividers as chat_PillsAndDividers, Input as chat_Input, Interactive as chat_Interactive, CustomInput as chat_CustomInput, Disabled as chat_Disabled } from '@/components/ui/chat.stories';
 import { default as checkboxMeta, Playground as checkbox_Playground, Demo as checkbox_Demo, Variants as checkbox_Variants, Disabled as checkbox_Disabled, WithLabel as checkbox_WithLabel, WithLabelExtended as checkbox_WithLabelExtended, WithFormField as checkbox_WithFormField } from '@/components/ui/checkbox.stories';
 import { default as colorPickerMeta, Playground as colorPicker_Playground, Demo as colorPicker_Demo, PopoverDemo as colorPicker_PopoverDemo, WithFormField as colorPicker_WithFormField } from '@/components/ui/color-picker.stories';
@@ -252,7 +252,8 @@ export const storyRegistry: Record<string, {
     stories: {
     'WithUnit': chartTooltip_WithUnit,
     'WithoutUnit': chartTooltip_WithoutUnit,
-    'WithChange': chartTooltip_WithChange
+    'WithChange': chartTooltip_WithChange,
+    'Below': chartTooltip_Below
     }
   },
   'chat': {
