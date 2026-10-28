@@ -95,7 +95,7 @@ function drawnShares(items: DonutChartItem[]) {
       // overflow the arc and every segment ends up held at the same size;
       // fall back to plain proportions so the largest still reads largest.
       const total = shares.reduce((s, share) => s + share, 0);
-      if (total <= 1) return shares;
+      if (total <= 1 + 1e-9) return shares;
       const sum = items.reduce((s, item) => s + item.value, 0);
       return items.map((item) => item.value / sum);
     }
